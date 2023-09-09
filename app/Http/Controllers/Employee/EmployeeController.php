@@ -9,6 +9,7 @@ use App\Models\Employee\EmployeeDetails;
 use App\Models\Employee\SecurityPriorAcquaintance;
 use Illuminate\Http\Request;
 use App\Http\Requests\Employee\AddEmployeeRequest;
+use App\Http\Requests\Employee\EditEmployeeRequest;
 
 use App\Models\Settings\Location\District;
 use App\Models\Settings\Location\Upazila;
@@ -223,9 +224,16 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function edit(Employee $employee)
+    public function edit($id)
     {
-        //
+        $districts = District::all();
+        $upazila = Upazila::all();
+        $union = Union::all();
+        $ward = Ward::all();
+        $bloods = BloodGroup::all();
+        $religions = Religion::all();
+        $employees = Employee::findOrFail(encryptor('decrypt',$id));
+        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees'));
     }
 
     /**
@@ -235,9 +243,125 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EditEmployeeRequest $request, $id)
     {
-        //
+        try {
+            $employee = Employee::findOrFail(encryptor('decrypt',$id));
+            $employee->bn_applicants_name = $request->bn_applicants_name;
+            $employee->bn_fathers_name = $request->bn_fathers_name;
+            $employee->bn_mothers_name = $request->bn_mothers_name;
+            $employee->admission_id_no = $request->admission_id_no;
+            // $employee->admission_id_no = 'AD-'.Carbon::now()->format('m-y').'-'. str_pad((Employee::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
+
+            $employee->bn_parm_district_id = $request->bn_parm_district_id;
+            $employee->bn_parm_upazila_id = $request->bn_parm_upazila_id;
+            $employee->bn_parm_union_id = $request->bn_parm_union_id;
+            $employee->bn_parm_ward_id = $request->bn_parm_ward_id;
+            $employee->bn_parm_holding_name = $request->bn_parm_holding_name;
+            $employee->bn_parm_village_name = $request->bn_parm_village_name;
+            $employee->bn_parm_post_ofc = $request->bn_parm_post_ofc;
+            $employee->bn_parm_phone_my = $request->bn_parm_phone_my;
+            $employee->bn_parm_phone_alt = $request->bn_parm_phone_alt;
+
+            $employee->bn_pre_district_id = $request->bn_pre_district_id;
+            $employee->bn_pre_upazila_id = $request->bn_pre_upazila_id;
+            $employee->bn_pre_union_id = $request->bn_pre_union_id;
+            $employee->bn_pre_ward_no = $request->bn_pre_ward_no;
+            $employee->bn_pre_holding_no = $request->bn_pre_holding_no;
+            $employee->bn_pre_village_name = $request->bn_pre_village_name;
+            $employee->bn_pre_post_ofc = $request->bn_pre_post_ofc;
+            $employee->bn_identification_mark = $request->bn_identification_mark;
+            $employee->bn_edu_qualification = $request->bn_edu_qualification;
+            $employee->bn_blood_id = $request->bn_blood_id;
+            $employee->bn_dob = $request->bn_dob;
+            $employee->bn_age = $request->bn_age;
+            $employee->bn_birth_certificate = $request->bn_birth_certificate;
+            $employee->bn_nid_no = $request->bn_nid_no;
+            $employee->bn_nationality = $request->bn_nationality;
+            $employee->bn_religion = $request->bn_religion;
+            $employee->bn_height_foot = $request->bn_height_foot;
+            $employee->bn_height_inc = $request->bn_height_inc;
+            $employee->bn_weight_kg = $request->bn_weight_kg;
+            $employee->bn_weight_pounds = $request->bn_weight_pounds;
+            $employee->bn_experience = $request->bn_experience;
+            $employee->bn_marital_status = $request->bn_marital_status;
+            $employee->bn_legacy_name = $request->bn_legacy_name;
+            $employee->bn_legacy_relation = $request->bn_legacy_relation;
+            $employee->bn_reference_admittee = $request->bn_reference_admittee;
+            $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
+            $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
+            $employee->bn_applied_position = $request->bn_applied_position;
+
+            //   English
+            $employee->en_applicants_name = $request->en_applicants_name;
+            $employee->en_fathers_name = $request->en_fathers_name;
+            $employee->en_mothers_name = $request->en_mothers_name;
+            $employee->en_parm_district_id = $request->en_parm_district_id;
+            $employee->en_parm_upazila_id = $request->en_parm_upazila_id;
+            $employee->en_parm_union_id = $request->en_parm_union_id;
+            $employee->en_parm_ward_id = $request->en_parm_ward_id;
+            $employee->en_parm_holding_name = $request->en_parm_holding_name;
+            $employee->en_parm_village_name = $request->en_parm_village_name;
+            $employee->en_parm_post_ofc = $request->en_parm_post_ofc;
+            $employee->en_parm_phone_my = $request->en_parm_phone_my;
+            $employee->en_parm_phone_alt = $request->en_parm_phone_alt;
+
+            $employee->en_pre_district_id = $request->en_pre_district_id;
+            $employee->en_pre_upazila_id = $request->en_pre_upazila_id;
+            $employee->en_pre_union_id = $request->en_pre_union_id;
+            $employee->en_pre_ward_id = $request->en_pre_ward_id;
+            $employee->en_pre_holding_no = $request->en_pre_holding_no;
+            $employee->en_pre_village_name = $request->en_pre_village_name;
+            $employee->en_pre_post_ofc = $request->en_pre_post_ofc;
+            $employee->en_identification_mark = $request->en_identification_mark;
+            $employee->en_edu_qualification = $request->en_edu_qualification;
+            $employee->en_blood_id = $request->en_blood_id;
+            $employee->en_dob = $request->en_dob;
+            $employee->en_age = $request->en_age;
+            $employee->en_birth_certificate = $request->en_birth_certificate;
+            $employee->en_nid_no = $request->en_nid_no;
+            $employee->en_nationality = $request->en_nationality;
+            $employee->en_religion = $request->en_religion;
+            $employee->en_height_foot = $request->en_height_foot;
+            $employee->en_height_inc = $request->en_height_inc;
+            $employee->en_weight_kg = $request->en_weight_kg;
+            $employee->en_weight_pounds = $request->en_weight_pounds;
+            $employee->en_experience = $request->en_experience;
+            $employee->en_marital_status = $request->en_marital_status;
+            $employee->en_legacy_name = $request->en_legacy_name;
+            $employee->en_legacy_relation = $request->en_legacy_relation;
+            $employee->en_reference_admittee = $request->en_reference_admittee;
+            $employee->en_reference_adm_phone = $request->en_reference_adm_phone;
+            $employee->en_reference_adm_adress = $request->en_reference_adm_adress;
+            $employee->en_applied_position = $request->en_applied_position;
+            $employee->bn_cer_gender = $request->bn_cer_gender;
+            $employee->bn_cer_physical_ability = $request->bn_cer_physical_ability;
+
+            $employee->bn_spouse_name = $request->bn_spouse_name;
+            $employee->bn_song_name = $request->bn_song_name;
+            $employee->bn_daughters_name = $request->bn_daughters_name;
+            $employee->en_spouse_name = $request->en_spouse_name;
+            $employee->en_song_name = $request->en_song_name;
+            $employee->en_daughters_name = $request->en_daughters_name;
+            if($request->has('concerned_person_sign'))
+            $employee->concerned_person_sign=$this->uploadImage($request->concerned_person_sign,'uploads/concerned_person_sign/');
+            if($request->has('bn_doctor_sign'))
+            $employee->bn_doctor_sign=$this->uploadImage($request->bn_doctor_sign,'uploads/bn_doctor_sign/');
+
+            if($request->has('profile_img'))
+            $employee->profile_img=$this->uploadImage($request->profile_img,'uploads/profile_img/');
+            if($request->has('signature_img'))
+            $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
+
+            if ($employee->save()) {
+                return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**

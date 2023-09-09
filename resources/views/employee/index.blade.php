@@ -31,10 +31,13 @@
                             <p><strong>Father's Name:</strong> {{$e->en_fathers_name}}</p>
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
                         </td>
-                        <td class="d-flex">
+                        <td>
                             <a href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
                                 <i class="bi bi-eye"></i>
                             </a>
+                            <a class="ms-2" href="{{route('employee.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                <i class="bi bi-pencil-square"></i>
+                            </a><br/>
                             <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
                                 Security
                             </a> <br/>
