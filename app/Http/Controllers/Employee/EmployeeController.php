@@ -378,16 +378,18 @@ class EmployeeController extends Controller
     public function securityGuards($id)
     {
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
+        $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
         $districts = District::all();
         $upazila = Upazila::all();
-        return view('employee.security-prior-acquaintance',compact('employees','districts','upazila'));
+        return view('employee.security-prior-acquaintance',compact('employees','districts','upazila','security'));
     }
 
-    public function securityGuardsStore(Request $request)
+    public function securityGuardsStore(Request $request ,$id)
     {
         try{
-            $security=new SecurityPriorAcquaintance;
-            $security->employee_id=$request->employee_id;
+            $security=SecurityPriorAcquaintance::where('employee_id',$id)->firstOrNew();
+            // $security=new SecurityPriorAcquaintance;
+            $security->employee_id=$id;
             $security->bn_in_laws_district_id=$request->bn_in_laws_district_id;
             $security->bn_in_laws_upazilla_id=$request->bn_in_laws_upazilla_id;
             $security->bn_in_laws_village_name=$request->bn_in_laws_village_name;
@@ -434,7 +436,7 @@ class EmployeeController extends Controller
             if($request->has('manager_sing'))
             $security->manager_sing=$this->uploadImage($request->manager_sing,'uploads/manager_sing/');
             if($security->save())
-            return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Successfully Done!', 'Success', ["positionClass" => "toast-top-right"]));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));
         }catch(Exception $e){

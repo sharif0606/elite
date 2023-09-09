@@ -82,7 +82,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
 
         Route::resource('employee', employee::class);
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
-        Route::post('/prior-introduction-security-guards', [employee::class,'securityGuardsStore'])->name('security.store');
+        Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
 
         Route::resource('customer', customer::class);
