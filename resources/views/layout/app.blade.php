@@ -57,7 +57,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 
-<body class="theme-light" style="overflow-y: auto;">
+<body class="theme-dark" style="overflow-y: auto;">
     <div id="app">
         @include('layout.nav.'.currentUser())
         <div id="main" class="layout-navbar">

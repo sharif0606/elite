@@ -13,6 +13,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .semiTinput {
             width: 44%;
@@ -21,6 +22,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .semiSinput {
             width: 64%;
@@ -29,6 +31,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .sbinput {
             width: 36%;
@@ -37,6 +40,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .sinput {
             width: 30%;
@@ -45,6 +49,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .sminput {
             width: 18%;
@@ -53,6 +58,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .small {
             width: 25%;
@@ -61,6 +67,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .verySmall {
             width: 10%;
@@ -69,6 +76,7 @@
             border-width: 0 0 1px;
             border-color: blue;
             background-color: transparent;
+            color: white;
         }
         .tbl_border{
             border: 1px solid;
