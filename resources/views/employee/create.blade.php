@@ -53,8 +53,11 @@
                     <h6 class="border-bottom my-2">বাংলা</h6>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_applicants_name">আবেদনকারীর নাম</label>
-                            <input type="text" id="bn_applicants_name" value="{{old('bn_applicants_name')}}" class="form-control" placeholder="" name="bn_applicants_name">
+                            <label for="bn_applicants_name">আবেদনকারীর নাম<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_applicants_name" value="{{old('bn_applicants_name')}}" class="form-control @error('bn_applicants_name') is-invalid @enderror" placeholder="" name="bn_applicants_name">
+                            @if($errors->has('bn_applicants_name'))
+                                <span class="text-danger"> {{ $errors->first('bn_applicants_name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
@@ -106,8 +109,8 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_district_id">জেলা</label>
-                            <select onchange="show_upazila(this.value)" name="bn_parm_district_id" class="choices form-control js-example-basic-single" id="bn_parm_district_id">
+                            <label for="bn_parm_district_id">জেলা<span class="text-danger">*</span></label>
+                            <select onchange="show_upazila(this.value)" name="bn_parm_district_id" class="choices form-control js-example-basic-single @error('bn_parm_district_id') is-invalid @enderror" id="bn_parm_district_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($districts as $d)
                                 <option value="{{$d->id}}" {{ old('bn_parm_district_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -115,12 +118,15 @@
                                     <option value="">No Country found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_parm_district_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_parm_district_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_upazila_id">উপজেলা</label>
-                            <select onchange="show_unions(this.value)" name="bn_parm_upazila_id" class=" form-control js-example-basic-single" id="bn_parm_upazila_id">
+                            <label for="bn_parm_upazila_id">উপজেলা<span class="text-danger">*</span></label>
+                            <select onchange="show_unions(this.value)" name="bn_parm_upazila_id" class=" form-control js-example-basic-single @error('bn_parm_upazila_id') is-invalid @enderror" id="bn_parm_upazila_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($upazila as $d)
                                 <option class="district district{{$d->district_id}}" value="{{$d->id}}" {{ old('bn_parm_upazila_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -128,12 +134,15 @@
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_parm_upazila_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_parm_upazila_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_union_id">ইউনিয়ন</label>
-                            <select name="bn_parm_union_id" class=" form-control" id="bn_parm_union_id">
+                            <label for="bn_parm_union_id">ইউনিয়ন<span class="text-danger">*</span></label>
+                            <select name="bn_parm_union_id" class="form-control @error('bn_parm_union_id') is-invalid @enderror" id="bn_parm_union_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($union as $u)
                                 <option class="upazila upazila{{$u->upazila_id}}" value="{{$u->id}}" {{ old('bn_parm_union_id')==$u->id?"selected":""}}> {{ $u->name_bn}}</option>
@@ -141,12 +150,15 @@
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_parm_union_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_parm_union_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_ward_id">ওয়ার্ড নং</label>
-                            <select name="bn_parm_ward_id" class=" form-control js-example-basic-single" id="bn_parm_ward_id">
+                            <label for="bn_parm_ward_id">ওয়ার্ড নং<span class="text-danger">*</span></label>
+                            <select name="bn_parm_ward_id" class=" form-control js-example-basic-single @error('bn_parm_ward_id') is-invalid @enderror" id="bn_parm_ward_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($ward as $d)
                                 <option value="{{$d->id}}" {{ old('bn_ward_name')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -154,24 +166,36 @@
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_parm_ward_id'))
+                            <span class="text-danger"> {{ $errors->first('bn_parm_ward_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_holding_name">হোল্ডিং নং</label>
-                            <input type="text" id="bn_parm_holding_name" value="{{old('bn_parm_holding_name')}}" class="form-control" placeholder="হোল্ডিং নং" name="bn_parm_holding_name">
+                            <label for="bn_parm_holding_name">হোল্ডিং নং<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_parm_holding_name" value="{{old('bn_parm_holding_name')}}" class="form-control @error('bn_parm_holding_name') is-invalid @enderror" placeholder="হোল্ডিং নং" name="bn_parm_holding_name">
+                            @if($errors->has('bn_parm_holding_name'))
+                            <span class="text-danger"> {{ $errors->first('bn_parm_holding_name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_village_name">গ্রামের নাম</label>
-                            <input type="text" id="bn_parm_village_name" value="{{old('bn_parm_village_name')}}" class="form-control" placeholder="গ্রামের নাম" name="bn_parm_village_name">
+                            <label for="bn_parm_village_name">গ্রামের নাম<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_parm_village_name" value="{{old('bn_parm_village_name')}}" class="form-control @error('bn_parm_village_name') is-invalid @enderror" placeholder="গ্রামের নাম" name="bn_parm_village_name">
+                            @if($errors->has('bn_parm_village_name'))
+                            <span class="text-danger"> {{ $errors->first('bn_parm_village_name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_post_ofc">পোঃ</label>
-                            <input type="text" id="bn_parm_post_ofc" value="{{old('bn_parm_post_ofc')}}" class="form-control" placeholder="পোঃ" name="bn_parm_post_ofc">
+                            <label for="bn_parm_post_ofc">পোঃ<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_parm_post_ofc" value="{{old('bn_parm_post_ofc')}}" class="form-control @error('bn_parm_post_ofc') is-invalid @enderror" placeholder="পোঃ" name="bn_parm_post_ofc">
+                            @if($errors->has('bn_parm_post_ofc'))
+                            <span class="text-danger"> {{ $errors->first('bn_parm_post_ofc') }}</span>
+                            @endif
                         </div>
                     </div>
                     {{--  <div class="col-md-4 col-12">
@@ -205,8 +229,8 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_district_id">জেলা</label>
-                            <select onchange="show_upazila(this.value)" name="bn_pre_district_id" class=" form-control js-example-basic-single" id="bn_pre_district_id">
+                            <label for="bn_pre_district_id">জেলা<span class="text-danger">*</span></label>
+                            <select onchange="show_upazila(this.value)" name="bn_pre_district_id" class=" form-control js-example-basic-single @error('bn_pre_district_id') is-invalid @enderror" id="bn_pre_district_id">
                                 <option value="">Select Discrict</option>
                                 @forelse($districts as $d)
                                 <option value="{{$d->id}}" {{ old('bn_pre_district_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -214,12 +238,15 @@
                                     <option value="">No Country found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_pre_district_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_district_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_upazila_id">উপজেলা</label>
-                            <select onchange="show_unions(this.value)" name="bn_pre_upazila_id" class="form-control js-example-basic-single" id="bn_pre_upazila_id">
+                            <label for="bn_pre_upazila_id">উপজেলা<span class="text-danger">*</span></label>
+                            <select onchange="show_unions(this.value)" name="bn_pre_upazila_id" class="form-control js-example-basic-single @error('bn_pre_upazila_id') is-invalid @enderror" id="bn_pre_upazila_id">
                                 <option value="">Select Upazila</option>
                                 @forelse($upazila as $d)
                                 <option class="district district{{$d->district_id}}" value="{{$d->id}}" {{ old('bn_pre_upazila_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -227,25 +254,31 @@
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_pre_upazila_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_upazila_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_union_id">ইউনিয়ন</label>
+                            <label for="bn_pre_union_id">ইউনিয়ন<span class="text-danger">*</span></label>
                             <select name="bn_pre_union_id" class="form-control js-example-basic-single" id="bn_pre_union_id">
                                 <option value="">Select Union</option>
                                 @forelse($union as $u)
-                                <option class="upazila upazila{{$u->upazila_id}}" value="{{$u->id}}" {{ old('bn_pre_union_id')==$u->id?"selected":""}}> {{ $u->name_bn}}</option>
+                                <option class="upazila upazila{{$u->upazila_id}} @error('bn_pre_union_id') is-invalid @enderror" value="{{$u->id}}" {{ old('bn_pre_union_id')==$u->id?"selected":""}}> {{ $u->name_bn}}</option>
                                 @empty
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_pre_union_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_union_id') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_ward_no">ওয়ার্ড নং</label>
-                            <select name="bn_pre_ward_no" class=" form-control" id="bn_pre_ward_no">
+                            <label for="bn_pre_ward_no">ওয়ার্ড নং<span class="text-danger">*</span></label>
+                            <select name="bn_pre_ward_no" class=" form-control @error('bn_pre_ward_no') is-invalid @enderror" id="bn_pre_ward_no">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($ward as $d)
                                 <option value="{{$d->id}}" {{ old('bn_pre_ward_no')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
@@ -253,24 +286,36 @@
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_pre_ward_no'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_ward_no') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_holding_no">হোল্ডিং নং</label>
-                            <input type="text" id="bn_pre_holding_no" value="{{old('bn_pre_holding_no')}}" class="form-control" placeholder="হোল্ডিং নং" name="bn_pre_holding_no">
+                            <label for="bn_pre_holding_no">হোল্ডিং নং<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_pre_holding_no" value="{{old('bn_pre_holding_no')}}" class="form-control @error('bn_pre_holding_no') is-invalid @enderror" placeholder="হোল্ডিং নং" name="bn_pre_holding_no">
+                            @if($errors->has('bn_pre_holding_no'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_holding_no') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_village_name">গ্রামের নাম</label>
-                            <input type="text" id="bn_pre_village_name" value="{{old('bn_pre_village_name')}}" class="form-control" placeholder="গ্রামের নাম" name="bn_pre_village_name">
+                            <label for="bn_pre_village_name">গ্রামের নাম<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_pre_village_name" value="{{old('bn_pre_village_name')}}" class="form-control @error('bn_pre_village_name') is-invalid @enderror" placeholder="গ্রামের নাম" name="bn_pre_village_name">
+                            @if($errors->has('bn_pre_village_name'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_village_name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_post_ofc">পোঃ</label>
-                            <input type="text" id="bn_pre_post_ofc" value="{{old('bn_pre_post_ofc')}}" class="form-control" placeholder="পোঃ" name="bn_pre_post_ofc">
+                            <label for="bn_pre_post_ofc">পোঃ<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_pre_post_ofc" value="{{old('bn_pre_post_ofc')}}" class="form-control @error('bn_pre_post_ofc') is-invalid @enderror" placeholder="পোঃ" name="bn_pre_post_ofc">
+                            @if($errors->has('bn_pre_post_ofc'))
+                                <span class="text-danger"> {{ $errors->first('bn_pre_post_ofc') }}</span>
+                            @endif
                         </div>
                     </div>
                     {{--  <div class="col-md-4 col-12">
@@ -287,14 +332,20 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_identification_mark">সনাক্তকরণ চিহ্ন</label>
-                            <input type="text" id="bn_identification_mark" value="{{old('bn_identification_mark')}}" class="form-control" placeholder="" name="bn_identification_mark">
+                            <label for="bn_identification_mark">সনাক্তকরণ চিহ্ন<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_identification_mark" value="{{old('bn_identification_mark')}}" class="form-control @error('bn_identification_mark') is-invalid @enderror" placeholder="" name="bn_identification_mark">
+                            @if($errors->has('bn_identification_mark'))
+                                <span class="text-danger"> {{ $errors->first('bn_identification_mark') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_edu_qualification">শিক্ষাগতা যোগ্যতা</label>
-                            <input type="text" id="bn_edu_qualification" value="{{old('bn_edu_qualification')}}" class="form-control" placeholder="" name="bn_edu_qualification">
+                            <label for="bn_edu_qualification">শিক্ষাগতা যোগ্যতা<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_edu_qualification" value="{{old('bn_edu_qualification')}}" class="form-control @error('bn_edu_qualification') is-invalid @enderror" placeholder="" name="bn_edu_qualification">
+                            @if($errors->has('bn_edu_qualification'))
+                                <span class="text-danger"> {{ $errors->first('bn_edu_qualification') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
@@ -324,8 +375,11 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_birth_certificate">জন্ম নিবন্ধন নং</label>
-                            <input type="text" id="bn_birth_certificate" value="{{old('bn_birth_certificate')}}" class="form-control" placeholder="" name="bn_birth_certificate">
+                            <label for="bn_birth_certificate">জন্ম নিবন্ধন নং<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_birth_certificate" value="{{old('bn_birth_certificate')}}" class="form-control @error('bn_birth_certificate') is-invalid @enderror" placeholder="" name="bn_birth_certificate">
+                            @if($errors->has('bn_birth_certificate'))
+                                <span class="text-danger"> {{ $errors->first('bn_birth_certificate') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
@@ -336,14 +390,17 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_nationality">জাতীয়তা</label>
-                            <input type="text" id="bn_nationality" value="{{old('bn_nationality','বাংলাদেশী')}}" class="form-control" placeholder="" name="bn_nationality">
+                            <label for="bn_nationality">জাতীয়তা<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_nationality" value="{{old('bn_nationality','বাংলাদেশী')}}" class="form-control @error('bn_nationality') is-invalid @enderror" placeholder="" name="bn_nationality">
+                            @if($errors->has('bn_nationality'))
+                                <span class="text-danger"> {{ $errors->first('bn_nationality') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_religion">ধর্ম</label>
-                            <select name="bn_religion" class="form-control js-example-basic-single" id="bn_religion">
+                            <label for="bn_religion">ধর্ম<span class="text-danger">*</span></label>
+                            <select name="bn_religion" class="form-control js-example-basic-single @error('bn_religion') is-invalid @enderror" id="bn_religion">
                                 <option value="">Select</option>
                                 @forelse($religions as $r)
                                 <option value="{{$r->id}}" {{ old('bn_religion')==$r->id?"selected":""}}> {{ $r->name_bn}}</option>
@@ -351,6 +408,9 @@
                                     <option value="">No Blood found</option>
                                 @endforelse
                             </select>
+                            @if($errors->has('bn_religion'))
+                                <span class="text-danger"> {{ $errors->first('bn_religion') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-2 col-6">
@@ -399,11 +459,14 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_marital_status">বৈবাহিক অবস্থা</label>
-                            <select name="bn_marital_status" class="form-control js-example-basic-single" onclick="getMarriedInfo()" id="bn_marital_status">
+                            <label for="bn_marital_status">বৈবাহিক অবস্থা<span class="text-danger">*</span></label>
+                            <select name="bn_marital_status" class="form-control js-example-basic-single @error('bn_marital_status') is-invalid @enderror" onclick="getMarriedInfo()" id="bn_marital_status">
                                 <option value="1">অবিবাহিত</option>
                                 <option value="2">বিবাহিত</option>
                             </select>
+                            @if($errors->has('bn_marital_status'))
+                                <span class="text-danger"> {{ $errors->first('bn_marital_status') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-3 col-12 d-none bn_spouse_name1" id="bn_spouse_name1">
@@ -448,26 +511,38 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_admittee">ভর্তিকারীর সুপারিশ/রেফারেন্স নাম</label>
-                            <input type="text" id="bn_reference_admittee" value="{{old('bn_reference_admittee')}}" class="form-control" placeholder="ভর্তিকারীর সুপারিশ/রেফারেন্স নাম" name="bn_reference_admittee">
+                            <label for="bn_reference_admittee">ভর্তিকারীর সুপারিশ/রেফারেন্স নাম<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_reference_admittee" value="{{old('bn_reference_admittee')}}" class="form-control @error('bn_reference_admittee') is-invalid @enderror" placeholder="ভর্তিকারীর সুপারিশ/রেফারেন্স নাম" name="bn_reference_admittee">
+                            @if($errors->has('bn_reference_admittee'))
+                                <span class="text-danger"> {{ $errors->first('bn_reference_admittee') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_adm_phone">মোবাইল</label>
-                            <input type="text" id="bn_reference_adm_phone" value="{{old('bn_reference_adm_phone')}}" class="form-control" placeholder="মোবাইল" name="bn_reference_adm_phone">
+                            <label for="bn_reference_adm_phone">মোবাইল<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_reference_adm_phone" value="{{old('bn_reference_adm_phone')}}" class="form-control  @error('bn_reference_adm_phone') is-invalid @enderror" placeholder="মোবাইল" name="bn_reference_adm_phone">
+                            @if($errors->has('bn_reference_adm_phone'))
+                                <span class="text-danger"> {{ $errors->first('bn_reference_adm_phone') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_adm_adress">ঠিকানা</label>
-                            <input type="text" id="bn_reference_adm_adress" value="{{old('bn_reference_adm_adress')}}" class="form-control" placeholder="ঠিকানা" name="bn_reference_adm_adress">
+                            <label for="bn_reference_adm_adress">ঠিকানা<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_reference_adm_adress" value="{{old('bn_reference_adm_adress')}}" class="form-control @error('bn_reference_adm_adress') is-invalid @enderror" placeholder="ঠিকানা" name="bn_reference_adm_adress">
+                            @if($errors->has('bn_reference_adm_adress'))
+                                <span class="text-danger"> {{ $errors->first('bn_reference_adm_adress') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_applied_position">আবেদিত পদ</label>
-                            <input type="text" id="bn_applied_position" value="{{old('bn_applied_position')}}" class="form-control" placeholder="আবেদিত পদ" name="bn_applied_position">
+                            <label for="bn_applied_position">আবেদিত পদ<span class="text-danger">*</span></label>
+                            <input type="text" id="bn_applied_position" value="{{old('bn_applied_position')}}" class="form-control @error('bn_applied_position') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_applied_position">
+                            @if($errors->has('bn_applied_position'))
+                                <span class="text-danger"> {{ $errors->first('bn_applied_position') }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>

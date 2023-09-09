@@ -9,6 +9,7 @@ use App\Models\Settings\Location\Union;
 use App\Models\Settings\Location\Ward;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Crm\CustomerRequest;
 
 use Toastr;
 use Carbon\Carbon;
@@ -51,7 +52,7 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
         try {
             $data = new Customer();
@@ -67,7 +68,7 @@ class CustomerController extends Controller
             $data->billing_address = $request->billing_address;
             $data->billing_person = $request->billing_person;
             $data->status = 1;
-            
+
 
             if($request->has('logo'))
             $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
@@ -134,7 +135,7 @@ class CustomerController extends Controller
             $data->billing_address = $request->billing_address;
             $data->billing_person = $request->billing_person;
             $data->status = 1;
-            
+
 
             if($request->has('logo'))
                 $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
@@ -149,7 +150,7 @@ class CustomerController extends Controller
             //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
-        
+
     }
 
     /**

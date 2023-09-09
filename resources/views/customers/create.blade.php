@@ -28,18 +28,24 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="name">Customer Name</label>
-                            <input type="text" id="name" value="{{old('name')}}" class="form-control" placeholder="Customer Name" name="name">
+                            <input type="text" id="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror" placeholder="Customer Name" name="name">
+                            @if($errors->has('name'))
+                                <span class="text-danger"> {{ $errors->first('name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="contact">Contact Number</label>
-                            <input type="text" id="contact" value="{{old('contact')}}" class="form-control" placeholder="Contact Number" name="contact">
+                            <input type="text" id="contact" value="{{old('contact')}}" class="form-control @error('contact') is-invalid @enderror" placeholder="Contact Number" name="contact">
+                            @if($errors->has('contact'))
+                                <span class="text-danger"> {{ $errors->first('contact') }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -96,14 +102,14 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="col-md-8 col-12">
                         <div class="form-group">
                             <label for="address">Address</label>
                             <input type="text" id="address" value="{{old('address')}}" class="form-control" placeholder="Full Address" name="address">
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6 col-12">
                         <div class="form-group">
                             <label for="contact_person">Contact Person Name</label>
@@ -129,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>

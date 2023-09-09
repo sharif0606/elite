@@ -8,6 +8,7 @@ use App\Models\Employee\Employee;
 use App\Models\Employee\EmployeeDetails;
 use App\Models\Employee\SecurityPriorAcquaintance;
 use Illuminate\Http\Request;
+use App\Http\Requests\Employee\AddEmployeeRequest;
 
 use App\Models\Settings\Location\District;
 use App\Models\Settings\Location\Upazila;
@@ -59,7 +60,7 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddEmployeeRequest $request)
     {
         try {
             // dd($request->all());

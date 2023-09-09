@@ -11,6 +11,7 @@ use App\Http\Controllers\Settings\Location\UpazilaController as upazila;
 use App\Http\Controllers\Settings\Location\ThanaController as thana;
 use App\Http\Controllers\Settings\Location\UnionController as union;
 use App\Http\Controllers\Settings\Location\WardController as ward;
+use App\Http\Controllers\Settings\JobPostController as jobpost;
 
 
 
@@ -69,6 +70,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('thana',thana::class,['as'=>'superadmin']);
         Route::resource('union',union::class,['as'=>'superadmin']);
         Route::resource('ward',ward::class,['as'=>'superadmin']);
+        Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 
