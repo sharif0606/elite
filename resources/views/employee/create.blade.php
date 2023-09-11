@@ -769,7 +769,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_pre_post_ofc">Po:</label>
-                            <input type="text" id="en_pre_post_ofc" value="{{old('en_pre_post_ofc')}}" class="form-control" placeholder="পোঃ" name="en_pre_post_ofc">
+                            <input type="text" id="en_pre_post_ofc" value="{{old('en_pre_post_ofc')}}" class="form-control" placeholder="Po:" name="en_pre_post_ofc">
                         </div>
                     </div>
                     {{--  <div class="col-md-4 col-12">
