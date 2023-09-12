@@ -244,7 +244,7 @@
                         </tr>
                         <tr>
                             <td class="py-1" style="text-align: left; width: 25%;">১৩ । আবেদিত পদ :</td>
-                            <td class="py-1" colspan="8" style="width: 75%;"><input type="text" class="tinput"  value="{{ $employees->bn_applied_position }}"></td>
+                            <td class="py-1" colspan="8" style="width: 75%;"><input type="text" class="tinput"  value="{{ $employees->position?->name_bn }}"></td>
                         </tr>
                         <tr>
                             <th class="py-1" colspan="9"  style="text-align: left;">

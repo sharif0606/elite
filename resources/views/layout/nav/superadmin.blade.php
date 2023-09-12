@@ -94,6 +94,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('customer.index', ['role' =>currentUser()])}}">Customer</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('guard.index', ['role' =>currentUser()])}}">Guard's Assign</a>
+                                </li>
 
                             </ul>
                         </li>

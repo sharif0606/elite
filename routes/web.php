@@ -12,6 +12,7 @@ use App\Http\Controllers\Settings\Location\ThanaController as thana;
 use App\Http\Controllers\Settings\Location\UnionController as union;
 use App\Http\Controllers\Settings\Location\WardController as ward;
 use App\Http\Controllers\Settings\JobPostController as jobpost;
+use App\Http\Controllers\Crm\GuardAssignController as guard;
 
 
 
@@ -71,6 +72,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('union',union::class,['as'=>'superadmin']);
         Route::resource('ward',ward::class,['as'=>'superadmin']);
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
+        Route::resource('guard',guard::class);
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 

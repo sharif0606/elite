@@ -17,6 +17,7 @@ use App\Models\Settings\Location\Union;
 use App\Models\Settings\Location\Ward;
 use App\Models\Settings\BloodGroup;
 use App\Models\Settings\Religion;
+use App\Models\JobPost;
 
 use Toastr;
 use Carbon\Carbon;
@@ -46,13 +47,14 @@ class EmployeeController extends Controller
      */
     public function create()
     {
+        $jobposts=JobPost::all();
         $districts = District::all();
         $upazila = Upazila::all();
         $union = Union::all();
         $ward = Ward::all();
         $bloods = BloodGroup::all();
         $religions = Religion::all();
-        return view('employee.create',compact('districts','upazila','union','ward','bloods','religions'));
+        return view('employee.create',compact('districts','upazila','union','ward','bloods','religions','jobposts'));
     }
 
     /**
@@ -215,7 +217,8 @@ class EmployeeController extends Controller
     {
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
         $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
-        return view('employee.show', compact('employees','security'));
+        $jobposts=JobPost::where('id',$employees->bn_applied_position)->first();
+        return view('employee.show', compact('employees','security','jobposts'));
     }
 
     /**

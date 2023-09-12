@@ -539,10 +539,21 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_applied_position">আবেদিত পদ<span class="text-danger">*</span></label>
-                            <input type="text" id="bn_applied_position" value="{{old('bn_applied_position')}}" class="form-control @error('bn_applied_position') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_applied_position">
+                            <select name="bn_applied_position" class=" form-control @error('bn_applied_position') is-invalid @enderror" id="bn_applied_position">
+                                <option value="">নির্বাচন করুন</option>
+                                @forelse($jobposts as $d)
+                                <option value="{{$d->id}}" {{ old('bn_applied_position')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                @empty
+                                    <option value="">No district found</option>
+                                @endforelse
+                            </select>
                             @if($errors->has('bn_applied_position'))
                                 <span class="text-danger"> {{ $errors->first('bn_applied_position') }}</span>
                             @endif
+                            {{--  <input type="text" id="bn_applied_position" value="{{old('bn_applied_position')}}" class="form-control @error('bn_applied_position') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_applied_position">
+                            @if($errors->has('bn_applied_position'))
+                                <span class="text-danger"> {{ $errors->first('bn_applied_position') }}</span>
+                            @endif  --}}
                         </div>
                     </div>
                 </div>

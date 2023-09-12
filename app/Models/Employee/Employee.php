@@ -10,6 +10,7 @@ use App\Models\Settings\Location\Union;
 use App\Models\Settings\Location\Ward;
 use App\Models\Settings\BloodGroup;
 use App\Models\Settings\Religion;
+use App\Models\JobPost;
 
 class Employee extends Model
 {
@@ -43,5 +44,8 @@ class Employee extends Model
     }
     public function religion(){
         return $this->belongsTo(Religion::class,'bn_religion','id');
+    }
+    public function position(){
+        return $this->belongsTo(JobPost::class,'bn_applied_position','id');
     }
 }
