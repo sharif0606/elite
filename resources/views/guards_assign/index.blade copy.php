@@ -12,8 +12,7 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Customer')}}</th>
-                        <th scope="col">{{__('Details')}}</th>
+                        <th scope="col">{{__('Customer Name')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -21,16 +20,7 @@
                     @forelse($guards as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td scope="row">{{$e->customer?->name}}</td>
-                        <td>
-                            @if ($e->details)
-                            @foreach ($e->details as $de)
-                            <span><strong>Job Post:</strong> {{$de->jobpost?->name }}</span>
-                            <span><strong>Qty:</strong> {{ $de->qty }}</span>
-                            <span><strong>Rate:</strong> {{ $de->rate }}</span><br/>
-                            @endforeach
-                            @endif
-                        </td>
+                        <td>{{$e->customer?->name}}</td>
                         <td>
                             <a href="{{route('guard.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>

@@ -66,20 +66,20 @@ class GuardAssignController extends Controller
                             $details->end_date=$request->end_date[$key];
                             $details->status=1;
                             $details->save();
-                            }
                         }
                     }
                 }
-                if ($data->save()) {
-                    return redirect()->route('guard.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-                } else {
-                    return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
-                }
-
-            } catch (Exception $e) {
-                dd($e);
+            }
+            if ($data->save()) {
+                return redirect()->route('guard.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -90,7 +90,8 @@ class GuardAssignController extends Controller
      */
     public function show($id)
     {
-        //
+        $guard = GuardAssign::findOrFail(encryptor('decrypt',$id));
+        return view('guards_assign.show',compact('guard'));
     }
 
     /**
@@ -101,7 +102,10 @@ class GuardAssignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jobpost=JobPost::all();
+        $customer=Customer::all();
+        $guard = GuardAssign::findOrFail(encryptor('decrypt',$id));
+        return view('guards_assign.edit',compact('jobpost','customer','guard'));
     }
 
     /**
@@ -113,7 +117,38 @@ class GuardAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $data=GuardAssign::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            $data->status = 0;
+            if($data->save()){
+                if($request->job_post_id){
+                    $dl=GuardAssignDetails::where('guard_id',$data->id)->delete();
+                    foreach($request->job_post_id as $key => $value){
+                        if($value){
+                            $details = new GuardAssignDetails;
+                            $details->guard_id=$data->id;
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->qty=$request->qty[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->start_date=$request->start_date[$key];
+                            $details->end_date=$request->end_date[$key];
+                            $details->status=1;
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if ($data->save()) {
+                return redirect()->route('guard.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
