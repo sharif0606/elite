@@ -119,6 +119,9 @@
                             <td>Start Date</td>
                             <td>End Date</td>
                             <td>Rate</td>
+                            <th>{{__('Hours')}}</th>
+                            <th>{{__('Employee Payment')}}</th>
+                            <th>{{__('Ot-Rate')}}</th>
                             <td>Total Rate</td>
                         </tr>
                     </thead>
@@ -132,7 +135,10 @@
                             <td>{{ $de->start_date }}</td>
                             <td>{{ $de->end_date }}</td>
                             <td>{{ $de->rate }}</td>
-                            <td>Total Rate</td>
+                            <td>{{ $de->hours }}</td>
+                            <td>{{ $de->employee_payment }}</td>
+                            <td>{{ $de->ot_rate }}</td>
+                            <td>200</td>
                         </tr>
                         @endforeach
                         @endif

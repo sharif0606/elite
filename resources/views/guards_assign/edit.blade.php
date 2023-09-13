@@ -45,6 +45,9 @@
                                                 <th scope="col">{{__('Rate')}}</th>
                                                 <th scope="col">{{__('Start Date')}}</th>
                                                 <th scope="col">{{__('End Date')}}</th>
+                                                <th scope="col">{{__('Hours')}}</th>
+                                                <th scope="col">{{__('Employee Payment')}}</th>
+                                                <th scope="col">{{__('Ot-Rate')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -65,6 +68,14 @@
                                                 <td><input class="form-control" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate"></td>
                                                 <td><input class="form-control" type="date" name="start_date[]" value="{{ $d->start_date }}" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="{{ $d->end_date }}" placeholder="End Date"></td>
+                                                <td>
+                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                                        <option value="1">8 Hour's</option>
+                                                        <option value="2">12 Hour's</option>
+                                                    </select>
+                                                </td>
+                                                <td><input class="form-control" type="text" name="employee_payment[]" value="" placeholder="Employee Payment"></td>
+                                                <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-Rate"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -106,6 +117,14 @@ var row=`
     <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
     <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
     <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
+    <td>
+        <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+            <option value="1">8 Hour's</option>
+            <option value="2">12 Hour's</option>
+        </select>
+    </td>
+    <td><input class="form-control" type="text" name="employee_payment[]" value="" placeholder="Employee Payment"></td>
+    <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-Rate"></td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
