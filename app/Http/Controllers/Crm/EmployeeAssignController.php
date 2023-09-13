@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Crm\EmployeeAssign;
 
 class EmployeeAssignController extends Controller
 {
@@ -14,7 +15,9 @@ class EmployeeAssignController extends Controller
      */
     public function index()
     {
-        //
+        $empasin=EmployeeAssign::all();
+        return view('employee_assign.index',compact('empasin'));
+
     }
 
     /**

@@ -97,6 +97,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('guard.index', ['role' =>currentUser()])}}">Guard's Assign</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('empasign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
+                                </li>
 
                             </ul>
                         </li>
