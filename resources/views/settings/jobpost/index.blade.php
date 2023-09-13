@@ -33,12 +33,11 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
-                                <td>{{$d->bill_able}}</td>
+                                <td> @if($d->bill_able==0) No @else Yes @endif</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.jobpost.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-
                                     <form id="form{{$d->id}}" action="{{route(currentUser().'.jobpost.destroy',encryptor('encrypt',$d->id))}}" method="post">
                                         @csrf
                                         @method('delete')

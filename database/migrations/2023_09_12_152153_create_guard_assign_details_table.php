@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('rate');
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->string('hours')->nullable()->comment('1=8,2=12');
+            $table->string('employee_payment')->nullable();
+            $table->string('ot_rate')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

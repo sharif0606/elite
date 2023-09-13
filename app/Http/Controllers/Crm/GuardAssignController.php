@@ -64,6 +64,9 @@ class GuardAssignController extends Controller
                             $details->rate=$request->rate[$key];
                             $details->start_date=$request->start_date[$key];
                             $details->end_date=$request->end_date[$key];
+                            $details->hours=$request->hours[$key];
+                            $details->employee_payment=$request->employee_payment[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
                             $details->status=1;
                             $details->save();
                         }
@@ -133,6 +136,9 @@ class GuardAssignController extends Controller
                             $details->rate=$request->rate[$key];
                             $details->start_date=$request->start_date[$key];
                             $details->end_date=$request->end_date[$key];
+                            $details->hours=$request->hours[$key];
+                            $details->employee_payment=$request->employee_payment[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
                             $details->status=1;
                             $details->save();
                         }

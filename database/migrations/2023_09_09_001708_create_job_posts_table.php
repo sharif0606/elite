@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_bn')->nullable();
-            $table->integer('bill_able')->nullable();
+            $table->integer('bill_able')->nullable()->comment('0=no,1=yes');
             $table->string('status')->nullable();
             $table->timestamps();
         });

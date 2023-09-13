@@ -14,7 +14,6 @@
                             <form class="form" method="post" action="{{route(currentUser().'.jobpost.store',['role' =>currentUser()])}}">
                                 @csrf
                                 <div class="row">
-
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="jobpostName">{{__('Name')}}<span class="text-danger">*</span></label>
@@ -24,16 +23,18 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="bill_able">{{__('Bill Able')}}<span class="text-danger">*</span></label>
-                                            <input type="text" id="bill_able" class="form-control" value="{{ old('bill_able')}}" name="bill_able">
+                                            <select name="bill_able" class="form-control @error('bill_able') is-invalid @enderror" id="bill_able">
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                            </select>
                                             @if($errors->has('bill_able'))
                                                 <span class="text-danger"> {{ $errors->first('bill_able') }}</span>
                                             @endif
                                         </div>
-                                    </div>  --}}
+                                    </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="name_bn">{{__('Name Bangla')}}</label>
@@ -41,7 +42,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
