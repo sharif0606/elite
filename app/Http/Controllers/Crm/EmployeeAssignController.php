@@ -94,7 +94,10 @@ class EmployeeAssignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee=Employee::all();
+        $customer=Customer::all();
+        $employee = EmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        return view('employee_assign.edit',compact('employee','customer','employee'));
     }
 
     /**

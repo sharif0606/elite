@@ -28,10 +28,10 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('guard.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('empasign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('guard.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('empasign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
