@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Guard Assign'))
+@section('pageTitle',trans('Employee Assign'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -19,18 +19,12 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('guard.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('empasign.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
-                                        <option value="">Select Customer</option>
-                                        @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                        @empty
-                                        @endforelse
-                                    </select>
+                                    <label for=""><b>Date</b></label>
+                                    <input class="form-control" type="date" name="date" value="" placeholder="Date">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -39,40 +33,35 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('Job Post')}}</th>
-                                                <th scope="col">{{__('Qty')}}</th>
-                                                <th scope="col">{{__('Rate')}}</th>
+                                                <th scope="col">{{__('Employee')}}</th>
+                                                <th scope="col">{{__('Customer')}}</th>
                                                 <th scope="col">{{__('Start Date')}}</th>
                                                 <th scope="col">{{__('End Date')}}</th>
-                                                <th scope="col">{{__('Hours')}}</th>
-                                                <th scope="col">{{__('Employee Payment')}}</th>
-                                                <th scope="col">{{__('Ot-Rate')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
                                         <tbody id="guardassing">
                                             <tr>
                                                 <td>
-                                                    <select class="form-select" id="job_post_id" name="job_post_id[]">
-                                                        <option value="">Select Post</option>
-                                                        @forelse ($jobpost as $job)
-                                                        <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                                    <select class="form-select" id="employee_id" name="employee_id[]">
+                                                        <option value="">Select Employee</option>
+                                                        @forelse ($employee as $emp)
+                                                        <option value="{{ $emp->id }}">{{ $emp->bn_applicants_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-                                                <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
-                                                <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-                                                <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
                                                 <td>
-                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                        <option value="1">8 Hour's</option>
-                                                        <option value="2">12 Hour's</option>
+                                                    <select class="form-select" id="customer_id" name="customer_id[]">
+                                                        <option value="">Select Customer</option>
+                                                        @forelse ($customer as $c)
+                                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                                        @empty
+                                                        @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="employee_payment[]" value="" placeholder="Employee Payment"></td>
-                                                <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-Rate"></td>
+                                                <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
+                                                <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -100,29 +89,28 @@
 var row=`
 <tr>
     <td>
-        <select class="form-select" id="job_post_id" name="job_post_id[]">
-            <option value="">Select Post</option>
-            @forelse ($jobpost as $job)
-            <option value="{{ $job->id }}">{{ $job->name }}</option>
+        <select class="form-select" id="employee_id" name="employee_id[]">
+            <option value="">Select Employee</option>
+            @forelse ($employee as $emp)
+            <option value="{{ $emp->id }}">{{ $emp->bn_applicants_name }}</option>
             @empty
             @endforelse
         </select>
     </td>
-    <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-    <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
+    <td>
+        <select class="form-select" id="customer_id" name="customer_id[]">
+            <option value="">Select Customer</option>
+            @forelse ($customer as $c)
+            <option value="{{ $c->id }}">{{ $c->name }}</option>
+            @empty
+            @endforelse
+        </select>
+    </td>
     <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
     <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
     <td>
-        <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-            <option value="1">8 Hour's</option>
-            <option value="2">12 Hour's</option>
-        </select>
-    </td>
-    <td><input class="form-control" type="text" name="employee_payment[]" value="" placeholder="Employee Payment"></td>
-    <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-Rate"></td>
-    <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+        {{-- <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
     </td>
 </tr>
 `;

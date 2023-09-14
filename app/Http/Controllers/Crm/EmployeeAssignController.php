@@ -5,6 +5,15 @@ namespace App\Http\Controllers\Crm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\EmployeeAssign;
+use App\Models\Employee\Employee;
+use App\Models\Customer;
+
+use Toastr;
+use Carbon\Carbon;
+use DB;
+use App\Http\Traits\ImageHandleTraits;
+use Intervention\Image\Facades\Image;
+use Exception;
 
 class EmployeeAssignController extends Controller
 {
@@ -15,7 +24,7 @@ class EmployeeAssignController extends Controller
      */
     public function index()
     {
-        $empasin=EmployeeAssign::all();
+        $empasin=EmployeeAssign::groupBy('generate_unique_id')->get();
         return view('employee_assign.index',compact('empasin'));
 
     }
@@ -27,7 +36,9 @@ class EmployeeAssignController extends Controller
      */
     public function create()
     {
-        //
+        $employee=Employee::all();
+        $customer=Customer::all();
+        return view('employee_assign.create',compact('employee','customer'));
     }
 
     /**
@@ -38,7 +49,30 @@ class EmployeeAssignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $uniqueid=substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0);
+            if($request->employee_id){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $employee = new EmployeeAssign;
+                        $employee->date=$request->date;
+                        $employee->generate_unique_id=$uniqueid;
+                        // $employee->generate_unique_id='EM-'.Carbon::now()->format('m-y').'-'. str_pad((EmployeeAssign::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
+                        $employee->employee_id=$request->employee_id[$key];
+                        $employee->customer_id=$request->customer_id[$key];
+                        $employee->start_date=$request->start_date[$key];
+                        $employee->end_date=$request->end_date[$key];
+                        $employee->status=1;
+                        $employee->save();
+                    }
+                }
+                return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**

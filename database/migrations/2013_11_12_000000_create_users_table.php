@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('image')->nullable();
             $table->integer('branch_id')->nullable();
+            $table->integer('all_company_access')->nullable();
             $table->integer('department_id')->nullable();
             $table->integer('designation_id')->nullable();
             $table->boolean('status')->default(1)->comment('1=>active 2=>Logged 0 => Inactive');
