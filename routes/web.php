@@ -13,6 +13,7 @@ use App\Http\Controllers\Settings\Location\UnionController as union;
 use App\Http\Controllers\Settings\Location\WardController as ward;
 use App\Http\Controllers\Settings\JobPostController as jobpost;
 use App\Http\Controllers\Crm\GuardAssignController as guard;
+use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
 use App\Http\Controllers\Crm\EmployeeAssignController as empasign;
 
 
@@ -74,6 +75,8 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('ward',ward::class,['as'=>'superadmin']);
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
         Route::resource('guard',guard::class);
+        Route::resource('empatten',empatten::class);
+        Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::resource('empasign',empasign::class);
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
