@@ -58,7 +58,7 @@
                                         <tbody id="guardassing">
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" name="employee_id" value="" placeholder="Employee Id">
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
@@ -93,36 +93,36 @@
 @endsection
 @push("scripts")
 <script>
-    $(document).ready(function(){
+    function getEmployees(e){
 
-        /*keyup function for Employee Id*/
-        $('.employee_id').keyup(function(){
+        var pa = '<div style="color:red">Invalid Employee ID</div>';
+        $(e).closest('tr').find('#employee_data').html('');
+        $(e).closest('tr').find('#employee_data').append(pa);
 
-            var pa = '<div style="color:red">Invalid Employee ID</div>';
-            $('#employee_data').html('');
-            $('#employee_data').append(pa);
-
-            var employee_id = $(this).val();
-            var div = $(this).parent();
+        var employee_id=$(e).closest('tr').find('.employee_id').val();
+        if(employee_id){
             $.ajax({
-                type:'get',
                 url:"{{ route('empatt.getEmployee') }}",
-                data:{'id':employee_id},
-
-                success:function(data){
+                type: "GET",
+                dataType: "json",
+                data: { 'id':employee_id },
+                success: function(data) {
                     if(data.length>0){
                         console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
 
-                        $('#employee_data').html('');
-                        $('.employee_name').val(name);
+                        $(e).closest('tr').find('#employee_data').html('');
+                        $(e).closest('tr').find('.employee_name').val(name);
                     }
-                }
+                },
             });
-        });
+        } else {
+            $(e).closest('tr').find('.employee_name').val('');
+            $(e).closest('tr').find('#employee_data').html('');
+        }
+    }
 
-    });
 </script>
 <script>
     function addRow(){
@@ -130,28 +130,22 @@
 var row=`
 <tr>
     <td>
-        {{--  <select class="form-select" id="employee_id" name="employee_id[]">
-            <option value="">Select Employee</option>
-            @forelse ($employee as $emp)
-            <option value="{{ $emp->id }}">{{ $emp->bn_applicants_name }}</option>
-            @empty
-            @endforelse
-        </select>  --}}
+        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
     </td>
     <td>
-        <select class="form-select" id="customer_id" name="customer_id[]">
-            <option value="">Select Customer</option>
-            @forelse ($customer as $c)
-            <option value="{{ $c->id }}">{{ $c->name }}</option>
-            @empty
-            @endforelse
-        </select>
+        <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
+        <div id="employee_data" style="color:green;font-size:14px;"></div>
     </td>
-    <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-    <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
+    <td><input class="form-control" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
+    <td>
+        <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
+    </td>
+    <td>
+        <input class="form-control" type="text" name="total_ot[]" value="" placeholder="OT">
+    </td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{-- <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
     </td>
 </tr>
 `;
