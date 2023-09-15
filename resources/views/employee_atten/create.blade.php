@@ -62,9 +62,9 @@
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
-                                                    <div id="employee_data" style="color:green;font-size:14px;"></div>
+                                                    <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
+                                                <td><input readonly class="form-control employee_contact" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
                                                 <td>
                                                     <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
                                                 </td>
@@ -96,8 +96,8 @@
     function getEmployees(e){
 
         var pa = '<div style="color:red">Invalid Employee ID</div>';
-        $(e).closest('tr').find('#employee_data').html('');
-        $(e).closest('tr').find('#employee_data').append(pa);
+        $(e).closest('tr').find('.employee_data').html('');
+        var message=$(e).closest('tr').find('.employee_data').append(pa);
 
         var employee_id=$(e).closest('tr').find('.employee_id').val();
         if(employee_id){
@@ -111,15 +111,18 @@
                         console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
+                        var contact = data[0].bn_parm_phone_my;
 
-                        $(e).closest('tr').find('#employee_data').html('');
+                        $(e).closest('tr').find('.employee_data').html('');
                         $(e).closest('tr').find('.employee_name').val(name);
+                        $(e).closest('tr').find('.employee_contact').val(contact);
                     }
                 },
             });
         } else {
             $(e).closest('tr').find('.employee_name').val('');
-            $(e).closest('tr').find('#employee_data').html('');
+            $(e).closest('tr').find('.employee_contact').val('');
+            $(e).closest('tr').find('.employee_data').html('');
         }
     }
 
@@ -134,9 +137,9 @@ var row=`
     </td>
     <td>
         <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
-        <div id="employee_data" style="color:green;font-size:14px;"></div>
+        <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
     </td>
-    <td><input class="form-control" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
+    <td><input readonly class="form-control employee_contact" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
     <td>
         <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
     </td>
