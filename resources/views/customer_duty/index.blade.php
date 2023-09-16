@@ -8,7 +8,7 @@
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('empatten.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customerduty.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($empatten as $e)
+                    @forelse($customerduty as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>
@@ -28,10 +28,10 @@
                             @endif  --}}
                         </td>
                         <td>
-                            <a href="{{route('empatten.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('customerduty.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('empatten.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('customerduty.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>

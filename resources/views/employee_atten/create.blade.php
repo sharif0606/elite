@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -65,14 +65,23 @@
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
+                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
                                                 </td>
-                                                <td><input readonly class="form-control employee_contact" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
+                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
+                                                    <input class="form-control" type="text" name="duty_qty[]" value="" placeholder="Duty Qty">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="total_ot[]" value="" placeholder="OT">
+                                                    <input class="form-control" type="text" name="ot_qty[]" value="" placeholder="OT Qty">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="duty_amount[]" value="" placeholder="Duty Amount">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="ot_amount[]" value="" placeholder="Ot Amount">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="total_amount[]" value="" placeholder="Total Amount">
                                                 </td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}

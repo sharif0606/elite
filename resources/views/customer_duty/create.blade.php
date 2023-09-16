@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Employee Attendance'))
+@section('pageTitle',trans('Customer Duty'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('empatten.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('customerduty.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
@@ -58,21 +58,30 @@
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="guardassing">
+                                        <tbody id="customerduty">
                                             <tr>
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
+                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
                                                 </td>
-                                                <td><input readonly class="form-control employee_contact" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
+                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
+                                                    <input class="form-control" type="text" name="duty_qty[]" value="" placeholder="Duty Qty">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="total_ot[]" value="" placeholder="OT">
+                                                    <input class="form-control" type="text" name="ot_qty[]" value="" placeholder="OT Qty">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="duty_amount[]" value="" placeholder="Duty Amount">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="ot_amount[]" value="" placeholder="Ot Amount">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control" type="text" name="total_amount[]" value="" placeholder="Total Amount">
                                                 </td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -139,17 +148,26 @@ var row=`
 <tr>
     <td>
         <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
-    </td>
-    <td>
-        <input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Name">
         <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
     </td>
-    <td><input readonly class="form-control employee_contact" type="text" name="employee_contact[]" value="" placeholder="Contact"></td>
     <td>
-        <input class="form-control" type="text" name="qty_duty[]" value="" placeholder="Duty">
+        <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
+    </td>
+    <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
+    <td>
+        <input class="form-control" type="text" name="duty_qty[]" value="" placeholder="Duty Qty">
     </td>
     <td>
-        <input class="form-control" type="text" name="total_ot[]" value="" placeholder="OT">
+        <input class="form-control" type="text" name="ot_qty[]" value="" placeholder="OT Qty">
+    </td>
+    <td>
+        <input class="form-control" type="text" name="duty_amount[]" value="" placeholder="Duty Amount">
+    </td>
+    <td>
+        <input class="form-control" type="text" name="ot_amount[]" value="" placeholder="Ot Amount">
+    </td>
+    <td>
+        <input class="form-control" type="text" name="total_amount[]" value="" placeholder="Total Amount">
     </td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -157,7 +175,7 @@ var row=`
     </td>
 </tr>
 `;
-    $('#guardassing').append(row);
+    $('#customerduty').append(row);
 }
 
 function RemoveRow(e) {
