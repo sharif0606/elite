@@ -15,6 +15,7 @@ use App\Http\Controllers\Settings\JobPostController as jobpost;
 use App\Http\Controllers\Crm\GuardAssignController as guard;
 use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
 use App\Http\Controllers\Crm\EmployeeAssignController as empasign;
+use App\Http\Controllers\Crm\CustomerDutyController as customerduty;
 
 
 
@@ -78,6 +79,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::resource('empasign',empasign::class);
+        Route::resource('customerduty',customerduty::class);
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 

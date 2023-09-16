@@ -103,6 +103,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('empasign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>
+                                </li>
 
                             </ul>
                         </li>
