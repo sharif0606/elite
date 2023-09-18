@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Customer</b></label>
-                                    <select class="form-select" id="customer_id" name="customer_id">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>

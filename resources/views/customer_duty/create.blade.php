@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Customer</b></label>
-                                    <select class="form-select" id="customer_id" name="customer_id">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -112,6 +112,7 @@
         var message=$(e).closest('tr').find('.employee_data').append(pa);
 
         var employee_id=$(e).closest('tr').find('.employee_id').val();
+        var customerId = document.getElementById('customer_id').value;
         if(employee_id){
             $.ajax({
                 url:"{{ route('empatt.getEmployee') }}",
@@ -120,16 +121,15 @@
                 data: { 'id':employee_id },
                 success: function(data) {
                     if(data.length>0){
-                        console.log(data);
+                        //console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
                         var contact = data[0].bn_parm_phone_my;
                         var position=data[0].position.name;
-                        console.log(position)
+                        var positionid=data[0].bn_applied_position;
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
-                        {{--  $(e).closest('tr').find('.employee_name').val(name);
-                        $(e).closest('tr').find('.employee_contact').val(contact);  --}}
+                        getDutyOtRate(customerId,positionid);
                     }
                 },
             });
@@ -139,6 +139,20 @@
             $(e).closest('tr').find('.employee_data').html('');
         }
     }
+
+    function getDutyOtRate(customerId,positionid){
+        $.ajax({
+            url:"{{ route('getguard_data') }}",
+            type: "GET",
+            dataType: "json",
+            data: { 'customer_id':customerId,'job_post_id':positionid },
+            success: function(data) {
+                console.log(data);
+
+            },
+        });
+    }
+
 
 </script>
 <script>

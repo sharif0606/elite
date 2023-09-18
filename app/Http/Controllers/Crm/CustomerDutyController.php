@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\CustomerDuty;
 use App\Models\Crm\CustomerAttendance;
+use App\Models\Crm\GuardAssignDetails;
+use App\Models\Crm\GuardAssign;
 
 use App\Models\Customer;
 
@@ -39,6 +41,16 @@ class CustomerDutyController extends Controller
         $customer=Customer::all();
         return view('customer_duty.create',compact('customer'));
     }
+
+    public function getGuard(Request $request)
+    {
+        $customerId = $request->customer_id;
+        $jobpostId = $request->job_post_id;
+        $guardIds = GuardAssign::where('customer_id', $customerId)->pluck('id');
+        $data = GuardAssignDetails::whereIn('guard_id', $guardIds)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+        return $data;
+    }
+
 
     /**
      * Store a newly created resource in storage.

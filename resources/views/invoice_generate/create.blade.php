@@ -48,6 +48,9 @@
                                     <label for=""><b>Vat</b></label>
                                     <input class="form-control" type="text" name="vat" value="" placeholder="Vat">
                                 </div>
+                                <div class="col-lg-3 mt-4 p-0">
+                                    <button type="button" class="btn btn-primary">Generate Bill</button>
+                                </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
                                 <button type="submit" class="btn btn-primary">Save</button>

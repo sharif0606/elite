@@ -82,6 +82,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('empasign',empasign::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
+        Route::get('/get-guard-duty-ot-rate', [customerduty::class, 'getGuard'])->name('getguard_data');
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 
