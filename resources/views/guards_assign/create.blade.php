@@ -41,12 +41,12 @@
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Qty')}}</th>
-                                                <th scope="col">{{__('Rate')}}</th>
+                                                <th scope="col">{{__('Rate (Person)')}}</th>
                                                 <th scope="col">{{__('Start Date')}}</th>
                                                 <th scope="col">{{__('End Date')}}</th>
                                                 <th scope="col">{{__('Hours')}}</th>
-                                                <th scope="col">{{__('Employee Payment')}}</th>
-                                                <th scope="col">{{__('Ot-Rate')}}</th>
+                                                <th scope="col">{{__('Guard Rate')}}</th>
+                                                <th scope="col">{{__('Guard-Ot')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>

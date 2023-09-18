@@ -135,7 +135,7 @@
                             <td>{{ $de->start_date }}</td>
                             <td>{{ $de->end_date }}</td>
                             <td>{{ $de->rate }}</td>
-                            <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
+                            <td>{{ $de->hours }}</td>
                             <td>{{ $de->employee_payment }}</td>
                             <td>{{ $de->ot_rate }}</td>
                             <td>200</td>

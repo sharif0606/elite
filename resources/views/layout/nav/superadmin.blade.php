@@ -106,6 +106,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
+                                </li>
 
                             </ul>
                         </li>
