@@ -129,8 +129,8 @@
                         var positionid=data[0].bn_applied_position;
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
-                        getDutyOtRate(customerId,positionid);
                     }
+                    getDutyOtRate(e,customerId,positionid);
                 },
             });
         } else {
@@ -140,13 +140,15 @@
         }
     }
 
-    function getDutyOtRate(customerId,positionid){
+    function getDutyOtRate(e,customerId,positionid){
         $.ajax({
             url:"{{ route('getguard_data') }}",
             type: "GET",
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
+                var employeeRate=data.employee_payment;
+                $(e).closest('tr').find('.duty_rate').val(employeeRate);
                 console.log(data);
 
             },
