@@ -103,42 +103,34 @@
             </div>
             <div class="row">
                 <div class="col-1">Cliant Name</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->name }}"></div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $emprate->customer?->name }}"></div>
             </div>
             <div class="row">
                 <div class="col-1">Address</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->address }}"></div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $emprate->customer?->address }}"></div>
             </div>
             <div class="row p-3">
                 <table class="table table-bordered">
                     <thead>
                         <tr class="text-center">
-                            <td >SL No</td>
-                            <td>Job Post</td>
-                            <td>QTY</td>
-                            <td>Start Date</td>
-                            <td>End Date</td>
-                            <td>Rate</td>
-                            <th>{{__('Hours')}}</th>
-                            <th>{{__('Employee Payment')}}</th>
-                            <th>{{__('Ot-Rate')}}</th>
-                            <td>Total Rate</td>
+                            <th >SL No</th>
+                            <th>Job Post</th>
+                            <th>Houres</th>
+                            <th>Rate</th>
+                            <th>OT-Rate</th>
+                            {{--  <th>Total Rate</th>  --}}
                         </tr>
                     </thead>
-                    <tbody >
-                        @if ($guard->details)
-                        @foreach ($guard->details as $de)
+                    <tbody>
+                        @if ($emprate->details)
+                        @foreach ($emprate->details as $de)
                         <tr class="text-center">
                             <td >{{ ++$loop->index  }}</td>
                             <td>{{ $de->jobpost?->name }}</td>
-                            <td>{{ $de->qty }}</td>
-                            <td>{{ $de->start_date }}</td>
-                            <td>{{ $de->end_date }}</td>
-                            <td>{{ $de->rate }}</td>
                             <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
-                            <td>{{ $de->employee_payment }}</td>
+                            <td>{{ $de->duty_rate }}</td>
                             <td>{{ $de->ot_rate }}</td>
-                            <td>200</td>
+                            {{--  <td>{{ $de->qty*$de->rate }}</td>  --}}
                         </tr>
                         @endforeach
                         @endif

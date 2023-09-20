@@ -12,11 +12,11 @@ use App\Http\Controllers\Settings\Location\ThanaController as thana;
 use App\Http\Controllers\Settings\Location\UnionController as union;
 use App\Http\Controllers\Settings\Location\WardController as ward;
 use App\Http\Controllers\Settings\JobPostController as jobpost;
-use App\Http\Controllers\Crm\GuardAssignController as guard;
 use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
 use App\Http\Controllers\Crm\EmployeeAssignController as empasign;
 use App\Http\Controllers\Crm\CustomerDutyController as customerduty;
 use App\Http\Controllers\Crm\InvoiceGenerateController as invoiceGenerate;
+use App\Http\Controllers\Crm\EmployeeRateController as employeeRate;
 
 
 
@@ -76,10 +76,10 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('union',union::class,['as'=>'superadmin']);
         Route::resource('ward',ward::class,['as'=>'superadmin']);
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
-        Route::resource('guard',guard::class);
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::resource('empasign',empasign::class);
+        Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::get('/get-guard-duty-ot-rate', [customerduty::class, 'getGuard'])->name('getguard_data');

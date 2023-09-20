@@ -4,20 +4,20 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Crm\EmployeeRate;
+use App\Models\Crm\EmployeeRateDetails;
 use App\Models\JobPost;
 use App\Models\Customer;
-use App\Models\Crm\GuardAssign;
-use App\Models\Crm\GuardAssignDetails;
 
 use Toastr;
 use Carbon\Carbon;
 use DB;
 use App\Http\Traits\ImageHandleTraits;
 use Intervention\Image\Facades\Image;
+use Exception;
 
-class GuardAssignController extends Controller
+class EmployeeRateController extends Controller
 {
-    use ImageHandleTraits;
     /**
      * Display a listing of the resource.
      *
@@ -25,8 +25,8 @@ class GuardAssignController extends Controller
      */
     public function index()
     {
-        $guards=GuardAssign::all();
-        return view('guards_assign.index',compact('guards'));
+        $emRate=EmployeeRate::all();
+        return view('employee_rate.index',compact('emRate'));
     }
 
     /**
@@ -38,7 +38,7 @@ class GuardAssignController extends Controller
     {
         $jobpost=JobPost::all();
         $customer=Customer::all();
-        return view('guards_assign.create',compact('customer','jobpost'));
+        return view('employee_rate.create',compact('customer','jobpost'));
     }
 
     /**
@@ -50,22 +50,18 @@ class GuardAssignController extends Controller
     public function store(Request $request)
     {
         try{
-            $data=new GuardAssign;
+            $data=new EmployeeRate;
             $data->customer_id = $request->customer_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
                     foreach($request->job_post_id as $key => $value){
                         if($value){
-                            $details = new GuardAssignDetails;
-                            $details->guard_id=$data->id;
+                            $details = new EmployeeRateDetails;
+                            $details->employee_rate_id=$data->id;
                             $details->job_post_id=$request->job_post_id[$key];
-                            $details->qty=$request->qty[$key];
-                            $details->rate=$request->rate[$key];
-                            $details->start_date=$request->start_date[$key];
-                            $details->end_date=$request->end_date[$key];
                             $details->hours=$request->hours[$key];
-                            $details->employee_payment=$request->employee_payment[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->status=1;
                             $details->save();
@@ -74,7 +70,7 @@ class GuardAssignController extends Controller
                 }
             }
             if ($data->save()) {
-                return redirect()->route('guard.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -93,8 +89,8 @@ class GuardAssignController extends Controller
      */
     public function show($id)
     {
-        $guard = GuardAssign::findOrFail(encryptor('decrypt',$id));
-        return view('guards_assign.show',compact('guard'));
+        $emprate = EmployeeRate::findOrFail(encryptor('decrypt',$id));
+        return view('employee_rate.show',compact('emprate'));
     }
 
     /**
@@ -107,8 +103,8 @@ class GuardAssignController extends Controller
     {
         $jobpost=JobPost::all();
         $customer=Customer::all();
-        $guard = GuardAssign::findOrFail(encryptor('decrypt',$id));
-        return view('guards_assign.edit',compact('jobpost','customer','guard'));
+        $emprate = EmployeeRate::findOrFail(encryptor('decrypt',$id));
+        return view('employee_rate.edit',compact('jobpost','customer','emprate'));
     }
 
     /**
@@ -121,23 +117,19 @@ class GuardAssignController extends Controller
     public function update(Request $request, $id)
     {
         try{
-            $data=GuardAssign::findOrFail(encryptor('decrypt',$id));
+            $data=EmployeeRate::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
-                    $dl=GuardAssignDetails::where('guard_id',$data->id)->delete();
+                    $dl=EmployeeRateDetails::where('employee_rate_id',$data->id)->delete();
                     foreach($request->job_post_id as $key => $value){
                         if($value){
-                            $details = new GuardAssignDetails;
-                            $details->guard_id=$data->id;
+                            $details = new EmployeeRateDetails;
+                            $details->employee_rate_id=$data->id;
                             $details->job_post_id=$request->job_post_id[$key];
-                            $details->qty=$request->qty[$key];
-                            $details->rate=$request->rate[$key];
-                            $details->start_date=$request->start_date[$key];
-                            $details->end_date=$request->end_date[$key];
                             $details->hours=$request->hours[$key];
-                            $details->employee_payment=$request->employee_payment[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->status=1;
                             $details->save();
@@ -146,7 +138,7 @@ class GuardAssignController extends Controller
                 }
             }
             if ($data->save()) {
-                return redirect()->route('guard.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

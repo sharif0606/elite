@@ -95,13 +95,13 @@
                                     <a href="{{route('customer.index', ['role' =>currentUser()])}}">Customer</a>
                                 </li>
                                 {{--  <li class="submenu-item">
-                                    <a href="{{route('guard.index', ['role' =>currentUser()])}}">Guard's Assign</a>
+                                    <a href="{{route('empatten.index', ['role' =>currentUser()])}}">Employee Attendance</a>
                                 </li>  --}}
                                 <li class="submenu-item">
-                                    <a href="{{route('empatten.index', ['role' =>currentUser()])}}">Employee Attendance</a>
+                                    <a href="{{route('empasign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route('empasign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
+                                    <a href="{{route('employeeRate.index', ['role' =>currentUser()])}}">Employee's Rate</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>

@@ -68,8 +68,8 @@
                                                 <td><input class="form-control" type="date" name="end_date[]" value="{{ $d->end_date }}" placeholder="End Date"></td>
                                                 <td>
                                                     <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                        <option value="1">8 Hour's</option>
-                                                        <option value="2">12 Hour's</option>
+                                                        <option value="1" {{ $d->hours=='1'?"selected":""}}>8 Hour's</option>
+                                                        <option value="2" {{ $d->hours=='2'?"selected":""}}>12 Hour's</option>
                                                     </select>
                                                 </td>
                                                 <td>

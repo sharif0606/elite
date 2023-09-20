@@ -5,9 +5,9 @@ namespace App\Models\Crm;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer;
-use App\Models\Crm\GuardAssignDetails;
+use App\Models\Crm\EmployeeRateDetails;
 
-class GuardAssign extends Model
+class EmployeeRate extends Model
 {
     use HasFactory;
     public function customer(){
@@ -15,6 +15,6 @@ class GuardAssign extends Model
     }
 
     public function details(){
-        return $this->hasMany(GuardAssignDetails::class,'guard_id','id');
+        return $this->hasMany(EmployeeRateDetails::class,'employee_rate_id','id');
     }
 }

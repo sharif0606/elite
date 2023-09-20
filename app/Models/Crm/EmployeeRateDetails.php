@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\JobPost;
 
-class GuardAssignDetails extends Model
+class EmployeeRateDetails extends Model
 {
     use HasFactory;
     public function jobpost(){
