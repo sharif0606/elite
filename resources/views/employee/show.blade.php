@@ -618,7 +618,7 @@
                         <tr>
                             <th>২ । পদবী</th>
                             <th>:</th>
-                            <td colspan="2"><input type="text" class="tinput" value="{{ $employees->bn_applied_position }}"></td>
+                            <td colspan="2"><input type="text" class="tinput" value="{{ $employees->bn_jobpost_id }}"></td>
                             <th>আইডি নং</th>
                             <td><input type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
                         </tr>

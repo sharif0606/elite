@@ -58,7 +58,7 @@ return new class extends Migration
             $table->string('bn_reference_admittee')->nullable();
             $table->string('bn_reference_adm_phone')->nullable();
             $table->string('bn_reference_adm_adress')->nullable();
-            $table->string('bn_applied_position')->nullable();
+            $table->string('bn_jobpost_id')->nullable();
 
             $table->string('bn_spouse_name')->nullable();
             $table->string('bn_song_name')->nullable();
@@ -107,7 +107,7 @@ return new class extends Migration
             $table->string('en_reference_admittee')->nullable();
             $table->string('en_reference_adm_phone')->nullable();
             $table->string('en_reference_adm_adress')->nullable();
-            $table->string('en_applied_position')->nullable();
+            $table->string('en_jobpost_id')->nullable();
 
             $table->string('en_spouse_name')->nullable();
             $table->string('en_song_name')->nullable();

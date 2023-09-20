@@ -47,7 +47,7 @@ class CustomerDutyController extends Controller
         $customerId = $request->customer_id;
         $jobpostId = $request->job_post_id;
         $guardIds = GuardAssign::where('customer_id', $customerId)->pluck('id');
-        $data = GuardAssignDetails::whereIn('guard_id', $guardIds)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+        $data = GuardAssignDetails::whereIn('guard_id', $guardIds)->whereIn('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
         return $data;
     }
 

@@ -113,7 +113,7 @@ class EmployeeController extends Controller
             $employee->bn_reference_admittee = $request->bn_reference_admittee;
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
-            $employee->bn_applied_position = $request->bn_applied_position;
+            $employee->bn_jobpost_id = $request->bn_jobpost_id;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;
@@ -217,7 +217,7 @@ class EmployeeController extends Controller
     {
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
         $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
-        $jobposts=JobPost::where('id',$employees->bn_applied_position)->first();
+        $jobposts=JobPost::where('id',$employees->bn_jobpost_id)->first();
         return view('employee.show', compact('employees','security','jobposts'));
     }
 
@@ -293,7 +293,7 @@ class EmployeeController extends Controller
             $employee->bn_reference_admittee = $request->bn_reference_admittee;
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
-            $employee->bn_applied_position = $request->bn_applied_position;
+            $employee->bn_jobpost_id = $request->bn_jobpost_id;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;

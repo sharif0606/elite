@@ -538,21 +538,21 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_applied_position">আবেদিত পদ<span class="text-danger">*</span></label>
-                            <select name="bn_applied_position" class=" form-control @error('bn_applied_position') is-invalid @enderror" id="bn_applied_position">
+                            <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
+                            <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ old('bn_applied_position')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
                                 @empty
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
-                            @if($errors->has('bn_applied_position'))
-                                <span class="text-danger"> {{ $errors->first('bn_applied_position') }}</span>
+                            @if($errors->has('bn_jobpost_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
                             @endif
-                            {{--  <input type="text" id="bn_applied_position" value="{{old('bn_applied_position')}}" class="form-control @error('bn_applied_position') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_applied_position">
-                            @if($errors->has('bn_applied_position'))
-                                <span class="text-danger"> {{ $errors->first('bn_applied_position') }}</span>
+                            {{--  <input type="text" id="bn_jobpost_id" value="{{old('bn_jobpost_id')}}" class="form-control @error('bn_jobpost_id') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_jobpost_id">
+                            @if($errors->has('bn_jobpost_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
                             @endif  --}}
                         </div>
                     </div>

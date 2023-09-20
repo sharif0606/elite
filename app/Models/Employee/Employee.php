@@ -46,6 +46,6 @@ class Employee extends Model
         return $this->belongsTo(Religion::class,'bn_religion','id');
     }
     public function position(){
-        return $this->belongsTo(JobPost::class,'bn_applied_position','id');
+        return $this->belongsTo(JobPost::class,'bn_jobpost_id','id');
     }
 }

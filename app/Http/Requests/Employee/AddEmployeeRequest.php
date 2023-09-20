@@ -47,7 +47,7 @@ class AddEmployeeRequest extends FormRequest
             'bn_marital_status' => 'required',
             'bn_reference_admittee' => 'required',
             'bn_reference_adm_phone' => 'required',
-            'bn_applied_position' => 'required',
+            'bn_jobpost_id' => 'required',
             'bn_reference_adm_adress' => 'required',
         ];
     }

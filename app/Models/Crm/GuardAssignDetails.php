@@ -10,6 +10,6 @@ class GuardAssignDetails extends Model
 {
     use HasFactory;
     public function jobpost(){
-        return $this->belongsTo(JobPost::class,'job_post_id','id');
+        return $this->belongsTo(JobPost::class,'bn_jobpost_id','id');
     }
 }
