@@ -94,9 +94,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('customer.index', ['role' =>currentUser()])}}">Customer</a>
                                 </li>
-                                <li class="submenu-item">
+                                {{--  <li class="submenu-item">
                                     <a href="{{route('guard.index', ['role' =>currentUser()])}}">Guard's Assign</a>
-                                </li>
+                                </li>  --}}
                                 <li class="submenu-item">
                                     <a href="{{route('empatten.index', ['role' =>currentUser()])}}">Employee Attendance</a>
                                 </li>

@@ -1,6 +1,6 @@
 @extends('layout.app')
-@section('pageTitle','Empoyees Assign List')
-@section('pageSubTitle','All Empoyees')
+@section('pageTitle','Employee List')
+@section('pageSubTitle','All Employee')
 @section('content')
 <!-- Bordered table start -->
 <div class="col-12">
@@ -10,8 +10,9 @@
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('empasign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
-                    <tr class="text-center">
+                    <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
+                        <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Details')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -20,12 +21,33 @@
                     @forelse($empasin as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
+                        <td scope="row">{{$e->customer?->name}}</td>
                         <td>
                             @if ($e->details)
-                            <span><strong>Job Post:</strong> {{$de->jobpost?->name }}</span>
-                            <span><strong>Qty:</strong> {{ $de->qty }}</span>
-                            <span><strong>Rate:</strong> {{ $de->rate }}</span><br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Job Post</th>
+                                        <th>Qty</th>
+                                        <th>Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($e->details as $de)
+                                    <tr>
+                                        <td>{{$de->jobpost?->name }}</td>
+                                        <td>{{ $de->qty }}</td>
+                                        <td>{{ $de->rate }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             @endif
+
+                            {{--  <span><strong>Job Post:</strong> {{$de->jobpost?->name }}</span>
+                            <span><strong>Qty:</strong> {{ $de->qty }}</span>
+                            <span><strong>Rate:</strong> {{ $de->rate }}</span><br/>  --}}
+
                         </td>
                         <td>
                             <a href="{{route('empasign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
@@ -44,7 +66,7 @@
                 </tbody>
             </table>
             <div class="pt-2">
-                {{--  {{$guards->links()}}  --}}
+                {{--  {{$empasin->links()}}  --}}
             </div>
         </div>
     </div>

@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employee_assigns', function (Blueprint $table) {
+        Schema::create('employee_assign_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id');
+            $table->integer('guard_id');
+            $table->integer('job_post_id');
+            $table->integer('qty');
+            $table->string('rate');
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('hours')->nullable()->comment('1=8,2=12');
             $table->string('status')->nullable();
             $table->timestamps();
         });
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_assigns');
+        Schema::dropIfExists('employee_assign_details');
     }
 };

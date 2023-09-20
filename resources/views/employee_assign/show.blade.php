@@ -103,31 +103,29 @@
             </div>
             <div class="row">
                 <div class="col-1">Cliant Name</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->name }}"></div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->customer?->name }}"></div>
             </div>
             <div class="row">
                 <div class="col-1">Address</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->address }}"></div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->customer?->address }}"></div>
             </div>
             <div class="row p-3">
                 <table class="table table-bordered">
                     <thead>
                         <tr class="text-center">
-                            <td >SL No</td>
-                            <td>Job Post</td>
-                            <td>QTY</td>
-                            <td>Start Date</td>
-                            <td>End Date</td>
-                            <td>Rate</td>
+                            <th >SL No</th>
+                            <th>Job Post</th>
+                            <th>QTY</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Rate</th>
                             <th>{{__('Hours')}}</th>
-                            <th>{{__('Employee Payment')}}</th>
-                            <th>{{__('Ot-Rate')}}</th>
-                            <td>Total Rate</td>
+                            <th>Total Rate</th>
                         </tr>
                     </thead>
-                    <tbody >
-                        @if ($guard->details)
-                        @foreach ($guard->details as $de)
+                    <tbody>
+                        @if ($empasin->details)
+                        @foreach ($empasin->details as $de)
                         <tr class="text-center">
                             <td >{{ ++$loop->index  }}</td>
                             <td>{{ $de->jobpost?->name }}</td>
@@ -135,10 +133,8 @@
                             <td>{{ $de->start_date }}</td>
                             <td>{{ $de->end_date }}</td>
                             <td>{{ $de->rate }}</td>
-                            <td>{{ $de->hours }}</td>
-                            <td>{{ $de->employee_payment }}</td>
-                            <td>{{ $de->ot_rate }}</td>
-                            <td>200</td>
+                            <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
+                            <td>{{ $de->qty*$de->rate }}</td>
                         </tr>
                         @endforeach
                         @endif

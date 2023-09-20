@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Crm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\EmployeeAssign;
+use App\Models\Crm\EmployeeAssignDetails;
 use App\Models\Employee\Employee;
+use App\Models\JobPost;
 use App\Models\Customer;
 
 use Toastr;
@@ -24,7 +26,7 @@ class EmployeeAssignController extends Controller
      */
     public function index()
     {
-        $empasin=EmployeeAssign::groupBy('generate_unique_id')->get();
+        $empasin=EmployeeAssign::all();
         return view('employee_assign.index',compact('empasin'));
 
     }
@@ -36,9 +38,9 @@ class EmployeeAssignController extends Controller
      */
     public function create()
     {
-        $employee=Employee::all();
+        $jobpost=JobPost::all();
         $customer=Customer::all();
-        return view('employee_assign.create',compact('employee','customer'));
+        return view('employee_assign.create',compact('customer','jobpost'));
     }
 
     /**
@@ -50,23 +52,31 @@ class EmployeeAssignController extends Controller
     public function store(Request $request)
     {
         try{
-            $uniqueid=substr(base_convert(sha1(uniqid(mt_rand())), 16, 36), 0);
-            if($request->employee_id){
-                foreach($request->employee_id as $key => $value){
-                    if($value){
-                        $employee = new EmployeeAssign;
-                        $employee->date=$request->date;
-                        $employee->generate_unique_id=$uniqueid;
-                        // $employee->generate_unique_id='EM-'.Carbon::now()->format('m-y').'-'. str_pad((EmployeeAssign::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
-                        $employee->employee_id=$request->employee_id[$key];
-                        $employee->customer_id=$request->customer_id[$key];
-                        $employee->start_date=$request->start_date[$key];
-                        $employee->end_date=$request->end_date[$key];
-                        $employee->status=1;
-                        $employee->save();
+            $data=new EmployeeAssign;
+            $data->customer_id = $request->customer_id;
+            $data->status = 0;
+            if($data->save()){
+                if($request->job_post_id){
+                    foreach($request->job_post_id as $key => $value){
+                        if($value){
+                            $details = new EmployeeAssignDetails;
+                            $details->guard_id=$data->id;
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->qty=$request->qty[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->start_date=$request->start_date[$key];
+                            $details->end_date=$request->end_date[$key];
+                            $details->hours=$request->hours[$key];
+                            $details->status=1;
+                            $details->save();
+                        }
                     }
                 }
+            }
+            if ($data->save()) {
                 return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
 
         } catch (Exception $e) {
@@ -83,7 +93,8 @@ class EmployeeAssignController extends Controller
      */
     public function show($id)
     {
-        //
+        $empasin = EmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        return view('employee_assign.show',compact('empasin'));
     }
 
     /**
@@ -94,10 +105,10 @@ class EmployeeAssignController extends Controller
      */
     public function edit($id)
     {
-        $employee=Employee::all();
+        $jobpost=JobPost::all();
         $customer=Customer::all();
-        $employee = EmployeeAssign::findOrFail(encryptor('decrypt',$id));
-        return view('employee_assign.edit',compact('employee','customer','employee'));
+        $empasin = EmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        return view('employee_assign.edit',compact('jobpost','customer','empasin'));
     }
 
     /**
@@ -109,7 +120,39 @@ class EmployeeAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $data=EmployeeAssign::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            $data->status = 0;
+            if($data->save()){
+                if($request->job_post_id){
+                    $dl=EmployeeAssignDetails::where('guard_id',$data->id)->delete();
+                    foreach($request->job_post_id as $key => $value){
+                        if($value){
+                            $details = new EmployeeAssignDetails;
+                            $details->guard_id=$data->id;
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->qty=$request->qty[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->start_date=$request->start_date[$key];
+                            $details->end_date=$request->end_date[$key];
+                            $details->hours=$request->hours[$key];
+                            $details->status=1;
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if ($data->save()) {
+                return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
