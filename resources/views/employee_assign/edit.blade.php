@@ -72,6 +72,7 @@
                                                         <option value="2" {{ $d->hours=='2'?"selected":""}}>12 Hour's</option>
                                                     </select>
                                                 </td>
+
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
