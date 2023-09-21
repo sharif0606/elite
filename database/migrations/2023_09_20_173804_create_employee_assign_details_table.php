@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('employee_assign_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('guard_id');
+            $table->integer('employee_assign_id');
             $table->integer('job_post_id');
             $table->integer('qty');
             $table->string('rate');

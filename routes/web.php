@@ -82,7 +82,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
-        Route::get('/get-guard-duty-ot-rate', [customerduty::class, 'getGuard'])->name('getguard_data');
+        Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 

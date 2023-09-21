@@ -60,7 +60,7 @@ class EmployeeAssignController extends Controller
                     foreach($request->job_post_id as $key => $value){
                         if($value){
                             $details = new EmployeeAssignDetails;
-                            $details->guard_id=$data->id;
+                            $details->employee_assign_id=$data->id;
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->qty=$request->qty[$key];
                             $details->rate=$request->rate[$key];
@@ -126,11 +126,11 @@ class EmployeeAssignController extends Controller
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
-                    $dl=EmployeeAssignDetails::where('guard_id',$data->id)->delete();
+                    $dl=EmployeeAssignDetails::where('employee_assign_id',$data->id)->delete();
                     foreach($request->job_post_id as $key => $value){
                         if($value){
                             $details = new EmployeeAssignDetails;
-                            $details->guard_id=$data->id;
+                            $details->employee_assign_id=$data->id;
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->qty=$request->qty[$key];
                             $details->rate=$request->rate[$key];

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\CustomerDuty;
 use App\Models\Crm\CustomerAttendance;
-use App\Models\Crm\GuardAssignDetails;
-use App\Models\Crm\GuardAssign;
+use App\Models\Crm\EmployeeRateDetails;
+use App\Models\Crm\EmployeeRate;
 
 use App\Models\Customer;
 
@@ -42,13 +42,18 @@ class CustomerDutyController extends Controller
         return view('customer_duty.create',compact('customer'));
     }
 
-    public function getGuard(Request $request)
+    public function getEmployeeDuty(Request $request)
     {
-        $customerId = $request->customer_id;
-        $jobpostId = $request->job_post_id;
-        $guardIds = GuardAssign::where('customer_id', $customerId)->pluck('id');
-        $data = GuardAssignDetails::whereIn('guard_id', $guardIds)->whereIn('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
-        return $data;
+        try {
+            $customerId = $request->customer_id;
+            $jobpostId = $request->job_post_id;
+            $empAssignId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
+            $data = EmployeeRateDetails::whereIn('employee_rate_id', $empAssignId)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+            return $data;
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
     }
 
 

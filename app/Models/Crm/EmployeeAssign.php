@@ -16,7 +16,7 @@ class EmployeeAssign extends Model
     }
 
     public function details(){
-        return $this->hasMany(EmployeeAssignDetails::class,'guard_id','id');
+        return $this->hasMany(EmployeeAssignDetails::class,'employee_assign_id','id');
     }
 
 }

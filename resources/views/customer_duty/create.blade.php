@@ -140,12 +140,12 @@
                 data: { 'id':employee_id },
                 success: function(data) {
                     if(data.length>0){
-                        //console.log(data);
+                        console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
                         var contact = data[0].bn_parm_phone_my;
                         var position=data[0].position.name;
-                        var positionid=data[0].bn_applied_position;
+                        var positionid=data[0].bn_jobpost_id;
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
                     }
@@ -153,7 +153,7 @@
                 },
             });
         } else {
-            $(e).closest('tr').find('.employee_name').val('No Employee Data');
+            $(e).closest('tr').find('.employee_name').val('');
             $(e).closest('tr').find('.employee_contact').val('');
             $(e).closest('tr').find('.employee_data').html('');
         }
@@ -161,14 +161,17 @@
 
     function getDutyOtRate(e,customerId,positionid){
         $.ajax({
-            url:"{{ route('getguard_data') }}",
+            url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
-                var employeeRate=data.employee_payment;
-                $(e).closest('tr').find('.duty_rate').val(employeeRate);
                 console.log(data);
+                var dutyRate=data.duty_rate;
+                var otRate=data.ot_rate;
+                console.log(dutyRate)
+                $(e).closest('tr').find('.duty_rate').val(dutyRate);
+                $(e).closest('tr').find('.ot_rate').val(otRate);
 
             },
         });
