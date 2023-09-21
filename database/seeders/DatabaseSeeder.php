@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
             VehicleCountriesSeeder::class,
             VehicleMostViewdSeeder::class*/
         ]);
-        UserDetail::factory(3)->create();
+        // UserDetail::factory(3)->create();
 
         // // creating Body Type
         // foreach(body_types() as $body_type) {
