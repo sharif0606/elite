@@ -229,6 +229,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
+        $jobposts=JobPost::all();
         $districts = District::all();
         $upazila = Upazila::all();
         $union = Union::all();
@@ -236,7 +237,7 @@ class EmployeeController extends Controller
         $bloods = BloodGroup::all();
         $religions = Religion::all();
         $employees = Employee::findOrFail(encryptor('decrypt',$id));
-        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees'));
+        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees','jobposts'));
     }
 
     /**
