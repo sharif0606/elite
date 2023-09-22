@@ -7,7 +7,7 @@
     <div class="card">
         <!-- table bordered -->
         <div class="table-responsive">
-            <table class="table table-bordered mb-0">
+            <table class="table table-bordered mb-0 table-striped">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customerduty.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center bg-primary text-white">

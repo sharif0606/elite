@@ -21,6 +21,7 @@
                     <div class="card-body">
                         <form method="post" action="{{route('customerduty.update', [encryptor('encrypt',$custduty->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
+                            @method('PATCH')
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Customer</b></label>
@@ -64,28 +65,28 @@
                                             @foreach ($custduty->details as $d)
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="{{ old('employee_id',$d->employee_id) }}" placeholder="Employee Id">
-                                                    <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="{{ old('employee_id',$d->employee?->admission_id_no) }}" placeholder="Employee Id">
+                                                    <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }} -{{ $d->employee?->position?->name }}</div>
                                                     <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
+                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ old('duty_rate',$d->duty_rate) }}" placeholder="Duty Rate">
                                                 </td>
-                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
+                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="{{ old('ot_rate',$d->ot_rate) }}" placeholder="Ot Rate"></td>
                                                 <td>
-                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="0" placeholder="OT Qty">
+                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="number" name="duty_qty[]" value="{{ old('duty_qty',$d->duty_qty) }}" placeholder="Duty Qty">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="{{ old('ot_qty',$d->ot_qty) }}" placeholder="OT Qty">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
+                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="{{ old('duty_amount',$d->duty_amount) }}" placeholder="Duty Amount">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
+                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="{{ old('ot_amount',$d->ot_amount) }}" placeholder="Ot Amount">
+                                                </td>
+                                                <td>
+                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="{{ old('total_amount',$d->total_amount) }}" placeholder="Total Amount">
                                                 </td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -100,11 +101,11 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td> Total</td>
-                                                <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
+                                                <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty" value="{{ old('total_duty',$custduty->total_duty) }}"></td>
+                                                <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot" value="{{ old('total_ot',$custduty->total_ot) }}"></td>
+                                                <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount" value="{{ old('total_duty_amount',$custduty->total_duty_amount) }}"></td>
+                                                <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount" value="{{ old('total_ot_amount',$custduty->total_ot_amount) }}"></td>
+                                                <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total" value="{{ old('finall_amount',$custduty->finall_amount) }}"></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
