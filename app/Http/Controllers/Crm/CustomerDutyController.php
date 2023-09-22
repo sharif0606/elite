@@ -9,6 +9,8 @@ use App\Models\Crm\CustomerDutyDetail;
 use App\Models\Crm\CustomerAttendance;
 use App\Models\Crm\EmployeeRate;
 use App\Models\Crm\EmployeeRateDetails;
+use App\Models\Employee\Employee;
+use App\Models\JobPost;
 
 use App\Models\Customer;
 
@@ -131,7 +133,11 @@ class CustomerDutyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jobpost=JobPost::all();
+        $customer=Customer::all();
+        $employee=Employee::all();
+        $custduty = CustomerDuty::findOrFail(encryptor('decrypt',$id));
+        return view('customer_duty.edit',compact('jobpost','customer','custduty','employee'));
     }
 
     /**

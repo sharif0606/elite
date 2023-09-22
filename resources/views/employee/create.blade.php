@@ -976,8 +976,15 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_applied_position">Position applied for</label>
-                            <input type="text" id="en_applied_position" value="{{old('en_applied_position')}}" class="form-control" placeholder="applied Post" name="en_applied_position">
+                            <label for="en_jobpost_id">Position applied for</label>
+                            <select name="en_jobpost_id" class=" form-control @error('en_jobpost_id') is-invalid @enderror" id="en_jobpost_id">
+                                <option value="">Select</option>
+                                @forelse($jobposts as $d)
+                                <option value="{{$d->id}}" {{ old('en_jobpost_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                @empty
+                                    <option value="">No found</option>
+                                @endforelse
+                            </select>
                         </div>
                     </div>
                 </div>
