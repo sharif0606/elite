@@ -336,7 +336,7 @@ class EmployeeController extends Controller
             $employee->en_reference_admittee = $request->en_reference_admittee;
             $employee->en_reference_adm_phone = $request->en_reference_adm_phone;
             $employee->en_reference_adm_adress = $request->en_reference_adm_adress;
-            $employee->en_applied_position = $request->en_applied_position;
+            $employee->en_jobpost_id = $request->en_jobpost_id;
             $employee->bn_cer_gender = $request->bn_cer_gender;
             $employee->bn_cer_physical_ability = $request->bn_cer_physical_ability;
 
