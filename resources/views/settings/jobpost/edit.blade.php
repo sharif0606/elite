@@ -27,6 +27,18 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label for="bill_able">{{__('Bill Able')}}<span class="text-danger">*</span></label>
+                                            <select name="bill_able" class="form-control @error('bill_able') is-invalid @enderror" id="bill_able">
+                                                <option value="0" {{ $jobpost->bill_able=="0"?"selected":"" }}>No</option>
+                                                <option value="1" {{ $jobpost->bill_able=="1"?"selected":"" }}>Yes</option>
+                                            </select>
+                                            @if($errors->has('bill_able'))
+                                                <span class="text-danger"> {{ $errors->first('bill_able') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="name_bn">{{__('jobpost Bangla')}}</label>
                                             <input type="text" id="name_bn" class="form-control" value="{{ old('name_bn',$jobpost->name_bn)}}" name="name_bn">
                                         </div>
