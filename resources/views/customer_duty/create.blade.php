@@ -62,27 +62,28 @@
                                         <tbody id="customerduty">
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
+                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
                                                 </td>
                                                 <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
                                                 <td>
-                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="" placeholder="Duty Qty">
+                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="" placeholder="OT Qty">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="0" placeholder="OT Qty">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_amount" type="text" name="duty_amount[]" value="" placeholder="Duty Amount">
+                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control ot_amount" type="text" name="ot_amount[]" value="" placeholder="Ot Amount">
+                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control total_amount" type="text" name="total_amount[]" value="" placeholder="Total Amount">
+                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
                                                 </td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -94,12 +95,12 @@
                                             <tr>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td> Total</td>
+                                                <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
+                                                <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
+                                                <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
+                                                <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
+                                                <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
@@ -157,6 +158,7 @@
                         var positionid=data[0].bn_jobpost_id;
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
+                        $(e).closest('tr').find('.job_post_id').val(positionid);
                     }
                     getDutyOtRate(e,customerId,positionid);
                 },
@@ -197,6 +199,36 @@
         $(e).closest('tr').find('.ot_amount').val(otAmount);
         $(e).closest('tr').find('.total_amount').val(otAmount+dutyAmount);
 
+        var totalDuty=0;
+        var totalOt=0;
+        var dutyAmountTotal=0;
+        var otAmountFi=0;
+        var totalAmountFi=0;
+        $('.duty_qty').each(function(){
+            totalDuty+=parseFloat($(this).val());
+        });
+        $('.ot_qty').each(function(){
+            totalOt+=parseFloat($(this).val());
+        });
+        $('.DutyAmountF').each(function(){
+            dutyAmountTotal+=parseFloat($(this).val());
+        });
+        $('.OtAmountFc').each(function(){
+            otAmountFi+=parseFloat($(this).val());
+        });
+        $('.TotalAmu').each(function(){
+            totalAmountFi+=parseFloat($(this).val());
+        });
+        $('.totalDutyP').val(totalDuty);
+        $('.totalOtP').val(totalOt);
+        $('.totalDutyAmount').val(dutyAmountTotal);
+        $('.totalOtAmount').val(otAmountFi);
+        $('.totalAmountPa').val(totalAmountFi);
+
+    }
+
+    function totalAmount(){
+
     }
 
 
@@ -207,27 +239,28 @@
 var row=`
 <tr>
     <td>
-        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id" value="" placeholder="Employee Id">
+        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
         <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
+        <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
     </td>
     <td>
         <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
     </td>
     <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
     <td>
-        <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="" placeholder="Duty Qty">
+        <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty">
     </td>
     <td>
-        <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="" placeholder="OT Qty">
+        <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty">
     </td>
     <td>
-        <input readonly class="form-control duty_amount" type="text" name="duty_amount[]" value="" placeholder="Duty Amount">
+        <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
     </td>
     <td>
-        <input readonly class="form-control ot_amount" type="text" name="ot_amount[]" value="" placeholder="Ot Amount">
+        <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
     </td>
     <td>
-        <input readonly class="form-control total_amount" type="text" name="total_amount[]" value="" placeholder="Total Amount">
+        <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
     </td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>

@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Crm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\CustomerDuty;
+use App\Models\Crm\CustomerDutyDetail;
 use App\Models\Crm\CustomerAttendance;
-use App\Models\Crm\EmployeeRateDetails;
 use App\Models\Crm\EmployeeRate;
+use App\Models\Crm\EmployeeRateDetails;
 
 use App\Models\Customer;
 
@@ -65,30 +66,42 @@ class CustomerDutyController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         try{
             $data=new CustomerDuty;
             $data->customer_id = $request->customer_id;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
+            $data->total_duty = $request->total_duty;
+            $data->total_ot = $request->total_ot;
+            $data->total_duty_amount = $request->total_duty_amount;
+            $data->total_ot_amount = $request->total_ot_amount;
+            $data->finall_amount = $request->finall_amount;
             $data->status = 0;
             if($data->save()){
-                if($request->job_post_id){
-                    foreach($request->job_post_id as $key => $value){
+                if($request->employee_id){
+                    foreach($request->employee_id as $key => $value){
                         if($value){
-                            $details = new EmployeeAssignDetails;
-                            $details->employee_assign_id=$data->id;
+                            $details = new CustomerDutyDetail;
+                            $details->customerduty_id=$data->id;
+                            $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
-                            $details->qty=$request->qty[$key];
-                            $details->rate=$request->rate[$key];
-                            $details->start_date=$request->start_date[$key];
-                            $details->end_date=$request->end_date[$key];
-                            $details->hours=$request->hours[$key];
-                            $details->status=1;
+                            $details->customer_id = $request->customer_id;
+                            $details->duty_rate=$request->duty_rate[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
+                            $details->duty_qty=$request->duty_qty[$key];
+                            $details->ot_qty=$request->ot_qty[$key];
+                            $details->duty_amount=$request->duty_amount[$key];
+                            $details->ot_amount=$request->ot_amount[$key];
+                            $details->total_amount=$request->total_amount[$key];
+                            $details->status=0;
                             $details->save();
                         }
                     }
                 }
             }
             if ($data->save()) {
-                return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('customerduty.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

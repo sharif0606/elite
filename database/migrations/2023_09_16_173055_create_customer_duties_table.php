@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('total_ot');
             $table->decimal('total_duty_amount',10,2)->default(0);
             $table->decimal('total_ot_amount',10,2)->default(0);
-            $table->decimal('total_amount',10,2)->default(0);
+            $table->decimal('finall_amount',10,2)->default(0);
             $table->string('status')->nullable();
             $table->timestamps();
         });
