@@ -10,8 +10,9 @@
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customerduty.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
-                    <tr class="text-center">
+                    <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
+                        <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Details')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -20,17 +21,45 @@
                     @forelse($customerduty as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
+                        <td scope="row">{{$e->customer?->name}}</td>
                         <td>
-                            {{--  @if ($e->details)
-                            <span><strong>Job Post:</strong> {{$de->jobpost?->name }}</span>
-                            <span><strong>Qty:</strong> {{ $de->qty }}</span>
-                            <span><strong>Rate:</strong> {{ $de->rate }}</span><br/>
-                            @endif  --}}
+                            @if ($e->details)
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Employee</th>
+                                        <th>Job Post</th>
+                                        <th>Duty Rate</th>
+                                        <th>Duty Qty</th>
+                                        <th>Duty Amount</th>
+                                        <th>Ot Rate</th>
+                                        <th>Ot Qty</th>
+                                        <th>Ot Amount</th>
+                                        <th>Total Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($e->details as $de)
+                                    <tr>
+                                        <td>{{$de->employee?->bn_applicants_name }}</td>
+                                        <td>{{$de->jobpost?->name }}</td>
+                                        <td>{{ $de->duty_rate }}</td>
+                                        <td>{{ $de->duty_qty }}</td>
+                                        <td>{{ $de->duty_amount }}</td>
+                                        <td>{{ $de->ot_rate }}</td>
+                                        <td>{{ $de->ot_qty }}</td>
+                                        <td>{{ $de->ot_amount }}</td>
+                                        <td>{{ $de->total_amount }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @endif
                         </td>
                         <td>
-                            <a href="{{route('customerduty.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            {{--  <a href="{{route('customerduty.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
-                            </a>
+                            </a>  --}}
                             <a href="{{route('customerduty.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
@@ -44,7 +73,7 @@
                 </tbody>
             </table>
             <div class="pt-2">
-                {{--  {{$guards->links()}}  --}}
+                {{--  {{$customerduty->links()}}  --}}
             </div>
         </div>
     </div>
