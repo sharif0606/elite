@@ -84,6 +84,9 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
 
+        /* get AjaX Data */
+        Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
+
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 
         Route::get('/profile', [userprofile::class,'profile'])->name('profile');

@@ -93,4 +93,14 @@ class InvoiceGenerateController extends Controller
     {
         //
     }
+
+    public function getInvoiceData(Request $request)
+    {
+        $customerId=$request->customer_id;
+        $startDate=$request->start_date;
+        $endDate=$request->end_date;
+        $getInvoice=Unit::where('customer_id', $customerId)->pluck('id');
+        // return $unit;
+        return response()->json($getInvoice,200);
+    }
 }
