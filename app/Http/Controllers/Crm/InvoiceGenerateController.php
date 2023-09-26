@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Crm\InvoiceGenerate;
+use App\Models\Crm\EmployeeAssign;
+use App\Models\Crm\EmployeeAssignDetails;
 
 use Toastr;
 use Carbon\Carbon;
@@ -99,8 +101,8 @@ class InvoiceGenerateController extends Controller
         $customerId=$request->customer_id;
         $startDate=$request->start_date;
         $endDate=$request->end_date;
-        $getInvoice=Unit::where('customer_id', $customerId)->pluck('id');
-        // return $unit;
+        $emAsinId=EmployeeAssign::where('customer_id', $customerId)->pluck('id');
+        $getInvoice=EmployeeAssignDetails::whereIn('employee_assign_id', $emAsinId)->get();
         return response()->json($getInvoice,200);
     }
 }
