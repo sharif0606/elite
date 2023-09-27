@@ -1,6 +1,6 @@
 @extends('layout.app')
-@section('pageTitle','Employee Rate List')
-@section('pageSubTitle','All Rate Employee')
+@section('pageTitle','Employee Salary List')
+@section('pageSubTitle','All')
 @section('content')
 <!-- Bordered table start -->
 <div class="col-12">
@@ -29,8 +29,8 @@
                                     <tr>
                                         <th>Job Post</th>
                                         <th>Houres</th>
-                                        <th>Rate</th>
-                                        <th>OT-Rate</th>
+                                        <th>Salary</th>
+                                        <th>OT</th>
                                     </tr>
                                 </thead>
                                 <tbody>

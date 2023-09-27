@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('emprate Rate Update'))
+@section('pageTitle',trans('Employee Salary Update'))
 @section('pageSubTitle',trans('Edit'))
 
 @section('content')
@@ -33,8 +33,8 @@
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Hours')}}</th>
-                                                <th scope="col">{{__('Rate (Person)')}}</th>
-                                                <th scope="col">{{__('OT-Rate(Person)')}}</th>
+                                                <th scope="col">{{__('Salary (Person)')}}</th>
+                                                <th scope="col">{{__('OT(Person)')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
