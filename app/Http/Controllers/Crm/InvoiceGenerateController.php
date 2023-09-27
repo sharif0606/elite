@@ -96,13 +96,37 @@ class InvoiceGenerateController extends Controller
         //
     }
 
+    // public function getInvoiceData(Request $request)
+    // {
+    //     $customerId=$request->customer_id;
+    //     $startDate=$request->start_date;
+    //     $endDate=$request->end_date;
+    //     $emAsinId=EmployeeAssign::where('customer_id', $customerId)->pluck('id');
+    //     $getInvoice=EmployeeAssignDetails::whereIn('employee_assign_id', $emAsinId)->get();
+    //     return response()->json($getInvoice,200);
+    // }
     public function getInvoiceData(Request $request)
     {
-        $customerId=$request->customer_id;
-        $startDate=$request->start_date;
-        $endDate=$request->end_date;
-        $emAsinId=EmployeeAssign::where('customer_id', $customerId)->pluck('id');
-        $getInvoice=EmployeeAssignDetails::whereIn('employee_assign_id', $emAsinId)->get();
-        return response()->json($getInvoice,200);
+        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')
+            ->select('employee_assigns.*', 'employee_assign_details.*');
+
+        if ($request->customer_id) {
+            $query->where('employee_assigns.customer_id', $request->customer_id);
+        }
+
+        if ($request->start_date && $request->end_date) {
+            $startDate = Carbon::parse($request->start_date)->toDateString();
+            $endDate = Carbon::parse($request->end_date)->toDateString();
+
+            $query->where(function($query) use ($startDate, $endDate) {
+                $query->where('employee_assign_details.start_date', '>=', $startDate)
+                ->where('employee_assign_details.end_date', '<=', $endDate);
+            });
+        }
+
+        $data = $query->get();
+
+        return response()->json($data, 200);
     }
+
 }
