@@ -128,5 +128,34 @@ class InvoiceGenerateController extends Controller
 
         return response()->json($data, 200);
     }
+    // public function getInvoiceData(Request $request)
+    // {
+    //     $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')
+    //         ->select('employee_assigns.*', 'employee_assign_details.*');
+
+    //     if ($request->customer_id) {
+    //         $query->where('employee_assigns.customer_id', $request->customer_id);
+    //     }
+
+    //     if ($request->start_date && $request->end_date) {
+    //         $startDate = Carbon::parse($request->start_date)->toDateString();
+    //         $endDate = Carbon::parse($request->end_date)->toDateString();
+
+    //         $query->where(function($query) use ($startDate, $endDate) {
+    //             $query->where(function($q) use ($startDate) {
+    //                 $q->where('employee_assign_details.start_date', '>=', $startDate);
+    //             })
+    //             ->where(function($q) use ($startDate, $endDate) {
+    //                 $q->where('employee_assign_details.end_date', '<=', $endDate)
+    //                     ->orWhereNull('employee_assign_details.end_date');
+    //             });
+    //         });
+    //     }
+
+    //     $data = $query->get();
+
+    //     return response()->json($data, 200);
+    // }
+
 
 }

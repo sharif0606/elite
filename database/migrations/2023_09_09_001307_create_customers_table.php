@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('logo')->nullable();
             $table->string('name')->nullable();
+            $table->string('brance_name')->nullable();
             $table->string('contact')->nullable();
             $table->string('address')->nullable();
             $table->integer('district_id')->nullable();
@@ -27,6 +28,9 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
             $table->string('billing_address')->nullable();
             $table->string('billing_person')->nullable();
+            $table->date('agreement_date')->nullable();
+            $table->date('renew_date')->nullable();
+            $table->date('validity_date')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

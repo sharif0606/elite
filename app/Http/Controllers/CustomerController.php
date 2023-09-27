@@ -57,16 +57,20 @@ class CustomerController extends Controller
         try {
             $data = new Customer();
             $data->name = $request->name;
+            $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->district_id = $request->district_id;
-            $data->upazila_id = $request->upazila_id;
-            $data->union_id = $request->union_id;
-            $data->ward_id = $request->ward_id;
+            // $data->district_id = $request->district_id;
+            // $data->upazila_id = $request->upazila_id;
+            // $data->union_id = $request->union_id;
+            // $data->ward_id = $request->ward_id;
             $data->contact_person = $request->contact_person;
             $data->contact_number = $request->contact_number;
             $data->billing_address = $request->billing_address;
             $data->billing_person = $request->billing_person;
+            $data->agreement_date = $request->agreement_date;
+            $data->renew_date = $request->renew_date;
+            $data->validity_date = $request->validity_date;
             $data->status = 1;
 
 
@@ -124,16 +128,20 @@ class CustomerController extends Controller
         try {
             $data = Customer::findOrFail(encryptor('decrypt',$id));
             $data->name = $request->name;
+            $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
-            $data->district_id = $request->district_id;
-            $data->upazila_id = $request->upazila_id;
-            $data->union_id = $request->union_id;
-            $data->ward_id = $request->ward_id;
+            // $data->district_id = $request->district_id;
+            // $data->upazila_id = $request->upazila_id;
+            // $data->union_id = $request->union_id;
+            // $data->ward_id = $request->ward_id;
             $data->contact_person = $request->contact_person;
             $data->contact_number = $request->contact_number;
             $data->billing_address = $request->billing_address;
             $data->billing_person = $request->billing_person;
+            $data->agreement_date = $request->agreement_date;
+            $data->renew_date = $request->renew_date;
+            $data->validity_date = $request->validity_date;
             $data->status = 1;
 
 
