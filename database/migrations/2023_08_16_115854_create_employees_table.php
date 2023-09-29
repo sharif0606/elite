@@ -63,8 +63,14 @@ return new class extends Migration
             $table->string('bn_spouse_name')->nullable();
             $table->string('bn_song_name')->nullable();
             $table->string('bn_daughters_name')->nullable();
-/*End Of Bangla Form */
 
+            $table->string('bn_post_allowance')->nullable();
+            $table->string('bn_traning_cost')->comment('detaction by 6 month')->nullable();
+            $table->string('bn_bank_name')->nullable();
+            $table->string('bn_brance_name')->nullable();
+            $table->string('bn_ac_no')->nullable();
+            $table->string('bn_routing_number')->nullable();
+/*End Of Bangla Form */
 
             $table->string('en_applicants_name')->nullable();
             $table->string('en_fathers_name')->nullable();
