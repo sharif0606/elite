@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('ward_id')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('contact_number')->nullable();
+            $table->string('file_upload_name')->nullable();
+            $table->string('file_upload')->nullable();
             $table->string('billing_address')->nullable();
             $table->string('billing_person')->nullable();
             $table->date('agreement_date')->nullable();
