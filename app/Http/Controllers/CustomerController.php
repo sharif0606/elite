@@ -60,6 +60,7 @@ class CustomerController extends Controller
             $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
+            $data->file_upload_name = $request->file_upload_name;
             // $data->district_id = $request->district_id;
             // $data->upazila_id = $request->upazila_id;
             // $data->union_id = $request->union_id;
@@ -74,6 +75,8 @@ class CustomerController extends Controller
             $data->status = 1;
 
 
+            if($request->has('file_upload'))
+            $data->file_upload=$this->uploadImage($request->file_upload,'uploads/customer/file_upload/');
             if($request->has('logo'))
             $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
 
@@ -131,6 +134,7 @@ class CustomerController extends Controller
             $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
+            $data->file_upload_name = $request->file_upload_name;
             // $data->district_id = $request->district_id;
             // $data->upazila_id = $request->upazila_id;
             // $data->union_id = $request->union_id;
@@ -144,7 +148,8 @@ class CustomerController extends Controller
             $data->validity_date = $request->validity_date;
             $data->status = 1;
 
-
+            if($request->has('file_upload'))
+            $data->file_upload=$this->uploadImage($request->file_upload,'uploads/customer/file_upload/');
             if($request->has('logo'))
                 $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
 

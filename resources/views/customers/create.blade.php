@@ -149,6 +149,18 @@
                             <input type="date" id="validity_date" value="{{old('validity_date')}}" class="form-control" placeholder="" name="validity_date">
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="file_upload_name">File Upload Name</label>
+                            <input type="text" id="file_upload_name" value="{{old('file_upload_name')}}" class="form-control" placeholder="" name="file_upload_name">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="file_upload">Upload File</label>
+                            <input type="file" id="file_upload" value="{{old('file_upload')}}" class="form-control" placeholder="" name="file_upload">
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="address">Address</label>
