@@ -114,6 +114,13 @@ class EmployeeController extends Controller
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
+            $employee->bn_post_allowance = $request->bn_post_allowance;
+            $employee->bn_traning_cost = $request->bn_traning_cost;
+            $employee->bn_traning_cost_byMonth = $request->bn_traning_cost_byMonth;
+            $employee->bn_bank_name = $request->bn_bank_name;
+            $employee->bn_brance_name = $request->bn_brance_name;
+            $employee->bn_ac_no = $request->bn_ac_no;
+            $employee->bn_routing_number = $request->bn_routing_number;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;
@@ -295,6 +302,13 @@ class EmployeeController extends Controller
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
+            $employee->bn_post_allowance = $request->bn_post_allowance;
+            $employee->bn_traning_cost = $request->bn_traning_cost;
+            $employee->bn_traning_cost_byMonth = $request->bn_traning_cost_byMonth;
+            $employee->bn_bank_name = $request->bn_bank_name;
+            $employee->bn_brance_name = $request->bn_brance_name;
+            $employee->bn_ac_no = $request->bn_ac_no;
+            $employee->bn_routing_number = $request->bn_routing_number;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;

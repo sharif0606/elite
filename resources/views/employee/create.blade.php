@@ -550,10 +550,70 @@
                             @if($errors->has('bn_jobpost_id'))
                                 <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
                             @endif
-                            {{--  <input type="text" id="bn_jobpost_id" value="{{old('bn_jobpost_id')}}" class="form-control @error('bn_jobpost_id') is-invalid @enderror" placeholder="আবেদিত পদ" name="bn_jobpost_id">
-                            @if($errors->has('bn_jobpost_id'))
-                                <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
-                            @endif  --}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_post_allowance">পোস্ট এলাউন্স</label>
+                            <input type="text" id="bn_post_allowance" value="{{old('bn_post_allowance')}}" class="form-control @error('bn_post_allowance') is-invalid @enderror" placeholder="পোস্ট এলাউন্স" name="bn_post_allowance">
+                            @if($errors->has('bn_post_allowance'))
+                                <span class="text-danger"> {{ $errors->first('bn_post_allowance') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_traning_cost">ট্রেনিং খরচ</label>
+                            <input type="text" id="bn_traning_cost" value="{{old('bn_traning_cost')}}" class="form-control @error('bn_traning_cost') is-invalid @enderror" placeholder="ট্রেনিং খরচ" name="bn_traning_cost">
+                            @if($errors->has('bn_traning_cost'))
+                                <span class="text-danger"> {{ $errors->first('bn_traning_cost') }}</span>
+                            @endif
+                            <input type="hidden" id="bn_traning_cost_byMonth" value="6" class="form-control @error('bn_traning_cost_byMonth') is-invalid @enderror" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
+                        </div>
+                    </div>
+                    {{--  <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_traning_cost_byMonth">ট্রেনিং খরচ মাস</label>
+                            <input type="text" id="bn_traning_cost_byMonth" value="{{old('bn_traning_cost_byMonth')}}" class="form-control @error('bn_traning_cost_byMonth') is-invalid @enderror" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
+                            @if($errors->has('bn_traning_cost_byMonth'))
+                                <span class="text-danger"> {{ $errors->first('bn_traning_cost_byMonth') }}</span>
+                            @endif
+                        </div>
+                    </div>  --}}
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_bank_name">ব্যাংক নাম</label>
+                            <input type="text" id="bn_bank_name" value="{{old('bn_bank_name')}}" class="form-control @error('bn_bank_name') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_bank_name">
+                            @if($errors->has('bn_bank_name'))
+                                <span class="text-danger"> {{ $errors->first('bn_bank_name') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_brance_name">ব্রাঞ্চ নাম</label>
+                            <input type="text" id="bn_brance_name" value="{{old('bn_brance_name')}}" class="form-control @error('bn_brance_name') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_brance_name">
+                            @if($errors->has('bn_brance_name'))
+                                <span class="text-danger"> {{ $errors->first('bn_brance_name') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_ac_no">একাউন্ট নং</label>
+                            <input type="text" id="bn_ac_no" value="{{old('bn_ac_no')}}" class="form-control @error('bn_ac_no') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_ac_no">
+                            @if($errors->has('bn_ac_no'))
+                                <span class="text-danger"> {{ $errors->first('bn_ac_no') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_routing_number">রাউটিং নাম</label>
+                            <input type="text" id="bn_routing_number" value="{{old('bn_routing_number')}}" class="form-control @error('bn_routing_number') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_routing_number">
+                            @if($errors->has('bn_routing_number'))
+                                <span class="text-danger"> {{ $errors->first('bn_routing_number') }}</span>
+                            @endif
                         </div>
                     </div>
                 </div>
