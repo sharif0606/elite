@@ -111,16 +111,36 @@ class InvoiceGenerateController extends Controller
             ->select('employee_assigns.*', 'employee_assign_details.*');
 
         if ($request->customer_id) {
-            $query->where('employee_assigns.customer_id', $request->customer_id);
+            $query = $query->where('employee_assigns.customer_id', $request->customer_id);
         }
 
         if ($request->start_date && $request->end_date) {
-            $startDate = Carbon::parse($request->start_date)->toDateString();
-            $endDate = Carbon::parse($request->end_date)->toDateString();
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
 
-            $query->where(function($query) use ($startDate, $endDate) {
-                $query->where('employee_assign_details.start_date', '>=', $startDate)
-                ->where('employee_assign_details.end_date', '<=', $endDate);
+            $query = $query->where(function($query) use ($startDate, $endDate) {
+                $query->where(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('employee_assign_details.start_date', '>=', $startDate)
+                    ->whereDate('employee_assign_details.end_date', '<=', $endDate);
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('employee_assign_details.start_date', '>=', $startDate)
+                    ->whereNull('employee_assign_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('employee_assign_details.start_date', '<=', $startDate)
+                    ->whereNull('employee_assign_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('employee_assign_details.start_date', '<=', $startDate)
+                    ->whereDate('employee_assign_details.end_date', '>=', $startDate);
+                });
+
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('employee_assign_details.start_date', '<=', $endDate)
+                    ->whereDate('employee_assign_details.end_date', '>=', $endDate);
+                });
+
             });
         }
 
