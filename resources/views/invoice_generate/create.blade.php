@@ -54,29 +54,22 @@
                             </div>
                             <div class="row mt-5 table-responsive-sm">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <tr class="text-center">
-                                        <th>S.L</th>
-                                        <th>Service</th>
-                                        <th>Rate</th>
-                                        <th>Total Person</th>
-                                        <th>Working Days</th>
-                                        <th>Total Hours</th>
-                                        <th>Rate per hours</th>
-                                        <th>Vat</th>
-                                        <th>Total Amount</th>
-                                    </tr>
-                                    <tr style="text-align: center;">
-                                        <td>01</td>
-                                        <td>Security In-Charg</td>
-                                        <td>20,076/-</td>
-                                        <td>01</td>
-                                        <th>23</th>
-                                        <td>184</td>
-                                        <td>109.10/-</td>
-                                        <td>109.10/-</td>
-                                        <td>20,076/-</td>
-                                    </tr>
-                                    <tr style="text-align: center;">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th>S.L</th>
+                                            <th>Service</th>
+                                            <th>Rate</th>
+                                            <th>Total Person</th>
+                                            <th>Working Days</th>
+                                            <th>Total Hours</th>
+                                            <th>Rate per hours</th>
+                                            <th>Vat</th>
+                                            <th>Total Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="show_invoice_data">
+                                    </tbody>
+                                    {{--  <tr style="text-align: center;">
                                         <td>02</td>
                                         <td>Security Supervisor</td>
                                         <td>15,600/-</td>
@@ -86,22 +79,24 @@
                                         <td>84.78/-</td>
                                         <td>84.78/-</td>
                                         <td>46,800/-</td>
-                                    </tr>
-                                    <tr style="text-align: center;">
-                                        <td></td>
-                                        <th colspan="7">Sub Tatal</th>
-                                        <td>3,11,904/-</td>
-                                    </tr>
-                                    <tr id="repeater_less" style="text-align: center;">
-                                        <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
-                                        <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
-                                        <td><input class="form-control text-center" type="text" placeholder="amount" name=""></td>
-                                    </tr>
-                                    <tr style="text-align: center;">
-                                        <td></td>
-                                        <th colspan="7">Tatal</th>
-                                        <td>3,08,482/-</td>
-                                    </tr>
+                                    </tr>  --}}
+                                    <tfoot>
+                                        <tr style="text-align: center;">
+                                            <td></td>
+                                            <th colspan="7">Sub Tatal</th>
+                                            <td>3,11,904/-</td>
+                                        </tr>
+                                        <tr id="repeater_less" style="text-align: center;">
+                                            <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
+                                            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
+                                            <td><input class="form-control text-center" type="text" placeholder="amount" name=""></td>
+                                        </tr>
+                                        <tr style="text-align: center;">
+                                            <td></td>
+                                            <th colspan="7">Tatal</th>
+                                            <td>3,08,482/-</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div class="d-flex justify-content-end my-2">
@@ -126,8 +121,25 @@
             type: "GET",
             dataType: "json",
             data: { customer_id:customer,start_date:startDate,end_date:endDate },
-            success: function(data) {
-                console.log(data);
+            success: function(invoice_data) {
+                console.log(invoice_data);
+                let selectElement = $('.show_invoice_data');
+                    selectElement.empty();
+                $.each(invoice_data, function (index, value) {
+
+                    selectElement.append(
+                        `<tr style="text-align: center;">
+                            <td>${value.id}</td>
+                            <td>${value.name_bn}</td>
+                            <td>${value.rate}</td>
+                            <td>${value.qty}</td>
+                            <td>${value.working_days}</td>
+                            <td>${value.total_hours}</td>
+                            <td>${value.rate_per_hour}</td>
+                            <td>${value.vat}</td>
+                            <td>${value.total_amount}</td>
+                        </tr>`);
+                });
 
             },
         });

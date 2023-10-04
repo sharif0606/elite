@@ -107,8 +107,8 @@ class InvoiceGenerateController extends Controller
     // }
     public function getInvoiceData(Request $request)
     {
-        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')
-            ->select('employee_assigns.*', 'employee_assign_details.*');
+        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')
+            ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*');
 
         if ($request->customer_id) {
             $query = $query->where('employee_assigns.customer_id', $request->customer_id);
