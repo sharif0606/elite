@@ -125,21 +125,34 @@
                 console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');
                     selectElement.empty();
-                $.each(invoice_data, function (index, value) {
+                    $.each(invoice_data, function(index, value) {
+                        console.log("value.start_date:", value.start_date);
+                        console.log("this start date:", startDate);
+                        let workingDays;
+                        if (value.start_date > startDate && value.end_date == null) {
+                            workingDays = endDate - value.start_date;
+                        } else if (value.start_date < startDate && value.end_date == null) {
+                            workingDays = endDate - startDate;
+                        } else if (value.start_date < startDate && value.end_date < endDate) {
+                            workingDays = value.end_date - value.start_date;
+                        } else {
+                            workingDays = '';
+                        }
 
-                    selectElement.append(
-                        `<tr style="text-align: center;">
-                            <td>${value.id}</td>
-                            <td>${value.name_bn}</td>
-                            <td>${value.rate}</td>
-                            <td>${value.qty}</td>
-                            <td>${value.working_days}</td>
-                            <td>${value.total_hours}</td>
-                            <td>${value.rate_per_hour}</td>
-                            <td>${value.vat}</td>
-                            <td>${value.total_amount}</td>
-                        </tr>`);
-                });
+                        selectElement.append(
+                            `<tr style="text-align: center;">
+                                <td>${value.id}</td>
+                                <td>${value.name_bn}</td>
+                                <td>${value.rate}</td>
+                                <td>${value.qty}</td>
+                                <td>${workingDays}</td>
+                                <td>${value.hours}</td>
+                                <td>Rate per hours</td>
+                                <td>Vat</td>
+                                <td>${value.rate*value.hours}</td>
+                            </tr>`
+                        );
+                    });
 
             },
         });
