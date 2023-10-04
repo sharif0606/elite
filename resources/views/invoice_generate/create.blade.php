@@ -126,15 +126,21 @@
                 let selectElement = $('.show_invoice_data');
                     selectElement.empty();
                     $.each(invoice_data, function(index, value) {
-                        console.log("value.start_date:", value.start_date);
-                        console.log("this start date:", startDate);
+                        //console.log("value.start_date:", value.start_date);
+                        //console.log("this start date:", startDate);
                         let workingDays;
                         if (value.start_date > startDate && value.end_date == null) {
-                            workingDays = endDate - value.start_date;
+                            workingDays = new Date(endDate) - new Date(value.start_date);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
                         } else if (value.start_date < startDate && value.end_date == null) {
-                            workingDays = endDate - startDate;
+                            workingDays = new Date(endDate) - new Date(startDate);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
                         } else if (value.start_date < startDate && value.end_date < endDate) {
-                            workingDays = value.end_date - value.start_date;
+                            workingDays = new Date(value.end_date) - new Date(value.start_date);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                        } else if (value.start_date > startDate && value.end_date < endDate) {
+                            workingDays = new Date(value.end_date) - new Date(value.start_date);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
                         } else {
                             workingDays = '';
                         }
