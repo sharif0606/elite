@@ -160,8 +160,8 @@
                                 <td>${value.qty}</td>
                                 <td>${workingDays}</td>
                                 <td>${totalHoures}</td>
-                                <td>Rate per hours</td>
-                                <td>${value.rate*value.hours}</td>
+                                <td>${parseFloat((value.rate*value.qty)/totalHoures).toFixed(2)}</td>
+                                <td>${parseFloat(((value.rate*value.qty)/totalHoures)*totalHoures).toFixed(2)}</td>
                             </tr>`
                         );
                         counter++;
