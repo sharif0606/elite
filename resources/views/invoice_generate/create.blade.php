@@ -63,7 +63,6 @@
                                             <th>Working Days</th>
                                             <th>Total Hours</th>
                                             <th>Rate per hours</th>
-                                            <th>Vat</th>
                                             <th>Total Amount</th>
                                         </tr>
                                     </thead>
@@ -83,17 +82,17 @@
                                     <tfoot>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="7">Sub Tatal</th>
+                                            <th colspan="6">Sub Tatal</th>
                                             <td>3,11,904/-</td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
-                                            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
+                                            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
                                             <td><input class="form-control text-center" type="text" placeholder="amount" name=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="7">Tatal</th>
+                                            <th colspan="6">Tatal</th>
                                             <td>3,08,482/-</td>
                                         </tr>
                                     </tfoot>
@@ -116,6 +115,7 @@
         var customer=$('.customer_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
+        let counter = 0;
         $.ajax({
             url: "{{route('get_invoice_data')}}",
             type: "GET",
@@ -129,35 +129,42 @@
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
                         let workingDays;
-                        if (value.start_date > startDate && value.end_date == null) {
+                        let totalHoures;
+                        if (value.start_date >= startDate && value.end_date == null) {
                             workingDays = new Date(endDate) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
-                        } else if (value.start_date < startDate && value.end_date == null) {
+                        } else if (value.start_date <= startDate && value.end_date == null) {
                             workingDays = new Date(endDate) - new Date(startDate);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
-                        } else if (value.start_date < startDate && value.end_date < endDate) {
+                        } else if (value.start_date <= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
-                        } else if (value.start_date > startDate && value.end_date < endDate) {
+                        } else if (value.start_date >= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
                         } else {
                             workingDays = '';
                         }
 
+                        if(value.hours=="1"){
+                            totalHoures=(8*(value.qty)*workingDays);
+                        }else{
+                            totalHoures=(12*(value.qty)*workingDays);
+                        }
+
                         selectElement.append(
                             `<tr style="text-align: center;">
-                                <td>${value.id}</td>
+                                <td>${counter + 1}</td>
                                 <td>${value.name_bn}</td>
                                 <td>${value.rate}</td>
                                 <td>${value.qty}</td>
                                 <td>${workingDays}</td>
-                                <td>${value.hours}</td>
+                                <td>${totalHoures}</td>
                                 <td>Rate per hours</td>
-                                <td>Vat</td>
                                 <td>${value.rate*value.hours}</td>
                             </tr>`
                         );
+                        counter++;
                     });
 
             },
