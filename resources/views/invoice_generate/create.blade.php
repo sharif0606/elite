@@ -82,8 +82,8 @@
                                     <tfoot>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="6">Sub Tatal</th>
-                                            <td>3,11,904/-</td>
+                                            <th colspan="6" style="text-align: end;">Sub Tatal</th>
+                                            <td><input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value=""></td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
@@ -130,6 +130,7 @@
                         //console.log("this start date:", startDate);
                         let workingDays;
                         let totalHoures;
+                        let ratePerHoures;
                         if (value.start_date >= startDate && value.end_date == null) {
                             workingDays = new Date(endDate) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
@@ -148,8 +149,10 @@
 
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*workingDays);
+                            ratePerHoures=parseFloat(value.rate/(8*30)).toFixed(2);
                         }else{
                             totalHoures=(12*(value.qty)*workingDays);
+                            ratePerHoures=parseFloat(value.rate/(12*30)).toFixed(2);
                         }
 
                         selectElement.append(
@@ -160,22 +163,32 @@
                                 <td>${value.qty}</td>
                                 <td>${workingDays}</td>
                                 <td>${totalHoures}</td>
-                                <td>${parseFloat((value.rate*value.qty)/totalHoures).toFixed(2)}</td>
-                                <td>${parseFloat(((value.rate*value.qty)/totalHoures)*totalHoures).toFixed(2)}</td>
+                                <td>${ratePerHoures}</td>
+                                <td>${parseFloat(totalHoures*ratePerHoures).toFixed(2)}
+                                    <input class="total_amounts" type="hidden" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
+                                </td>
                             </tr>`
                         );
                         counter++;
                     });
+                    subtotalAmount()
 
             },
         });
      }
+     function subtotalAmount(){
+        var subTotal=0;
+        $('.total_amounts').each(function(){
+            subTotal+=parseFloat($(this).val());
+        });
+        $('.sub_total_amount').val(subTotal);
+    }
      function addRow(){
 
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='RemoveRow(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Less: 01 duty absent of Receptionist on 17-18/07/2023"></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Less: 01 duty absent of Receptionist on 17-18/07/2023"></td>
             <td><input class="form-control text-center" type="text" placeholder="amount"></td>
         </tr>
         `;
