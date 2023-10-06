@@ -45,8 +45,8 @@
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Vat</b></label>
-                                    <input class="form-control" type="text" name="vat" value="" placeholder="Vat">
+                                    <label for=""><b>Vat(%)</b></label>
+                                    <input class="form-control vat" type="text" name="vat" value="" placeholder="Vat">
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
@@ -83,17 +83,25 @@
                                         <tr style="text-align: center;">
                                             <td></td>
                                             <th colspan="6" style="text-align: end;">Sub Tatal</th>
-                                            <td><input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value=""></td>
+                                            <td>
+                                                <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
+                                                <input class="lessP" type="hidden" name="less_total[]" value="">
+                                            </td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
                                             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
-                                            <td><input class="form-control text-center" type="text" placeholder="amount" name=""></td>
+                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="6">Tatal</th>
-                                            <td>3,08,482/-</td>
+                                            <th colspan="6">Tatal Tk</th>
+                                            <td><input readonly type="text" class="form-control text-center total_tk" name="total_tk" value=""></td>
+                                        </tr>
+                                        <tr style="text-align: center;">
+                                            <td></td>
+                                            <th colspan="6">Vat</th>
+                                            <td>3,08,482</td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -115,6 +123,7 @@
         var customer=$('.customer_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
+        var vat=$('.vat').val();
         let counter = 0;
         $.ajax({
             url: "{{route('get_invoice_data')}}",
@@ -183,13 +192,25 @@
         });
         $('.sub_total_amount').val(subTotal);
     }
+     function lessCount(e){
+        var totalLess=0;
+        $('.less_count').each(function(){
+            totalLess+=parseFloat($(this).val());
+            //alert(totalLess)
+        });
+        $('.lessP').val(totalLess);
+        var subTotal=$('.sub_total_amount').val();
+        var totalLes=$('.lessP').val();
+        var totalTaka=subTotal-totalLes
+        $('.total_tk').val(totalTaka);
+    }
      function addRow(){
 
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='RemoveRow(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Less: 01 duty absent of Receptionist on 17-18/07/2023"></td>
-            <td><input class="form-control text-center" type="text" placeholder="amount"></td>
+            <td><input class="form-control text-center less_count"  onkeyup="lessCount(this)" type="text" placeholder="amount"></td>
         </tr>
         `;
             $('#repeater_less').after(row);
