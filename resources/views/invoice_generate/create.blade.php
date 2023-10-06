@@ -101,7 +101,12 @@
                                         <tr style="text-align: center;">
                                             <td></td>
                                             <th colspan="6">Vat</th>
-                                            <td>3,08,482</td>
+                                            <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                        </tr>
+                                        <tr style="text-align: center;">
+                                            <td></td>
+                                            <th colspan="6">Grand Total</th>
+                                            <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -123,7 +128,6 @@
         var customer=$('.customer_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
-        var vat=$('.vat').val();
         let counter = 0;
         $.ajax({
             url: "{{route('get_invoice_data')}}",
@@ -201,8 +205,13 @@
         $('.lessP').val(totalLess);
         var subTotal=$('.sub_total_amount').val();
         var totalLes=$('.lessP').val();
+        var vat=$('.vat').val();
         var totalTaka=subTotal-totalLes
         $('.total_tk').val(totalTaka);
+        var vatTaka=((totalTaka*vat)/100);
+        var grandTotal=totalTaka+vatTaka
+        $('.vat_taka').val(vatTaka);
+        $('.grand_total').val(grandTotal);
     }
      function addRow(){
 
