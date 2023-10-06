@@ -52,7 +52,7 @@
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
                                 </div>
                             </div>
-                            <div class="row mt-5 table-responsive-sm">
+                            <div class="row mt-5 table-responsive-sm d-none show_click">
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr class="text-center">
