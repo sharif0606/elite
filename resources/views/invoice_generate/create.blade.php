@@ -188,6 +188,7 @@
 
             },
         });
+        $('.show_click').removeClass('d-none');
      }
      function subtotalAmount(){
         var subTotal=0;
