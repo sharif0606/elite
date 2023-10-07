@@ -183,7 +183,7 @@
                                     <input class="" type="hidden" name="total_houres[]" value="${totalHoures}">
                                 </td>
                                 <td>${ratePerHoures}
-                                    <input class="" type="hidden" name="total_houres[]" value="${ratePerHoures}">
+                                    <input class="" type="hidden" name="rate_per_houres[]" value="${ratePerHoures}">
                                 </td>
                                 <td>${parseFloat(totalHoures*ratePerHoures).toFixed(2)}
                                     <input class="total_amounts" type="hidden" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
@@ -225,7 +225,6 @@
         $('.grand_total').val(grandTotal);
     }
      function addRow(){
-
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='RemoveRow(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>

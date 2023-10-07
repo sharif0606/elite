@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Crm\InvoiceGenerate;
+use App\Models\Crm\InvoiceGenerateDetails;
+use App\Models\Crm\InvoiceGenerateLess;
 use App\Models\Crm\EmployeeAssign;
 use App\Models\Crm\EmployeeAssignDetails;
 
@@ -48,7 +50,56 @@ class InvoiceGenerateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new InvoiceGenerate;
+            $data->customer_id = $request->customer_id;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
+            $data->bill_date = $request->bill_date;
+            $data->vat = $request->vat;
+            $data->sub_total_amount = $request->sub_total_amount;
+            $data->total_tk = $request->total_tk;
+            $data->vat_taka = $request->vat_taka;
+            $data->grand_total = $request->grand_total;
+            $data->status = 0;
+            if($data->save()){
+                if($request->job_post_id){
+                    foreach($request->job_post_id as $key => $value){
+                        if($value){
+                            $details = new InvoiceGenerateDetails;
+                            $details->invoice_id=$data->id;
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->employee_qty=$request->employee_qty[$key];
+                            $details->warking_day=$request->warking_day[$key];
+                            $details->total_houres=$request->total_houres[$key];
+                            $details->rate_per_houres=$request->rate_per_houres[$key];
+                            $details->total_amounts=$request->total_amounts[$key];
+                            $details->status=0;
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if($request->less_amount){
+                foreach($request->less_amount as $i=>$less_amount){
+                    if($less_amount){
+                        $olddue=new InvoiceGenerateLess;
+                        $olddue->invoice_id=$data->id;
+                        $olddue->less_description=$request->less_description[$i];
+                        $olddue->less_amount=$less_amount;
+                        $olddue->status=0;
+                        $olddue->save();
+                    }
+                }
+            }
+            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
