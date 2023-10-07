@@ -128,6 +128,12 @@
         var customer=$('.customer_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
+
+        let workingdayinmonth= new Date(startDate);
+        let smonth=workingdayinmonth.getMonth()+1;
+        let syear=workingdayinmonth.getFullYear();
+            workingdayinmonth= new Date(syear, smonth, 0).getDate();
+
         let counter = 0;
         $.ajax({
             url: "{{route('get_invoice_data')}}",
@@ -141,6 +147,7 @@
                     $.each(invoice_data, function(index, value) {
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
+
                         let workingDays;
                         let totalHoures;
                         let ratePerHoures;
@@ -162,10 +169,10 @@
 
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*workingDays);
-                            ratePerHoures=parseFloat(value.rate/(8*30)).toFixed(2);
+                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth)).toFixed(2);
                         }else{
                             totalHoures=(12*(value.qty)*workingDays);
-                            ratePerHoures=parseFloat(value.rate/(12*30)).toFixed(2);
+                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth)).toFixed(2);
                         }
 
                         selectElement.append(
@@ -193,20 +200,21 @@
      function subtotalAmount(){
         var subTotal=0;
         $('.total_amounts').each(function(){
-            subTotal+=parseFloat($(this).val());
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
         $('.sub_total_amount').val(subTotal);
     }
      function lessCount(e){
         var totalLess=0;
         $('.less_count').each(function(){
-            totalLess+=parseFloat($(this).val());
+            totalLess+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
             //alert(totalLess)
         });
+        console.log(totalLess)
         $('.lessP').val(totalLess);
         var subTotal=$('.sub_total_amount').val();
         var totalLes=$('.lessP').val();
-        var vat=$('.vat').val();
+        var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
         var totalTaka=subTotal-totalLes
         $('.total_tk').val(totalTaka);
         var vatTaka=((totalTaka*vat)/100);
