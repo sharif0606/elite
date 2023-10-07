@@ -191,7 +191,8 @@
                         );
                         counter++;
                     });
-                    subtotalAmount()
+                    subtotalAmount();
+                    lessCount();
 
             },
         });
@@ -210,15 +211,15 @@
             totalLess+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
             //alert(totalLess)
         });
-        console.log(totalLess)
+        //console.log(totalLess)
         $('.lessP').val(totalLess);
         var subTotal=$('.sub_total_amount').val();
         var totalLes=$('.lessP').val();
         var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
         var totalTaka=subTotal-totalLes
         $('.total_tk').val(totalTaka);
-        var vatTaka=((totalTaka*vat)/100);
-        var grandTotal=totalTaka+vatTaka
+        var vatTaka=parseFloat((totalTaka*vat)/100).toFixed(2);
+        var grandTotal=parseFloat(totalTaka+vatTaka).toFixed(2);
         $('.vat_taka').val(vatTaka);
         $('.grand_total').val(grandTotal);
     }
