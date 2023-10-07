@@ -68,17 +68,6 @@
                                     </thead>
                                     <tbody class="show_invoice_data">
                                     </tbody>
-                                    {{--  <tr style="text-align: center;">
-                                        <td>02</td>
-                                        <td>Security Supervisor</td>
-                                        <td>15,600/-</td>
-                                        <td>03</td>
-                                        <th>23</th>
-                                        <td>552</td>
-                                        <td>84.78/-</td>
-                                        <td>84.78/-</td>
-                                        <td>46,800/-</td>
-                                    </tr>  --}}
                                     <tfoot>
                                         <tr style="text-align: center;">
                                             <td></td>
@@ -90,8 +79,8 @@
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
-                                            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name=""></td>
-                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name=""></td>
+                                            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
@@ -178,12 +167,24 @@
                         selectElement.append(
                             `<tr style="text-align: center;">
                                 <td>${counter + 1}</td>
-                                <td>${value.name_bn}</td>
-                                <td>${value.rate}</td>
-                                <td>${value.qty}</td>
-                                <td>${workingDays}</td>
-                                <td>${totalHoures}</td>
-                                <td>${ratePerHoures}</td>
+                                <td>${value.name_bn}
+                                    <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
+                                </td>
+                                <td>${value.rate}
+                                    <input class="" type="hidden" name="rate[]" value="${value.rate}">
+                                </td>
+                                <td>${value.qty}
+                                    <input class="" type="hidden" name="employee_qty[]" value="${value.qty}">
+                                </td>
+                                <td>${workingDays+1}
+                                    <input class="" type="hidden" name="warking_day[]" value="${workingDays+1}">
+                                </td>
+                                <td>${totalHoures}
+                                    <input class="" type="hidden" name="total_houres[]" value="${totalHoures}">
+                                </td>
+                                <td>${ratePerHoures}
+                                    <input class="" type="hidden" name="total_houres[]" value="${ratePerHoures}">
+                                </td>
                                 <td>${parseFloat(totalHoures*ratePerHoures).toFixed(2)}
                                     <input class="total_amounts" type="hidden" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
                                 </td>
@@ -216,10 +217,10 @@
         var subTotal=$('.sub_total_amount').val();
         var totalLes=$('.lessP').val();
         var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
-        var totalTaka=subTotal-totalLes
+        var totalTaka=parseFloat(subTotal-totalLes).toFixed(2);
         $('.total_tk').val(totalTaka);
         var vatTaka=parseFloat((totalTaka*vat)/100).toFixed(2);
-        var grandTotal=parseFloat(totalTaka+vatTaka).toFixed(2);
+        var grandTotal=parseFloat(totalTaka) + parseFloat(vatTaka);
         $('.vat_taka').val(vatTaka);
         $('.grand_total').val(grandTotal);
     }
@@ -228,8 +229,8 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='RemoveRow(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Less: 01 duty absent of Receptionist on 17-18/07/2023"></td>
-            <td><input class="form-control text-center less_count"  onkeyup="lessCount(this)" type="text" placeholder="amount"></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
         </tr>
         `;
             $('#repeater_less').after(row);
