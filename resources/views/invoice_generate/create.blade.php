@@ -222,7 +222,7 @@
         var vatTaka=parseFloat((totalTaka*vat)/100).toFixed(2);
         var grandTotal=parseFloat(totalTaka) + parseFloat(vatTaka);
         $('.vat_taka').val(vatTaka);
-        $('.grand_total').val(grandTotal);
+        $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
     }
      function addRow(){
         var row=`

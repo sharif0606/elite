@@ -12,7 +12,11 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Details')}}</th>
+                        <th scope="col">{{__('Customer')}}</th>
+                        <th scope="col">{{__('Start Date')}}</th>
+                        <th scope="col">{{__('End Date')}}</th>
+                        <th scope="col">{{__('Bill Date')}}</th>
+                        <th scope="col">{{__('Grand Total')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -20,13 +24,11 @@
                     @forelse($invoice as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td>
-                            {{--  @if ($e->details)
-                            <span><strong>Job Post:</strong> {{$de->jobpost?->name }}</span>
-                            <span><strong>Qty:</strong> {{ $de->qty }}</span>
-                            <span><strong>Rate:</strong> {{ $de->rate }}</span><br/>
-                            @endif  --}}
-                        </td>
+                        <td>{{ $e->customer?->name }}</td>
+                        <td>{{ $e->start_date }}</td>
+                        <td>{{ $e->end_date }}</td>
+                        <td>{{ $e->bill_date }}</td>
+                        <td>{{ $e->grand_total }}</td>
                         <td>
                             <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
