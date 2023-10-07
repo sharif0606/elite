@@ -110,7 +110,7 @@ class InvoiceGenerateController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('invoice_generate.show');
     }
 
     /**

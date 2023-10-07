@@ -92,7 +92,6 @@
                 <div class="col-6 col-sm-6" style="padding-left: 10px;">
                     <div style="text-align: center;">
                         <h5 style="padding-top: 5px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
-                        <p class="text-center m-0 p-0">ভর্তি ফরম:সকল অস্থায়ী পদের জন্য</p>
                         <p class="text-center m-0 p-0">বাড়ি নং-২,লেইন নং-২,রোড নং-২,ব্লক-''কে''</p>
                         <p class="text-center m-0 p-0">হালিশহর হাউজিং এষ্টেট,চট্টগ্রাম-৪২২৪</p>
                     </div>
@@ -102,48 +101,9 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-1">Cliant Name</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->name }}"></div>
-            </div>
-            <div class="row">
-                <div class="col-1">Address</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $guard->customer?->address }}"></div>
-            </div>
-            <div class="row p-3">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <td >SL No</td>
-                            <td>Job Post</td>
-                            <td>QTY</td>
-                            <td>Start Date</td>
-                            <td>End Date</td>
-                            <td>Rate</td>
-                            <th>{{__('Hours')}}</th>
-                            <th>{{__('Employee Payment')}}</th>
-                            <th>{{__('Ot-Rate')}}</th>
-                            <td>Total Rate</td>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        @if ($guard->details)
-                        @foreach ($guard->details as $de)
-                        <tr class="text-center">
-                            <td >{{ ++$loop->index  }}</td>
-                            <td>{{ $de->jobpost?->name }}</td>
-                            <td>{{ $de->qty }}</td>
-                            <td>{{ $de->start_date }}</td>
-                            <td>{{ $de->end_date }}</td>
-                            <td>{{ $de->rate }}</td>
-                            <td>{{ $de->hours }}</td>
-                            <td>{{ $de->employee_payment }}</td>
-                            <td>{{ $de->ot_rate }}</td>
-                            <td>200</td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
-                </table>
+                <div class="col-6">
+                    <img src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
+                </div>
             </div>
         </div>
     </section>
