@@ -83,6 +83,9 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
+        Route::get('/single-invoice-show1/{id}', [invoiceGenerate::class, 'getSingleInvoice1'])->name('invoiceShow1');
+        Route::get('/single-invoice-show2/{id}', [invoiceGenerate::class, 'getSingleInvoice2'])->name('invoiceShow2');
+        Route::get('/single-invoice-show3/{id}', [invoiceGenerate::class, 'getSingleInvoice3'])->name('invoiceShow3');
 
         /* get AjaX Data */
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');

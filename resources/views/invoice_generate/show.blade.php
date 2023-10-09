@@ -5,84 +5,6 @@
     <button type="button" class="btn btn-info no-print" onclick="printDiv('result_show')">Print</button>
 </div>  --}}
 <section id="result_show">
-    <style>
-        .tinput {
-            width: 100%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .semiTinput {
-            width: 44%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .semiSinput {
-            width: 64%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .sbinput {
-            width: 36%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .sinput {
-            width: 30%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .sminput {
-            width: 18%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .small {
-            width: 25%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .verySmall {
-            width: 10%;
-            outline: 0;
-            border-style: dashed;
-            border-width: 0 0 1px;
-            border-color: blue;
-            background-color: transparent;
-            {{--  color: white;  --}}
-        }
-        .tbl_border{
-            border: 1px solid;
-            border-collapse: collapse;
-        }
-    </style>
     <section>
         <div class="container">
             <div class="row p-3">
@@ -101,8 +23,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
-                    <img src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
+                <div class="col-6 mb-3">
+                    <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                        <img src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
+                    </a>
+                </div>
+                <div class="col-6 mb-3">
+                    <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                        <img src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
+                    </a>
+                </div>
+                <div class="col-6 mb-3">
+                    <a href="{{route('invoiceShow3',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                        <img src="{{ asset('assets/billcopy/Screenshot_3.png')}}" alt="No Image Found">
+                    </a>
                 </div>
             </div>
         </div>

@@ -110,7 +110,13 @@ class InvoiceGenerateController extends Controller
      */
     public function show($id)
     {
-        return view('invoice_generate.show');
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        return view('invoice_generate.show',compact('invoice_id'));
+    }
+    public function getSingleInvoice1($id)
+    {
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        return view('invoice_generate.single_show1',compact('invoice_id'));
     }
 
     /**
