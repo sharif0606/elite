@@ -6,7 +6,8 @@
     <title>Document</title>
 
 </head>
-<body>
+{{--  <button type="button" class="btn btn-info no-print" onclick="printDiv('result_show')">Print</button>  --}}
+<body id="result_show">
     <div style="text-align: center;"><h2>BILL COPY</h2></div>
     <table width="100%">
         <tr>
@@ -28,7 +29,7 @@
         <tr>
             <td width="40%" style="text-align: left;">Bill for Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
-            <td width="30%" style="text-align: center;">Date...................</td>
+            <td width="30%" style="text-align: center;">Date : {{ $invoice_id->bill_date }}</td>
         </tr>
     </table>
     <div style="padding: 0 70px 0 80px;">
@@ -40,19 +41,19 @@
             </tr>
             <tr>
                 <td width="15%">To:</td>
-                <td><b>Mamiya-OP (Bangladesh) Ltd</b></td>
+                <td><b>{{ $invoice_id->customer?->name }}</b></td>
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>Plot No. 33-46, Sector-03, CEPZ, South Halishahar</td>
+                <td>{{ $invoice_id->customer?->brance_name }}</td>
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>Chattogram-1223, Bangladesh.</td>
+                <td>{{ $invoice_id->customer?->billing_address }}</td>
             </tr>
             <tr>
                 <td width="15%"><b>Subject:</b></td>
-                <td><b>Security Services Bill for the Month of July-2023</b></td>
+                <td><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             </tr>
             <tr>
                 <td width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -61,86 +62,65 @@
         </table>
                 <div>
                     Reference to the above subject, We herewith submitted the security services bill for the period
-                    covering <b>21<sup>st</sup> June 2023 to 20<sup>th</sup> July-2023.</b>
+                    covering <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}.</b>
                 </div>
 
         <table border="1" width="100%" cellspacing="0">
-            <tr>
-                <th>S.L</th>
-                <th>Service</th>
-                <th>Rate</th>
-                <th>Total Person</th>
-                <th>Working Days</th>
-                <th>Total Hours</th>
-                <th>Rate per hours</th>
-                <th>Total Amount</th>
-            </tr>
-            <tr style="text-align: center;">
-                <td>01</td>
-                <td>Security In-Charg</td>
-                <td>20,076/-</td>
-                <td>01</td>
-                <th>23</th>
-                <td>184</td>
-                <td>109.10/-</td>
-                <td>20,076/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td>02</td>
-                <td>Security Supervisor</td>
-                <td>15,600/-</td>
-                <td>03</td>
-                <th>23</th>
-                <td>552</td>
-                <td>84.78/-</td>
-                <td>46,800/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td>03</td>
-                <td>Receptionist</td>
-                <td>14,676/-</td>
-                <td>01</td>
-                <th>23</th>
-                <td>184</td>
-                <td>79.76/-</td>
-                <td>14,676/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <th colspan="6">Sub Tatal</th>
-                <td>3,11,904/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <td colspan="6">Less: 02 duty absent of in-charge on 08-09/07/2023</td>
-                <td>1,338/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <td colspan="6">Less: 02 duty absent of Receptionist on 17-18/07/2023</td>
-                <td>978/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <td colspan="6">Less: 02 duty absent of Security Guard (B Grade) on 28-29/06/2023</td>
-                <td>706/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <td colspan="6">Less: 02 duty absent of Security Guard (Female) on 19/07/2023</td>
-                <td>400/-</td>
-            </tr>
-            <tr style="text-align: center;">
-                <td></td>
-                <th colspan="6">Tatal</th>
-                <td>{{ money_format($invoice_id->grand_total)}}</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>S.L</th>
+                    <th>Service</th>
+                    <th>Rate</th>
+                    <th>Total Person</th>
+                    <th>Working Days</th>
+                    <th>Total Hours</th>
+                    <th>Rate per hours</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($invoice_id->details)
+                @foreach ($invoice_id->details as $de)
+                <tr style="text-align: center;">
+                    <td >{{ ++$loop->index  }}</td>
+                    <td>{{ $de->jobpost?->name }}</td>
+                    <td>{{ $de->rate }}</td>
+                    <td>{{ $de->employee_qty }}</td>
+                    <td>{{ $de->warking_day }}</td>
+                    <td>{{ $de->total_houres }}</td>
+                    <td>{{ $de->rate_per_houres }}</td>
+                    <td>{{ $de->total_amounts }}</td>
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+            <tfoot>
+                <tr style="text-align: center;">
+                    <td></td>
+                    <th colspan="6">Sub Tatal</th>
+                    <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
+                </tr>
+                @if ($invoice_id->less)
+                @foreach ($invoice_id->less as $le)
+                <tr style="text-align: center;">
+                    <td></td>
+                    <td colspan="6">{{ $le->less_description }}</td>
+                    <td>{{ $le->less_amount }}</td>
+                </tr>
+                @endforeach
+                @endif
+                <tr style="text-align: center;">
+                    <td></td>
+                    <th colspan="6">Tatal</th>
+                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                </tr>
+            </tfoot>
         </table>
         <div>
             <p>
                 Total Amount in Words: <b>
                     @php
-                    $dueTotal = $invoice_id->grand_total;
+                    $dueTotal = $invoice_id->total_tk;
 
                     if ($dueTotal > 0) {
                         $textValue = getBangladeshCurrency($dueTotal);
@@ -176,5 +156,19 @@
             </td>
         </tr>
     </table>
+    <script>
+        function printDiv(divName) {
+            var prtContent = document.getElementById(divName);
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+            WinPrint.onload =function(){
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
+            }
+        }
+    </script>
 </body>
 </html>
