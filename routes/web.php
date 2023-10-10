@@ -23,8 +23,9 @@ use App\Http\Controllers\Crm\EmployeeRateController as employeeRate;
 use App\Http\Controllers\Settings\AdminUserController as admin;
 use App\Http\Controllers\Settings\UserProfileController as userprofile;
 
-
+/* HRM */
 use App\Http\Controllers\Employee\EmployeeController as employee;
+use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 
 /*crm*/
 use App\Http\Controllers\CustomerController as customer;
@@ -99,6 +100,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
 
 
         Route::resource('employee', employee::class);
+        Route::resource('salarySheet', salarySheet::class);
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
         Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');

@@ -82,6 +82,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('employee.index', ['role' =>currentUser()])}}">Employee</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>
+                                </li>
 
                             </ul>
                         </li>
