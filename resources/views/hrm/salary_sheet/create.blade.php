@@ -296,36 +296,84 @@
     function addRow(){
 
 var row=`
-<tr>
-    <td>
-        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
-        <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
-        <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
-    </td>
-    <td>
-        <input class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
-    </td>
-    <td><input class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
-    <td>
-        <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" placeholder="Duty Qty">
-    </td>
-    <td>
-        <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" placeholder="OT Qty">
-    </td>
-    <td>
-        <input class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" placeholder="Duty Amount">
-    </td>
-    <td>
-        <input class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" placeholder="Ot Amount">
-    </td>
-    <td>
-        <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="Total Amount">
-    </td>
-    <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-    </td>
-</tr>
+    <tr>
+        <td>1</td>
+        <td>
+            <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
+            <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
+            <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+        </td>
+        <td>
+            <input class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
+        </td>
+        <td><input class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
+        <td>
+            <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="number" name="duty_qty[]" placeholder="Duty Qty">
+        </td>
+        <td>
+            <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" placeholder="OT Qty">
+        </td>
+        <td>
+            <input class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" placeholder="Duty Amount">
+        </td>
+        <td>
+            <input class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" placeholder="Ot Amount">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+        </td>
+        <td>
+            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+        </td>
+    </tr>
 `;
     $('#customerduty').append(row);
 }
