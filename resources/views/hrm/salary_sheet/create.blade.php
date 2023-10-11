@@ -294,10 +294,11 @@
 </script>  --}}
 <script>
     function addRow(){
+        var rowCount = $('#customerduty tr').length;
 
 var row=`
     <tr>
-        <td>1</td>
+        <td>${rowCount+1}</td>
         <td>
             <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
@@ -371,7 +372,7 @@ var row=`
             <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
         </td>
         <td>
-            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         </td>
     </tr>
 `;
