@@ -33,9 +33,9 @@
                             <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
-                            </a>
+                            </a>  --}}
                         </td>
                     </tr>
                     @empty
