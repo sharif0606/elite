@@ -86,7 +86,7 @@
                     <td >{{ ++$loop->index  }}</td>
                     <td>{{ $de->jobpost?->name }}</td>
                     <td>{{ $de->rate }}</td>
-                    <td>01-31/072023</td>
+                    <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                     <td>{{ $de->employee_qty }}</td>
                     <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
                 </tr>
