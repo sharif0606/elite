@@ -23,19 +23,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 mb-3">
+                <div class="col-4 text-center">
                     <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
-                        <img src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-4 text-center">
                     <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
-                        <img src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-6 mb-3">
+                <div class="col-4 text-center">
                     <a href="{{route('invoiceShow3',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
-                        <img src="{{ asset('assets/billcopy/Screenshot_3.png')}}" alt="No Image Found">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_3.png')}}" alt="No Image Found">
                     </a>
                 </div>
             </div>

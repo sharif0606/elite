@@ -50,6 +50,7 @@ class InvoiceGenerateController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         try{
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
@@ -74,6 +75,8 @@ class InvoiceGenerateController extends Controller
                             $details->warking_day=$request->warking_day[$key];
                             $details->total_houres=$request->total_houres[$key];
                             $details->rate_per_houres=$request->rate_per_houres[$key];
+                            $details->st_date=$request->st_date[$key];
+                            $details->ed_date=$request->ed_date[$key];
                             $details->total_amounts=$request->total_amounts[$key];
                             $details->status=0;
                             $details->save();

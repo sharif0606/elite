@@ -136,24 +136,35 @@
                     $.each(invoice_data, function(index, value) {
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
-
                         let workingDays;
                         let totalHoures;
                         let ratePerHoures;
+                        let st_date;
+                        let ed_date;
                         if (value.start_date >= startDate && value.end_date == null) {
                             workingDays = new Date(endDate) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=endDate;
                         } else if (value.start_date <= startDate && value.end_date == null) {
                             workingDays = new Date(endDate) - new Date(startDate);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=startDate;
+                            ed_date=endDate;
                         } else if (value.start_date <= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=value.end_date;
                         } else if (value.start_date >= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(value.start_date);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=value.end_date;
                         } else {
                             workingDays = '';
+                            st_date='';
+                            ed_date='';
                         }
 
                         if(value.hours=="1"){
@@ -178,6 +189,8 @@
                                 </td>
                                 <td>${workingDays+1}
                                     <input class="" type="hidden" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
+                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>${totalHoures}
                                     <input class="" type="hidden" name="total_houres[]" value="${totalHoures}">

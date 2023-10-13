@@ -23,6 +23,8 @@ return new class extends Migration
             $table->decimal('total_houres',10,2)->default(0);
             $table->decimal('rate_per_houres',10,2)->default(0);
             $table->decimal('total_amounts',10,2)->default(0);
+            $table->date('st_date')->nullable();
+            $table->date('ed_date')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
