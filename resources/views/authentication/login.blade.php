@@ -19,9 +19,12 @@
         @endif
     </div>
     <div class="form-group position-relative has-icon-left mb-3">
-        <input type="password" name="password" class="form-control form-control-sm" placeholder="Password">
+        <input type="password" name="password" id="pass_log_id" class="form-control form-control-sm" placeholder="Password">
         <div class="form-control-icon">
             <i class="bi bi-shield-lock"></i>
+        </div>
+        <div class="form-control-icon2" style="position:absolute; bottom:4px; right:10px">
+            <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
         </div>
         @if($errors->has('password'))
             <small class="d-block text-danger">
@@ -37,5 +40,13 @@
     <p><a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.</p>
 </div>
 
+<script>
+    $(document).on('click', '.toggle-password', function() {
 
+        $(this).toggleClass("fa-eye fa-eye-slash");
+
+        var input = $("#pass_log_id");
+        input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+    });
+</script>
 @endsection
