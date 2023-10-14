@@ -66,6 +66,7 @@ return new class extends Migration
 
             $table->string('bn_post_allowance')->nullable();
             $table->decimal('bn_traning_cost',14,2)->nullable();
+            $table->decimal('bn_remaining_cost',14,2)->nullable();
             $table->integer('bn_traning_cost_byMonth')->comment('detaction by 6 month')->nullable();
             $table->text('bn_bank_name')->nullable();
             $table->text('bn_brance_name')->nullable();
