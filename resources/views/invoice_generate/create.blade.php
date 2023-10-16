@@ -22,12 +22,12 @@
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
-                                <div class="col-lg-3 mt-2">
+                                <div class="col-lg-6 mt-2">
                                     <label for=""><b>Customer</b></label>
                                     <select class="form-select customer_id" id="customer_id" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                        <option value="{{ $c->id }}">{{ $c->name }} - ( {{ $c->brance_name }} )</option>
                                         @empty
                                         @endforelse
                                     </select>
@@ -178,7 +178,7 @@
                         selectElement.append(
                             `<tr style="text-align: center;">
                                 <td>${counter + 1}</td>
-                                <td>${value.name_bn}
+                                <td>${value.name}
                                     <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
                                 </td>
                                 <td>${value.rate}
