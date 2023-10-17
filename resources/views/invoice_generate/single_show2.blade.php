@@ -114,7 +114,7 @@
         <div>
             <p><b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount;
+                $dueTotal = (($invoice_id->sub_total_amount*floatval($invoice_id->vat)/100))+$invoice_id->sub_total_amount;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
