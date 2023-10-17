@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input class="form-control vat" type="text" name="vat" value="" placeholder="Vat">
+                                    <input class="form-control vat" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
