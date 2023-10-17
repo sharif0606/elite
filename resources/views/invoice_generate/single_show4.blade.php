@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill of Dutch Bangla Bank Ltd. for August-2023</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -39,7 +40,7 @@
                 <th width="5%">SL</th>
                 <th width="35%">Description</th>
                 <th width="20%">Monthly Service Charge</th>
-                <th width="20%">VAT @ 10%</th>
+                <th width="20%">VAT @ {{ $invoice_id->vat }}%</th>
                 <th width="20%">Total</th>
             </tr>
         </thead>
@@ -49,9 +50,20 @@
             <tr style="text-align: center;">
                 <td>{{ ++$loop->index  }}</td>
                 <td>{{ $de->jobpost?->name }}</td>
-                <td>23,000/-</td>
-                <td>2,300/-</td>
-                <td style="text-align: right;">25,300/-</td>
+                <td>{{ ($de->rate*$de->employee_qty) }}
+                    <input type="hidden" class="month_service" name="" value="{{ $de->rate*$de->employee_qty }}">
+                </td>
+                <td>
+                    @php
+                        $totalSalary=$de->rate*$de->employee_qty;
+                        $vatAmount=(($totalSalary*$invoice_id->vat)/100);
+                    @endphp
+                    {{ $vatAmount }}
+                    <input type="hidden" class="vat_amount" name="" value="{{ $vatAmount }}">
+                </td>
+                <td style="text-align: center;">{{ money_format($totalSalary+$vatAmount) }}
+                    <input type="hidden" class="total_amount" name="" value="{{ $totalSalary+$vatAmount }}">
+                </td>
             </tr>
             @endforeach
             @endif
@@ -59,15 +71,20 @@
         <tfoot>
             <tr style="text-align: center;">
                 <td colspan="2"> Grand Total</td>
-                <td><b>44,000/-</b></td>
-                <td><b>4,400/-</b></td>
-                <td style="text-align: right;"><b>48,400/-</b></td>
+                <td><b class="tmonth_s"></b></td>
+                <td><b class="tvat_amount"></b></td>
+                <td style="text-align: center;"><b class="ttotal_amount"></b></td>
 
             </tr>
         </tfoot>
     </table>
-    <div>Total Amount(In Words): <b><i>Fourty Eight Thousand Four Hundred taka
-                only.</i></b> </div>
+    {{--  <div>Total Amount(In Words): <b><i>
+        @php
+        $dueTotal = '<input type="hidden" class="dueTotal" name="" value="">';
+        echo "$dueTotal";
+        @endphp
+                only.</i></b>
+    </div>  --}}
     <br>
     <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> or
         <b>A/C No.165 120 000 2281 Dutch Bangla Bank Ltd. Halisahar Branch, Ctg.</b> by
@@ -97,6 +114,29 @@
             </td>
         </tr>
     </table>
+    <script>
+        monthService()
+        function monthService(){
+            var monthSer=0;
+            var vatAmount=0;
+            var totalAmount=0;
+            $('.month_service').each(function(){
+                monthSer+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            });
+            $('.tmonth_s').text(monthSer);
+
+            $('.vat_amount').each(function(){
+                vatAmount+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            });
+            $('.tvat_amount').text(vatAmount.toFixed(2));
+
+            $('.total_amount').each(function(){
+                totalAmount+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            });
+            $('.ttotal_amount').text(totalAmount.toFixed(2));
+            $(".dueTotal").val(totalAmount.toFixed(2));
+        }
+    </script>
 </body>
 
 </html>
