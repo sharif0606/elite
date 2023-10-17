@@ -43,6 +43,11 @@
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_4.png')}}" alt="No Image Found">
                     </a>
                 </div>
+                <div class="col-4 text-center">
+                    <a href="{{route('invoiceShow5',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_5.png')}}" alt="No Image Found">
+                    </a>
+                </div>
             </div>
         </div>
     </section>
