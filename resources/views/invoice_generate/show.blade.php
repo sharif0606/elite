@@ -23,32 +23,32 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow3',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_3.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow4',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_4.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow5',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_5.png')}}" alt="No Image Found">
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow6',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_6.png')}}" alt="No Image Found">
                     </a>

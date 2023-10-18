@@ -115,7 +115,7 @@
         </tr>
     </table>
     <script>
-        monthService()
+        monthService();
         function monthService(){
             var monthSer=0;
             var vatAmount=0;
