@@ -141,6 +141,11 @@ class InvoiceGenerateController extends Controller
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         return view('invoice_generate.single_show5',compact('invoice_id'));
     }
+    public function getSingleInvoice6($id)
+    {
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        return view('invoice_generate.single_show6',compact('invoice_id'));
+    }
 
     /**
      * Show the form for editing the specified resource.

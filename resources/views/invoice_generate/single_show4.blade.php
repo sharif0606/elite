@@ -83,7 +83,7 @@
         $dueTotal = '<input type="hidden" class="dueTotal" name="" value="">';
         echo "$dueTotal";
         @endphp
-                only.</i></b>
+         only.</i></b>
     </div>  --}}
     <br>
     <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> or
