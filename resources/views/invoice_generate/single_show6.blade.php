@@ -76,7 +76,7 @@
                 <td><b>{{ \Carbon\Carbon::parse($invoice_id->st_date)->format('F Y')}}</b> </td>
                 <td>{{ $de->employee_qty }}<br>({{ $de->employee_qty*$de->warking_day }} duties)</td>
                 <td style="text-align: center;">1,22,500.00</td>
-                <td></td>
+                <td><input style="outline: none; border: none; appearance: none;" type="text" name="" id=""></td>
             </tr>
             @endforeach
             @endif
