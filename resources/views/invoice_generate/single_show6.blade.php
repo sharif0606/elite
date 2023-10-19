@@ -40,11 +40,11 @@
     <table width="100%">
         <tr>
             <td width="8%">Attention:</td>
-            <td>Md. Nurul Absar</td>
+            <td>{{ $invoice_id->customer?->contact_person }}</td>
         </tr>
         <tr>
             <td width="8%"></td>
-            <td>Senior Executive(HR)</td>
+            <td>{{ $invoice_id->customer?->contact_number }}</td>
         </tr>
     </table>
     <br>
