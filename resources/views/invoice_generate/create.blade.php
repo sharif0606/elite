@@ -168,10 +168,10 @@
                         }
 
                         if(value.hours=="1"){
-                            totalHoures=(8*(value.qty)*workingDays);
+                            totalHoures=(8*(value.qty)*workingDays+1);
                             ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth)).toFixed(2);
                         }else{
-                            totalHoures=(12*(value.qty)*workingDays);
+                            totalHoures=(12*(value.qty)*workingDays+1);
                             ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth)).toFixed(2);
                         }
 
@@ -198,7 +198,7 @@
                                 <td>${ratePerHoures}
                                     <input class="" type="hidden" name="rate_per_houres[]" value="${ratePerHoures}">
                                 </td>
-                                <td>${parseFloat(totalHoures*ratePerHoures).toFixed(2)}
+                                <td>${parseFloat(((value.rate)/workingdayinmonth)*(value.qty)*(workingDays+1)).toFixed(2)}
                                     <input class="total_amounts" type="hidden" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
                                 </td>
                             </tr>`

@@ -60,10 +60,10 @@
                 <td></td>
             </tr>
         </table>
-                <div>
-                    Reference to the above subject, We herewith submitted the security services bill for the period
-                    covering <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}.</b>
-                </div>
+            <div>
+                Reference to the above subject, We herewith submitted the security services bill for the period
+                covering <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}.</b>
+            </div>
 
         <table border="1" width="100%" cellspacing="0">
             <thead>
