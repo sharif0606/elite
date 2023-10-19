@@ -86,10 +86,7 @@
          only.</i></b>
     </div>  --}}
     <br>
-    <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> or
-        <b>A/C No.165 120 000 2281 Dutch Bangla Bank Ltd. Halisahar Branch, Ctg.</b> by
-        the 1<sup>st</sup> week of each month.
-    </div>
+    <div>{{ $invoice_id->footer_note }}</div>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
     <br><br>

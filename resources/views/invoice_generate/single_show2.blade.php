@@ -124,8 +124,7 @@
                 }
             @endphp
                 </b> <br>
-                The payment may please be made in Cheques/Drafts/Cash in favor of <b>"Elite Security Services Limited"</b>
-                by the 1<sup>st</sup> week of each month.
+                {{ $invoice_id->footer_note }}
             </p>
             Your Cooperation will be highly appreciated.
             <p><i><b>With thanks of Regards</b></i></p>

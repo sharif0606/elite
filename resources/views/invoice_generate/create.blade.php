@@ -48,6 +48,10 @@
                                     <label for=""><b>Vat(%)</b></label>
                                     <input class="form-control vat" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Footer Note</b></label>
+                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note"></textarea>
+                                </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
                                 </div>

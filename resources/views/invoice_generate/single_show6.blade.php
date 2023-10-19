@@ -94,8 +94,7 @@
         </tfoot>
     </table>
     <br>
-    <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> by
-        the 1<sup>st</sup> week of each month.</div>
+    <div>{{ $invoice_id->footer_note }}</div>
     <br><br><br><br><br>
     <table width="100%">
         <tr>

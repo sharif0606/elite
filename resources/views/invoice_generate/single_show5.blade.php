@@ -62,10 +62,7 @@
     </table>
     {{--  <div>Total Amount(In Words): <b><i>One Lac Seventy Thousand taka only.</i></b></div>  --}}
     <br>
-    <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> or
-        <b>A/C No.19131060005835, Prime Bank Ltd. Halisahar Branch (</b>Routing Number: <b>170153166), Chattogram</b>
-        by
-        the 1<sup>st</sup> week of each month. <b>Contact Number: Abu Rashel, Contact Number: 01844-040718</b>
+    <div>{{ $invoice_id->footer_note }}
     </div>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
