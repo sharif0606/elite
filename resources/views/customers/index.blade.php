@@ -34,6 +34,9 @@
                             <a href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
+                            <a href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
+                                <i class="bi bi-list"></i>
+                            </a>
                             {{--  <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
                                 Certificate
                             </a>  --}}

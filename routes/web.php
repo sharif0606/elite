@@ -29,6 +29,7 @@ use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 
 /*crm*/
 use App\Http\Controllers\CustomerController as customer;
+use App\Http\Controllers\Crm\CustomerBranceController as customerbrance;
 
 
 /* Middleware */
@@ -109,6 +110,8 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
 
         Route::resource('customer', customer::class);
+        Route::resource('customerbrance', customerbrance::class);
+        Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
     });
 });
 

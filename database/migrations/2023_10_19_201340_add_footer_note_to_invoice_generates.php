@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('invoice_generates', function (Blueprint $table) {
-            //
+            $table->dropColumn('footer_note');
         });
     }
 };
