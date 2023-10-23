@@ -15,21 +15,6 @@
                 <div class="row">
                     <h5 class="text-center m-0">Customer details</h5>
                 </div>
-                {{--  <div class="row ">
-                    <div class="col-12 col-md-3">
-                        <div class="card">
-                            <div class="card-header p-1">
-                                <h5 class="card-title">Logo</h5>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-body p-0">
-                                    <input type="file" class="" name="logo">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>  --}}
-
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
@@ -55,59 +40,6 @@
                 </div>
                 <div class="row">
                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="district_id">District</label>
-                            <select onchange="show_upazila(this.value)" name="district_id" class="choices form-control js-example-basic-single" id="district_id">
-                                <option value="">select</option>
-                                @forelse($districts as $d)
-                                <option value="{{$d->id}}" {{ old('district_id',$customer->district_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No District found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="upazila_id">Upazila</label>
-                            <select onchange="show_unions(this.value)" name="upazila_id" class=" form-control js-example-basic-single" id="upazila_id">
-                                <option value="">select</option>
-                                @forelse($upazila as $d)
-                                <option class="district district{{$d->district_id}}" value="{{$d->id}}" {{ old('upazila_id',$customer->upazila_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No Upazila found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="union_id">Union</label>
-                            <select name="union_id" class=" form-control" id="union_id">
-                                <option value="">select</option>
-                                @forelse($union as $u)
-                                <option class="upazila upazila{{$u->upazila_id}}" value="{{$u->id}}" {{ old('union_id',$customer->union_id)==$u->id?"selected":""}}> {{ $u->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="ward_id">Ward no</label>
-                            <select name="ward_id" class=" form-control js-example-basic-single" id="ward_id">
-                                <option value="">select</option>
-                                @forelse($ward as $d)
-                                <option value="{{$d->id}}" {{ old('ward_id',$customer->ward_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No Ward no found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>  --}}
-
-                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="contact_person">Contact Person Name</label>
                             <input type="text" id="contact_person" value="{{old('contact_person',$customer->contact_person)}}" class="form-control" placeholder="Contact Person" name="contact_person">
@@ -142,7 +74,7 @@
                             <label for="validity_date">Validity Date</label>
                             <input type="date" id="validity_date" value="{{old('validity_date',$customer->validity_date)}}" class="form-control" placeholder="" name="validity_date">
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-lg-6 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="file_upload_name">File Upload Name</label>
@@ -161,12 +93,12 @@
                             <textarea class="form-control" id="address" rows="5" placeholder="Full Address" name="address">{{old('address',$customer->address)}}</textarea>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
+                    {{--  <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="billing_address">Billing Address</label>
                             <textarea class="form-control" id="billing_address" rows="5" placeholder="Billing Address" name="billing_address">{{old('billing_address',$customer->billing_address)}}</textarea>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="logo">Logo</label>

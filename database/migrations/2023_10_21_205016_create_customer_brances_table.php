@@ -16,10 +16,21 @@ return new class extends Migration
         Schema::create('customer_brances', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
-            $table->string('brance_name');
-            $table->string('contact_persone');
-            $table->string('contact_phone');
-            $table->string('billing_person_name');
+            $table->string('brance_name')->nullable();
+            $table->string('contact_person')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('billing_person')->nullable();
+            $table->string('billing_address')->nullable();
+            $table->date('agreement_date')->nullable();
+            $table->date('renew_date')->nullable();
+            $table->date('validity_date')->nullable();
+            $table->decimal('vat',10,2)->default(0);
+            // $table->decimal('rate',10,2)->default(0);
+            $table->string('take_home')->nullable();
+            $table->string('royal_tea')->nullable();
+            $table->string('ait')->nullable();
+            $table->string('received_by_city')->nullable();
+            $table->string('zone')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

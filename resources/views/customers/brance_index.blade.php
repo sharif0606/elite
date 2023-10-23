@@ -7,7 +7,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="row pb-1">
-                        <div class="col-2"><a class="btn btn-sm btn-primary float-end" href="{{route('customer.createScreen')}}?customer_id={{$customer_id}}"><i class="bi bi-plus-square"></i> Add</a></div>
+                        <div class="col-12">
+                            <a class="btn btn-sm btn-primary float-end" href="{{route('customer.createScreen')}}?customer_id={{$customer_id}}"><i class="bi bi-plus-square"></i> Add</a>
+                        </div>
                     </div>
 
                     <div class="table-responsive"><!-- table bordered -->

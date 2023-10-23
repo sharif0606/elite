@@ -44,10 +44,10 @@
                                     <label for=""><b>Bill Date</b></label>
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
-                                <div class="col-lg-3 mt-2">
+                                {{--  <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
                                     <input class="form-control vat" type="number" name="vat" value="" placeholder="Vat">
-                                </div>
+                                </div>  --}}
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Footer Note</b></label>
                                     <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note"></textarea>
