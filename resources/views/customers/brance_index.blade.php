@@ -38,6 +38,13 @@
                                         <a href="{{route('customerbrance.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
+                                        <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $data->id }})">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        <form id="form{{ $data->id }}" action="{{ route('customerbrance.destroy', encryptor('encrypt', $data->id)) }}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty
@@ -53,3 +60,12 @@
         </div>
     </section>
 @endsection
+@push("scripts")
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this Shop?")) {
+            $('#form' + id).submit();
+        }
+    }
+</script>
+@endpush

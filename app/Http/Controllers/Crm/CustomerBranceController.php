@@ -128,7 +128,7 @@ class CustomerBranceController extends Controller
             $data->zone = $request->zone;
             $data->status = 1;
             if ($data->save()){
-                return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -147,6 +147,8 @@ class CustomerBranceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cbrance=CustomerBrance::findOrFail(encryptor('decrypt',$id));
+        $cbrance->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }
