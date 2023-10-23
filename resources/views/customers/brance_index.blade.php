@@ -18,6 +18,7 @@
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Brance Name')}}</th>
+                                    <th scope="col">{{__('VAT(%)')}}</th>
                                     <th scope="col">{{__('Contact Person Name')}}</th>
                                     <th scope="col">{{__('Contact Phone')}}</th>
                                     <th scope="col">{{__('Billing Person Name')}}</th>
@@ -29,9 +30,10 @@
                                 <tr>
                                     <th scope="row">{{++$index}}</th>
                                     <td>{{$data->brance_name}}</td>
-                                    <td>{{$data->contact_persone}}</td>
-                                    <td>{{$data->contact_phone}}</td>
-                                    <td>{{$data->billing_person_name}}</td>
+                                    <td>{{$data->vat}}</td>
+                                    <td>{{$data->contact_person}}</td>
+                                    <td>{{$data->contact_number}}</td>
+                                    <td>{{$data->billing_person}}</td>
                                     <td class="white-space-nowrap">
                                         <a href="{{route('customerbrance.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>

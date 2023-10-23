@@ -14,7 +14,7 @@
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Name')}}</th>
                         <th scope="col">{{__('Contact')}}</th>
-                        <th scope="col">{{__('Contact Person')}}</th>
+                        {{--  <th scope="col">{{__('Contact Person')}}</th>  --}}
                         <th scope="col">{{__('Address')}}</th>
                         <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>
                     </tr>
@@ -25,10 +25,10 @@
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{$e->name}}</td>
                         <td>{{$e->contact}}</td>
-                        <td>
+                        {{--  <td>
                             <strong>Name:</strong> {{$e->contact_person}}<br/>
                             <strong>Contact:</strong> {{$e->contact_number}}
-                        </td>
+                        </td>  --}}
                         <td>{{$e->address}}</td>
                         <td class="d-flex">
                             <a href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
