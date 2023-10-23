@@ -65,7 +65,7 @@ class CustomerBranceController extends Controller
             $data->zone = $request->zone;
             $data->status = 1;
             if ($data->save()){
-                return redirect()->route('customerbrance.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
