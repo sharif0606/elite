@@ -3,6 +3,9 @@
 @section('pageSubTitle','List')
 @section('content')
     <section class="section"><!-- Bordered table start -->
+        <div class="row">
+            <h4 class="text-center m-0">{{ $customerName->name }}</h4>
+        </div>
         <div class="row" id="table-bordered">
             <div class="col-12">
                 <div class="card">

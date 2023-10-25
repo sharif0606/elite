@@ -22,9 +22,10 @@ class CustomerBranceController extends Controller
     {
         // dd($request->all());
         $cbrance=CustomerBrance::where('customer_id',encryptor('decrypt',$request->customer_id));
+        $customerName=Customer::where('id',encryptor('decrypt',$request->customer_id))->first();
         $customer_id=$request->customer_id;
         $cbrance=$cbrance->orderBy('id')->get();
-        return view('customers.brance_index',compact('cbrance','customer_id'));
+        return view('customers.brance_index',compact('cbrance','customer_id','customerName'));
     }
 
     public function createScreen(Request $request){
