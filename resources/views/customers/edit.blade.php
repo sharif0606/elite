@@ -22,7 +22,7 @@
                             <input type="text" id="name" value="{{old('name',$customer->name)}}" class="form-control" placeholder="Customer Name" name="name">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="brance_name">Brance Name</label>
                             <input type="text" id="brance_name" value="{{old('brance_name',$customer->brance_name)}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Brance Name" name="brance_name">
@@ -30,7 +30,7 @@
                                 <span class="text-danger"> {{ $errors->first('brance_name') }}</span>
                             @endif
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="contact">Contact Number</label>
