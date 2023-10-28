@@ -70,6 +70,9 @@
                                 <li class="submenu-item ">
                                     <a href="{{route(currentUser().'.jobpost.index')}}">{{__('Job Post')}}</a>
                                 </li>
+                                <li class="submenu-item ">
+                                    <a href="{{route(currentUser().'.zone.index')}}">{{__('Zone')}}</a>
+                                </li>
                             </ul>
                         </li>
 

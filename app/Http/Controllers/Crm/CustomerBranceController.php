@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Customer;
+use App\Models\Settings\Zone;
 use Toastr;
 use Carbon\Carbon;
 use DB;
@@ -21,17 +22,19 @@ class CustomerBranceController extends Controller
     public function index(Request $request)
     {
         // dd($request->all());
+        $zone=Zone::all();
         $cbrance=CustomerBrance::where('customer_id',encryptor('decrypt',$request->customer_id));
         $customerName=Customer::where('id',encryptor('decrypt',$request->customer_id))->first();
         $customer_id=$request->customer_id;
         $cbrance=$cbrance->orderBy('id')->get();
-        return view('customers.brance_index',compact('cbrance','customer_id','customerName'));
+        return view('customers.brance_index',compact('cbrance','customer_id','customerName','zone'));
     }
 
     public function createScreen(Request $request){
         $cbran=Customer::findOrFail(encryptor('decrypt',$request->customer_id));
+        $zone=Zone::all();
 
-        return view('customers.brance_create',compact('cbran'));
+        return view('customers.brance_create',compact('cbran','zone'));
     }
     public function create()
     {
@@ -63,7 +66,7 @@ class CustomerBranceController extends Controller
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
             $data->received_by_city = $request->received_by_city;
-            $data->zone = $request->zone;
+            $data->zone_id = $request->zone_id;
             $data->status = 1;
             if ($data->save()){
                 return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
@@ -96,9 +99,10 @@ class CustomerBranceController extends Controller
      */
     public function edit($id)
     {
+        $zone=Zone::all();
         $cdetails=CustomerBrance::findOrFail(encryptor('decrypt',$id));
         $customer=Customer::findOrFail($cdetails->customer_id);
-        return view('customers.brance_edit',compact('customer','cdetails'));
+        return view('customers.brance_edit',compact('customer','cdetails','zone'));
     }
 
     /**
@@ -126,7 +130,7 @@ class CustomerBranceController extends Controller
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
             $data->received_by_city = $request->received_by_city;
-            $data->zone = $request->zone;
+            $data->zone_id = $request->zone_id;
             $data->status = 1;
             if ($data->save()){
                 return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));

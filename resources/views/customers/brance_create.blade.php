@@ -90,7 +90,14 @@
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Zone</b></label>
-                        <input class="form-control zone" type="text" name="zone" value="" placeholder="Zone">
+                        {{--  <input class="form-control zone" type="text" name="zone" value="" placeholder="Zone">  --}}
+                        <select class="form-select" id="zone" name="zone_id">
+                            <option value="">Select Zone</option>
+                            @forelse ($zone as $z)
+                            <option value="{{ $z->id }}">{{ $z->name }}</option>
+                            @empty
+                            @endforelse
+                        </select>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">

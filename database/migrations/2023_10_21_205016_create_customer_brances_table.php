@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('royal_tea')->nullable();
             $table->string('ait')->nullable();
             $table->string('received_by_city')->nullable();
-            $table->string('zone')->nullable();
+            $table->integer('zone_id')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

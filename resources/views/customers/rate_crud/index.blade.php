@@ -33,13 +33,13 @@
                                     <td>{{$data->rate}}</td>
                                     <td>{{$data->ot_rate}}</td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route('customerbrance.edit',encryptor('encrypt',$data->id))}}">
+                                        <a href="{{route('customerRate.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $data->id }})">
                                             <i class="bi bi-trash"></i>
                                         </a>
-                                        <form id="form{{ $data->id }}" action="{{ route('customerbrance.destroy', encryptor('encrypt', $data->id)) }}" method="post">
+                                        <form id="form{{ $data->id }}" action="{{ route('customerRate.destroy', encryptor('encrypt', $data->id)) }}" method="post">
                                             @csrf
                                             @method('delete')
                                         </form>
@@ -61,7 +61,7 @@
 @push("scripts")
 <script>
     function confirmDelete(id) {
-        if (confirm("Are you sure you want to delete this Shop?")) {
+        if (confirm("Are you sure you want to delete this row?")) {
             $('#form' + id).submit();
         }
     }

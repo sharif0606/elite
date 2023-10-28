@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Job-Post List'))
+@section('pageTitle',trans('Zone List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -13,7 +13,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div>
-                    <a class="float-end" href="{{route(currentUser().'.jobpost.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    <a class="float-end" href="{{route(currentUser().'.zone.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -23,22 +23,23 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Name bn')}}</th>
-                                <th scope="col">{{__('Billable')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($jobpost as $d)
+                            @forelse($zone as $d)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
-                                <td> @if($d->bill_able==0) No @else Yes @endif</td>
                                 <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.jobpost.edit',encryptor('encrypt',$d->id))}}">
+                                    <a href="{{route(currentUser().'.zone.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form id="form{{$d->id}}" action="{{route(currentUser().'.jobpost.destroy',encryptor('encrypt',$d->id))}}" method="post">
+                                    <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    <form id="form{{ $d->id }}" action="{{ route(currentUser().'.zone.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>
@@ -46,7 +47,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="8" class="text-center">No Job-Post Found</th>
+                                <th colspan="8" class="text-center">No Zone Found</th>
                             </tr>
                             @endforelse
                         </tbody>
@@ -60,4 +61,12 @@
 
 
 @endsection
-
+@push("scripts")
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this Row?")) {
+            $('#form' + id).submit();
+        }
+    }
+</script>
+@endpush
