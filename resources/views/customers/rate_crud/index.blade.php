@@ -14,7 +14,6 @@
                             <a class="btn btn-sm btn-primary float-end" href="{{route('customer.rateCreateScreen')}}?customer_id={{$customer_id}}"><i class="bi bi-plus-square"></i> Add</a>
                         </div>
                     </div>
-
                     <div class="table-responsive"><!-- table bordered -->
                         <table class="table table-bordered mb-0">
                             <thead>
@@ -27,12 +26,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{--  @forelse($cbrance as $index=>$data)
+                                @forelse($crate as $index=>$data)
                                 <tr>
                                     <th scope="row">{{++$index}}</th>
-                                    <td>{{$data->brance_name}}</td>
-                                    <td>{{$data->vat}}</td>
-                                    <td>{{$data->contact_person}}</td>
+                                    <td>{{$data->jobpost?->name}}</td>
+                                    <td>{{$data->rate}}</td>
+                                    <td>{{$data->ot_rate}}</td>
                                     <td class="white-space-nowrap">
                                         <a href="{{route('customerbrance.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>
@@ -50,7 +49,7 @@
                                 <tr>
                                     <th colspan="8" class="text-center">No Data Found</th>
                                 </tr>
-                                @endforelse  --}}
+                                @endforelse
                             </tbody>
                         </table>
                     </div>

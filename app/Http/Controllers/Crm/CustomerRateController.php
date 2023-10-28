@@ -8,6 +8,13 @@ use App\Models\Crm\CustomerRate;
 use App\Models\Customer;
 use App\Models\JobPost;
 
+use Toastr;
+use Carbon\Carbon;
+use DB;
+use App\Http\Traits\ImageHandleTraits;
+use Intervention\Image\Facades\Image;
+use Exception;
+
 class CustomerRateController extends Controller
 {
 
@@ -38,7 +45,23 @@ class CustomerRateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = new CustomerRate();
+            $data->customer_id = $request->customer_id;
+            $data->job_post_id = $request->job_post_id;
+            $data->rate = $request->rate;
+            $data->ot_rate = $request->ot_rate;
+            $data->status = 1;
+            if ($data->save()){
+                return redirect(currentUser()."/customerRate?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
