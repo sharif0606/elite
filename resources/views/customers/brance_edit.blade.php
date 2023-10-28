@@ -100,6 +100,10 @@
                         </select>
                         {{--  <input class="form-control zone" type="text" name="zone" value="{{old('zone',$cdetails->zone)}}" placeholder="Zone">  --}}
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for=""><b>ATM</b></label>
+                        <input class="form-control" type="text" name="atm" value="{{old('atm',$cdetails->atm)}}" placeholder="ATM">
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="billing_address">Billing Address</label>

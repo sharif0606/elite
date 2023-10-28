@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('ait')->nullable();
             $table->string('received_by_city')->nullable();
             $table->integer('zone_id')->nullable();
+            $table->string('atm')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
