@@ -18,7 +18,7 @@
                                     <select class="form-select customer_id" id="customer_id" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }} - ( {{ $c->brance_name }} )</option>
+                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
