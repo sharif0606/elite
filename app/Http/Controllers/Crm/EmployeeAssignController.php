@@ -9,6 +9,7 @@ use App\Models\Crm\EmployeeAssignDetails;
 use App\Models\Employee\Employee;
 use App\Models\JobPost;
 use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 
 use Toastr;
 use Carbon\Carbon;
@@ -164,5 +165,11 @@ class EmployeeAssignController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function loadBranchAjax($customerId)
+    {
+        $branch = CustomerBrance::where('customer_id', $customerId)->select('id','brance_name')->get();
+        return response()->json($branch, 200);
     }
 }

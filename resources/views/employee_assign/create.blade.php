@@ -15,7 +15,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -27,10 +27,6 @@
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id">
                                         <option value="">Select Branch</option>
-                                        @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                        @empty
-                                        @endforelse
                                     </select>
                                 </div>
                             </div>
@@ -92,43 +88,61 @@
 @endsection
 @push("scripts")
 <script>
-    function addRow(){
+    function getBranch(e){
+        let customerId=$(e).val();
+        if(customerId){
+            $.ajax({
+                url: "{{ url('/branch/ajax') }}/" + customerId,
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    console.log(data)
+                    var d = $('#branch_id').empty();
+                    $.each(data, function(key, value) {
+                        $('#branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
+                    });
+                },
+            });
 
-var row=`
-<tr>
-    <td>
-        <select class="form-select" id="job_post_id" name="job_post_id[]">
-            <option value="">Select Post</option>
-            @forelse ($jobpost as $job)
-            <option value="{{ $job->id }}">{{ $job->name }}</option>
-            @empty
-            @endforelse
-        </select>
-    </td>
-    <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-    <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
-    <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-    <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-    <td>
-        <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-            <option value="1">8 Hour's</option>
-            <option value="2">12 Hour's</option>
-        </select>
-    </td>
-    <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-    </td>
-</tr>
-`;
-    $('#empassign').append(row);
-}
-
-function removeRow(e) {
-    if (confirm("Are you sure you want to remove this row?")) {
-        $(e).closest('tr').remove();
+        }
     }
-}
+
+    function addRow(){
+    var row=`
+    <tr>
+        <td>
+            <select class="form-select" id="job_post_id" name="job_post_id[]">
+                <option value="">Select Post</option>
+                @forelse ($jobpost as $job)
+                <option value="{{ $job->id }}">{{ $job->name }}</option>
+                @empty
+                @endforelse
+            </select>
+        </td>
+        <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
+        <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
+        <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
+        <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
+        <td>
+            <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                <option value="1">8 Hour's</option>
+                <option value="2">12 Hour's</option>
+            </select>
+        </td>
+        <td>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+        </td>
+    </tr>
+    `;
+        $('#empassign').append(row);
+    }
+
+    function removeRow(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+        }
+    }
 
 </script>
 

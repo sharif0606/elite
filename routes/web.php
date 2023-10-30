@@ -100,6 +100,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
 
         /* get AjaX Data */
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
+        Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 
