@@ -78,16 +78,16 @@
                         <input class="form-control take_home" type="text" name="take_home" value="{{old('take_home',$cdetails->take_home)}}" placeholder="Take Home">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                        <label for=""><b>Royal Tea</b></label>
-                        <input class="form-control royal_tea" type="text" name="royal_tea" value="{{old('royal_tea',$cdetails->royal_tea)}}" placeholder="Royal Tea">
+                        <label for=""><b>Royalty</b></label>
+                        <input class="form-control royal_tea" type="text" name="royal_tea" value="{{old('royal_tea',$cdetails->royal_tea)}}" placeholder="Royalty">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>AIT</b></label>
                         <input class="form-control ait" type="text" name="ait" value="{{old('ait',$cdetails->ait)}}" placeholder="AIT">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                        <label for=""><b>Received By City</b></label>
-                        <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$cdetails->received_by_city)}}" placeholder="Received By City">
+                        <label for=""><b>Received By Ctg</b></label>
+                        <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$cdetails->received_by_city)}}" placeholder="Received By Ctg">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Zone</b></label>
