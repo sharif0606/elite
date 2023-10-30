@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Brance Details List')
+@section('pageTitle','Branch Details List')
 @section('pageSubTitle','List')
 @section('content')
     <section class="section"><!-- Bordered table start -->
@@ -20,7 +20,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Brance Name')}}</th>
+                                    <th scope="col">{{__('Branch Name')}}</th>
                                     <th scope="col">{{__('VAT(%)')}}</th>
                                     <th scope="col">{{__('Contact Person Name')}}</th>
                                     <th scope="col">{{__('Contact Phone')}}</th>

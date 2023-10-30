@@ -1,6 +1,6 @@
 @extends('layout.app')
-@section('pageTitle','Update Brance ')
-@section('pageSubTitle','Update Brance ')
+@section('pageTitle','Update Branch')
+@section('pageSubTitle','Update Branch')
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
@@ -102,7 +102,17 @@
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>ATM</b></label>
-                        <input class="form-control" type="text" name="atm" value="{{old('atm',$cdetails->atm)}}" placeholder="ATM">
+                        <div  id="atmadd">
+                        @if ($cdetails->atms)
+                        @foreach ($cdetails->atms as $d)
+                            <div class="d-flex">
+                                <input class="form-control" type="text" name="atm[]" value="{{old('atm',$d->atm)}}" placeholder="ATM">
+                                <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                            </div>
+                        @endforeach
+                        @endif
+                        </div>
+                        <p onClick='addRow();' class="add-row text-primary  text-end"><i class="bi bi-plus-square-fill"></i></p>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
@@ -123,6 +133,23 @@
 @endsection
 @push('scripts')
 <script>
+    function addRow(){
+
+        var row=`
+        <div class="d-flex">
+            <input class="form-control" type="text" name="atm[]" value="" placeholder="ATM">
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+        </div>
+        `;
+            $('#atmadd').append(row);
+        }
+
+        function removeRow(e) {
+            if (confirm("Are you sure you want to remove this row?")) {
+                $(e).closest('.d-flex').remove();
+            }
+        }
+
     /* call on load page */
     $(document).ready(function(){
         $('.district').hide();

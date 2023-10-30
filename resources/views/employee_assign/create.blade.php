@@ -23,6 +23,16 @@
                                         @endforelse
                                     </select>
                                 </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Branch Name</b></label>
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id">
+                                        <option value="">Select Branch</option>
+                                        @forelse ($customer as $c)
+                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">

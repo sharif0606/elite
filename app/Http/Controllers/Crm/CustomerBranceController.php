@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Customer;
 use App\Models\Settings\Zone;
+use App\Models\Crm\Atm;
 use Toastr;
 use Carbon\Carbon;
 use DB;
@@ -67,9 +68,20 @@ class CustomerBranceController extends Controller
             $data->ait = $request->ait;
             $data->received_by_city = $request->received_by_city;
             $data->zone_id = $request->zone_id;
-            $data->atm = $request->atm;
+            // $data->atm = $request->atm;
             $data->status = 1;
             if ($data->save()){
+                if($request->atm){
+                    foreach($request->atm as $key => $value){
+                        if($value){
+                            $at = new Atm;
+                            $at->branch_id=$data->id;
+                            $at->atm=$request->atm[$key];
+                            $at->status=0;
+                            $at->save();
+                        }
+                    }
+                }
                 return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -132,9 +144,21 @@ class CustomerBranceController extends Controller
             $data->ait = $request->ait;
             $data->received_by_city = $request->received_by_city;
             $data->zone_id = $request->zone_id;
-            $data->atm = $request->atm;
+            // $data->atm = $request->atm;
             $data->status = 1;
             if ($data->save()){
+                if($request->atm){
+                    $dl=Atm::where('branch_id',$data->id)->delete();
+                    foreach($request->atm as $key => $value){
+                        if($value){
+                            $at = new Atm;
+                            $at->branch_id=$data->id;
+                            $at->atm=$request->atm[$key];
+                            $at->status=0;
+                            $at->save();
+                        }
+                    }
+                }
                 return redirect(currentUser()."/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

@@ -1,6 +1,6 @@
 @extends('layout.app')
-@section('pageTitle','Add Brance ')
-@section('pageSubTitle','New Brance ')
+@section('pageTitle','Add Branch ')
+@section('pageSubTitle','New Branch ')
 @push('styles')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
@@ -13,13 +13,13 @@
                 @csrf
                 <div class="row">
                     <h4 class="text-center m-0">{{ $cbran->name }}</h4>
-                    <h5 class="text-center m-0">Brance details</h5>
+                    <h5 class="text-center m-0">Branch details</h5>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="brance_name">Brance Name</label>
-                            <input type="text" id="brance_name" value="{{old('brance_name')}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Brance Name" name="brance_name">
+                            <label for="brance_name">Branch Name</label>
+                            <input type="text" id="brance_name" value="{{old('brance_name')}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Branch Name" name="brance_name">
                             @if($errors->has('brance_name'))
                                 <span class="text-danger"> {{ $errors->first('brance_name') }}</span>
                             @endif
@@ -77,16 +77,16 @@
                         <input class="form-control take_home" type="text" name="take_home" value="" placeholder="Take Home">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                        <label for=""><b>Royal Tea</b></label>
-                        <input class="form-control royal_tea" type="text" name="royal_tea" value="" placeholder="Royal Tea">
+                        <label for=""><b>Royalty</b></label>
+                        <input class="form-control royal_tea" type="text" name="royal_tea" value="" placeholder="Royalty">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>AIT</b></label>
                         <input class="form-control ait" type="text" name="ait" value="" placeholder="AIT">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                        <label for=""><b>Received By City</b></label>
-                        <input class="form-control received_by_city" type="text" name="received_by_city" value="" placeholder="Received By City">
+                        <label for=""><b>Received By Ctg</b></label>
+                        <input class="form-control received_by_city" type="text" name="received_by_city" value="" placeholder="Received By Ctg">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Zone</b></label>
@@ -101,7 +101,11 @@
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>ATM</b></label>
-                        <input class="form-control" type="text" name="atm" value="" placeholder="ATM">
+                        <div  id="atmadd">
+                            <input class="form-control" type="text" name="atm[]" value="" placeholder="ATM">
+
+                        </div>
+                        <p onClick='addRow();' class="add-row text-primary  text-end"><i class="bi bi-plus-square-fill"></i></p>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
@@ -122,6 +126,24 @@
 @endsection
 @push('scripts')
 <script>
+    function addRow(){
+
+        var row=`
+        <div class="d-flex">
+            <input class="form-control" type="text" name="atm[]" value="" placeholder="ATM">
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+        </div>
+        `;
+            $('#atmadd').append(row);
+        }
+
+        function removeRow(e) {
+            if (confirm("Are you sure you want to remove this row?")) {
+                $(e).closest('.d-flex').remove();
+            }
+        }
+
+
     /* call on load page */
     $(document).ready(function(){
         $('.district').hide();

@@ -1,15 +1,11 @@
 <?php
 
 namespace App\Models\Crm;
-use App\Models\Crm\Atm;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomerBrance extends Model
+class Atm extends Model
 {
     use HasFactory;
-    public function atms(){
-        return $this->hasMany(Atm::class,'branch_id','id');
-    }
 }
