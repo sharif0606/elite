@@ -87,24 +87,26 @@
 </section>
 @endsection
 @push("scripts")
+{{--  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>  --}}
 <script>
-    function getBranch(e){
+    function getBranch(e) {
         let customerId=$(e).val();
-        if(customerId){
-            $.ajax({
-                url: "{{ url('/branch/ajax') }}/" + customerId,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    console.log(data)
-                    var d = $('#branch_id').empty();
-                    $.each(data, function(key, value) {
-                        $('#branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
-                    });
-                },
-            });
-
-        }
+        $.ajax({
+            url: "{{ route('get_ajax_branch') }}",
+            type: "GET",
+            dataType: "json",
+            data: { customerId: customerId },
+            success: function (data) {
+                //console.log(data)
+                var d = $('#branch_id').empty();
+                $.each(data, function(key, value) {
+                    $('#branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
+                });
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
     }
 
     function addRow(){
