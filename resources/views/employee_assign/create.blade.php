@@ -64,7 +64,7 @@
                                                 </td>
                                                 <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
                                                 <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
-                                                <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
+                                                <td><input required class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
                                                 <td>
                                                     <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
@@ -156,7 +156,7 @@
     var row=`
     <tr>
         <td>
-            <select class="form-select" id="job_post_id" name="job_post_id[]">
+            <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                 <option value="">Select Post</option>
                 @forelse ($jobpost as $job)
                 <option value="{{ $job->id }}">{{ $job->name }}</option>

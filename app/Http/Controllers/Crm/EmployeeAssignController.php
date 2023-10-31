@@ -57,6 +57,8 @@ class EmployeeAssignController extends Controller
         try{
             $data=new EmployeeAssign;
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
@@ -126,6 +128,8 @@ class EmployeeAssignController extends Controller
         try{
             $data=EmployeeAssign::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
