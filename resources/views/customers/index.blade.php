@@ -31,6 +31,9 @@
                         </td>  --}}
                         <td>{{$e->address}}</td>
                         <td class="d-flex">
+                            <a href="{{route('customer.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                <i class="bi bi-eye"></i>
+                            </a>
                             <a href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
@@ -40,6 +43,13 @@
                             <a href="{{route('customerRate.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
                                 <i class="bi bi-aspect-ratio"></i>
                             </a>
+                            <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <form id="form{{ $e->id }}" action="{{ route('customer.destroy', encryptor('encrypt', $e->id)) }}" method="post">
+                                @csrf
+                                @method('delete')
+                            </form>
                             {{--  <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
                                 Certificate
                             </a>  --}}
@@ -59,3 +69,12 @@
     </div>
 </div>
 @endsection
+@push("scripts")
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this Shop?")) {
+            $('#form' + id).submit();
+        }
+    }
+</script>
+@endpush

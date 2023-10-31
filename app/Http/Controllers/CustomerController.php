@@ -94,9 +94,10 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
-        //
+        $customer = Customer::findOrFail(encryptor('decrypt',$id));
+        return view('customers.show',compact('customer'));
     }
 
     /**
@@ -166,6 +167,8 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $c=Customer::findOrFail(encryptor('decrypt',$id));
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

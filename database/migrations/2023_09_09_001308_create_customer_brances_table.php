@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('customer_brances', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id');
+            $table->unsignedBigInteger('customer_id')->nullable();
+			$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->string('brance_name')->nullable();
             $table->string('contact_person')->nullable();
             $table->string('contact_number')->nullable();

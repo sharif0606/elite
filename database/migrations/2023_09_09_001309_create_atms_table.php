@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('atms', function (Blueprint $table) {
             $table->id();
-            $table->integer('branch_id')->nullable();
+            $table->unsignedBigInteger('branch_id')->nullable();
+			$table->foreign('branch_id')->references('id')->on('customer_brances')->onDelete('cascade');
             $table->string('atm')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();

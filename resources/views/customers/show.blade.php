@@ -202,30 +202,31 @@
 
     <div class="bg1"  style="width:800px; margin:0 auto;">
         <div style="text-align: center;">
-            {{--  <img src="{{ asset('./images/khulsi_club_logo.png')}}" width="88%" height= auto; alt="">  --}}
+            {{--  <img src="{{ asset('assets/billcopy/logo.png') }}" width="88%" height= auto; alt="">  --}}
         </div>
         <div style="margin-bottom: 1.5rem;">
-            <h1 class="font" style="text-align: center; margin-top:0;">Membership Form</h1>
+            <h1 style="text-align: center; margin-top:0;">Customer's All Information</h1>
         </div>
 
         <div class="pdiv">
             <div class="tbl1">
-                <p style="margin: 0px; font-weight:bold;"><em>Govt. Reg No: CH-10511/13</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</em></p>
                 <p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p style="margin: 0px; font-weight:bold;"><em>Holding No - 1471/2184/1, Concord</em></p>
-                <p style="margin: 0px; font-weight:bold;"><em>Amusement Park Road, Opposite of Ansar</em></p>
-                <p style="margin: 0px; font-weight:bold;"><em>Sadar Doptor, Foy'slake, Khulshi,</em></p>
-                <p style="margin: 0px; font-weight:bold;"><em>Chattogram, Bangladesh</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>House #2, Lane #2, Road #2, Block-K,</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>Halishahar Housing Estate, Chattogram-4224</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>Tel: 02333323387, 02333328707</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>Mobile: 01844-040714, 01844-040717</em></p>
                 <p style="margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <p style="margin: 0px; font-weight:bold;"><em>Contact: +88019 88 896 906, +88019 70 896 905</em></p>
+                <p style="margin: 0px; font-weight:bold;"><em>Email: ctg@elitebd.com</em></p>
             </div>
             <div class="pbox">
+                <td><img src="{{ asset('assets/billcopy/logo.png') }}" width="210px" height="110px" alt=""></td>
                 {{--  @if ($show_data->image > 0)
                 <td><img src="#" width="110px" height="110px" alt=""></td>
                 @else
                 <td ><p class="photo"><em>4 Copies of Passport Size Photo</em></p></td>
                 @endif  --}}
-                <td ><p class="photo"><em>4 Copies of Passport Size Photo</em></p></td>
+                {{--  <td ><p class="photo"><em>4 Copies of Passport Size Photo</em></p></td>  --}}
             </div>
         </div>
         <div style="margin-top: 2.5rem;">
