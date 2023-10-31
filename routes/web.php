@@ -103,7 +103,8 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
         // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
         Route::get('get-branch-ajax',[empasign::class,'loadBranchAjax'])->name('get_ajax_branch');
-
+        Route::get('get-atm-ajax',[empasign::class,'loadAtmAjax'])->name('get_ajax_atm');
+        Route::get('get-rate-ajax',[empasign::class,'loadRateAjax'])->name('get_ajax_rate');
 
         Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
 

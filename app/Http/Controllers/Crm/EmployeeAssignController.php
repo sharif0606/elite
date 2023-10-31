@@ -10,6 +10,8 @@ use App\Models\Employee\Employee;
 use App\Models\JobPost;
 use App\Models\Customer;
 use App\Models\Crm\CustomerBrance;
+use App\Models\Crm\Atm;
+use App\Models\Crm\CustomerRate;
 
 use Toastr;
 use Carbon\Carbon;
@@ -172,6 +174,19 @@ class EmployeeAssignController extends Controller
         $customerId = $request->customerId;
         $branch = CustomerBrance::where('customer_id', $customerId)->select('id','brance_name')->get();
         return response()->json($branch, 200);
+    }
+    public function loadAtmAjax(Request $request)
+    {
+        $branchId = $request->branchId;
+        $atm = Atm::where('branch_id', $branchId)->select('id','atm')->get();
+        return response()->json($atm, 200);
+    }
+    public function loadRateAjax(Request $request)
+    {
+        $customerId = $request->customerId;
+        $jobpostId = $request->jobpostId;
+        $rate = CustomerRate::where('customer_id', $customerId)->where('job_post_id',$jobpostId)->first();
+        return response()->json($rate, 200);
     }
 
 }
