@@ -14,13 +14,13 @@
                 @method('PATCH')
                 <div class="row">
                     <h4 class="text-center m-0">{{ $customer->name }}</h4>
-                    <h5 class="text-center m-0">Brance details</h5>
+                    <h5 class="text-center m-0">Branch details</h5>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="brance_name">Brance Name</label>
-                            <input type="text" id="brance_name" value="{{old('brance_name',$cdetails->brance_name)}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Brance Name" name="brance_name">
+                            <label for="brance_name">Branch Name</label>
+                            <input type="text" id="brance_name" value="{{old('brance_name',$cdetails->brance_name)}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Branch Name" name="brance_name">
                             @if($errors->has('brance_name'))
                                 <span class="text-danger"> {{ $errors->first('brance_name') }}</span>
                             @endif
