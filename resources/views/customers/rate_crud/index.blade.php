@@ -21,7 +21,7 @@
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Job Post')}}</th>
                                     <th scope="col">{{__('Rate')}}</th>
-                                    <th scope="col">{{__('Ot Rate')}}</th>
+                                    {{--  <th scope="col">{{__('Ot Rate')}}</th>  --}}
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
@@ -31,7 +31,7 @@
                                     <th scope="row">{{++$index}}</th>
                                     <td>{{$data->jobpost?->name}}</td>
                                     <td>{{$data->rate}}</td>
-                                    <td>{{$data->ot_rate}}</td>
+                                    {{--  <td>{{$data->ot_rate}}</td>  --}}
                                     <td class="white-space-nowrap">
                                         <a href="{{route('customerRate.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>

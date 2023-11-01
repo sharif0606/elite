@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="ot_rate">OT-Rate</label>
+                            <label for="ot_rate">Job Post</label>
                             <select class="form-select" id="job_post_id" name="job_post_id">
                                 <option value="">Select Post</option>
                                 @forelse ($jobpost as $job)
@@ -35,12 +35,12 @@
                             <input type="number" id="rate" value="{{old('rate',$crate->rate)}}" class="form-control" placeholder="Rate" name="rate">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="ot_rate">OT-Rate</label>
                             <input type="number" id="ot_rate" value="{{old('ot_rate',$crate->ot_rate)}}" class="form-control" placeholder="Ot Rate" name="ot_rate">
                         </div>
-                    </div>
+                    </div>  --}}
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->integer('job_post_id');
             $table->decimal('rate',10,2)->default(0);
-            $table->decimal('ot_rate',10,2)->default(0);
+            $table->decimal('ot_rate',10,2)->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
