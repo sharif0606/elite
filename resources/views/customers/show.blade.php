@@ -309,20 +309,19 @@
         </form>
         @endforeach
         @endif
+        <div>
+            <h4 class="" style="margin-bottom: 0;"><b>Rate</b></h4>
+        </div>
         @if ($customer->customerRate)
         @foreach ($customer->customerRate as $rate)
         <form action="">
-            <table class = "gfg" style="width:100%">
-                <tbody >
-                    <tr>
-                        <td style="text-align: left;">Job Post:</th>
-                        <td colspan="3"><input type="text" class="tinput"  value="{{ $rate->jobpost?->name }}"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;">Rate:</td>
-                        <td colspan="3"><input type="text" class="tinput" value="{{ $rate->rate }}"></td>
-                    </tr>
-                </tbody>
+            <table class = "gfg2" style=" width:100%">
+                <tr>
+                    <td style="text-align: left;">Job Post :</td>
+                    <td ><input type="text" class="tinput" value="{{ $rate->jobpost?->name }}"></td>
+                    <td style="text-align: left; padding-left:5px;">Rate:</td>
+                    <td ><input type="text" class="tinput" value="{{ $rate->rate }}"></td>
+                </tr>
             </table>
         </form>
         @endforeach
