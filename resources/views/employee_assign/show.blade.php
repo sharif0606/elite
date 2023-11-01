@@ -104,6 +104,10 @@
             <div class="row">
                 <div class="col-1">Cliant Name</div>
                 <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->customer?->name }}"></div>
+                <div class="col-1">Branch</div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->branch?->brance_name }}"></div>
+                <div class="col-1">Atm</div>
+                <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->atms?->atm }}"></div>
             </div>
             <div class="row">
                 <div class="col-1">Address</div>
