@@ -309,6 +309,24 @@
         </form>
         @endforeach
         @endif
+        @if ($customer->customerRate)
+        @foreach ($customer->customerRate as $rate)
+        <form action="">
+            <table class = "gfg" style="width:100%">
+                <tbody >
+                    <tr>
+                        <td style="text-align: left;">Job Post:</th>
+                        <td colspan="3"><input type="text" class="tinput"  value="{{ $rate->jobpost?->name }}"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Rate:</td>
+                        <td colspan="3"><input type="text" class="tinput" value="{{ $rate->rate }}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        @endforeach
+        @endif
     </div>
     <script>
         function printDiv(divName) {

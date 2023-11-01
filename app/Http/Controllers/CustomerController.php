@@ -14,6 +14,7 @@ use App\Http\Requests\Crm\CustomerRequest;
 use Toastr;
 use Carbon\Carbon;
 use DB;
+use Exception;
 use App\Http\Traits\ImageHandleTraits;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
