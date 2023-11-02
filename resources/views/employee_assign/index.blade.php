@@ -51,6 +51,13 @@
                             <a href="{{route('empasign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
+                            <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <form id="form{{ $e->id }}" action="{{ route('empasign.destroy', encryptor('encrypt', $e->id)) }}" method="post">
+                                @csrf
+                                @method('delete')
+                            </form>
                         </td>
                     </tr>
                     @empty
@@ -67,3 +74,12 @@
     </div>
 </div>
 @endsection
+@push("scripts")
+<script>
+    function confirmDelete(id) {
+        if (confirm("Are you sure you want to delete this Data?")) {
+            $('#form' + id).submit();
+        }
+    }
+</script>
+@endpush

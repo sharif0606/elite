@@ -170,7 +170,9 @@ class EmployeeAssignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $c=EmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 
     public function loadBranchAjax(Request $request)
