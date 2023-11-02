@@ -216,6 +216,63 @@
 
     @stack('scripts')
     {!! Toastr::message() !!}
+    <script>
+        function getBranch(e) {
+            let customerId=$(e).val();
+            $.ajax({
+                url: "{{ route('get_ajax_branch') }}",
+                type: "GET",
+                dataType: "json",
+                data: { customerId: customerId },
+                success: function (data) {
+                    //console.log(data)
+                    var d = $('#branch_id').empty();
+                    $.each(data, function(key, value) {
+                        $('#branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
+                    });
+                },
+                error: function () {
+                    console.error("Error fetching data from the server.");
+                },
+            });
+        }
+        function getAtm(e) {
+            let branchId=$(e).val();
+            $.ajax({
+                url: "{{ route('get_ajax_atm') }}",
+                type: "GET",
+                dataType: "json",
+                data: { branchId: branchId },
+                success: function (data) {
+                    //console.log(data)
+                    var d = $('#atm_id').empty();
+                    $.each(data, function(key, value) {
+                        $('#atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                    });
+                },
+                error: function () {
+                    console.error("Error fetching data from the server.");
+                },
+            });
+        }
+        function getRate(e) {
+            let customerId=$('#customer_id').find(":selected").val();
+            let jobpostId=$(e).closest('tr').find('.job_post_id').val();
+            $.ajax({
+                url: "{{ route('get_ajax_rate') }}",
+                type: "GET",
+                dataType: "json",
+                data: { customerId: customerId, jobpostId: jobpostId},
+                success: function (data) {
+                    console.log(data)
+                    $(e).closest('tr').find('.rate').val(data.rate);
+                },
+                error: function () {
+                    console.error("Error fetching data from the server.");
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>
