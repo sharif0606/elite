@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('employee_assign_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_assign_id');
+            $table->unsignedBigInteger('employee_assign_id')->nullable();
+			$table->foreign('employee_assign_id')->references('id')->on('employee_assigns')->onDelete('cascade');
             $table->integer('job_post_id');
             $table->integer('qty');
             $table->string('rate');
