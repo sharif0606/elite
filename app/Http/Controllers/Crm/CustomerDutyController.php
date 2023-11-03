@@ -72,6 +72,8 @@ class CustomerDutyController extends Controller
         try{
             $data=new CustomerDuty;
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->total_duty = $request->total_duty;
@@ -152,6 +154,8 @@ class CustomerDutyController extends Controller
         try{
             $data=CustomerDuty::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->total_duty = $request->total_duty;
