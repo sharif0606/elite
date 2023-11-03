@@ -256,6 +256,11 @@
             });
         }
         function getRate(e) {
+
+            if (!$('.customer_id').val()) {
+                $('.customer_id').focus();
+                return false;
+            }
             let customerId=$('#customer_id').find(":selected").val();
             let jobpostId=$(e).closest('tr').find('.job_post_id').val();
             $.ajax({
