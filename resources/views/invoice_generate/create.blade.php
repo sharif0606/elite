@@ -94,7 +94,10 @@
                                             </td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
-                                            <td><span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span></td>
+                                            <td>
+                                                <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                <span class="text-danger"><i class="bi bi-dash-circle-fill"></i></span>
+                                            </td>
                                             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
                                             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
                                         </tr>
