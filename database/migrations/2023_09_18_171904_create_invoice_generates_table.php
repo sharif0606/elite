@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('invoice_generates', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id');
+            $table->integer('branch_id')->nullable();
+            $table->integer('atm_id')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->date('bill_date')->nullable();

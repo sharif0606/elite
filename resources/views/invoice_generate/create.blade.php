@@ -22,14 +22,26 @@
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
-                                <div class="col-lg-6 mt-2">
-                                    <label for=""><b>Customer</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Customer Name</b></label>
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }} - ( {{ $c->brance_name }} )</option>
+                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Branch Name</b></label>
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                        <option value="">Select Branch</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Atm</b></label>
+                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
+                                        <option value="">Select Atm</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">

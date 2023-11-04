@@ -54,6 +54,8 @@ class InvoiceGenerateController extends Controller
         try{
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
