@@ -141,7 +141,6 @@
         let smonth=workingdayinmonth.getMonth()+1;
         let syear=workingdayinmonth.getFullYear();
             workingdayinmonth= new Date(syear, smonth, 0).getDate();
-
         let counter = 0;
         $.ajax({
             url: "{{route('get_invoice_data')}}",
