@@ -83,7 +83,10 @@
                                     </tbody>
                                     <tfoot>
                                         <tr style="text-align: center;">
-                                            <td></td>
+                                            <td class="d-flex">
+                                                <span onClick='incressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
+                                                <span onClick='decressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                            </td>
                                             <th colspan="6" style="text-align: end;">Sub Tatal</th>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
@@ -91,12 +94,12 @@
                                             </td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
-                                            <td>
+                                            {{--  <td>
                                                 <span onClick='incressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
                                                 <span onClick='decressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
                                             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
-                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
+                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>  --}}
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
@@ -185,9 +188,11 @@
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth)).toFixed(2);
+                            type_houre=8;
                         }else{
                             totalHoures=(12*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth)).toFixed(2);
+                            type_houre=12;
                         }
 
                         selectElement.append(
@@ -209,6 +214,7 @@
                                 </td>
                                 <td>
                                     <input class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
+                                    <input class="type_houre" type="hidden" name="" value="${type_houre}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${ratePerHoures}">
@@ -257,7 +263,7 @@
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
-            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
+            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
         </tr>
         `;
             $('#repeater_less').after(row);
@@ -277,13 +283,20 @@
                 $(e).closest('tr').remove();
             }
         }
-        {{--  function reCalcultateInvoice(e) {
+        function removeDecressRowData(e) {
+            if (confirm("Are you sure you want to remove this row?")) {
+                $(e).closest('tr').remove();
+            }
+        }
+        function reCalcultateInvoice(e) {
             var rate=$(e).closest('tr').find('.rate_c').val();
             var person=$(e).closest('tr').find('.employee_qty_c').val();
             var workingDay=$(e).closest('tr').find('.warking_day_c').val();
             var totalHours=$(e).closest('tr').find('.total_houres_c').val();
             var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
-        }  --}}
+            var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
+            var reTotalHoure=rate
+        }
 </script>
 
 @endpush
