@@ -92,8 +92,8 @@
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             <td>
-                                                <span onClick='incressRowData();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                <span class="text-danger"><i class="bi bi-dash-circle-fill"></i></span>
+                                                <span onClick='incressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
+                                                <span onClick='decressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
                                             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
                                             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>
@@ -183,10 +183,10 @@
                         }
 
                         if(value.hours=="1"){
-                            totalHoures=(8*(value.qty)*workingDays+1);
+                            totalHoures=(8*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth)).toFixed(2);
                         }else{
-                            totalHoures=(12*(value.qty)*workingDays+1);
+                            totalHoures=(12*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth)).toFixed(2);
                         }
 
@@ -200,18 +200,18 @@
                                     <input class="form-control input_css rate_c" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css" type="text" name="employee_qty[]" value="${value.qty}">
+                                    <input class="form-control input_css employee_qty_c" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css" type="text" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="form-control input_css warking_day_c" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css" type="text" name="total_houres[]" value="${totalHoures}">
+                                    <input class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css" type="text" name="rate_per_houres[]" value="${ratePerHoures}">
+                                    <input class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${ratePerHoures}">
                                 </td>
                                 <td>${parseFloat(((value.rate)/workingdayinmonth)*(value.qty)*(workingDays+1)).toFixed(2)}
                                     <input class="total_amounts" type="hidden" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
@@ -262,14 +262,28 @@
         `;
             $('#repeater_less').after(row);
         }
+     function decressRowData(){
+        var row=`
+        <tr style="text-align: center;">
+            <td><span onClick='removeDecressRowData(this);' class="add-row text-primary"><i class="bi bi-trash"></i></span></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Add: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
+        </tr>
+        `;
+            $('#repeater_less').after(row);
+        }
         function removeIncressRowData(e) {
             if (confirm("Are you sure you want to remove this row?")) {
                 $(e).closest('tr').remove();
             }
         }
-        function reCalcultateInvoice(e) {
+        {{--  function reCalcultateInvoice(e) {
             var rate=$(e).closest('tr').find('.rate_c').val();
-        }
+            var person=$(e).closest('tr').find('.employee_qty_c').val();
+            var workingDay=$(e).closest('tr').find('.warking_day_c').val();
+            var totalHours=$(e).closest('tr').find('.total_houres_c').val();
+            var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
+        }  --}}
 </script>
 
 @endpush
