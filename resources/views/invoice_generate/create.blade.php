@@ -134,6 +134,8 @@
 <script>
     function getInvoiceData(e){
         var customer=$('.customer_id').val();
+        var branch_id=$('.branch_id').val();
+        var atm_id=$('.atm_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
 
@@ -146,7 +148,7 @@
             url: "{{route('get_invoice_data')}}",
             type: "GET",
             dataType: "json",
-            data: { customer_id:customer,start_date:startDate,end_date:endDate },
+            data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
             success: function(invoice_data) {
                 console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');

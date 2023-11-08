@@ -134,7 +134,7 @@
                             <td >{{ ++$loop->index  }}</td>
                             <td>{{ $de->jobpost?->name }}</td>
                             <td>{{ $de->qty }}</td>
-                            <td>{{ $de->start_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($de->start_date)->format('d F Y') }}</td>
                             <td>{{ $de->end_date }}</td>
                             <td>{{ $de->rate }}</td>
                             <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
