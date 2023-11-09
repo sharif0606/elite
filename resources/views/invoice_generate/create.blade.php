@@ -207,10 +207,10 @@
                                     <input class="form-control input_css rate_c" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css employee_qty_c" type="text" name="employee_qty[]" value="${value.qty}">
+                                    <input class="form-control input_css employee_qty_c" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css warking_day_c" type="text" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="form-control input_css warking_day_c" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
@@ -297,7 +297,8 @@
             var totalHours=$(e).closest('tr').find('.total_houres_c').val();
             var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
             var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
-            var reTotalHoure=rate
+            var reTotalHoure=(workingDay*typeHours*person);
+            $(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
         }
 </script>
 
