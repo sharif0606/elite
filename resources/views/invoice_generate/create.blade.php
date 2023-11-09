@@ -172,7 +172,7 @@
                             st_date=startDate;
                             ed_date=endDate;
                         } else if (value.start_date <= startDate && value.end_date <= endDate) {
-                            workingDays = new Date(value.end_date) - new Date(value.start_date);
+                            workingDays = new Date(value.end_date) - new Date(startDate);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
                             st_date=value.start_date;
                             ed_date=value.end_date;
