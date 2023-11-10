@@ -228,7 +228,7 @@
                     //console.log(data)
                     var d = $('#branch_id').empty();
                     $.each(data, function(key, value) {
-                        $('#branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
+                        $('#branch_id').append('<option data-vat="'+value.vat+'" value="' + value.id + '">' + value.brance_name + '</option>');
                     });
                 },
                 error: function () {
