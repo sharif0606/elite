@@ -84,19 +84,20 @@
                                     <tfoot>
                                         <tr style="text-align: center;">
                                             <td class="d-flex">
-                                                <span onClick='incressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
-                                                <span onClick='decressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                {{--  <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>  --}}
+                                                <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
                                             <th colspan="6" style="text-align: end;">Sub Tatal</th>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
-                                                <input class="lessP" type="hidden" name="less_total[]" value="">
+                                                {{--  <input class="lessP" type="hidden" name="less_total[]" value="">  --}}
+                                                <input class="addP" type="hidden" name="add_total[]" value="">
                                             </td>
                                         </tr>
                                         <tr id="repeater_less" style="text-align: center;">
                                             {{--  <td>
-                                                <span onClick='incressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
-                                                <span onClick='decressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
+                                                <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
                                             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
                                             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>  --}}
@@ -104,7 +105,10 @@
                                         <tr style="text-align: center;">
                                             <td></td>
                                             <th colspan="6">Tatal Tk</th>
-                                            <td><input readonly type="text" class="form-control text-center total_tk" name="total_tk" value=""></td>
+                                            <td>
+                                                <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
+                                                <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
+                                            </td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
@@ -150,7 +154,7 @@
             dataType: "json",
             data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
             success: function(invoice_data) {
-                console.log(invoice_data);
+                //console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');
                     selectElement.empty();
                     $.each(invoice_data, function(index, value) {
@@ -229,7 +233,7 @@
                         counter++;
                     });
                     subtotalAmount();
-                    lessCount();
+                    addCount();
 
             },
         });
@@ -242,7 +246,7 @@
         });
         $('.sub_total_amount').val(subTotal);
     }
-     function lessCount(e){
+     {{--  function lessCount(e){
         var totalLess=0;
         $('.less_count').each(function(){
             totalLess+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
@@ -255,26 +259,52 @@
         var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
         var totalTaka=parseFloat(subTotal-totalLes).toFixed(2);
         $('.total_tk').val(totalTaka);
+        $('.temporaty_total').val(totalTaka);
         var vatTaka=parseFloat((totalTaka*vat)/100).toFixed(2);
         var grandTotal=parseFloat(totalTaka) + parseFloat(vatTaka);
         $('.vat_taka').val(vatTaka);
         $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
+    }  --}}
+     function addCount(e){
+        var totalAdd=0;
+        $('.add_count').each(function(){
+            totalAdd+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            //alert(totalAdd)
+        });
+        //console.log(totalAdd)
+        $('.addP').val(totalAdd);
+        var addSubTotal=$('.sub_total_amount').val();
+        var totalAdds=$('.addP').val();
+        var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
+        var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
+        $('.total_tk').val(totalAddTaka);
+        $('.temporaty_total').val(totalAddTaka);
+        var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
+        var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
+        $('.vat_taka').val(aVatTaka);
+        $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
     }
-     function incressRowData(){
+     {{--  function decressRowData(){
         var row=`
         <tr style="text-align: center;">
-            <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
+            <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
             <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
         </tr>
         `;
             $('#repeater_less').after(row);
         }
-     function decressRowData(){
+        function removedecressRowData(e) {
+            if (confirm("Are you sure you want to remove this row?")) {
+                $(e).closest('tr').remove();
+                lessCount();
+            }
+        }  --}}
+     function incressRowData(){
         var row=`
         <tr style="text-align: center;">
-            <td><span onClick='removeDecressRowData(this);' class="add-row text-primary"><i class="bi bi-trash"></i></span></td>
-            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Add: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
             <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
         </tr>
         `;
@@ -283,11 +313,7 @@
         function removeIncressRowData(e) {
             if (confirm("Are you sure you want to remove this row?")) {
                 $(e).closest('tr').remove();
-            }
-        }
-        function removeDecressRowData(e) {
-            if (confirm("Are you sure you want to remove this row?")) {
-                $(e).closest('tr').remove();
+                addCount();
             }
         }
         function reCalcultateInvoice(e) {
