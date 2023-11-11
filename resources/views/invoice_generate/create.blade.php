@@ -21,7 +21,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -43,11 +43,11 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
+                                    <input required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Bill Date</b></label>
@@ -137,6 +137,19 @@
 @push("scripts")
 <script>
     function getInvoiceData(e){
+
+        if (!$('.customer_id').val()) {
+            $('.customer_id').focus();
+            return false;
+        }
+        if (!$('.start_date').val()) {
+            $('.start_date').focus();
+            return false;
+        }
+        if (!$('.end_date').val()) {
+            $('.end_date').focus();
+            return false;
+        }
         var customer=$('.customer_id').val();
         var branch_id=$('.branch_id').val();
         var atm_id=$('.atm_id').val();
@@ -244,7 +257,7 @@
         $('.total_amounts').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
-        $('.sub_total_amount').val(subTotal);
+        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
     }
      {{--  function lessCount(e){
         var totalLess=0;

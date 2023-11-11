@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('invoice_generate_lesses', function (Blueprint $table) {
             $table->id();
             $table->integer('invoice_id');
-            $table->text('less_description');
-            $table->decimal('less_amount',10,2)->default(0);
+            $table->text('description');
+            $table->decimal('amount',10,2)->default(0);
             $table->string('status')->nullable();
             $table->timestamps();
         });
