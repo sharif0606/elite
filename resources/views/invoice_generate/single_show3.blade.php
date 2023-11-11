@@ -86,8 +86,8 @@
                 @foreach ($invoice_id->less as $le)
                 <tr style="text-align: center;">
                     <td></td>
-                    <td colspan="6">{{ $le->less_description }}</td>
-                    <td>{{ $le->less_amount }}</td>
+                    <td colspan="6">{{ $le->description }}</td>
+                    <td>{{ $le->amount }}</td>
                 </tr>
                 @endforeach
                 @endif

@@ -87,13 +87,13 @@ class InvoiceGenerateController extends Controller
                     }
                 }
             }
-            if($request->less_amount){
-                foreach($request->less_amount as $i=>$less_amount){
-                    if($less_amount){
+            if($request->add_amount){
+                foreach($request->add_amount as $i=>$add_amount){
+                    if($add_amount){
                         $olddue=new InvoiceGenerateLess;
                         $olddue->invoice_id=$data->id;
-                        $olddue->less_description=$request->less_description[$i];
-                        $olddue->less_amount=$less_amount;
+                        $olddue->description=$request->add_description[$i];
+                        $olddue->amount=$add_amount;
                         $olddue->status=0;
                         $olddue->save();
                     }
