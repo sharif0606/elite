@@ -29,7 +29,7 @@
         <tr>
             <td width="40%" style="text-align: left;">Bill for Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
-            <td width="30%" style="text-align: center;">Date : {{ $invoice_id->bill_date }}</td>
+            <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>
         </tr>
     </table>
     <div style="padding: 0 70px 0 80px;">
@@ -112,7 +112,7 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Tatal</th>
-                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                    <td>{{ ($invoice_id->total_tk)}}</td>
                 </tr>
             </tfoot>
         </table>
