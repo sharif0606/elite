@@ -288,7 +288,9 @@
         $('.addP').val(totalAdd);
         var addSubTotal=$('.sub_total_amount').val();
         var totalAdds=$('.addP').val();
-        var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
+        //var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
+        var vat=$('#branch_id').find(":selected").data('vat');
+        console.log(vat)
         var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
         $('.total_tk').val(totalAddTaka);
         $('.temporaty_total').val(totalAddTaka);

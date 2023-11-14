@@ -112,7 +112,7 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Tatal</th>
-                    <td>{{ ($invoice_id->total_tk)}}</td>
+                    <td>{{ money_format($invoice_id->total_tk)}}</td>
                 </tr>
             </tfoot>
         </table>
