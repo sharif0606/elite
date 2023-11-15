@@ -13,6 +13,7 @@ use App\Http\Controllers\Settings\Location\UnionController as union;
 use App\Http\Controllers\Settings\Location\WardController as ward;
 use App\Http\Controllers\Settings\JobPostController as jobpost;
 use App\Http\Controllers\Settings\ZoneController as zone;
+use App\Http\Controllers\Settings\InvoiceSettingController as invoicesetting;
 
 
 use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
@@ -83,6 +84,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('ward',ward::class,['as'=>'superadmin']);
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
         Route::resource('zone',zone::class,['as'=>'superadmin']);
+        Route::resource('invoicesetting',invoicesetting::class,['as'=>'superadmin']);
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');

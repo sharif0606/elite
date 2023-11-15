@@ -73,6 +73,9 @@
                                 <li class="submenu-item ">
                                     <a href="{{route(currentUser().'.zone.index')}}">{{__('Zone')}}</a>
                                 </li>
+                                <li class="submenu-item ">
+                                    <a href="{{route(currentUser().'.invoicesetting.index')}}">{{__('Invoice Setting')}}</a>
+                                </li>
                             </ul>
                         </li>
 
