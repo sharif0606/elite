@@ -139,20 +139,25 @@
     </div>
     <table width="100%" style="padding-top: 5px;">
         <tr style="text-align: center;">
+            @php
+            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+            @endphp
             <td>
-                Md. Abu Rashel <br>
-                Deputy Manager <br>
-                Cell: 01844-040718
+                {{ $footersetting1?->name }} <br>
+                {{ $footersetting1?->designation }} <br>
+                Cell: {{ $footersetting1?->phone  }}
             </td>
             <td>
-                Md. Mayan Uddin <br>
-                 Manager <br>
-                Cell: 01844-040714
+                {{ $footersetting2?->name }} <br>
+                {{ $footersetting2?->designation }} <br>
+                Cell: {{ $footersetting2?->phone  }}
             </td>
             <td>
-                Anup Kumar Mutsddi <br>
-                Senior Manager <br>
-                (Accounts & Finance)
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone  }}
             </td>
         </tr>
     </table>
