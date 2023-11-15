@@ -28,7 +28,7 @@
         <tr>
             <td width="40%" style="text-align: left;">Bill for Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
-            <td width="30%" style="text-align: center;">Date : {{ $invoice_id->bill_date }}</td>
+            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table>
     <div style="padding: 0 70px 0 80px;">
