@@ -206,11 +206,11 @@
 
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth)).toFixed(2);
+                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
                             type_houre=8;
                         }else{
                             totalHoures=(12*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth)).toFixed(2);
+                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
                             type_houre=12;
                         }
 
@@ -221,25 +221,25 @@
                                     <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css rate_c" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
+                                    <input class="form-control input_css rate_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css employee_qty_c" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
+                                    <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css warking_day_c" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
-                                <td>
-                                    <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
+                                <td>${totalHoures}
+                                    <input readonly class="form-control input_css total_houres_c" type="hidden" name="total_houres[]" value="${totalHoures}">
                                     <input class="type_houre" type="hidden" name="" value="${type_houre}">
                                 </td>
-                                <td>
-                                    <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${ratePerHoures}">
+                                <td>${parseFloat(ratePerHoures).toFixed(2)}
+                                    <input readonly class="form-control input_css rate_per_houres_c" type="hidden" name="rate_per_houres[]" value="${ratePerHoures}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
                                 </td>
                             </tr>`
                         );
