@@ -46,11 +46,11 @@
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $invoice_id->customer?->brance_name }}</td>
+                <td>{{ $branch?->brance_name }}</td>
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $invoice_id->customer?->billing_address }}</td>
+                <td>{{ $branch?->billing_address }}</td>
             </tr>
             <tr>
                 <td width="15%"><b>Subject:</b></td>

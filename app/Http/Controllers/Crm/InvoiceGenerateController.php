@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Crm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\InvoiceGenerate;
 use App\Models\Crm\InvoiceGenerateDetails;
 use App\Models\Crm\InvoiceGenerateLess;
@@ -117,12 +118,14 @@ class InvoiceGenerateController extends Controller
     public function show($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.show',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.show',compact('invoice_id','branch'));
     }
     public function getSingleInvoice1($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show1',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show1',compact('invoice_id','branch'));
     }
     public function getSingleInvoice2($id)
     {
