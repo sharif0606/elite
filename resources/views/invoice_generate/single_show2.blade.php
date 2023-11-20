@@ -112,7 +112,7 @@
             </tfoot>
         </table>
         <div>
-            <p><b>
+            <p>Total Amount In Words:<b>
                 @php
                 $dueTotal = (($invoice_id->sub_total_amount*floatval($invoice_id->vat)/100))+$invoice_id->sub_total_amount;
 
