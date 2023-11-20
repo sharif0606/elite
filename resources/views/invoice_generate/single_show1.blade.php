@@ -98,7 +98,7 @@
             <tfoot>
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="6">Sub Tatal</th>
+                    <th colspan="6">Sub Total</th>
                     <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                 </tr>
                 @if ($invoice_id->less)
@@ -112,7 +112,7 @@
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="6">Tatal</th>
+                    <th colspan="6">Total</th>
                     <td>{{ money_format($invoice_id->total_tk)}}</td>
                 </tr>
             </tfoot>
