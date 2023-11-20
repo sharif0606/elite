@@ -104,7 +104,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="6">Tatal Tk</th>
+                                            <th colspan="6">Total Tk</th>
                                             <td>
                                                 <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                 <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
