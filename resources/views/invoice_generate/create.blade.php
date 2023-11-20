@@ -112,7 +112,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="6">Vat</th>
+                                            <th colspan="6">Vat (<span class="vat_percent"></span> %)</th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
@@ -296,6 +296,7 @@
         var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
         $('.vat_taka').val(aVatTaka);
+        $('.vat_percent').text(vat);
         $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
     }
      {{--  function decressRowData(){
