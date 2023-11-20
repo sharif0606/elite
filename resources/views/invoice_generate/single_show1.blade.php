@@ -8,7 +8,7 @@
 </head>
 {{--  <button type="button" class="btn btn-info no-print" onclick="printDiv('result_show')">Print</button>  --}}
 <body id="result_show">
-    <div style="text-align: center;"><h2>BILL COPY</h2></div>
+    <div style="text-align: center;"><h2>INVOICE COPY</h2></div>
     <table width="100%">
         <tr>
             <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
@@ -27,7 +27,7 @@
     <hr style="height: 1px; background-color: red;">
     <table width="100%"style="padding-left: 55px;">
         <tr>
-            <td width="40%" style="text-align: left;">Bill for Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
             <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
             {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
@@ -119,7 +119,7 @@
         </table>
         <div>
             <p>
-                Total Amount in Words: <b>
+                Total Amount In Words: <b>
                     @php
                     $dueTotal = $invoice_id->total_tk;
 
