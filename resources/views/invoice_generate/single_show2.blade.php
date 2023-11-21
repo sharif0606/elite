@@ -7,7 +7,7 @@
 
 </head>
 <body>
-    <div style="text-align: center;"><h2>BILL COPY</h2></div>
+    <div style="text-align: center;"><h2>INVOICE COPY</h2></div>
     <table width="100%">
         <tr>
             <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>

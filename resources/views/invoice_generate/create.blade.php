@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this),addCount(this)">
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
@@ -53,10 +53,10 @@
                                     <label for=""><b>Bill Date</b></label>
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
-                                {{--  <div class="col-lg-3 mt-2">
+                                <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input class="form-control vat" type="number" name="vat" value="" placeholder="Vat">
-                                </div>  --}}
+                                    <input class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
+                                </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Footer Note</b></label>
                                     <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note"></textarea>
@@ -297,6 +297,7 @@
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
         $('.vat_taka').val(aVatTaka);
         $('.vat_percent').text(vat);
+        $('.vat').val(vat);
         $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
     }
      {{--  function decressRowData(){
