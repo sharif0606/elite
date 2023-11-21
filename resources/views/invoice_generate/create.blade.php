@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
+                                    <input required class="form-control vat" onkeyup="changeVat(this)" step="0.01" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Footer Note</b></label>
@@ -299,6 +299,17 @@
         $('.vat_percent').text(vat);
         $('.vat').val(vat);
         $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
+    }
+    function changeVat(e){
+        let changeVat=$('.vat').val();
+        var changeaddSubTotal=$('.sub_total_amount').val();
+        var changetotalAdds=$('.addP').val();
+        var changetotalAddTaka=parseFloat(changeaddSubTotal) + parseFloat(changetotalAdds);
+        var changeaVatTaka=parseFloat((changetotalAddTaka*changeVat)/100).toFixed(2);
+        var changeaGrandTotal=parseFloat(changetotalAddTaka) + parseFloat(changeaVatTaka);
+        $('.vat_taka').val(changeaVatTaka);
+        $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
+        $('.vat_percent').text(changeVat);
     }
      {{--  function decressRowData(){
         var row=`
