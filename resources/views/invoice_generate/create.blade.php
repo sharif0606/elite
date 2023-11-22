@@ -251,6 +251,8 @@
             },
         });
         $('.show_click').removeClass('d-none');
+        var vat=$('#branch_id').find(":selected").data('vat');
+        $('.vat').val(vat);
      }
      function subtotalAmount(){
         var subTotal=0;
@@ -289,7 +291,9 @@
         var addSubTotal=$('.sub_total_amount').val();
         var totalAdds=$('.addP').val();
         //var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
-        var vat=$('#branch_id').find(":selected").data('vat');
+        //var vat=$('#branch_id').find(":selected").data('vat');
+        var vat=$('.vat').val();
+        console.log(vat);
         var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
         $('.total_tk').val(totalAddTaka);
         $('.temporaty_total').val(totalAddTaka);
@@ -297,16 +301,14 @@
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
         $('.vat_taka').val(aVatTaka);
         $('.vat_percent').text(vat);
-        $('.vat').val(vat);
+        //$('.vat').val(vat);
         $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
     }
     function changeVat(e){
         let changeVat=$('.vat').val();
-        var changeaddSubTotal=$('.sub_total_amount').val();
-        var changetotalAdds=$('.addP').val();
-        var changetotalAddTaka=parseFloat(changeaddSubTotal) + parseFloat(changetotalAdds);
-        var changeaVatTaka=parseFloat((changetotalAddTaka*changeVat)/100).toFixed(2);
-        var changeaGrandTotal=parseFloat(changetotalAddTaka) + parseFloat(changeaVatTaka);
+        var changeaddSubTotal=$('.temporaty_total').val();
+        var changeaVatTaka=parseFloat((changeaddSubTotal*changeVat)/100).toFixed(2);
+        var changeaGrandTotal=parseFloat(changeaddSubTotal) + parseFloat(changeaVatTaka);
         $('.vat_taka').val(changeaVatTaka);
         $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
         $('.vat_percent').text(changeVat);
