@@ -13,7 +13,7 @@
     <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
             <th width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></th>
-            <th style="text-align: right; padding-right: 50px;"><b>{{ $invoice_id->bill_date }}</b></th>
+            <th style="text-align: right; padding-right: 50px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></th>
         </tr>
     </table>
     <br>
@@ -22,8 +22,8 @@
     <div>To</div>
     <div>Manager</div>
     <div><b>{{ $invoice_id->customer?->name }}</b></div>
-    <div>{{ $invoice_id->customer?->brance_name }}</div>
-    <div>{{ $invoice_id->customer?->billing_address }}</div>
+    <div>{{ $branch?->brance_name }}</div>
+    <div>{{ $branch?->billing_address }}</div>
     <br>
     <div><b>Subject: Submission of bill against security services/Security including Armed services for the month of
         {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></div>
@@ -78,36 +78,35 @@
             </tr>
         </tfoot>
     </table>
-    {{--  <div>Total Amount(In Words): <b><i>
-        @php
-        $dueTotal = '<input type="hidden" class="dueTotal" name="" value="">';
-        echo "$dueTotal";
-        @endphp
-         only.</i></b>
-    </div>  --}}
+{{ $textValue }}
     <br>
     <div>{{ $invoice_id->footer_note }}</div>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
     <br><br>
     <i>With thanks & Regards</i>
-    <br><br><br><br><br>
-    <table width="100%">
-        <tr>
-            <td style="text-align: left;">
-                <div>Abu Rashel Bhuiyan</div>
-                <div>Deputy Manager</div>
-                <div>Cell:<b>01844-040718</b></div>
+    <br>
+    <table width="100%" style="padding-top: 5px;">
+        <tr style="text-align: center;">
+            @php
+            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+            @endphp
+            <td>
+                {{ $footersetting1?->name }} <br>
+                {{ $footersetting1?->designation }} <br>
+                Cell: {{ $footersetting1?->phone  }}
             </td>
-            <td style="text-align: left; padding-left:80px;">
-                <div>Md Mayin Uddin</div>
-                <div>Manager</div>
-                <div>Cell:<b>01844-040714</b></div>
+            <td>
+                {{ $footersetting2?->name }} <br>
+                {{ $footersetting2?->designation }} <br>
+                Cell: {{ $footersetting2?->phone  }}
             </td>
-            <td style="text-align: left; padding-left: 80px;">
-                <div>Anyp Kumur Mutsuddin</div>
-                <div>Senior Manager</div>
-                <div>Account & Finance</div>
+            <td>
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone  }}
             </td>
         </tr>
     </table>

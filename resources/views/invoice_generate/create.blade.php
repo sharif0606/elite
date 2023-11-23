@@ -293,7 +293,7 @@
         //var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
         //var vat=$('#branch_id').find(":selected").data('vat');
         var vat=$('.vat').val();
-        console.log(vat);
+        //console.log(vat);
         var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
         $('.total_tk').val(totalAddTaka);
         $('.temporaty_total').val(totalAddTaka);

@@ -26,7 +26,7 @@
     <hr style="height: 1px; background-color: red;">
     <table width="100%"style="padding-left: 55px;">
         <tr>
-            <td width="40%" style="text-align: left;">Bill for Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
             <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
@@ -48,11 +48,11 @@
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $invoice_id->customer?->brance_name }}</td>
+                <td>{{ $branch?->brance_name }}</td>
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $invoice_id->customer?->billing_address }}</td>
+                <td>{{ $branch?->billing_address }}</td>
             </tr>
             <tr>
                 <td width="15%"><b>Subject:</b></td>
@@ -114,7 +114,7 @@
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*floatval($invoice_id->vat)/100))+$invoice_id->sub_total_amount;
+                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
@@ -132,20 +132,25 @@
     </div>
     <table width="100%" style="padding-top: 5px;">
         <tr style="text-align: center;">
+            @php
+            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+            @endphp
             <td>
-                Md. Abu Rashel <br>
-                Deputy Manager <br>
-                Cell: 01844-040718
+                {{ $footersetting1?->name }} <br>
+                {{ $footersetting1?->designation }} <br>
+                Cell: {{ $footersetting1?->phone  }}
             </td>
             <td>
-                Md. Mayan Uddin <br>
-                 Manager <br>
-                Cell: 01844-040714
+                {{ $footersetting2?->name }} <br>
+                {{ $footersetting2?->designation }} <br>
+                Cell: {{ $footersetting2?->phone  }}
             </td>
             <td>
-                Anup Kumar Mutsddi <br>
-                Senior Manager <br>
-                (Accounts & Finance)
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone  }}
             </td>
         </tr>
     </table>

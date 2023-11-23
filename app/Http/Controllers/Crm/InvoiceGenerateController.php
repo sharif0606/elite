@@ -130,27 +130,47 @@ class InvoiceGenerateController extends Controller
     public function getSingleInvoice2($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show2',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show2',compact('invoice_id','branch'));
     }
     public function getSingleInvoice3($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show3',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show3',compact('invoice_id','branch'));
     }
     public function getSingleInvoice4($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show4',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $summaryQuery = "SELECT
+        SUM(`rate`) as total,
+        (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
+        ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat
+    FROM `invoice_generate_details`
+    WHERE `invoice_id` = 3;
+    ";
+
+    $summery = DB::select($summaryQuery)[0];
+        $dueTotal = $summery->withVat;
+        $textValue='Zero';
+        if ($dueTotal > 0) {
+            $textValue = getBangladeshCurrency($dueTotal);
+
+        }
+        return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
     }
     public function getSingleInvoice5($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show5',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show5',compact('invoice_id','branch'));
     }
     public function getSingleInvoice6($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_generate.single_show6',compact('invoice_id'));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show6',compact('invoice_id','branch'));
     }
 
     /**
