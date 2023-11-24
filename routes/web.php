@@ -90,6 +90,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
         Route::resource('zone',zone::class,['as'=>'superadmin']);
         Route::resource('invoicesetting',invoicesetting::class,['as'=>'superadmin']);
+        Route::get('/jobpost_description', [jobpost::class,'jobpostDescription'])->name('jobpost_description');
 
         /*stock */
         Route::resource('category',category::class,['as'=>'superadmin']);

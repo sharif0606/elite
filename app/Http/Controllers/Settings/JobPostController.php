@@ -31,6 +31,29 @@ class JobPostController extends Controller
     {
         return view('settings.jobpost.create');
     }
+    public function jobpostDescription()
+    {
+        $jobpost = JobPost::get();
+        return view('settings.jobpost.description_create',compact('jobpost'));
+    }
+    public function jobpostDescriptionStore(Request $request, $id)
+    {
+        try{
+            $c=new JobPost;
+            $c->name=$request->jobpostName;
+            $c->name_bn=$request->name_bn;
+            $c->bill_able=$request->bill_able;
+            $c->status=1;
+            if($c->save()){
+                return redirect()->route(currentUser().'.jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            // dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
