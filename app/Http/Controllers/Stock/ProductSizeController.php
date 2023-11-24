@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\ProductSize;
+use App\Http\Traits\ImageHandleTraits;
+use Exception;
+use DB;
+use Toastr;
+use Illuminate\Support\Carbon;
 
 class ProductSizeController extends Controller
 {
@@ -15,7 +20,8 @@ class ProductSizeController extends Controller
      */
     public function index()
     {
-        //
+        $size = ProductSize::paginate(20);
+        return view('Stock.productSize.index',compact('size'));
     }
 
     /**
@@ -25,7 +31,7 @@ class ProductSizeController extends Controller
      */
     public function create()
     {
-        //
+        return view('Stock.productSize.create');
     }
 
     /**
@@ -36,7 +42,20 @@ class ProductSizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $c=new ProductSize;
+            $c->name=$request->name;
+            $c->name_bn=$request->name_bn;
+            $c->status=1;
+            if($c->save()){
+                return redirect()->route(currentUser().'.size.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            // dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -58,7 +77,8 @@ class ProductSizeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $size=ProductSize::findOrFail(encryptor('decrypt',$id));
+        return view('Stock.productSize.edit',compact('size'));
     }
 
     /**
@@ -70,7 +90,20 @@ class ProductSizeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $c=ProductSize::findOrFail(encryptor('decrypt',$id));
+            $c->name=$request->name;
+            $c->name_bn=$request->name_bn;
+            $c->status=1;
+            if($c->save()){
+                return redirect()->route(currentUser().'.size.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            // dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -81,6 +114,8 @@ class ProductSizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $size=ProductSize::findOrFail(encryptor('decrypt',$id));
+        $size->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

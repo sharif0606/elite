@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Zone List'))
+@section('pageTitle',trans('Size List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -13,7 +13,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div>
-                    <a class="float-end" href="{{route(currentUser().'.zone.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    <a class="float-end" href="{{route(currentUser().'.size.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -27,19 +27,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($zone as $d)
+                            @forelse($size as $d)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
                                 <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.zone.edit',encryptor('encrypt',$d->id))}}">
+                                    <a href="{{route(currentUser().'.size.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a>
-                                    <form id="form{{ $d->id }}" action="{{ route(currentUser().'.zone.destroy', encryptor('encrypt', $d->id)) }}" method="post">
+                                    <form id="form{{ $d->id }}" action="{{ route(currentUser().'.size.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>
@@ -47,7 +47,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="8" class="text-center">No Zone Found</th>
+                                <th colspan="8" class="text-center">No size Found</th>
                             </tr>
                             @endforelse
                         </tbody>

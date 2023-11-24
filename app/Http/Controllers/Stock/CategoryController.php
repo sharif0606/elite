@@ -77,7 +77,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category=Category::findOrFail(encryptor('decrypt',$id));
+        return view('Stock.category.edit',compact('category'));
     }
 
     /**
@@ -89,7 +90,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $c=Category::findOrFail(encryptor('decrypt',$id));
+            $c->name=$request->name;
+            $c->name_bn=$request->name_bn;
+            $c->status=1;
+            if($c->save()){
+                return redirect()->route(currentUser().'.category.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            //dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -100,6 +114,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category=Category::findOrFail(encryptor('decrypt',$id));
+        $category->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

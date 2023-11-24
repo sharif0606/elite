@@ -131,7 +131,7 @@
                                     <a href="{{route(currentUser().'.category.index')}}">Category</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>
+                                    <a href="{{route(currentUser().'.size.index')}}">Product Size</a>
                                 </li>
 
                             </ul>
