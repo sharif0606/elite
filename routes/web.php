@@ -36,6 +36,9 @@ use App\Http\Controllers\CustomerController as customer;
 use App\Http\Controllers\Crm\CustomerBranceController as customerbrance;
 use App\Http\Controllers\Crm\CustomerRateController as customerRate;
 
+/* Stock */
+use App\Http\Controllers\Stock\CategoryController as category;
+
 
 /* Middleware */
 use App\Http\Middleware\isAdmin;
@@ -85,6 +88,9 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
         Route::resource('zone',zone::class,['as'=>'superadmin']);
         Route::resource('invoicesetting',invoicesetting::class,['as'=>'superadmin']);
+
+        /*stock */
+        Route::resource('category',category::class,['as'=>'superadmin']);
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');

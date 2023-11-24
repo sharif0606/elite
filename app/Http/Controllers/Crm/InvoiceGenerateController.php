@@ -156,7 +156,6 @@ class InvoiceGenerateController extends Controller
         $textValue='Zero';
         if ($dueTotal > 0) {
             $textValue = getBangladeshCurrency($dueTotal);
-
         }
         return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
     }

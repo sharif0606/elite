@@ -121,6 +121,21 @@
 
                             </ul>
                         </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-stack"></i>
+                                <span>Stock</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item">
+                                    <a href="{{route(currentUser().'.category.index')}}">Category</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>
+                                </li>
+
+                            </ul>
+                        </li>
 
 
 
