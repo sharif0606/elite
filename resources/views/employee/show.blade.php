@@ -84,7 +84,7 @@
         }
     </style>
     <section>
-        <div class="container">
+        <div class="container-fluid">
             <div class="row p-3">
                 <div class="col-3">
                     <img  class="mt-5" height="80px" width="140px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">

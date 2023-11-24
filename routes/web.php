@@ -39,6 +39,7 @@ use App\Http\Controllers\Crm\CustomerRateController as customerRate;
 /* Stock */
 use App\Http\Controllers\Stock\CategoryController as category;
 use App\Http\Controllers\Stock\ProductSizeController as size;
+use App\Http\Controllers\Stock\ProductController as product;
 
 
 /* Middleware */
@@ -93,6 +94,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         /*stock */
         Route::resource('category',category::class,['as'=>'superadmin']);
         Route::resource('size',size::class,['as'=>'superadmin']);
+        Route::resource('product',product::class,['as'=>'superadmin']);
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');

@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\Product;
+use App\Http\Traits\ImageHandleTraits;
+use Exception;
+use DB;
+use Toastr;
+use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
 {

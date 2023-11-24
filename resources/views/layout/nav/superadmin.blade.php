@@ -133,6 +133,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route(currentUser().'.size.index')}}">Product Size</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route(currentUser().'.product.index')}}">Product</a>
+                                </li>
 
                             </ul>
                         </li>
