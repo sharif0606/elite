@@ -221,7 +221,7 @@ class InvoiceGenerateController extends Controller
             ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*');
 
         if ($request->atm_id) {
-            $query = $query->where('employee_assigns.atm_id', $request->atm_id);
+            $query = $query->where('employee_assigns.atm_id',"!=","0")->where('employee_assigns.branch_id', $request->branch_id);
         }
         else if ($request->branch_id) {
             $query = $query->where('employee_assigns.branch_id', $request->branch_id);

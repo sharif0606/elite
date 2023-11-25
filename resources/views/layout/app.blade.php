@@ -227,6 +227,7 @@
                 success: function (data) {
                     //console.log(data)
                     var d = $('#branch_id').empty();
+                    $('#branch_id').append('<option value="0">Select Branch</option>');
                     $.each(data, function(key, value) {
                         $('#branch_id').append('<option data-vat="'+value.vat+'" value="' + value.id + '">' + value.brance_name + '</option>');
                     });
@@ -246,8 +247,10 @@
                 success: function (data) {
                     //console.log(data)
                     var d = $('#atm_id').empty();
+                    $('#atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                    $('#atm_id').append('<option value="1">All ATM</option>');
                     $.each(data, function(key, value) {
-                        $('#atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                        //$('#atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
                     });
                 },
                 error: function () {
