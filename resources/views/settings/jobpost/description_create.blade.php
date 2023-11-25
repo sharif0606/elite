@@ -13,6 +13,7 @@
                         <div class="card-body">
                             <form class="form" method="post" action="{{route('jobpost_descriptionstor',encryptor('encrypt',$jobpost->id))}}">
                                 @csrf
+                                <input type="hidden" value="{{ $jobpost->id }}" name="jobpost_id">
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">

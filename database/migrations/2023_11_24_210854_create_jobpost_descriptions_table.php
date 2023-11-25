@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('jobpost_descriptions', function (Blueprint $table) {
             $table->id();
             $table->integer('jobpost_id')->nullable();
-            $table->integer('type')->nullable();
             $table->string('title')->nullable();
             $table->string('title_bn')->nullable();
-            $table->string('description')->nullable();
-            $table->string('description_bn')->nullable();
+            $table->string('department')->nullable();
+            $table->string('department_bn')->nullable();
+            $table->string('head_title')->nullable();
+            $table->string('head_titlehead_title_bn')->nullable();
             $table->timestamps();
         });
     }
