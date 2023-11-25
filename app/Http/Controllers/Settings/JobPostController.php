@@ -25,12 +25,12 @@ class JobPostController extends Controller
     }
     public function jobpostDescription($id)
     {
-        $jobpost = JobPost::get();
+        // $jobpost = JobPost::get();
         $jobpost=JobPost::findOrFail(encryptor('decrypt',$id));
         return view('settings.jobpost.description_create',compact('jobpost'));
     }
     public function jobpostDescriptionStore(Request $request, $id)
-    {
+    { dd($request->all());
         try{
             $c=new JobpostDescription;
             $c->name=$request->jobpostName;
