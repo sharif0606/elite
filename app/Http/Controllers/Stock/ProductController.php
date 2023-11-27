@@ -80,7 +80,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category=Category::all();
+        $product=Product::findOrFail(encryptor('decrypt',$id));
+        return view('Stock.product.edit',compact('product','category'));
     }
 
     /**
@@ -92,7 +94,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $product=Product::findOrFail(encryptor('decrypt',$id));
+            $product->category_id=$request->category_id;
+            $product->product_name=$request->product_name;
+            $product->product_name_bn=$request->product_name_bn;
+            $product->description=$request->description;
+            if($product->save()){
+                return redirect()->route(currentUser().'.product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            // dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -103,6 +119,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product=Product::findOrFail(encryptor('decrypt',$id));
+        $product->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

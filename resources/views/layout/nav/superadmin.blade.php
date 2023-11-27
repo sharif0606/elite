@@ -136,6 +136,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route(currentUser().'.product.index')}}">Product</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route(currentUser().'.product_stockin.create')}}">Product Stock In</a>
+                                </li>
 
                             </ul>
                         </li>
