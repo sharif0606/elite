@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Product Stock In'))
+@section('pageTitle',trans('Product Requisition'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.product_stockin.store')}}">
+                            <form class="form" method="post" action="{{route(currentUser().'.requisition.store')}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -60,8 +60,8 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="entry_date">Entry Date</label>
-                                            <input required class="form-control" type="date" name="entry_date" value="" placeholder="Entry Date">
+                                            <label for="issue_date">Issue Date</label>
+                                            <input required class="form-control" type="date" name="issue_date" value="" placeholder="Issue Date">
                                         </div>
                                     </div>
                                 </div>

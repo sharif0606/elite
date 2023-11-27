@@ -41,6 +41,7 @@ use App\Http\Controllers\Stock\CategoryController as category;
 use App\Http\Controllers\Stock\ProductSizeController as size;
 use App\Http\Controllers\Stock\ProductController as product;
 use App\Http\Controllers\Stock\ProductStockinController as product_stockin;
+use App\Http\Controllers\Stock\ProductRequisitionController as requisition;
 
 
 /* Middleware */
@@ -99,6 +100,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('size',size::class,['as'=>'superadmin']);
         Route::resource('product',product::class,['as'=>'superadmin']);
         Route::resource('product_stockin',product_stockin::class,['as'=>'superadmin']);
+        Route::resource('requisition',requisition::class,['as'=>'superadmin']);
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');

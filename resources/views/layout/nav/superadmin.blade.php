@@ -137,7 +137,10 @@
                                     <a href="{{route(currentUser().'.product.index')}}">Product</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.product_stockin.create')}}">Product Stock In</a>
+                                    <a href="{{route(currentUser().'.product_stockin.index')}}">Product Stock In</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="{{route(currentUser().'.requisition.index')}}">Product Requisition</a>
                                 </li>
 
                             </ul>

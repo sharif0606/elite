@@ -10,8 +10,9 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.product_stockin.store')}}">
+                            <form class="form" method="post" action="{{route(currentUser().'.product_stockin.update',encryptor('encrypt',$stockin->id))}}">
                                 @csrf
+                                @method('PATCH')
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
@@ -19,7 +20,7 @@
                                             <select required class="form-select product_id" id="product_id" name="product_id">
                                                 <option value="">Select Product</option>
                                                 @forelse ($product as $pr)
-                                                <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>
+                                                <option value="{{ $pr->id }}" {{ old('product_id',$stockin->product_id)==$pr->id?"selected":""}}>{{ $pr->product_name }}</option>
                                                 @empty
                                                 @endforelse
                                             </select>
@@ -34,7 +35,7 @@
                                             <select required class="form-select size_id" id="size_id" name="size_id">
                                                 <option value="">Select Product</option>
                                                 @forelse ($size as $s)
-                                                <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                                <option value="{{ $s->id }}" {{ old('size_id',$stockin->size_id)==$s->id?"selected":""}}>{{ $s->name }}</option>
                                                 @empty
                                                 @endforelse
                                             </select>
@@ -46,22 +47,22 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="entry_date">Qty</label>
-                                            <input required class="form-control" type="text" name="product_qty" value="" placeholder="Product Qty">
+                                            <input required class="form-control" type="text" name="product_qty" value="{{ old('product_qty',$stockin->product_qty)}}" placeholder="Product Qty">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="description">Product Type</label>
                                             <select name="type" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                <option value="1">Intact</option>
-                                                <option value="2">Used</option>
+                                                <option value="1" {{ old('type',$stockin->type)==1?"selected":""}}>Intact</option>
+                                                <option value="2" {{ old('type',$stockin->type)==2?"selected":""}}>Used</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="entry_date">Entry Date</label>
-                                            <input required class="form-control" type="date" name="entry_date" value="" placeholder="Entry Date">
+                                            <input required class="form-control" type="date" name="entry_date" value="{{ old('entry_date',$stockin->entry_date)}}" placeholder="Entry Date">
                                         </div>
                                     </div>
                                 </div>

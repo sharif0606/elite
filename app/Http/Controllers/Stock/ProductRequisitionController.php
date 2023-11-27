@@ -4,16 +4,16 @@ namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Stock\ProductRequisition;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
-use App\Models\Stock\ProductStockin;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
 use Toastr;
 use Illuminate\Support\Carbon;
 
-class ProductStockinController extends Controller
+class ProductRequisitionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +22,8 @@ class ProductStockinController extends Controller
      */
     public function index()
     {
-        $stockin=ProductStockin::all();
-        return view('Stock.productStockin.index',compact('stockin'));
+        $requisition=ProductRequisition::all();
+        return view('Stock.productrequisition.index',compact('requisition'));
     }
 
     /**
@@ -35,7 +35,7 @@ class ProductStockinController extends Controller
     {
         $size=ProductSize::all();
         $product=Product::all();
-        return view('Stock.productStockin.create',compact('product','size'));
+        return view('Stock.productrequisition.create',compact('product','size'));
     }
 
     /**
@@ -47,12 +47,14 @@ class ProductStockinController extends Controller
     public function store(Request $request)
     {
         try{
-            $product=new ProductStockin;
+            $product=new ProductRequisition;
             $product->product_id=$request->product_id;
             $product->size_id=$request->size_id;
-            $product->entry_date=$request->entry_date;
+            $product->employee_id=$request->employee_id;
+            $product->issue_date=$request->issue_date;
             $product->product_qty=$request->product_qty;
             $product->type=$request->type;
+            $product->note=$request->note;
             if($product->save()){
                 return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
@@ -83,10 +85,7 @@ class ProductStockinController extends Controller
      */
     public function edit($id)
     {
-        $size=ProductSize::all();
-        $product=Product::all();
-        $stockin=ProductStockin::findOrFail(encryptor('decrypt',$id));
-        return view('Stock.productStockin.edit',compact('product','size','stockin'));
+        //
     }
 
     /**
@@ -98,22 +97,7 @@ class ProductStockinController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-            $product=ProductStockin::findOrFail(encryptor('decrypt',$id));
-            $product->product_id=$request->product_id;
-            $product->size_id=$request->size_id;
-            $product->entry_date=$request->entry_date;
-            $product->product_qty=$request->product_qty;
-            $product->type=$request->type;
-            if($product->save()){
-                return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
-            }else{
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
-            }
-        }catch(Exception $e){
-            // dd($e);
-            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
-        }
+        //
     }
 
     /**
