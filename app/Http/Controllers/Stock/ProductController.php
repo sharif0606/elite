@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\Product;
+use App\Models\Stock\Category;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
@@ -20,7 +21,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products=Product::all();
+        return view('Stock.product.index',compact('products'));
     }
 
     /**
@@ -30,7 +32,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $category=Category::all();
+        return view('Stock.product.create',compact('category'));
     }
 
     /**
@@ -41,7 +44,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $product=new Product;
+            $product->category_id=$request->category_id;
+            $product->product_name=$request->product_name;
+            $product->product_name_bn=$request->product_name_bn;
+            $product->description=$request->description;
+            if($product->save()){
+                return redirect()->route(currentUser().'.product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }catch(Exception $e){
+            // dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
