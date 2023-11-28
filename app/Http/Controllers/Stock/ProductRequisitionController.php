@@ -50,21 +50,28 @@ class ProductRequisitionController extends Controller
     public function store(Request $request)
     {
         try{
-            $product=new ProductRequisition;
-            $product->product_id=$request->product_id;
-            $product->size_id=$request->size_id;
-            $product->employee_id=$request->employee_id;
-            $product->issue_date=$request->issue_date;
-            $product->product_qty=$request->product_qty;
-            $product->type=$request->type;
-            $product->note=$request->note;
-            if($product->save()){
+            $data=new ProductRequisition;
+            $data->employee_id=$request->employee_id;
+            $data->issue_date=$request->issue_date;
+            $data->note=$request->note;
+            if($data->save()){
+                if($request->product_id){
+                    foreach($request->product_id as $key => $value){
+                        if($value){
+                            $details = new ProductRequisitionDetails;
+                            $details->product_requisition_id=$data->id;
+                            $details->product_id=$request->product_id[$key];
+                            $details->size_id=$request->size_id[$key];
+                            $details->product_qty=$request->product_qty[$key];
+                            $details->type=$request->type[$key];
+                            $details->save();
+                        }
+                    }
+                }
                 return redirect()->route(currentUser().'.requisition.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-            }else{
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
-        }catch(Exception $e){
-             dd($e);
+        } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
@@ -77,7 +84,8 @@ class ProductRequisitionController extends Controller
      */
     public function show($id)
     {
-        //
+        $requisition = ProductRequisition::findOrFail(encryptor('decrypt',$id));
+        return view('Stock.productrequisition.show',compact('requisition'));
     }
 
     /**

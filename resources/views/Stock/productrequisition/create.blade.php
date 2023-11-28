@@ -57,7 +57,7 @@
                                             <tbody id="requisition">
                                                 <tr>
                                                     <td>
-                                                        <select required class="form-select product_id" id="product_id" name="product_id">
+                                                        <select required class="form-select product_id" id="product_id" name="product_id[]">
                                                             <option value="">Select Product</option>
                                                             @forelse ($product as $pr)
                                                             <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>
@@ -69,7 +69,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <select required class="form-select size_id" id="size_id" name="size_id">
+                                                        <select required class="form-select size_id" id="size_id" name="size_id[]">
                                                             <option value="">Select Product</option>
                                                             @forelse ($size as $s)
                                                             <option value="{{ $s->id }}">{{ $s->name }}</option>
@@ -80,7 +80,7 @@
                                                             <span class="text-danger"> {{ $errors->first('size_id') }}</span>
                                                         @endif
                                                     </td>
-                                                    <td><input required class="form-control" type="text" name="product_qty" value="" placeholder="Product Qty"></td>
+                                                    <td><input required class="form-control" type="text" name="product_qty[]" value="" placeholder="Product Qty"></td>
                                                     <td>
                                                         <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
                                                             <option value="1">Intact</option>
@@ -113,7 +113,7 @@
     var row=`
     <tr>
         <td>
-            <select required class="form-select product_id" id="product_id" name="product_id">
+            <select required class="form-select product_id" id="product_id" name="product_id[]">
                 <option value="">Select Product</option>
                 @forelse ($product as $pr)
                 <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>
@@ -125,7 +125,7 @@
             @endif
         </td>
         <td>
-            <select required class="form-select size_id" id="size_id" name="size_id">
+            <select required class="form-select size_id" id="size_id" name="size_id[]">
                 <option value="">Select Product</option>
                 @forelse ($size as $s)
                 <option value="{{ $s->id }}">{{ $s->name }}</option>
@@ -136,9 +136,9 @@
                 <span class="text-danger"> {{ $errors->first('size_id') }}</span>
             @endif
         </td>
-        <td><input required class="form-control" type="text" name="product_qty" value="" placeholder="Product Qty"></td>
+        <td><input required class="form-control" type="text" name="product_qty[]" value="" placeholder="Product Qty"></td>
         <td>
-            <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+            <select name="type[]" class="form-control @error('type') is-invalid @enderror" id="type">
                 <option value="1">Intact</option>
                 <option value="2">Used</option>
             </select>

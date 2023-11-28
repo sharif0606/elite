@@ -20,12 +20,12 @@
                         <thead>
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
-                                <th scope="col">{{__('Product')}}</th>
+                                {{--  <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Size')}}</th>
-                                <th scope="col">{{__('Qty')}}</th>
+                                <th scope="col">{{__('Qty')}}</th>  --}}
                                 <th scope="col">{{__('Employee Id')}}</th>
                                 <th scope="col">{{__('Entry Date')}}</th>
-                                <th scope="col">{{__('Type')}}</th>
+                                {{--  <th scope="col">{{__('Type')}}</th>  --}}
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -33,13 +33,16 @@
                             @forelse($requisition as $d)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$d->product?->product_name}}</td>
+                                {{--  <td>{{$d->product?->product_name}}</td>
                                 <td>{{$d->size?->name}}</td>
-                                <td>{{$d->product_qty}}</td>
-                                <td>{{$d->employee_id}}</td>
+                                <td>{{$d->product_qty}}</td>  --}}
+                                <td>{{$d->employee?->bn_applicants_name}}</td>
                                 <td>{{$d->issue_date}}</td>
-                                <td>@if ($d->type==2) Used @else Intact @endif</td>
+                                {{--  <td>@if ($d->type==2) Used @else Intact @endif</td>  --}}
                                 <td class="white-space-nowrap">
+                                    <a href="{{route(currentUser().'.requisition.show',encryptor('encrypt',$d->id))}}">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
                                     <a href="{{route(currentUser().'.requisition.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
