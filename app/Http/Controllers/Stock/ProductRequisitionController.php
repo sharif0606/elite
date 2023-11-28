@@ -10,6 +10,7 @@ use App\Models\Stock\ProductSize;
 use App\Models\Employee\Employee;
 use App\Models\Stock\ProductRequisitionDetails;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Stock\Stock;
 use Exception;
 use DB;
 use Toastr;
@@ -64,7 +65,18 @@ class ProductRequisitionController extends Controller
                             $details->size_id=$request->size_id[$key];
                             $details->product_qty=$request->product_qty[$key];
                             $details->type=$request->type[$key];
-                            $details->save();
+                            if($details->save()){
+                                $stock=new Stock;
+                                $stock->employee_id=$request->employee_id;
+                                $stock->issue_date=$request->issue_date;
+                                $stock->note=$request->note;
+                                $stock->product_id=$request->product_id[$key];
+                                $stock->size_id=$request->size_id[$key];
+                                $stock->product_qty='-'.$request->product_qty[$key];
+                                $stock->type=$request->type[$key];
+                                $stock->status=1;
+                                $stock->save();
+                            }
                         }
                     }
                 }

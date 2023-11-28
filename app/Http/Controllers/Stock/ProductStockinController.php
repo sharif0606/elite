@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
 use App\Models\Stock\ProductStockin;
+use App\Models\Stock\Stock;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
@@ -47,13 +48,21 @@ class ProductStockinController extends Controller
     public function store(Request $request)
     {
         try{
-            $product=new ProductStockin;
-            $product->product_id=$request->product_id;
-            $product->size_id=$request->size_id;
-            $product->entry_date=$request->entry_date;
-            $product->product_qty=$request->product_qty;
-            $product->type=$request->type;
-            if($product->save()){
+            $pin=new ProductStockin;
+            $pin->product_id=$request->product_id;
+            $pin->size_id=$request->size_id;
+            $pin->entry_date=$request->entry_date;
+            $pin->product_qty=$request->product_qty;
+            $pin->type=$request->type;
+            if($pin->save()){
+                $stock=new Stock;
+                $stock->product_id=$request->product_id;
+                $stock->size_id=$request->size_id;
+                $stock->entry_date=$request->entry_date;
+                $stock->product_qty=$request->product_qty;
+                $stock->type=$request->type;
+                $stock->status=0;
+                $stock->save();
                 return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
