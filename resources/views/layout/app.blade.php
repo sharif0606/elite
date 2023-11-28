@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELITE FORCE | @yield('siteTitle', 'Dashboard')</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/x-icon">
@@ -52,6 +53,17 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+        .select2-container .select2-selection--single {
+            /*height: 38px;*/
+            border:1px solid #dce7f1;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 30px;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            /*line-height: 38px;*/
         }
     </style>
     @stack('styles')
@@ -199,7 +211,7 @@
         </div>
 
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('/assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('/assets/js/app.js') }}"></script>
     <script src="{{ asset('/assets/js/pages/horizontal-layout.js') }}"></script>
@@ -218,6 +230,7 @@
     @stack('scripts')
     {!! Toastr::message() !!}
     <script>
+        $('.select2').select2();
         function getBranch(e) {
             let customerId=$(e).val();
             $.ajax({

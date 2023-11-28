@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Stock\ProductRequisition;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
+use App\Models\Employee\Employee;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
@@ -35,7 +36,8 @@ class ProductRequisitionController extends Controller
     {
         $size=ProductSize::all();
         $product=Product::all();
-        return view('Stock.productrequisition.create',compact('product','size'));
+        $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
+        return view('Stock.productrequisition.create',compact('product','size','employee'));
     }
 
     /**
@@ -56,12 +58,12 @@ class ProductRequisitionController extends Controller
             $product->type=$request->type;
             $product->note=$request->note;
             if($product->save()){
-                return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route(currentUser().'.requisition.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         }catch(Exception $e){
-            // dd($e);
+             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }

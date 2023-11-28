@@ -23,6 +23,7 @@
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Size')}}</th>
                                 <th scope="col">{{__('Qty')}}</th>
+                                <th scope="col">{{__('Employee Id')}}</th>
                                 <th scope="col">{{__('Entry Date')}}</th>
                                 <th scope="col">{{__('Type')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
@@ -35,7 +36,8 @@
                                 <td>{{$d->product?->product_name}}</td>
                                 <td>{{$d->size?->name}}</td>
                                 <td>{{$d->product_qty}}</td>
-                                <td>{{$d->entry_date}}</td>
+                                <td>{{$d->employee_id}}</td>
+                                <td>{{$d->issue_date}}</td>
                                 <td>@if ($d->type==2) Used @else Intact @endif</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.requisition.edit',encryptor('encrypt',$d->id))}}">
