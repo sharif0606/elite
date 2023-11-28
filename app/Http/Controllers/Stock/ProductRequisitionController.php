@@ -8,6 +8,7 @@ use App\Models\Stock\ProductRequisition;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
 use App\Models\Employee\Employee;
+use App\Models\Stock\ProductRequisitionDetails;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;

@@ -54,7 +54,7 @@
                                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="stockEntry">
+                                            <tbody id="requisition">
                                                 <tr>
                                                     <td>
                                                         <select required class="form-select product_id" id="product_id" name="product_id">
@@ -107,3 +107,57 @@
         </div>
     </section>
 @endsection
+@push("scripts")
+<script>
+    function addRow(){
+    var row=`
+    <tr>
+        <td>
+            <select required class="form-select product_id" id="product_id" name="product_id">
+                <option value="">Select Product</option>
+                @forelse ($product as $pr)
+                <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>
+                @empty
+                @endforelse
+            </select>
+            @if($errors->has('product_id'))
+                <span class="text-danger"> {{ $errors->first('product_id') }}</span>
+            @endif
+        </td>
+        <td>
+            <select required class="form-select size_id" id="size_id" name="size_id">
+                <option value="">Select Product</option>
+                @forelse ($size as $s)
+                <option value="{{ $s->id }}">{{ $s->name }}</option>
+                @empty
+                @endforelse
+            </select>
+            @if($errors->has('size_id'))
+                <span class="text-danger"> {{ $errors->first('size_id') }}</span>
+            @endif
+        </td>
+        <td><input required class="form-control" type="text" name="product_qty" value="" placeholder="Product Qty"></td>
+        <td>
+            <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                <option value="1">Intact</option>
+                <option value="2">Used</option>
+            </select>
+        </td>
+        <td>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            {{--<span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>--}}
+        </td>
+    </tr>
+    `;
+        $('#requisition').append(row);
+    }
+
+    function removeRow(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+        }
+    }
+
+</script>
+
+@endpush

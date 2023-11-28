@@ -15,14 +15,9 @@ return new class extends Migration
     {
         Schema::create('product_requisitions', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->integer('size_id')->nullable();
             $table->integer('employee_id');
-            $table->integer('type')->comment('1=intact, 2=used')->nullable();
-            $table->integer('product_qty');
             $table->date('issue_date');
             $table->string('note')->nullable();
-            $table->date('maxlife_time')->nullable();
             $table->timestamps();
         });
     }
