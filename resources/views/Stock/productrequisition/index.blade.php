@@ -43,12 +43,12 @@
                                     <a href="{{route(currentUser().'.requisition.show',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="{{route(currentUser().'.requisition.edit',encryptor('encrypt',$d->id))}}">
+                                    {{--  <a href="{{route(currentUser().'.requisition.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
+                                    </a>  --}}
+                                    {{--  <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
-                                    </a>
+                                    </a>  --}}
                                     <form id="form{{ $d->id }}" action="{{ route(currentUser().'.requisition.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')

@@ -15,7 +15,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stock=Stock::groupBy('product_id')->get();
+        $stock=Stock::groupBy('product_id')->groupBy('size_id')->get();
         return view('Stock.stock.list',compact('stock'));
     }
 
