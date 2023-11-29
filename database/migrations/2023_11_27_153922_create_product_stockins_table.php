@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('product_stockins', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
+            $table->integer('employee_id')->nullable();
             $table->integer('size_id')->nullable();
             $table->date('entry_date');
             $table->integer('product_qty')->nullable();
-            $table->integer('type')->comment('1=intact, 2=used')->nullable();
+            $table->integer('type')->comment('1=new, 2=used')->nullable();
             $table->timestamps();
         });
     }

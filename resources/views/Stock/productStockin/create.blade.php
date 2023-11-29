@@ -51,10 +51,22 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="description">Product Type</label>
-                                            <select name="type" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                            <label for="type">Product Type</label>
+                                            <select name="type" class="form-control @error('hours') is-invalid @enderror" onclick="getEmployee()" id="type">
                                                 <option value="1">Intact</option>
                                                 <option value="2">Used</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12 d-none employee_id" id="employee_id">
+                                        <div class="form-group">
+                                            <label for="employee_id">Employee Id</label>
+                                            <select class="form-select" name="employee_id">
+                                                <option value="">Select Employee</option>
+                                                @forelse ($employee as $em)
+                                                <option value="{{ $em->id }}">{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
+                                                @empty
+                                                @endforelse
                                             </select>
                                         </div>
                                     </div>
@@ -80,3 +92,15 @@
         </div>
     </section>
 @endsection
+@push("scripts")
+    <script>
+        function getEmployee() {
+            var Type = document.querySelector('select[name="type"]').value;
+            if (Type === "2") {
+                $('.employee_id').removeClass('d-none');
+            } else {
+                $('.employee_id').addClass('d-none');
+            }
+        }
+    </script>
+@endpush

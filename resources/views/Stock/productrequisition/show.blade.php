@@ -128,7 +128,7 @@
                             <td>{{ $de->product?->product_name }}</td>
                             <td>{{ $de->size?->name }}</td>
                             <td>{{ $de->product_qty }}</td>
-                            <td>@if ($de->type==2) Used @else Intact @endif</td>
+                            <td>@if ($de->type==2) Used @else New @endif</td>
                         </tr>
                         @endforeach
                         @endif

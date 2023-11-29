@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
+use App\Models\Employee\Employee;
 
 class Stock extends Model
 {
@@ -15,5 +16,8 @@ class Stock extends Model
     }
     public function size(){
         return $this->belongsTo(ProductSize::class,'size_id','id');
+    }
+    public function employee(){
+        return $this->belongsTo(Employee::class,'employee_id','id');
     }
 }

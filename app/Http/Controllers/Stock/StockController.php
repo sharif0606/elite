@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\Stock;
+use App\Models\Stock\Product;
 use DB;
 
 class StockController extends Controller
@@ -20,11 +21,16 @@ class StockController extends Controller
         return view('Stock.stock.list',compact('stock'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function stockindividual($id)
+    {
+        //$company = company()['company_id'];
+        $where = '';
+        //$salesItem = Sales_details::where('product_id', $id)->where('company_id', $company)->get();
+        $stock = Stock::where('product_id',(encryptor('decrypt',$id)))->get();
+        $product = Product::where('id',(encryptor('decrypt',$id)))->first();
+
+        return view('Stock.stock.stockReportIndividual', compact('stock','product'));
+    }
     public function create()
     {
         //

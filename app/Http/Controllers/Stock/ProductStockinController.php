@@ -8,6 +8,7 @@ use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
 use App\Models\Stock\ProductStockin;
 use App\Models\Stock\Stock;
+use App\Models\Employee\Employee;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
@@ -36,7 +37,8 @@ class ProductStockinController extends Controller
     {
         $size=ProductSize::all();
         $product=Product::all();
-        return view('Stock.productStockin.create',compact('product','size'));
+        $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
+        return view('Stock.productStockin.create',compact('product','size','employee'));
     }
 
     /**
@@ -50,6 +52,7 @@ class ProductStockinController extends Controller
         try{
             $pin=new ProductStockin;
             $pin->product_id=$request->product_id;
+            $pin->employee_id=$request->employee_id;
             $pin->size_id=$request->size_id;
             $pin->entry_date=$request->entry_date;
             $pin->product_qty=$request->product_qty;
@@ -57,6 +60,7 @@ class ProductStockinController extends Controller
             if($pin->save()){
                 $stock=new Stock;
                 $stock->product_id=$request->product_id;
+                $stock->employee_id=$request->employee_id;
                 $stock->size_id=$request->size_id;
                 $stock->entry_date=$request->entry_date;
                 $stock->product_qty=$request->product_qty;

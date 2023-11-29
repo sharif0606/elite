@@ -9,6 +9,7 @@ use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
 use App\Models\Employee\Employee;
 use App\Models\Stock\ProductRequisitionDetails;
+use App\Models\Stock\ProductStockin;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
 use Exception;
@@ -68,7 +69,7 @@ class ProductRequisitionController extends Controller
                             if($details->save()){
                                 $stock=new Stock;
                                 $stock->employee_id=$request->employee_id;
-                                $stock->issue_date=$request->issue_date;
+                                $stock->entry_date=$request->issue_date;
                                 $stock->note=$request->note;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->size_id=$request->size_id[$key];

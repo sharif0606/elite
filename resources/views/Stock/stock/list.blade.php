@@ -26,7 +26,7 @@
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->qty}}</td>
                                 <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.product_stockin.edit',encryptor('encrypt',$d->product_id))}}">
+                                    <a href="{{route(currentUser().'.stock.individual',encryptor('encrypt',$d->product_id))}}">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                 </td>

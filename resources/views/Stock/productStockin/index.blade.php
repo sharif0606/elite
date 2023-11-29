@@ -36,7 +36,7 @@
                                 <td>{{$d->size?->name}}</td>
                                 <td>{{$d->product_qty}}</td>
                                 <td>{{$d->entry_date}}</td>
-                                <td>@if ($d->type==2) Used @else Intact @endif</td>
+                                <td>@if ($d->type==2) Used @else New @endif</td>
                                 {{--  <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.product_stockin.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>

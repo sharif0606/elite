@@ -36,13 +36,13 @@
                                     <a href="{{route(currentUser().'.category.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
+                                    {{--  <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                     <form id="form{{ $d->id }}" action="{{ route(currentUser().'.category.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                    </form>
+                                    </form>  --}}
                                 </td>
                             </tr>
                             @empty

@@ -103,6 +103,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('product_stockin',product_stockin::class,['as'=>'superadmin']);
         Route::resource('requisition',requisition::class,['as'=>'superadmin']);
         Route::resource('stock',stock::class,['as'=>'superadmin']);
+        Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
