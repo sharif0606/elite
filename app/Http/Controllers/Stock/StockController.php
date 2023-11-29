@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Stock;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\Stock;
+use DB;
 
 class StockController extends Controller
 {
@@ -15,7 +16,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stock=Stock::groupBy('product_id')->groupBy('size_id')->get();
+        $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name FROM `stocks` join products on products.id=stocks.product_id join product_sizes on product_sizes.id=stocks.size_id group by stocks.product_id,stocks.size_id order by stocks.product_id,product_sizes.name");
         return view('Stock.stock.list',compact('stock'));
     }
 

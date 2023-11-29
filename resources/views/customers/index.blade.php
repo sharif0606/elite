@@ -37,10 +37,10 @@
                             <a href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
+                            <a title="Branch" href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
                                 <i class="bi bi-list"></i>
                             </a>
-                            <a href="{{route('customerRate.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
+                            <a title="Rate" href="{{route('customerRate.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
                                 <i class="bi bi-aspect-ratio"></i>
                             </a>
                             <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
