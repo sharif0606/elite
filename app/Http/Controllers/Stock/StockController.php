@@ -28,21 +28,7 @@ class StockController extends Controller
             $where .= " AND products.id = '" . $request->product . "'";
         }
 
-        //$stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name FROM `stocks` join products on products.id=stocks.product_id join product_sizes on product_sizes.id=stocks.size_id group by stocks.product_id,stocks.size_id order by stocks.product_id,product_sizes.name");
-        // $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name
-        // FROM `stocks`
-        // join products on products.id=stocks.product_id
-        // join product_sizes on product_sizes.id=stocks.size_id
-        // group by stocks.product_id,stocks.size_id
-        // order by stocks.product_id,product_sizes.name");
-        $sql = "SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name
-        FROM `stocks`
-        join products on products.id=stocks.product_id
-        join product_sizes on product_sizes.id=stocks.size_id
-        WHERE 1 = 1 $where
-        group by stocks.product_id,stocks.size_id
-        order by stocks.product_id,product_sizes.name";
-        $stock = DB::select($sql);
+        $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name FROM `stocks` join products on products.id=stocks.product_id join product_sizes on product_sizes.id=stocks.size_id " . $where . " group by stocks.product_id,stocks.size_id order by stocks.product_id,product_sizes.name");
         return view('Stock.stock.list',compact('stock','product'));
     }
 
