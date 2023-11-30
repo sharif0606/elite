@@ -13,7 +13,6 @@ use Toastr;
 
 class JobPostController extends Controller
 {
-
     public function index()
     {
         $jobpost = JobPost::paginate(20);
@@ -32,20 +31,58 @@ class JobPostController extends Controller
         return view('settings.jobpost.description_create',compact('jobpost','description'));
     }
     public function jobpostDescriptionStore(Request $request, $id)
-    { dd($request->all());
+    { //dd($request->all());
         try{
-            $c=new JobpostDescription;
-            $c->name=$request->jobpostName;
-            $c->name_bn=$request->name_bn;
-            $c->bill_able=$request->bill_able;
-            $c->status=1;
-            if($c->save()){
-                return redirect()->route(currentUser().'.jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-            }else{
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            $data=JobpostDescription::where('jobpost_id',encryptor('decrypt',$id))->firstOrNew();
+            $data->jobpost_id = $request->jobpost_id;
+            $data->title = $request->title;
+            $data->title_bn = $request->title_bn;
+            $data->department = $request->department;
+            $data->department_bn = $request->department_bn;
+            $data->head_title = $request->head_title;
+            $data->head_title_bn = $request->head_title_bn;
+            if($data->save()){
+                if($request->type_responsibility){
+                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
+                    foreach($request->type_responsibility as $key => $value){
+                        if($value){
+                            $details = new JobpostDescriptionDetails;
+                            $details->jobpost_description_id=$data->id;
+                            $details->type=$request->type_responsibility[$key];
+                            $details->description=$request->responsibility_dutie[$key];
+                            $details->save();
+                        }
+                    }
+                }
+                if($request->type_skill){
+                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
+                    foreach($request->type_skill as $key => $value){
+                        if($value){
+                            $details = new JobpostDescriptionDetails;
+                            $details->jobpost_description_id=$data->id;
+                            $details->type=$request->type_skill[$key];
+                            $details->description=$request->description_skill[$key];
+                            $details->save();
+                        }
+                    }
+                }
+                if($request->type_personality){
+                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
+                    foreach($request->type_personality as $key => $value){
+                        if($value){
+                            $details = new JobpostDescriptionDetails;
+                            $details->jobpost_description_id=$data->id;
+                            $details->type=$request->type_personality[$key];
+                            $details->description=$request->description_personality[$key];
+                            $details->save();
+                        }
+                    }
+                }
             }
-        }catch(Exception $e){
-            // dd($e);
+            return redirect()->route(currentUser().'.jobpost.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+
+        } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }

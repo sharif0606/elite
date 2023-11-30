@@ -150,7 +150,7 @@
             </div>
         </div>
         `;
-            $('.responsibility_dutie_repeater').after(responsibility);
+            $('.responsibility_dutie_repeater').append(responsibility);
         }
     function SkillRepeat(){
         var skill=`
@@ -164,7 +164,7 @@
             </div>
         </div>
         `;
-            $('.skills_repeater').after(skill);
+            $('.skills_repeater').append(skill);
         }
     function Personality(){
         var personality=`
@@ -178,7 +178,7 @@
             </div>
         </div>
         `;
-            $('.personality_repeater').after(personality);
+            $('.personality_repeater').append(personality);
         }
 
 </script>

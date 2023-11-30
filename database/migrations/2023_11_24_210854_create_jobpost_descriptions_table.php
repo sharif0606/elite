@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('department')->nullable();
             $table->string('department_bn')->nullable();
             $table->string('head_title')->nullable();
-            $table->string('head_titlehead_title_bn')->nullable();
+            $table->string('head_title_bn')->nullable();
             $table->timestamps();
         });
     }

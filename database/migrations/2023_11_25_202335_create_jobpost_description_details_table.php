@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('jobpost_description_details', function (Blueprint $table) {
             $table->id();
             $table->integer('jobpost_description_id')->nullable();
-            $table->integer('jobpost_id')->nullable();
+            //$table->integer('jobpost_id')->nullable();
             $table->integer('type')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
