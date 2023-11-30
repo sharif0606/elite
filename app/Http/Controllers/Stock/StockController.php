@@ -35,12 +35,12 @@ class StockController extends Controller
         join product_sizes on product_sizes.id=stocks.size_id
         group by stocks.product_id,stocks.size_id
         order by stocks.product_id,product_sizes.name");
-        $sql = "SELECT products.*, stocks.*, SUM(stocks.quantity) as qty, SUM(stocks.quantity_bag) as bagQty, AVG(stocks.unit_price) as avunitprice
-        FROM stocks
-        JOIN products ON products.id = stocks.product_id
-        WHERE stocks.company_id = ? $where
-        GROUP BY stocks.lot_no, stocks.brand";
-        $stock = DB::select($sql, [$company]);
+        // $sql = "SELECT products.*, stocks.*, SUM(stocks.quantity) as qty, SUM(stocks.quantity_bag) as bagQty, AVG(stocks.unit_price) as avunitprice
+        // FROM stocks
+        // JOIN products ON products.id = stocks.product_id
+        // WHERE stocks.company_id = ? $where
+        // GROUP BY stocks.lot_no, stocks.brand";
+        // $stock = DB::select($sql, [$company]);
         return view('Stock.stock.list',compact('stock','product'));
     }
 
