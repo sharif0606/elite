@@ -99,7 +99,7 @@
                                 <i class="bi bi-people-fill"></i>
                                 <span>CRM</span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="submenu">
                                 <li class="submenu-item">
                                     <a href="{{route('customer.index', ['role' =>currentUser()])}}">Customer</a>
                                 </li>

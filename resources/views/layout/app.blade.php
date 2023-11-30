@@ -257,6 +257,20 @@
         }
     </script>
     <script>
+        $(document).ready(function() {
+            var currentPageUrl = window.location.href;
+            $('.submenu-item a').each(function() {
+                var anchorUrl = $(this).attr('href');
+                if (currentPageUrl === anchorUrl) {
+                    $(this).closest('.submenu-item').addClass('active');
+                    $(this).closest('ul.submenu').addClass('active').css('display', 'block');
+
+                    $(this).closest('ul.submenu').parents('ul.submenu').addClass('active').css('display', 'block');
+                }
+            });
+        });
+    </script>
+    <script>
         function printDiv(divName) {
             var prtContent = document.getElementById(divName);
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
