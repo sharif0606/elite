@@ -77,12 +77,15 @@
                                         @if ($description?->details)
                                             @foreach ($description->details as $d)
                                                 @if ($d->type == '1')
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
-                                                        <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
+                                                        <div>
                                                             <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।">{{$d->description }}</textarea>
                                                             <input type="hidden" name="type_responsibility[]" value="{{'1',$d->type}}">
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
+                                                </div>
                                                 @endif
                                             @endforeach
                                         @endif
@@ -140,14 +143,14 @@
 <script>
     function ResponsibilityRepeat(){
         var responsibility=`
-        <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
-            <div class="form-group">
-                <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="২. ফ্যাক্টরীর সম্পদের উপর সার্বক্ষণিক কড়া নজর রাখতে হবে।"></textarea>
-                <input type="hidden" name="type_responsibility[]" value="1">
-                @if($errors->has('jobpostName'))
-                    <span class="text-danger"> {{ $errors->first('jobpostName') }}</span>
-                @endif
+        <div class="row">
+            <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
+                <div>
+                    <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।"></textarea>
+                    <input type="hidden" name="type_responsibility[]" value="1">
+                </div>
             </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
         </div>
         `;
             $('.responsibility_dutie_repeater').append(responsibility);
@@ -179,6 +182,11 @@
         </div>
         `;
             $('.personality_repeater').append(personality);
+        }
+        function removeRow(e) {
+            if (confirm("Are you sure you want to remove this row?")) {
+                $(e).closest('.row').remove();
+            }
         }
 
 </script>

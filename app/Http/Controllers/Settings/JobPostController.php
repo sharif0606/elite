@@ -42,8 +42,8 @@ class JobPostController extends Controller
             $data->head_title = $request->head_title;
             $data->head_title_bn = $request->head_title_bn;
             if($data->save()){
+                $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
                 if($request->type_responsibility){
-                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
                     foreach($request->type_responsibility as $key => $value){
                         if($value){
                             $details = new JobpostDescriptionDetails;
@@ -55,7 +55,7 @@ class JobPostController extends Controller
                     }
                 }
                 if($request->type_skill){
-                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
+                    // $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
                     foreach($request->type_skill as $key => $value){
                         if($value){
                             $details = new JobpostDescriptionDetails;
@@ -67,7 +67,7 @@ class JobPostController extends Controller
                     }
                 }
                 if($request->type_personality){
-                    $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
+                    // $dl=JobpostDescriptionDetails::where('jobpost_description_id',$data->id)->delete();
                     foreach($request->type_personality as $key => $value){
                         if($value){
                             $details = new JobpostDescriptionDetails;
