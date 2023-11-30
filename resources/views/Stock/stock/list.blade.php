@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
     <form class="form" method="get" action="">
-        <div class="row">
+        {{--  <div class="row">
             <div class="col-4 py-1">
                 <label for="fdate">{{__('From Date')}}</label>
                 <input type="date" id="fdate" class="form-control" value="{{ old('fdate')}}" name="fdate">
@@ -35,7 +35,7 @@
                 <button type="#" class="btn pbtn btn-sm btn-warning me-1 mb-1 ps-5 pe-5">{{__('Reset')}}</button>
 
             </div>
-        </div>
+        </div>  --}}
         <div class="row" id="table-bordered">
             <div class="col-12">
                 <div class="card">
