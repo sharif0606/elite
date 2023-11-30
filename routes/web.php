@@ -43,6 +43,7 @@ use App\Http\Controllers\Stock\ProductController as product;
 use App\Http\Controllers\Stock\ProductStockinController as product_stockin;
 use App\Http\Controllers\Stock\ProductRequisitionController as requisition;
 use App\Http\Controllers\Stock\StockController as stock;
+use App\Http\Controllers\Stock\ProductDamageController as productdamage;
 
 
 /* Middleware */
@@ -103,6 +104,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('product_stockin',product_stockin::class,['as'=>'superadmin']);
         Route::resource('requisition',requisition::class,['as'=>'superadmin']);
         Route::resource('stock',stock::class,['as'=>'superadmin']);
+        Route::resource('productdamage',productdamage::class,['as'=>'superadmin']);
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
 
         Route::resource('empatten',empatten::class);

@@ -143,6 +143,9 @@
                                     <a href="{{route(currentUser().'.requisition.index')}}">Product Requisition</a>
                                 </li>
                                 <li class="submenu-item">
+                                    <a href="{{route(currentUser().'.productdamage.index')}}">Product Damage</a>
+                                </li>
+                                <li class="submenu-item">
                                     <a href="{{route(currentUser().'.stock.index')}}">Stock</a>
                                 </li>
 

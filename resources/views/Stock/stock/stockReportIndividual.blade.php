@@ -93,6 +93,13 @@
                                         <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->entry_date)->format('d/m/Y')}}</td>
                                         <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                         <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                        @elseif($s->status=='2')
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;">{{abs($s->product_qty)}}</td>
+                                        <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->entry_date)->format('d/m/Y')}}</td>
                                         @else
                                         <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                         <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
