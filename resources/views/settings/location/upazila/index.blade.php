@@ -9,7 +9,7 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                
+
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
@@ -18,9 +18,9 @@
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-striped" id="table1">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('District')}}</th>
                                 <th scope="col">{{__('Upazila')}}</th>
@@ -30,7 +30,7 @@
                         </thead>
                         <tbody>
                             @forelse($upazilas as $d)
-                            <tr>
+                            <tr class="text-center">
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->district?->name}}</td>
                                 <td>{{$d->name}}</td>

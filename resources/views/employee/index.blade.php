@@ -5,13 +5,17 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <div>
+
+            <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+            <thead>
+        </div>
         <!-- table bordered -->
         <div class="table-responsive">
-            <table class="table table-bordered mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+            <table class="table table-striped" id="table1">
                 <thead>
-                    <tr>
-                        <th scope="col" width="20px">{{__('#SL')}}</th>
+                    <tr class="bg-primary text-white">
+                        <th scope="col" width="65px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Bangla')}}</th>
                         <th scope="col">{{__('English')}}</th>
                         <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>

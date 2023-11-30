@@ -5,12 +5,14 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <div>
+            <a class="btn btn-sm btn-primary float-end my-2" href="{{route('empasign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+        </div>
         <!-- table bordered -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('empasign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+            <table class="table table-striped" id="table1">
                 <thead>
-                    <tr class="text-center bg-primary text-white">
+                    <tr class="bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Details')}}</th>

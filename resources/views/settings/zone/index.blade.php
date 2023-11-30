@@ -17,9 +17,9 @@
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-striped" id="table1">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Name bn')}}</th>
@@ -28,8 +28,8 @@
                         </thead>
                         <tbody>
                             @forelse($zone as $d)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                            <tr class="text-center">
+                                <td scope="row">{{ ++$loop->index }}</td>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
                                 <td class="white-space-nowrap">

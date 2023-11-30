@@ -18,9 +18,9 @@
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-striped" id="table1">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
                                 {{--  <th scope="col">{{__('Upazila')}}</th>  --}}
                                 <th scope="col">{{__('ward')}}</th>
