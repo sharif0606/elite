@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\Settings\JobpostDescription;
+use App\Models\Settings\JobpostDescriptionDetails;
 use Exception;
 use DB;
 use Toastr;
@@ -27,7 +28,8 @@ class JobPostController extends Controller
     {
         // $jobpost = JobPost::get();
         $jobpost=JobPost::findOrFail(encryptor('decrypt',$id));
-        return view('settings.jobpost.description_create',compact('jobpost'));
+        $description=JobpostDescription::where('jobpost_id',encryptor('decrypt',$id))->first();
+        return view('settings.jobpost.description_create',compact('jobpost','description'));
     }
     public function jobpostDescriptionStore(Request $request, $id)
     { dd($request->all());
