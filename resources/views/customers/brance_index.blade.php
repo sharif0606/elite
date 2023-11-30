@@ -16,9 +16,9 @@
                     </div>
 
                     <div class="table-responsive"><!-- table bordered -->
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-striped" id="table1">
                             <thead>
-                                <tr>
+                                <tr class="bg-primary text-white">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Branch Name')}}</th>
                                     <th scope="col">{{__('VAT(%)')}}</th>
@@ -30,8 +30,8 @@
                             </thead>
                             <tbody>
                                 @forelse($cbrance as $index=>$data)
-                                <tr>
-                                    <th scope="row">{{++$index}}</th>
+                                <tr class="text-center">
+                                    <td scope="row"><b>{{++$index}}</b></td>
                                     <td>{{$data->brance_name}}</td>
                                     <td>{{$data->vat}}</td>
                                     <td>{{$data->contact_person}}</td>

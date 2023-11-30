@@ -16,9 +16,9 @@
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
+                    <table class="table table-striped" id="table1">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-white">
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Size')}}</th>
@@ -30,8 +30,8 @@
                         </thead>
                         <tbody>
                             @forelse($stockin as $d)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                            <tr class="text-center">
+                                <td scope="row">{{ ++$loop->index }}</td>
                                 <td>{{$d->product?->product_name}}</td>
                                 <td>{{$d->size?->name}}</td>
                                 <td>{{$d->product_qty}}</td>

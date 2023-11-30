@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELITE FORCE | @yield('siteTitle', 'Dashboard')</title>
-
+    <link rel="stylesheet" href="{{ asset('assets/extensions/simple-datatables/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pages/simple-datatables.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/app-dark.css') }}">
@@ -21,50 +22,8 @@
     <link rel="stylesheet" href="{{ asset('/assets/extensions/laravel-toster/toastr.min.css') }}">
     <!-- Bootstrap Date Range Picker  -->
     <link rel="stylesheet" href="{{asset('assets/bootstrap-daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main/custome.css') }}">
     <style>
-        .loader {
-            margin: 0 auto;
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-        }
-
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        .select2-container .select2-selection--single {
-            /*height: 38px;*/
-            border:1px solid #dce7f1;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 30px;
-        }
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #444;
-            /*line-height: 38px;*/
-        }
     </style>
     @stack('styles')
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -223,6 +182,8 @@
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js')}}"></script>
     <script src="{{ asset('/assets/js/pages/form-element-select.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('/assets/js/pages/simple-datatables.js') }}"></script>
     <script>
         $('.dropify').dropify();
     </script>

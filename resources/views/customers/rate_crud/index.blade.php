@@ -15,24 +15,24 @@
                         </div>
                     </div>
                     <div class="table-responsive"><!-- table bordered -->
-                        <table class="table table-bordered mb-0">
+                        <table class="table table-striped" id="table1">
                             <thead>
-                                <tr>
+                                <tr class="bg-primary text-white">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Job Post')}}</th>
                                     <th scope="col">{{__('Rate')}}</th>
                                     {{--  <th scope="col">{{__('Ot Rate')}}</th>  --}}
-                                    <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                                    <th class="white-space-nowrap text-center">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($crate as $index=>$data)
-                                <tr>
-                                    <th scope="row">{{++$index}}</th>
+                                <tr class="text-center">
+                                    <td scope="row"><b>{{++$index}}</b></td>
                                     <td>{{$data->jobpost?->name}}</td>
                                     <td>{{$data->rate}}</td>
                                     {{--  <td>{{$data->ot_rate}}</td>  --}}
-                                    <td class="white-space-nowrap">
+                                    <td class="white-space-nowrap text-center">
                                         <a href="{{route('customerRate.edit',encryptor('encrypt',$data->id))}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
