@@ -17,30 +17,32 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        // $product = Product::all();
-        // $where = '';
-        // if ($request->fdate) {
-        //     $tdate = $request->tdate ? $request->tdate : $request->fdate;
-        //     $where = " AND date(stocks.`created_at`) BETWEEN '" . $request->fdate . "' AND '" . $tdate . "'";
-        // }
+        $product = Product::all();
+        $where = '';
+        if ($request->fdate) {
+            $tdate = $request->tdate ? $request->tdate : $request->fdate;
+            $where = " AND date(stocks.`created_at`) BETWEEN '" . $request->fdate . "' AND '" . $tdate . "'";
+        }
 
-        // if ($request->product) {
-        //     $where .= " AND products.id = '" . $request->product . "'";
-        // }
+        if ($request->product) {
+            $where .= " AND products.id = '" . $request->product . "'";
+        }
 
         //$stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name FROM `stocks` join products on products.id=stocks.product_id join product_sizes on product_sizes.id=stocks.size_id group by stocks.product_id,stocks.size_id order by stocks.product_id,product_sizes.name");
-        $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name
+        // $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name
+        // FROM `stocks`
+        // join products on products.id=stocks.product_id
+        // join product_sizes on product_sizes.id=stocks.size_id
+        // group by stocks.product_id,stocks.size_id
+        // order by stocks.product_id,product_sizes.name");
+        $sql = "SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name
         FROM `stocks`
         join products on products.id=stocks.product_id
         join product_sizes on product_sizes.id=stocks.size_id
+        WHERE 1 = 1 $where
         group by stocks.product_id,stocks.size_id
-        order by stocks.product_id,product_sizes.name");
-        // $sql = "SELECT products.*, stocks.*, SUM(stocks.quantity) as qty, SUM(stocks.quantity_bag) as bagQty, AVG(stocks.unit_price) as avunitprice
-        // FROM stocks
-        // JOIN products ON products.id = stocks.product_id
-        // WHERE stocks.company_id = ? $where
-        // GROUP BY stocks.lot_no, stocks.brand";
-        // $stock = DB::select($sql, [$company]);
+        order by stocks.product_id,product_sizes.name";
+        $stock = DB::select($sql);
         return view('Stock.stock.list',compact('stock','product'));
     }
 
