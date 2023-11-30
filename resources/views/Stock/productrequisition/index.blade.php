@@ -16,9 +16,9 @@
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-striped" id="table1">
+                    <table class="table table-bordered mb-0">
                         <thead>
-                            <tr class="bg-primary text-white">
+                            <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 {{--  <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Size')}}</th>
@@ -31,8 +31,8 @@
                         </thead>
                         <tbody>
                             @forelse($requisition as $d)
-                            <tr class="text-center">
-                                <td scope="row">{{ ++$loop->index }}</td>
+                            <tr>
+                                <th scope="row">{{ ++$loop->index }}</th>
                                 {{--  <td>{{$d->product?->product_name}}</td>
                                 <td>{{$d->size?->name}}</td>
                                 <td>{{$d->product_qty}}</td>  --}}

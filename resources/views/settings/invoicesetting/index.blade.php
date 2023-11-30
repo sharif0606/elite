@@ -17,9 +17,9 @@
                 </div>  --}}
                 <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-striped" id="table1">
+                    <table class="table table-bordered mb-0">
                         <thead>
-                            <tr class="bg-primary text-white">
+                            <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Designation')}}</th>
@@ -29,8 +29,8 @@
                         </thead>
                         <tbody>
                             @forelse($invoicesettings as $d)
-                            <tr class="text-center">
-                                <td scope="row">{{ ++$loop->index }}</td>
+                            <tr>
+                                <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->designation}}</td>
                                 <td>{{$d->phone}}</td>

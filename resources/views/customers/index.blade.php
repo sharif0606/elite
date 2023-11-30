@@ -6,13 +6,11 @@
 <div class="col-12">
     <div class="card">
         <!-- table bordered -->
-        <div>
-            <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customer.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
-        </div>
         <div class="table-responsive">
-            <table class="table table-striped" id="table1">
+            <table class="table table-bordered mb-0">
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customer.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
-                    <tr class="bg-primary text-white">
+                    <tr>
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Name')}}</th>
                         <th scope="col">{{__('Contact')}}</th>
@@ -23,7 +21,7 @@
                 </thead>
                 <tbody>
                     @forelse($customers as $e)
-                    <tr class="text-center">
+                    <tr>
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{$e->name}}</td>
                         <td>{{$e->contact}}</td>

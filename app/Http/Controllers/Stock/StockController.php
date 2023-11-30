@@ -32,12 +32,15 @@ class StockController extends Controller
         return view('Stock.stock.list',compact('stock','product'));
     }
 
-    public function stockindividual($id)
+    public function stockindividual(Request $request,$id)
     {
         //$company = company()['company_id'];
-        $where = '';
-        //$salesItem = Sales_details::where('product_id', $id)->where('company_id', $company)->get();
-        $stock = Stock::where('product_id',(encryptor('decrypt',$id)))->get();
+        $stock = Stock::where('product_id',(encryptor('decrypt',$id)));
+        if ($request->fdate) {
+            $tdate = $request->tdate ? $request->tdate : $request->fdate;
+            $stock =$stock->whereBetween('entry_date',[$request->fdate, $tdate]);
+        }
+        $stock = $stock->get();
         $product = Product::where('id',(encryptor('decrypt',$id)))->first();
 
         return view('Stock.stock.stockReportIndividual', compact('stock','product'));

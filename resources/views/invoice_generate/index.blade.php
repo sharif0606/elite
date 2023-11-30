@@ -5,14 +5,12 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
-        <div>
-            <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
-        </div>
         <!-- table bordered -->
         <div class="table-responsive">
-            <table class="table table-striped" id="table1">
+            <table class="table table-bordered mb-0">
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
-                    <tr class="bg-primary text-white">
+                    <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Start Date')}}</th>
