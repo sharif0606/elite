@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
 <div>
-    <a href="#" class="btn btn-info no-print"> Go To Dashboard</a>
+    <a href="#" onclick="history.back()" class="btn btn-info no-print"> Go To Dashboard</a>
     <button type="button" class="btn btn-info no-print" onclick="printDiv('result_show')">Print</button>
 </div>
 <section id="result_show">
@@ -860,6 +860,20 @@
                                 <img height="50px" width="150px"  src="{{asset('uploads/manager_sing/'.$security?->manager_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
                                 <span style="border-top: solid 1px;">ম্যানেজার (অপারেশন )</span>
                             </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr style="text-align: center">
+                            <img src="{{asset('assets/images/terms1.jpeg')}}" alt="কোন স্বাক্ষর নেই"><br/>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr style="text-align: center">
+                            <img src="{{asset('assets/images/terms2.jpeg')}}" alt="কোন স্বাক্ষর নেই"><br/>
                         </tr>
                     </tbody>
                 </table>
