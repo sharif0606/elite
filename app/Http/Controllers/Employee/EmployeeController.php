@@ -18,6 +18,7 @@ use App\Models\Settings\Location\Ward;
 use App\Models\Settings\BloodGroup;
 use App\Models\Settings\Religion;
 use App\Models\JobPost;
+use App\Models\Settings\JobpostDescription;
 
 use Toastr;
 use Carbon\Carbon;
@@ -225,7 +226,8 @@ class EmployeeController extends Controller
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
         $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
         $jobposts=JobPost::where('id',$employees->bn_jobpost_id)->first();
-        return view('employee.show', compact('employees','security','jobposts'));
+        $jobdescription=JobpostDescription::where('jobpost_id',$employees->bn_jobpost_id)->first();
+        return view('employee.show', compact('employees','security','jobposts','jobdescription'));
     }
 
     /**

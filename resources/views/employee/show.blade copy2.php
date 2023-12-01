@@ -494,27 +494,39 @@
                 </table>
 
                 <div style="text-align: center; margin-top: 13rem;">
-                    <h4>{{ $jobdescription?->head_title }}</h4>
-                    <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
+                    <h4>Job Description of Security Guard</h4>
+                    <h5><span style="border-bottom: solid 1px;">(সিকিউরিটি গার্ডের কর্ম বিবরণী )</span></h5>
                 </div>
                 <table style="widht: 100%;">
                     <tbody>
                         <tr>
                             <th>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">পদবী :- {{ $jobdescription?->title_bn }}</span></h6>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">বিভাগ :- {{ $jobdescription?->department_bn }}</span></h6>
+                                <h6><span style="text-align: left; border-bottom: solid 1px;">পদবী :- গার্ড</span></h6>
+                                <h6><span style="text-align: left; border-bottom: solid 1px;">বিভাগ :- সিকিউরিটি</span></h6>
                                 <h6><span style="text-align: left; border-bottom: solid 1px;">দায়িত্ব ও কর্তব্য :</span></h6>
                             </th>
                         </tr>
                         <tr>
                             <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
-                                    @foreach ($jobdescription->details as $d)
-                                        @if ($d->type == '1')
-                                            <p style="margin: 12px;">{{$d->description }}</p>
-                                        @endif
-                                    @endforeach
-                                @endif
+                                <p style="margin: 12px;">১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।</p>
+                                <p style="margin: 12px;">২. ফ্যাক্টরীর সম্পদের উপর সার্বক্ষণিক কড়া নজর রাখতে হবে।</p>
+                                <p style="margin: 12px;">৩. মেইন গেইটের নিরাপত্তা (খোলা ও বন্ধ ) নিশ্চিত করা। </p>
+                                <p style="margin: 12px;">৪. বহির্গমন দরজা তালামুক্ত ও বাধামুক্ত রাখা।</p>
+                                <p style="margin: 12px;">৫. কারখানার চারদিকে টহল দেয়া। </p>
+                                <p style="margin: 12px;">৬. বহিরাগতদের বা দর্শনার্থীদের পরিচয় ও সাক্ষাতের কারণ কর্তৃপক্ষকে অবশই অবগত করা।</p>
+                                <p style="margin: 12px;">৭. বহির্গমন পথসমূহ সবসময় যাতে বাধামুক্ত থাকে তা নিশ্চিত করা।</p>
+                                <p style="margin: 12px;">৮. ছুটির সময় প্রত্যেক শ্রমিক/কর্মীদের বহনকৃত বাগসমূহ সঠিকভাবে চেক করা। </p>
+                                <p style="margin: 12px;">৯. কারখানার সকল অগ্নি নিরাপত্তা সরঞ্জামাদি সর্বদা বাধামুক্ত আছে কিনা তা নিশ্চিত করা।</p>
+                                <p style="margin: 12px;">১০. সকলের সাথে (শ্রমিক ও কর্তৃপক্ষ ) পর্যাপ্ত যোগাযোগ  ব্যবস্থা নিশ্চিত করা।</p>
+                                <p style="margin: 12px;">১১. কোনো ধরণের বিপদের সময় কারখানায় কর্মরত সকলের নিরাপত্তা নিশ্চিত করা।</p>
+                                <p style="margin: 12px;">১২. ক্রয়কৃত মালামাল কারখানায় প্রবেশের সময় সঠিকভাবে চেক করা। </p>
+                                <p style="margin: 12px;">১৩. কর্তৃপক্ষের অনুমতি প্রাপ্ত প্রত্যেক দর্শনার্থী বা বহিরাগতদের পরিচয় ও সাক্ষাতের কারণ ভিজিটর রেজিস্টারে লিপিবদ্ধ করতে সহযোগিতা করা।</p>
+                                <p style="margin: 12px;">১৪. যে কোনো পণ্য কারখানা থেকে বাহিরে যাওয়ার সময় ও কারখানায় প্রবেশ করার সময় গেট পাশ ও চালান সংগ্রহ করে সুপারভাইজারের কাছে হস্তান্তর করা।</p>
+                                <p style="margin: 12px;">১৫. কন্টেইনার কারখানায় প্রবেশের পূর্বে এর ভিতর ও বাহির সঠিকভাবে মেটাল ডিটেক্টর দিয়ে পরীক্ষা করে দেখতে হবে কোথাও কোনো বিষ্ফোরক দ্রব্য, দাহ্যপদার্থ, অবৈধ মালামাল ও যন্ত্রপাতি আছে কিনা।  যদি অবৈধ কোনো কিছু পাওয়া যায় তবে তা সাথে সাথে কর্তৃপক্ষকে অবহিত করতে হবে।</p>
+                                <p style="margin: 12px;">১৬. কোনো প্রকার দুর্ঘটনা, অগ্নিকান্ড, হাঙ্গামা, হৈ চৈ ও ব্যাক্তিগত বা কোম্পানির ক্ষতিজনিত বিষয় তৎক্ষণাৎ দায়িত্বরত সুপারভাইজারকে/কর্তৃপক্ষকে জানানো।</p>
+                                <p style="margin: 12px;">১৭. কাজের পুনরাবৃত্তি উপেক্ষা করতে সঠিক কর্মপদ্ধতিতে কর্ম পরিচালনা করতে হবে। </p>
+                                <p style="margin: 12px;">১৮. প্যাকিংয়ে প্রবেশকালে প্রত্যেকের নাম ও পদবী ও প্রবেশের কারণ উল্লেখপূর্বক প্রবেশ ও বাহিরের সময় এন্ট্রি করা। (পাকিং এরিয়ায় কর্মরত গার্ডের জন্য প্রযোজ্য )</p>
+                                <p style="margin: 12px;">১৯. বাউন্ডারীর নিরাপত্তা নিশ্চিত কর। (বাউন্ডারীর পোষ্টে কর্মরত গার্ডের জন্য প্রযোজ্য)</p>
                             </td>
                         </tr>
                     </tbody>
@@ -528,13 +540,10 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
-                                    @foreach ($jobdescription->details as $d)
-                                        @if ($d->type == '2')
-                                            <p style="margin: 12px;">{{$d->description }}</p>
-                                        @endif
-                                    @endforeach
-                                @endif
+                                <p style="margin: 12px;">১. নিজের দায়িত্ব সম্পর্কে যথাযত জ্ঞান থাকতে হবে।</p>
+                                <p style="margin: 12px;">২. কাজের প্রতি মনোযোগী হতে হবে। </p>
+                                <p style="margin: 12px;">৩. নির্দিষ্ট সময়ের কাজ নির্দিষ্ট সময়ের মধ্যে শেষ করার মানসিকতা থাকতে হবে। </p>
+                                <p style="margin: 12px;">৪. যেকোনো জায়গায় নিরাপত্তা নিশ্চিত করার দক্ষতা থাকা। </p>
                             </td>
                         </tr>
                         <tr>
@@ -544,13 +553,17 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
-                                @foreach ($jobdescription->details as $d)
-                                    @if ($d->type == '3')
-                                <p style="margin: 12px;">{{$d->description }}</p>
-                                @endif
-                                @endforeach
-                            @endif
+                                <p style="margin: 12px;">১. নিরাপত্তা নীতি, হয়রানী ও উৎপীড়নমুক্ত নীতি সম্পর্কে যথেষ্ট জ্ঞান ও প্রশিক্ষণ থাকতে হবে।</p>
+                                <p style="margin: 12px;">২. বিনা অনুমতিতে অনুপস্থিত না থাকা।</p>
+                                <p style="margin: 12px;">৩. কারো সাথে খারাপ আচরণ না করা।</p>
+                                <p style="margin: 12px;">৪. নিয়মিত সকল ট্রেনিং এ অংশগ্রহণ করা।</p>
+                                <p style="margin: 12px;">৫. সর্বদা সহযোগিতামূলক আচরণ করতে হবে। </p>
+                                <p style="margin: 12px;">৬. সুপারভাইজার নির্দেশ মেনে চলা। </p>
+                                <p style="margin: 12px;">৭. কর্মরত অবস্থায় সর্বদা পরিচয় ও পোষাক পরিধান করবে। </p>
+                                <p style="margin: 12px;">৮. যে কোনো ধরণের পরিবর্তনের সাথে খাপ খাওয়ানোর ক্ষমতা থাকতে হবে।</p>
+                                <p style="margin: 12px;">৯. কোনো অবস্থাতেই কারো সাথে শারীরিক বা মানসিক নির্যাতন, গালিগালাজ, হয়রানী এবং যৌনহয়রানি করা যাবে না। </p>
+                                <p style="margin: 12px;">১০. নিরাপত্তা কাজে নিয়োজিত প্রহরী দৈনন্দিন সাধারণ কাজ কর্ম সম্পাদনের ক্ষেত্রে পেশিশক্তি ব্যবহার করবে না। </p>
+                                <p style="margin: 12px; padding-bottom:2rem;">১১. প্রতিষ্ঠানের পরিবেশ পরিষ্কার -পরিছন্ন রাখতে বিশেষ  ভূমিকা পালন করা। </p>
                             </td>
                         </tr>
                         <tr>
