@@ -9,14 +9,12 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div>
                     <a class="float-end" href="{{route(currentUser().'.district.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
-                <!-- table bordered -->
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
                         <thead>
