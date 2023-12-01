@@ -52,7 +52,7 @@ class ProductDamageController extends Controller
         try{
             $damage=new ProductDamage;
             $damage->product_id=$request->product_id;
-            $damage->employee_id=$request->employee_id;
+            // $damage->employee_id=$request->employee_id;
             $damage->size_id=$request->size_id;
             $damage->entry_date=$request->entry_date;
             $damage->product_qty=$request->product_qty;

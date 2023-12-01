@@ -58,7 +58,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-6 col-sm-12 d-none employee_id" id="employee_id">
+                                    {{--  <div class="col-lg-4 col-md-6 col-sm-12 d-none employee_id" id="employee_id">
                                         <div class="form-group">
                                             <label for="employee_id">Employee Id</label>
                                             <select class="form-select" name="employee_id">
@@ -69,7 +69,7 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                    </div>
+                                    </div>  --}}
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="entry_date">Entry Date</label>
