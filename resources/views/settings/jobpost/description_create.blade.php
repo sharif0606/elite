@@ -77,15 +77,15 @@
                                         @if ($description?->details)
                                             @foreach ($description->details as $d)
                                                 @if ($d->type == '1')
-                                                <div class="row">
-                                                    <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
-                                                        <div>
-                                                            <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।">{{$d->description }}</textarea>
-                                                            <input type="hidden" name="type_responsibility[]" value="{{'1',$d->type}}">
+                                                    <div class="row">
+                                                        <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
+                                                            <div>
+                                                                <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।">{{$d->description }}</textarea>
+                                                                <input type="hidden" name="type_responsibility[]" value="{{'1',$d->type}}">
+                                                            </div>
                                                         </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
                                                     </div>
-                                                    <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
-                                                </div>
                                                 @endif
                                             @endforeach
                                         @endif
@@ -97,11 +97,14 @@
                                         @if ($description?->details)
                                             @foreach ($description->details as $d)
                                                 @if ($d->type == '2')
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
-                                                        <div class="form-group">
-                                                            <textarea class="form-control" name="description_skill[]" id="" rows="2" placeholder="১. নিজের দায়িত্ব সম্পর্কে যথাযত জ্ঞান থাকতে হবে।">{{$d->description }}</textarea>
-                                                            <input type="hidden" name="type_skill[]" value="2">
+                                                    <div class="row">
+                                                        <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
+                                                            <div class="form-group">
+                                                                <textarea class="form-control" name="description_skill[]" id="" rows="2" placeholder="১. নিজের দায়িত্ব সম্পর্কে যথাযত জ্ঞান থাকতে হবে।">{{$d->description }}</textarea>
+                                                                <input type="hidden" name="type_skill[]" value="2">
+                                                            </div>
                                                         </div>
+                                                        <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -114,12 +117,15 @@
                                         @if ($description?->details)
                                             @foreach ($description->details as $d)
                                                 @if ($d->type == '3')
-                                                    <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
+                                                <div class="row">
+                                                    <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
                                                         <div class="form-group">
                                                             <textarea class="form-control" name="description_personality[]" id="" rows="2" placeholder="১. নিরাপত্তা নীতি, হয়রানী ও উৎপীড়নমুক্ত নীতি সম্পর্কে যথেষ্ট জ্ঞান ও প্রশিক্ষণ থাকতে হবে।">{{$d->description }}</textarea>
                                                             <input type="hidden" name="type_personality[]" value="3">
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
+                                                </div>
                                                 @endif
                                             @endforeach
                                         @endif
@@ -157,21 +163,25 @@
         }
     function SkillRepeat(){
         var skill=`
-        <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
-            <div class="form-group">
-                <textarea class="form-control" name="description_skill[]" id="" rows="2" placeholder="১. নিজের দায়িত্ব সম্পর্কে যথাযত জ্ঞান থাকতে হবে।"></textarea>
-                <input type="hidden" name="type_skill[]" value="2">
-                @if($errors->has('jobpostName'))
-                    <span class="text-danger"> {{ $errors->first('jobpostName') }}</span>
-                @endif
+        <div class="row">
+            <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
+                <div>
+                    <textarea class="form-control" name="description_skill[]" id="" rows="2" placeholder="১. নিজের দায়িত্ব সম্পর্কে যথাযত জ্ঞান থাকতে হবে।"></textarea>
+                    <input type="hidden" name="type_skill[]" value="2">
+                    @if($errors->has('jobpostName'))
+                        <span class="text-danger"> {{ $errors->first('jobpostName') }}</span>
+                    @endif
+                </div>
             </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
         </div>
         `;
             $('.skills_repeater').append(skill);
         }
     function Personality(){
         var personality=`
-        <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
+        <div class="row">
+        <div class="col-lg-11 col-md-11 col-sm-11 mb-1">
             <div class="form-group">
                 <textarea class="form-control" name="description_personality[]" id="" rows="2" placeholder="১. নিরাপত্তা নীতি, হয়রানী ও উৎপীড়নমুক্ত নীতি সম্পর্কে যথেষ্ট জ্ঞান ও প্রশিক্ষণ থাকতে হবে।"></textarea>
                 <input type="hidden" name="type_personality[]" value="3">
@@ -180,6 +190,8 @@
                 @endif
             </div>
         </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
+    </div>
         `;
             $('.personality_repeater').append(personality);
         }

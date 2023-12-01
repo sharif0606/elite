@@ -33,7 +33,7 @@ class JobPostController extends Controller
     public function jobpostDescriptionStore(Request $request, $id)
     { //dd($request->all());
         try{
-            $data=JobpostDescription::where('jobpost_id',encryptor('decrypt',$id))->firstOrNew();
+            $data=JobpostDescription::where('jobpost_id',$request->jobpost_id)->firstOrNew();
             $data->jobpost_id = $request->jobpost_id;
             $data->title = $request->title;
             $data->title_bn = $request->title_bn;
