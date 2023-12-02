@@ -140,10 +140,10 @@
                                     <a href="{{route(currentUser().'.product_stockin.index')}}">Product Stock In</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.requisition.index')}}">Product Requisition</a>
+                                    <a href="{{route(currentUser().'.requisition.index')}}">Product Issue</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.productdamage.index')}}">Product Damage</a>
+                                    <a href="{{route(currentUser().'.productdamage.index')}}">Product Condem</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route(currentUser().'.stock.index')}}">Stock</a>
