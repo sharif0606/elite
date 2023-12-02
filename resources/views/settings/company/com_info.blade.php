@@ -15,7 +15,7 @@
                 <div class="card-content">
                     <div class="card-body">
                         <div class="row">
-                           
+
                                 <h6>My Company Information</h6>
                                 <form class="form" method="post" enctype="multipart/form-data" action="{{route(currentUser().'.compaccinfo.update',encryptor('encrypt',$com_acc_info->id))}}">
                                     @csrf
@@ -116,7 +116,7 @@
                                         </div>
                                     </div>
                                 </form>
-                           
+
 
 
                         </div>
