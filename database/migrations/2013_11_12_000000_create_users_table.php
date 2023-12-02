@@ -29,12 +29,10 @@ return new class extends Migration
             $table->boolean('status')->default(1)->comment('1=>active 2=>Logged 0 => Inactive');
             $table->string('last_login')->nullable();
             $table->string('last_login_ip')->nullable();
-            $table->unsignedBigInteger('company_id')->nullable()->index();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->unsignedBigInteger('branch_id')->nullable()->index();
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
-            $table->unsignedBigInteger('created_by')->nullable();;
-            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->unsignedBigInteger('branch_id')->nullable()->index()->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+            $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('updated_by')->nullable()->index()->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
