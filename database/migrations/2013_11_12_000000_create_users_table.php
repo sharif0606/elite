@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('last_login')->nullable();
             $table->string('last_login_ip')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->unsignedBigInteger('branch_id')->nullable()->index()->foreign('branch_id')->references('id')->on('branches')->onDelete('cascade');
+            $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('updated_by')->nullable()->index()->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->rememberToken();
@@ -47,7 +47,7 @@ return new class extends Migration
                 'designation_id' => 1,
                 'department_id' => 1,
                 'role_id' => 1,
-                'branch_id' => 1,
+                'company_branch_id' => 1,
                 'all_company_access' => 1,
                 'status' => 1,
                 'created_by' => 1,
@@ -61,7 +61,7 @@ return new class extends Migration
                 'designation_id' => 1,
                 'department_id' => 1,
                 'role_id' => 2,
-                'branch_id' => 1,
+                'company_branch_id' => 1,
                 'all_company_access' => 1,
                 'status' => 1,
                 'created_at' => Carbon::now(),
@@ -75,7 +75,7 @@ return new class extends Migration
                 'designation_id' => 1,
                 'department_id' => 1,
                 'role_id' => 3,
-                'branch_id' => 1,
+                'company_branch_id' => 1,
                 'all_company_access' => 0,
                 'status' => 1,
                 'created_at' => Carbon::now(),
@@ -89,7 +89,7 @@ return new class extends Migration
                 'designation_id' => 1,
                 'department_id' => 1,
                 'role_id' => 4,
-                'branch_id' => 1,
+                'company_branch_id' => 1,
                 'all_company_access' => 0,
                 'status' => 1,
                 'created_at' => Carbon::now(),
@@ -103,7 +103,7 @@ return new class extends Migration
                 'designation_id' => 1,
                 'department_id' => 1,
                 'role_id' => 5,
-                'branch_id' => 1,
+                'company_branch_id' => 1,
                 'all_company_access' => 0,
                 'status' => 1,
                 'created_at' => Carbon::now(),
