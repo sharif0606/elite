@@ -54,7 +54,7 @@
                                         <div class="form-group">
                                             <label for="description">Product Type</label>
                                             <select name="type" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                <option value="1" {{ old('type',$stockin->type)==1?"selected":""}}>Intact</option>
+                                                <option value="1" {{ old('type',$stockin->type)==1?"selected":""}}>New</option>
                                                 <option value="2" {{ old('type',$stockin->type)==2?"selected":""}}>Used</option>
                                             </select>
                                         </div>
