@@ -605,7 +605,7 @@
                         <tr>
                             <th>২ । পদবী</th>
                             <th>:</th>
-                            <td colspan="2"><input type="text" class="tinput" value="{{ $employees->bn_jobpost_id }}"></td>
+                            <td colspan="2"><input type="text" class="tinput" value="{{ $employees->position?->name_bn }}"></td>
                             <th>আইডি নং</th>
                             <td><input type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
                         </tr>
@@ -874,6 +874,96 @@
                     <tbody>
                         <tr style="text-align: center">
                             <img src="{{asset('assets/images/terms2.jpeg')}}" alt="কোন স্বাক্ষর নেই"><br/>
+                        </tr>
+                        <tr style="text-align: end">
+                            <td>আবেদনকারীর স্বাক্ষর</td><br/>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <tbody>
+                        <tr >
+                            <th colspan="4"></th>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
+                    <tbody>
+                        <tr>
+                            <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
+                            <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                            <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
+                            <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
+                            <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style='text-align:justify;'>
+                                শর্তাবলি ভালোভাবে পড়ে ও বুঝে, অত্র কোম্পানীর(এলিট সিকিউরিটি সার্ভিসেস লিঃ) এ চাকুরী করার জন্য রাজি আছি। আমি সর্ব
+                                অবস্থায় এ শর্তগুলো মেনে চলবো। কোন অবস্থাতেই ব্যতিক্রম বা কোম্পানীর স্বার্থ বিরোধী কোন কাজ করবো না। করলে
+                                কোম্পানী আমার বিরুদ্ধে শাস্তিমূলক ব্যবস্থাসহ দেশের প্রচলিত আইন অনুযায়ী ব্যবস্থা গ্রহন করতে পারবে। আমি বর্তমানে
+                                বাংলাদেশের কোন ট্রেড ইউনিয়ন/সংগঠন/সমিতির সদস্য নই এবং ভবিষ্যতেও সদস্য হবো না।আমার বিরুদ্ধে কোন আদালতে কোন
+                                মামলা/মোকাদ্দমা নেই,আমি কোন আদালত কর্তৃক সাজাপ্রাপ্ত হইনি এবং কোন আদালতের/পুলিশের গ্রেপ্তারি পরোয়ানাভুক্ত নই।
+                                আমি ইতিপূর্বে রাষ্ট্র বিরোধী কোন কর্মকান্ডে জড়িত ছিলাম না।ইহার ব্যতিক্রম হলো এলিট সিকিউরিটি সার্ভিসেস লিঃ কর্তৃপক্ষ
+                                আমার বিরুদ্ধে চাকরিচ্যুতসহ আইনানুগ ব্যবস্থা গ্রহন করতে পারবেন।
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                আমি সজ্ঞানে পড়ে, বুঝে ও সকল শর্ত মেনে নিয়ে নিজ ইচ্ছায় আমার স্বাক্ষর প্রদান করলাম। ভর্তিকালীন সময়ে ভর্তির ফি বাবদ
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 10%;">নগদ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td style="text-align: center; width: 25%;">টাকা প্রদান করলাম।বাকী</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td style="text-align: center; width: 45%;">টাকা আমার মাসিক বেতন থেকে সমন্বয় করে দিব।</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;">স্বাক্ষীর স্বাক্ষরঃ </td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%;">আবেদনকারীর নামঃ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%;">তারিখ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <p style="text-align: center;">পৃষ্ঠা-৪</p>
+                    <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px;">অফিসে ব্যবহারের জন্য</span></h4></div>
+                    <tbody>
+                        {{--  <tr>
+                            <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
+                            <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                            <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
+                            <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
+                            <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                        </tr>  --}}
+                        <tr>
+                            <td colspan="5" style='text-align:justify;'>
+                                আবেদনকারীর শারীরিক, মানসিক ও শিক্ষাগত যোগ্যতা বিবেচিত হওয়ার ফলে এলিট সিকিউরিটি সার্ভিসেস লিঃ এর
+                                অধীনে <b>{{ $employees->position?->name_bn }}</b> পদে প্রাথমিকভাবে নির্বাচন করে
+                                ভর্তি করা হলো। ভর্তির তারিখ <b>{{ date('d-M-Y', strtotime($employees?->created_at)) }}</b> । ভর্তির ফি সম্পূর্ণ নগদ প্রদানে অপরাগতায় জাতীয় পরিচয়
+                                পত্র নম্বর <b>{{ $employees->bn_nid_no }} </b> এর কার্ডটি জমা রাখা হল যা ভর্তির শর্ত পূর্ণ হলে ফেরত প্রদানযোগ্য।
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 10%; padding-top: 50px;">প্রশিক্ষণ কর্মকর্তা </td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%; padding-top: 50px;">জোন কমান্ডার/ভর্তিকারী কর্মকর্তা</td>
+                            <td style="width: 10%;"></td>
                         </tr>
                     </tbody>
                 </table>
