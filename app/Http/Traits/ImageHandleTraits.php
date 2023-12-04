@@ -16,7 +16,7 @@ trait ImageHandleTraits{
     public function checkValidImage($image)
     {
         $extention = strtolower($image->getClientOriginalExtension());
-        if ($extention === 'jpeg' || $extention === 'jpg' || $extention === 'png') {
+        if ($extention === 'jpeg' || $extention === 'jpg' || $extention === 'png'|| $extention === 'pdf') {
             return $extention;
         } else {
             return 'Invalid image format. Please try again';

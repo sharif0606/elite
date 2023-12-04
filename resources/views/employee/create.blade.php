@@ -1064,6 +1064,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="row imggl">
+                    <label for="status"><b>{{__('All Documents Upload')}}:</b></label>
+                    <div class="col-5 col-sm-3 mb-3">
+                        <input class="form-control mb-1" type="text" name="document_caption[]" placeholder="Document Caption"/>
+                        <input type="file" class="dropify" data-height="100" name="document_img[]"/>
+                    </div>
+                    <div class="col-2 addbtn">
+                        <button type="button" class="btn btn-primary" onclick="addGallery()">Add More</button>
+                    </div>
+                </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
@@ -1072,6 +1082,12 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function addGallery(){
+        $('.addbtn').before('<div class="col-5 col-sm-3 mb-3"><input class="form-control mb-1" type="text" name="document_caption[]" placeholder="Document Caption"/> <input type="file" class="dropify" data-height="100" name="document_img[]"/></div>');
+        $(".dropify").dropify({messages:{default:"  click here",replace:" click to here",remove:"Remove",error:"Ooops, something wrong appended."},error:{fileSize:"The file size is too big (1M max)."}});
+    }
+</script>
 <script>
     function newSongsRepeter() {
         var Repeter = `

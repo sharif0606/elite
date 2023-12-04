@@ -185,7 +185,7 @@
     <script src="{{ asset('/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('/assets/js/pages/simple-datatables.js') }}"></script>
     <script>
-        $('.dropify').dropify();
+        $(".dropify").dropify({messages:{default:"  click here",replace:" click to here",remove:"Remove",error:"Ooops, something wrong appended."},error:{fileSize:"The file size is too big (1M max)."}});
     </script>
 
     @stack('scripts')

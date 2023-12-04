@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employee;
 use App\Http\Controllers\Controller;
 
 use App\Models\Employee\Employee;
+use App\Models\Employee\EmployeeDocuments;
 use App\Models\Employee\EmployeeDetails;
 use App\Models\Employee\SecurityPriorAcquaintance;
 use Illuminate\Http\Request;
@@ -185,6 +186,17 @@ class EmployeeController extends Controller
             $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
 
             if ($employee->save()) {
+                if($request->has('document_caption')){
+                    foreach($request->document_caption as $key => $value){
+                        if($value){
+                            $document=new EmployeeDocuments;
+                            $document->employee_id = $employee->id;
+                            $document->document_caption = $request->document_caption[$key];
+                            $document->document_img=$this->uploadImage($request->document_img[$key],'uploads/document_img/');
+                            $document->save();
+                        }
+                    }
+                }
                 return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

@@ -944,13 +944,6 @@
                     <p style="text-align: center;">পৃষ্ঠা-৪</p>
                     <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px;">অফিসে ব্যবহারের জন্য</span></h4></div>
                     <tbody>
-                        {{--  <tr>
-                            <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
-                            <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
-                            <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
-                            <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
-                            <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
-                        </tr>  --}}
                         <tr>
                             <td colspan="5" style='text-align:justify;'>
                                 আবেদনকারীর শারীরিক, মানসিক ও শিক্ষাগত যোগ্যতা বিবেচিত হওয়ার ফলে এলিট সিকিউরিটি সার্ভিসেস লিঃ এর
@@ -964,6 +957,79 @@
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%; padding-top: 50px;">জোন কমান্ডার/ভর্তিকারী কর্মকর্তা</td>
                             <td style="width: 10%;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%;">
+                    <p style="text-align: center; padding-top: 30px;">ডিজিএম/জেনারেল ম্যানেজার</p>
+                    <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px;">আঙ্গুলের ছাপ</span></h4></div>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%;">বাম</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%;">ডান</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">১.কনিষ্ঠ</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">১.কনিষ্ঠ</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">২.অনামিকা</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">২.অনামিকা</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৩.মধ্যমা</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৩.মধ্যমা</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৪.তর্জনী</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৪.তর্জনী</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৫.বৃদ্ধা</td>
+                            <td style="text-align: end; width: 40%;"></td>
+                            <td style="width: 10%; padding-bottom: 30px;">৫.বৃদ্ধা</td>
+                            <td style="width: 20%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 20%;"></td>
+                            <td style="width: 10%; padding-bottom: 20px;">৬.নমুনা স্বাক্ষর</td>
+                            <td style="width: 30%;"><input type="text"></td>
+                            <td style="width: 10%;"><input type="text"></td>
+                            <td style="width: 30%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;">তারিখ </td>
+                            <td style="width: 30%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td style="text-align: end; width: 25%;">নামঃ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%;">নংঃ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="width: 30%;"></td>
+                            <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
                         </tr>
                     </tbody>
                 </table>
