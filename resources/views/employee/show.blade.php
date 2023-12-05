@@ -1179,19 +1179,19 @@
                     <th class="tbl_border" style="text-align: center;">22</th>
                     <th class="tbl_border">Is any case filed against him <br> in any court of Justice</th>
                     <th class="tbl_border" style="text-align: center;">:</th>
-                    <th class="tbl_border">@if($employees->en_is_any_case=='1') {{ 'Yes' }} @elseif($employees->en_is_any_case=='2') {{ 'No' }}@else '' @endif</th>
+                    <th class="tbl_border">@if($employees->en_is_any_case=='1') {{ 'Yes' }} @elseif($employees->en_is_any_case=='2') {{ 'No' }}@else  @endif</th>
                 </tr>
                 <tr class="tbl_border" >
                     <th class="tbl_border" style="text-align: center;">23</th>
                     <th class="tbl_border">Had he ever been convicted <br> by the criminal Court</th>
                     <th class="tbl_border" style="text-align: center;">:</th>
-                    <th class="tbl_border">@if($employees->en_is_criminal_court=='1') {{ 'Yes' }} @elseif($employees->en_is_criminal_court=='2') {{ 'No' }}@else '' @endif</th>
+                    <th class="tbl_border">@if($employees->en_is_criminal_court=='1') {{ 'Yes' }} @elseif($employees->en_is_criminal_court=='2') {{ 'No' }}@else  @endif</th>
                 </tr>
                 <tr class="tbl_border" >
                     <th class="tbl_border" style="text-align: center;">24</th>
                     <th class="tbl_border">Any Other Information</th>
                     <th class="tbl_border" style="text-align: center;">:</th>
-                    <th class="tbl_border">@if($employees->en_any_other_info=='1') {{ 'Yes' }} @elseif($employees->en_any_other_info=='2') {{ 'No' }}@else '' @endif</th>
+                    <th class="tbl_border">@if($employees->en_any_other_info=='1') {{ 'Yes' }} @elseif($employees->en_any_other_info=='2') {{ 'No' }}@else  @endif</th>
                 </tr>
             </tbody>
         </table>
