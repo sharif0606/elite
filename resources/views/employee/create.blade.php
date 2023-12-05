@@ -674,7 +674,7 @@
                     <h6 class="">Permanent Address </h6>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_parm_district_id">District</label>
                             <select onchange="show_upazila(this.value)" name="en_parm_district_id" class="choices form-control js-example-basic-single" id="en_parm_district_id">
@@ -725,7 +725,7 @@
                                 @endforelse
                             </select>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_parm_holding_name">Holding no</label>
@@ -773,7 +773,7 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_pre_district_id">District</label>
                             <select onchange="show_upazila(this.value)" name="en_pre_district_id" class=" form-control js-example-basic-single" id="en_pre_district_id">
@@ -824,7 +824,7 @@
                                 @endforelse
                             </select>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_pre_holding_no">Holding no</label>
@@ -867,7 +867,7 @@
                             <input type="text" id="en_edu_qualification" value="{{old('en_edu_qualification')}}" class="form-control" placeholder="" name="en_edu_qualification">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_blood_id">Blood Group</label>
                             <select name="en_blood_id" class="form-control js-example-basic-single" id="en_blood_id">
@@ -879,13 +879,13 @@
                                 @endforelse
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-12">
+                    </div>  --}}
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_dob">Date of Birth</label>
                             <input type="date" id="en_dob" value="{{old('en_dob')}}" class="form-control" placeholder="" name="en_dob">
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_age">Age</label>
@@ -910,7 +910,7 @@
                             <input type="text" id="en_nationality" value="{{old('en_nationality','Bangladeshi')}}" class="form-control" placeholder="" name="en_nationality">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_religion">Religion</label>
                             <select name="en_religion" class="form-control js-example-basic-single" id="en_religion">
@@ -922,7 +922,7 @@
                                 @endforelse
                             </select>
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-2 col-6">
                         <div class="form-group mt-3">
                             <label for="en_experience">Height</label>
@@ -1018,7 +1018,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_reference_admittee">NAME OF RECOMMENDATION/REFERENCE OF ADMITTEE</label>
+                            <label for="en_reference_admittee">Name Of Recommendation/Reference Of Admitted</label>
                             <input type="text" id="en_reference_admittee" value="{{old('en_reference_admittee')}}" class="form-control" placeholder="NAME OF RECOMMENDATION/REFERENCE OF ADMITTEE" name="en_reference_admittee">
                         </div>
                     </div>
@@ -1034,7 +1034,7 @@
                             <input type="text" id="en_reference_adm_adress" value="{{old('en_reference_adm_adress')}}" class="form-control" placeholder="Address" name="en_reference_adm_adress">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_jobpost_id">Position applied for</label>
                             <select name="en_jobpost_id" class=" form-control @error('en_jobpost_id') is-invalid @enderror" id="en_jobpost_id">
@@ -1046,7 +1046,7 @@
                                 @endforelse
                             </select>
                         </div>
-                    </div>
+                    </div>  --}}
                 </div>
 
                 <div class="row d-flex justify-content-end">

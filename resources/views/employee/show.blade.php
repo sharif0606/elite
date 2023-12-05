@@ -99,7 +99,7 @@
                     </div>
                 </div>
                 <div class="col-3" style="padding-left: 10px;">
-                    <img height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">
+                    <img class="tbl_border" height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">
                 </div>
             </div>
             <div class="row p-3">
@@ -1036,7 +1036,187 @@
             </div>
         </div>
     </section>
+    <section>
+        <div class="row">
+            <div class="col-9 text-center mb-5" style="margin-bottom: 50px !important;">
+                <h5 style="padding-top: 3rem;">ELITE SECURITY SERVICES LIMITED </h5>
+                <p style="margin: 1px;">BIO-DATA</p>
+                <p style="margin: 1px;"><b style="border-bottom: solid 1px;">{{ $employees->position?->name }}</b></p>
+            </div>
+            <div class="col-3">
+                <img class="tbl_border" height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="No Img">
+            </div>
+        </div>
+        <table class="tbl_border" style="width: 100%;">
+            <tbody>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">1</th>
+                    <th class="tbl_border">Name</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_applicants_name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">2</th>
+                    <th class="tbl_border">Designation</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->position?->name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">3</th>
+                    <th class="tbl_border">Place of Posting</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border"></th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">4</th>
+                    <th class="tbl_border">Employee ID No</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->admission_id_no }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">5</th>
+                    <th class="tbl_border">Height</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_height_foot }} Feet {{ $employees->en_height_inc }} Inch</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">6</th>
+                    <th class="tbl_border">Blood Group</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->bloodgroup?->name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">7</th>
+                    <th class="tbl_border">Father's Name</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_fathers_name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">8</th>
+                    <th class="tbl_border">Mother's Name</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_mothers_name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">9</th>
+                    <th class="tbl_border">Next of Kin(NOK)</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_legacy_name }}, ({{ $employees->en_legacy_relation }})</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">10</th>
+                    <th class="tbl_border">Present Address</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_pre_post_ofc }} ,  {{ $employees->en_pre_village_name }} ,  {{ $employees->bn_pre_ward?->name }} ,  {{ $employees->bn_union?->name }} ,  {{ $employees->bn_upazilla?->name }} ,  {{ $employees->bn_district?->name }} </th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">11</th>
+                    <th class="tbl_border">Permanent Address</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_parm_post_ofc }} ,  {{ $employees->en_parm_village_name }} ,  {{ $employees->bn_parm_ward?->name}} ,  {{ $employees->bn_parm_union?->name }} ,  {{ $employees->bn_parm_upazilla?->name }} ,  {{ $employees->bn_parm_district?->name }} </th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">12</th>
+                    <th class="tbl_border">NID/Birth Certificate No</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">@if($employees->en_nid_no) {{ 'NID  :'.$employees->en_nid_no }} @else {{ 'B.C.  :'.$employees->en_birth_certificate }} @endif</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">13</th>
+                    <th class="tbl_border">Date of Birth</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ date('d-M-Y', strtotime($employees->bn_dob)) }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">14</th>
+                    <th class="tbl_border">Personal & Alt. Phone No</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_parm_phone_my }}  ,  {{ $employees->en_parm_phone_alt }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">15</th>
+                    <th class="tbl_border">Educational Qualification</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_edu_qualification }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">16</th>
+                    <th class="tbl_border">Experience</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_experience }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">17</th>
+                    <th class="tbl_border">Religion</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->religion?->name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">18</th>
+                    <th class="tbl_border">Marital Status</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border"> @if($employees->bn_marital_status=='1') {{ 'Unmarried' }} @else {{ 'Married' }} @endif</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">19</th>
+                    <th class="tbl_border">Character Certificate <br> (By Chairman)</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">(Certificate attached)</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">20</th>
+                    <th class="tbl_border">Nationality</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_nationality }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">21</th>
+                    <th class="tbl_border">Identification Mark(if any)</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->en_identification_mark }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">22</th>
+                    <th class="tbl_border">Is any case filed against him <br> in any court of Justice</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->bn_applicants_name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">23</th>
+                    <th class="tbl_border">Had he ever been convicted <br> by the criminal Court</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->bn_applicants_name }}</th>
+                </tr>
+                <tr class="tbl_border" >
+                    <th class="tbl_border" style="text-align: center;">24</th>
+                    <th class="tbl_border">Any Other Information</th>
+                    <th class="tbl_border" style="text-align: center;">:</th>
+                    <th class="tbl_border">{{ $employees->bn_applicants_name }}</th>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-12 text-end mt-5" style="margin-top: 50px !important;">
+                <p style="margin: 1px;"><b style="border-top: solid 2px;">Signature of the  {{ $employees->position?->name }}</b></p>
+            </div>
+        </div>
+        <p class="mb-0 pb-0">I have checked and verified the above mentioned information and found all correct.</p>
+        <p class="mt-0 pt-0"><span style="border-bottom: solid 1px;">Certified by</span> </p>
+    </section>
 
+</section>
+<section class="mt-5">
+    <div class="row imggl">
+        <p>সকল ডকুমেন্ট</p>
+        @forelse($employeeDocuments as $ed)
+        <div class="col-5 col-sm-3 mb-3 text-center del{{$ed->id}}">
+            <input readonly class="form-control mb-1" value="{{$ed->document_caption}}" type="text" name="document_caption[]" placeholder="Document Caption"/>
+            <a target="_blank" href="{{asset('uploads/document_img/'.$ed->document_img)}}"><img class="modImg w-100" src="{{asset('uploads/document_img/'.$ed->document_img)}}" alt="Click PDF" /></a>
+            <button type="button" onclick="deletedata({{$ed->id}})" class="btn btn-danger btn-sm mt-2">Delete</button>
+        </div>
+        @empty
+        @endforelse
+    </div>
 </section>
 
 <script>
