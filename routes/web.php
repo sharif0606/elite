@@ -142,6 +142,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
         Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
+        Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
 
         Route::resource('customer', customer::class);
         Route::resource('customerbrance', customerbrance::class);

@@ -25,7 +25,7 @@ trait ImageHandleTraits{
 
     public function deleteImage($image, $path)
     {
-        $oldImagePath = public_path("/public/$path/$image");
+        $oldImagePath = public_path("$path/$image");
         if (File::exists($oldImagePath)) {
             return File::delete($oldImagePath);
         } else {

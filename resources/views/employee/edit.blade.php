@@ -1073,6 +1073,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="row imggl">
+                    <label for="status"><b>{{__('All Documents Upload')}}:</b></label>
+                    <div class="col-5 col-sm-3 mb-3">
+                        <input class="form-control mb-1" type="text" name="document_caption[]" placeholder="Document Caption"/>
+                        <input type="file" class="dropify" data-height="100" name="document_img[]"/>
+                    </div>
+                    <div class="col-2 addbtn">
+                        <button type="button" class="btn btn-primary" onclick="addGallery()">Add More</button>
+                    </div>
+                </div>
+                <div class="row imggl">
+                    @forelse($employeeDocuments as $ed)
+                    <div class="col-5 col-sm-3 mb-3 text-center del{{$ed->id}}">
+                        <input readonly class="form-control mb-1" value="{{$ed->document_caption}}" type="text" name="document_caption[]" placeholder="Document Caption"/>
+                        <a target="_blank" href="{{asset('uploads/document_img/'.$ed->document_img)}}"><img class="modImg w-100" src="{{asset('uploads/document_img/'.$ed->document_img)}}" alt="PDF" /></a>
+                        <button type="button" onclick="deletedata({{$ed->id}})" class="btn btn-danger btn-sm mt-2">Delete</button>
+                    </div>
+                    @empty
+
+                    @endforelse
+
+                </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
@@ -1081,6 +1103,19 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function addGallery(){
+        $('.addbtn').before('<div class="col-5 col-sm-3 mb-3"><input class="form-control mb-1" type="text" name="document_caption[]" placeholder="Document Caption"/> <input type="file" class="dropify" data-height="100" name="document_img[]"/></div>');
+        $(".dropify").dropify({messages:{default:"click here",replace:"Drag and drop or click to replace",remove:"Remove",error:"Ooops, something wrong appended."},error:{fileSize:"The file size is too big (1M max)."}});
+    }
+
+    function deletedata(e){
+        $.get("{{route(currentUser().'.employeeDocument')}}?id="+e, function(data, status){
+            alert("Image Deleted!");
+            $('.del'+e).remove();
+        });
+    }
+</script>
 <script>
     function newSongsRepeter() {
         var Repeter = `

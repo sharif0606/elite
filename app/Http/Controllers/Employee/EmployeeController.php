@@ -258,16 +258,17 @@ class EmployeeController extends Controller
         $bloods = BloodGroup::all();
         $religions = Religion::all();
         $employees = Employee::findOrFail(encryptor('decrypt',$id));
-        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees','jobposts'));
+        $employeeDocuments = EmployeeDocuments::where('employee_id',encryptor('decrypt',$id))->get();
+        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees','jobposts','employeeDocuments'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
+    public function employeeDocument(Request $request){
+        $documents=EmployeeDocuments::findOrFail($request->id);
+        if($this->deleteImage($documents->document_img,'uploads/document_img/'))
+        EmployeeDocuments::find($request->id)->delete();
+        return back();
+    }
+
     public function update(EditEmployeeRequest $request, $id)
     {
         try {
@@ -386,6 +387,17 @@ class EmployeeController extends Controller
             $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
 
             if ($employee->save()) {
+                if($request->has('document_caption')){
+                    foreach($request->document_caption as $key => $value){
+                        if($value){
+                            $document=new EmployeeDocuments;
+                            $document->employee_id = $employee->id;
+                            $document->document_caption = $request->document_caption[$key];
+                            $document->document_img=$this->uploadImage($request->document_img[$key],'uploads/document_img/');
+                            $document->save();
+                        }
+                    }
+                }
                 return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
