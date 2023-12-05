@@ -44,6 +44,7 @@
                                 <div class="card-body p-0">
                                     <!-- Basic file uploader -->
                                     <input type="file" class="" name="profile_img">
+                                    <img height="50px" width="50px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">
                                 </div>
                             </div>
                         </div>
@@ -1068,6 +1069,7 @@
                                 <div class="card-body p-0">
                                     <!-- Basic file uploader -->
                                     <input type="file" class="" name="signature_img">
+                                    <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই">
                                 </div>
                             </div>
                         </div>
