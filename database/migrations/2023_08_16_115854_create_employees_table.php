@@ -79,33 +79,33 @@ return new class extends Migration
             $table->string('en_applicants_name')->nullable();
             $table->string('en_fathers_name')->nullable();
             $table->string('en_mothers_name')->nullable();
-            $table->integer('en_parm_district_id')->nullable();
-            $table->integer('en_parm_upazila_id')->nullable();
-            $table->integer('en_parm_union_id')->nullable();
-            $table->integer('en_parm_ward_id')->nullable();
+            // $table->integer('en_parm_district_id')->nullable();
+            // $table->integer('en_parm_upazila_id')->nullable();
+            // $table->integer('en_parm_union_id')->nullable();
+            // $table->integer('en_parm_ward_id')->nullable();
             $table->string('en_parm_holding_name')->nullable();
             $table->string('en_parm_village_name')->nullable();
             $table->string('en_parm_post_ofc')->nullable();
             $table->string('en_parm_phone_my')->nullable();
             $table->string('en_parm_phone_alt')->nullable();
 
-            $table->integer('en_pre_district_id')->nullable();
-            $table->integer('en_pre_upazila_id')->nullable();
-            $table->integer('en_pre_union_id')->nullable();
-            $table->integer('en_pre_ward_id')->nullable();
+            // $table->integer('en_pre_district_id')->nullable();
+            // $table->integer('en_pre_upazila_id')->nullable();
+            // $table->integer('en_pre_union_id')->nullable();
+            // $table->integer('en_pre_ward_id')->nullable();
 
             $table->string('en_pre_holding_no')->nullable();
             $table->string('en_pre_village_name')->nullable();
             $table->string('en_pre_post_ofc')->nullable();
             $table->string('en_identification_mark')->nullable();
             $table->string('en_edu_qualification')->nullable();
-            $table->string('en_blood_id')->nullable();
+            //$table->string('en_blood_id')->nullable();
             $table->string('en_dob')->nullable();
             $table->integer('en_age')->nullable();
             $table->string('en_birth_certificate')->nullable();
             $table->string('en_nid_no')->nullable();
             $table->string('en_nationality')->nullable();
-            $table->string('en_religion')->nullable();
+            //$table->string('en_religion')->nullable();
             $table->string('en_height_foot')->nullable();
             $table->string('en_height_inc')->nullable();
             $table->string('en_weight_kg')->nullable();
@@ -117,7 +117,11 @@ return new class extends Migration
             $table->string('en_reference_admittee')->nullable();
             $table->string('en_reference_adm_phone')->nullable();
             $table->string('en_reference_adm_adress')->nullable();
-            $table->string('en_jobpost_id')->nullable();
+            $table->string('en_place_of_posting')->nullable();
+            $table->integer('en_is_any_case')->nullable();
+            $table->integer('en_is_criminal_court')->nullable();
+            $table->integer('en_any_other_info')->nullable();
+            //$table->string('en_jobpost_id')->nullable();
 
             $table->string('en_spouse_name')->nullable();
             $table->string('en_song_name')->nullable();

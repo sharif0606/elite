@@ -69,8 +69,6 @@ class EmployeeController extends Controller
     {
         try {
             // dd($request->all());
-            /*echo '<pre>';
-            print_r($request->all());*/
             $employee = new Employee();
             $employee->bn_applicants_name = $request->bn_applicants_name;
             $employee->bn_fathers_name = $request->bn_fathers_name;
@@ -165,6 +163,10 @@ class EmployeeController extends Controller
             $employee->en_reference_admittee = $request->en_reference_admittee;
             $employee->en_reference_adm_phone = $request->en_reference_adm_phone;
             $employee->en_reference_adm_adress = $request->en_reference_adm_adress;
+            $employee->en_place_of_posting = $request->en_place_of_posting;
+            $employee->en_is_any_case = $request->en_is_any_case;
+            $employee->en_is_criminal_court = $request->en_is_criminal_court;
+            $employee->en_any_other_info = $request->en_any_other_info;
             // $employee->en_jobpost_id = $request->en_jobpost_id;
             $employee->bn_cer_gender = $request->bn_cer_gender;
             $employee->bn_cer_physical_ability = $request->bn_cer_physical_ability;
@@ -330,32 +332,32 @@ class EmployeeController extends Controller
             $employee->en_applicants_name = $request->en_applicants_name;
             $employee->en_fathers_name = $request->en_fathers_name;
             $employee->en_mothers_name = $request->en_mothers_name;
-            $employee->en_parm_district_id = $request->en_parm_district_id;
-            $employee->en_parm_upazila_id = $request->en_parm_upazila_id;
-            $employee->en_parm_union_id = $request->en_parm_union_id;
-            $employee->en_parm_ward_id = $request->en_parm_ward_id;
+            // $employee->en_parm_district_id = $request->en_parm_district_id;
+            // $employee->en_parm_upazila_id = $request->en_parm_upazila_id;
+            // $employee->en_parm_union_id = $request->en_parm_union_id;
+            // $employee->en_parm_ward_id = $request->en_parm_ward_id;
             $employee->en_parm_holding_name = $request->en_parm_holding_name;
             $employee->en_parm_village_name = $request->en_parm_village_name;
             $employee->en_parm_post_ofc = $request->en_parm_post_ofc;
             $employee->en_parm_phone_my = $request->en_parm_phone_my;
             $employee->en_parm_phone_alt = $request->en_parm_phone_alt;
 
-            $employee->en_pre_district_id = $request->en_pre_district_id;
-            $employee->en_pre_upazila_id = $request->en_pre_upazila_id;
-            $employee->en_pre_union_id = $request->en_pre_union_id;
-            $employee->en_pre_ward_id = $request->en_pre_ward_id;
+            // $employee->en_pre_district_id = $request->en_pre_district_id;
+            // $employee->en_pre_upazila_id = $request->en_pre_upazila_id;
+            // $employee->en_pre_union_id = $request->en_pre_union_id;
+            // $employee->en_pre_ward_id = $request->en_pre_ward_id;
             $employee->en_pre_holding_no = $request->en_pre_holding_no;
             $employee->en_pre_village_name = $request->en_pre_village_name;
             $employee->en_pre_post_ofc = $request->en_pre_post_ofc;
             $employee->en_identification_mark = $request->en_identification_mark;
             $employee->en_edu_qualification = $request->en_edu_qualification;
-            $employee->en_blood_id = $request->en_blood_id;
-            $employee->en_dob = $request->en_dob;
-            $employee->en_age = $request->en_age;
+            //$employee->en_blood_id = $request->en_blood_id;
+            //$employee->en_dob = $request->en_dob;
+            //$employee->en_age = $request->en_age;
             $employee->en_birth_certificate = $request->en_birth_certificate;
             $employee->en_nid_no = $request->en_nid_no;
             $employee->en_nationality = $request->en_nationality;
-            $employee->en_religion = $request->en_religion;
+            // $employee->en_religion = $request->en_religion;
             $employee->en_height_foot = $request->en_height_foot;
             $employee->en_height_inc = $request->en_height_inc;
             $employee->en_weight_kg = $request->en_weight_kg;
@@ -367,7 +369,11 @@ class EmployeeController extends Controller
             $employee->en_reference_admittee = $request->en_reference_admittee;
             $employee->en_reference_adm_phone = $request->en_reference_adm_phone;
             $employee->en_reference_adm_adress = $request->en_reference_adm_adress;
-            $employee->en_jobpost_id = $request->en_jobpost_id;
+            //$employee->en_jobpost_id = $request->en_jobpost_id;
+            $employee->en_place_of_posting = $request->en_place_of_posting;
+            $employee->en_is_any_case = $request->en_is_any_case;
+            $employee->en_is_criminal_court = $request->en_is_criminal_court;
+            $employee->en_any_other_info = $request->en_any_other_info;
             $employee->bn_cer_gender = $request->bn_cer_gender;
             $employee->bn_cer_physical_ability = $request->bn_cer_physical_ability;
 

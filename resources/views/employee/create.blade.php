@@ -1047,6 +1047,39 @@
                             </select>
                         </div>
                     </div>  --}}
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_place_of_posting">Place of Posting</label>
+                            <input type="text" id="en_place_of_posting" value="{{old('en_place_of_posting')}}" class="form-control" placeholder="Place of Posting" name="en_place_of_posting">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_is_any_case">Is any case filed against him in any Court if Justice</label>
+                            <select name="en_is_any_case" class="form-control">
+                                <option value="1">Yes</option>
+                                <option selected value="2">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_is_criminal_court">Had he ever been convicated by the criminal Court</label>
+                            <select name="en_is_criminal_court" class="form-control">
+                                <option value="1">Yes</option>
+                                <option selected value="2">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_any_other_info">Any Other Information</label>
+                            <select name="en_any_other_info" class="form-control">
+                                <option value="1">Yes</option>
+                                <option selected value="2">No</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row d-flex justify-content-end">

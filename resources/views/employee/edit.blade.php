@@ -1044,7 +1044,7 @@
                             <input type="text" id="en_reference_adm_adress" value="{{old('en_reference_adm_adress',$employees->en_reference_adm_adress)}}" class="form-control" placeholder="Address" name="en_reference_adm_adress">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_applied_position">Position applied for</label>
                             <select name="en_jobpost_id" class=" form-control @error('en_jobpost_id') is-invalid @enderror" id="en_jobpost_id">
@@ -1054,6 +1054,39 @@
                                 @empty
                                     <option value="">No found</option>
                                 @endforelse
+                            </select>
+                        </div>
+                    </div>  --}}
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_place_of_posting">Place of Posting</label>
+                            <input type="text" id="en_place_of_posting" value="{{old('en_place_of_posting',$employees->en_place_of_posting)}}" class="form-control" placeholder="Place of Posting" name="en_place_of_posting">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_is_any_case">Is any case filed against him in any Court if Justice</label>
+                            <select name="en_is_any_case" class="form-control">
+                                <option value="1" {{ $employees->en_is_any_case=='1'?"selected":""}}>Yes</option>
+                                <option value="2" {{ $employees->en_is_any_case=='2'?"selected":""}}>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_is_criminal_court">Had he ever been convicated by the criminal Court</label>
+                            <select name="en_is_criminal_court" class="form-control">
+                                <option value="1" {{ $employees->en_is_criminal_court=='1'?"selected":""}}>Yes</option>
+                                <option value="2" {{ $employees->en_is_criminal_court=='2'?"selected":""}}>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="en_any_other_info">Any Other Information</label>
+                            <select name="en_any_other_info" class="form-control">
+                                <option value="1" {{ $employees->en_any_other_info=='1'?"selected":""}}>Yes</option>
+                                <option value="2" {{ $employees->en_any_other_info=='2'?"selected":""}}>No</option>
                             </select>
                         </div>
                     </div>
