@@ -37,8 +37,8 @@
                                 <td>{{$d->size?->name}}</td>
                                 <td>{{$d->product_qty}}</td>  --}}
                                 <td>{{$d->employee?->bn_applicants_name}}</td>
-                                <td>{{$d->issue_date}}</td>
-                                {{--  <td>@if ($d->type==2) Used @else Intact @endif</td>  --}}
+                                <td>{{ \Carbon\Carbon::parse($d->issue_date)->format('d/m/Y') }}</td>
+                                {{--  <td>@if ($d->type==2) Used @else New @endif</td>  --}}
                                 <td class="white-space-nowrap">
                                     <a href="{{route(currentUser().'.requisition.show',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-eye"></i>

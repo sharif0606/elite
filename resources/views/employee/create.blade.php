@@ -63,7 +63,10 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="admission_id_no">ভর্তিরপর আইডি নং</label>
-                            <input type="text" id="admission_id_no" value="{{old('admission_id_no')}}" class="form-control" placeholder="" name="admission_id_no">
+                            <input type="text" id="admission_id_no" value="{{old('admission_id_no')}}" class="form-control @error('admission_id_no') is-invalid @enderror" placeholder="" name="admission_id_no">
+                            @if($errors->has('admission_id_no'))
+                            <span class="text-danger"> {{ $errors->first('admission_id_no') }}</span>
+                        @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">

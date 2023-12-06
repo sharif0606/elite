@@ -1211,8 +1211,7 @@
         @forelse($employeeDocuments as $ed)
         <div class="col-5 col-sm-3 mb-3 text-center del{{$ed->id}}">
             <input readonly class="form-control mb-1" value="{{$ed->document_caption}}" type="text" name="document_caption[]" placeholder="Document Caption"/>
-            <a target="_blank" href="{{asset('uploads/document_img/'.$ed->document_img)}}"><img class="modImg w-100" src="{{asset('uploads/document_img/'.$ed->document_img)}}" alt="Click PDF" /></a>
-            <button type="button" onclick="deletedata({{$ed->id}})" class="btn btn-danger btn-sm mt-2">Delete</button>
+            <a target="_blank" href="{{asset('uploads/document_img/'.$ed->document_img)}}"><i class="bi bi-eye"></i></a>
         </div>
         @empty
         @endforelse

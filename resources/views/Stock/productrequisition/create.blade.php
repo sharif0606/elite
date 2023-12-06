@@ -83,7 +83,7 @@
                                                     <td><input required class="form-control" type="text" name="product_qty[]" value="" placeholder="Product Qty"></td>
                                                     <td>
                                                         <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                            <option value="1">Intact</option>
+                                                            <option value="1">New</option>
                                                             <option value="2">Used</option>
                                                         </select>
                                                     </td>
@@ -139,7 +139,7 @@
         <td><input required class="form-control" type="text" name="product_qty[]" value="" placeholder="Product Qty"></td>
         <td>
             <select name="type[]" class="form-control @error('type') is-invalid @enderror" id="type">
-                <option value="1">Intact</option>
+                <option value="1">New</option>
                 <option value="2">Used</option>
             </select>
         </td>

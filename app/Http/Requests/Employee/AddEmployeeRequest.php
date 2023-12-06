@@ -25,6 +25,7 @@ class AddEmployeeRequest extends FormRequest
     {
         return [
             'bn_applicants_name' => 'required',
+            'admission_id_no'=>'required|unique:employees,admission_id_no',
             // 'bn_parm_district_id' => 'required',
             // 'bn_parm_upazila_id' => 'required',
             // 'bn_parm_union_id' => 'required',
