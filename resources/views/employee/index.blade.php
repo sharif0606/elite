@@ -22,6 +22,7 @@
                     <tr>
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>
+                            <p><strong>আইডি নং:</strong> {{$e->admission_id_no}}</p>
                             <p><strong>আবেদনকারীর নাম:</strong> {{$e->bn_applicants_name}}</p>
                             <p><strong>পিতার নাম:</strong> {{$e->bn_fathers_name}}</p>
                             <p><strong>মাতার নাম:</strong> {{$e->bn_mothers_name}}</p>
@@ -30,6 +31,7 @@
                             <p><strong>Applicant's Name:</strong> {{$e->en_applicants_name}}</p>
                             <p><strong>Father's Name:</strong> {{$e->en_fathers_name}}</p>
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
+                            <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
                         </td>
                         <td>
                             <a href="{{route('employee.show',encryptor('encrypt',$e->id))}}">

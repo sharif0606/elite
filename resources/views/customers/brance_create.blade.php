@@ -73,8 +73,8 @@
                         <input class="form-control billing_rate" type="text" name="billing_rate" value="" placeholder="Billing Rate">
                     </div>  --}}
                     <div class="col-lg-4 col-md-6 col-sm-12">
-                        <label for=""><b>Take Home</b></label>
-                        <input class="form-control take_home" type="text" name="take_home" value="" placeholder="Take Home">
+                        <label for=""><b>Take Home Salary</b></label>
+                        <input class="form-control take_home" type="text" name="take_home" value="" placeholder="Take Home Salary">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Royalty</b></label>

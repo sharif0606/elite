@@ -61,6 +61,8 @@ class CustomerController extends Controller
             // $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
+            $data->bin = $request->bin;
+            $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
             // $data->contact_person = $request->contact_person;
             // $data->contact_number = $request->contact_number;
@@ -132,6 +134,8 @@ class CustomerController extends Controller
             // $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
+            $data->bin = $request->bin;
+            $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
             // $data->contact_person = $request->contact_person;
             // $data->contact_number = $request->contact_number;

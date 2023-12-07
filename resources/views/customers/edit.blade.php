@@ -37,6 +37,12 @@
                             <input type="text" id="contact" value="{{old('contact',$customer->contact)}}" class="form-control" placeholder="Contact Number" name="contact">
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="file_upload_name">File Upload Name</label>
+                            <input type="text" id="file_upload_name" value="{{old('file_upload_name',$customer->file_upload_name)}}" class="form-control" placeholder="" name="file_upload_name">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     {{--  <div class="col-lg-4 col-md-6 col-sm-12">
@@ -75,16 +81,22 @@
                             <input type="date" id="validity_date" value="{{old('validity_date',$customer->validity_date)}}" class="form-control" placeholder="" name="validity_date">
                         </div>
                     </div>  --}}
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="file_upload_name">File Upload Name</label>
-                            <input type="text" id="file_upload_name" value="{{old('file_upload_name',$customer->file_upload_name)}}" class="form-control" placeholder="" name="file_upload_name">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="file_upload">Upload File</label>
                             <input type="file" id="file_upload" value="{{old('file_upload')}}" class="form-control" placeholder="" name="file_upload">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="bin">Bin</label>
+                            <input type="text" id="bin" value="{{old('bin',$customer->bin)}}" class="form-control" placeholder="Bin" name="bin">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="invoice_number">Invoice Number</label>
+                            <input type="text" id="invoice_number" value="{{old('invoice_number',$customer->invoice_number)}}" class="form-control" placeholder="Invoice Number" name="invoice_number">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">

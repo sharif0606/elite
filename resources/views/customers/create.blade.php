@@ -92,6 +92,18 @@
                             <input type="file" id="file_upload" value="{{old('file_upload')}}" class="form-control" placeholder="" name="file_upload">
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="bin">Bin</label>
+                            <input type="text" id="bin" value="{{old('bin')}}" class="form-control" placeholder="Bin" name="bin">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="invoice_number">Invoice Number</label>
+                            <input type="text" id="invoice_number" value="{{old('invoice_number')}}" class="form-control" placeholder="Invoice Number" name="invoice_number">
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="address">Address</label>
