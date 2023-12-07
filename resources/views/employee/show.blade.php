@@ -1417,18 +1417,18 @@
                 </tr>
                 <tr>
                     <td>১৬।</td>
-                    <td>উক্ত গার্ডটি নতুন পোষ্টের জন্য ভর্তি করা হলে পোষ্টের নাম লিখুনঃ</td>
-                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                    <td colspan="2">উক্ত গার্ডটি নতুন পোষ্টের জন্য ভর্তি করা হলে পোষ্টের নাম লিখুনঃ</td>
+                    <td colspan="2"><input readonly type="text" class="tinput" value=""></td>
                 </tr>
                 <tr>
                     <td>১৭।</td>
-                    <td>যদি পুরাতন পোষ্ট হয়,তাহলে পোষ্টের নামঃ</td>
-                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                    <td colspan="2">যদি পুরাতন পোষ্ট হয়,তাহলে পোষ্টের নামঃ</td>
+                    <td colspan="2"><input readonly type="text" class="tinput" value=""></td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td>কাহার পরিবর্তেও ভর্তির কারণঃ</td>
-                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                    <td colspan="2">কাহার পরিবর্তেও ভর্তির কারণঃ</td>
+                    <td colspan="2"><input readonly type="text" class="tinput" value=""></td>
                 </tr>
                 <tr>
                     <td class="text-end" colspan="5">
