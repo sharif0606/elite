@@ -87,7 +87,7 @@
         <div class="container-fluid">
             <div class="row p-3">
                 <div class="col-3">
-                    <img  class="mt-5" height="80px" width="140px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                    <img  class="mt-5" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                 </div>
                 <div class="col-6 col-sm-6" style="padding-left: 10px;">
                     <div style="text-align: center;">
@@ -263,7 +263,7 @@
                 <table style="width: 100%; margin-top: 2rem;">
                     <tbody>
                         <tr>
-                            <td colspan="2" style="text-align: left;">তারিখ:</td>
+                            <td colspan="2" style="text-align: left;">তারিখ: {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
                         </tr>
                         <tr>
                             <td  style="text-align: left; padding-left: 45px;">
@@ -428,7 +428,7 @@
                             <td class="tbl_border">৪ । লিঙ্গ: পুরুষ/মহিলা
                             </td>
                             <td  class="tbl_border">
-                                তিনি প্রতিষ্টানে নিযুক্ত হইতে ইচ্ছুক এবং আমার পরীক্ষা হইতে এইরূপ পাওয়া গিয়াছে যে তাহার বয়স  <input type="text" class="verySmall text-center"  value="30">বছর এবং তিনি প্রতিষ্টানে প্রাপ্ত বয়স্ক/কিশোর হিসাবে নিযুক্ত হইবার যুগ্য।
+                                তিনি প্রতিষ্টানে নিযুক্ত হইতে ইচ্ছুক এবং আমার পরীক্ষা হইতে এইরূপ পাওয়া গিয়াছে যে তাহার বয়স  <input type="text" class="verySmall text-center"  value="{{ $age }}">বছর এবং তিনি প্রতিষ্টানে প্রাপ্ত বয়স্ক/কিশোর হিসাবে নিযুক্ত হইবার যুগ্য।
                             </td>
                         </tr>
                         <tr class="tbl_border">
@@ -440,7 +440,7 @@
                                 <label for="">জেলা:</label>{{ $employees->bn_parm_district?->name_bn }}
                             </td>
                             <td  class="tbl_border">
-                                তাহার সনাক্তকরণের চিহ্ন :<input type="text" class="verySmall"  value="30">
+                                তাহার সনাক্তকরণের চিহ্ন :<input type="text" class="sinput"  value="{{ $employees->bn_identification_mark }}">
                             </td>
                         </tr>
                         <tr class="tbl_border">
@@ -580,7 +580,7 @@
                         <tr>
                             <td style="width: 33%">
                                 <div>
-                                    <img  class="mt-4" height="80px" width="140px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                                    <img  class="mt-4" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                                 </div>
                             </td>
                             <td style="width: 67%; text-align:start;">
@@ -914,11 +914,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10%;">নগদ</td>
-                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
-                            <td style="text-align: center; width: 25%;">টাকা প্রদান করলাম।বাকী</td>
-                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
-                            <td style="text-align: center; width: 45%;">টাকা আমার মাসিক বেতন থেকে সমন্বয় করে দিব।</td>
+                            <td style="text-align: left; width: 10% !important;">নগদ</td>
+                            <td style="width: 10% !important;"><input readonly type="text" class="verySmall"  value=""></td>
+                            <td style="text-align: center; width: 25% !important;">টাকা প্রদান করলাম।বাকী</td>
+                            <td style="width: 10% !important;"><input readonly type="text" class="verySmall"  value=""></td>
+                            <td style="text-align: center; width: 45% !important;">টাকা আমার মাসিক বেতন থেকে সমন্বয় করে দিব।</td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 5%;">স্বাক্ষীর স্বাক্ষরঃ </td>
@@ -936,7 +936,7 @@
                             <td style="text-align: left; width: 5%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">তারিখ</td>
-                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -973,37 +973,37 @@
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 20%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">১.কনিষ্ঠ</td>
+                            <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ</td>
                             <td style="text-align: end; width: 40%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">১.কনিষ্ঠ</td>
+                            <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ</td>
                             <td style="width: 20%;"></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 20%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">২.অনামিকা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা</td>
                             <td style="text-align: end; width: 40%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">২.অনামিকা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা</td>
                             <td style="width: 20%;"></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 20%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৩.মধ্যমা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা</td>
                             <td style="text-align: end; width: 40%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৩.মধ্যমা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা</td>
                             <td style="width: 20%;"></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 20%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৪.তর্জনী</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী</td>
                             <td style="text-align: end; width: 40%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৪.তর্জনী</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী</td>
                             <td style="width: 20%;"></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 20%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৫.বৃদ্ধা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা</td>
                             <td style="text-align: end; width: 40%;"></td>
-                            <td style="width: 10%; padding-bottom: 30px;">৫.বৃদ্ধা</td>
+                            <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা</td>
                             <td style="width: 20%;"></td>
                         </tr>
                         <tr>
@@ -1015,7 +1015,7 @@
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 5%;">তারিখ </td>
-                            <td style="width: 30%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td style="width: 30%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
                             <td style="text-align: end; width: 25%;">নামঃ</td>
                             <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
                         </tr>
@@ -1202,6 +1202,107 @@
         </div>
         <p class="mb-0 pb-0">I have checked and verified the above mentioned information and found all correct.</p>
         <p class="mt-0 pt-0"><span style="border-bottom: solid 1px;">Certified by</span> </p>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
+                <h5 style="padding-top: 3rem;"> <span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি ফি সংক্রান্ত</span></h5>
+                <p style="margin: 1px;"><b style="border-bottom: solid 1px;">হলফনামা</b></p>
+            </div>
+        </div>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>আমি</td>
+                    <td colspan="2"><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                    <td>বয়স</td>
+                    <td><input type="text" class="tinput" value="{{ $age }}"></td>
+                    <td>পিতা</td>
+                    <td colspan="2"><input type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
+                </tr>
+                <tr>
+                    <td>মাতা</td>
+                    <td colspan="2"><input readonly type="text" class="tinput" value="{{ $employees->bn_mothers_name }}"></td>
+                    <td>গ্রাম</td>
+                    <td><input type="text" class="tinput" value="{{ $employees->bn_parm_village_name }}"></td>
+                    <td>ডাকঘর</td>
+                    <td colspan="2"><input type="text" class="tinput" value="{{ $employees->bn_parm_post_ofc }}"></td>
+                </tr>
+                <tr>
+                    <td>উপজেলা</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_parm_upazilla?->name_bn }}"></td>
+                    <td>জেলা</td>
+                    <td><input type="text" class="tinput" value="{{ $employees->bn_parm_district?->name_bn }}"></td>
+                    <td>ধর্ম</td>
+                    <td><input type="text" class="tinput" value="{{ $employees->religion?->name_bn }}"></td>
+                    <td>জাতীয়তা</td>
+                    <td><input type="text" class="tinput" value="{{ $employees->bn_nationality }}"></td>
+                </tr>
+                <tr>
+                    <td>নং</td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td>গত</td>
+                    <td><input type="text" class="tinput" value=""></td>
+                    <td>ইং তারিখে {{ $employees->position?->name_bn }}</td>
+                    <td colspan="3">হিসেবে এলিট সিকিউরিটি সার্ভিসেস লিঃ এ ভর্তি হয়েছি।</td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        আমি স্বজ্ঞানে, সু্স্থ্য মস্তিষ্কে, অন্যের বিনা প্ররোচনায় হলফ পূর্বক ঘোষণা করছি যে, ভর্তি
+                        হওয়ার সময় আমি ভর্তি ফি বাবদ {{ $employees->bn_traning_cost }} টাকা মাত্র প্রদান করেছি। আমি আরো ঘোষণা
+                        করছি যে, উল্লেখিত ভর্তি ফি ছাড়া অতিরিক্ত কোন অর্থ প্রদান করি নাই এবং তৃতীয় কোন
+                        পক্ষের সাথে ভর্তি ফি সংক্রান্ত কোন লেনদেন করি নাই। ভর্তি ফি প্রদানের ব্যাপারে আমার
+                        কোন অভিযোগ উত্থাপন করব না, করলে তাহা সকল
+                        ক্ষেত্রে অগ্রাহ্য হবে ।
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start" colspan="8">
+                            <p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">জেনারেল কর্মকর্তার স্বাক্ষর</b></p>
+                            <p style="margin: 1px;"><b>(সীলসহ এবং ঠিকানা সহকারে)</b></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row"  style="margin-top: 50px !important;">
+            <div class="col-6">
+                <p style="margin: 1px; margin-top: 50px !important;"><b style="border-bottom: solid 2px;">স্বাক্ষীঃ (ঠিকানা সহকারে নিকট আত্বীয়স্বজন)</b></p>
+                <p style="padding: 2px;"><b>১।</b></p>
+                <p style="padding: 2px;"><b>২।</b></p>
+                <p style="padding: 2px;"><b>৩।</b></p>
+            </div>
+            <div class="col-6">
+                <p style="margin: 1px; margin-top: 50px !important;"><b style="border-bottom: solid 2px;"> ঘোষণাকারীর স্বাক্ষর</b></p>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <td>ভর্তি আইডি নং</td>
+                                <td><input readonly type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
+                            </tr>
+                            <tr>
+                                <td>নামঃ</td>
+                                <td><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                            </tr>
+                            <tr>
+                                <td>পদবীঃ</td>
+                                <td><input readonly type="text" class="tinput" value="{{ $employees->position?->name_bn }}"></td>
+                            </tr>
+                            <tr>
+                                <td>ন্যাশনাল আইডি নংঃ</td>
+                                <td><input readonly type="text" class="tinput" value="{{ $employees->bn_nid_no }}"></td>
+                            </tr>
+                            <tr>
+                                <td>মোবাইল নংঃ</td>
+                                <td><input readonly type="text" class="tinput" value="{{ $employees->bn_parm_phone_my }}"></td>
+                            </tr>
+                            <tr>
+                                <td>তারিখঃ</td>
+                                <td><input readonly type="text" class="tinput" value="{{ date('d-m-Y', strtotime($employees->created_at)) }}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
     </section>
 
 </section>
