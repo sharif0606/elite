@@ -87,7 +87,7 @@
         <div class="container-fluid">
             <div class="row p-3">
                 <div class="col-3">
-                    <img  class="mt-5" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                    <img  class="mt-5" height="80px" width="160px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                 </div>
                 <div class="col-6 col-sm-6" style="padding-left: 10px;">
                     <div style="text-align: center;">
@@ -1303,6 +1303,176 @@
                     </table>
             </div>
         </div>
+    </section>
+    <section>
+        <div class="row">
+            <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
+                <h5 style="padding-top: 3rem;"> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
+                {{--  <span class="text-end" style="padding-left: 50px !important;">তারিখ:{{ date('d-m-Y', strtotime($employees->created_at)) }}</span>  --}}
+                <p style="margin: 1px;"><b>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড,চট্টগ্রাম ।</b></p>
+            </div>
+        </div>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>০১।</td>
+                    <td>নির্বাচিত প্রার্থীর নামঃ</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                    <td>উচ্চতাঃ</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_height_foot }} ফুট {{ $employees->bn_height_inc }} ইঞ্চি"></td>
+                </tr>
+                <tr>
+                    <td>০২।</td>
+                    <td>পিতার নামঃ</td>
+                    <td><input type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
+                    <td>বয়স</td>
+                    <td><input type="text" class="tinput" value="{{ $age }}"></td>
+                </tr>
+                <tr>
+                    <td>০৩।</td>
+                    <td>উপজেলা</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_parm_upazilla?->name_bn }}"></td>
+                    <td>জেলা</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_parm_district?->name_bn }}"></td>
+                </tr>
+                <tr>
+                    <td>০৪।</td>
+                    <td colspan="2">জাতীয় পরিচয়পত্র সংযুক্ত (মূলকপি/ফটোকপি)</td>
+                    <td colspan="2"> : আছে / নাই</td>
+                </tr>
+                <tr>
+                    <td>০৫।</td>
+                    <td colspan="2">জাতীয়তা সনদ সংযুক্ত (মূলকপি/ফটোকপি)</td>
+                    <td colspan="2"> : আছে / নাই</td>
+                </tr>
+                <tr>
+                    <td>০৬।</td>
+                    <td colspan="2">শিক্ষাগত যোগ্যতা সনদ সংযুক্ত (মূলকপি/ফটোকপি)</td>
+                    <td colspan="2"> : আছে / নাই</td>
+                </tr>
+                <tr>
+                    <td>০৭।</td>
+                    <td colspan="2">জন্ম নিবন্ধন সনদ সংযুক্ত (মূলকপি/ফটোকপি)</td>
+                    <td colspan="2"> : আছে / নাই</td>
+                </tr>
+                <tr>
+                    <td>০৮।</td>
+                    <td colspan="2">অভিজ্ঞতা সনদ সংযুক্ত</td>
+                    <td colspan="2"> : আছে / নাই</td>
+                </tr>
+                <tr>
+                    <td>০৯।</td>
+                    <td colspan="2">ভর্তি ফি বাবদ (অফেরতযোগ্য) নগদ {{ $employees->bn_traning_cost }} টাকা দিয়ে বাকি</td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td>টাকা রেখে স্বাক্ষর করলাম</td>
+                </tr>
+                <tr>
+                    <td>১০।</td>
+                    <td>প্রার্থীর স্বাক্ষরঃ</td>
+                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td>১১।</td>
+                    <td>সনাক্তকারী/কাগজপত্র গ্রহনকারী/টাকা গ্রহনকারী/নাম ও স্বাক্ষরঃ</td>
+                    <td  colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td>১২।</td>
+                    <td>স্বাক্ষরঃ-</td>
+                    <td> <span>ভর্তিকারী/জোন কমান্ডার</span></td>
+                    <td></td>
+                    <td>ডিজিএম/জিএম</td>
+                </tr>
+                <tr>
+                    <td>১৩।</td>
+                    <td><h4>‍শপথ বাক্য পাঠঃ-</h4></td>
+                    <td>আমি(নাম)</td>
+                    <td><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                    <td>{{ $employees->position?->name_bn }} হিসেবে মহান সৃষ্টিকর্তার
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="4">
+                        শপথ কবে এবং স্বাক্ষী রেখে অঙ্গীকার করিতেছি যে, আজ থেকে আমার উপর অত্র কোম্পানীর অর্পিত নিরাপত্তার
+                        সকল দায়-দায়িত্ব সঠিকভাবে পালন করিব। যে কোন সময় মানুষের জান ও মালের নিরাপত্তা প্রদানের দায়িত্ব আমাকে
+                        দেওয়া হইলে তা পালন করিতে কোন রকম অবহেলা ও গাফিলতি করিব না। অত্র কোম্পানির সকল নিয়ম-কানুন এবং
+                        উর্ধ্বতন কর্মকর্তার সকল আইনগত আদেশ/উপদেশ মেনে নিয়ে দায়িত্ব পালন করিতে আমি বাধ্য থাকিব । হে মহান
+                        সৃষ্টিকর্তা আমার উপর অর্পিত সকল দায় দায়িত্ব পালন করার শক্তি ও সামর্থ দিন, আমিন ।
+                    </td>
+                </tr>
+                <tr>
+                    <td>১৪।</td>
+                    <td>মান যাচাইকারী এবং শপথ পরিচালনাকারীর নাম ও স্বাক্ষর</td>
+                    <td  colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td>১৫।</td>
+                    <td colspan="4">প্রশিক্ষনের কালঃ  ------------  হইতে  ------------------  মোট =  ------- দিন</td>
+                </tr>
+                <tr>
+                    <td class="text-start" colspan="5">
+                        <p style="margin: 1px; margin-top: 10px !important;"><h5 class="text-center"><span style="border-bottom: solid 2px;">জোন কমান্ডারের মন্তব্যঃ</span></h5></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>১৬।</td>
+                    <td>উক্ত গার্ডটি নতুন পোষ্টের জন্য ভর্তি করা হলে পোষ্টের নাম লিখুনঃ</td>
+                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td>১৭।</td>
+                    <td>যদি পুরাতন পোষ্ট হয়,তাহলে পোষ্টের নামঃ</td>
+                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>কাহার পরিবর্তেও ভর্তির কারণঃ</td>
+                    <td colspan="3"><input readonly type="text" class="tinput" value=""></td>
+                </tr>
+                <tr>
+                    <td class="text-end" colspan="5">
+                        <p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-start" colspan="5">
+                        <p style="margin: 1px; margin-top: 10px !important;"><h5 class="text-center"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>১৮।</td>
+                    <td>বরাদ্ধকৃত আইডি নং </td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>১৯।</td>
+                    <td colspan="4">উল্লেখিত সনদপত্রগুলো গ্রহন করে পোশাক ইস্যু করলাম।</td>
+                </tr>
+                <tr>
+                    <td>তারিখঃ</td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-end"><p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">স্টোরম্যানের সীল/স্বাক্ষর</b></p></td>
+                </tr>
+                <tr>
+                    <td>২০।</td>
+                    <td>ভর্তি ফি বাবদ নগদ </td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td colspan="2">টাকা সদস্য সচিব থেকে বুঝে গ্রহন করলাম ।</td>
+                </tr>
+                <tr>
+                    <td>তারিখঃ</td>
+                    <td><input readonly type="text" class="tinput" value=""></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-end"><p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">হিসাব শাখার প্রধান</b></p></td>
+                </tr>
+            </tbody>
+        </table>
     </section>
 
 </section>
