@@ -32,7 +32,7 @@
 {{--  <body class="theme-dark" style="overflow-y: auto;">  --}}
 <body style="overflow-y: auto;">
     <div id="app">
-        @include('layout.nav.'.currentUser())
+        @include('layout.nav')
         <div id="main" class="layout-navbar">
             <header>
                 <nav class="navbar navbar-expand navbar-light navbar-top">

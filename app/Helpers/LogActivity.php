@@ -23,7 +23,7 @@ class LogActivity
     	$log['table_name'] = $table_name;
     	$log['ip'] = Request::ip();
     	$log['agent'] = "0";//Request::header('user-agent');
-    	$log['user_id'] = currentUserId() ? currentUserId() : 1;
+    	$log['user_id'] = currentUserId() ? currentUserId() : 0;
     	LogActivityModel::create($log);
     }
 

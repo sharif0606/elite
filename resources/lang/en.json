@@ -1,4 +1,6 @@
 {
-    "dashboard": "Dashboard",
-    "profile_statistics":"Profile Statistics"
+    "index": "List",
+    "create": "Add New",
+    "edit": "Update",
+    "destroy": "Delete"
 }

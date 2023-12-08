@@ -47,7 +47,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.country.index')}}">Country</a>
+                                    <a href="{{route('country.index')}}">Country</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="{{route(currentUser().'.division.index')}}"> {{__('Division')}}</a>

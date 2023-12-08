@@ -10,7 +10,7 @@ class DashboardController extends Controller
     /*
     * admin dashboard
     */
-    public function superadminDashboard(){
+    public function index(){
         return view('dashboard.superadmin');
     }
     /*
@@ -26,7 +26,7 @@ class DashboardController extends Controller
     public function userDashboard(){
         return view('dashboard.user');
     }
-    
+
     /*
     * sales manager dashboard
     */

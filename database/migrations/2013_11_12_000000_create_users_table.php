@@ -29,6 +29,7 @@ return new class extends Migration
             $table->boolean('status')->default(1)->comment('1=>active 2=>Logged 0 => Inactive');
             $table->string('last_login')->nullable();
             $table->string('last_login_ip')->nullable();
+            $table->boolean('full_access')->default(false)->comment('1=>yes 0=>no');
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

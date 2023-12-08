@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
                 $userd->save();
                 return redirect('login')->with($this->resMessageHtml(true,null,'Successfully Registred'));
             }
-                
+
             else
                 return redirect('login')->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){
@@ -76,7 +76,7 @@ class AuthenticationController extends Controller
                 [
                     'userId'=>encryptor('encrypt',$user->id),
                     'userName'=>encryptor('encrypt',$user->name),
-                    'role'=>encryptor('encrypt',$user->role->type),
+                    'role'=>encryptor('encrypt',$user->role->name),
                     'roleIdentity'=>encryptor('encrypt',$user->role->identity),
                     'country_id'=>$user->country_id,
                     /*'language'=>encryptor('encrypt',$user->language),

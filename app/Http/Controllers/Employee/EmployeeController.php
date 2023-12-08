@@ -199,9 +199,11 @@ class EmployeeController extends Controller
                         }
                     }
                 }
-                return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                $this->notice::success('Data Saved!');
+                return redirect()->route('employee.index', ['role' =>currentUser()]);
             } else {
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+                $this->notice::error('Please try again!','Fail');
+                return redirect()->back()->withInput();
             }
 
             // if($employee->save()){
@@ -225,7 +227,8 @@ class EmployeeController extends Controller
             // }
         } catch (Exception $e) {
             dd($e);
-            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            $this->notice::error('Please try again!','Fail');
+            return redirect()->back()->withInput();
         }
     }
 

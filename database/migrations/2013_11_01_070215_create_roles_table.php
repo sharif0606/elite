@@ -15,38 +15,38 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('type',20)->unique();
+            $table->string('name',20)->unique();
             $table->string('identity',30)->unique();
             $table->timestamps();
         });
-        DB::table('roles')->insert([
-            [
-                'type' => 'Super Admin',
-                'identity' => 'superadmin',
-                'created_at' => Carbon::now()
-            ],
-            [
-                'type' => 'Admin',
-                'identity' => 'admin',
-                'created_at' => Carbon::now()
-            ],
-            [
-                'type' => 'Humar Resource Executive',
-                'identity' => 'hrexecutive',
-                'created_at' => Carbon::now()
-            ],
-            [
-                'type' => 'Accountant',
-                'identity' => 'accountant',
-                'created_at' => Carbon::now()
-            ],
-            [
-                'type' => 'General User',
-                'identity' => 'user',
-                'created_at' => Carbon::now()
-            ]
-        ]);
-        
+        // DB::table('roles')->insert([
+        //     [
+        //         'name' => 'Super Admin',
+        //         'identity' => 'superadmin',
+        //         'created_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'name' => 'Admin',
+        //         'identity' => 'admin',
+        //         'created_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'name' => 'Humar Resource Executive',
+        //         'identity' => 'hrexecutive',
+        //         'created_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'name' => 'Accountant',
+        //         'identity' => 'accountant',
+        //         'created_at' => Carbon::now()
+        //     ],
+        //     [
+        //         'name' => 'General User',
+        //         'identity' => 'user',
+        //         'created_at' => Carbon::now()
+        //     ]
+        // ]);
+
     }
 
     /**

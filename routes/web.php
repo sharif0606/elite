@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController as auth;
-use App\Http\Controllers\DashboardController as dash;
+use App\Http\Controllers\DashboardController as dashboard;
+use App\Http\Controllers\Settings\UserController as user;
+use App\Http\Controllers\Settings\RoleController as role;
+use App\Http\Controllers\Settings\PermissionController as permission;
 
 use App\Http\Controllers\Settings\Location\CountryController as country;
 use App\Http\Controllers\Settings\Location\DivisionController as division;
@@ -46,12 +49,6 @@ use App\Http\Controllers\Stock\StockController as stock;
 use App\Http\Controllers\Stock\ProductDamageController as productdamage;
 
 
-/* Middleware */
-use App\Http\Middleware\isAdmin;
-use App\Http\Middleware\isSuperadmin;
-use App\Http\Middleware\isSalesexecutive;
-use App\Http\Middleware\isUser;
-
 
 /*
 
@@ -80,11 +77,10 @@ Route::get('/logout', [auth::class,'singOut'])->name('logOut');
 
 //Route::middleware('checkRole')->group(function () {
 
-Route::group(['middleware'=>isSuperadmin::class],function(){
-    Route::prefix('superadmin')->group(function(){
-        //Route::prefix('{role}')->group(function () {
+Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
-        Route::resource('country',country::class,['as'=>'superadmin']);
+
+        Route::resource('country',country::class);
         Route::resource('division',division::class,['as'=>'superadmin']);
         Route::resource('district',district::class,['as'=>'superadmin']);
         Route::resource('upazila',upazila::class,['as'=>'superadmin']);
@@ -96,6 +92,10 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('invoicesetting',invoicesetting::class,['as'=>'superadmin']);
         Route::get('/jobpost_description/{id}', [jobpost::class,'jobpostDescription'])->name('jobpost_description');
         Route::post('/jobpost_description/{id}', [jobpost::class,'jobpostDescriptionStore'])->name('jobpost_descriptionstor');
+        Route::resource('user', user::class);
+        Route::resource('role', role::class);
+        Route::get('permission/{role}', [permission::class,'index'])->name('permission.list');
+        Route::post('permission/{role}', [permission::class,'save'])->name('permission.save');
 
         /*stock */
         Route::resource('category',category::class,['as'=>'superadmin']);
@@ -105,7 +105,6 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('requisition',requisition::class,['as'=>'superadmin']);
         Route::resource('stock',stock::class,['as'=>'superadmin']);
         Route::resource('productdamage',productdamage::class,['as'=>'superadmin']);
-        Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
@@ -114,27 +113,7 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
-        Route::get('/single-invoice-show1/{id}', [invoiceGenerate::class, 'getSingleInvoice1'])->name('invoiceShow1');
-        Route::get('/single-invoice-show2/{id}', [invoiceGenerate::class, 'getSingleInvoice2'])->name('invoiceShow2');
-        Route::get('/single-invoice-show3/{id}', [invoiceGenerate::class, 'getSingleInvoice3'])->name('invoiceShow3');
-        Route::get('/single-invoice-show4/{id}', [invoiceGenerate::class, 'getSingleInvoice4'])->name('invoiceShow4');
-        Route::get('/single-invoice-show5/{id}', [invoiceGenerate::class, 'getSingleInvoice5'])->name('invoiceShow5');
-        Route::get('/single-invoice-show6/{id}', [invoiceGenerate::class, 'getSingleInvoice6'])->name('invoiceShow6');
 
-        /* get AjaX Data */
-        Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
-        // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
-        // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
-        Route::get('get-branch-ajax',[empasign::class,'loadBranchAjax'])->name('get_ajax_branch');
-        Route::get('get-atm-ajax',[empasign::class,'loadAtmAjax'])->name('get_ajax_atm');
-        Route::get('get-rate-ajax',[empasign::class,'loadRateAjax'])->name('get_ajax_rate');
-
-        Route::get('/dashboard', [dash::class,'superadminDashboard'])->name('dashboard');
-
-        Route::get('/profile', [userprofile::class,'profile'])->name('profile');
-        Route::post('/profile', [userprofile::class,'store'])->name('profile.store');
-        Route::get('/change_password', [userprofile::class,'change_password'])->name('change_password');
-        Route::post('/change_password', [userprofile::class,'change_password_store'])->name('change_password.store');
 
 
         Route::resource('employee', employee::class);
@@ -150,16 +129,35 @@ Route::group(['middleware'=>isSuperadmin::class],function(){
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
     });
-});
 
-Route::group(['middleware'=>isAdmin::class],function(){
-    Route::prefix('admin')->group(function(){
-        Route::get('/dashboard', [dash::class,'adminDashboard'])->name('admin.dashboard');
-        /* settings */
+    Route::middleware(['checkauth'])->prefix('admin')->group(function(){
+        Route::get('dashboard', [dashboard::class,'index'])->name('dashboard');
+        /* get AjaX Data */
+        Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
+        // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
+        // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
+        Route::get('get-branch-ajax',[empasign::class,'loadBranchAjax'])->name('get_ajax_branch');
+        Route::get('get-atm-ajax',[empasign::class,'loadAtmAjax'])->name('get_ajax_atm');
+        Route::get('get-rate-ajax',[empasign::class,'loadRateAjax'])->name('get_ajax_rate');
+
+        Route::get('/profile', [userprofile::class,'profile'])->name('profile');
+        Route::post('/profile', [userprofile::class,'store'])->name('profile.store');
+        Route::get('/change_password', [userprofile::class,'change_password'])->name('change_password');
+        Route::post('/change_password', [userprofile::class,'change_password_store'])->name('change_password.store');
+
+        /* invoce */
+        Route::get('/single-invoice-show1/{id}', [invoiceGenerate::class, 'getSingleInvoice1'])->name('invoiceShow1');
+        Route::get('/single-invoice-show2/{id}', [invoiceGenerate::class, 'getSingleInvoice2'])->name('invoiceShow2');
+        Route::get('/single-invoice-show3/{id}', [invoiceGenerate::class, 'getSingleInvoice3'])->name('invoiceShow3');
+        Route::get('/single-invoice-show4/{id}', [invoiceGenerate::class, 'getSingleInvoice4'])->name('invoiceShow4');
+        Route::get('/single-invoice-show5/{id}', [invoiceGenerate::class, 'getSingleInvoice5'])->name('invoiceShow5');
+        Route::get('/single-invoice-show6/{id}', [invoiceGenerate::class, 'getSingleInvoice6'])->name('invoiceShow6');
+
+        /* stock */
+
+        Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
 
     });
-});
-
 
 
 
