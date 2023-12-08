@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.country.update',encryptor('encrypt',$country->id))}}">
+                            <form class="form" method="post" action="{{route('country.update',encryptor('encrypt',$country->id))}}">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$country->id)}}">
@@ -25,7 +25,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                
+
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="countryCode">{{__('Country Code')}}<span class="text-danger">*</span></label>
@@ -42,11 +42,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
-                                        
+
                                     </div>
                                 </div>
                             </form>

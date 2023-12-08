@@ -47,6 +47,12 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
+                                    <a href="{{route('role.index')}}">Role</a>
+                                </li>
+                                <li class="submenu-item ">
+                                    <a href="{{route('user.index')}}">User</a>
+                                </li>
+                                <li class="submenu-item ">
                                     <a href="{{route('country.index')}}">Country</a>
                                 </li>
                                 <li class="submenu-item ">

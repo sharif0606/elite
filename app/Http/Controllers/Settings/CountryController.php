@@ -40,7 +40,7 @@ class CountryController extends Controller
      */
     public function create()
     {
-        return view('settings.country.create');
+        return view('settings.location.country.create');
     }
 
     /**
@@ -62,13 +62,16 @@ class CountryController extends Controller
             $c->created_by=currentUserId();
             if($request->has('image')) $b->image = $this->uploadImage($request->file('image'), 'uploads/brands');
             if($c->save()){
-                return redirect()->route(currentUser().'.country.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                $this->notice::success('Data Saved!');
+                return redirect()->route(currentUser().'.country.index');
             }else{
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+                $this->notice::error('Please try again!','Fail');
+                return redirect()->back()->withInput();
             }
         }catch(Exception $e){
             //dd($e);
-            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            $this->notice::error('Please try again!','Fail');
+            return redirect()->back()->withInput();
         }
     }
 
@@ -109,19 +112,22 @@ class CountryController extends Controller
             $c->name=$request->name;
             $c->code=$request->code;
             $c->afford_range=$request->afford_range;
-            $c->high_grade_range	=$request->high_grade_range	;
-            $c->inspection	=$request->inspection;
-            $c->insurance	=$request->insurance;
+            $c->high_grade_range=$request->high_grade_range	;
+            $c->inspection=$request->inspection;
+            $c->insurance=$request->insurance;
             $c->updated_by=currentUserId();
             if($request->has('image')) $c->image = $this->uploadImage($request->file('image'), 'uploads/country');
             if($c->save()){
-                return redirect()->route(currentUser().'.country.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                $this->notice::success('Data Update!');
+                return redirect()->route('country.index');
             }else{
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+                $this->notice::error('Please try again!','Fail');
+                return redirect()->back()->withInput();
             }
         }catch(Exception $e){
             //dd($e);
-            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            $this->notice::error('Please try again!','Fail');
+            return redirect()->back()->withInput();
         }
     }
 
