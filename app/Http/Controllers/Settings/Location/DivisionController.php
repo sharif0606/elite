@@ -51,7 +51,7 @@ class DivisionController extends Controller
             $division->name=$request->divisionName;
             $division->name_bn=$request->divisionBn;
             if($division->save())
-                return redirect()->route(currentUser().'.division.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                return redirect()->route('division.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){
@@ -99,7 +99,7 @@ class DivisionController extends Controller
             $division->name=$request->divisionName;
             $division->name_bn=$request->divisionBn;
             if($division->save())
-                return redirect()->route(currentUser().'.division.index')->with($this->resMessageHtml(true,null,'Successfully updated'));
+                return redirect()->route('division.index')->with($this->resMessageHtml(true,null,'Successfully updated'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){

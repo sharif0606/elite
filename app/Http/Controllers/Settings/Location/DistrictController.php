@@ -50,9 +50,9 @@ class DistrictController extends Controller
             $district->name=$request->districtName;
             $district->name_bn=$request->districtBn;
             if($district->save())
-                return redirect()->route(currentUser().'.district.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                return redirect()->route('district.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));    
+                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));
         }catch(Exception $e){
             dd($e);
             return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
@@ -98,7 +98,7 @@ class DistrictController extends Controller
             $district->name=$request->districtName;
             $district->name_bn=$request->districtBn;
             if($district->save())
-                return redirect()->route(currentUser().'.district.index')->with($this->resMessageHtml(true,null,'Successfully update'));
+                return redirect()->route('district.index')->with($this->resMessageHtml(true,null,'Successfully update'));
                 else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){

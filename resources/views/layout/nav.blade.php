@@ -56,10 +56,10 @@
                                     <a href="{{route('country.index')}}">Country</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.division.index')}}"> {{__('Division')}}</a>
+                                    <a href="{{route('division.index')}}"> {{__('Division')}}</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.district.index')}}">{{__('District')}}</a>
+                                    <a href="{{route('district.index')}}">{{__('District')}}</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a href="{{route(currentUser().'.upazila.index')}}">{{__('Upazila')}}</a>

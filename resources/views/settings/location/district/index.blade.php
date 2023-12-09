@@ -13,7 +13,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div>
-                    <a class="float-end" href="{{route(currentUser().'.district.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    <a class="float-end" href="{{route('district.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
@@ -34,13 +34,13 @@
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
                                 <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.district.edit',encryptor('encrypt',$d->id))}}">
+                                    <a href="{{route('district.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <!--<a href="javascript:void()" onclick="$('#form{{$d->id}}').submit()">
                                         <i class="bi bi-trash"></i>
                                     </a>
-                                    <form id="form{{$d->id}}" action="{{route(currentUser().'.country.destroy',encryptor('encrypt',$d->id))}}" method="post">
+                                    <form id="form{{$d->id}}" action="{{route('country.destroy',encryptor('encrypt',$d->id))}}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>-->

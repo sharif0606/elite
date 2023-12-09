@@ -81,8 +81,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
 
         Route::resource('country',country::class);
-        Route::resource('division',division::class,['as'=>'superadmin']);
-        Route::resource('district',district::class,['as'=>'superadmin']);
+        Route::resource('division',division::class);
+        Route::resource('district',district::class);
         Route::resource('upazila',upazila::class,['as'=>'superadmin']);
         Route::resource('thana',thana::class,['as'=>'superadmin']);
         Route::resource('union',union::class,['as'=>'superadmin']);

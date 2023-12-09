@@ -11,10 +11,10 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.division.store')}}">
+                            <form class="form" method="post" action="{{route('division.store')}}">
                                 @csrf
                                 <div class="row">
-                                    
+
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="country_id">{{__('Country')}}<span class="text-danger">*</span></label>
@@ -47,11 +47,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
-                                        
+
                                     </div>
                                 </div>
                             </form>
