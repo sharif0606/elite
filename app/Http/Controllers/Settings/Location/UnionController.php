@@ -48,7 +48,7 @@ class UnionController extends Controller
             $union->name=$request->unionName;
             $union->name_bn=$request->unionBn;
             if($union->save())
-                return redirect()->route(currentUser().'.union.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                return redirect()->route('union.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));
         }catch(Exception $e){
@@ -96,7 +96,7 @@ class UnionController extends Controller
             $union->name=$request->unionName;
             $union->name_bn=$request->unionBn;
             if($union->save())
-                return redirect()->route(currentUser().'.union.index')->with($this->resMessageHtml(true,null,'Successfully update'));
+                return redirect()->route('union.index')->with($this->resMessageHtml(true,null,'Successfully update'));
                 else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){
