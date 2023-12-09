@@ -81,7 +81,7 @@ class ProductRequisitionController extends Controller
                         }
                     }
                 }
-                return redirect()->route(currentUser().'.requisition.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('requisition.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
             dd($e);

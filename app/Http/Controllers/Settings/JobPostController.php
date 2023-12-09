@@ -79,7 +79,7 @@ class JobPostController extends Controller
                     }
                 }
             }
-            return redirect()->route(currentUser().'.jobpost.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            return redirect()->route('jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 
         } catch (Exception $e) {
             dd($e);
@@ -96,7 +96,7 @@ class JobPostController extends Controller
             $c->bill_able=$request->bill_able;
             $c->status=1;
             if($c->save()){
-                return redirect()->route(currentUser().'.jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -129,7 +129,7 @@ class JobPostController extends Controller
             $c->bill_able=$request->bill_able;
             $c->status=1;
             if($c->save()){
-                return redirect()->route(currentUser().'.jobpost.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('jobpost.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

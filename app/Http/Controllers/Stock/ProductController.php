@@ -52,7 +52,7 @@ class ProductController extends Controller
             $product->description=$request->description;
             if($product->save()){
                 \LogActivity::addToLog('Add Product',$request->getContent(),'Product');
-                return redirect()->route(currentUser().'.product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -103,7 +103,7 @@ class ProductController extends Controller
             $product->description=$request->description;
             if($product->save()){
                 \LogActivity::addToLog('Update Product',$request->getContent(),'Product');
-                return redirect()->route(currentUser().'.product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

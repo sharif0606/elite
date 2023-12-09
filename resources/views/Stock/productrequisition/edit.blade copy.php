@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.requisition.update',encryptor('encrypt',$stockin->id))}}">
+                            <form class="form" method="post" action="{{route('requisition.update',encryptor('encrypt',$stockin->id))}}">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row">

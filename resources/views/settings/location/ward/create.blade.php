@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.ward.store')}}">
+                            <form class="form" method="post" action="{{route('ward.store')}}">
                                 @csrf
                                 <div class="row">
 

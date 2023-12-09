@@ -71,16 +71,16 @@
                                     <a href="{{route('union.index')}}">{{__('Unions')}}</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.ward.index')}}">{{__('Wards')}}</a>
+                                    <a href="{{route('ward.index')}}">{{__('Wards')}}</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.jobpost.index')}}">{{__('Job Post')}}</a>
+                                    <a href="{{route('jobpost.index')}}">{{__('Job Post')}}</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.zone.index')}}">{{__('Zone')}}</a>
+                                    <a href="{{route('zone.index')}}">{{__('Zone')}}</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a href="{{route(currentUser().'.invoicesetting.index')}}">{{__('Invoice Setting')}}</a>
+                                    <a href="{{route('invoicesetting.index')}}">{{__('Invoice Setting')}}</a>
                                 </li>
                             </ul>
                         </li>
@@ -134,25 +134,25 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.category.index')}}">Category</a>
+                                    <a href="{{route('category.index')}}">Category</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.size.index')}}">Product Size</a>
+                                    <a href="{{route('size.index')}}">Product Size</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.product.index')}}">Product</a>
+                                    <a href="{{route('product.index')}}">Product</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.product_stockin.index')}}">Product Stock In</a>
+                                    <a href="{{route('product_stockin.index')}}">Product Stock In</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.requisition.index')}}">Product Issue</a>
+                                    <a href="{{route('requisition.index')}}">Product Issue</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.productdamage.index')}}">Product Condem</a>
+                                    <a href="{{route('productdamage.index')}}">Product Condem</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route(currentUser().'.stock.index')}}">Stock</a>
+                                    <a href="{{route('stock.index')}}">Stock</a>
                                 </li>
 
                             </ul>

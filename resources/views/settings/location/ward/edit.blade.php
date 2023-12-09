@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route(currentUser().'.ward.update',encryptor('encrypt',$ward->id))}}">
+                            <form class="form" method="post" action="{{route('ward.update',encryptor('encrypt',$ward->id))}}">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$ward->id)}}">

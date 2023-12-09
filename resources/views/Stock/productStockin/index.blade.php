@@ -12,7 +12,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div>
-                    <a class="float-end" href="{{route(currentUser().'.product_stockin.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    <a class="float-end" href="{{route('product_stockin.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -38,13 +38,13 @@
                                 <td>{{$d->entry_date}}</td>
                                 <td>@if ($d->type==2) Used @else New @endif</td>
                                 {{--  <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.product_stockin.edit',encryptor('encrypt',$d->id))}}">
+                                    <a href="{{route('product_stockin.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a>
-                                    <form id="form{{ $d->id }}" action="{{ route(currentUser().'.product_stockin.destroy', encryptor('encrypt', $d->id)) }}" method="post">
+                                    <form id="form{{ $d->id }}" action="{{ route('product_stockin.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
                                     </form>

@@ -86,10 +86,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('upazila',upazila::class);
         Route::resource('thana',thana::class);
         Route::resource('union',union::class);
-        Route::resource('ward',ward::class,['as'=>'superadmin']);
-        Route::resource('jobpost',jobpost::class,['as'=>'superadmin']);
-        Route::resource('zone',zone::class,['as'=>'superadmin']);
-        Route::resource('invoicesetting',invoicesetting::class,['as'=>'superadmin']);
+        Route::resource('ward',ward::class);
+        Route::resource('jobpost',jobpost::class);
+        Route::resource('zone',zone::class);
+        Route::resource('invoicesetting',invoicesetting::class);
         Route::get('/jobpost_description/{id}', [jobpost::class,'jobpostDescription'])->name('jobpost_description');
         Route::post('/jobpost_description/{id}', [jobpost::class,'jobpostDescriptionStore'])->name('jobpost_descriptionstor');
         Route::resource('user', user::class);
@@ -98,13 +98,13 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::post('permission/{role}', [permission::class,'save'])->name('permission.save');
 
         /*stock */
-        Route::resource('category',category::class,['as'=>'superadmin']);
-        Route::resource('size',size::class,['as'=>'superadmin']);
-        Route::resource('product',product::class,['as'=>'superadmin']);
-        Route::resource('product_stockin',product_stockin::class,['as'=>'superadmin']);
-        Route::resource('requisition',requisition::class,['as'=>'superadmin']);
-        Route::resource('stock',stock::class,['as'=>'superadmin']);
-        Route::resource('productdamage',productdamage::class,['as'=>'superadmin']);
+        Route::resource('category',category::class);
+        Route::resource('size',size::class);
+        Route::resource('product',product::class);
+        Route::resource('product_stockin',product_stockin::class);
+        Route::resource('requisition',requisition::class);
+        Route::resource('stock',stock::class);
+        Route::resource('productdamage',productdamage::class);
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
@@ -118,8 +118,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         Route::resource('employee', employee::class);
         Route::resource('salarySheet', salarySheet::class);
-        Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
-        Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
 
@@ -145,6 +143,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/change_password', [userprofile::class,'change_password'])->name('change_password');
         Route::post('/change_password', [userprofile::class,'change_password_store'])->name('change_password.store');
 
+        /* employee security */
+        Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
+        Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
+
         /* invoce */
         Route::get('/single-invoice-show1/{id}', [invoiceGenerate::class, 'getSingleInvoice1'])->name('invoiceShow1');
         Route::get('/single-invoice-show2/{id}', [invoiceGenerate::class, 'getSingleInvoice2'])->name('invoiceShow2');
@@ -154,7 +156,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show6/{id}', [invoiceGenerate::class, 'getSingleInvoice6'])->name('invoiceShow6');
 
         /* stock */
-
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
 
     });

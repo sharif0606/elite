@@ -46,7 +46,7 @@ class WardController extends Controller
             $ward->name=$request->wardName;
             $ward->name_bn=$request->wardBn;
             if($ward->save())
-                return redirect()->route(currentUser().'.ward.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                return redirect()->route('ward.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));
         }catch(Exception $e){
@@ -93,7 +93,7 @@ class WardController extends Controller
             $ward->name=$request->wardName;
             $ward->name_bn=$request->wardBn;
             if($ward->save())
-                return redirect()->route(currentUser().'.ward.index')->with($this->resMessageHtml(true,null,'Successfully update'));
+                return redirect()->route('ward.index')->with($this->resMessageHtml(true,null,'Successfully update'));
                 else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){

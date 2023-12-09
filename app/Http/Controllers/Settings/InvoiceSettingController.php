@@ -84,7 +84,7 @@ class InvoiceSettingController extends Controller
             $c->phone=$request->phone;
             $c->status=1;
             if($c->save()){
-                return redirect()->route(currentUser().'.invoicesetting.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('invoicesetting.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

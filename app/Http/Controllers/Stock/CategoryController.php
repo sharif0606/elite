@@ -48,7 +48,7 @@ class CategoryController extends Controller
             $c->name_bn=$request->name_bn;
             $c->status=1;
             if($c->save()){
-                return redirect()->route(currentUser().'.category.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('category.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -96,7 +96,7 @@ class CategoryController extends Controller
             $c->name_bn=$request->name_bn;
             $c->status=1;
             if($c->save()){
-                return redirect()->route(currentUser().'.category.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('category.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

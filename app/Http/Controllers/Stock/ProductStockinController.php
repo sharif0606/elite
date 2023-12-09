@@ -67,7 +67,7 @@ class ProductStockinController extends Controller
                 $stock->type=$request->type;
                 $stock->status=0;
                 $stock->save();
-                return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('product_stockin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -119,7 +119,7 @@ class ProductStockinController extends Controller
             $product->product_qty=$request->product_qty;
             $product->type=$request->type;
             if($product->save()){
-                return redirect()->route(currentUser().'.product_stockin.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('product_stockin.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
