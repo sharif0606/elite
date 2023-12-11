@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->nullable();
 			$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->integer('branch_id')->nullable();
-            $table->integer('atm_id')->nullable();
+            //$table->integer('atm_id')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');

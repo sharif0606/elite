@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('empasign.update',[encryptor('encrypt',$empasin->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('employee_assign.update',[encryptor('encrypt',$empasin->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="row p-2 mt-4">

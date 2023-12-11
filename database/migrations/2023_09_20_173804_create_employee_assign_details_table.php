@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_assign_id')->nullable();
 			$table->foreign('employee_assign_id')->references('id')->on('employee_assigns')->onDelete('cascade');
+            $table->integer('atm_id')->nullable();
             $table->integer('job_post_id');
             $table->integer('qty');
             $table->string('rate');

@@ -58,7 +58,6 @@ class EmployeeAssignController extends Controller
             $data=new EmployeeAssign;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
-            $data->atm_id = $request->atm_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
@@ -66,6 +65,7 @@ class EmployeeAssignController extends Controller
                         if($value){
                             $details = new EmployeeAssignDetails;
                             $details->employee_assign_id=$data->id;
+                            $details->atm_id = $request->atm_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->qty=$request->qty[$key];
                             $details->rate=$request->rate[$key];
@@ -80,7 +80,7 @@ class EmployeeAssignController extends Controller
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Assign',$request->getContent(),'EmployeeAssign,EmployeeAssignDetails');
-                return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('employee_assign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -141,6 +141,7 @@ class EmployeeAssignController extends Controller
                         if($value){
                             $details = new EmployeeAssignDetails;
                             $details->employee_assign_id=$data->id;
+                            $details->atm_id = $request->atm_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->qty=$request->qty[$key];
                             $details->rate=$request->rate[$key];
@@ -155,7 +156,7 @@ class EmployeeAssignController extends Controller
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Assign Update',$request->getContent(),'EmployeeAssign,EmployeeAssignDetails');
-                return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('employee_assign.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

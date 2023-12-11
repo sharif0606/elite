@@ -108,7 +108,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
-        Route::resource('empasign',empasign::class);
+        Route::resource('employee_assign',empasign::class);
         Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);

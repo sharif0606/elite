@@ -8,7 +8,7 @@
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('empasign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee_assign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
@@ -45,16 +45,16 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('empasign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('employee_assign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('empasign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('employee_assign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
                                 <i class="bi bi-trash"></i>
                             </a>
-                            <form id="form{{ $e->id }}" action="{{ route('empasign.destroy', encryptor('encrypt', $e->id)) }}" method="post">
+                            <form id="form{{ $e->id }}" action="{{ route('employee_assign.destroy', encryptor('encrypt', $e->id)) }}" method="post">
                                 @csrf
                                 @method('delete')
                             </form>

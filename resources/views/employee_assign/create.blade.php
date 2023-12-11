@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('empasign.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('employee_assign.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="EmployeeAsignGetAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onblur="EmployeeAsignGetAtm(this)">
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
@@ -50,7 +50,7 @@
                                             <tr>
                                                 <td>
                                                     <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                                                        <option value="">Select Atm</option>
+                                                        <option value="0">Select Atm</option>
                                                     </select>
                                                 </td>
                                                 <td>
@@ -74,7 +74,7 @@
                                                 </td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -100,7 +100,7 @@
     <tr>
         <td>
             <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                <option value="">Select Atm</option>
+                <option value="0">Select Atm</option>
             </select>
         </td>
         <td>
@@ -140,7 +140,7 @@
 </script>
 <script>
     function EmployeeAsignGetAtm(e) {
-        let branchId=$(e).val();
+        let branchId=$('.branch_id').val();
         $.ajax({
             url: "{{ route('get_ajax_atm') }}",
             type: "GET",
@@ -148,8 +148,8 @@
             data: { branchId: branchId },
             success: function (data) {
                 //console.log(data)
-                var d = $('.atm_id').empty();
-                $('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                //var d = $('.atm_id').empty();
+                //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
                 //$('#atm_id').append('<option value="1">All ATM</option>');
                 $.each(data, function(key, value) {
                     $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');

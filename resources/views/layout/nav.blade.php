@@ -113,7 +113,7 @@
                                     <a href="{{route('empatten.index', ['role' =>currentUser()])}}">Employee Attendance</a>
                                 </li>  --}}
                                 <li class="submenu-item">
-                                    <a href="{{route('empasign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
+                                    <a href="{{route('employee_assign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('employeeRate.index', ['role' =>currentUser()])}}">Employee's Salary</a>
