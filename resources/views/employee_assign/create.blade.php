@@ -25,14 +25,8 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="EmployeeAsignGetAtm(this)">
                                         <option value="">Select Branch</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Atm</b></label>
-                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
-                                        <option value="">Select Atm</option>
                                     </select>
                                 </div>
                             </div>
@@ -42,6 +36,7 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
+                                                <th scope="col">{{__('ATM')}}</th>
                                                 <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Qty')}}</th>
                                                 <th scope="col">{{__('Rate (Person)')}}</th>
@@ -53,6 +48,11 @@
                                         </thead>
                                         <tbody id="empassign">
                                             <tr>
+                                                <td>
+                                                    <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+                                                        <option value="">Select Atm</option>
+                                                    </select>
+                                                </td>
                                                 <td>
                                                     <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                                                         <option value="">Select Post</option>
@@ -99,6 +99,11 @@
     var row=`
     <tr>
         <td>
+            <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+                <option value="">Select Atm</option>
+            </select>
+        </td>
+        <td>
             <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                 <option value="">Select Post</option>
                 @forelse ($jobpost as $job)
@@ -132,6 +137,29 @@
         }
     }
 
+</script>
+<script>
+    function EmployeeAsignGetAtm(e) {
+        let branchId=$(e).val();
+        $.ajax({
+            url: "{{ route('get_ajax_atm') }}",
+            type: "GET",
+            dataType: "json",
+            data: { branchId: branchId },
+            success: function (data) {
+                //console.log(data)
+                var d = $('.atm_id').empty();
+                $('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                //$('#atm_id').append('<option value="1">All ATM</option>');
+                $.each(data, function(key, value) {
+                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                });
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
+    }
 </script>
 
 @endpush
