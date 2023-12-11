@@ -39,12 +39,12 @@
                                         <option value="{{ $branch->id }}">{{ $branch->brance_name }}</option>
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                {{--  <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
                                         <option value="{{ $atm->id }}">{{ $atm->atm }}</option>
                                     </select>
-                                </div>
+                                </div>  --}}
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
@@ -52,6 +52,7 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
+                                                <th scope="col">{{__('ATM')}}</th>
                                                 <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Qty')}}</th>
                                                 <th scope="col">{{__('Rate')}}</th>
@@ -65,6 +66,15 @@
                                             @if ($empasin->details)
                                             @foreach ($empasin->details as $d)
                                             <tr>
+                                                <td>
+                                                    <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+                                                        <option value="0">Select Atm</option>
+                                                        @forelse ($atm as $a)
+                                                        <option value="{{ $d->atm_id }}" {{ $d->atm_id==$a->id?"selected":""}}>{{ $a->atm }}</option>
+                                                        @empty
+                                                        @endforelse
+                                                    </select>
+                                                </td>
                                                 <td>
                                                     <select class="form-select" id="job_post_id" name="job_post_id[]">
                                                         <option value="">Select Post</option>
@@ -113,6 +123,11 @@
 
 var row=`
 <tr>
+    <td>
+        <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+            <option value="0">Select Atm</option>
+        </select>
+    </td>
     <td>
         <select class="form-select" id="job_post_id" name="job_post_id[]">
             <option value="">Select Post</option>

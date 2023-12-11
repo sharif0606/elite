@@ -115,7 +115,7 @@ class EmployeeAssignController extends Controller
         $customer=Customer::all();
         $empasin = EmployeeAssign::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('id',$empasin->branch_id)->first();
-        $atm=Atm::where('id',$empasin->atm_id)->first();
+        $atm=Atm::where('branch_id',$empasin->branch_id)->get();
         return view('employee_assign.edit',compact('jobpost','customer','empasin','branch','atm'));
     }
 
