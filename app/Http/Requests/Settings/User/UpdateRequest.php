@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             'userName_en'=>'required',
             'EmailAddress'=>'nullable|unique:users,email,'.$id,
-            'contactNumber_en'=>'required|unique:users,contact_no_en,'.$id
+            'contactNumber_en'=>'required|unique:users,contact_no,'.$id
         ];
     }
 }

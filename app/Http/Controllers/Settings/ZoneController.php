@@ -49,6 +49,7 @@ class ZoneController extends Controller
             $c->name_bn=$request->name_bn;
             $c->status=1;
             if($c->save()){
+                \LogActivity::addToLog('Add Zone',$request->getContent(),'Zone');
                 return redirect()->route('zone.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -97,6 +98,7 @@ class ZoneController extends Controller
             $c->name_bn=$request->name_bn;
             $c->status=1;
             if($c->save()){
+                \LogActivity::addToLog('Update Zone',$request->getContent(),'Zone');
                 return redirect()->route('zone.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

@@ -79,6 +79,7 @@ class JobPostController extends Controller
                     }
                 }
             }
+            \LogActivity::addToLog('Add Jobpost Description',$request->getContent(),'JobpostDescription,JobpostDescriptionDetails');
             return redirect()->route('jobpost.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 
         } catch (Exception $e) {

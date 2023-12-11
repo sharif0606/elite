@@ -64,7 +64,7 @@ class AdminUserController extends Controller
             }else{
                 $user->role_id=$request->role_id;
             }
-            
+
             $user->password=Hash::make($request->password);
             $user->all_company_access=$request->all_company_access;
             if(currentUser() == 'salesexecutive' || currentUser() == 'superadmin')
@@ -73,6 +73,7 @@ class AdminUserController extends Controller
             if($request->has('image')) $user->image = $this->uploadImage($request->file('image'), 'uploads/admin');
 
             if($user->save())
+            \LogActivity::addToLog('Add User',$request->getContent(),'User');
                 return redirect()->route(currentUser().'.admin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             else
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -124,7 +125,7 @@ class AdminUserController extends Controller
             $user->all_company_access=$request->all_company_access;
 
 
-            if($request->has('image')) 
+            if($request->has('image'))
                 if($this->deleteImage($user->image, 'uploads/admin'))
                     $user->image = $this->uploadImage($request->file('image'), 'uploads/admin');
                 else
@@ -132,8 +133,9 @@ class AdminUserController extends Controller
 
             if($request->has('password') && $request->password)
                 $user->password=Hash::make($request->password);
-         
+
             if($user->save())
+            \LogActivity::addToLog('Update User',$request->getContent(),'User');
                 return redirect()->route(currentUser().'.admin.index')->with(Toastr::success('Successfully updated!', 'Success', ["positionClass" => "toast-top-right"]));
             else
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -161,6 +163,6 @@ class AdminUserController extends Controller
             //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
-        
+
     }
 }

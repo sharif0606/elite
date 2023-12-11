@@ -38,6 +38,7 @@ class RoleController extends Controller
             $data->identity=$request->Identity;
             if($data->save()){
                 $this->notice::success('Successfully saved');
+                \LogActivity::addToLog('Add Role',$request->getContent(),'Role');
                 return redirect()->route('role.index');
             }
         }catch(Exception $e){
@@ -75,6 +76,7 @@ class RoleController extends Controller
             $data->identity=$request->Identity;
             if($data->save()){
                 $this->notice::success('Successfully updated');
+                \LogActivity::addToLog('Update Role',$request->getContent(),'Role');
                 return redirect()->route('role.index');
             }
         }catch(Exception $e){

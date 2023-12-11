@@ -24,7 +24,7 @@ class AddNewRequest extends FormRequest
         return [
             'userName_en'=>'required|max:255',
             'roleId'=>'required|max:2',
-            'contactNumber_en'=>'required|unique:users,contact_no_en',
+            'contactNumber_en'=>'required|unique:users,contact_no',
             'EmailAddress'=>'required|unique:users,email',
             'password'=>'required'
         ];

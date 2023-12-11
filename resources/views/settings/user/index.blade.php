@@ -8,7 +8,7 @@
 
             <!-- table bordered -->
             <div class="table-responsive"><div>
-                <a class="pull-right fs-1" href="{{route('user.create')}}"><i class="fa fa-plus"></i></a>
+                <a class="float-end" href="{{route('user.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
             </div>
                 <table class="table table-bordered mb-0">
                     <thead>
@@ -27,7 +27,7 @@
                         @forelse($data as $p)
                         <tr>
                             <th scope="row">{{ ++$loop->index }}</th>
-                            <td>{{$p->name_en}}</td>
+                            <td>{{$p->name}}</td>
                             <td>{{$p->email}}</td>
                             <td>{{$p->contact_no_en}}</td>
                             <td>{{$p->role?->type}}</td>

@@ -35,7 +35,7 @@
                                     <i class="bi bi-unlock"></i>
                                 </a>
                                 <a href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
-                                    <i class="fa fa-trash"></i>
+                                    <i class="bi bi-trash"></i>
                                 </a>
                                 <form id="form{{$p->id}}" action="{{route('role.destroy',encryptor('encrypt',$p->id))}}" method="post">
                                     @csrf

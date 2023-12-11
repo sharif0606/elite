@@ -38,15 +38,15 @@ class UserController extends Controller
     {
         try{
             $data=new User();
-            $data->name_en=$request->userName_en;
-            $data->name_bn=$request->userName_bn;
+            $data->name=$request->userName_en;
+            // $data->name_bn=$request->userName_bn;
             $data->email=$request->EmailAddress;
-            $data->contact_no_en=$request->contactNumber_en;
-            $data->contact_no_bn=$request->contactNumber_bn;
+            $data->contact_no=$request->contactNumber_en;
+            // $data->contact_no_bn=$request->contactNumber_bn;
             $data->role_id=$request->roleId;
             $data->status=$request->status;
             $data->full_access=$request->fullAccess;
-            $data->language='en';
+            // $data->language='en';
             $data->password=Hash::make($request->password);
 
             if($request->hasFile('image')){
@@ -57,10 +57,11 @@ class UserController extends Controller
 
             if($data->save()){
                 $this->notice::success('Successfully saved');
+                \LogActivity::addToLog('Add User',$request->getContent(),'User');
                 return redirect()->route('user.index');
             }
         }catch(Exception $e){
-            //dd($e);
+            dd($e);
             $this->notice::error('Please try again');
             return redirect()->back()->withInput();
         }
@@ -91,11 +92,11 @@ class UserController extends Controller
     {
         try{
             $data=User::findOrFail(encryptor('decrypt',$id));
-            $data->name_en=$request->userName_en;
-            $data->name_bn=$request->userName_bn;
+            $data->name=$request->userName_en;
+            // $data->name_bn=$request->userName_bn;
             $data->email=$request->EmailAddress;
-            $data->contact_no_en=$request->contactNumber_en;
-            $data->contact_no_bn=$request->contactNumber_bn;
+            $data->contact_no=$request->contactNumber_en;
+            // $data->contact_no_bn=$request->contactNumber_bn;
             $data->role_id=$request->roleId;
             $data->status=$request->status;
             $data->full_access=$request->fullAccess;
@@ -111,6 +112,7 @@ class UserController extends Controller
 
             if($data->save()){
                 $this->notice::success('Successfully updated');
+                \LogActivity::addToLog('Update User',$request->getContent(),'User');
                 return redirect()->route('user.index');
             }
         }catch(Exception $e){

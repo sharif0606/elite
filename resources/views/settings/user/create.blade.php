@@ -18,7 +18,7 @@
                                     <select class="form-control" name="roleId" id="roleId">
                                         <option value="">Select Role</option>
                                         @forelse($role as $r)
-                                            <option value="{{$r->id}}" {{ old('roleId')==$r->id?"selected":""}}> {{ $r->type}}</option>
+                                            <option value="{{$r->id}}" {{ old('roleId')==$r->id?"selected":""}}> {{ $r->name}}</option>
                                         @empty
                                             <option value="">No Role found</option>
                                         @endforelse
@@ -37,7 +37,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            {{--  <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="userName_bn">Name (Bangla)</label>
                                     <input type="text" id="userName_bn" class="form-control" value="{{ old('userName_bn')}}" name="userName_bn">
@@ -45,7 +45,7 @@
                                         <span class="text-danger"> {{ $errors->first('userName_bn') }}</span>
                                     @endif
                                 </div>
-                            </div>
+                            </div>  --}}
 
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
@@ -65,7 +65,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6 col-12">
+                            {{--  <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="contactNumber_bn">Contact Number (Bangla)</label>
                                     <input type="text" id="contactNumber_bn" class="form-control" value="{{ old('contactNumber_bn')}}" name="contactNumber_bn">
@@ -73,7 +73,7 @@
                                         <span class="text-danger"> {{ $errors->first('contactNumber_bn') }}</span>
                                     @endif
                                 </div>
-                            </div>
+                            </div>  --}}
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="status">Status</label>

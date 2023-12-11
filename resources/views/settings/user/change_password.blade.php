@@ -18,7 +18,7 @@
         <div class="row match-height" style="background:#eee;">
             <div class="col-12">
             <h4>Change Password</h4>
-                <form class="form" method="post" action="{{route(currentUser().'.change_password.store')}}">
+                <form class="form" method="post" action="{{route('change_password.store')}}">
                     @csrf
                     <div class="row">
                         <div class="col-md-4 col-12">
