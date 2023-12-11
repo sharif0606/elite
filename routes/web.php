@@ -156,7 +156,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show6/{id}', [invoiceGenerate::class, 'getSingleInvoice6'])->name('invoiceShow6');
 
         /* stock */
-        Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('superadmin.stock.individual');
+        Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');
 
     });
 

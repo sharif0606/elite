@@ -80,6 +80,7 @@ class CustomerController extends Controller
             $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
 
             if ($data->save()) {
+                \LogActivity::addToLog('Add Customer',$request->getContent(),'Customer');
                 return redirect()->route('customer.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -152,6 +153,7 @@ class CustomerController extends Controller
                 $data->logo=$this->uploadImage($request->logo,'uploads/logo/');
 
             if ($data->save()) {
+                \LogActivity::addToLog('Update Customer',$request->getContent(),'Customer');
                 return redirect()->route('customer.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

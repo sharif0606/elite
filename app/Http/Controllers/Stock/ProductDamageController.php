@@ -67,6 +67,7 @@ class ProductDamageController extends Controller
                 $stock->type=$request->type;
                 $stock->status=2;
                 $stock->save();
+                \LogActivity::addToLog('Add Damage',$request->getContent(),'ProductDamage,Stock');
                 return redirect()->route('productdamage.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
