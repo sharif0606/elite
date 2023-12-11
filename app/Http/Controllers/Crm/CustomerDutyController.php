@@ -105,7 +105,8 @@ class CustomerDutyController extends Controller
                 }
             }
             if ($data->save()) {
-                return redirect()->route('customerduty.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                \LogActivity::addToLog('Add Duty',$request->getContent(),'CustomerDuty,CustomerDutyDetail');
+                return redirect()->route('customerduty.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

@@ -154,6 +154,7 @@ class EmployeeAssignController extends Controller
                 }
             }
             if ($data->save()) {
+                \LogActivity::addToLog('Employee Assign Update',$request->getContent(),'EmployeeAssign,EmployeeAssignDetails');
                 return redirect()->route('empasign.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

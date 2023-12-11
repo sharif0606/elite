@@ -70,6 +70,7 @@ class EmployeeRateController extends Controller
                 }
             }
             if ($data->save()) {
+                \LogActivity::addToLog('Employee Rate',$request->getContent(),'EmployeeRate,EmployeeRateDetails');
                 return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -138,6 +139,7 @@ class EmployeeRateController extends Controller
                 }
             }
             if ($data->save()) {
+                \LogActivity::addToLog('Employee Rate Update',$request->getContent(),'EmployeeRate,EmployeeRateDetails');
                 return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
