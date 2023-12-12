@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('product_name')->nullable();
             $table->string('product_name_bn')->nullable();
             //$table->integer('size_id')->nullable();
+            $table->integer('is_issue')->nullable()->comment('0=no, 1=yes');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');

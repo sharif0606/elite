@@ -50,6 +50,7 @@ class ProductController extends Controller
             $product->product_name=$request->product_name;
             $product->product_name_bn=$request->product_name_bn;
             $product->description=$request->description;
+            $product->is_issue=$request->is_issue;
             if($product->save()){
                 \LogActivity::addToLog('Add Product',$request->getContent(),'Product');
                 return redirect()->route('product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
@@ -101,6 +102,7 @@ class ProductController extends Controller
             $product->product_name=$request->product_name;
             $product->product_name_bn=$request->product_name_bn;
             $product->description=$request->description;
+            $product->is_issue=$request->is_issue;
             if($product->save()){
                 \LogActivity::addToLog('Update Product',$request->getContent(),'Product');
                 return redirect()->route('product.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));

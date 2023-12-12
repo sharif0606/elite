@@ -53,6 +53,15 @@
                                             <textarea name="description" id="description" class="form-control" rows="2">{{ $product->description }}</textarea>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="is_issue">Is Issue</label>
+                                            <select name="is_issue" class="form-control @error('is_issue') is-invalid @enderror" id="is_issue">
+                                                <option value="0" {{ old('is_issue',$product->is_issue)=='0'?"selected":""}}>No</option>
+                                                <option value="1" {{ old('is_issue',$product->is_issue)=='1'?"selected":""}}>Yes</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
