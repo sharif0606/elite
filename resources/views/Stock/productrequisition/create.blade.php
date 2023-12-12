@@ -15,9 +15,9 @@
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="employee_id">Employee Id</label>
+                                            <label for="employee_id">Employee Name/Id</label>
                                             {{--  <input required class="form-control" type="text" name="employee_id" value="" placeholder="Employee Id">  --}}
-                                            <select required class="form-select employee_id select2" id="employee_id" name="employee_id">
+                                            <select class="form-select employee_id select2" id="employee_id" name="employee_id">
                                                 <option value="">Select Employee</option>
                                                 @forelse ($employee as $em)
                                                 <option value="{{ $em->id }}">{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
@@ -31,8 +31,9 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label- for="note">{{__('Issue Date')}}</label->
-                                            <input required class="form-control" type="date" name="issue_date" value="" placeholder="Issue Date">
+                                            <label for="note">{{__('Issue Date')}}</label>
+                                            <input required class="form-control datepicker" type="text" name="issue_date" id="issue_date" placeholder="dd/mm/yyy">
+                                            {{--  <input required class="form-control" type="date" name="issue_date" value="" placeholder="Issue Date" >  --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -55,12 +56,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="requisition">
+                                                @forelse ($product_issue as $pe)
                                                 <tr>
                                                     <td>
                                                         <select required class="form-select product_id" id="product_id" name="product_id[]">
                                                             <option value="">Select Product</option>
                                                             @forelse ($product as $pr)
-                                                            <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>
+                                                            <option value="{{ $pr->id }}" {{ old('product_id',$pe->id)==$pr->id?"selected":""}}>{{ $pr->product_name }}</option>
                                                             @empty
                                                             @endforelse
                                                         </select>
@@ -69,7 +71,7 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <select required class="form-select size_id" id="size_id" name="size_id[]">
+                                                        <select class="form-select size_id" id="size_id" name="size_id[]">
                                                             <option value="">Select Product</option>
                                                             @forelse ($size as $s)
                                                             <option value="{{ $s->id }}">{{ $s->name }}</option>
@@ -80,7 +82,7 @@
                                                             <span class="text-danger"> {{ $errors->first('size_id') }}</span>
                                                         @endif
                                                     </td>
-                                                    <td><input required class="form-control" type="text" name="product_qty[]" value="" placeholder="Product Qty"></td>
+                                                    <td><input required class="form-control text-center" type="text" name="product_qty[]" value="1" placeholder="Product Qty"></td>
                                                     <td>
                                                         <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
                                                             <option value="1">New</option>
@@ -88,10 +90,12 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                     </td>
                                                 </tr>
+                                                @empty
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
@@ -111,7 +115,7 @@
 <script>
     function addRow(){
     var row=`
-    <tr>
+    <tr class="text-center">
         <td>
             <select required class="form-select product_id" id="product_id" name="product_id[]">
                 <option value="">Select Product</option>
@@ -159,5 +163,19 @@
     }
 
 </script>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<!-- Include jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(function() {
+      $(".datepicker").datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true
+      });
+    });
+  </script>
 @endpush

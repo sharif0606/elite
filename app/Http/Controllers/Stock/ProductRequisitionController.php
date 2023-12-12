@@ -39,8 +39,9 @@ class ProductRequisitionController extends Controller
     {
         $size=ProductSize::all();
         $product=Product::all();
+        $product_issue=Product::where('is_issue','1')->get();
         $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
-        return view('Stock.productrequisition.create',compact('product','size','employee'));
+        return view('Stock.productrequisition.create',compact('product','size','employee','product_issue'));
     }
 
     /**
@@ -51,10 +52,14 @@ class ProductRequisitionController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         try{
             $data=new ProductRequisition;
             $data->employee_id=$request->employee_id;
-            $data->issue_date=$request->issue_date;
+            // $data->issue_date=$request->issue_date;
+            $originalDate = $request->issue_date;
+            $formattedDate = Carbon::createFromFormat('d/m/Y', $originalDate)->format('Y-m-d');
+            $data->issue_date = $formattedDate;
             $data->note=$request->note;
             if($data->save()){
                 if($request->product_id){
@@ -69,7 +74,7 @@ class ProductRequisitionController extends Controller
                             if($details->save()){
                                 $stock=new Stock;
                                 $stock->employee_id=$request->employee_id;
-                                $stock->entry_date=$request->issue_date;
+                                $stock->entry_date=$formattedDate;
                                 $stock->note=$request->note;
                                 $stock->product_id=$request->product_id[$key];
                                 $stock->size_id=$request->size_id[$key];
