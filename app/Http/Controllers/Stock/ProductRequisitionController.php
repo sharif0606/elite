@@ -81,8 +81,8 @@ class ProductRequisitionController extends Controller
                         }
                     }
                 }
-                \LogActivity::addToLog('Add Condem',$request->getContent(),'ProductRequisition,ProductRequisitionDetails,Stock');
-                return redirect()->route('requisition.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                \LogActivity::addToLog('Add Issue',$request->getContent(),'ProductRequisition,ProductRequisitionDetails,Stock');
+                return redirect()->route('product_issue.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
             dd($e);

@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Update Product requisition'))
+@section('pageTitle',trans('Update Product Issue'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route('requisition.update',encryptor('encrypt',$stockin->id))}}">
+                            <form class="form" method="post" action="{{route('product_issue.update',encryptor('encrypt',$stockin->id))}}">
                                 @csrf
                                 @method('PATCH')
                                 <div class="row">

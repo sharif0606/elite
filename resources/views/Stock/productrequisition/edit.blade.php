@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Update Product requisition'))
+@section('pageTitle',trans('Update Product Issue'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')

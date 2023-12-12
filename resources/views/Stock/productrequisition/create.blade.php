@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Product Requisition'))
+@section('pageTitle',trans('Product Issue'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" action="{{route('requisition.store')}}">
+                            <form class="form" method="post" action="{{route('product_issue.store')}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6 col-sm-12">

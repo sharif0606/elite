@@ -146,7 +146,7 @@
                                     <a href="{{route('product_stockin.index')}}">Product Stock In</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route('requisition.index')}}">Product Issue</a>
+                                    <a href="{{route('product_issue.index')}}">Product Issue</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('productdamage.index')}}">Product Condem</a>

@@ -102,7 +102,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('size',size::class);
         Route::resource('product',product::class);
         Route::resource('product_stockin',product_stockin::class);
-        Route::resource('requisition',requisition::class);
+        Route::resource('product_issue',requisition::class);
         Route::resource('stock',stock::class);
         Route::resource('productdamage',productdamage::class);
 
