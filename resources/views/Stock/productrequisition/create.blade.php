@@ -42,6 +42,15 @@
                                             <textarea name="note" id="note" class="form-control" rows="2"></textarea>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <label for="manual_employee_id">Mamual Employee Id</label>
+                                            <input required class="form-control" type="text" name="manual_employee_id" value="" placeholder="Manual Employee Id">
+                                            @if($errors->has('manual_employee_id'))
+                                                <span class="text-danger"> {{ $errors->first('manual_employee_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row p-2 mt-4">
                                     <div class="table-responsive">

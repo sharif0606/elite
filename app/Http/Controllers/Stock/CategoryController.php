@@ -20,7 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::paginate(20);
+        $category = Category::paginate(10);
         return view('Stock.category.index',compact('category'));
     }
 

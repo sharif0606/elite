@@ -52,6 +52,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="my-3 text-end">
+                        {{ $category->links() }}
+                    </div>
                 </div>
             </div>
         </div>

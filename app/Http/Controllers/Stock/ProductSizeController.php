@@ -20,7 +20,7 @@ class ProductSizeController extends Controller
      */
     public function index()
     {
-        $size = ProductSize::paginate(20);
+        $size = ProductSize::paginate(10);
         return view('Stock.productSize.index',compact('size'));
     }
 

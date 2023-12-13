@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('product_requisitions', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
+            $table->integer('employee_id')->nullable();
             $table->date('issue_date');
             $table->string('note')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

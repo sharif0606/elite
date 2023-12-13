@@ -12,6 +12,7 @@ use App\Models\Stock\ProductRequisitionDetails;
 use App\Models\Stock\ProductStockin;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
+use App\Http\Requests\Stock\ProductIssue\AddProductIssue;
 use Exception;
 use DB;
 use Toastr;
@@ -50,12 +51,19 @@ class ProductRequisitionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddProductIssue $request)
     {
         //dd($request->all());
         try{
             $data=new ProductRequisition;
-            $data->employee_id=$request->employee_id;
+            if($request->employee_id){
+                $data->employee_id=$request->employee_id;
+            }else{
+                $employee= new Employee;
+                $employee->admission_id_no=$request->manual_employee_id;
+                $employee->save();
+                $data->employee_id=$employee->id;
+            }
             // $data->issue_date=$request->issue_date;
             $originalDate = $request->issue_date;
             $formattedDate = Carbon::createFromFormat('d/m/Y', $originalDate)->format('Y-m-d');

@@ -55,6 +55,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="my-3 text-end">
+                        {{ $products->links() }}
+                    </div>
                 </div>
             </div>
         </div>
