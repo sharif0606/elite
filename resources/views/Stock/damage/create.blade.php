@@ -16,7 +16,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="product_id">Product<span class="text-danger">*</span></label>
-                                            <select required class="form-select product_id" id="product_id" name="product_id">
+                                            <select required class="form-select product_id select2" id="product_id" name="product_id">
                                                 <option value="">Select Product</option>
                                                 @forelse ($product as $pr)
                                                 <option value="{{ $pr->id }}">{{ $pr->product_name }}</option>

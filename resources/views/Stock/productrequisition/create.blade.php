@@ -54,7 +54,7 @@
                                     <div class="col-md-4 col-12">
                                         <div class="form-group">
                                             <label for="bn_applicants_name">Mamual Employee Name(Bangla)</label>
-                                            <input type="text" id="bn_applicants_name" value="{{old('bn_applicants_name')}}" class="form-control @error('bn_applicants_name') is-invalid @enderror" placeholder="" name="bn_applicants_name">
+                                            <input type="text" id="bn_applicants_name" value="{{old('bn_applicants_name')}}" class="form-control @error('bn_applicants_name') is-invalid @enderror" placeholder="বাংলা নাম দিন" name="bn_applicants_name">
                                             @if($errors->has('bn_applicants_name'))
                                                 <span class="text-danger"> {{ $errors->first('bn_applicants_name') }}</span>
                                             @endif

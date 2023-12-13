@@ -22,10 +22,14 @@ class ProductStockinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $stockin=ProductStockin::all();
-        return view('Stock.productStockin.index',compact('stockin'));
+        $product=Product::select('id','product_name')->get();
+        $stockin=ProductStockin::orderBy('id', 'DESC');
+        if($request->product_id)
+        $stockin=$stockin->where('product_id','like','%'.$request->product_id.'%');
+        $stockin=$stockin->paginate(12);
+        return view('Stock.productStockin.index',compact('stockin','product'));
     }
 
     /**

@@ -401,8 +401,8 @@
                             <td class="tbl_border">১ । ক্রমিক নং {{ $employees->id }}</td>
                         </tr>
                         <tr class="tbl_border">
-                            <td class="tbl_border">তারিখ {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
-                            <td class="tbl_border">তারিখ {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
+                            <td class="tbl_border">তারিখ {{ date('d/m/Y', strtotime($employees->created_at)) }}</td>
+                            <td class="tbl_border">তারিখ {{ date('d/m/Y', strtotime($employees->created_at)) }}</td>
                         </tr>
                         <tr class="tbl_border">
                             <td class="tbl_border">২ । নাম :{{ $employees->bn_applicants_name }}</td>

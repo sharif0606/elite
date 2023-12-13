@@ -13,7 +13,6 @@
                             <div class="row">
                                 <div class="input-group input-group-sm d-flex justify-content-between" >
                                     <div class="d-flex" style="width: 350px;">
-                                        {{--  <input type="text" name="employee_name" value="{{isset($_GET['employee_name'])?$_GET['employee_name']:''}}" class="form-control float-start" placeholder="Search by Employee" style="width: 200px;">  --}}
                                         <select class="form-select employee_id select2" id="employee_id" name="employee_id">
                                             <option value="">Select Employee</option>
                                             @forelse ($employee as $em)
