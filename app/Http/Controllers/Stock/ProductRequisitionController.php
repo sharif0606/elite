@@ -25,10 +25,14 @@ class ProductRequisitionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $requisition=ProductRequisition::all();
-        return view('Stock.productrequisition.index',compact('requisition'));
+        $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
+        $requisition=ProductRequisition::orderBy('id', 'DESC');
+        if($request->employee_id)
+        $requisition=$requisition->where('employee_id','like','%'.$request->employee_id.'%');
+        $requisition=$requisition->paginate(12);
+        return view('Stock.productrequisition.index',compact('requisition','employee'));
     }
 
     /**
@@ -61,6 +65,7 @@ class ProductRequisitionController extends Controller
             }else{
                 $employee= new Employee;
                 $employee->admission_id_no=$request->manual_employee_id;
+                $employee->bn_applicants_name=$request->bn_applicants_name;
                 $employee->save();
                 $data->employee_id=$employee->id;
             }

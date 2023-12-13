@@ -51,6 +51,15 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <div class="col-md-4 col-12">
+                                        <div class="form-group">
+                                            <label for="bn_applicants_name">Mamual Employee Name(Bangla)</label>
+                                            <input type="text" id="bn_applicants_name" value="{{old('bn_applicants_name')}}" class="form-control @error('bn_applicants_name') is-invalid @enderror" placeholder="" name="bn_applicants_name">
+                                            @if($errors->has('bn_applicants_name'))
+                                                <span class="text-danger"> {{ $errors->first('bn_applicants_name') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row p-2 mt-4">
                                     <div class="table-responsive">
@@ -81,7 +90,7 @@
                                                     </td>
                                                     <td>
                                                         <select class="form-select size_id" id="size_id" name="size_id[]">
-                                                            <option value="">Select Product</option>
+                                                            <option value="">Select Size</option>
                                                             @forelse ($size as $s)
                                                             <option value="{{ $s->id }}">{{ $s->name }}</option>
                                                             @empty
@@ -172,10 +181,6 @@
     }
 
 </script>
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<!-- Include jQuery UI -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>

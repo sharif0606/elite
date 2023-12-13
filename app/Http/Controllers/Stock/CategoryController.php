@@ -20,6 +20,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        // $category = Category::orderBy('id','desc')->paginate(10);
         $category = Category::paginate(10);
         return view('Stock.category.index',compact('category'));
     }

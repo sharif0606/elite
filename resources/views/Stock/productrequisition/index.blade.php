@@ -7,13 +7,41 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
+                <div class="row pb-1">
+                    <div class="col-10">
+                        <form action="" method="get">
+                            <div class="row">
+                                <div class="input-group input-group-sm d-flex justify-content-between" >
+                                    <div class="d-flex" style="width: 350px;">
+                                        {{--  <input type="text" name="employee_name" value="{{isset($_GET['employee_name'])?$_GET['employee_name']:''}}" class="form-control float-start" placeholder="Search by Employee" style="width: 200px;">  --}}
+                                        <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                                            <option value="">Select Employee</option>
+                                            @forelse ($employee as $em)
+                                            <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
 
+                                        <div class="input-group-append" style="margin-left: 6px;">
+                                            <button type="submit" class="btn btn-info">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                        <div class="input-group-append" style="margin-left: -2px;">
+                                            <a class="btn btn-warning ms-2" href="{{route('product_issue.index')}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <a class="float-end" href="{{route('product_issue.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    </div>
+                </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
-                <div>
-                    <a class="float-end" href="{{route('product_issue.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
-                </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
