@@ -25,12 +25,8 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
-                                        <option value="">Select Customer</option>
-                                        @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}" {{ $empasin->customer_id==$c->id?"selected":""}}>{{ $c->name }}</option>
-                                        @empty
-                                        @endforelse
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
+                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
@@ -70,7 +66,7 @@
                                                     <select class="form-select atm_id" id="atm_id" name="atm_id[]">
                                                         <option value="0">Select Atm</option>
                                                         @forelse ($atm as $a)
-                                                        <option value="{{ $d->atm_id }}" {{ $d->atm_id==$a->id?"selected":""}}>{{ $a->atm }}</option>
+                                                        <option value="{{ $a->id }}" {{ $d->atm_id==$a->id?"selected":""}}>{{ $a->atm }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -96,7 +92,7 @@
                                                 </td>
 
                                                 <td>
-                                                    {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                    <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
