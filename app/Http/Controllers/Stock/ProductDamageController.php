@@ -22,10 +22,14 @@ class ProductDamageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $damage=ProductDamage::all();
-        return view('Stock.damage.index',compact('damage'));
+        $product=Product::select('id','product_name')->get();
+        $damage=ProductDamage::orderBy('id', 'DESC');
+        if($request->product_id)
+        $damage=$damage->where('product_id','like','%'.$request->product_id.'%');
+        $damage=$damage->paginate(12);
+        return view('Stock.damage.index',compact('damage','product'));
     }
 
     /**

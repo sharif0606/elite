@@ -17,7 +17,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="name">{{__('Name')}}<span class="text-danger">*</span></label>
-                                            <input type="text" id="name" class="form-control" value="{{ old('name')}}" name="name">
+                                            <input type="text" id="name" class="form-control" value="{{ old('name')}}" name="name" placeholder="Size Name">
                                             @if($errors->has('name'))
                                                 <span class="text-danger"> {{ $errors->first('name') }}</span>
                                             @endif
@@ -26,7 +26,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="name_bn">{{__('Name Bangla')}}</label>
-                                            <input type="text" id="name_bn" class="form-control" value="{{ old('name_bn')}}" name="name_bn">
+                                            <input type="text" id="name_bn" class="form-control" value="{{ old('name_bn')}}" name="name_bn" placeholder="সাইজ">
                                         </div>
                                     </div>
                                 </div>

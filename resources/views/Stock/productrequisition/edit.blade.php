@@ -46,14 +46,14 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="entry_date">Qty</label>
+                                            <label for="product_qty">Qty</label>
                                             <input required class="form-control" type="text" name="product_qty" value="{{ old('product_qty',$stockin->product_qty)}}" placeholder="Product Qty">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="description">Product Type</label>
-                                            <select name="type" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                            <select name="type" class="form-control @error('type') is-invalid @enderror" id="type">
                                                 <option value="1" {{ old('type',$stockin->type)==1?"selected":""}}>New</option>
                                                 <option value="2" {{ old('type',$stockin->type)==2?"selected":""}}>Used</option>
                                             </select>

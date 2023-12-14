@@ -97,7 +97,7 @@
 
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
-                                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -163,5 +163,27 @@ function RemoveRow(e) {
 }
 
 </script>
-
+<script>
+    function EmployeeAsignGetAtm(e) {
+        let branchId=$('.branch_id').val();
+        $.ajax({
+            url: "{{ route('get_ajax_atm') }}",
+            type: "GET",
+            dataType: "json",
+            data: { branchId: branchId },
+            success: function (data) {
+                //console.log(data)
+                //var d = $('.atm_id').empty();
+                //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                //$('#atm_id').append('<option value="1">All ATM</option>');
+                $.each(data, function(key, value) {
+                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                });
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
+    }
+</script>
 @endpush

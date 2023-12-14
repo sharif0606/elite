@@ -90,7 +90,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('jobpost',jobpost::class);
         Route::resource('zone',zone::class);
         Route::resource('invoicesetting',invoicesetting::class);
-        Route::get('/jobpost_description/{id}', [jobpost::class,'jobpostDescription'])->name('jobpost_description');
+        Route::get('/jobpost_description/{id}', [jobpost::class,'jobpostDescription'])->name('jobpost.description');
         Route::post('/jobpost_description/{id}', [jobpost::class,'jobpostDescriptionStore'])->name('jobpost_descriptionstor');
         Route::resource('user', user::class);
         Route::resource('role', role::class);

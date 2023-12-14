@@ -17,7 +17,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="category_id">Category<span class="text-danger">*</span></label>
-                                            <select class="form-control form-select" name="category_id" id="category_id">
+                                            <select class="form-control form-select select2" name="category_id" id="category_id">
                                                 <option value="">Select Category</option>
                                                 @forelse($category as $cat)
                                                     <option value="{{$cat->id}}" {{ old('category_id')==$cat->id?"selected":""}}> {{ $cat->name_bn}}</option>
@@ -33,7 +33,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="product_name">Product Name<span class="text-danger">*</span></label>
-                                            <input type="text" id="product_name" class="form-control" value="{{ old('product_name')}}" name="product_name">
+                                            <input type="text" id="product_name" class="form-control" value="{{ old('product_name')}}" name="product_name" placeholder="Product Name">
                                             @if($errors->has('product_name'))
                                                 <span class="text-danger"> {{ $errors->first('product_name') }}</span>
                                             @endif
@@ -42,14 +42,14 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="product_name_bn">Product Bangla</label>
-                                            <input type="text" id="product_name_bn" class="form-control" value="{{ old('product_name_bn')}}" name="product_name_bn">
+                                            <input type="text" id="product_name_bn" class="form-control" value="{{ old('product_name_bn')}}" name="product_name_bn" placeholder="নাম">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="description">Description</label>
                                             {{--  <input type="text" id="description" class="form-control" value="{{ old('description')}}" name="">  --}}
-                                            <textarea name="description" id="description" class="form-control" rows="2"></textarea>
+                                            <textarea name="description" id="description" class="form-control" rows="2"  placeholder="Description"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">

@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onblur="EmployeeAsignGetAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="branch_change()">
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
@@ -67,7 +67,7 @@
                                                 <td><input required class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
                                                 <td>
-                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror not-hide" id="hours">
                                                         <option value="1">8 Hour's</option>
                                                         <option value="2">12 Hour's</option>
                                                     </select>
@@ -97,7 +97,7 @@
 <script>
     function addRow(){
     var row=`
-    <tr>
+    <tr class="new_rows">
         <td>
             <select class="form-select atm_id" id="atm_id" name="atm_id[]">
                 <option value="0">Select Atm</option>
@@ -139,7 +139,12 @@
 
 </script>
 <script>
-    function EmployeeAsignGetAtm(e) {
+    function branch_change(){
+        $('.new_rows').remove();
+        $('#empassign').find(':input').not(':button, :submit, :reset, :hidden, .not-hide').val('');
+        EmployeeAsignGetAtm()
+    }
+    function EmployeeAsignGetAtm() {
         let branchId=$('.branch_id').val();
         $.ajax({
             url: "{{ route('get_ajax_atm') }}",
@@ -148,11 +153,11 @@
             data: { branchId: branchId },
             success: function (data) {
                 //console.log(data)
-                //var d = $('.atm_id').empty();
-                //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                var d = $('.atm_id:last').empty();
+                $('.atm_id:last').append('<option data-vat="0" value="0">Select ATM</option>');
                 //$('#atm_id').append('<option value="1">All ATM</option>');
                 $.each(data, function(key, value) {
-                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                    $('.atm_id:last').append('<option value="' + value.id + '">' + value.atm + '</option>');
                 });
             },
             error: function () {

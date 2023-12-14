@@ -38,7 +38,7 @@
                                     <a href="{{route('jobpost.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a title="Description" href="{{route('jobpost_description',encryptor('encrypt',$d->id))}}">
+                                    <a title="Description" href="{{route('jobpost.description',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                     <form id="form{{$d->id}}" action="{{route('jobpost.destroy',encryptor('encrypt',$d->id))}}" method="post">

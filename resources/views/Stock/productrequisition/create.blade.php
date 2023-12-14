@@ -102,7 +102,7 @@
                                                     </td>
                                                     <td><input required class="form-control text-center" type="text" name="product_qty[]" value="1" placeholder="Product Qty"></td>
                                                     <td>
-                                                        <select name="type[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                                        <select name="type[]" class="form-control @error('type') is-invalid @enderror" id="type">
                                                             <option value="1">New</option>
                                                             <option value="2">Used</option>
                                                         </select>
