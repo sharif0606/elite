@@ -52,7 +52,7 @@
                                 <th scope="col">{{__('Qty')}}</th>  --}}
                                 <th scope="col">{{__('Employee name/Id')}}</th>
                                 <th scope="col">{{__('Entry Date')}}</th>
-                                {{--  <th scope="col">{{__('Type')}}</th>  --}}
+                                <th scope="col">{{__('Note')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -61,10 +61,10 @@
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 {{--  <td>{{$d->product?->product_name}}</td>
-                                <td>{{$d->size?->name}}</td>
-                                <td>{{$d->product_qty}}</td>  --}}
+                                <td>{{$d->size?->name}}</td>  --}}
                                 <td>{{$d->employee?->bn_applicants_name}}/ ID- {{$d->employee?->admission_id_no}}</td>
                                 <td>{{ \Carbon\Carbon::parse($d->issue_date)->format('d/m/Y') }}</td>
+                                <td>{{$d->note}}</td>
                                 {{--  <td>@if ($d->type==2) Used @else New @endif</td>  --}}
                                 <td class="white-space-nowrap">
                                     <a href="{{route('product_issue.show',encryptor('encrypt',$d->id))}}">

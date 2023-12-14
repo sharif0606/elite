@@ -43,6 +43,7 @@
                                 <th scope="col">{{__('Category')}}</th>
                                 <th scope="col">{{__('Product')}}</th>
                                 <th scope="col">{{__('Product bn')}}</th>
+                                <th scope="col">{{__('Product Description')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -53,6 +54,7 @@
                                 <td>{{$d->category?->name}}</td>
                                 <td>{{$d->product_name}}</td>
                                 <td>{{$d->product_name_bn}}</td>
+                                <td>{{$d->description}}</td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route('product.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
