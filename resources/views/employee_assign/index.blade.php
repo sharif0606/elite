@@ -9,8 +9,8 @@
         <div class="table-responsive">
             <table class="table table-bordered table-striped mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee_assign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
-                <thead>
-                    <tr class="text-center bg-primary text-white">
+                <thead class="table-dark">
+                    <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Details')}}</th>
