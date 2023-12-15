@@ -566,7 +566,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_traning_cost">ট্রেনিং খরচ</label>
+                            <label for="bn_traning_cost">ট্রেনিং ফি</label>
                             <input type="text" id="bn_traning_cost" value="{{old('bn_traning_cost')}}" class="form-control @error('bn_traning_cost') is-invalid @enderror" placeholder="ট্রেনিং খরচ" name="bn_traning_cost">
                             @if($errors->has('bn_traning_cost'))
                                 <span class="text-danger"> {{ $errors->first('bn_traning_cost') }}</span>
