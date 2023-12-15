@@ -725,11 +725,11 @@
                         </tr>
                         <tr>
                             <th >২১। পূর্বের কর্মস্থল অব্যহতি পত্র দিয়েছিলেন কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_resign_letter_status }}"></td>
+                            <td><input type="text" class="tinput" value="@if ($security?->bn_resign_letter_status=='1') হা @else না @endif"></td>
                         </tr>
                         <tr>
                             <th >২২। সার্ভিস বই আছে কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_service_book_status }}"></td>
+                            <td><input type="text" class="tinput" value="@if ($security?->bn_service_book_status=='1') হা @else না @endif"></td>
                         </tr>
                     </tbody>
                 </table>
