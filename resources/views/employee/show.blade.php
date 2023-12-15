@@ -778,11 +778,11 @@
                         </tr>
                         <tr>
                             <th colspan="">৩২। সীম কার্ড রেজিস্টেশন করা আছে কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_sim_card_reg_status }}"></td>
+                            <td><input type="text" class="tinput" value="@if ($security?->bn_sim_card_reg_status=='1') হা @else না @endif"></td>
                         </tr>
                         <tr>
                             <th colspan="">৩৩। আপনার দায়ের করা বা আপনার বিরুদ্ধে থানায় কিংবা আদালতে (স্থানীয় ও বর্তমান ) কোনো মামলা আছে কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_case_filed_status }}"></td>
+                            <td><input type="text" class="tinput" value="@if ($security?->bn_case_filed_status=='1') হা @else না @endif"></td>
                         </tr>
                         <tr>
                             <th colspan="">৩৪। পূর্বের কর্মস্থলের একজন কর্মকর্তার নাম:</th>
