@@ -154,6 +154,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('stock.index')}}">Stock</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('stock.employeeList')}}">Employee Wise</a>
+                                </li>
 
                             </ul>
                         </li>

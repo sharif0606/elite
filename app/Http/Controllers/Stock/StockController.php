@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stock\Stock;
 use App\Models\Stock\Product;
+use App\Models\Employee\Employee;
 use DB;
 
 class StockController extends Controller
@@ -45,6 +46,15 @@ class StockController extends Controller
 
         return view('Stock.stock.stockReportIndividual', compact('stock','product'));
     }
+
+    public function EmployeeList(Request $request)
+    {
+        $stock=Stock::select('id','employee_id','product_qty','entry_date')->whereNotNull('employee_id')->groupBy('employee_id')->get();
+        $employee = Employee::select('id','admission_id_no','bn_applicants_name')->get();
+
+        return view('Stock.employeeReport.list',compact('stock','employee'));
+    }
+
     public function create()
     {
         //
