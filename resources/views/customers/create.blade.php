@@ -35,7 +35,7 @@
                     </div>  --}}
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label for="contact">Phone Number<span class="text-danger">*</span></label>
+                            <label for="contact">Phone Number</label>
                             <input type="text" id="contact" value="{{old('contact')}}" class="form-control @error('contact') is-invalid @enderror" placeholder="Contact Number" name="contact">
                             @if($errors->has('contact'))
                                 <span class="text-danger"> {{ $errors->first('contact') }}</span>
