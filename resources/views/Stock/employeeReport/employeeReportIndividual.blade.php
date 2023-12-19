@@ -86,7 +86,7 @@
                                             $actualQtyTotalkg = 0;
                                             $totalQty = 0;
                                         @endphp
-                                        @forelse($stock as $s)
+                                        @forelse($productList as $s)
                                         <tr class="tbl_expense">
                                             <th class="text-center">{{ ++$loop->index }}</th>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">

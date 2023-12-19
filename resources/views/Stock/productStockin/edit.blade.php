@@ -32,7 +32,7 @@
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
                                             <label for="size_id">Product Size<span class="text-danger">*</span></label>
-                                            <select required class="form-select size_id" id="size_id" name="size_id">
+                                            <select class="form-select size_id" id="size_id" name="size_id">
                                                 <option value="">Select Product</option>
                                                 @forelse ($size as $s)
                                                 <option value="{{ $s->id }}" {{ old('size_id',$stockin->size_id)==$s->id?"selected":""}}>{{ $s->name }}</option>

@@ -25,7 +25,7 @@
                                     </button>
                                 </div>
                                 <div class="input-group-append" style="margin-left: -2px;">
-                                    <a class="btn btn-warning ms-2" href="{{route('product_issue.index')}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
+                                    <a class="btn btn-warning ms-2" href="{{route('stock.employeeList')}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
                                 </div>
                             </div>
                         </div>
