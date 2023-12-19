@@ -106,6 +106,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('stock',stock::class);
         Route::resource('productdamage',productdamage::class);
         Route::get('/stock-employee-list',[stock::class,'EmployeeList'])->name('stock.employeeList');
+        Route::get('/stock-employee-individual/{id}',[stock::class,'employeeIndividual'])->name('stock.employeeIndividual');
 
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');

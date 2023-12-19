@@ -52,9 +52,21 @@ class StockController extends Controller
         $stock=Stock::select('id','employee_id','product_qty','entry_date')->whereNotNull('employee_id')->groupBy('employee_id')->get();
         $employee = Employee::select('id','admission_id_no','bn_applicants_name')->get();
 
-        return view('Stock.employeeReport.list',compact('stock','employee'));
+        return view('Stock.employeeReport.employee_list',compact('stock','employee'));
     }
 
+    public function employeeIndividual(Request $request,$id)
+    {
+        $stock = Stock::where('employee_id',(encryptor('decrypt',$id)));
+        if ($request->fdate) {
+            $tdate = $request->tdate ? $request->tdate : $request->fdate;
+            $stock =$stock->whereBetween('entry_date',[$request->fdate, $tdate]);
+        }
+        $stock = $stock->get();
+        $employee = Employee::where('id',(encryptor('decrypt',$id)))->first();
+
+        return view('Stock.employeeReport.employeeReportIndividual', compact('stock','employee'));
+    }
     public function create()
     {
         //

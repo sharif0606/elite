@@ -6,26 +6,31 @@
 <section class="section">
     <form class="form" method="get" action="">
         <div class="row">
-            <div class="col-4 py-1">
-                <label for="employee_id">{{__('Employee Name/ID')}}</label>
-                <select name="employee_id" class="choices form-select">
-                    <option value="">Select</option>
-                    @forelse ($employee as $p)
-                        <option value="{{$p->id}}" {{ old('employee_id')==$p->id?"selected":""}}>{{$p->bn_applicants_name}}</option>
-                    @empty
-                        <option value="">No Data Found</option>
-                    @endforelse
-                </select>
-            </div>
-        </div>
-        <div class="row m-4">
-            <div class="col-6 d-flex justify-content-end">
-                <button type="submit" class="btn btn-sm btn-success me-1 mb-1 ps-5 pe-5">{{__('Show')}}</button>
+            <div class="col-10">
+                <form action="" method="get">
+                    <div class="row">
+                        <div class="input-group input-group-sm d-flex justify-content-between" >
+                            <div class="d-flex" style="width: 350px;">
+                                <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                                    <option value="">Select Employee</option>
+                                    @forelse ($employee as $em)
+                                    <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
 
-            </div>
-            <div class="col-6 d-flex justify-content-Start">
-                <button type="#" class="btn pbtn btn-sm btn-warning me-1 mb-1 ps-5 pe-5">{{__('Reset')}}</button>
-
+                                <div class="input-group-append" style="margin-left: 6px;">
+                                    <button type="submit" class="btn btn-info">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                                <div class="input-group-append" style="margin-left: -2px;">
+                                    <a class="btn btn-warning ms-2" href="{{route('product_issue.index')}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row" id="table-bordered">
@@ -50,7 +55,7 @@
                                     {{--  <td>{{$d->name}}</td>
                                     <td>{{$d->qty}}</td>  --}}
                                     <td class="white-space-nowrap">
-                                        <a href="{{route('stock.individual',encryptor('encrypt',$d->product_id))}}">
+                                        <a href="{{route('stock.employeeIndividual',encryptor('encrypt',$d->employee_id))}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
