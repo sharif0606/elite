@@ -83,7 +83,6 @@
                                             <th class="tbl_expense" style="text-align: center; padding: 5px;">Issue Date</th>
                                         </tr>
                                         @php
-                                            $actualQtyTotalkg = 0;
                                             $totalQty = 0;
                                         @endphp
                                         @forelse($productList as $s)
@@ -97,13 +96,13 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">@if($s->type=='2') Used @else New  @endif </td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{$s->size?->name}}</td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->created_at)->format('d/m/Y')}}</td>
-                                            @if($s->status=='0')
-                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">{{$s->product_qty}}</td>
+                                            @if($s->status=='1')
+                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">{{ abs($s->product_qty) }}</td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->entry_date)->format('d/m/Y')}}</td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
 
-                                            @elseif($s->status=='1')
+                                            @elseif($s->status=='0')
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{abs($s->product_qty)}}</td>
