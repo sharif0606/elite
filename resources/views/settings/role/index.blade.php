@@ -7,10 +7,9 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-
             <!-- table bordered -->
             <div class="table-responsive"><div>
-                <a class="pull-right fs-1" href="{{route('role.create')}}"><i class="fa fa-plus"></i></a>
+                <a class="float-end" href="{{route('role.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
             </div>
                 <table class="table table-bordered mb-0">
                     <thead>

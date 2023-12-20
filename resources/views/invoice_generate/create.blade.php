@@ -60,9 +60,6 @@
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
                                     <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
-
-
-You Cooperation will be highly appreciated.
                                     </textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
