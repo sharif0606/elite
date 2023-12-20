@@ -84,15 +84,21 @@
                                         </tr>
                                         @php
                                             $totalQty = 0;
+                                            $proid=0;
                                         @endphp
                                         @forelse($productList as $s)
+                                        @php
+                                            $key = array_search($s->product_id, array_column($stock, 'product_id'));
+                                        @endphp
                                         <tr class="tbl_expense">
                                             <th class="text-center">{{ ++$loop->index }}</th>
-                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">
+                                            @if($proid!=$s->product_id)
+                                            <td rowspan="{{ $stock[$key]['c'] }}" class="tbl_expense" style="text-align: center; padding: 5px;">
                                                 @if($s->product?->product_name_bn)
                                                 {{$s->product?->product_name_bn}}
                                                 @endif
                                             </td>
+                                            @endif
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->created_at)->format('d/m/Y')}}</td>
                                             @if($s->status=='1')
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{ abs($s->product_qty) }}</td>
@@ -118,10 +124,25 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             @endif
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">
+                                                {{--  @php
+                                                $positiveQty = 0;
+                                                $negativeQty = 0;
+                                                if ($s->product_qty > 0) {
+                                                    $positiveQty += $s->product_qty;
+                                                } else {
+                                                    $negativeQty += abs($s->product_qty);
+                                                }
+                                                echo "Positive Quantity: $positiveQty, Negative Quantity: $negativeQty";
+                                                @endphp  --}}
                                                 @php echo $totalQty += $s->product_qty; @endphp
 
                                             </td>
                                         </tr>
+                                        @php
+                                            $proid=$s->product_id;
+                                            $proidcount=0;
+                                        @endphp
+
                                         @empty
                                         <tr>
                                             <th colspan="10">No data Found</th>
