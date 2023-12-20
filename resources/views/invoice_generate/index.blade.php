@@ -8,7 +8,7 @@
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
@@ -30,10 +30,10 @@
                         <td>{{ $e->bill_date }}</td>
                         <td>{{ $e->grand_total }}</td>
                         <td>
-                            <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>  --}}
                         </td>

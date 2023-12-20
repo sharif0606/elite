@@ -3,7 +3,12 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+    }
+</style>
 <!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
@@ -20,7 +25,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
                         <thead>
-                            <tr class="bg-primary text-white">
+                            <tr class="text-center">
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Upazila')}}</th>
                                 <th scope="col">{{__('Union')}}</th>

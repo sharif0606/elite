@@ -3,7 +3,13 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
@@ -29,8 +35,8 @@
                         </thead>
                         <tbody>
                             @forelse($countries as $d)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                            <tr class="text-center">
+                                <td scope="row">{{ ++$loop->index }}</td>
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>
                                 <td>{{$d->code}}</td>

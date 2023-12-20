@@ -2,6 +2,13 @@
 @section('title',trans('Users'))
 @section('page',trans('List'))
 @section('content')
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -25,8 +32,8 @@
                     </thead>
                     <tbody>
                         @forelse($data as $p)
-                        <tr>
-                            <th scope="row">{{ ++$loop->index }}</th>
+                        <tr class="text-center">
+                            <td scope="row">{{ ++$loop->index }}</td>
                             <td>{{$p->name}}</td>
                             <td>{{$p->email}}</td>
                             <td>{{$p->contact_no_en}}</td>

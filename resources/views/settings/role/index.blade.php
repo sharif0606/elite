@@ -2,7 +2,13 @@
 @section('title',trans('Role'))
 @section('page',trans('List'))
 @section('content')
-
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <!-- Bordered table start -->
 <div class="row">
     <div class="col-12">
@@ -22,8 +28,8 @@
                     </thead>
                     <tbody>
                         @forelse($data as $p)
-                        <tr>
-                            <th scope="row">{{ ++$loop->index }}</th>
+                        <tr class="text-center">
+                            <td scope="row">{{ ++$loop->index }}</td>
                             <td>{{$p->name}}</td>
                             <td>{{$p->identity}}</td>
                             <td class="white-space-nowrap">

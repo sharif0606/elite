@@ -3,7 +3,13 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
@@ -20,7 +26,7 @@
                 <div class="table-responsive">
                     <table class="table table-bordered mb-0">
                         <thead>
-                            <tr class="bg-primary text-white">
+                            <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 {{--  <th scope="col">{{__('Upazila')}}</th>  --}}
                                 <th scope="col">{{__('ward')}}</th>
@@ -30,8 +36,8 @@
                         </thead>
                         <tbody>
                             @forelse($ward as $d)
-                            <tr>
-                                <th scope="row">{{ ++$loop->index }}</th>
+                            <tr class="text-center">
+                                <td scope="row">{{ ++$loop->index }}</td>
                                 {{--  <td>{{$d->upazila?->name}}</td>  --}}
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->name_bn}}</td>

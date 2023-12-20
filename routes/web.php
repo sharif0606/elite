@@ -79,7 +79,6 @@ Route::get('/logout', [auth::class,'singOut'])->name('logOut');
 
 Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
-
         Route::resource('country',country::class);
         Route::resource('division',division::class);
         Route::resource('district',district::class);
@@ -108,6 +107,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/stock-employee-list',[stock::class,'EmployeeList'])->name('stock.employeeList');
         Route::get('/stock-employee-individual/{id}',[stock::class,'employeeIndividual'])->name('stock.employeeIndividual');
 
+        /* CRM */
         Route::resource('empatten',empatten::class);
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::resource('employee_assign',empasign::class);
@@ -115,19 +115,18 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
-
-
-
-        Route::resource('employee', employee::class);
-        Route::resource('salarySheet', salarySheet::class);
-        Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
-        Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
-
         Route::resource('customer', customer::class);
         Route::resource('customerbrance', customerbrance::class);
         Route::resource('customerRate', customerRate::class);
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
+
+        /* HRM */
+        Route::resource('employee', employee::class);
+        Route::resource('salarySheet', salarySheet::class);
+        Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
+        Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
+
     });
 
     Route::middleware(['checkauth'])->prefix('admin')->group(function(){

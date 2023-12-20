@@ -2,6 +2,13 @@
 @section('pageTitle','Empoyees Attendance List')
 @section('pageSubTitle','All Attendance')
 @section('content')
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">

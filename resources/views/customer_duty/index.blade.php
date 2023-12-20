@@ -2,6 +2,13 @@
 @section('pageTitle','Empoyees Attendance List')
 @section('pageSubTitle','All Attendance')
 @section('content')
+<style>
+    .th_color {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
@@ -10,11 +17,11 @@
             <table class="table table-bordered mb-0 table-striped">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('customerduty.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
-                    <tr class="text-center bg-primary text-white">
-                        <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Customer')}}</th>
-                        <th scope="col">{{__('Details')}}</th>
-                        <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                    <tr class="text-center">
+                        <th class="th_color" scope="col">{{__('#SL')}}</th>
+                        <th class="th_color" scope="col">{{__('Customer')}}</th>
+                        <th class="th_color" scope="col">{{__('Details')}}</th>
+                        <th class="th_color">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,16 +33,16 @@
                             @if ($e->details)
                             <table class="table">
                                 <thead>
-                                    <tr>
-                                        <th>Employee</th>
-                                        <th>Job Post</th>
-                                        <th>Duty Rate</th>
-                                        <th>Duty Qty</th>
-                                        <th>Duty Amount</th>
-                                        <th>Ot Rate</th>
-                                        <th>Ot Qty</th>
-                                        <th>Ot Amount</th>
-                                        <th>Total Amount</th>
+                                    <tr style="background-color: rgb(166, 166, 207) !important;">
+                                        <th style=" color: rgb(15, 15, 15) !important;">Employee</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Job Post</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Rate</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Qty</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Amount</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Rate</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Qty</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Amount</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Total Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
