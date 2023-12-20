@@ -33,7 +33,7 @@
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item active ">
+                        <li class="sidebar-item">
                             <a href="{{route('dashboard', ['role' =>currentUser()])}}" class="sidebar-link">
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
@@ -46,7 +46,7 @@
                                 <span>Settings</span>
                             </a>
                             <ul class="submenu ">
-                                <li class="submenu-item ">
+                                <li class="submenu-item">
                                     <a href="{{route('role.index')}}">Role</a>
                                 </li>
                                 <li class="submenu-item ">
