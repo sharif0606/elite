@@ -49,8 +49,11 @@ class StockController extends Controller
 
     public function EmployeeList(Request $request)
     {
-        $stock=Stock::select('id','employee_id','product_qty','entry_date')->whereNotNull('employee_id')->groupBy('employee_id')->get();
+        $stock=Stock::select('id','employee_id','product_qty','entry_date')->whereNotNull('employee_id');
         $employee = Employee::select('id','admission_id_no','bn_applicants_name')->get();
+        if($request->employee_id)
+        $stock=$stock->where('employee_id','like','%'.$request->employee_id.'%');
+        $stock=$stock->groupBy('employee_id')->get();
 
         return view('Stock.employeeReport.employee_list',compact('stock','employee'));
     }
