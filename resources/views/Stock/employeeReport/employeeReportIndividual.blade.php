@@ -83,6 +83,7 @@
                                             <th class="tbl_expense" style="text-align: center; padding: 5px;">Issue Date</th>
                                         </tr>
                                         @php
+                                            $serialNumber = 0;
                                             $totalQty = 0;
                                             $proid=0;
                                         @endphp
@@ -91,7 +92,9 @@
                                             $key = array_search($s->product_id, array_column($stock, 'product_id'));
                                         @endphp
                                         <tr class="tbl_expense">
-                                            <th class="text-center">{{ ++$loop->index }}</th>
+                                            @if($proid!=$s->product_id)
+                                            <th rowspan="{{ $stock[$key]['c'] }}" class="text-center">{{ ++$serialNumber }}</th>
+                                            @endif
                                             @if($proid!=$s->product_id)
                                             <td rowspan="{{ $stock[$key]['c'] }}" class="tbl_expense" style="text-align: center; padding: 5px;">
                                                 @if($s->product?->product_name_bn)
