@@ -58,7 +58,7 @@ class StockController extends Controller
     public function employeeIndividual(Request $request,$id)
     {
         $productList = Stock::where('employee_id',(encryptor('decrypt',$id)))->orderBy('product_id')->get();
-        $stock = json_decode(json_encode(DB::select("select count(*) as c,product_id from stocks where employee_id='".encryptor('decrypt',$id)."' group by product_id")),true);
+        $stock = json_decode(json_encode(DB::select("select count(*) as c,product_id,SUM(product_qty) AS total_qty from stocks where employee_id='".encryptor('decrypt',$id)."' group by product_id")),true);
         //print_r($stock);die();
         // if ($request->fdate) {
         //     $tdate = $request->tdate ? $request->tdate : $request->fdate;

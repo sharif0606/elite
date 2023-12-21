@@ -123,7 +123,8 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             @endif
-                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">
+                                            @if($proid!=$s->product_id)
+                                            <td rowspan="{{ $stock[$key]['c'] }}" class="tbl_expense" style="text-align: center; padding: 5px;">
                                                 {{--  @php
                                                 $positiveQty = 0;
                                                 $negativeQty = 0;
@@ -134,9 +135,11 @@
                                                 }
                                                 echo "Positive Quantity: $positiveQty, Negative Quantity: $negativeQty";
                                                 @endphp  --}}
-                                                @php echo $totalQty += $s->product_qty; @endphp
+                                                {{--  @php echo $totalQty += $s->product_qty; @endphp  --}}
+                                                {{ abs($stock[$key]['total_qty']) }}
 
                                             </td>
+                                            @endif
                                         </tr>
                                         @php
                                             $proid=$s->product_id;
