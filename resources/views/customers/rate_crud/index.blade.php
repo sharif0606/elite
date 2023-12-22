@@ -15,7 +15,7 @@
                         </div>
                     </div>
                     <div class="table-responsive"><!-- table bordered -->
-                        <table class="table table-striped" id="table1">
+                        <table class="table table-striped" id="">
                             <thead>
                                 <tr class="bg-primary text-white">
                                     <th scope="col">{{__('#SL')}}</th>
