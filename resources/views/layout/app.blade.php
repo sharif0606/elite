@@ -226,7 +226,7 @@
                     $('#atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
                     $('#atm_id').append('<option value="1">All ATM</option>');
                     $.each(data, function(key, value) {
-                        //$('#atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                        $('#atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
                     });
                 },
                 error: function () {
