@@ -9,6 +9,7 @@
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
