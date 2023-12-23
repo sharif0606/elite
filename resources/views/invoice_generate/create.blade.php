@@ -232,12 +232,12 @@
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
-                                <td>${totalHoures}
-                                    <input readonly class="form-control input_css total_houres_c" type="hidden" name="total_houres[]" value="${totalHoures}">
+                                <td>
+                                    <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
                                     <input class="type_houre" type="hidden" name="" value="${type_houre}">
                                 </td>
-                                <td>${parseFloat(ratePerHoures).toFixed(2)}
-                                    <input readonly class="form-control input_css rate_per_houres_c" type="hidden" name="rate_per_houres[]" value="${ratePerHoures}">
+                                <td>
+                                    <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${parseFloat(ratePerHoures).toFixed(2)}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
@@ -354,20 +354,20 @@
             var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
             var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
             var reTotalHoure=(workingDay*typeHours*person);
-            //var reratePerHoures=((rate/workingDay)/typeHours);
-            //var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
+            var reratePerHoures=((rate/workingDay)/typeHours);
+            var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
             $(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
-            //$(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
+            $(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
 
-            var startDate=$('.start_date').val();
-            let workingdayinMonth= new Date(startDate);
-            let smonth=workingdayinMonth.getMonth()+1;
-            let syear=workingdayinMonth.getFullYear();
-                workingdayinMonth= new Date(syear, smonth, 0).getDate();
-                ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
-                $(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
-            let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
-                $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+          //  var startDate=$('.start_date').val();
+          //  let workingdayinMonth= new Date(startDate);
+          //  let smonth=workingdayinMonth.getMonth()+1;
+           // let syear=workingdayinMonth.getFullYear();
+             //   workingdayinMonth= new Date(syear, smonth, 0).getDate();
+             //   ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
+             //   $(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
+            //let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
+                //$(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                 subtotalAmount();
                 addCount();
         }
