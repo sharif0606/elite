@@ -181,8 +181,14 @@ class InvoiceGenerateController extends Controller
         $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')
             ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*');
 
-        if ($request->atm_id) {
+        if ($request->atm_id=='a') {
             $query = $query->where('employee_assign_details.atm_id',"!=","0")->where('employee_assigns.branch_id', $request->branch_id);
+        }
+        else if ($request->atm_id=='n') {
+            $query = $query->where('employee_assign_details.atm_id',"=","0")->where('employee_assigns.branch_id', $request->branch_id);
+        }
+        else if ($request->atm_id >0) {
+            $query = $query->where('employee_assign_details.atm_id',$request->atm_id)->where('employee_assigns.branch_id', $request->branch_id);
         }
         else if ($request->branch_id) {
             $query = $query->where('employee_assigns.branch_id', $request->branch_id);
