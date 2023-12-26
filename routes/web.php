@@ -38,6 +38,7 @@ use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 use App\Http\Controllers\CustomerController as customer;
 use App\Http\Controllers\Crm\CustomerBranceController as customerbrance;
 use App\Http\Controllers\Crm\CustomerRateController as customerRate;
+use App\Http\Controllers\Crm\WasaEmployeeAssignController as wasaEmployeeAsign;
 
 /* Stock */
 use App\Http\Controllers\Stock\CategoryController as category;
@@ -118,6 +119,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customer', customer::class);
         Route::resource('customerbrance', customerbrance::class);
         Route::resource('customerRate', customerRate::class);
+        Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 

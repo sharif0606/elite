@@ -116,6 +116,9 @@
                                     <a href="{{route('employee_assign.index', ['role' =>currentUser()])}}">Employee's Assign</a>
                                 </li>
                                 <li class="submenu-item">
+                                    <a href="{{route('wasaEmployeeAsign.index', ['role' =>currentUser()])}}">Wasa Employee's Assign</a>
+                                </li>
+                                <li class="submenu-item">
                                     <a href="{{route('employeeRate.index', ['role' =>currentUser()])}}">Employee's Salary</a>
                                 </li>
                                 <li class="submenu-item">
