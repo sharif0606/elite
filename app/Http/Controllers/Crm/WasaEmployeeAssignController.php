@@ -35,6 +35,12 @@ class WasaEmployeeAssignController extends Controller
         return view('wasa_employee_assign.create',compact('customer','jobpost','employee'));
     }
 
+    public function wasaGetEmployee(Request $request)
+	{
+		$data = Employee::where('id',$request->id)->select('id','admission_id_no','en_applicants_name','bn_ac_no','bn_jobpost_id')->with('position')->get();
+		return $data;
+	}
+
     /**
      * Store a newly created resource in storage.
      *

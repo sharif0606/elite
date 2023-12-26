@@ -15,7 +15,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -38,12 +38,12 @@
                                             <tr class="text-center">
                                                 <th scope="col">{{__('ATM')}}</th>
                                                 <th scope="col">{{__('ID No')}}</th>
-                                                <th scope="col">{{__('Job Post')}}</th>
-                                                <th scope="col">{{__('Qty')}}</th>
-                                                <th scope="col">{{__('Rate (Person)')}}</th>
-                                                <th scope="col">{{__('Start Date')}}</th>
-                                                <th scope="col">{{__('End Date')}}</th>
-                                                <th scope="col">{{__('Hours')}}</th>
+                                                <th scope="col">{{__('Rank')}}</th>
+                                                <th scope="col">{{__('Area')}}</th>
+                                                <th scope="col">{{__('Name')}}</th>
+                                                <th scope="col">{{__('Duty')}}</th>
+                                                <th scope="col">{{__('Account No')}}</th>
+                                                <th scope="col">{{__('Salary')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -55,10 +55,10 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id" onchange="getEmployees(this)">
                                                         <option value="">Select Employee</option>
                                                         @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->en_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
+                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -72,16 +72,11 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-                                                <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
-                                                <td><input required class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-                                                <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-                                                <td>
-                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror not-hide" id="hours">
-                                                        <option value="1">8 Hour's</option>
-                                                        <option value="2">12 Hour's</option>
-                                                    </select>
-                                                </td>
+                                                <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
+                                                <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
+                                                <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+                                                <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
+                                                <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -103,8 +98,45 @@
 </section>
 @endsection
 @push("scripts")
-{{--  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>  --}}
 <script>
+    function getEmployees(e){
+        if (!$('.customer_id').val()) {
+            $('.customer_id').focus();
+            return false;
+        }
+        var employee_id=$(e).closest('tr').find('.employee_id').val();
+        console.log(employee_id);
+        var customerId = document.getElementById('customer_id').value;
+        if(employee_id){
+            $.ajax({
+                url:"{{ route('wasaGetEmployee') }}",
+                type: "GET",
+                dataType: "json",
+                data: { 'id':employee_id },
+                success: function(data) {
+                    console.log(data);
+                    if(data.length>0){
+                        var id = data[0].id;
+                        var name = data[0].en_applicants_name;
+                        var ac_no = data[0].bn_ac_no;
+                        var contact = data[0].bn_parm_phone_my;
+                        var positionid=data[0].bn_jobpost_id;
+                        var positionName = data[0].position.name;
+                        var positionId = data[0].position.id;
+                        console.log(positionName);
+                        $(e).closest('tr').find('.job_post_id').val(positionId).prop('selected', true);
+                        $(e).closest('tr').find('.employee_name').val(name);
+                        $(e).closest('tr').find('.account_no').val(ac_no);
+                    }
+                },
+            });
+        } else {
+            $(e).closest('tr').find('.employee_name').val('');
+            $(e).closest('tr').find('.job_post_id').val('');
+            $(e).closest('tr').find('.account_no').val('');
+        }
+    }
+
     function addRow(){
     var row=`
     <tr class="new_rows">
@@ -176,5 +208,5 @@
         });
     }
 </script>
-
+{{--  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>  --}}
 @endpush

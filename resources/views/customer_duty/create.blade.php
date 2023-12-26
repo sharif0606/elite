@@ -24,13 +24,14 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this),getEmployees(e)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
+                                    {{--  <span class="customer_select_message"></span>  --}}
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
@@ -134,18 +135,19 @@
     function getEmployees(e){
 
         var customer_id = $('.customer_id');
+        var customer_select_message = $('.customer_select_message');
         if (!customer_id.val()) {
             customer_id.focus();
-            $('.customer_select_message').html('Please select a customer');
+            customer_select_message.html('Please select a customer');
             return false;
         }
-        customer_id.on('change', function() {
-            if ($(this).val()) {
-                $('.customer_select_message').hide();
-            } else {
-                $('.customer_select_message').html('Please select a customer').show();
-            }
-        });
+        //customer_id.on('change', function() {
+         //   if ($(this).val()) {
+         //       customer_select_message.hide();
+        //    } else {
+         //       customer_select_message.html('Please select a customer').show();
+        //    }
+        //});
 
         var pa = '<div style="color:red">Invalid Employee ID</div>';
         $(e).closest('tr').find('.employee_data').html('');

@@ -110,7 +110,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* CRM */
         Route::resource('empatten',empatten::class);
-        Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::resource('employee_assign',empasign::class);
         Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
@@ -145,6 +144,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::post('/profile', [userprofile::class,'store'])->name('profile.store');
         Route::get('/change_password', [userprofile::class,'change_password'])->name('change_password');
         Route::post('/change_password', [userprofile::class,'change_password_store'])->name('change_password.store');
+
+        /*Crm */
+        Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
+        Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
 
         /* employee security */
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
