@@ -56,9 +56,10 @@
                                                 </td>
                                                 <td>
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id" onchange="getEmployees(this)">
-                                                        <option value="">Select Employee</option>
+                                                        <option value="">Select</option>
                                                         @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>
+                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                                                        {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
                                                         @empty
                                                         @endforelse
                                                     </select>
@@ -100,10 +101,10 @@
 @push("scripts")
 <script>
     function getEmployees(e){
-        if (!$('.customer_id').val()) {
-            $('.customer_id').focus();
-            return false;
-        }
+       // if (!$('.customer_id').val()) {
+        //    $('.customer_id').focus();
+       //     return false;
+       // }
         var employee_id=$(e).closest('tr').find('.employee_id').val();
         console.log(employee_id);
         var customerId = document.getElementById('customer_id').value;
@@ -146,6 +147,16 @@
             </select>
         </td>
         <td>
+            <select class="form-select employee_id select2" id="employee_id" name="employee_id" onchange="getEmployees(this)">
+                <option value="">Select</option>
+                @forelse ($employee as $em)
+                <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
+                @empty
+                @endforelse
+            </select>
+        </td>
+        <td>
             <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                 <option value="">Select Post</option>
                 @forelse ($jobpost as $job)
@@ -154,19 +165,14 @@
                 @endforelse
             </select>
         </td>
-        <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-        <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
-        <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-        <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-        <td>
-            <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                <option value="1">8 Hour's</option>
-                <option value="2">12 Hour's</option>
-            </select>
-        </td>
+        <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
+        <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
+        <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+        <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
+        <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-            {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+            <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
         </td>
     </tr>
     `;
