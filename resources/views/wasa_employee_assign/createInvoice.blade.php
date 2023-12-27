@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('wasaEmployeeAsign.update',[encryptor('encrypt',$empasin->id)])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('wasaEmployeeAsign.update',[encryptor('encrypt',$empasin?->id)])}}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="row p-2 mt-4">

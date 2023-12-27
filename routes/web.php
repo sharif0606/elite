@@ -119,6 +119,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customerbrance', customerbrance::class);
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
+        Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 

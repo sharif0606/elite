@@ -9,7 +9,8 @@
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
-                <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>
+                <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-plus-square"></i> Add Wasa</button>
+                {{--  <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('wasaEmployeeAsign.createInvoice')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>  --}}
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
@@ -51,5 +52,32 @@
             </div>
         </div>
     </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <form action="{{route('wasaEmployeeAsign.createInvoice')}}">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Customer</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                {{--  <label for=""><b>Customer Name</b></label>  --}}
+                <select required class="form-select customer_id select2" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                    <option value="">Select Customer</option>
+                    @forelse ($customer as $c)
+                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                    @empty
+                    @endforelse
+                </select>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+        </form>
+    </div>
+  </div>
 </div>
 @endsection

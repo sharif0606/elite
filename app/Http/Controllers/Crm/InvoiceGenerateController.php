@@ -25,7 +25,8 @@ class InvoiceGenerateController extends Controller
     public function index()
     {
         $invoice=InvoiceGenerate::all();
-        return view('invoice_generate.index',compact('invoice'));
+        $customer=Customer::all();
+        return view('invoice_generate.index',compact('invoice','customer'));
     }
 
     public function create()

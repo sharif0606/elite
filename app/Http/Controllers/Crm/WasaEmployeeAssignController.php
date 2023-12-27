@@ -133,7 +133,42 @@ class WasaEmployeeAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $data=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            //$data->atm_id = $request->atm_id;
+            $data->status = 0;
+            if($data->save()){
+                if($request->employee_id){
+                    $dl=WasaEmployeeAssignDetails::where('wasa_employee_assign_id',$data->id)->delete();
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $details = new WasaEmployeeAssignDetails;
+                            $details->wasa_employee_assign_id=$data->id;
+                            $details->atm_id = $request->atm_id[$key];
+                            $details->employee_id=$request->employee_id[$key];
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->area=$request->area[$key];
+                            $details->employee_name=$request->employee_name[$key];
+                            $details->duty=$request->duty[$key];
+                            $details->account_no=$request->account_no[$key];
+                            $details->salary_amount=$request->salary_amount[$key];
+                            $details->status=0;
+                            $details->save();
+                        }
+                    }
+                }
+                \LogActivity::addToLog('Wasa Employee Assign Update',$request->getContent(),'WasaEmployeeAssign,WasaEmployeeAssignDetails');
+                return redirect()->route('wasaEmployeeAsign.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -145,5 +180,20 @@ class WasaEmployeeAssignController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function createInvoice(Request $request)
+    {
+        $empasin = WasaEmployeeAssign::where('customer_id',$request->customer_id)->first();
+        if($empasin){
+            $jobpost=JobPost::all();
+            $branch=CustomerBrance::where('id',$empasin->branch_id)->first();
+            $customer=Customer::where('id',$empasin->customer_id)->first();
+            $atm=Atm::where('branch_id',$empasin->branch_id)->get();
+            $employee = Employee::select('id','admission_id_no','en_applicants_name')->get();
+            return view('wasa_employee_assign.createInvoice',compact('jobpost','customer','empasin','branch','atm','employee'));
+        }else{
+            return back();
+        }
     }
 }
