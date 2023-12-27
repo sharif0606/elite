@@ -27,17 +27,19 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Job Post</th>
-                                        <th>Qty</th>
-                                        <th>Rate</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Rank</th>
+                                        <th>Salary</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($e->details as $de)
                                     <tr>
+                                        <td>{{ $de->employee?->admission_id_no }}</td>
+                                        <td>{{ $de->employee_name }}</td>
                                         <td>{{$de->jobpost?->name }}</td>
-                                        <td>{{ $de->qty }}</td>
-                                        <td>{{ $de->rate }}</td>
+                                        <td>{{ $de->salary_amount }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>

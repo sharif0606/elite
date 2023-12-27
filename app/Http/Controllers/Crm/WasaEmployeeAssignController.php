@@ -5,9 +5,16 @@ namespace App\Http\Controllers\Crm;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\WasaEmployeeAssign;
+use App\Models\Crm\WasaEmployeeAssignDetails;
 use App\Models\JobPost;
 use App\Models\Customer;
 use App\Models\Employee\Employee;
+use Exception;
+use Toastr;
+use Carbon\Carbon;
+use DB;
+use App\Http\Traits\ImageHandleTraits;
+use Intervention\Image\Facades\Image;
 
 class WasaEmployeeAssignController extends Controller
 {
@@ -49,7 +56,42 @@ class WasaEmployeeAssignController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $data=new WasaEmployeeAssign;
+            $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->status = 0;
+            if($data->save()){
+                if($request->employee_id){
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $details = new WasaEmployeeAssignDetails;
+                            $details->wasa_employee_assign_id=$data->id;
+                            $details->atm_id = $request->atm_id[$key];
+                            $details->employee_id=$request->employee_id[$key];
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->area=$request->area[$key];
+                            $details->employee_name=$request->employee_name[$key];
+                            $details->duty=$request->duty[$key];
+                            $details->account_no=$request->account_no[$key];
+                            $details->salary_amount=$request->salary_amount[$key];
+                            $details->status=0;
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if ($data->save()) {
+                \LogActivity::addToLog('Wasa Employee Assign',$request->getContent(),'WasaEmployeeAssign,WasaEmployeeAssignDetails');
+                return redirect()->route('wasaEmployeeAsign.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**

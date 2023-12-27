@@ -55,7 +55,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id" onchange="getEmployees(this)">
+                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
                                                         @forelse ($employee as $em)
                                                         <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
@@ -147,7 +147,7 @@
             </select>
         </td>
         <td>
-            <select class="form-select employee_id select2" id="employee_id" name="employee_id" onchange="getEmployees(this)">
+            <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                 <option value="">Select</option>
                 @forelse ($employee as $em)
                 <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
