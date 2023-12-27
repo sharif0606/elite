@@ -9,7 +9,7 @@
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
-                <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-plus-square"></i> Add Wasa</button>
+                <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-plus-square"></i> Add Different</button>
                 {{--  <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('wasaEmployeeAsign.createInvoice')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>  --}}
                 <thead>
                     <tr class="text-center">
@@ -59,22 +59,24 @@
     <div class="modal-content">
         <form action="{{route('wasaEmployeeAsign.createInvoice')}}">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Customer</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Wasa or One Trip</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 {{--  <label for=""><b>Customer Name</b></label>  --}}
-                <select required class="form-select customer_id select2" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                     <option value="">Select Customer</option>
                     @forelse ($customer as $c)
                     <option value="{{ $c->id }}">{{ $c->name }}</option>
                     @empty
                     @endforelse
                 </select>
+                <br/>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Go</button>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-sm btn-primary my-2" href="{{route('wasaEmployeeAsign.oneTrip')}}"><i class="bi bi-plus-square"></i> One Trip</a>
               </div>
         </form>
     </div>

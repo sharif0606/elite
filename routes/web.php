@@ -120,6 +120,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
         Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
+        Route::get('createOnetrip', [wasaEmployeeAsign::class,'createOneTrip'])->name('wasaEmployeeAsign.oneTrip');
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 
@@ -161,6 +162,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show4/{id}', [invoiceGenerate::class, 'getSingleInvoice4'])->name('invoiceShow4');
         Route::get('/single-invoice-show5/{id}', [invoiceGenerate::class, 'getSingleInvoice5'])->name('invoiceShow5');
         Route::get('/single-invoice-show6/{id}', [invoiceGenerate::class, 'getSingleInvoice6'])->name('invoiceShow6');
+        Route::get('wasastoreInvoice', [wasaEmployeeAsign::class,'storeWasaInvoice'])->name('WasaInviceStore');
 
         /* stock */
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');

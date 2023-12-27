@@ -1,7 +1,7 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Default Employee Assign Update'))
-@section('pageSubTitle',trans('Edit'))
+@section('pageTitle',trans('Wasa Invoice Generate'))
+@section('pageSubTitle',trans('Crate'))
 
 @section('content')
 <section id="multiple-column-form">
@@ -39,6 +39,7 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
+                                                <th scope="col">{{__('#SL')}}</th>
                                                 <th scope="col">{{__('ATM')}}</th>
                                                 <th scope="col">{{__('ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
@@ -54,6 +55,7 @@
                                             @if ($empasin->details)
                                             @foreach ($empasin->details as $d)
                                             <tr>
+                                                <td scope="row">{{ ++$loop->index }}</td>
                                                 <td>
                                                     <select class="form-select atm_id" id="atm_id" name="atm_id[]">
                                                         <option value="0">Select Atm</option>
