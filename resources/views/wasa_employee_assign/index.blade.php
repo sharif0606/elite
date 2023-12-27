@@ -47,16 +47,16 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('employee_assign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('wasaEmployeeAsign.show',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('employee_assign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a href="{{route('wasaEmployeeAsign.edit',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
                                 <i class="bi bi-trash"></i>
                             </a>
-                            <form id="form{{ $e->id }}" action="{{ route('employee_assign.destroy', encryptor('encrypt', $e->id)) }}" method="post">
+                            <form id="form{{ $e->id }}" action="{{ route('wasaEmployeeAsign.destroy', encryptor('encrypt', $e->id)) }}" method="post">
                                 @csrf
                                 @method('delete')
                             </form>

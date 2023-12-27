@@ -9,6 +9,8 @@ use App\Models\Crm\WasaEmployeeAssignDetails;
 use App\Models\JobPost;
 use App\Models\Customer;
 use App\Models\Employee\Employee;
+use App\Models\Crm\CustomerBrance;
+use App\Models\Crm\Atm;
 use Exception;
 use Toastr;
 use Carbon\Carbon;
@@ -113,7 +115,13 @@ class WasaEmployeeAssignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $jobpost=JobPost::all();
+        $empasin = WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        $branch=CustomerBrance::where('id',$empasin->branch_id)->first();
+        $customer=Customer::where('id',$empasin->customer_id)->first();
+        $atm=Atm::where('branch_id',$empasin->branch_id)->get();
+        $employee = Employee::select('id','admission_id_no','en_applicants_name')->get();
+        return view('wasa_employee_assign.edit',compact('jobpost','customer','empasin','branch','atm','employee'));
     }
 
     /**

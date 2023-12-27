@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Employee Assign Update'))
+@section('pageTitle',trans('Default Employee Assign Update'))
 @section('pageSubTitle',trans('Edit'))
 
 @section('content')
@@ -23,7 +23,7 @@
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
-                                        <option value="{{ $branch->id }}">{{ $branch->brance_name }}</option>
+                                        <option value="{{ $branch?->id }}">{{ $branch?->brance_name }}</option>
                                     </select>
                                 </div>
                                 {{--  <div class="col-lg-4 mt-2">
@@ -40,12 +40,13 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('ATM')}}</th>
-                                                <th scope="col">{{__('Job Post')}}</th>
-                                                <th scope="col">{{__('Qty')}}</th>
-                                                <th scope="col">{{__('Rate')}}</th>
-                                                <th scope="col">{{__('Start Date')}}</th>
-                                                <th scope="col">{{__('End Date')}}</th>
-                                                <th scope="col">{{__('Hours')}}</th>
+                                                <th scope="col">{{__('ID No')}}</th>
+                                                <th scope="col">{{__('Rank')}}</th>
+                                                <th scope="col">{{__('Area')}}</th>
+                                                <th scope="col">{{__('Name')}}</th>
+                                                <th scope="col">{{__('Duty')}}</th>
+                                                <th scope="col">{{__('Account No')}}</th>
+                                                <th scope="col">{{__('Salary')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -63,7 +64,17 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select" id="job_post_id" name="job_post_id[]">
+                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
+                                                        <option value="">Select</option>
+                                                        @forelse ($employee as $em)
+                                                        <option value="{{ $em->id }}" {{ ($d->employee_id == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                                                        {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
+                                                        @empty
+                                                        @endforelse
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                                                         <option value="">Select Post</option>
                                                         @forelse ($jobpost as $job)
                                                         <option value="{{ $job->id }}" {{ $d->job_post_id==$job->id?"selected":""}}>{{ $job->name }}</option>
@@ -71,19 +82,13 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="qty[]" value="{{ $d->qty }}" placeholder="qty"></td>
-                                                <td><input class="form-control" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate"></td>
-                                                <td><input required class="form-control" type="date" name="start_date[]" value="{{ $d->start_date }}" placeholder="Start Date"></td>
-                                                <td><input class="form-control" type="date" name="end_date[]" value="{{ $d->end_date }}" placeholder="End Date"></td>
+                                                <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
+                                                <td><input class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
+                                                <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
+                                                <td><input class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
+                                                <td><input class="form-control" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                                 <td>
-                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                                                        <option value="1" {{ $d->hours=='1'?"selected":""}}>8 Hour's</option>
-                                                        <option value="2" {{ $d->hours=='2'?"selected":""}}>12 Hour's</option>
-                                                    </select>
-                                                </td>
-
-                                                <td>
-                                                    <span onClick='RemoveRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -106,42 +111,85 @@
 @endsection
 @push("scripts")
 <script>
+    function getEmployees(e){
+        // if (!$('.customer_id').val()) {
+         //    $('.customer_id').focus();
+        //     return false;
+        // }
+         var employee_id=$(e).closest('tr').find('.employee_id').val();
+         console.log(employee_id);
+         var customerId = document.getElementById('customer_id').value;
+         if(employee_id){
+             $.ajax({
+                 url:"{{ route('wasaGetEmployee') }}",
+                 type: "GET",
+                 dataType: "json",
+                 data: { 'id':employee_id },
+                 success: function(data) {
+                     console.log(data);
+                     if(data.length>0){
+                         var id = data[0].id;
+                         var name = data[0].en_applicants_name;
+                         var ac_no = data[0].bn_ac_no;
+                         var contact = data[0].bn_parm_phone_my;
+                         var positionid=data[0].bn_jobpost_id;
+                         var positionName = data[0].position.name;
+                         var positionId = data[0].position.id;
+                         console.log(positionName);
+                         $(e).closest('tr').find('.job_post_id').val(positionId).prop('selected', true);
+                         $(e).closest('tr').find('.employee_name').val(name);
+                         $(e).closest('tr').find('.account_no').val(ac_no);
+                     }
+                 },
+             });
+         } else {
+             $(e).closest('tr').find('.employee_name').val('');
+             $(e).closest('tr').find('.job_post_id').val('');
+             $(e).closest('tr').find('.account_no').val('');
+         }
+     }
+
     function addRow(){
 
-var row=`
-<tr>
-    <td>
-        <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-            <option value="0">Select Atm</option>
-        </select>
-    </td>
-    <td>
-        <select class="form-select" id="job_post_id" name="job_post_id[]">
-            <option value="">Select Post</option>
-            @forelse ($jobpost as $job)
-            <option value="{{ $job->id }}">{{ $job->name }}</option>
-            @empty
-            @endforelse
-        </select>
-    </td>
-    <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-    <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
-    <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-    <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-    <td>
-        <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-            <option value="1">8 Hour's</option>
-            <option value="2">12 Hour's</option>
-        </select>
-    </td>
-    <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-    </td>
-</tr>
-`;
-    $('#empasinassing').append(row);
-}
+        var row=`
+        <tr class="new_rows">
+            <td>
+                <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+                    <option value="0">Select Atm</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
+                    <option value="">Select</option>
+                    @forelse ($employee as $em)
+                    <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                    {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
+                    @empty
+                    @endforelse
+                </select>
+            </td>
+            <td>
+                <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
+                    <option value="">Select Post</option>
+                    @forelse ($jobpost as $job)
+                    <option value="{{ $job->id }}">{{ $job->name }}</option>
+                    @empty
+                    @endforelse
+                </select>
+            </td>
+            <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
+            <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
+            <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+            <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
+            <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
+            <td>
+                <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+            </td>
+        </tr>
+        `;
+        $('#empasinassing').append(row);
+    }
 
 function RemoveRow(e) {
     if (confirm("Are you sure you want to remove this row?")) {
