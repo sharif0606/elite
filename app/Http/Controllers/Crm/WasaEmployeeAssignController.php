@@ -62,6 +62,11 @@ class WasaEmployeeAssignController extends Controller
             $data=new WasaEmployeeAssign;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
+            $data->add_commission = $request->add_commission;
+            $data->vat_on_commission = $request->vat_on_commission;
+            $data->ait_on_commission = $request->ait_on_commission;
+            $data->vat_on_subtotal = $request->vat_on_subtotal;
+            $data->ait_on_subtotal = $request->ait_on_subtotal;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){
@@ -137,7 +142,11 @@ class WasaEmployeeAssignController extends Controller
             $data=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
-            //$data->atm_id = $request->atm_id;
+            $data->add_commission = $request->add_commission;
+            $data->vat_on_commission = $request->vat_on_commission;
+            $data->ait_on_commission = $request->ait_on_commission;
+            $data->vat_on_subtotal = $request->vat_on_subtotal;
+            $data->ait_on_subtotal = $request->ait_on_subtotal;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){

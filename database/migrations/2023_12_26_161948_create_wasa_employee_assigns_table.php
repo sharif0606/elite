@@ -18,6 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id')->nullable();
 			$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->integer('branch_id')->nullable();
+            $table->decimal('add_commission',10,2)->default(0);
+            $table->decimal('vat_on_commission',10,2)->default(0);
+            $table->decimal('ait_on_commission',10,2)->default(0);
+            $table->decimal('vat_on_subtotal',10,2)->default(0);
+            $table->decimal('ait_on_subtotal',10,2)->default(0);
             //$table->integer('atm_id')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

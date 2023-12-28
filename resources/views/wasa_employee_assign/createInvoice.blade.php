@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Wasa Invoice Generate'))
+@section('pageTitle',trans('Invoice Generate'))
 @section('pageSubTitle',trans('Crate'))
 
 @section('content')
@@ -33,14 +33,6 @@
                                     <label for=""><b>Bill Date</b></label>
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>VAT(%)</b></label>
-                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
-                                </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>AIT(%)</b></label>
-                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
-                                </div>
                                 {{--  <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
@@ -51,7 +43,7 @@
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mb-0 table-striped">
+                                    <table class="table table-bordered mb-0">
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('#SL')}}</th>
@@ -123,7 +115,7 @@
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">Add: Commission 5%</th>
+                                                <th colspan="7">Add: Commission {{ $empasin->add_commission }}%</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                     <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
@@ -132,19 +124,19 @@
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">(<span class="vat_percent"></span> %) VAT + (<span class="vat_percent"></span> %)AIT = 20% Commision</th>
+                                                <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $empasin->ait_on_commission }}</span> %)AIT = {{ $empasin->vat_on_commission+$empasin->ait_on_commission }}% Commision</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                                 <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">(<span class="vat_percent"></span> %) VAT on Sub Total</th>
+                                                <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                                 <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">(<span class="vat_percent"></span> %) AIT on Sub Total</th>
+                                                <th colspan="7">(<span class="vat_percent">{{ $empasin->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                                 <td></td>
                                             </tr>
@@ -216,17 +208,22 @@
     function addRow(){
 
         var row=`
-        <tr class="new_rows">
+        <tr>
+            <td scope="row"></td>
             <td>
                 <select class="form-select atm_id" id="atm_id" name="atm_id[]">
                     <option value="0">Select Atm</option>
+                    @forelse ($atm as $a)
+                    <option value="{{ $a->id }}" {{ $d->atm_id==$a->id?"selected":""}}>{{ $a->atm }}</option>
+                    @empty
+                    @endforelse
                 </select>
             </td>
             <td>
                 <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                     <option value="">Select</option>
                     @forelse ($employee as $em)
-                    <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                    <option value="{{ $em->id }}" {{ ($d->employee_id == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
                     {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
                     @empty
                     @endforelse
@@ -236,16 +233,16 @@
                 <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                     <option value="">Select Post</option>
                     @forelse ($jobpost as $job)
-                    <option value="{{ $job->id }}">{{ $job->name }}</option>
+                    <option value="{{ $job->id }}" {{ $d->job_post_id==$job->id?"selected":""}}>{{ $job->name }}</option>
                     @empty
                     @endforelse
                 </select>
             </td>
-            <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
-            <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
-            <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
-            <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
-            <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
+            <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
+            <td><input class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
+            <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
+            <td><input class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
+            <td><input class="form-control salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
             <td>
                 <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                 <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
