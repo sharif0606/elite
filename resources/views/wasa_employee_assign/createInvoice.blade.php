@@ -34,7 +34,11 @@
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Vat(%)</b></label>
+                                    <label for=""><b>VAT(%)</b></label>
+                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>AIT(%)</b></label>
                                     <input required class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
                                 {{--  <div class="col-lg-4 mt-2">
@@ -99,7 +103,7 @@
                                                 <td><input class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
                                                 <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
                                                 <td><input class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
-                                                <td><input class="form-control" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
+                                                <td><input class="form-control salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -113,7 +117,7 @@
                                                 <td></td>
                                                 <th colspan="7" style="text-align: end;">Sub Tatal</th>
                                                 <td>
-                                                    <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
+                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -128,13 +132,13 @@
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">(<span class="vat_percent"></span> %) Vat + (<span class="vat_percent"></span> %)AIT = 20% Commision</th>
+                                                <th colspan="7">(<span class="vat_percent"></span> %) VAT + (<span class="vat_percent"></span> %)AIT = 20% Commision</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                                 <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="7">(<span class="vat_percent"></span> %) Vat on Sub Total</th>
+                                                <th colspan="7">(<span class="vat_percent"></span> %) VAT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                                 <td></td>
                                             </tr>
@@ -170,6 +174,7 @@
 @endsection
 @push("scripts")
 <script>
+    subtotalAmount();
     function getEmployees(e){
         // if (!$('.customer_id').val()) {
          //    $('.customer_id').focus();
@@ -250,11 +255,18 @@
         $('#empasinassing').append(row);
     }
 
-function RemoveRow(e) {
-    if (confirm("Are you sure you want to remove this row?")) {
-        $(e).closest('tr').remove();
+    function RemoveRow(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+        }
     }
-}
+    function subtotalAmount(){
+        var subTotal=0;
+        $('.salary_amount').each(function(){
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
+    }
 
 </script>
 <script>
