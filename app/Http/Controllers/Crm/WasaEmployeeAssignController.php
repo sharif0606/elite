@@ -179,7 +179,10 @@ class WasaEmployeeAssignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $crate=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
+        $dl=WasaEmployeeAssignDetails::where('wasa_employee_assign_id',$crate->id)->delete();
+        $crate->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 
     public function createInvoice(Request $request)

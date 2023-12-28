@@ -15,16 +15,27 @@
                             @method('PATCH')
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
+                                    <label for=""><b>Customer Name</b></label> :  {{ $customer->name }}
+                                    <input readonly class="form-control customer_id" id="customer_id" type="hidden" name="customer_id" value="{{ $customer->id }}">
+                                    {{--  <select class="form-select customer_id" id="customer_id" name="customer_id">
                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                    </select>
+                                    </select>  --}}
                                 </div>
                                 <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <label for=""><b>Branch Name</b></label> : {{ $branch?->brance_name }}
+                                    <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ $customer->id }}">
+                                    {{--  <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                        <option value="0">Select Branch</option>
                                         <option value="{{ $branch?->id }}">{{ $branch?->brance_name }}</option>
-                                    </select>
+                                    </select>  --}}
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Bill Date</b></label>
+                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Vat(%)</b></label>
+                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
                                 {{--  <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
@@ -41,7 +52,7 @@
                                             <tr class="text-center">
                                                 <th scope="col">{{__('#SL')}}</th>
                                                 <th scope="col">{{__('ATM')}}</th>
-                                                <th scope="col">{{__('ID No')}}</th>
+                                                <th scope="col">{{__('Employee ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
                                                 <th scope="col">{{__('Area')}}</th>
                                                 <th scope="col">{{__('Name')}}</th>
@@ -97,6 +108,52 @@
                                             @endforeach
                                             @endif
                                         </tbody>
+                                        <tfoot>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7">Add: Commission 5%</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
+                                                    <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7">(<span class="vat_percent"></span> %) Vat + (<span class="vat_percent"></span> %)AIT = 20% Commision</th>
+                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7">(<span class="vat_percent"></span> %) Vat on Sub Total</th>
+                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7">(<span class="vat_percent"></span> %) AIT on Sub Total</th>
+                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <td></td>
+                                                <th colspan="7">Grand Total</th>
+                                                <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10">Total Amount in Word: </td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
