@@ -4,6 +4,12 @@
 @section('pageSubTitle',trans('Crate'))
 
 @section('content')
+<style>
+    .input_css{
+        border: none;
+        outline: none;
+    }
+</style>
 <section id="multiple-column-form">
     <div class="row match-height">
         <div class="col-12">
@@ -55,7 +61,6 @@
                                                 <th scope="col">{{__('Duty')}}</th>
                                                 <th scope="col">{{__('Account No')}}</th>
                                                 <th scope="col">{{__('Salary')}}</th>
-                                                <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
                                         <tbody id="empasinassing">
@@ -91,15 +96,11 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
-                                                <td><input class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
-                                                <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
-                                                <td><input class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
-                                                <td><input class="form-control salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
-                                                <td>
-                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                                                    <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
+                                                <td><input class="form-control input_css" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
+                                                <td><input class="form-control input_css employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
+                                                <td><input required class="form-control input_css" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
+                                                <td><input class="form-control input_css account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
+                                                <td><input class="form-control input_css salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                             </tr>
                                             @endforeach
                                             @endif
@@ -111,7 +112,6 @@
                                                 <td>
                                                     <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
                                                 </td>
-                                                <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
@@ -120,34 +120,29 @@
                                                     <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                     <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
                                                 </td>
-                                                <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $empasin->ait_on_commission }}</span> %)AIT = {{ $empasin->vat_on_commission+$empasin->ait_on_commission }}% Commision</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
-                                                <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
-                                                <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
-                                                <td></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">Grand Total</th>
                                                 <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
-                                                <td colspan="10">Total Amount in Word: </td>
+                                                <td colspan="9">Total Amount in Word: </td>
                                             </tr>
                                         </tfoot>
                                     </table>
