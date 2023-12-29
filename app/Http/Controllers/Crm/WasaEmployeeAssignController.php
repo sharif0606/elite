@@ -11,6 +11,8 @@ use App\Models\Customer;
 use App\Models\Employee\Employee;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\Atm;
+use App\Models\Crm\InvoiceGenerate;
+use App\Models\Crm\InvoiceGenerateDetails;
 use Exception;
 use Toastr;
 use Carbon\Carbon;
@@ -210,36 +212,70 @@ class WasaEmployeeAssignController extends Controller
             return back();
         }
     }
-    public function storeWasaInvoice(Request $request, $id)
+    public function storeWasaInvoice(Request $request, $id=null)
     {
+        dd($request->all());
         try{
-            $data=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
+            $billDate = Carbon::parse($request->bill_date);
+            $firstDayOfMonth = $billDate->firstOfMonth();
+            $lastDayOfMonth = $billDate->lastOfMonth();
+
+            $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
             //$data->atm_id = $request->atm_id;
+            $data->start_date = $firstDayOfMonth;
+            $data->end_date = $lastDayOfMonth;
+            $data->bill_date = $request->bill_date;
+            $data->vat = $request->vat_subtotal;
+            $data->sub_total_amount = $request->sub_total_salary;
+            //$data->total_tk = $request->total_tk;
+            $data->vat_taka = $request->vat_tk_subtotal;
+            $data->grand_total = $request->grand_total_tk;
+            $data->footer_note = $request->footer_note;
             $data->status = 0;
+
+            //aigula invoice table a rakha dorkar
+
+            // $data->add_commission = $request->add_commission;
+            // $data->vat_on_commission = $request->vat_on_commission;
+            // $data->ait_on_commission = $request->ait_on_commission;
+            // $data->vat_on_subtotal = $request->vat_on_subtotal;
+            // $data->ait_on_subtotal = $request->ait_on_subtotal;
+
             if($data->save()){
-                if($request->employee_id){
-                    $dl=WasaEmployeeAssignDetails::where('wasa_employee_assign_id',$data->id)->delete();
-                    foreach($request->employee_id as $key => $value){
+                if($request->job_post_id){
+                    foreach($request->job_post_id as $key => $value){
                         if($value){
-                            $details = new WasaEmployeeAssignDetails;
-                            $details->wasa_employee_assign_id=$data->id;
-                            $details->atm_id = $request->atm_id[$key];
-                            $details->employee_id=$request->employee_id[$key];
+                            $details = new InvoiceGenerateDetails;
+                            $details->invoice_id=$data->id;
                             $details->job_post_id=$request->job_post_id[$key];
-                            $details->area=$request->area[$key];
-                            $details->employee_name=$request->employee_name[$key];
                             $details->duty=$request->duty[$key];
-                            $details->account_no=$request->account_no[$key];
-                            $details->salary_amount=$request->salary_amount[$key];
+                            $details->st_date=$firstDayOfMonth;
+                            $details->ed_date = $lastDayOfMonth;
+                            $details->total_amounts=$request->salary_amount[$key];
+                            //$details->atm_id = $request->atm_id[$key];
+
+                            //aigula invoice table a rakha dorkar
+
+                            // $details->employee_id=$request->employee_id[$key];
+                            // $details->area=$request->area[$key];
+                            // $details->employee_name=$request->employee_name[$key];
+                            // $details->account_no=$request->account_no[$key];
                             $details->status=0;
                             $details->save();
+
+                            //invoice a achea but amader aikhane nai
+
+                            // $details->employee_qty=$request->employee_qty[$key];
+                            // $details->total_houres=$request->total_houres[$key];
+                            // $details->rate_per_houres=$request->rate_per_houres[$key];
+                            // $details->rate=$request->rate[$key];
                         }
                     }
                 }
-                \LogActivity::addToLog('Wasa Employee Assign Update',$request->getContent(),'WasaEmployeeAssign,WasaEmployeeAssignDetails');
-                return redirect()->route('wasaEmployeeAsign.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                \LogActivity::addToLog('Wasa invoice Create',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails');
+                return redirect()->route('invoiceGenerate.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

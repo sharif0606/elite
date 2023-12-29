@@ -16,13 +16,15 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('wasaEmployeeAsign.update',[encryptor('encrypt',$empasin?->id)])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('WasaInviceStore')}}" enctype="multipart/form-data">
+                        {{--  <form method="post" action="{{route('WasaInviceStore',[encryptor('encrypt',$empasin?->id)])}}" enctype="multipart/form-data">  --}}
                             @csrf
-                            @method('PATCH')
+                            @method('POST')
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label> :  {{ $customer->name }}
                                     <input readonly class="form-control customer_id" id="customer_id" type="hidden" name="customer_id" value="{{ $customer->id }}">
+                                    <input class="" type="hidden" name="vat_subtotal" value="{{ $empasin->vat_on_subtotal }}">
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label> : {{ $branch?->brance_name }}
@@ -30,7 +32,12 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Bill Date</b></label>
-                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                    <input required class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                </div>
+                                <div class="col-lg-12 mt-2">
+                                    <label for=""><b>Footer Note</b></label>
+                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="2" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
+                                    </textarea>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -64,10 +71,10 @@
                                                 <td>{{ $d->jobpost?->name }}
                                                     <input class="" type="hidden" name="job_post_id[]" value="{{ $d->job_post_id }}">
                                                 </td>
-                                                <td><input class="form-control input_css" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
-                                                <td><input class="form-control input_css employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
+                                                <td><input readonly class="form-control input_css" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
+                                                <td><input readonly class="form-control input_css employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
                                                 <td><input required class="form-control input_css" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
-                                                <td><input class="form-control input_css account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
+                                                <td><input readonly class="form-control input_css account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
                                                 <td><input class="form-control input_css salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                             </tr>
                                             @endforeach
@@ -93,33 +100,32 @@
                                                 <td></td>
                                                 <th colspan="7">Add: Commission {{ $empasin->add_commission }}%</th>
                                                 <td>
-                                                    <input readonly type="text" class="form-control total_tk" name="total_tk" value="{{ $comissionTk }} ">
-                                                    <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
+                                                    <input readonly type="text" class="form-control add_commission_tk" name="add_commission_tk" value="{{ $comissionTk }} ">
                                                 </td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $empasin->ait_on_commission }}</span> %)AIT = {{ $empasin->vat_on_commission+$empasin->ait_on_commission }}% Commision</th>
-                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $vatAitTakaCommision }}"></td>
+                                                <td><input readonly type="text" class="form-control vat_ait_commission_tk" name="vat_ait_commission_tk" value="{{ $vatAitTakaCommision }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
-                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $vatOnSubtotal }}"></td>
+                                                <td><input readonly type="text" class="form-control vat_tk_subtotal" name="vat_tk_subtotal" value="{{ $vatOnSubtotal }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
-                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $aitOnSubtotal }}"></td>
+                                                <td><input readonly type="text" class="form-control ait_tk_subtotal" name="ait_tk_subtotal" value="{{ $aitOnSubtotal }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">Grand Total</th>
-                                                <td><input readonly type="text" class="form-control grand_total" name="grand_total" value="{{ $grandTotal }}"></td>
+                                                <td><input readonly type="text" class="form-control grand_total_tk" name="grand_total_tk" value="{{ $grandTotal }}"></td>
                                             </tr>
-                                            <tr>
+                                            {{--  <tr>
                                                 <td colspan="9">Total Amount in Word: </td>
-                                            </tr>
+                                            </tr>  --}}
                                         </tfoot>
                                     </table>
                                 </div>
