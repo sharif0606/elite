@@ -97,15 +97,24 @@
                                                 </td>
                                                 <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
                                                 <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
-                                                <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+                                                <td><input required class="form-control not-hide" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
                                                 <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
-                                                <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
+                                                <td><input class="form-control salary_amount" type="text" onkeyup="subtotalAmount();" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
                                         </tbody>
+                                        <tfoot>
+                                            <tr style="text-align: center;">
+                                                <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -122,6 +131,13 @@
 @endsection
 @push("scripts")
 <script>
+    function subtotalAmount(){
+        var subTotal=0;
+        $('.salary_amount').each(function(){
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
+    }
     function getEmployees(e){
        // if (!$('.customer_id').val()) {
         //    $('.customer_id').focus();
@@ -191,7 +207,7 @@
         <td><input class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
         <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
         <td><input class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
-        <td><input class="form-control" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
+        <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="" placeholder="Salary Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -204,6 +220,7 @@
     function removeRow(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
+            subtotalAmount();
         }
     }
 

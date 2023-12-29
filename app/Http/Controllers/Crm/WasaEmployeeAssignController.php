@@ -67,6 +67,7 @@ class WasaEmployeeAssignController extends Controller
             $data->ait_on_commission = $request->ait_on_commission;
             $data->vat_on_subtotal = $request->vat_on_subtotal;
             $data->ait_on_subtotal = $request->ait_on_subtotal;
+            $data->sub_total_salary = $request->sub_total_salary;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){
@@ -147,6 +148,7 @@ class WasaEmployeeAssignController extends Controller
             $data->ait_on_commission = $request->ait_on_commission;
             $data->vat_on_subtotal = $request->vat_on_subtotal;
             $data->ait_on_subtotal = $request->ait_on_subtotal;
+            $data->sub_total_salary = $request->sub_total_salary;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){
