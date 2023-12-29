@@ -81,33 +81,41 @@
                                                     <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="{{ $empasin->sub_total_salary }}">
                                                 </td>
                                             </tr>
+                                            @php
+                                                $comissionTk=($empasin->sub_total_salary)*($empasin->add_commission/100);
+                                                $vatAit=(($empasin->vat_on_commission+$empasin->ait_on_commission)/100);
+                                                $vatAitTakaCommision=($comissionTk*$vatAit);
+                                                $vatOnSubtotal=($empasin->sub_total_salary)*($empasin->vat_on_subtotal/100);
+                                                $aitOnSubtotal=($empasin->sub_total_salary)*($empasin->ait_on_subtotal/100);
+                                                $grandTotal=($empasin->sub_total_salary+$comissionTk+$vatAitTakaCommision+$vatOnSubtotal+$aitOnSubtotal);
+                                            @endphp
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">Add: Commission {{ $empasin->add_commission }}%</th>
                                                 <td>
-                                                    <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
+                                                    <input readonly type="text" class="form-control total_tk" name="total_tk" value="{{ $comissionTk }} ">
                                                     <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
                                                 </td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $empasin->ait_on_commission }}</span> %)AIT = {{ $empasin->vat_on_commission+$empasin->ait_on_commission }}% Commision</th>
-                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $vatAitTakaCommision }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
-                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $vatOnSubtotal }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">(<span class="vat_percent">{{ $empasin->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
-                                                <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                                <td><input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{ $aitOnSubtotal }}"></td>
                                             </tr>
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="7">Grand Total</th>
-                                                <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
+                                                <td><input readonly type="text" class="form-control grand_total" name="grand_total" value="{{ $grandTotal }}"></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="9">Total Amount in Word: </td>
