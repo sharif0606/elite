@@ -152,6 +152,12 @@ class InvoiceGenerateController extends Controller
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
         return view('invoice_generate.single_show6',compact('invoice_id','branch'));
     }
+    public function getSingleInvoice7($id)
+    {
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show6',compact('invoice_id','branch'));
+    }
 
     public function edit($id)
     {
