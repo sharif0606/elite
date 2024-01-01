@@ -244,14 +244,16 @@ class WasaEmployeeAssignController extends Controller
                             $invoiceDetail->save();
                         }
                     }
-                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', DB::raw('SUM(salary_amount) as total_amounts'))->groupBy('job_post_id')->get();
+                    // $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id','atm_id','duty', DB::raw('SUM(salary_amount) as total_amounts'))->groupBy('job_post_id')->get();
+                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty','salary_amount', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
+
                     foreach ($wasaInvoice as $winvoice) {
                         $details = new InvoiceGenerateDetails;
                         $details->invoice_id = $data->id;
                         $details->job_post_id = $winvoice->job_post_id;
                         $details->total_amounts=$winvoice->total_amounts;
-                        //$details->rate = $winvoice->total_rate;
-                        //$details->employee_qty = $winvoice->employee_qty;
+                        $details->rate = $winvoice->salary_amount;
+                        $details->employee_qty = $winvoice->employee_count;
                         //$details->total_houres = $winvoice->total_houres;
                         //$details->rate_per_houres = $winvoice->rate_per_houres;
                         $details->atm_id = $winvoice->atm_id;
