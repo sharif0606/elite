@@ -15,6 +15,20 @@ return new class extends Migration
     {
         Schema::create('wasa_invoice_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('wasa_invoice_id')->nullable();
+			$table->foreign('wasa_invoice_id')->references('id')->on('wasa_invoices')->onDelete('cascade');
+            $table->integer('invoice_id')->nullable();
+            $table->integer('atm_id')->nullable();
+            $table->integer('employee_id');
+            $table->integer('job_post_id');
+            $table->string('area');
+            $table->integer('duty');
+            $table->integer('salary_amount')->nullable();
+            $table->string('status')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');
+            $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('updated_by')->nullable()->index()->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

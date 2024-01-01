@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('branch_id')->nullable();
-            $table->integer('atm_id')->nullable();
+            //$table->integer('atm_id')->nullable(); //shift details table
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->date('bill_date')->nullable();
