@@ -254,7 +254,7 @@ class WasaEmployeeAssignController extends Controller
                         $details->total_amounts=$winvoice->total_amounts;
                         $details->rate = $winvoice->salary_amount;
                         $details->employee_qty = $winvoice->employee_count;
-                        //$details->total_houres = $winvoice->total_houres;
+                        $details->total_houres = ($winvoice->employee_count*$winvoice->duty*8);
                         //$details->rate_per_houres = $winvoice->rate_per_houres;
                         $details->atm_id = $winvoice->atm_id;
                         $details->warking_day = $winvoice->duty;
