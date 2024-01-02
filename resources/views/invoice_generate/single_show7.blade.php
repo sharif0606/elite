@@ -5,18 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bill of Al-Arafah Islami Bank Ltd. for August-2023</title>
+    <title>{{ $invoice_id->customer?->name }}. for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
 </head>
 
 <body>
     <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
-            <th width="50%">August-2023</th>
-            <th style="text-align: right; padding-right: 50px;">24/08/2023</th>
+            <th width="50%">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</th>
+            <th style="text-align: right; padding-right: 50px;">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</th>
         </tr>
     </table>
     <br>
-    <div>Invoice No. ESSL/WASA//23/07-01</div>
+    <div>Invoice No. {{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</div>
     <br>
     <table width="100%">
         <tr>
@@ -27,19 +27,19 @@
         </tr>
         <tr>
             <td></td>
-            <td>Chittagong WASA</td>
+            <td>{{ $invoice_id->customer?->name }}</td>
         </tr>
         <tr>
             <td></td>
-            <td>WASA Bhaban, Dampara</td>
+            <td>{{ $invoice_id->customer?->address }}</td>
         </tr>
-        <tr>
+        {{--  <tr>
             <td></td>
             <td>Chattogram.</td>
-        </tr>
+        </tr>  --}}
     </table>
     <br>
-    <div>Subject:   <b> Security Service bill for the month of July-2023.</b></div>
+    <div>Subject:   <b> Security Service bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}.</b></div>
     <br>
     <div>Dear Sir,</div>
     <br>
@@ -157,8 +157,8 @@
             <td  >2191215009818</td>
             <td style="text-align: right;">16,875.00</td>
         </tr>
-        
-        
+
+
         <tr>
             <th></th>
             <th colspan="6">Sub Total</th>
@@ -192,11 +192,11 @@
         <tr>
             <td colspan="8">Total Amount(In Words): <b><i>Forty Eight Thousand Five Hundred Sixty Five taka
                 only.</i></b></td>
-          
+
         </tr>
-       
+
     </table>
-    
+
     <br>
     <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> by
         the 1<sup>st</sup> week of each month.</div>

@@ -237,15 +237,15 @@ class WasaEmployeeAssignController extends Controller
                             $invoiceDetail->job_post_id=$request->job_post_id[$key];
                             $invoiceDetail->area=$request->area[$key];
                             $invoiceDetail->duty=$request->duty[$key];
-                            // $invoiceDetail->st_date=$firstDayOfMonth;
-                            // $invoiceDetail->ed_date = $lastDayOfMonth;
+                            $invoiceDetail->start_date=$firstDayOfMonth;
+                            $invoiceDetail->end_date = $lastDayOfMonth;
                             $invoiceDetail->salary_amount=$request->salary_amount[$key];
                             $invoiceDetail->status=0;
                             $invoiceDetail->save();
                         }
                     }
                     // $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id','atm_id','duty', DB::raw('SUM(salary_amount) as total_amounts'))->groupBy('job_post_id')->get();
-                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty','salary_amount', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
+                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty','salary_amount','start_date','end_date', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
 
                     foreach ($wasaInvoice as $winvoice) {
                         $details = new InvoiceGenerateDetails;
@@ -258,8 +258,8 @@ class WasaEmployeeAssignController extends Controller
                         //$details->rate_per_houres = $winvoice->rate_per_houres;
                         $details->atm_id = $winvoice->atm_id;
                         $details->warking_day = $winvoice->duty;
-                        $details->st_date=$firstDayOfMonth;
-                        $details->ed_date = $lastDayOfMonth;
+                        $details->st_date=$winvoice->start_date;
+                        $details->ed_date =$winvoice->end_date;
                         // You may add other fields as needed
                         $details->status = 0;
                         $details->save();

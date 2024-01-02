@@ -11,6 +11,7 @@ use App\Models\Crm\InvoiceGenerateDetails;
 use App\Models\Crm\InvoiceGenerateLess;
 use App\Models\Crm\EmployeeAssign;
 use App\Models\Crm\EmployeeAssignDetails;
+use App\Models\Crm\WasaInvoice;
 
 use Toastr;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class InvoiceGenerateController extends Controller
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
-            $data->atm_id = $request->atm_id;
+            //$data->atm_id = $request->atm_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
@@ -156,7 +157,8 @@ class InvoiceGenerateController extends Controller
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.single_show7',compact('invoice_id','branch'));
+        $wasa=WasaInvoice::where('invoice_id',$invoice_id->id)->first();
+        return view('invoice_generate.single_show7',compact('invoice_id','branch','wasa'));
     }
 
     public function edit($id)
