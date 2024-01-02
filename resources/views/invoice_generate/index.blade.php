@@ -76,7 +76,7 @@
                 <button type="submit" class="btn btn-primary">Go</button>
               </div>
               <div class="modal-footer">
-                <a class="btn btn-sm btn-primary my-2" href="{{route('wasaEmployeeAsign.oneTrip')}}"><i class="bi bi-plus-square"></i> One Trip</a>
+                <a class="btn btn-sm btn-primary my-2" href="{{route('oneTripInvoice.create')}}"><i class="bi bi-plus-square"></i> One Trip</a>
               </div>
         </form>
     </div>

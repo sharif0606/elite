@@ -39,6 +39,7 @@ use App\Http\Controllers\CustomerController as customer;
 use App\Http\Controllers\Crm\CustomerBranceController as customerbrance;
 use App\Http\Controllers\Crm\CustomerRateController as customerRate;
 use App\Http\Controllers\Crm\WasaEmployeeAssignController as wasaEmployeeAsign;
+use App\Http\Controllers\Crm\OnetripInvoiceController as oneTripInvoice;
 
 /* Stock */
 use App\Http\Controllers\Stock\CategoryController as category;
@@ -119,8 +120,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customerbrance', customerbrance::class);
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
+        Route::resource('oneTripInvoice', oneTripInvoice::class);
         Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
-        Route::get('createOnetrip', [wasaEmployeeAsign::class,'createOneTrip'])->name('wasaEmployeeAsign.oneTrip');
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 
