@@ -39,15 +39,24 @@
                             <div class="row">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input required class="form-control add_commission" type="date" name="add_commission" value="" placeholder="Add: Commission">
+                                    <input required class="form-control start_date" type="date" name="start_date" value="" placeholder="">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input required class="form-control vat_on_commission" type="date" name="vat_on_commission" value="" placeholder="VAT on Commission">
+                                    <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input required class="form-control ait_on_commission" step="0.01" type="number" name="ait_on_commission" value="0" placeholder="AIT on Commission">
+                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="0" placeholder="VAT">
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Bill Date</b></label>
+                                    <input required class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                </div>
+                                <div class="col-lg-12 mt-2">
+                                    <label for=""><b>Footer Note</b></label>
+                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="2" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
+                                    </textarea>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -70,13 +79,13 @@
                                                     <input class="form-control" type="text" name="service[]" value="" placeholder="Service">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="rate[]" value="" placeholder="Rate">
+                                                    <input class="form-control" step="0.01" type="number" name="rate[]" value="" placeholder="Rate">
                                                 </td>
                                                 <td>
                                                     <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
                                                 </td>
                                                 <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
-                                                <td><input class="form-control" type="text" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
+                                                <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -110,7 +119,7 @@
 <script>
     function subtotalAmount(){
         var subTotal=0;
-        $('.salary_amount').each(function(){
+        $('.amount').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
         $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
@@ -122,13 +131,13 @@
             <input class="form-control" type="text" name="service[]" value="" placeholder="Service">
         </td>
         <td>
-            <input class="form-control" type="text" name="rate[]" value="" placeholder="Rate">
+            <input class="form-control" step="0.01" type="number" name="rate[]" value="" placeholder="Rate">
         </td>
         <td>
             <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
         </td>
         <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
-        <td><input class="form-control" type="text" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
+        <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
