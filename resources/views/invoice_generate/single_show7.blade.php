@@ -57,140 +57,62 @@
             <th width="15%" >Account Number</th>
             <th width="13%">Salary Amount</th>
         </tr>
-        <tr>
-           <td >01</td>
-            <td>17300</td>
-            <td>Guard</td>
-            <td>Lalkhan Bazar</td>
-            <th style="text-align: left;">Pradip Das</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td>2191215009618</td>
-            <td style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td>02</td>
-            <td>15291</td>
-            <td>Guard</td>
-            <td>Bayezid</td>
-            <th  style="text-align: left;">Dil Bahadur</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td>2191215009617</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-       <tr >
-           <td>03</td>
-            <td>19120</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th style="text-align: left;">Md. Mosharof Hosain</th>
-            <th style="font-weight: 100;" >31 </th>
-            <td >2191215009814</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >04</td>
-            <td >18650</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th  style="text-align: left;">Mohammad Abul Kalam</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td  >2191215009613</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >05</td>
-            <td >18167</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th style="text-align: left;">Md. Abul Hossain</th>
-            <th style="font-weight: 100;" >31 </th>
-            <td >2191215009812</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >06</td>
-            <td >18636</td>
-            <td >Guard</td>
-            <td>Bayezid</td>
-            <th  style="text-align: left;">Nurul Absar</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td  >2191215009953</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >07</td>
-            <td >18092</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th style="text-align: left;">Md. Salamat Ullah</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td  >2191215009952</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >08</td>
-            <td >18682</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th style="text-align: left;">Halim Khan</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td  >2191215009081</td>
-            <td style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td >09</td>
-            <td >18597</td>
-            <td >Guard</td>
-            <td >Bayezid</td>
-            <th style="text-align: left;">Md. Hossain Nur Chowdhury</th>
-            <th  style="font-weight: 100;" >31 </th>
-            <td  >2191215009080</td>
-            <td  style="text-align: right;">16,875.00</td>
-        </tr>
-        <tr >
-           <td>10</td>
-            <td >18973</td>
-            <td >Guard</td>
-            <td >Modunaghat</td>
-            <th style="text-align: left;">Mohammad Rashid</th>
-            <th style="font-weight: 100;" >31 </th>
-            <td  >2191215009818</td>
-            <td style="text-align: right;">16,875.00</td>
-        </tr>
-
-
+            @if ($wasa->wasadetails)
+            @foreach ($wasa->wasadetails as $de)
+            <tr>
+                <td>{{ ++$loop->index  }}</td>
+                <td>{{ $de->employee?->admission_id_no }}</td>
+                <td>{{ $de->jobpost?->name }}</td>
+                <td>{{ $de->area }}</td>
+                <td>{{ $de->employee?->en_applicants_name }}</td>
+                <td>{{ $de->duty }}</td>
+                <td>{{ $de->employee?->bn_ac_no }}</td>
+                <td style="text-align: end;">{{ $de->salary_amount }}</td>
+            </tr>
+            @endforeach
+            @endif
         <tr>
             <th></th>
             <th colspan="6">Sub Total</th>
-            <th style="text-align: right;">722,359.00</th>
+            <th style="text-align: right;">{{ $wasa->sub_total_salary }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">Add: Commission 5%</th>
-            <th style="text-align: right;">36,117.95</th>
+            <th colspan="6">Add: Commission {{ $wasa->add_commission }}%</th>
+            <th style="text-align: right;">{{ $wasa->add_commission_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">10% VAT+ 10% AIT = 20% on Commission</th>
-            <th style="text-align: right;">7,223.59</th>
+            <th colspan="6">{{ $wasa->vat_on_commission }}% VAT+ {{ $wasa->ait_on_commission }}% AIT = {{ $wasa->vat_ait_on_commission }}% on Commission</th>
+            <th style="text-align: right;">{{ $wasa->vat_ait_on_commission_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">VAT 10%</th>
-            <th style="text-align: right;">72,235.90</th>
+            <th colspan="6">VAT {{ $wasa->vat_on_subtotal }}% on Sub Total</th>
+            <th style="text-align: right;">{{ $wasa->vat_on_subtotal_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">AIT 2% on Sub Total</th>
-            <th style="text-align: right;">14,447.18</th>
+            <th colspan="6">AIT {{ $wasa->ait_on_subtotal }}% on Sub Total</th>
+            <th style="text-align: right;">{{ $wasa->ait_on_subtotal_tk }}</th>
         </tr>
         <tr>
             <th></th>
             <th colspan="6">Grand Total</th>
-            <th style="text-align: right;">852,383.62</th>
+            <th style="text-align: right;">{{ $wasa->grand_total_tk }}</th>
         </tr>
         <tr>
-            <td colspan="8">Total Amount(In Words): <b><i>Forty Eight Thousand Five Hundred Sixty Five taka
+            <td colspan="8">Total Amount(In Words): <b><i>
+                @php
+                $dueTotal = $wasa->grand_total_tk;
+
+                if ($dueTotal > 0) {
+                    $textValue = getBangladeshCurrency($dueTotal);
+                    echo "$textValue";
+                } else {
+                    echo "Zero";
+                }
+            @endphp
                 only.</i></b></td>
 
         </tr>
@@ -198,29 +120,31 @@
     </table>
 
     <br>
-    <div>The Payment may please be made in Cheques/drafts/cash in favours of <b>'Elite Security Services Limited'</b> by
-        the 1<sup>st</sup> week of each month.</div>
-    <br>
-    <div>Your Cooperation will be highly appreciated.</div>
+    <div>{{ $invoice_id->footer_note }}.</div>
     <br><br>
     <i>With thanks & Regards</i>
     <br><br><br><br><br>
     <table width="100%">
         <tr>
-            <td style="text-align: left;">
-                <div>Abu Rashel Bhuiyan</div>
-                <div>Deputy Manager</div>
-                <div>Cell:<b>01844-040718</b></div>
+            @php
+            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+            @endphp
+            <td>
+                {{ $footersetting1?->name }} <br>
+                {{ $footersetting1?->designation }} <br>
+                Cell: {{ $footersetting1?->phone  }}
             </td>
-            <td style="text-align: left; padding-left:80px;">
-                <div>Md Mayin Uddin</div>
-                <div>Manager</div>
-                <div>Cell:<b>01844-040714</b></div>
+            <td>
+                {{ $footersetting2?->name }} <br>
+                {{ $footersetting2?->designation }} <br>
+                Cell: {{ $footersetting2?->phone  }}
             </td>
-            <td style="text-align: left; padding-left: 80px;">
-                <div>Anyp Kumur Mutsuddin</div>
-                <div>Senior Manager</div>
-                <div>Account & Finance</div>
+            <td>
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone  }}
             </td>
         </tr>
     </table>
