@@ -231,6 +231,7 @@
                                     <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
+                                    <input class="" type="hidden" name="atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>
                                     <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
