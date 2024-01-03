@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('onetrip_invoice_details', function (Blueprint $table) {
             $table->id();
             $table->integer('ontrip_id')->nullable();
+            $table->integer('invoice_id')->nullable();
             $table->string('service')->nullable();
             $table->decimal('rate',10,2)->default(0);
             $table->date('period')->nullable();

@@ -11,6 +11,15 @@ use App\Models\Customer;
 use App\Models\Employee\Employee;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\Atm;
+use App\Models\Crm\InvoiceGenerate;
+use App\Models\Crm\InvoiceGenerateDetails;
+
+use Toastr;
+use Carbon\Carbon;
+use DB;
+use App\Http\Traits\ImageHandleTraits;
+use Intervention\Image\Facades\Image;
+use Exception;
 
 class OnetripInvoiceController extends Controller
 {
@@ -45,36 +54,71 @@ class OnetripInvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         try{
-            $data=new OnetripInvoice;
-            $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
-            $data->atm_id = $request->atm_id;
-            $data->start_date = $request->start_date;
-            $data->end_date = $request->end_date;
-            $data->bill_date = $request->bill_date;
-            $data->vat = $request->vat;
-            $data->sub_total_amount = $request->sub_total_amount;
-            $data->total_tk = $request->total_tk;
-            $data->vat_taka = $request->vat_taka;
-            $data->grand_total = $request->grand_total;
-            $data->footer_note = $request->footer_note;
-            $data->status = 0;
-            if($data->save()){
+            $invoice=new InvoiceGenerate;
+            $invoice->customer_id = $request->customer_id;
+            $invoice->branch_id = $request->branch_id;
+            //$invoice->atm_id = $request->atm_id;
+            $invoice->start_date = $request->start_date;
+            $invoice->end_date = $request->end_date;
+            $invoice->bill_date = $request->bill_date;
+            $invoice->vat = $request->vat;
+            $invoice->sub_total_amount = $request->sub_total_amount;
+            $invoice->total_tk = $request->total_tk;
+            $invoice->vat_taka = $request->vat_taka;
+            $invoice->grand_total = $request->grand_total;
+            $invoice->footer_note = $request->footer_note;
+            $invoice->status = 0;
+            if($invoice->save()){
+                $onetrip=new OnetripInvoice;
+                $onetrip->customer_id = $request->customer_id;
+                $onetrip->invoice_id = $invoice->id;
+                $onetrip->branch_id = $request->branch_id;
+                $onetrip->atm_id = $request->atm_id;
+                $onetrip->start_date = $request->start_date;
+                $onetrip->end_date = $request->end_date;
+                $onetrip->bill_date = $request->bill_date;
+                $onetrip->vat = $request->vat;
+                $onetrip->sub_total_amount = $request->sub_total_amount;
+                $onetrip->total_tk = $request->total_tk;
+                $onetrip->vat_taka = $request->vat_taka;
+                $onetrip->grand_total = $request->grand_total;
+                $onetrip->footer_note = $request->footer_note;
+                $onetrip->status = 0;
+                $onetrip->save();
                 if($request->rate){
                     foreach($request->rate as $key => $value){
                         if($value){
-                            $details = new OnetripInvoiceDetails;
-                            $details->invoice_id=$data->id;
-                            $details->service=$request->service[$key];
+                            $details = new InvoiceGenerateDetails;
+                            $details->invoice_id=$invoice->id;
                             $details->rate=$request->rate[$key];
-                            $details->period=$request->period[$key];
-                            $details->trip=$request->trip[$key];
-                            $details->amount=$request->amount[$key];
+                            $details->st_date=$request->period[$key];
+                            $details->ed_date=$request->period[$key];
+                            $details->total_amounts=$request->amount[$key];
+                            $details->job_post_id=0;
+                            $details->employee_qty=0;
+                            $details->warking_day=0;
+                            $details->total_houres=0;
+                            $details->rate_per_houres=0;
                             $details->status=0;
                             $details->save();
                         }
+                    }
+                }
+            }
+            if($request->rate){
+                foreach($request->rate as $key => $value){
+                    if($value){
+                        $details = new OnetripInvoiceDetails;
+                        $details->invoice_id=$onetrip->id;
+                        $details->service=$request->service[$key];
+                        $details->rate=$request->rate[$key];
+                        $details->period=$request->period[$key];
+                        $details->trip=$request->trip[$key];
+                        $details->amount=$request->amount[$key];
+                        $details->status=0;
+                        $details->save();
                     }
                 }
             }
