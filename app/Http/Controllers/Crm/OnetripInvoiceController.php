@@ -65,7 +65,7 @@ class OnetripInvoiceController extends Controller
             $invoice->bill_date = $request->bill_date;
             $invoice->vat = $request->vat;
             $invoice->sub_total_amount = $request->sub_total_amount;
-            $invoice->total_tk = $request->total_tk;
+            $invoice->total_tk = $request->sub_total_amount;
             $invoice->vat_taka = $request->vat_taka;
             $invoice->grand_total = $request->grand_total;
             $invoice->footer_note = $request->footer_note;
@@ -81,7 +81,7 @@ class OnetripInvoiceController extends Controller
                 $onetrip->bill_date = $request->bill_date;
                 $onetrip->vat = $request->vat;
                 $onetrip->sub_total_amount = $request->sub_total_amount;
-                $onetrip->total_tk = $request->total_tk;
+               // $onetrip->total_tk = $request->sub_total_amount;
                 $onetrip->vat_taka = $request->vat_taka;
                 $onetrip->grand_total = $request->grand_total;
                 $onetrip->footer_note = $request->footer_note;
@@ -105,20 +105,19 @@ class OnetripInvoiceController extends Controller
                             $details->save();
                         }
                     }
-                }
-            }
-            if($request->rate){
-                foreach($request->rate as $key => $value){
-                    if($value){
-                        $details = new OnetripInvoiceDetails;
-                        $details->invoice_id=$onetrip->id;
-                        $details->service=$request->service[$key];
-                        $details->rate=$request->rate[$key];
-                        $details->period=$request->period[$key];
-                        $details->trip=$request->trip[$key];
-                        $details->amount=$request->amount[$key];
-                        $details->status=0;
-                        $details->save();
+                    foreach($request->rate as $key => $value){
+                        if($value){
+                            $details = new OnetripInvoiceDetails;
+                            $details->ontrip_id=$onetrip->id;
+                            $details->invoice_id=$invoice->id;
+                            $details->service=$request->service[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->period=$request->period[$key];
+                            $details->trip=$request->trip[$key];
+                            $details->amount=$request->amount[$key];
+                            $details->status=0;
+                            $details->save();
+                        }
                     }
                 }
             }

@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
 			$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->integer('invoice_id')->nullable();
             $table->integer('branch_id')->nullable();
             $table->integer('atm_id')->nullable();
             $table->decimal('vat',10,2)->default(0);
-            $table->decimal('vat_tk',10,2)->default(0);
-            $table->decimal('sub_total_tk',10,2)->default(0);
-            $table->decimal('grand_total_tk',10,2)->default(0);
+            $table->decimal('vat_taka',10,2)->default(0);
+            $table->decimal('sub_total_amount',10,2)->default(0);
+            $table->decimal('grand_total',10,2)->default(0);
             $table->string('footer_note')->nullable();
             $table->date('bill_date')->nullable();
             $table->date('start_date')->nullable();

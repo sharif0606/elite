@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input required class="form-control vat" step="0.01" type="number" name="vat" value="0" placeholder="VAT">
+                                    <input required class="form-control vat" step="0.01" type="number" onkeyup="VatTk()" name="vat" value="0" placeholder="VAT">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Bill Date</b></label>
@@ -85,7 +85,7 @@
                                                     <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
                                                 </td>
                                                 <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
-                                                <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
+                                                <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="" placeholder="Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -96,7 +96,21 @@
                                             <tr style="text-align: center;">
                                                 <th colspan="4" style="text-align: end;">Sub Tatal</th>
                                                 <td>
-                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
+                                                    <input readonly type="text" class="form-control sub_total_amount" name="sub_total_amount" value="">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <th colspan="4" style="text-align: end;">Vat@ <span class="vat_percent"></span> %</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control vat_taka" name="vat_taka" value="">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <th colspan="4" style="text-align: end;">Grand Total=</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control grand_total" name="grand_total" value="">
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -122,7 +136,16 @@
         $('.amount').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
-        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
+        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
+    }
+    function VatTk(){
+        let vat=$('.vat').val();
+        var subtotal=$('.sub_total_amount').val();
+        var vatTk=parseFloat((subtotal*vat)/100).toFixed(2);
+        var grandTotal=parseFloat(subtotal) + parseFloat(vatTk);
+        $('.vat_taka').val(vatTk);
+        $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
+        $('.vat_percent').text(vat);
     }
     function addRow(){
     var row=`
@@ -137,7 +160,7 @@
             <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
         </td>
         <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
-        <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount();" name="amount[]" value="" placeholder="Amount"></td>
+        <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="" placeholder="Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
             {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
