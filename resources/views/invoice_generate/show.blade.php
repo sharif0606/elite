@@ -58,6 +58,11 @@
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/wasa1.png')}}" alt="No Image Found">
                     </a>
                 </div>
+                <div class="col-4 text-center mb-2">
+                    <a href="{{route('invoiceShow8',[encryptor('encrypt',$invoice_id->id)])}}">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/onetrip.png')}}" alt="No Image Found">
+                    </a>
+                </div>
             </div>
         </div>
     </section>
