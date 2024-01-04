@@ -10,13 +10,13 @@
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.child_one.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                            <a class="float-end" href="{{route('child_one.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Sub Head')}}</th>
                                     <th scope="col">{{__('Child One')}}</th>
-                                   
+
                                     <th scope="col">{{__('Opening Balance')}}</th>
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
@@ -27,21 +27,21 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$d->sub_head?->head_name}} - {{$d->sub_head?->head_code}}</td>
                                     <td>{{$d->head_name}} - {{$d->head_code}}</td>
-                                   
+
                                     <td>{{$d->opening_balance}}</td>
                                     <td class="white-space-nowrap">
                                         @if($d->head_code != 5310 && $d->head_code != 5320 && $d->head_code != 1130 && $d->head_code != 2130 && $d->head_code != 4120)
                                         @if(currentUser() == 'admin' || currentUser() == 'owner')
-                                            <a href="{{route(currentUser().'.child_one.edit',encryptor('encrypt',$d->id))}}">
+                                            <a href="{{route('child_one.edit',encryptor('encrypt',$d->id))}}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             {{-- <a class="text-danger" href="javascript:void()" onclick="$('#form{{$d->id}}').submit()">
                                                 <i class="bi bi-trash"></i>
                                             </a>
-                                            <form id="form{{$d->id}}" onsubmit="return confirm('Are you sure?')" action="{{route(currentUser().'.child_one.destroy',encryptor('encrypt',$d->id))}}" method="post">
+                                            <form id="form{{$d->id}}" onsubmit="return confirm('Are you sure?')" action="{{route('child_one.destroy',encryptor('encrypt',$d->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                
+
                                             </form> --}}
                                         @endif
                                         @endif

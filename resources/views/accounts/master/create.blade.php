@@ -11,10 +11,10 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.master.store')}}">
+                        <form class="form" method="post" action="{{route('master.store')}}">
                             @csrf
                             <div class="row">
-                                
+
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="head_name">{{__('Head Name')}}</label>
