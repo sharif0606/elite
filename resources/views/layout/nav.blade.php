@@ -163,10 +163,19 @@
 
                             </ul>
                         </li>
-
-
-
-
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'><i class="bi bi-calculator"></i><span>{{__('Accounts')}}</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="py-1 submenu-item"><a href="" >{{__('Master Head')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="" >{{__('Sub Head')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="" >{{__('Child One')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="" >{{__('Child Two')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="">{{__('Navigate View')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="">{{__('Income Statement')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="" >{{__('Account Head Report')}}</a></li>
+                            </ul>
+                        </li>
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->
 
 
