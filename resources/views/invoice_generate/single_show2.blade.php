@@ -96,7 +96,7 @@
             <tfoot>
                 <tr style="text-align: center;">
                     <td></td>
-                    <td colspan="4">Sub Tatal</td>
+                    <td colspan="4">Sub Total</td>
                     <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                 </tr>
                 <tr style="text-align: center;">

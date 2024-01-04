@@ -130,13 +130,10 @@ class InvoiceGenerateController extends Controller
         $summaryQuery = "SELECT
         SUM(`rate`) as total,
         (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
-        ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat
-    FROM `invoice_generate_details`
-    WHERE `invoice_id` = 3;
-    ";
+        ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat FROM `invoice_generate_details` WHERE `invoice_id` = $invoice_id->id;";
 
     $summery = DB::select($summaryQuery)[0];
-        $dueTotal = $summery->withVat;
+        $dueTotal = ($summery->withVat+$summery->total);
         $textValue='Zero';
         if ($dueTotal > 0) {
             $textValue = getBangladeshCurrency($dueTotal);

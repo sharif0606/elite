@@ -78,7 +78,7 @@
             </tr>
         </tfoot>
     </table>
-{{ $textValue }}
+{{--  {{ $textValue }}  --}}
     <br>
     <div>{{ $invoice_id->footer_note }}</div>
     <br>
