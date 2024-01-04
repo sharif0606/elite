@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill For month of July 2023 to COATS Bangladesh Limited</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -67,6 +68,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+            $TotalTk = 0;
+            @endphp
             @if ($invoice_id->details)
             @foreach ($invoice_id->details as $de)
             <tr style="text-align: center;">
@@ -75,9 +79,14 @@
                 <td>{{ $de->rate }}</td>
                 <td><b>{{ \Carbon\Carbon::parse($invoice_id->st_date)->format('F Y')}}</b> </td>
                 <td>{{ $de->employee_qty }}<br>({{ $de->employee_qty*$de->warking_day }} duties)</td>
-                <td style="text-align: center;">1,22,500.00</td>
+                <td style="text-align: center;">{{ $de->rate*$de->employee_qty }}
+                    <input type="hidden" class="total_amount" name="" value="{{ $de->rate*$de->employee_qty }}">
+                </td>
                 <td><input style="outline: none; border: none; appearance: none;" type="text" name="" id=""></td>
             </tr>
+            <?php
+            $TotalTk += $de->rate * $de->employee_qty;
+            ?>
             @endforeach
             @endif
         </tbody>
@@ -85,11 +94,20 @@
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;">Grand Total= </td>
-                <td style="text-align: center;">6,20,000.00</td>
+                <td style="text-align: center;" class="ttotal_amount"></td>
                 <td></td>
             </tr>
             <tr>
-                <td colspan="7">Total Amount(In Words): <b><i>Taka Six Lac Twenty Thousand only.</i></b> </td>
+                <td colspan="7">Total Amount(In Words): <b><i>
+                    @php
+                    if ($TotalTk > 0) {
+                        $textValue = getBangladeshCurrency($TotalTk);
+                        echo "$textValue";
+                    } else {
+                        echo "Zero";
+                    }
+                    @endphp
+                     only.</i></b> </td>
             </tr>
         </tfoot>
     </table>
@@ -120,6 +138,16 @@
             </td>
         </tr>
     </table>
+    <script>
+        monthService()
+        function monthService(){
+            var totalAmount=0;
+            $('.total_amount').each(function(){
+                totalAmount+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            });
+            $('.ttotal_amount').text(totalAmount);
+        }
+    </script>
 </body>
 
 </html>
