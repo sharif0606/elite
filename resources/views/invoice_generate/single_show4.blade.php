@@ -45,6 +45,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+            $TotalTk = 0;
+            @endphp
             @if ($invoice_id->details)
             @foreach ($invoice_id->details as $de)
             <tr style="text-align: center;">
@@ -57,6 +60,7 @@
                     @php
                         $totalSalary=$de->rate*$de->employee_qty;
                         $vatAmount=(($totalSalary*$invoice_id->vat)/100);
+                        $grandTotal=$totalSalary+$vatAmount;
                     @endphp
                     {{ $vatAmount }}
                     <input type="hidden" class="vat_amount" name="" value="{{ $vatAmount }}">
@@ -65,6 +69,7 @@
                     <input type="hidden" class="total_amount" name="" value="{{ $totalSalary+$vatAmount }}">
                 </td>
             </tr>
+            <?php $TotalTk += $grandTotal; ?>
             @endforeach
             @endif
         </tbody>
@@ -78,9 +83,19 @@
             </tr>
         </tfoot>
     </table>
-{{--  {{ $textValue }}  --}}
-    <br>
-    <div>{{ $invoice_id->footer_note }}</div>
+    <p>
+        Total Amount In Words: <b>
+            @php
+            if ($TotalTk > 0) {
+                $textValue = getBangladeshCurrency($TotalTk);
+                echo "$textValue";
+            } else {
+                echo "Zero";
+            }
+            @endphp only.
+            </b> <br>
+            {{ $invoice_id->footer_note }}
+    </p>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
     <br><br>

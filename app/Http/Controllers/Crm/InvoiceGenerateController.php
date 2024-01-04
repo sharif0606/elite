@@ -127,18 +127,19 @@ class InvoiceGenerateController extends Controller
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        $summaryQuery = "SELECT
-        SUM(`rate`) as total,
-        (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
-        ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat FROM `invoice_generate_details` WHERE `invoice_id` = $invoice_id->id;";
+    //     $summaryQuery = "SELECT
+    //     SUM(`rate`) as total,
+    //     (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
+    //     ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat FROM `invoice_generate_details` WHERE `invoice_id` = $invoice_id->id;";
 
-    $summery = DB::select($summaryQuery)[0];
-        $dueTotal = ($summery->withVat+$summery->total);
-        $textValue='Zero';
-        if ($dueTotal > 0) {
-            $textValue = getBangladeshCurrency($dueTotal);
-        }
-        return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
+    // $summery = DB::select($summaryQuery)[0];
+    //     $dueTotal = ($summery->withVat+$summery->total);
+    //     $textValue='Zero';
+    //     if ($dueTotal > 0) {
+    //         $textValue = getBangladeshCurrency($dueTotal);
+    //     }
+        // return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
+        return view('invoice_generate.single_show4',compact('invoice_id','branch'));
     }
     public function getSingleInvoice5($id)
     {
