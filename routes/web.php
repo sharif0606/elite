@@ -50,6 +50,16 @@ use App\Http\Controllers\Stock\ProductRequisitionController as requisition;
 use App\Http\Controllers\Stock\StockController as stock;
 use App\Http\Controllers\Stock\ProductDamageController as productdamage;
 
+/* Accounts*/
+use App\Http\Controllers\Accounts\MasterAccountController as master;
+use App\Http\Controllers\Accounts\SubHeadController as sub_head;
+use App\Http\Controllers\Accounts\ChildOneController as child_one;
+use App\Http\Controllers\Accounts\ChildTwoController as child_two;
+use App\Http\Controllers\Accounts\NavigationHeadViewController as navigate;
+use App\Http\Controllers\Accounts\IncomeStatementController as statement;
+use App\Http\Controllers\Accounts\Report\HeadReportController as headreport;
+use App\Http\Controllers\Accounts\Report\BalanceSheetController as balancesheet;
+use App\Http\Controllers\Accounts\Report\ProfitLossController as profitloss;
 
 
 /*
@@ -130,6 +140,19 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('salarySheet', salarySheet::class);
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
+
+        //Accounts
+        Route::resource('master',master::class);
+        Route::resource('sub_head',sub_head::class);
+        Route::resource('child_one',child_one::class);
+        Route::resource('child_two',child_two::class);
+        Route::resource('navigate',navigate::class);
+
+        Route::get('incomeStatement',[statement::class,'index'])->name('incomeStatement');
+        Route::get('incomeStatement_details',[statement::class,'details'])->name('incomeStatement.details');
+        Route::get('/profitloss', [profitloss::class, 'index'])->name('profitloss');
+        Route::get('/balancesheet', [balancesheet::class, 'index'])->name('balancesheet');
+        Route::get('/headreport', [headreport::class, 'index'])->name('headreport');
 
     });
 
