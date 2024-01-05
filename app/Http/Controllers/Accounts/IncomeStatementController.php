@@ -27,7 +27,7 @@ class IncomeStatementController extends Controller
     public function details(Request $r){
         $month=$r->month;
         $year=$r->year;
-        $acc_head=Master_account::where(company())->get();
+        $acc_head=Master_account::all();
         /* operating income */
         $incomeheadop=array();
         $incomeheadopone=array();
@@ -161,7 +161,7 @@ class IncomeStatementController extends Controller
                 });
             })
             ->get();
-            
+
             /* operating expense */
             $opexpense=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
             ->where(function($query) use ($expenseheadop,$expenseheadopone,$expenseheadoptwo){
@@ -176,7 +176,7 @@ class IncomeStatementController extends Controller
                 });
             })
             ->get();
-            
+
             /* nonoperating expense */
             $nonopexpense=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
             ->where(function($query) use ($expenseheadnop,$expenseheadnopone,$expenseheadnoptwo){
@@ -199,9 +199,9 @@ class IncomeStatementController extends Controller
                 });
             })
             ->get();
-        
+
         $data='<div class="col-lg-12 stretch-card">
-                
+
                 <div class="card">
                     <h4 class="card-title">Income Statement</h4>
                     </p>
@@ -266,7 +266,7 @@ class IncomeStatementController extends Controller
                             $data.='<td> '.$opi->journal_title.' </td>';
                             $data.='<td class="text-right"> '.$opi->cr.' </td>';
                             $data.='</tr>';
-                            
+
                         }
                     }
                     $data.='<tr>
@@ -274,8 +274,8 @@ class IncomeStatementController extends Controller
                             <th class="text-right"> Gross Nonoperating Income Total </th>
                             <th class="text-right"> '.$nonopinc.' </th>
                             </tr>';
-                    
-                    
+
+
                     /* nonoperating Expense */
                     if($nonopexpense){
                         foreach($nonopexpense as $opi){
@@ -285,7 +285,7 @@ class IncomeStatementController extends Controller
                             $data.='<td> '.$opi->journal_title.' </td>';
                             $data.='<td class="text-right"> '.$opi->dr.' </td>';
                             $data.='</tr>';
-                            
+
                         }
                     }
                     $data.='<tr>
@@ -311,7 +311,7 @@ class IncomeStatementController extends Controller
                             $data.='<td> '.$t->journal_title.' </td>';
                             $data.='<td class="text-right"> '.$t->dr.' </td>';
                             $data.='</tr>';
-                            
+
                         }
                     }
                     $data.='<tr>
@@ -323,7 +323,7 @@ class IncomeStatementController extends Controller
             $data.='</tbody>
                 </table>
             </div>
-            
+
         </div>';
         echo  json_encode($data);
         //print_r($r->year);

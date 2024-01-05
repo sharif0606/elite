@@ -57,9 +57,11 @@ use App\Http\Controllers\Accounts\ChildOneController as child_one;
 use App\Http\Controllers\Accounts\ChildTwoController as child_two;
 use App\Http\Controllers\Accounts\NavigationHeadViewController as navigate;
 use App\Http\Controllers\Accounts\IncomeStatementController as statement;
-use App\Http\Controllers\Accounts\Report\HeadReportController as headreport;
-use App\Http\Controllers\Accounts\Report\BalanceSheetController as balancesheet;
-use App\Http\Controllers\Accounts\Report\ProfitLossController as profitloss;
+/*Vouchers */
+use App\Http\Controllers\Vouchers\VoucherController as vouchers;
+use App\Http\Controllers\Vouchers\CreditVoucherController as credit;
+use App\Http\Controllers\Vouchers\DebitVoucherController as debit;
+use App\Http\Controllers\Vouchers\JournalVoucherController as journal;
 
 
 /*
@@ -147,12 +149,14 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('child_one',child_one::class);
         Route::resource('child_two',child_two::class);
         Route::resource('navigate',navigate::class);
-
-        Route::get('incomeStatement',[statement::class,'index'])->name('incomeStatement');
+        Route::get('incomeStatement',[statement::class,'index'])->name('incomeStatement.list');
         Route::get('incomeStatement_details',[statement::class,'details'])->name('incomeStatement.details');
-        Route::get('/profitloss', [profitloss::class, 'index'])->name('profitloss');
-        Route::get('/balancesheet', [balancesheet::class, 'index'])->name('balancesheet');
-        Route::get('/headreport', [headreport::class, 'index'])->name('headreport');
+
+        //Voucher
+        Route::resource('credit_voucher',credit::class);
+        Route::resource('debit_voucher',debit::class);
+        Route::resource('journal_voucher',journal::class);
+        Route::get('get_head', [vouchers::class, 'get_head'])->name('get_head');
 
     });
 

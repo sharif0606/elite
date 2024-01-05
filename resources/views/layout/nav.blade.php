@@ -172,8 +172,17 @@
                                 <li class="py-1 submenu-item"><a href="{{route('child_one.index')}}" >{{__('Child One')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('child_two.index')}}" >{{__('Child Two')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('navigate.index')}}">{{__('Navigate View')}}</a></li>
-                                <li class="py-1 submenu-item"><a href="{{route('incomeStatement')}}">{{__('Income Statement')}}</a></li>
-                                <li class="py-1 submenu-item"><a href="{{route('headreport')}}" >{{__('Account Head Report')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('incomeStatement.list')}}">{{__('Income Statement')}}</a></li>
+                                {{--  <li class="py-1 submenu-item"><a href="{{route('headreport')}}" >{{__('Account Head Report')}}</a></li>  --}}
+                            </ul>
+                        </li>
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'><i class="bi bi-receipt"></i><span>{{__('Voucher')}}</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="py-1 submenu-item"><a href="{{route('credit_voucher.index')}}">{{__('Receive/Cr Voucher')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('debit_voucher.index')}}">{{__('Payment/Dr Voucher')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('journal_voucher.index')}}">{{__('Journal Voucher')}}</a></li>
                             </ul>
                         </li>
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->

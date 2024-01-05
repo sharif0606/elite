@@ -59,7 +59,7 @@
 
                 <br>
 
-                    
+
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
 		var year = $('#year').val();
 		if (year) {
 			$.ajax({
-				url: "{{route(currentUser().'.incomeStatement.details')}}",
+				url: "{{route('incomeStatement.details')}}",
 				data: {
 					'month': month,
 					'year': year
@@ -100,7 +100,7 @@
 			alert("Please select any Year");
 			$('#year').focus();
 		}
-		return false; // keeps the page from not refreshing     
+		return false; // keeps the page from not refreshing
 	}
 </script>
 @endpush

@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.sub_head.store')}}">
+                        <form class="form" method="post" action="{{route('sub_head.store')}}">
                             @csrf
                             <div class="row">
 
@@ -31,7 +31,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="head_name">{{__('Head Name')}}</label>
@@ -62,7 +62,7 @@
 
                                 <div class="col-12 d-flex justify-content-start">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Save')}}</button>
-                                    
+
                                 </div>
                             </div>
                         </form>

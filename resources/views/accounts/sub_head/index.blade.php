@@ -12,13 +12,13 @@
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.sub_head.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                            <a class="float-end" href="{{route('sub_head.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Master Head')}}</th>
                                     <th scope="col">{{__('Sub Head')}}</th>
-                                   
+
                                     <th scope="col">{{__('Opening Balance')}}</th>
                                     {{-- <th class="white-space-nowrap">{{__('ACTION')}}</th> --}}
                                 </tr>
@@ -29,23 +29,23 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$d->master_account?->head_name}} - {{$d->master_account?->head_code}}</td>
                                     <td>{{$d->head_name}} - {{$d->head_code}}</td>
-                           
+
                                     <td>{{$d->opening_balance}}</td>
-                                    @if(currentUser() == 'admin' || currentUser() == 'owner')
+                                    {{--  @if(currentUser() == 'admin' || currentUser() == 'owner')  --}}
                                         {{-- <td class="white-space-nowrap">
-                                            <a href="{{route(currentUser().'.sub_head.edit',encryptor('encrypt',$d->id))}}">
+                                            <a href="{{route('sub_head.edit',encryptor('encrypt',$d->id))}}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <a href="javascript:void()" onclick="$('#form{{$d->id}}').submit()">
                                                 <i class="bi bi-trash"></i>
                                             </a>
-                                            <form id="form{{$d->id}}" action="{{route(currentUser().'.sub_head.destroy',encryptor('encrypt',$d->id))}}" method="post">
+                                            <form id="form{{$d->id}}" action="{{route('sub_head.destroy',encryptor('encrypt',$d->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                
+
                                             </form>
                                         </td> --}}
-                                    @endif
+                                    {{--  @endif  --}}
                                 </tr>
                                 @empty
                                 <tr>
@@ -53,7 +53,7 @@
                                 </tr>
                                 @endforelse
                             </tbody>
-                            
+
                         </table>
                         <div class="d-flex justify-content-end my-3">
                             {!! $data->links()!!}

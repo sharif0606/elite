@@ -22,7 +22,7 @@ class SubHeadController extends Controller
      */
     public function index()
     {
-        $data= Sub_head::where(company())->paginate(10);
+        $data= Sub_head::paginate(10);
         return view('accounts.sub_head.index',compact('data'));
     }
 
@@ -33,7 +33,7 @@ class SubHeadController extends Controller
      */
     public function create()
     {
-        $data= Master_account::where(company())->get();
+        $data= Master_account::all();
         return view('accounts.sub_head.create',compact('data'));
     }
 
@@ -46,13 +46,11 @@ class SubHeadController extends Controller
     public function store(AddNewRequest $request)
     {
         try{
-            $mac = new Sub_head;
-            $mac->company_id=company()['company_id'];
+            $mac = new Sub_head();
             $mac->master_head_id= $request->master_head;
             $mac->head_name= $request->head_name;
             $mac->head_code= $request->head_code;
             $mac->opening_balance= $request->opening_balance;
-            $mac->created_by=currentUserId();
 
         if($mac->save())
                 return redirect()->route(currentUser().'.sub_head.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -83,7 +81,7 @@ class SubHeadController extends Controller
      */
     public function edit($id)
     {
-        $data= Master_account::where(company())->get();
+        $data= Master_account::all();
         $sub= Sub_head::findOrFail(encryptor('decrypt',$id));
         return view('accounts.sub_head.edit',compact('data','sub'));
     }
@@ -103,7 +101,6 @@ class SubHeadController extends Controller
             $mac->head_name= $request->head_name;
             $mac->head_code= $request->head_code;
             $mac->opening_balance= $request->opening_balance;
-            $mac->updated_by=currentUserId();
 
         if($mac->save())
                 return redirect()->route(currentUser().'.sub_head.index')->with($this->resMessageHtml(true,null,'Successfully Updated'));

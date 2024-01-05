@@ -22,7 +22,7 @@ class ChildTwoController extends Controller
      */
     public function index()
     {
-        $data= Child_two::where(company())->paginate(10);
+        $data= Child_two::paginate(10);
         return view('accounts.child_two.index',compact('data'));
     }
 
@@ -33,7 +33,7 @@ class ChildTwoController extends Controller
      */
     public function create()
     {
-        $data= Child_one::where(company())->get();
+        $data= Child_one::all();
         return view('accounts.child_two.create',compact('data'));
     }
 
@@ -47,12 +47,10 @@ class ChildTwoController extends Controller
     {
         try{
             $mac = new Child_two;
-            $mac->company_id=company()['company_id'];
             $mac->child_one_id= $request->child_one;
             $mac->head_name= $request->head_name;
             $mac->head_code= $request->head_code;
             $mac->opening_balance= $request->opening_balance;
-            $mac->created_by=currentUserId();
 
         if($mac->save())
                 return redirect()->route(currentUser().'.child_two.index')->with($this->resMessageHtml(true,null,'Successfully created'));
@@ -83,7 +81,7 @@ class ChildTwoController extends Controller
      */
     public function edit($id)
     {
-        $data= Child_one::where(company())->get();
+        $data= Child_one::all();
         $child= Child_two::findOrFail(encryptor('decrypt',$id));
         return view('accounts.child_two.edit',compact('data','child'));
     }
@@ -102,7 +100,6 @@ class ChildTwoController extends Controller
             $mac->head_name= $request->head_name;
             $mac->head_code= $request->head_code;
             $mac->opening_balance= $request->opening_balance;
-            $mac->updated_by=currentUserId();
 
         if($mac->save())
                 return redirect()->route(currentUser().'.child_two.index')->with($this->resMessageHtml(true,null,'Successfully Updated'));

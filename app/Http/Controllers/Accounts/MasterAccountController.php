@@ -24,7 +24,7 @@ class MasterAccountController extends Controller
     public function index()
     {
 
-        $data= Master_account::where(company())->paginate(10);
+        $data= Master_account::paginate(10);
         return view('accounts.master.index',compact('data'));
     }
 
@@ -48,7 +48,6 @@ class MasterAccountController extends Controller
     {
         try{
             $mac = new Master_account;
-            $mac->company_id=company()['company_id'];
             $mac->head_name= $request->head_name;
             $mac->head_code= $request->head_code;
             $mac->opening_balance= $request->opening_balance;

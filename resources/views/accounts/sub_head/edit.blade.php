@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post" action="{{route(currentUser().'.sub_head.update',encryptor('encrypt',$sub->id))}}">
+                        <form class="form" method="post" action="{{route('sub_head.update',encryptor('encrypt',$sub->id))}}">
                             @csrf
                             @method('patch')
                             <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$sub->id)}}">
@@ -62,7 +62,7 @@
 
                                 <div class="col-12 d-flex justify-content-start">
                                     <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Save')}}</button>
-                                    
+
                                 </div>
                             </div>
                         </form>

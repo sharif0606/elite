@@ -10,13 +10,13 @@
                     <!-- table bordered -->
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
-                            <a class="float-end" href="{{route(currentUser().'.child_two.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                            <a class="float-end" href="{{route('child_two.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                             <thead>
                                 <tr>
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Child One')}}</th>
                                     <th scope="col">{{__('Child Two')}}</th>
-                                
+
                                     <th scope="col">{{__('Opening Balance')}}</th>
                                     {{-- <th class="white-space-nowrap">{{__('ACTION')}}</th> --}}
                                 </tr>
@@ -27,11 +27,11 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$d->child_one?->head_name}} - {{$d->child_one?->head_code}}</td>
                                     <td>{{$d->head_name}} - {{$d->head_code}}</td>
-                               
+
                                     <td>{{$d->opening_balance}}</td>
                                     <td class="white-space-nowrap">
-                                        @if(currentUser() == 'admin' || currentUser() == 'owner')
-                                            <a href="{{route(currentUser().'.child_two.edit',encryptor('encrypt',$d->id))}}">
+                                        {{--  @if(currentUser() == 'admin' || currentUser() == 'owner')  --}}
+                                            <a href="{{route('child_two.edit',encryptor('encrypt',$d->id))}}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             {{-- <a class="text-danger" href="javascript:void()" onclick="$('#form{{$d->id}}').submit()">
@@ -40,9 +40,9 @@
                                             <form id="form{{$d->id}}" onsubmit="return confirm('Are you sure?')" action="{{route(currentUser().'.child_two.destroy',encryptor('encrypt',$d->id))}}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                
+
                                             </form> --}}
-                                        @endif
+                                        {{--  @endif  --}}
                                     </td>
                                 </tr>
                                 @empty

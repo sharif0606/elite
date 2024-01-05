@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class NavigationHeadViewController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +18,9 @@ class NavigationHeadViewController extends Controller
      */
     public function index()
     {
-        $data= Master_account::where(company())->get();
+        $data= Master_account::all();
         return view('accounts.navigate.index',compact('data'));
     }
 
-    
+
 }
