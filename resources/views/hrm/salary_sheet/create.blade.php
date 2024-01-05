@@ -14,24 +14,35 @@
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Customer</b></label>
-                                    <select class="form-select customer_id" onchange="getEmployees(this)" id="customer_id" name="customer_id">
+                                    <label for=""><b>Customer Name</b></label>
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
-                                    <p class="customer_select_message text-danger"></p>
                                 </div>
-                                {{--  <div class="col-lg-3 mt-2">
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Branch Name</b></label>
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                        <option value="">Select Branch</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Atm</b></label>
+                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
+                                        <option value="">Select Atm</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
                                     <input class="form-control" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
                                     <input class="form-control" type="date" name="end_date" value="" placeholder="End Date">
-                                </div>  --}}
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
