@@ -53,7 +53,7 @@ class MasterAccountController extends Controller
             $mac->opening_balance= $request->opening_balance;
 
         if($mac->save())
-                return redirect()->route(currentUser().'.master.index')->with($this->resMessageHtml(true,null,'Successfully created'));
+                return redirect()->route('master.index')->with($this->resMessageHtml(true,null,'Successfully created'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){
@@ -102,7 +102,7 @@ class MasterAccountController extends Controller
             $mac->opening_balance= $request->opening_balance;
 
         if($mac->save())
-                return redirect()->route(currentUser().'.master.index')->with($this->resMessageHtml(true,null,'Successfully Updated'));
+                return redirect()->route('master.index')->with($this->resMessageHtml(true,null,'Successfully Updated'));
             else
                 return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
         }catch(Exception $e){

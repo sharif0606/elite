@@ -34,7 +34,7 @@ class DebitVoucherController extends VoucherController
         $paymethod=$this->cashHead();
 		return view('voucher.debitVoucher.create',compact('paymethod'));
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -128,10 +128,10 @@ class DebitVoucherController extends VoucherController
                 }
                 DB::commit();
 				\Toastr::success('Successfully created');
-				return redirect()->route('admin.debit_voucher.index');
+				return redirect()->route('debit_voucher.index');
 			}
 		}catch (Exception $e) {
-			// dd($e);
+			dd($e);
 			\Toastr::error('Please try again');
 			DB::rollBack();
 			return redirect()->back()->withInput();
@@ -187,9 +187,9 @@ class DebitVoucherController extends VoucherController
             if($dv->save()){
                 $gldata=array('purpose'=>$request->purpose,'rec_date'=>$request->current_date);
                 GeneralLedger::where('debit_voucher_id',$dv->id)->update($gldata);
-			
+
 			    \Toastr::success('Successfully created');
-			    return redirect()->route('admin.debit_voucher.index');
+			    return redirect()->route('debit_voucher.index');
             }
 		}catch (Exception $e) {
 			// dd($e);

@@ -156,7 +156,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('credit_voucher',credit::class);
         Route::resource('debit_voucher',debit::class);
         Route::resource('journal_voucher',journal::class);
-        Route::get('get_head', [vouchers::class, 'get_head'])->name('get_head');
 
     });
 
@@ -196,6 +195,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* stock */
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');
+
+        /* accounts */
+
+        Route::get('get_head', [vouchers::class, 'get_head'])->name('get_head');
 
     });
 

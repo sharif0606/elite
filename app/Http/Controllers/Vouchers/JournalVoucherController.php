@@ -100,10 +100,10 @@ class JournalVoucherController extends VoucherController
                 }
                 DB::commit();
                 \Toastr::success('Successfully created');
-				return redirect()->route('admin.journal_voucher.index');
+				return redirect()->route('journal_voucher.index');
 			}
 		}catch (Exception $e) {
-			//dd($e);
+			dd($e);
             \Toastr::error('Please try again');
 			DB::rollBack();
 			return redirect()->back()->withInput();
@@ -159,11 +159,11 @@ class JournalVoucherController extends VoucherController
             if($journalVoucher->save()){
                 $gldata=array('purpose'=>$request->purpose,'rec_date'=>$request->current_date);
                 GeneralLedger::where('journal_voucher_id',$journalVoucher->id)->update($gldata);
-			
+
 			    \Toastr::success('Successfully Updated');
-                return redirect()->route(currentUser().'.journal_voucher.index');
+                return redirect()->route('journal_voucher.index');
             }
-            
+
         }catch (Exception $e) {
             //dd($e);
             \Toastr::error('Please try again');
