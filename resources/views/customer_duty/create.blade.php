@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('customerduty.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('customerduty.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
@@ -74,9 +74,10 @@
                                         <tbody id="customerduty">
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)"  value="" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
                                                     <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+                                                    <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
@@ -162,6 +163,7 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
+                    console.log(employee_id);
                     if(data.length>0){
                         console.log(data);
                         var id = data[0].id;
@@ -172,6 +174,7 @@
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
                         $(e).closest('tr').find('.job_post_id').val(positionid);
+                        $(e).closest('tr').find('.employee_id_primary').val(id);
                     }
                     getDutyOtRate(e,customerId,positionid);
                 },
@@ -185,6 +188,8 @@
 
     function getDutyOtRate(e,customerId,positionid){
         $.ajax({
+            console.log(customerId);
+            console.log(positionid);
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
@@ -252,9 +257,10 @@
 var row=`
 <tr>
     <td>
-        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
+        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
         <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
         <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+        <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
     </td>
     <td>
         <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">

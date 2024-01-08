@@ -91,6 +91,8 @@ class CustomerDutyController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
+                            $details->start_date = $request->start_date;
+                            $details->end_date = $request->end_date;
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
@@ -175,6 +177,8 @@ class CustomerDutyController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
+                            $details->start_date = $request->start_date;
+                            $details->end_date = $request->end_date;
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];

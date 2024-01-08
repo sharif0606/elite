@@ -22,7 +22,7 @@ class CustomerBranceController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         $zone=Zone::all();
         $cbrance=CustomerBrance::where('customer_id',encryptor('decrypt',$request->customer_id));
         $customerName=Customer::where('id',encryptor('decrypt',$request->customer_id))->first();
@@ -83,7 +83,7 @@ class CustomerBranceController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Add Branch',$request->getContent(),'CustomerBrance,Atm');
-                return redirect("customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('customerbrance.index',['customer_id='.encryptor('encrypt',$request->customer_id)])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -161,7 +161,7 @@ class CustomerBranceController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Update Branch',$request->getContent(),'CustomerBrance,Atm');
-                return redirect("customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect("admin/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

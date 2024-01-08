@@ -49,7 +49,7 @@ class CustomerRateController extends Controller
             $data->status = 1;
             if ($data->save()){
                 \LogActivity::addToLog('Add Rate',$request->getContent(),'CustomerRate');
-                return redirect("customerRate?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect("admin/customerRate?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -85,7 +85,7 @@ class CustomerRateController extends Controller
             $data->status = 1;
             if ($data->save()){
                 \LogActivity::addToLog('Update Rate',$request->getContent(),'CustomerRate');
-                return redirect("customerRate?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect("admin/customerRate?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

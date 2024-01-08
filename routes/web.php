@@ -127,15 +127,11 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
-        Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
         Route::resource('customer', customer::class);
         Route::resource('customerbrance', customerbrance::class);
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
         Route::resource('oneTripInvoice', oneTripInvoice::class);
-        Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
-        Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
-        Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 
         /* HRM */
         Route::resource('employee', employee::class);
@@ -177,6 +173,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         /*Crm */
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
+        Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
+        Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
+        Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
+        Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
 
         /* employee security */
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
