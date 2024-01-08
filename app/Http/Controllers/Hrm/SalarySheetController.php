@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Hrm\SalarySheet;
 use App\Models\Customer;
+use App\Models\Crm\CustomerDuty;
+use App\Models\Crm\CustomerDutyDetail;
 
 class SalarySheetController extends Controller
 {
@@ -84,5 +86,60 @@ class SalarySheetController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getSalaryData(Request $request)
+    {
+        $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')
+            ->select('customer_duties.*', 'customer_duty_details.*','job_posts.*');
+
+        // if ($request->atm_id=='a') {
+        //     $query = $query->where('customer_duty_details.atm_id',"!=","0")->where('customer_duties.branch_id', $request->branch_id);
+        // }
+        // else if ($request->atm_id=='n') {
+        //     $query = $query->where('customer_duty_details.atm_id',"=","0")->where('customer_duties.branch_id', $request->branch_id);
+        // }
+        // else if ($request->atm_id >0) {
+        //     $query = $query->where('customer_duty_details.atm_id',$request->atm_id)->where('customer_duties.branch_id', $request->branch_id);
+        // }
+        // else if ($request->branch_id) {
+        //     $query = $query->where('customer_duties.branch_id', $request->branch_id);
+        // }
+        // else{
+        //     $query = $query->where('customer_duties.customer_id', $request->customer_id);
+        // }
+
+        if ($request->start_date && $request->end_date) {
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+
+            $query = $query->where(function($query) use ($startDate, $endDate) {
+                $query->where(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
+                    ->whereDate('customer_duty_details.end_date', '<=', $endDate);
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
+                    ->whereNull('customer_duty_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
+                    ->whereNull('customer_duty_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
+                    ->whereDate('customer_duty_details.end_date', '>=', $startDate);
+                });
+
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('customer_duty_details.start_date', '<=', $endDate)
+                    ->whereDate('customer_duty_details.end_date', '>=', $endDate);
+                });
+            });
+        }
+
+        $data = $query->get();
+
+        return response()->json($data, 200);
     }
 }

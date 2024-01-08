@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('customerduty.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarySheet.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
@@ -37,12 +37,15 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control" type="date" name="start_date" value="" placeholder="Start Date">
+                                    <input class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>
+                                {{--  <div class="col-lg-3 mt-4 p-0">
+                                    <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
+                                </div>  --}}
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
@@ -81,7 +84,7 @@
                                                 <th>Loan</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="customerduty">
+                                        <tbody id="salarySheet">
                                             <tr>
                                                 <td>1</td>
                                                 <td>
@@ -189,123 +192,137 @@
 </section>
 @endsection
 @push("scripts")
-{{--  <script>
-    function getEmployees(e){
+<script>
+    function getSalaryData(e){
 
-        var customer_id = $('.customer_id');
-        if (!customer_id.val()) {
-            customer_id.focus();
-            $('.customer_select_message').html('Please select a customer');
+        if (!$('.customer_id').val()) {
+            $('.customer_id').focus();
             return false;
         }
-        customer_id.on('change', function() {
-            if ($(this).val()) {
-                $('.customer_select_message').hide();
-            } else {
-                $('.customer_select_message').html('Please select a customer').show();
-            }
-        });
-
-        var pa = '<div style="color:red">Invalid Employee ID</div>';
-        $(e).closest('tr').find('.employee_data').html('');
-        var message=$(e).closest('tr').find('.employee_data').append(pa);
-
-        var employee_id=$(e).closest('tr').find('.employee_id').val();
-        var customerId = document.getElementById('customer_id').value;
-        if(employee_id){
-            $.ajax({
-                url:"{{ route('empatt.getEmployee') }}",
-                type: "GET",
-                dataType: "json",
-                data: { 'id':employee_id },
-                success: function(data) {
-                    if(data.length>0){
-                        console.log(data);
-                        var id = data[0].id;
-                        var name = data[0].bn_applicants_name;
-                        var contact = data[0].bn_parm_phone_my;
-                        var position=data[0].position.name;
-                        var positionid=data[0].bn_jobpost_id;
-
-                        $(e).closest('tr').find('.employee_data').html(name+'-'+position);
-                        $(e).closest('tr').find('.job_post_id').val(positionid);
-                    }
-                    getDutyOtRate(e,customerId,positionid);
-                },
-            });
-        } else {
-            $(e).closest('tr').find('.employee_name').val('');
-            $(e).closest('tr').find('.employee_contact').val('');
-            $(e).closest('tr').find('.employee_data').html('');
+        if (!$('.start_date').val()) {
+            $('.start_date').focus();
+            return false;
         }
-    }
+        if (!$('.end_date').val()) {
+            $('.end_date').focus();
+            return false;
+        }
+        var customer=$('.customer_id').val();
+        var branch_id=$('.branch_id').val();
+        var atm_id=$('.atm_id').val();
+        var startDate=$('.start_date').val();
+        var endDate=$('.end_date').val();
 
-    function getDutyOtRate(e,customerId,positionid){
+        let workingdayinmonth= new Date(startDate);
+        let smonth=workingdayinmonth.getMonth()+1;
+        let syear=workingdayinmonth.getFullYear();
+            workingdayinmonth= new Date(syear, smonth, 0).getDate();
+        let counter = 0;
         $.ajax({
-            url:"{{ route('get_employeedata') }}",
+            url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { 'customer_id':customerId,'job_post_id':positionid },
-            success: function(data) {
-                console.log(data);
-                var dutyRate=data.duty_rate;
-                var otRate=data.ot_rate;
-                console.log(dutyRate)
-                $(e).closest('tr').find('.duty_rate').val(dutyRate);
-                $(e).closest('tr').find('.ot_rate').val(otRate);
+            data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
+            success: function(salary_data) {
+                console.log(salary_data);
+                let selectElement = $('.show_invoice_data');
+                    selectElement.empty();
+                    $.each(salary_data, function(index, value) {
+                        //console.log("value.start_date:", value.start_date);
+                        //console.log("this start date:", startDate);
+                        let workingDays;
+                        let totalHoures;
+                        let ratePerHoures;
+                        let st_date;
+                        let ed_date;
+                        if (value.start_date >= startDate && value.end_date == null) {
+                            workingDays = new Date(endDate) - new Date(value.start_date);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=endDate;
+                        } else if (value.start_date <= startDate && value.end_date == null) {
+                            workingDays = new Date(endDate) - new Date(startDate);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=startDate;
+                            ed_date=endDate;
+                        } else if (value.start_date <= startDate && value.end_date <= endDate) {
+                            workingDays = new Date(value.end_date) - new Date(startDate);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=value.end_date;
+                        } else if (value.start_date >= startDate && value.end_date <= endDate) {
+                            workingDays = new Date(value.end_date) - new Date(value.start_date);
+                            workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
+                            st_date=value.start_date;
+                            ed_date=value.end_date;
+                        } else {
+                            workingDays = '';
+                            st_date='';
+                            ed_date='';
+                        }
+
+                        if(value.hours=="1"){
+                            totalHoures=(8*(value.qty)*(workingDays+1));
+                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
+                            type_houre=8;
+                        }else{
+                            totalHoures=(12*(value.qty)*(workingDays+1));
+                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
+                            type_houre=12;
+                        }
+
+                        selectElement.append(
+                            `<tr style="text-align: center;">
+                                <td>${counter + 1}</td>
+                                <td>${value.name}
+                                    <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
+                                </td>
+                                <td>
+                                    <input class="form-control input_css rate_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
+                                </td>
+                                <td>
+                                    <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
+                                </td>
+                                <td>
+                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
+                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
+                                    <input class="" type="hidden" name="atm_id[]" value="${value.atm_id}">
+                                </td>
+                                <td>
+                                    <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
+                                    <input class="type_houre" type="hidden" name="" value="${type_houre}">
+                                </td>
+                                <td>
+                                    <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${parseFloat(ratePerHoures).toFixed(2)}">
+                                </td>
+                                <td>
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
+                                </td>
+                            </tr>`
+                        );
+                        counter++;
+                    });
+                    subtotalAmount();
+                    addCount();
 
             },
         });
+        $('.show_click').removeClass('d-none');
+        var vat=$('#branch_id').find(":selected").data('vat');
+        $('.vat').val(vat);
+     }
+     function subtotalAmount(){
+        var subTotal=0;
+        $('.total_amounts').each(function(){
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
     }
-
-    function CalculateAmount(e){
-        let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
-        let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
-        let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
-        let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let dutyAmount=parseFloat(dutyRate*dutyQty);
-        let otAmount=parseFloat(otRate*otQty);
-        $(e).closest('tr').find('.duty_amount').val(dutyAmount);
-        $(e).closest('tr').find('.ot_amount').val(otAmount);
-        $(e).closest('tr').find('.total_amount').val(otAmount+dutyAmount);
-
-        var totalDuty=0;
-        var totalOt=0;
-        var dutyAmountTotal=0;
-        var otAmountFi=0;
-        var totalAmountFi=0;
-        $('.duty_qty').each(function(){
-            totalDuty+=parseFloat($(this).val());
-        });
-        $('.ot_qty').each(function(){
-            totalOt+=parseFloat($(this).val());
-        });
-        $('.DutyAmountF').each(function(){
-            dutyAmountTotal+=parseFloat($(this).val());
-        });
-        $('.OtAmountFc').each(function(){
-            otAmountFi+=parseFloat($(this).val());
-        });
-        $('.TotalAmu').each(function(){
-            totalAmountFi+=parseFloat($(this).val());
-        });
-        $('.totalDutyP').val(totalDuty);
-        $('.totalOtP').val(totalOt);
-        $('.totalDutyAmount').val(dutyAmountTotal);
-        $('.totalOtAmount').val(otAmountFi);
-        $('.totalAmountPa').val(totalAmountFi);
-
-    }
-
-    function totalAmount(){
-
-    }
-
-
-</script>  --}}
+</script>
 <script>
     function addRow(){
-        var rowCount = $('#customerduty tr').length;
+        var rowCount = $('#salarySheet tr').length;
 
 var row=`
     <tr>
@@ -387,7 +404,7 @@ var row=`
         </td>
     </tr>
 `;
-    $('#customerduty').append(row);
+    $('#salarySheet').append(row);
 }
 
 function removeRow(e) {

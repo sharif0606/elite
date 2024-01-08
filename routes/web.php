@@ -158,7 +158,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     Route::middleware(['checkauth'])->prefix('admin')->group(function(){
         Route::get('dashboard', [dashboard::class,'index'])->name('dashboard');
         /* get AjaX Data */
-        Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
         // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
         // Route::get('/branch/ajax/{customerId}', [empasign::class, 'loadBranchAjax'])->name('loadbranch.ajax');
         Route::get('get-branch-ajax',[empasign::class,'loadBranchAjax'])->name('get_ajax_branch');
@@ -170,7 +169,11 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/change_password', [userprofile::class,'change_password'])->name('change_password');
         Route::post('/change_password', [userprofile::class,'change_password_store'])->name('change_password.store');
 
+        /* Hrm */
+        Route::get('get-salary-data',[salarySheet::class,'getSalaryData'])->name('get_salary_data');
+
         /*Crm */
+        Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
@@ -197,7 +200,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');
 
         /* accounts */
-
         Route::get('get_head', [vouchers::class, 'get_head'])->name('get_head');
 
     });
