@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this),getEmployees(e)">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this);getEmployees(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -134,7 +134,6 @@
 @push("scripts")
 <script>
     function getEmployees(e){
-
         var customer_id = $('.customer_id');
         var customer_select_message = $('.customer_select_message');
         if (!customer_id.val()) {
@@ -187,9 +186,9 @@
     }
 
     function getDutyOtRate(e,customerId,positionid){
+        //console.log(customerId);
+        //console.log(positionid);
         $.ajax({
-            console.log(customerId);
-            console.log(positionid);
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
