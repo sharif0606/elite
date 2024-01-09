@@ -90,24 +90,8 @@ class SalarySheetController extends Controller
 
     public function getSalaryData(Request $request)
     {
-        $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')
-            ->select('customer_duties.*', 'customer_duty_details.*','job_posts.*');
-
-        // if ($request->atm_id=='a') {
-        //     $query = $query->where('customer_duty_details.atm_id',"!=","0")->where('customer_duties.branch_id', $request->branch_id);
-        // }
-        // else if ($request->atm_id=='n') {
-        //     $query = $query->where('customer_duty_details.atm_id',"=","0")->where('customer_duties.branch_id', $request->branch_id);
-        // }
-        // else if ($request->atm_id >0) {
-        //     $query = $query->where('customer_duty_details.atm_id',$request->atm_id)->where('customer_duties.branch_id', $request->branch_id);
-        // }
-        // else if ($request->branch_id) {
-        //     $query = $query->where('customer_duties.branch_id', $request->branch_id);
-        // }
-        // else{
-        //     $query = $query->where('customer_duties.customer_id', $request->customer_id);
-        // }
+        $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')->join('employees','customer_duty_details.employee_id','=','employees.id')
+            ->select('customer_duties.*', 'customer_duty_details.*','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name');
 
         if ($request->start_date && $request->end_date) {
             $startDate = $request->start_date;
