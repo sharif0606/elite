@@ -212,11 +212,13 @@
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let dutyAmount=parseFloat(dutyRate*dutyQty);
-        let otAmount=parseFloat(otRate*otQty);
-        $(e).closest('tr').find('.duty_amount').val(dutyAmount);
-        $(e).closest('tr').find('.ot_amount').val(otAmount);
-        $(e).closest('tr').find('.total_amount').val(otAmount+dutyAmount);
+        let dutyRateDay=dutyRate/30;
+        let otRateDay=otRate/30;
+        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+        let otAmount=parseFloat(otRateDay*otQty);
+        $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
+        $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
+        $(e).closest('tr').find('.total_amount').val(parseFloat(otAmount+dutyAmount).toFixed(2));
 
         var totalDuty=0;
         var totalOt=0;
