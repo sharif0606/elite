@@ -66,8 +66,6 @@
          $('.upazila').hide();
          $('.upazila'+e).show();
     }
-
-
 </script>
 
 <script src="{{ asset('/assets/extensions/filepond/filepond.js') }}"></script>
