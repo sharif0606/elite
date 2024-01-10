@@ -2,6 +2,13 @@
 @section('pageTitle','Rate List')
 @section('pageSubTitle','List')
 @section('content')
+<style>
+    th {
+        background-color: blue !important;
+        color: white !important;
+        text-align: center !important;
+    }
+</style>
     <section class="section"><!-- Bordered table start -->
         <div class="row">
             <h4 class="text-center m-0">{{ $customerName->name }}</h4>
@@ -17,7 +24,7 @@
                     <div class="table-responsive"><!-- table bordered -->
                         <table class="table table-striped" id="">
                             <thead>
-                                <tr class="bg-primary text-white">
+                                <tr class="text-center">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Job Post')}}</th>
                                     <th scope="col">{{__('Rate')}}</th>
