@@ -97,29 +97,36 @@ class SalarySheetController extends Controller
             $startDate = $request->start_date;
             $endDate = $request->end_date;
 
-            $query = $query->where(function($query) use ($startDate, $endDate) {
-                $query->where(function($query) use ($startDate, $endDate) {
-                    $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
-                    ->whereDate('customer_duty_details.end_date', '<=', $endDate);
-                });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
-                    $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
-                    ->whereNull('customer_duty_details.end_date');
-                });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
-                    $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
-                    ->whereNull('customer_duty_details.end_date');
-                });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
-                    $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
-                    ->whereDate('customer_duty_details.end_date', '>=', $startDate);
-                });
-
-                $query->orWhere(function($query) use ($startDate, $endDate) {
+            $query->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('customer_duty_details.start_date', '<=', $endDate)
-                    ->whereDate('customer_duty_details.end_date', '>=', $endDate);
+                        ->whereDate('customer_duty_details.end_date', '>=', $startDate);
                 });
             });
+
+            // $query = $query->where(function($query) use ($startDate, $endDate) {
+            //     $query->where(function($query) use ($startDate, $endDate) {
+            //         $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
+            //         ->whereDate('customer_duty_details.end_date', '<=', $endDate);
+            //     });
+            //     $query->orWhere(function($query) use ($startDate, $endDate) {
+            //         $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
+            //         ->whereNull('customer_duty_details.end_date');
+            //     });
+            //     $query->orWhere(function($query) use ($startDate, $endDate) {
+            //         $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
+            //         ->whereNull('customer_duty_details.end_date');
+            //     });
+            //     $query->orWhere(function($query) use ($startDate, $endDate) {
+            //         $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
+            //         ->whereDate('customer_duty_details.end_date', '>=', $startDate);
+            //     });
+
+            //     $query->orWhere(function($query) use ($startDate, $endDate) {
+            //         $query->whereDate('customer_duty_details.start_date', '<=', $endDate)
+            //         ->whereDate('customer_duty_details.end_date', '>=', $endDate);
+            //     });
+            // });
         }
 
         $data = $query->get();
