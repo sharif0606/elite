@@ -154,6 +154,7 @@
         var message=$(e).closest('tr').find('.employee_data').append(pa);
 
         var employee_id=$(e).closest('tr').find('.employee_id').val();
+        //console.log('E='+employee_id);
         var customerId = document.getElementById('customer_id').value;
         if(employee_id){
             $.ajax({
@@ -162,15 +163,16 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
-                    console.log(employee_id);
+                    //console.log(employee_id);
                     if(data.length>0){
-                        console.log(data);
+                        //console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
                         var contact = data[0].bn_parm_phone_my;
                         var position=data[0].position.name;
                         var positionid=data[0].bn_jobpost_id;
-
+                        //console.log('Customer'.customerId);
+                        //console.log('Position'.positionid);
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
                         $(e).closest('tr').find('.job_post_id').val(positionid);
                         $(e).closest('tr').find('.employee_id_primary').val(id);
@@ -186,18 +188,18 @@
     }
 
     function getDutyOtRate(e,customerId,positionid){
-        //console.log(customerId);
-        //console.log(positionid);
+        //console.log('Customer'.customerId);
+        //console.log('Position'.positionid);
         $.ajax({
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
-                console.log(dutyRate)
+                //console.log(dutyRate)
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
 

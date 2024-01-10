@@ -34,6 +34,7 @@
                             <table class="table">
                                 <thead>
                                     <tr style="background-color: rgb(166, 166, 207) !important;">
+                                        <th style=" color: rgb(15, 15, 15) !important;">Employee ID</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Employee</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Job Post</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Rate</th>
@@ -48,6 +49,7 @@
                                 <tbody>
                                     @foreach ($e->details as $de)
                                     <tr>
+                                        <td>{{$de->employee?->admission_id_no }}</td>
                                         <td>{{$de->employee?->bn_applicants_name }}</td>
                                         <td>{{$de->jobpost?->name }}</td>
                                         <td>{{ $de->duty_rate }}</td>

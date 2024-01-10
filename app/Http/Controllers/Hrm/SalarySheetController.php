@@ -99,8 +99,8 @@ class SalarySheetController extends Controller
 
             $query->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($query) use ($startDate, $endDate) {
-                    $query->whereDate('customer_duty_details.start_date', '<=', $endDate)
-                        ->whereDate('customer_duty_details.end_date', '>=', $startDate);
+                    $query->whereDate('customer_duty_details.start_date', '>=',$startDate )
+                        ->whereDate('customer_duty_details.end_date', '<=', $endDate);
                 });
             });
 
