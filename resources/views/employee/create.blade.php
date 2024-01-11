@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="admission_id_no">ভর্তিরপর আইডি নং</label>
+                            <label for="admission_id_no">ভর্তিরপর আইডি নং<span class="text-danger">*</span></label>
                             <input type="text" id="admission_id_no" value="{{old('admission_id_no')}}" class="form-control @error('admission_id_no') is-invalid @enderror" placeholder="" name="admission_id_no">
                             @if($errors->has('admission_id_no'))
                             <span class="text-danger"> {{ $errors->first('admission_id_no') }}</span>
@@ -112,7 +112,7 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_district_id">জেলা<span class="text-danger">*</span></label>
+                            <label for="bn_parm_district_id">জেলা</label>
                             <select onchange="show_upazila(this.value)" name="bn_parm_district_id" class="choices form-control js-example-basic-single @error('bn_parm_district_id') is-invalid @enderror" id="bn_parm_district_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($districts as $d)
@@ -128,7 +128,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_upazila_id">উপজেলা<span class="text-danger">*</span></label>
+                            <label for="bn_parm_upazila_id">উপজেলা</label>
                             <select onchange="show_unions(this.value)" name="bn_parm_upazila_id" class=" form-control js-example-basic-single @error('bn_parm_upazila_id') is-invalid @enderror" id="bn_parm_upazila_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($upazila as $d)
@@ -144,7 +144,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_union_id">ইউনিয়ন<span class="text-danger">*</span></label>
+                            <label for="bn_parm_union_id">ইউনিয়ন</label>
                             <select name="bn_parm_union_id" class="form-control @error('bn_parm_union_id') is-invalid @enderror" id="bn_parm_union_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($union as $u)
@@ -160,7 +160,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_ward_id">ওয়ার্ড নং<span class="text-danger">*</span></label>
+                            <label for="bn_parm_ward_id">ওয়ার্ড নং</label>
                             <select name="bn_parm_ward_id" class=" form-control js-example-basic-single @error('bn_parm_ward_id') is-invalid @enderror" id="bn_parm_ward_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($ward as $d)
@@ -176,7 +176,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_holding_name">হোল্ডিং নং<span class="text-danger">*</span></label>
+                            <label for="bn_parm_holding_name">হোল্ডিং নং</label>
                             <input type="text" id="bn_parm_holding_name" value="{{old('bn_parm_holding_name')}}" class="form-control @error('bn_parm_holding_name') is-invalid @enderror" placeholder="হোল্ডিং নং" name="bn_parm_holding_name">
                             @if($errors->has('bn_parm_holding_name'))
                             <span class="text-danger"> {{ $errors->first('bn_parm_holding_name') }}</span>
@@ -185,7 +185,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_village_name">গ্রামের নাম<span class="text-danger">*</span></label>
+                            <label for="bn_parm_village_name">গ্রামের নাম</label>
                             <input type="text" id="bn_parm_village_name" value="{{old('bn_parm_village_name')}}" class="form-control @error('bn_parm_village_name') is-invalid @enderror" placeholder="গ্রামের নাম" name="bn_parm_village_name">
                             @if($errors->has('bn_parm_village_name'))
                             <span class="text-danger"> {{ $errors->first('bn_parm_village_name') }}</span>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_parm_post_ofc">পোঃ<span class="text-danger">*</span></label>
+                            <label for="bn_parm_post_ofc">পোঃ</label>
                             <input type="text" id="bn_parm_post_ofc" value="{{old('bn_parm_post_ofc')}}" class="form-control @error('bn_parm_post_ofc') is-invalid @enderror" placeholder="পোঃ" name="bn_parm_post_ofc">
                             @if($errors->has('bn_parm_post_ofc'))
                             <span class="text-danger"> {{ $errors->first('bn_parm_post_ofc') }}</span>
@@ -232,7 +232,7 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_district_id">জেলা<span class="text-danger">*</span></label>
+                            <label for="bn_pre_district_id">জেলা</label>
                             <select onchange="show_upazila(this.value)" name="bn_pre_district_id" class=" form-control js-example-basic-single @error('bn_pre_district_id') is-invalid @enderror" id="bn_pre_district_id">
                                 <option value="">Select Discrict</option>
                                 @forelse($districts as $d)
@@ -248,7 +248,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_upazila_id">উপজেলা<span class="text-danger">*</span></label>
+                            <label for="bn_pre_upazila_id">উপজেলা</label>
                             <select onchange="show_unions(this.value)" name="bn_pre_upazila_id" class="form-control js-example-basic-single @error('bn_pre_upazila_id') is-invalid @enderror" id="bn_pre_upazila_id">
                                 <option value="">Select Upazila</option>
                                 @forelse($upazila as $d)
@@ -264,7 +264,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_union_id">ইউনিয়ন<span class="text-danger">*</span></label>
+                            <label for="bn_pre_union_id">ইউনিয়ন</label>
                             <select name="bn_pre_union_id" class="form-control js-example-basic-single" id="bn_pre_union_id">
                                 <option value="">Select Union</option>
                                 @forelse($union as $u)
@@ -280,7 +280,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_ward_no">ওয়ার্ড নং<span class="text-danger">*</span></label>
+                            <label for="bn_pre_ward_no">ওয়ার্ড নং</label>
                             <select name="bn_pre_ward_no" class=" form-control @error('bn_pre_ward_no') is-invalid @enderror" id="bn_pre_ward_no">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($ward as $d)
@@ -296,7 +296,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_holding_no">হোল্ডিং নং<span class="text-danger">*</span></label>
+                            <label for="bn_pre_holding_no">হোল্ডিং নং</label>
                             <input type="text" id="bn_pre_holding_no" value="{{old('bn_pre_holding_no')}}" class="form-control @error('bn_pre_holding_no') is-invalid @enderror" placeholder="হোল্ডিং নং" name="bn_pre_holding_no">
                             @if($errors->has('bn_pre_holding_no'))
                                 <span class="text-danger"> {{ $errors->first('bn_pre_holding_no') }}</span>
@@ -305,7 +305,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_village_name">গ্রামের নাম<span class="text-danger">*</span></label>
+                            <label for="bn_pre_village_name">গ্রামের নাম</label>
                             <input type="text" id="bn_pre_village_name" value="{{old('bn_pre_village_name')}}" class="form-control @error('bn_pre_village_name') is-invalid @enderror" placeholder="গ্রামের নাম" name="bn_pre_village_name">
                             @if($errors->has('bn_pre_village_name'))
                                 <span class="text-danger"> {{ $errors->first('bn_pre_village_name') }}</span>
@@ -314,7 +314,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_post_ofc">পোঃ<span class="text-danger">*</span></label>
+                            <label for="bn_pre_post_ofc">পোঃ</label>
                             <input type="text" id="bn_pre_post_ofc" value="{{old('bn_pre_post_ofc')}}" class="form-control @error('bn_pre_post_ofc') is-invalid @enderror" placeholder="পোঃ" name="bn_pre_post_ofc">
                             @if($errors->has('bn_pre_post_ofc'))
                                 <span class="text-danger"> {{ $errors->first('bn_pre_post_ofc') }}</span>
@@ -335,7 +335,7 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_identification_mark">সনাক্তকরণ চিহ্ন<span class="text-danger">*</span></label>
+                            <label for="bn_identification_mark">সনাক্তকরণ চিহ্ন</label>
                             <input type="text" id="bn_identification_mark" value="{{old('bn_identification_mark')}}" class="form-control @error('bn_identification_mark') is-invalid @enderror" placeholder="" name="bn_identification_mark">
                             @if($errors->has('bn_identification_mark'))
                                 <span class="text-danger"> {{ $errors->first('bn_identification_mark') }}</span>
@@ -344,7 +344,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_edu_qualification">শিক্ষাগতা যোগ্যতা<span class="text-danger">*</span></label>
+                            <label for="bn_edu_qualification">শিক্ষাগতা যোগ্যতা</label>
                             <input type="text" id="bn_edu_qualification" value="{{old('bn_edu_qualification')}}" class="form-control @error('bn_edu_qualification') is-invalid @enderror" placeholder="" name="bn_edu_qualification">
                             @if($errors->has('bn_edu_qualification'))
                                 <span class="text-danger"> {{ $errors->first('bn_edu_qualification') }}</span>
@@ -370,16 +370,16 @@
                             <input type="date" id="bn_dob" value="{{old('bn_dob')}}" class="form-control" placeholder="" name="bn_dob">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_age">বয়স</label>
                             <input readonly type="text" id="bn_age" value="{{old('bn_age')}}" class="form-control" placeholder="" name="bn_age">
                         </div>
-                    </div>
+                    </div>  --}}
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_birth_certificate">জন্ম নিবন্ধন নং<span class="text-danger">*</span></label>
-                            <input type="text" id="bn_birth_certificate" value="{{old('bn_birth_certificate')}}" class="form-control @error('bn_birth_certificate') is-invalid @enderror" placeholder="" name="bn_birth_certificate">
+                            <label for="bn_birth_certificate">জন্ম নিবন্ধন নং</label>
+                            <input type="text" id="bn_birth_certificate" value="{{old('bn_birth_certificate')}}" class="form-control @error('bn_birth_certificate') is-invalid @enderror" placeholder="জন্ম নিবন্ধন নং" name="bn_birth_certificate">
                             @if($errors->has('bn_birth_certificate'))
                                 <span class="text-danger"> {{ $errors->first('bn_birth_certificate') }}</span>
                             @endif
@@ -388,12 +388,12 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_nid_no">জাতীয় পরিচয়পত্র নং</label>
-                            <input type="text" id="bn_nid_no" value="{{old('bn_nid_no')}}" class="form-control" placeholder="" name="bn_nid_no">
+                            <input type="text" id="bn_nid_no" value="{{old('bn_nid_no')}}" class="form-control" placeholder="জাতীয় পরিচয়পত্র নং" name="bn_nid_no">
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_nationality">জাতীয়তা<span class="text-danger">*</span></label>
+                            <label for="bn_nationality">জাতীয়তা</label>
                             <input type="text" id="bn_nationality" value="{{old('bn_nationality','বাংলাদেশী')}}" class="form-control @error('bn_nationality') is-invalid @enderror" placeholder="" name="bn_nationality">
                             @if($errors->has('bn_nationality'))
                                 <span class="text-danger"> {{ $errors->first('bn_nationality') }}</span>
@@ -402,7 +402,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_religion">ধর্ম<span class="text-danger">*</span></label>
+                            <label for="bn_religion">ধর্ম</label>
                             <select name="bn_religion" class="form-control js-example-basic-single @error('bn_religion') is-invalid @enderror" id="bn_religion">
                                 <option value="">Select</option>
                                 @forelse($religions as $r)
@@ -462,7 +462,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_marital_status">বৈবাহিক অবস্থা<span class="text-danger">*</span></label>
+                            <label for="bn_marital_status">বৈবাহিক অবস্থা</label>
                             <select name="bn_marital_status" class="form-control js-example-basic-single @error('bn_marital_status') is-invalid @enderror" onclick="getMarriedInfo()" id="bn_marital_status">
                                 <option value="1">অবিবাহিত</option>
                                 <option value="2">বিবাহিত</option>
@@ -514,7 +514,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_admittee">ভর্তিকারীর সুপারিশ/রেফারেন্স নাম<span class="text-danger">*</span></label>
+                            <label for="bn_reference_admittee">ভর্তিকারীর সুপারিশ/রেফারেন্স নাম</label>
                             <input type="text" id="bn_reference_admittee" value="{{old('bn_reference_admittee')}}" class="form-control @error('bn_reference_admittee') is-invalid @enderror" placeholder="ভর্তিকারীর সুপারিশ/রেফারেন্স নাম" name="bn_reference_admittee">
                             @if($errors->has('bn_reference_admittee'))
                                 <span class="text-danger"> {{ $errors->first('bn_reference_admittee') }}</span>
@@ -523,7 +523,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_adm_phone">মোবাইল<span class="text-danger">*</span></label>
+                            <label for="bn_reference_adm_phone">মোবাইল</label>
                             <input type="text" id="bn_reference_adm_phone" value="{{old('bn_reference_adm_phone')}}" class="form-control  @error('bn_reference_adm_phone') is-invalid @enderror" placeholder="মোবাইল" name="bn_reference_adm_phone">
                             @if($errors->has('bn_reference_adm_phone'))
                                 <span class="text-danger"> {{ $errors->first('bn_reference_adm_phone') }}</span>
@@ -532,7 +532,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_reference_adm_adress">ঠিকানা<span class="text-danger">*</span></label>
+                            <label for="bn_reference_adm_adress">ঠিকানা</label>
                             <input type="text" id="bn_reference_adm_adress" value="{{old('bn_reference_adm_adress')}}" class="form-control @error('bn_reference_adm_adress') is-invalid @enderror" placeholder="ঠিকানা" name="bn_reference_adm_adress">
                             @if($errors->has('bn_reference_adm_adress'))
                                 <span class="text-danger"> {{ $errors->first('bn_reference_adm_adress') }}</span>
@@ -541,7 +541,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
+                            <label for="bn_jobpost_id">আবেদিত পদ</label>
                             <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
