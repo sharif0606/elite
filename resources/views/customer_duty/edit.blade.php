@@ -65,9 +65,10 @@
                                             @foreach ($custduty->details as $d)
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="{{ old('employee_id',$d->employee?->admission_id_no) }}" placeholder="Employee Id">
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="{{ $d->employee?->admission_id_no }}" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }} -{{ $d->employee?->position?->name }}</div>
                                                     <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+                                                    <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ old('employee_id',$d->employee?->id) }}">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ old('duty_rate',$d->duty_rate) }}" placeholder="Duty Rate">
@@ -164,6 +165,7 @@
 
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
                         $(e).closest('tr').find('.job_post_id').val(positionid);
+                        $(e).closest('tr').find('.employee_id_primary').val(id);
                     }
                     getDutyOtRate(e,customerId,positionid);
                 },
@@ -244,9 +246,10 @@
 var row=`
 <tr>
     <td>
-        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" name="employee_id[]" value="" placeholder="Employee Id">
+        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
         <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
         <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+        <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
     </td>
     <td>
         <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
