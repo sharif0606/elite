@@ -17,7 +17,7 @@
         </tr>
     </table>
     <br>
-    <div>Invoice No. ESSL/GPH/July-23-01</div>
+    <div>Invoice No. {{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</div>
     <br>
     <div>To</div>
     <div>Manager</div>

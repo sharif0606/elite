@@ -38,7 +38,8 @@
         <table width="100%">
             <tr>
                 <td width="15%">Invoice No:</td>
-                <td>ESSL/Mamiya/23/07-01</td>
+                <td>{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
+                {{--  <td>ESSL/Mamiya/23/07-01</td>  --}}
             </tr>
             <tr>
                 <td width="15%">To:</td>

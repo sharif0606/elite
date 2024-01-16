@@ -12,7 +12,7 @@
 <body>
     <div style="font-size: 20px; text-align: right; margin-top: 2.2in;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></div>
     <div style="text-align: center; font-size: 28px; ">
-        <b><u>Invoice</u></b>
+        <b><u>Invoice</u> {{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</b>
     </div>
     <table width="100%">
         <tr>
