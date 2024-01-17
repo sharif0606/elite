@@ -106,8 +106,8 @@
                 <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->customer?->name }}"></div>
                 <div class="col-1">Branch</div>
                 <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->branch?->brance_name }}"></div>
-                <div class="col-1">Atm</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->atms?->atm }}"></div>
+                {{--  <div class="col-1">Atm</div>  --}}
+                {{--  <div class="col-2"><input type="text" class="tinput"  value="{{ $empasin->atms?->atm }}"></div>  --}}
             </div>
             <div class="row">
                 <div class="col-1">Address</div>
@@ -132,7 +132,11 @@
                         @foreach ($empasin->details as $de)
                         <tr class="text-center">
                             <td >{{ ++$loop->index  }}</td>
-                            <td>{{ $de->jobpost?->name }}</td>
+                            <td>{{ $de->jobpost?->name }}
+                                @if($de->atms?->atm)
+                                    (ATM:{{ $de->atms?->atm }})
+                                @endif
+                                </td>
                             <td>{{ $de->qty }}</td>
                             <td>{{ \Carbon\Carbon::parse($de->start_date)->format('d F Y') }}</td>
                             <td>{{ $de->end_date }}</td>

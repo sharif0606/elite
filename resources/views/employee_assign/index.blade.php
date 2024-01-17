@@ -24,7 +24,10 @@
                         <td scope="row">
                         {{$e->customer?->name}}
                         <br/>
-                        {{$e->branch?->brance_name}}
+                        @if($e->branch?->brance_name)
+
+                        Branch :{{$e->branch?->brance_name}}
+                        @endif
                         </td>
                         <td>
                             @if ($e->details)
@@ -41,7 +44,7 @@
                                     <tr>
                                         <td>{{$de->jobpost?->name }}
                                             @if($de->atms?->atm )
-                                            ({{ $de->atms?->atm }})
+                                            (ATM: {{ $de->atms?->atm }})
                                             @endif
                                             </td>
                                         <td>{{ $de->qty }}</td>
