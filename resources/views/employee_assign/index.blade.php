@@ -21,7 +21,11 @@
                     @forelse($empasin as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td scope="row">{{$e->customer?->name}}</td>
+                        <td scope="row">
+                        {{$e->customer?->name}}
+                        <br/>
+                        {{$e->branch?->brance_name}}
+                        </td>
                         <td>
                             @if ($e->details)
                             <table class="table">
@@ -35,7 +39,11 @@
                                 <tbody>
                                     @foreach ($e->details as $de)
                                     <tr>
-                                        <td>{{$de->jobpost?->name }}</td>
+                                        <td>{{$de->jobpost?->name }}
+                                            @if($de->atms?->atm )
+                                            ({{ $de->atms?->atm }})
+                                            @endif
+                                            </td>
                                         <td>{{ $de->qty }}</td>
                                         <td>{{ $de->rate }}</td>
                                     </tr>
