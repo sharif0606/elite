@@ -45,7 +45,7 @@
                 <td width="15%">To:</td>
                 <td><b>{{ $invoice_id->customer?->name }}</b></td>
                 @if($invoice_id->customer?->bin)
-                <td width="40%" style="text-align: center;">BIN NO- : <b>{{ $invoice_id->customer?->bin }}</b></td>
+                <td width="40%" style="text-align: center;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO- : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
                 @endif
             </tr>
             <tr>
@@ -87,8 +87,8 @@
                 @if ($invoice_id->details)
                 @foreach ($invoice_id->details as $de)
                 <tr style="text-align: center;">
-                    <td >{{ count($invoice_id->details) - $loop->index }}</td>
-                    {{--  <td >{{ ++$loop->index  }}</td>  --}}
+                    {{--  <td >{{ count($invoice_id->details) - $loop->index }}</td>  --}}
+                    <td>{{ ++$loop->index  }}</td>
                     <td>{{ $de->jobpost?->name }}</td>
                     <td>{{ $de->rate }}</td>
                     <td>{{ $de->employee_qty }}</td>

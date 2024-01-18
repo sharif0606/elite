@@ -174,6 +174,7 @@
                     $.each(invoice_data, function(index, value) {
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
+                        let ATMdata= value.atm>'0'?value.atm:'';
                         let workingDays;
                         let totalHoures;
                         let ratePerHoures;
@@ -218,8 +219,9 @@
                         selectElement.append(
                             `<tr style="text-align: center;">
                                 <td>${counter + 1}</td>
-                                <td>${value.name}
+                                <td>${value.name} <br/> ${ATMdata}
                                     <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
+                                    <input class="" type="hidden" name="detail_atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css rate_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
@@ -231,7 +233,6 @@
                                     <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
-                                    <input class="" type="hidden" name="atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>
                                     <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">

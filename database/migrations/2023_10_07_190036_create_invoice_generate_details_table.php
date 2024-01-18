@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('invoice_id');
             $table->integer('job_post_id');
-            $table->integer('atm_id')->nullable();
+            $table->integer('atm_id')->nullable(); //real atm id
             $table->decimal('rate',10,2)->default(0);
             $table->integer('employee_qty')->default(0);
             $table->integer('warking_day')->default(0);

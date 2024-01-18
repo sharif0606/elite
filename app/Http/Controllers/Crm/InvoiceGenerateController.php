@@ -39,12 +39,12 @@ class InvoiceGenerateController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         try{
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
-            //$data->atm_id = $request->atm_id;
+            $data->atm_id = $request->atm_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
@@ -64,7 +64,7 @@ class InvoiceGenerateController extends Controller
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->rate=$request->rate[$key];
                             $details->employee_qty=$request->employee_qty[$key];
-                            $details->atm_id = $request->atm_id[$key];
+                            $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
                             $details->total_houres=$request->total_houres[$key];
                             $details->rate_per_houres=$request->rate_per_houres[$key];
@@ -194,8 +194,8 @@ class InvoiceGenerateController extends Controller
     // }
     public function getInvoiceData(Request $request)
     {
-        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')
-            ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*');
+        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')->leftjoin('atms','employee_assign_details.atm_id','=','atms.id')
+            ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*','atms.*');
 
         if ($request->atm_id=='a') {
             $query = $query->where('employee_assign_details.atm_id',"!=","0")->where('employee_assigns.branch_id', $request->branch_id);
