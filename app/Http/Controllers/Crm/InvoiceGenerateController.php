@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Crm\CustomerBrance;
+use App\Models\Crm\Atm;
 use App\Models\Crm\InvoiceGenerate;
 use App\Models\Crm\InvoiceGenerateDetails;
 use App\Models\Crm\InvoiceGenerateLess;
@@ -26,7 +27,7 @@ class InvoiceGenerateController extends Controller
 
     public function index()
     {
-        $invoice=InvoiceGenerate::all();
+        $invoice=InvoiceGenerate::orderBy('id','DESC')->get();
         $customer=Customer::all();
         return view('invoice_generate.index',compact('invoice','customer'));
     }
@@ -108,7 +109,7 @@ class InvoiceGenerateController extends Controller
     public function getSingleInvoice1($id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show1',compact('invoice_id','branch'));
     }
     public function getSingleInvoice2($id)

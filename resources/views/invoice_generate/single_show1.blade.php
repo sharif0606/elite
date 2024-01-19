@@ -89,7 +89,10 @@
                 <tr style="text-align: center;">
                     {{--  <td >{{ count($invoice_id->details) - $loop->index }}</td>  --}}
                     <td>{{ ++$loop->index  }}</td>
-                    <td>{{ $de->jobpost?->name }}</td>
+                    <td>{{ $de->jobpost?->name }}
+                        <br/>
+                        {{ $de->atms?->atm }}
+                    </td>
                     <td>{{ $de->rate }}</td>
                     <td>{{ $de->employee_qty }}</td>
                     <td>{{ $de->warking_day }}</td>

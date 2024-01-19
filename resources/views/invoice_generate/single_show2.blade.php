@@ -84,7 +84,10 @@
                 @foreach ($invoice_id->details as $de)
                 <tr style="text-align: center;">
                     <td >{{ ++$loop->index  }}</td>
-                    <td>{{ $de->jobpost?->name }}</td>
+                    <td>{{ $de->jobpost?->name }}
+                        <br/>
+                        {{ $de->atms?->atm }}
+                    </td>
                     <td>{{ $de->rate }}</td>
                     <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                     <td>{{ $de->employee_qty }}</td>
