@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class EditEmployeeRequest extends FormRequest
 {
@@ -21,10 +22,12 @@ class EditEmployeeRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(Request $r)
     {
+        $id=encryptor('decrypt',$r->uptoken);
         return [
             'bn_applicants_name' => 'required',
+            'admission_id_no'=>'required|unique:employees,admission_id_no,'.$id,
             // 'bn_parm_district_id' => 'required',
             // 'bn_parm_upazila_id' => 'required',
             // 'bn_parm_union_id' => 'required',

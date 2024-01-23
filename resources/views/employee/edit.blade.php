@@ -31,6 +31,7 @@
             <form class="form" method="post" action="{{route('employee.update',[encryptor('encrypt',$employees->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+                <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$employees->id)}}">
                 <div class="row">
                     <h5 class="text-center m-0">এলিট সিকিউরিটি সার্ভিস লিমিটেড</h5>
                 </div>
@@ -66,6 +67,9 @@
                         <div class="form-group">
                             <label for="admission_id_no">ভর্তিরপর আইডি নং<span class="text-danger">*</span></label>
                             <input type="text" id="admission_id_no" value="{{old('admission_id_no',$employees->admission_id_no)}}" class="form-control" placeholder="" name="admission_id_no">
+                            @if($errors->has('admission_id_no'))
+                            <span class="text-danger"> {{ $errors->first('admission_id_no') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
