@@ -41,6 +41,9 @@
             <tr>
                 <td width="15%">To:</td>
                 <td><b>Manager</b></td>
+                @if($invoice_id->customer?->bin)
+                <td width="40%" style="text-align: center;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO- : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
+                @endif
             </tr>
             <tr>
                 <td width="15%"></td>
@@ -81,32 +84,48 @@
             </thead>
             <tbody>
                 @if ($invoice_id->details)
-                @foreach ($invoice_id->details as $de)
-                <tr style="text-align: center;">
-                    <td >{{ ++$loop->index  }}</td>
-                    <td>{{ $de->jobpost?->name }}
-                        <br/>
-                        {{ $de->atms?->atm }}
-                    </td>
-                    <td>{{ $de->rate }}</td>
-                    <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
-                    <td>{{ $de->employee_qty }}</td>
-                    <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
-                </tr>
-                @endforeach
+                    @foreach ($invoice_id->details as $de)
+                        <tr style="text-align: center;">
+                            <td >{{ ++$loop->index  }}</td>
+                            <td>{{ $de->jobpost?->name }}
+                                <br/>
+                                {{ $de->atms?->atm }}
+                            </td>
+                            <td>{{ $de->rate }}</td>
+                            <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
+                            <td>{{ $de->employee_qty }}</td>
+                            <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
+                        </tr>
+                    @endforeach
                 @endif
             </tbody>
             <tfoot>
-                <tr style="text-align: center;">
-                    <td></td>
-                    <td colspan="4">Sub Total</td>
-                    <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
-                </tr>
-                <tr style="text-align: center;">
-                    <td></td>
-                    <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
-                    <td>{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
-                </tr>
+                @if($invoice_id->vat>0)
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <td colspan="4">Sub Total</td>
+                        <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
+                    </tr>
+                    @if ($invoice_id->less)
+                        @foreach ($invoice_id->less as $le)
+                            <tr style="text-align: center;">
+                                <td></td>
+                                <td colspan="4">{{ $le->description }}</td>
+                                <td>{{ $le->amount }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="4">Total</th>
+                        <td>{{ money_format($invoice_id->total_tk)}}</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
+                        <td>{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
+                    </tr>
+                @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Grand Total</th>
