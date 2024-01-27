@@ -22,12 +22,12 @@
                     {{--  <img height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">  --}}
                 </div>
             </div>
-            <!-- <div class="row">
+            <div class="row">
                 <div class="col-4">
                     <input type="checkbox" id="check_header" name="check_header" value="1">
                     <label for="check_header"> show Header part check</label>
                 </div>
-            </div> -->
+            </div>
             <div class="row">
                 <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
