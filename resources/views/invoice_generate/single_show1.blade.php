@@ -8,31 +8,41 @@
 </head>
 {{--  <button type="button" class="btn btn-info no-print" onclick="printDiv('result_show')">Print</button>  --}}
 <body id="result_show">
-    <div style="text-align: center;"><h2>INVOICE</h2></div>
-    <table width="100%">
-        <tr>
-            <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+        @if($headershow==1)
+        <div style="text-align: center;"><h2>INVOICE</h2></div>
+        <table width="100%">
+            <tr>
+                <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
 
-            <td width="50%">
-                <h3>
-                    House #2, Lane #2, Road #2, Block-K,<br>
-                Halishahar Housing Estate, Chattogram-4224 <br>
-                Tel: 02333323387, 02333328707 <br>
-                Mobile: 01844-040714, 01844-040717 <br>
-                Email: ctg@elitebd.com
-                </h3>
-            </td>
-        </tr>
-    </table>
-    <hr style="height: 1px; background-color: red;">
-    <table width="100%"style="padding-left: 55px;">
-        <tr>
-            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
-            <td width="30%"></td>
-            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
-            {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
-        </tr>
-    </table>
+                <td width="50%">
+                    <h3>
+                        House #2, Lane #2, Road #2, Block-K,<br>
+                    Halishahar Housing Estate, Chattogram-4224 <br>
+                    Tel: 02333323387, 02333328707 <br>
+                    Mobile: 01844-040714, 01844-040717 <br>
+                    Email: ctg@elitebd.com
+                    </h3>
+                </td>
+            </tr>
+        </table>
+        <hr style="height: 1px; background-color: red;">
+        <table width="100%"style="padding-left: 55px;">
+            <tr>
+                <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+                <td width="30%"></td>
+                <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+                {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
+            </tr>
+        </table>
+        @else
+        <table width="100%"style="padding: 2in 0px 30px 0px;">
+            <tr style="font-size: 20px;">
+                <td width="20%" style="text-align: left;"></td>
+                <td width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+                <td width="30%" style="text-align: center;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            </tr>
+        </table>
+        @endif
     <div style="padding: 0 70px 0 80px;">
 
         <table width="100%">

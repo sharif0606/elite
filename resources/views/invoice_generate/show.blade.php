@@ -30,7 +30,7 @@
             </div>
             <div class="row">
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow1',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
                     </a>
                 </div>
@@ -40,37 +40,37 @@
                     </a>
                 </div>  --}}
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow3',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow3',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_3.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow4',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow4',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_4.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow5',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow5',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_5.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow6',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
+                    <a href="{{route('invoiceShow6',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_6.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow7',[encryptor('encrypt',$invoice_id->id)])}}">
+                    <a href="{{route('invoiceShow7',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/wasa1.png')}}" alt="No Image Found">
                     </a>
                 </div>
                 <div class="col-4 text-center mb-2">
-                    <a href="{{route('invoiceShow8',[encryptor('encrypt',$invoice_id->id)])}}">
+                    <a href="{{route('invoiceShow8',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/onetrip.png')}}" alt="No Image Found">
                     </a>
                 </div>
@@ -80,8 +80,21 @@
 
 </section>
 <script>
-    function goSingleShow(){
-        let checkField=$('.check_header').val();
+    $('.check_header').click(function(){
+        if($(this).prop('checked')){
+            $('.invoiceshow').each(function(){
+                const url = new URL($(this).prop('href'));
+                $(this).prop('href',url.origin+url.pathname+"?header=1")
+            })
+        }else{
+            $('.invoiceshow').each(function(){
+                const url = new URL($(this).prop('href'));
+                $(this).prop('href',url.origin+url.pathname+"?header=0")
+            })
+        }
+    })
+        {{--  let checkField=$('.check_header').val();
+        "invoiceshow"
         //let checkField=$('.check_header').prop('checked');
         console.log(checkField);
         //var checkField=$('.check_header').val();
@@ -97,7 +110,7 @@
             //window.location=$(this).attr('href', route);
         }
 
-    }
+    }  --}}
 </script>
 
 <script>
