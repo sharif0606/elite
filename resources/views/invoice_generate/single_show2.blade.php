@@ -107,19 +107,21 @@
                         <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                     </tr>
                     @if ($invoice_id->less)
+                    @php $totalAddLess=0; @endphp
                         @foreach ($invoice_id->less as $le)
                             <tr style="text-align: center;">
                                 <td></td>
                                 <td colspan="4">{{ $le->description }}</td>
                                 <td>{{ $le->amount }}</td>
                             </tr>
+                            @php $totalAddLess += $le->amount; @endphp
                         @endforeach
                     @endif
-                    <tr style="text-align: center;">
+                    {{--  <tr style="text-align: center;" class="d-none">
                         <td></td>
                         <th colspan="4">Total</th>
                         <td>{{ money_format($invoice_id->total_tk)}}</td>
-                    </tr>
+                    </tr>  --}}
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
@@ -128,15 +130,15 @@
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="4">Grand Total</th>
-                    <td>{{ money_format((($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount) }}</td>
+                    <th colspan="4">Total</th>
+                    <td>{{ money_format((($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount +$totalAddLess) }}</td>
                 </tr>
             </tfoot>
         </table>
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount;
+                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount+$totalAddLess;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);

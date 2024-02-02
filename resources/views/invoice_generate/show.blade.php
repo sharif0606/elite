@@ -24,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-4">
-                    <input type="checkbox" id="check_header" name="check_header" value="1">
+                    <input type="checkbox" class="check_header" id="check_header" name="check_header" value="1">
                     <label for="check_header"> show Header part check</label>
                 </div>
             </div>
@@ -34,6 +34,11 @@
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_1.png')}}" alt="No Image Found">
                     </a>
                 </div>
+                {{--  <div id="imageContainer" class="col-4 text-center mb-2">
+                    <a id="invoiceLink" onclick="goSingleShow();" class="invoiceLink" href="#">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_1.png') }}" alt="No Image Found">
+                    </a>
+                </div>  --}}
                 <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow2',[encryptor('encrypt',$invoice_id->id),'role' =>currentUser()])}}">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_2.png')}}" alt="No Image Found">
@@ -74,6 +79,26 @@
     </section>
 
 </section>
+<script>
+    function goSingleShow(){
+        let checkField=$('.check_header').val();
+        //let checkField=$('.check_header').prop('checked');
+        console.log(checkField);
+        //var checkField=$('.check_header').val();
+        if (checkField=='1') {
+            var route = "{{ route('invoiceShow1',[encryptor('encrypt',$invoice_id->id)]) }}";
+
+            //$('.invoiceLink').attr('href', route);
+            $('.invoiceLink').click(function(){
+                window.location=$(this).attr('href', route);
+            })
+        } else {
+            'ok'
+            //window.location=$(this).attr('href', route);
+        }
+
+    }
+</script>
 
 <script>
     function printDiv(divName) {
