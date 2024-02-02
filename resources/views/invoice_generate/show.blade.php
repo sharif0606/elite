@@ -92,25 +92,7 @@
                 $(this).prop('href',url.origin+url.pathname+"?header=0")
             })
         }
-    })
-        {{--  let checkField=$('.check_header').val();
-        "invoiceshow"
-        //let checkField=$('.check_header').prop('checked');
-        console.log(checkField);
-        //var checkField=$('.check_header').val();
-        if (checkField=='1') {
-            var route = "{{ route('invoiceShow1',[encryptor('encrypt',$invoice_id->id)]) }}";
-
-            //$('.invoiceLink').attr('href', route);
-            $('.invoiceLink').click(function(){
-                window.location=$(this).attr('href', route);
-            })
-        } else {
-            'ok'
-            //window.location=$(this).attr('href', route);
-        }
-
-    }  --}}
+    });
 </script>
 
 <script>

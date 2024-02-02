@@ -115,19 +115,21 @@ class InvoiceGenerateController extends Controller
         $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show1',compact('invoice_id','branch','headershow'));
     }
-    public function getSingleInvoice2($id)
+    public function getSingleInvoice2(Request $request, $id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.single_show2',compact('invoice_id','branch'));
+        return view('invoice_generate.single_show2',compact('invoice_id','branch','headershow'));
     }
-    public function getSingleInvoice3($id)
+    public function getSingleInvoice3(Request $request, $id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.single_show3',compact('invoice_id','branch'));
+        return view('invoice_generate.single_show3',compact('invoice_id','branch','headershow'));
     }
-    public function getSingleInvoice4($id)
+    public function getSingleInvoice4(Request $request, $id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
