@@ -836,7 +836,9 @@
                                 <span style="border-top: solid 1px;">তথ্যদানকারীর স্বাক্ষর</span>
                             </th>
                             <th style="padding-bottom: 3rem;">
+                                @if($security?->data_collector_sing !='')
                                 <img height="50px" width="150px"  src="{{asset('uploads/data_collector_sing/'.$security?->data_collector_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                @endif
                                 <span style="border-top: solid 1px;">তথ্য সংগ্রহকারীর স্বাক্ষর</span>
                             </th>
                         </tr>
