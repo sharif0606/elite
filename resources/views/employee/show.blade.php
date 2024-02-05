@@ -254,7 +254,7 @@
                         <tr>
                             <td colspan="4" style="text-align: left; padding-top: 2rem;"><label for="">তারিখ: {{ date('d-M-Y', strtotime($employees->created_at)) }}</label></td>
                             <td colspan="5" style="text-align: right; padding-top: 2rem; padding-right: 30px;">
-                                @if($employees->signature_img)
+                                @if($employees->signature_img !='')
                                 <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই"><br/>
                                 @endif
                                 <label for="">(আবেদনকারীর স্বাক্ষর)</label>
@@ -830,7 +830,9 @@
                     <tbody>
                         <tr style="text-align: center;">
                             <th style="width: 50%; padding-bottom: 3rem;">
+                                @if($security?->informant_sing !='')
                                 <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                @endif
                                 <span style="border-top: solid 1px;">তথ্যদানকারীর স্বাক্ষর</span>
                             </th>
                             <th style="padding-bottom: 3rem;">
