@@ -1140,7 +1140,7 @@
         </div>
     </section>
     <section>
-        <div class="row">
+        <div class="row" style="margin-top: 10rem;">
             <div class="col-9 text-center mb-5" style="margin-bottom: 50px !important;">
                 <h5 style="padding-top: 3rem;">ELITE SECURITY SERVICES LIMITED </h5>
                 <p style="margin: 1px;">BIO-DATA</p>
