@@ -380,7 +380,7 @@
                             <th class="py-2" colspan="3">বিনীত নিবেদক</th>
                         </tr>
                         <tr>
-                            <th colspan="3" style="padding-top: 5rem;">
+                            <th colspan="3" style="padding-top: 3rem;">
                                 <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই"><br/>
                                 আবেদনকারীর স্বাক্ষর
                             </th>
@@ -495,7 +495,7 @@
                     </tbody>
                 </table>
 
-                <div style="text-align: center; margin-top: 13rem;">
+                <div style="text-align: center; margin-top: 8rem;">
                     <h4>{{ $jobdescription?->head_title }}</h4>
                     <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
                 </div>
