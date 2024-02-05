@@ -495,7 +495,7 @@
                     </tbody>
                 </table>
 
-                <div style="text-align: center; margin-top: 8rem;">
+                <div style="text-align: center; margin-top: 10rem;">
                     <h4>{{ $jobdescription?->head_title }}</h4>
                     <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
                 </div>
@@ -869,7 +869,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-center">
+                <div class="text-center" style="margin-top: 4rem;">
                     {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-২</span></h5>  --}}
                     <h4><span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি হয়ে চাকুরীকালীন সময়ে পালনীয় দায়িত্ব ও শর্তাবলী</span></h4>
                 </div>
