@@ -964,7 +964,7 @@
                                 <p>
                                     ২৯। দায়িত্ব পালনকালীন সময়ে কারো থেকে কোনো বখশিস/আর্থিক সাহায্য চাওয়া যাবে না
                                 </p>
-                                <p>
+                                <p cl>
                                     ৩০। চাকুরী হতে অব্যহতিকালীন অথবা চাকুরী করা অবস্থায় কোম্পানী প্রদত্ত আইডি কার্ড ও কিটবুক হারানো গেলে থানায় সাধারণ ডায়েরী করতে হবে। সাধারণ ডায়েরীর প্রমাণ অফিসে জমা করে পুনরায় আইডি কার্ড এবং কিটবুক ইস্যু করা যাবে। অন্যথায় প্রতিটির জন্য ১০০/- (একশত টাকা) হারে জরিমানা আদায়যোগ্য ।
                                 </p>
                             </td>
@@ -1307,7 +1307,7 @@
         <p class="mt-0 pt-0"><span style="border-bottom: solid 1px;">Certified by</span> </p>
     </section>
     <section>
-        <div class="row">
+        <div class="row" style="margin-top: 10rem;">
             <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
                 <h5 style="padding-top: 3rem;"> <span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি ফি সংক্রান্ত</span></h5>
                 <p style="margin: 1px;"><b style="border-bottom: solid 1px;">হলফনামা</b></p>
