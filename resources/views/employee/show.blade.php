@@ -380,7 +380,7 @@
                             <th class="py-2" colspan="3">বিনীত নিবেদক</th>
                         </tr>
                         <tr>
-                            <th colspan="3" style="padding-top: 3rem;">
+                            <th colspan="3" style="padding-top: 1rem;">
                                 <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই"><br/>
                                 আবেদনকারীর স্বাক্ষর
                             </th>
