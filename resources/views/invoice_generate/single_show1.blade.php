@@ -13,7 +13,6 @@
         <table width="100%">
             <tr>
                 <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
-
                 <td width="50%">
                     <h3>
                         House #2, Lane #2, Road #2, Block-K,<br>

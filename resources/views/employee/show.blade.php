@@ -1488,7 +1488,7 @@
                 </tr>
                 <tr>
                     <td>১৩।</td>
-                    <td><h4>‍শপথ বাক্য পাঠঃ-</h4></td>
+                    <td><h4 class="mb-0">‍শপথ বাক্য পাঠঃ-</h4></td>
                     <td>আমি(নাম)</td>
                     <td><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
                     <td>{{ $employees->position?->name_bn }} হিসেবে মহান সৃষ্টিকর্তার
@@ -1535,12 +1535,12 @@
                 </tr>
                 <tr>
                     <td class="text-end" colspan="5">
-                        <p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
+                        <p style="margin: 1px; margin-top: 10px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-start" colspan="5">
-                        <p style="margin: 1px; margin-top: 10px !important;"><h5 class="text-center"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
+                        <p style="margin-top: 5px !important;"><h5 class="text-center"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
                     </td>
                 </tr>
                 <tr>
