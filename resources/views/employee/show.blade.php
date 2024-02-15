@@ -262,14 +262,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <table style="width: 100%; margin-top: 2rem;">
+                <table style="width: 100%; margin-top: 1rem;">
                     <tbody>
                         <tr>
                             <td colspan="2" style="text-align: left;">তারিখ: {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
                         </tr>
                         <tr>
                             <td  style="text-align: left; padding-left: 45px;">
-                                <p style="padding-top: 20px; margin: 0px;">পরিচালক</p>
+                                <p style="padding-top: 10px; margin: 0px;">পরিচালক</p>
                                 <p style="margin: 0px;">এলিট সিকিউরিটি সার্ভিসেস লি:</p>
                                 <p style="margin: 0px;">বাড়ি-২, রোড-, লেন-২, ব্লক-কে,</p>
                                 <p style="margin: 0px;">হালিশহর হাউসিং এষ্টেট, চট্টগ্রাম।</p>
