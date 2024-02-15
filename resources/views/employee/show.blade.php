@@ -377,10 +377,10 @@
                             <td class="py-2" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
                         </tr>
                         <tr>
-                            <th class="py-2" colspan="3">বিনীত নিবেদক</th>
+                            <th class="py-1" colspan="3">বিনীত নিবেদক</th>
                         </tr>
                         <tr>
-                            <th colspan="3" style="padding-top: 1rem;">
+                            <th colspan="3" style="">
                                 <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই"><br/>
                                 আবেদনকারীর স্বাক্ষর
                             </th>
