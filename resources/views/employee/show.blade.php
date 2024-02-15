@@ -374,7 +374,7 @@
                             <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
                         </tr>
                         <tr>
-                            <td class="py-2" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
+                            <td class="py-1" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
                         </tr>
                         <tr>
                             <th class="py-1" colspan="3">বিনীত নিবেদক</th>
