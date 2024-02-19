@@ -1408,7 +1408,7 @@
         </div>
     </section>
     <section>
-        <div class="row" style="margin-top: 10rem;">
+        <div class="row" style="margin-top: 13rem;">
             <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
                 <h5 style="padding-top: 3rem;"> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
                 {{--  <span class="text-end" style="padding-left: 50px !important;">তারিখ:{{ date('d-m-Y', strtotime($employees->created_at)) }}</span>  --}}
