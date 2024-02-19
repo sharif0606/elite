@@ -495,7 +495,7 @@
                     </tbody>
                 </table>
 
-                <div style="text-align: center; margin-top: 10rem;">
+                <div style="text-align: center; margin-top: 4rem;">
                     <h4>{{ $jobdescription?->head_title }}</h4>
                     <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
                 </div>
@@ -577,7 +577,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table style="width: 100%; margin-top: 13rem;">
+                <table style="width: 100%; margin-top: 10rem;">
                     <tbody>
                         <tr>
                             <td style="width: 33%">
@@ -851,7 +851,7 @@
                             <th colspan="2"><h6><span style="border-bottom: solid 1px;">অফিস ব্যবহারের অংশ</span></h6></th>
                         </tr>
                         <tr>
-                            <th colspan="2" style="padding-bottom: 3rem;"><p>তথপ্রদানকারীর তথ্য ও সকল কাগজপত্র পর্যবেক্ষন ও সনাক্তকারীদের নিশ্চয়তার ভিত্তিতে তথ্য সমূহ সঠিক/সঠিক নহে বলে প্রতীয়মান হয়েছে।<br>উপরুক্ত তথ্য যাচাইয়ের ক্ষেত্রে ব্যবহৃত মাধ্যম : </p></th>
+                            <th colspan="2" style=""><p>তথপ্রদানকারীর তথ্য ও সকল কাগজপত্র পর্যবেক্ষন ও সনাক্তকারীদের নিশ্চয়তার ভিত্তিতে তথ্য সমূহ সঠিক/সঠিক নহে বলে প্রতীয়মান হয়েছে।<br>উপরুক্ত তথ্য যাচাইয়ের ক্ষেত্রে ব্যবহৃত মাধ্যম : </p></th>
                         </tr>
                     </tbody>
                 </table>
@@ -869,7 +869,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="text-center" style="margin-top: 10rem;">
+                <div class="text-center" style="margin-top: 2rem;">
                     {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-২</span></h5>  --}}
                     <h4><span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি হয়ে চাকুরীকালীন সময়ে পালনীয় দায়িত্ব ও শর্তাবলী</span></h4>
                 </div>
