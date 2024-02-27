@@ -1045,7 +1045,7 @@
                 </table>
                 <table style="width: 100%;">
                     {{--  <p style="text-align: center;">পৃষ্ঠা-৪</p>  --}}
-                    <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px; margin-top:1px !important">অফিসে ব্যবহারের জন্য</span></h4></div>
+                    <div style="text-align: center;"> <h4 style="margin-top:2px !important;"><span style="border-bottom: solid 1px; margin-top:1px !important">অফিসে ব্যবহারের জন্য</span></h4></div>
                     <tbody>
                         <tr>
                             <td colspan="5" style='text-align:justify;'>
@@ -1540,7 +1540,7 @@
                 </tr>
                 <tr>
                     <td class="text-start" colspan="5">
-                        <p style="margin-top: 7px !important;"><h5 class="text-center"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
+                        <p style="margin-top: 5px !important;"><h5 class="text-center" style="margin-top:3px !important;"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
                     </td>
                 </tr>
                 <tr>
