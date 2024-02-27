@@ -1535,7 +1535,7 @@
                 </tr>
                 <tr>
                     <td class="text-end" colspan="5">
-                        <p style="margin: 1px; margin-top: 10px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
+                        <p style="margin: 1px; margin-top: 10px !important; margin-bottom: 10px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
                     </td>
                 </tr>
                 <tr>
