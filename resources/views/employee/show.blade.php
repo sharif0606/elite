@@ -964,7 +964,7 @@
                                 <p style="margin-bottom: 0px !important">
                                     ২৯। দায়িত্ব পালনকালীন সময়ে কারো থেকে কোনো বখশিস/আর্থিক সাহায্য চাওয়া যাবে না
                                 </p>
-                                <p>
+                                <p style="margin-bottom: 0px !important">
                                     ৩০। চাকুরী হতে অব্যহতিকালীন অথবা চাকুরী করা অবস্থায় কোম্পানী প্রদত্ত আইডি কার্ড ও কিটবুক হারানো গেলে থানায় সাধারণ ডায়েরী করতে হবে। সাধারণ ডায়েরীর প্রমাণ অফিসে জমা করে পুনরায় আইডি কার্ড এবং কিটবুক ইস্যু করা যাবে। অন্যথায় প্রতিটির জন্য ১০০/- (একশত টাকা) হারে জরিমানা আদায়যোগ্য ।
                                 </p>
                             </td>
@@ -991,7 +991,7 @@
                     </tbody>
                 </table>
                 <table style="width: 100%;">
-                    <div style="text-align: center;"> <h4><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
+                    <div style="text-align: center;"> <h4 style="margin-bottom: 0px;"><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
                     <tbody>
                         <tr>
                             <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
