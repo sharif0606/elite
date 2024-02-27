@@ -1540,7 +1540,7 @@
                 </tr>
                 <tr>
                     <td class="text-start" colspan="5">
-                        <p style="margin-top: 5px !important;"><h5 class="text-center" style="margin-top:3px !important;"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5></p>
+                        <h5 class="text-center" style="margin-top:3px !important;"><span style="border-bottom: solid 2px;">ষ্টোরম্যান/অফিস এক্সিকিউটিভ এর করণীয় ।</span></h5>
                     </td>
                 </tr>
                 <tr>
