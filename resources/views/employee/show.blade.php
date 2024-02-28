@@ -870,7 +870,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <hr>
+                {{--  <hr>  --}}
                 <table style="width: 100%;">
                     <tbody>
                         <tr>
