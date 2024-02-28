@@ -481,7 +481,7 @@
                                         @else
                                         <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                                         @endif
-                                        <p>সংশ্লিষ্ট ব্যক্তির স্বাক্ষর/টিপসহি </p>
+                                        <p>সংশ্লিষ্ট ব্যক্তির<br/>স্বাক্ষর/টিপসহি </p>
                                     </div>
                                     <div>
                                         @if($employees->bn_doctor_sign !='')
@@ -501,7 +501,7 @@
                                         @else
                                         <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                                         @endif
-                                        <p>সংশ্লিষ্ট ব্যক্তির স্বাক্ষর/টিপসহি </p>
+                                        <p>সংশ্লিষ্ট ব্যক্তির<br/>স্বাক্ষর/টিপসহি </p>
                                     </div>
                                     <div>
                                         @if($employees->bn_doctor_sign !='')
