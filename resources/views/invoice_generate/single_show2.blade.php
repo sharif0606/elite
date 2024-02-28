@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td width="15%">To:</td>
-                <td><b>Manager</b></td>
+                {{--  <td><b>Manager</b></td>  --}}
                 @if($invoice_id->customer?->bin)
                 <td width="40%" style="text-align: center;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO- : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
                 @endif
