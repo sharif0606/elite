@@ -1005,7 +1005,9 @@
                             {{--  <img src="{{asset('assets/images/terms1.jpeg')}}" alt=""><br/>  --}}
                         </tr>
                         <tr style="text-align: end">
-                            <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                            <td><img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/></td>
+                        </tr>
+                        <tr>
                             <td>আবেদনকারীর স্বাক্ষর</td><br/>
                         </tr>
                         {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-৩</span></h5>  --}}
