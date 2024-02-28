@@ -1004,27 +1004,14 @@
                             </td>
                             {{--  <img src="{{asset('assets/images/terms1.jpeg')}}" alt=""><br/>  --}}
                         </tr>
-                        {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-৩</span></h5>  --}}
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        {{--  <tr style="text-align: center">
-                            <img src="{{asset('assets/images/terms2.jpeg')}}" alt="কোন স্বাক্ষর নেই"><br/>
-                        </tr>  --}}
                         <tr style="text-align: end">
                             <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                             <td>আবেদনকারীর স্বাক্ষর</td><br/>
                         </tr>
+                        {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-৩</span></h5>  --}}
                     </tbody>
                 </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr >
-                            <th colspan="4"></th>
-                        </tr>
-                    </tbody>
-                </table>
+
                 <div style="text-align: center;"> <h4 style="margin-bottom: 0px;"><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
                 <table style="width: 100%;">
                     <tbody>
