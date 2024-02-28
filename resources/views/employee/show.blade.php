@@ -383,7 +383,11 @@
                         </tr>
                         <tr>
                             <th colspan="3" style="">
-                                <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                @if($employees->signature_img !='')
+                                <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt=""><br/>
+                                @else
+                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                @endif
                                 আবেদনকারীর স্বাক্ষর
                             </th>
                         </tr>
@@ -472,11 +476,19 @@
                             <td class="tbl_border">
                                 <div class="d-flex justify-content-between p-2">
                                     <div>
-                                        <img height="50px" width="150px"  src="{{asset('uploads/concerned_person_sign/'.$employees->concerned_person_sign)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                        @if($employees->concerned_person_sign !='')
+                                        <img height="50px" width="150px"  src="{{asset('uploads/concerned_person_sign/'.$employees->concerned_person_sign)}}" alt=""><br/>
+                                        @else
+                                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                        @endif
                                         <p>সংশ্লিষ্ট ব্যক্তির স্বাক্ষর/টিপসহি </p>
                                     </div>
                                     <div>
-                                        <img height="50px" width="150px"  src="{{asset('uploads/bn_doctor_sign/'.$employees->bn_doctor_sign)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                        @if($employees->bn_doctor_sign !='')
+                                        <img height="50px" width="150px"  src="{{asset('uploads/bn_doctor_sign/'.$employees->bn_doctor_sign)}}" alt=""><br/>
+                                        @else
+                                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                        @endif
                                         <p>রেজিস্টার্ড চিকিৎসকের স্বাক্ষর</p>
                                     </div>
                                 </div>
@@ -484,11 +496,19 @@
                             <td  class="tbl_border">
                                 <div class="d-flex justify-content-between p-2">
                                     <div>
-                                        <img height="50px" width="150px"  src="{{asset('uploads/concerned_person_sign/'.$employees->concerned_person_sign)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                        @if($employees->concerned_person_sign !='')
+                                        <img height="50px" width="150px"  src="{{asset('uploads/concerned_person_sign/'.$employees->concerned_person_sign)}}" alt=""><br/>
+                                        @else
+                                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                        @endif
                                         <p>সংশ্লিষ্ট ব্যক্তির স্বাক্ষর/টিপসহি </p>
                                     </div>
                                     <div>
-                                        <img height="50px" width="150px"  src="{{asset('uploads/bn_doctor_sign/'.$employees->bn_doctor_sign)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                        @if($employees->bn_doctor_sign !='')
+                                        <img height="50px" width="150px" src="{{asset('uploads/bn_doctor_sign/'.$employees->bn_doctor_sign)}}" alt=""><br/>
+                                        @else
+                                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                        @endif
                                         <p>রেজিস্টার্ড চিকিৎসকের স্বাক্ষর</p>
                                     </div>
                                 </div>
@@ -833,13 +853,17 @@
                         <tr style="text-align: center;">
                             <th style="width: 50%; padding-bottom: 3rem;">
                                 @if($security?->informant_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt=""><br/>
+                                @else
+                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                                 @endif
                                 <span style="border-top: solid 1px;">তথ্যদানকারীর স্বাক্ষর</span>
                             </th>
                             <th style="padding-bottom: 3rem;">
                                 @if($security?->data_collector_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/data_collector_sing/'.$security?->data_collector_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                <img height="50px" width="150px"  src="{{asset('uploads/data_collector_sing/'.$security?->data_collector_sing)}}" alt=""><br/>
+                                @else
+                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                                 @endif
                                 <span style="border-top: solid 1px;">তথ্য সংগ্রহকারীর স্বাক্ষর</span>
                             </th>
@@ -861,11 +885,19 @@
                     <tbody>
                         <tr style="text-align: center">
                             <th style="width: 50%;">
-                                <img height="50px" width="150px"  src="{{asset('uploads/executive_sing/'.$security?->executive_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                @if($security?->executive_sing !='')
+                                <img height="50px" width="150px"  src="{{asset('uploads/executive_sing/'.$security?->executive_sing)}}" alt=""><br/>
+                                @else
+                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                @endif
                                 <span style="border-top: solid 1px;">এক্সেকিউটিভ(এইচআর)</span>
                             </th>
                             <th>
-                                <img height="50px" width="150px"  src="{{asset('uploads/manager_sing/'.$security?->manager_sing)}}" alt="কোন স্বাক্ষর নেই"><br/>
+                                @if($security?->manager_sing !='')
+                                <img height="50px" width="150px"  src="{{asset('uploads/manager_sing/'.$security?->manager_sing)}}" alt=""><br/>
+                                @else
+                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                @endif
                                 <span style="border-top: solid 1px;">ম্যানেজার (অপারেশন )</span>
                             </th>
                         </tr>
@@ -981,6 +1013,7 @@
                             <img src="{{asset('assets/images/terms2.jpeg')}}" alt="কোন স্বাক্ষর নেই"><br/>
                         </tr>  --}}
                         <tr style="text-align: end">
+                            <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
                             <td>আবেদনকারীর স্বাক্ষর</td><br/>
                         </tr>
                     </tbody>
