@@ -1573,7 +1573,7 @@
                 </tr>
                 <tr>
                     <td class="text-end" colspan="5">
-                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                        {{--  <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>  --}}
                         <p style="margin: 1px;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
                     </td>
                 </tr>
