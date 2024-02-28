@@ -1025,15 +1025,15 @@
                         </tr>
                     </tbody>
                 </table>
+                <div style="text-align: center;"> <h4 style="margin-bottom: 0px;"><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
                 <table style="width: 100%;">
-                    <div style="text-align: center;"> <h4 style="margin-bottom: 0px;"><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
                     <tbody>
                         <tr>
-                            <td style="text-align: left; width: 10%;">আমি, নামঃ</td>
+                            <td style="text-align: left; width: 15%;">আমি, নামঃ</td>
                             <td style="width: 20%;">{{ $employees->bn_applicants_name }}</td>
                             <td style="width: 10%;">পিতাঃ</td>
                             <td style="width: 15%;">{{ $employees->bn_fathers_name }}</td>
-                            <td style="width: 45%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                            <td style="width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
                         </tr>
                         <tr>
                             <td colspan="5" style='text-align:justify;'>
@@ -1063,18 +1063,21 @@
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
                             <td style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 5%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">আবেদনকারীর নামঃ</td>
                             <td style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 5%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">তারিখ</td>
                             <td style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1091,8 +1094,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10%; padding-top: 50px;">প্রশিক্ষণ কর্মকর্তা </td>
-                            <td style="width: 30%;"></td>
+                            <td style="text-align: left; width: 15%; padding-top: 50px;">প্রশিক্ষণ কর্মকর্তা </td>
+                            <td style="width: 25%;"></td>
                             <td style="text-align: end; width: 25%; padding-top: 50px;">জোন কমান্ডার/ভর্তিকারী কর্মকর্তা</td>
                             <td style="width: 10%;"></td>
                         </tr>
@@ -1570,7 +1573,8 @@
                 </tr>
                 <tr>
                     <td class="text-end" colspan="5">
-                        <p style="margin: 1px; margin-top: 10px !important; margin-bottom: 10px !important;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
+                        <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                        <p style="margin: 1px;"><b style="border-top: solid 2px;">জেনারেল কমান্ডারের স্বাক্ষর</b></p>
                     </td>
                 </tr>
                 <tr>
