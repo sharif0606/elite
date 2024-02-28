@@ -1018,11 +1018,18 @@
                 <table style="width: 100%;">
                     <tbody>
                         <tr>
-                            <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
-                            <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
-                            <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
-                            <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
-                            <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                            <td colspan="5">
+                                <table>
+                                    <tr>
+                                        <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
+                                        <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                                        <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
+                                        <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
+                                        <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                                    </tr>
+                                </table>
+                            </td>
+
                             {{--  <td style="text-align: left; width: 15%;">আমি, নামঃ</td>
                             <td style="width: 20%;">{{ $employees->bn_applicants_name }}</td>
                             <td style="width: 10%;">পিতাঃ</td>
@@ -1046,11 +1053,17 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10% !important;">নগদ</td>
-                            <td style="width: 10% !important;"><input readonly type="text" class="verySmall"  value=""></td>
-                            <td style="text-align: center; width: 25% !important;">টাকা প্রদান করলাম।বাকী</td>
-                            <td style="width: 10% !important;"><input readonly type="text" class="verySmall"  value=""></td>
-                            <td style="text-align: center; width: 45% !important;">টাকা আমার মাসিক বেতন থেকে সমন্বয় করে দিব।</td>
+                            <td colspan="5">
+                                <table>
+                                    <tr>
+                                        <td style="text-align: left; width: 6% !important;">নগদ</td>
+                                        <td style="width: 10% !important;"><input readonly type="text" class="verySmall"  value=""></td>
+                                        <td style="text-align: center; width: 25% !important;">টাকা প্রদান করলাম।বাকী</td>
+                                        <td style="width: 7% !important;"><input readonly type="text" class="verySmall"  value=""></td>
+                                        <td style="text-align: center; width: 50% !important;">টাকা আমার মাসিক বেতন থেকে সমন্বয় করে দিব।</td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 5%;">স্বাক্ষীর স্বাক্ষরঃ </td>
