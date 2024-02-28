@@ -851,7 +851,7 @@
                 <table style="width: 100%;">
                     <tbody>
                         <tr style="text-align: center;">
-                            <th style="width: 50%; padding-bottom: 3rem;">
+                            <th style="width: 50%; padding-bottom: 1rem;">
                                 @if($security?->informant_sing !='')
                                 <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt=""><br/>
                                 @else
