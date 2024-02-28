@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('vat_taka',10,2)->default(0);
             $table->decimal('grand_total',10,2)->default(0);
             $table->text('footer_note')->nullable();
+            $table->text('header_note')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');

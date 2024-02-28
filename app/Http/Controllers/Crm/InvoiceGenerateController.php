@@ -55,6 +55,7 @@ class InvoiceGenerateController extends Controller
             $data->vat_taka = $request->vat_taka;
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
+            $data->header_note = $request->header_note;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){

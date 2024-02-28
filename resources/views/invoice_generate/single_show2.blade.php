@@ -68,6 +68,17 @@
                 <td width="15%"></td>
                 <td>{{ $branch?->billing_address }}</td>
             </tr>
+            @if($branch?->attention)
+            <tr>
+                <td width="15%">Attention:</td>
+                <td><b>{{ $branch?->attention }}</b></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>{{ $branch?->attention_details }}</td>
+            </tr>
+            @endif
             <tr>
                 <td width="15%"><b>Subject:</b></td>
                 <td><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
@@ -78,8 +89,7 @@
             </tr>
         </table>
                 <div>
-                    Reference to the above subject, We herewith submitted the security services bill along with Chalan
-                    copy.
+                    {{ $invoice_id->header_note }}
                 </div>
 
         <table border="1" width="100%" cellspacing="0">

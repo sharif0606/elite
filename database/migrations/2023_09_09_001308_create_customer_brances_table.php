@@ -27,6 +27,8 @@ return new class extends Migration
             $table->date('validity_date')->nullable();
             $table->decimal('vat',10,2)->default(0);
             // $table->decimal('rate',10,2)->default(0);
+            $table->text('attention')->nullable();
+            $table->text('attention_details')->nullable();
             $table->string('take_home')->nullable();
             $table->string('royal_tea')->nullable();
             $table->string('ait')->nullable();

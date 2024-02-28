@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer;
 use App\Models\Crm\InvoiceGenerateDetails;
 use App\Models\Crm\InvoiceGenerateLess;
+use App\Models\Crm\CustomerBrance;
 
 class InvoiceGenerate extends Model
 {
     use HasFactory;
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
+    }
+    public function branch(){
+        return $this->belongsTo(CustomerBrance::class,'branch_id','id');
     }
     public function details(){
         return $this->hasMany(InvoiceGenerateDetails::class,'invoice_id','id');

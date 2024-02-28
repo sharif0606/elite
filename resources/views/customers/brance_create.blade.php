@@ -89,6 +89,14 @@
                         <input class="form-control received_by_city" type="text" name="received_by_city" value="" placeholder="Received By Ctg">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for=""><b>Attention</b></label>
+                        <input class="form-control attention" type="text" name="attention" value="" placeholder="Attention">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for=""><b>Attention Details</b></label>
+                        <input class="form-control attention_details" type="text" name="attention_details" value="" placeholder="Attention Details">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Zone</b></label>
                         {{--  <input class="form-control zone" type="text" name="zone" value="" placeholder="Zone">  --}}
                         <select class="form-select" id="zone" name="zone_id">

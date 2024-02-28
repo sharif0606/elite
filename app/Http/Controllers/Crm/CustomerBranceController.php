@@ -66,6 +66,8 @@ class CustomerBranceController extends Controller
             $data->take_home = $request->take_home;
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
+            $data->attention = $request->attention;
+            $data->attention_details = $request->attention_details;
             $data->received_by_city = $request->received_by_city;
             $data->zone_id = $request->zone_id;
             // $data->atm = $request->atm;
@@ -143,6 +145,8 @@ class CustomerBranceController extends Controller
             $data->take_home = $request->take_home;
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
+            $data->attention = $request->attention;
+            $data->attention_details = $request->attention_details;
             $data->received_by_city = $request->received_by_city;
             $data->zone_id = $request->zone_id;
             // $data->atm = $request->atm;

@@ -26,7 +26,11 @@
                     @forelse($invoice as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{ $e->customer?->name }}</td>
+                        <td>{{ $e->customer?->name }}
+                            @if($e->branch_id)
+                            ({{ $e->branch?->brance_name }})
+                            @endif
+                        </td>
                         <td>{{ $e->start_date }}</td>
                         <td>{{ $e->end_date }}</td>
                         <td>{{ $e->bill_date }}</td>

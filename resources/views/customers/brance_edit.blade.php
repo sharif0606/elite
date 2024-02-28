@@ -90,6 +90,14 @@
                         <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$cdetails->received_by_city)}}" placeholder="Received By Ctg">
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for=""><b>Attention</b></label>
+                        <input class="form-control attention" type="text" name="attention" value="{{old('attention',$cdetails->attention)}}" placeholder="Attention">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <label for=""><b>Attention Details</b></label>
+                        <input class="form-control attention_details" type="text" name="attention_details" value="{{old('attention_details',$cdetails->attention_details)}}" placeholder="Attention Details">
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Zone</b></label>
                         <select class="form-select" id="zone" name="zone_id">
                             <option value="">Select Zone</option>
