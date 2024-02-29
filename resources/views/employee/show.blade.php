@@ -1022,19 +1022,13 @@
                                 <table>
                                     <tr>
                                         <td class="py-1" style="text-align: left; width: 15%;">আমি, নামঃ</td>
-                                        <td class="py-1" style="width: 20%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                                        <td class="py-1" style="width: 25%;"><input type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
                                         <td class="py-1" style="text-align: center; width: 10%;">পিতাঃ</td>
                                         <td class="py-1" style="width: 15%;"><input type="text" class="tinput"  value="{{ $employees->bn_fathers_name }}"></td>
-                                        <td class="py-1" style="text-align: center; width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
+                                        <td class="py-1" style="text-align: center; width: 35%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>
                                     </tr>
                                 </table>
                             </td>
-
-                            {{--  <td style="text-align: left; width: 15%;">আমি, নামঃ</td>
-                            <td style="width: 20%;">{{ $employees->bn_applicants_name }}</td>
-                            <td style="width: 10%;">পিতাঃ</td>
-                            <td style="width: 15%;">{{ $employees->bn_fathers_name }}</td>
-                            <td style="width: 40%;">উপরের  উল্লেখিত ১ থেকে ৩০ পর্যন্ত</td>  --}}
                         </tr>
                         <tr>
                             <td colspan="5" style='text-align:justify;'>
@@ -1066,22 +1060,22 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 5%;">স্বাক্ষীর স্বাক্ষরঃ </td>
+                            <td style="text-align: left; width: 10%;">স্বাক্ষীর স্বাক্ষরঃ </td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
-                            <td colspan="2" style="width: 10%;"><input readonly type="text" class="tinput"  value=""></td>
+                            <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value=""></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="text-align: left; width: 10%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">আবেদনকারীর নামঃ</td>
-                            <td colspan="2" style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
+                            <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 5%;"></td>
+                            <td style="text-align: left; width: 10%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">তারিখ</td>
-                            <td colspan="2" style="width: 10%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
+                            <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
                         </tr>
                     </tbody>
                 </table>
