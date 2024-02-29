@@ -6,7 +6,7 @@
     <title>{{ $invoice_id->customer?->name }} for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
 
 </head>
-<body>
+<body style="font-size: 16px !important">
     @if($headershow==1)
     <div style="text-align: center;"><h2>INVOICE</h2></div>
     <table width="100%">
@@ -35,10 +35,10 @@
     </table>
     @else
     <table width="100%"style="padding: 2in 0px 30px 0px;">
-        <tr style="font-size: 20px;">
+        <tr style="font-size: 20px; position: relative;">
             <td width="20%" style="text-align: left;"></td>
-            <td width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
-            <td width="30%" style="text-align: center;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            <td style="position: absolute; top:-8px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-8px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table>
     @endif
@@ -46,19 +46,15 @@
 
         <table width="100%">
             <tr>
-                <td width="15%">Invoice No:</td>
-                <td>{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
+                <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
+                <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
             </tr>
             <tr>
                 <td width="15%">To:</td>
-                {{--  <td><b>Manager</b></td>  --}}
-                @if($invoice_id->customer?->bin)
-                <td width="40%" style="text-align: center;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO- : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
-                @endif
-            </tr>
-            <tr>
-                <td width="15%"></td>
                 <td><b>{{ $invoice_id->customer?->name }}</b></td>
+                @if($invoice_id->customer?->bin)
+                <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
+                @endif
             </tr>
             <tr>
                 <td width="15%"></td>
@@ -70,8 +66,8 @@
             </tr>
             @if($branch?->attention)
             <tr>
-                <td width="15%">Attention:</td>
-                <td><b>{{ $branch?->attention }}</b></td>
+                <td style="padding-top: 8px;" width="15%">Attention:</td>
+                <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
                 <td></td>
             </tr>
             <tr>
@@ -80,15 +76,15 @@
             </tr>
             @endif
             <tr>
-                <td width="15%"><b>Subject:</b></td>
-                <td><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+                <td style="padding-top: 8px;" width="15%"><b>Subject:</b></td>
+                <td style="padding-top: 8px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             </tr>
             <tr>
-                <td width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
+                <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
                 <td></td>
             </tr>
         </table>
-                <div>
+                <div style="padding-top: 8px; padding-bottom: 8px;">
                     {{ $invoice_id->header_note }}
                 </div>
 
@@ -100,7 +96,7 @@
                     <th>Rate</th>
                     <th>Period</th>
                     <th>Person</th>
-                    <th>Bill Amount</th>
+                    <th>Total Amount</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,7 +108,11 @@
                                 <br/>
                                 {{ $de->atms?->atm }}
                             </td>
-                            <td>{{ $de->rate }}</td>
+                            <td>{{ $de->rate }} <br/>
+                                @if($de->type_houre )
+                                    ({{ $de->type_houre }} Hours)
+                                @endif
+                            </td>
                             <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                             <td>{{ $de->employee_qty }}</td>
                             <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
@@ -176,7 +176,7 @@
         </div>
     </div>
     <table width="100%" style="padding-top: 5px;">
-        <tr style="text-align: center;">
+        <tr style="text-align: left;">
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
             $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
@@ -187,12 +187,12 @@
                 {{ $footersetting1?->designation }} <br>
                 Cell: {{ $footersetting1?->phone  }}
             </td>
-            <td>
+            <td style="text-align: center;">
                 {{ $footersetting2?->name }} <br>
                 {{ $footersetting2?->designation }} <br>
                 Cell: {{ $footersetting2?->phone  }}
             </td>
-            <td>
+            <td  style="text-align: right;">
                 {{ $footersetting3?->name }} <br>
                 {{ $footersetting3?->designation }} <br>
                 {{ $footersetting3?->phone  }}

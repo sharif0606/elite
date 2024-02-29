@@ -21,9 +21,10 @@ return new class extends Migration
             $table->decimal('rate',10,2)->default(0);
             $table->integer('employee_qty')->default(0);
             $table->integer('warking_day')->default(0);
-            $table->decimal('total_houres',10,2)->default(0);
-            $table->decimal('rate_per_houres',10,2)->default(0);
-            $table->decimal('total_amounts',10,2)->default(0);
+            $table->decimal('total_houres',14,2)->default(0);
+            $table->decimal('type_houre',14,2)->comment('type=8 or 12')->nullable();
+            $table->decimal('rate_per_houres',14,2)->default(0);
+            $table->decimal('total_amounts',14,2)->default(0);
             $table->date('st_date')->nullable();
             $table->date('ed_date')->nullable();
             $table->string('status')->nullable();

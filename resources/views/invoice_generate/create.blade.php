@@ -241,7 +241,7 @@
                                 </td>
                                 <td>
                                     <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
-                                    <input class="type_houre" type="hidden" name="" value="${type_houre}">
+                                    <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
                                     <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${parseFloat(ratePerHoures).toFixed(2)}">
