@@ -1059,7 +1059,7 @@
                                 </table>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style="margin-top:1rem;">
                             <td style="text-align: left; width: 15%;">স্বাক্ষীর স্বাক্ষরঃ </td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
