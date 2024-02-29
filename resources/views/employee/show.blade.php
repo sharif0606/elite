@@ -419,9 +419,9 @@
                         <tr class="tbl_border">
                             <td class="tbl_border">২ । পিতার নাম: {{ $employees->bn_fathers_name }}</td>
                             <td class="tbl_border">
-                                আমি এই মর্মে প্রত্যয়ন করিতেছি যে (নাম )<input type="text" class="sminput"  value="{{ $employees->bn_applicants_name }}">পিতা:<input type="text" class="sminput"  value="{{ $employees->bn_fathers_name }}">
-                                মাতা:<input type="text" class="sminput"  value="{{ $employees->bn_mothers_name }}">
-                                ঠিকানা :<input type="text" class="semiTinput"  value="{{ $employees->bn_parm_village_name}}, {{ $employees->bn_parm_upazilla?->name_bn}}, {{ $employees->bn_parm_district?->name_bn }}">কে আমি পরীক্ষা করিয়াছি।
+                                আমি এই মর্মে প্রত্যয়ন করিতেছি যে (নাম ) <span style="border-bottom-style: dashed;">{{ $employees->bn_applicants_name }}</span> পিতা:<span style="border-bottom-style: dashed;">{{ $employees->bn_fathers_name }}</span>
+                                মাতা:<span style="border-bottom-style: dashed;">{{ $employees->bn_mothers_name }}</span>
+                                ঠিকানা :<span style="border-bottom-style: dashed;">{{ $employees->bn_parm_village_name}}, {{ $employees->bn_parm_upazilla?->name_bn}}, {{ $employees->bn_parm_district?->name_bn }}</span> কে আমি পরীক্ষা করিয়াছি।
                             </td>
                         </tr>
                         <tr class="tbl_border">
