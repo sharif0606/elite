@@ -201,7 +201,6 @@
         </tr>
     </table>
     <div style="text-align: center;">
-
         <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
@@ -217,7 +216,6 @@
             {{ $footersetting2?->designation }} <br>
             Cell: {{ $footersetting2?->phone  }}
         </div>
-
     </div>
 </body>
 </html>
