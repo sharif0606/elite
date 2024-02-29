@@ -1342,7 +1342,7 @@
         <p class="mb-0 pb-0">I have checked and verified the above mentioned information and found all correct.</p>
         <p class="mt-0 pt-0"><span style="border-bottom: solid 1px;">Certified by</span> </p>
     </section>
-    <section  style="margin-bottom: 5rem;">
+    <section  style="margin-bottom: 15rem;">
         <div class="row" style="margin-top: 10rem;">
             <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
                 <h5 style="padding-top: 3rem;"> <span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি ফি সংক্রান্ত</span></h5>
@@ -1467,7 +1467,7 @@
         </div>
     </section>
     <section>
-        <div class="row" style="margin-top: 10rem;">
+        <div class="row" style="">
             <div class="col-12 text-center" style="margin-bottom: 5px !important;">
                 <h5> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
                 {{--  <span class="text-end" style="padding-left: 50px !important;">তারিখ:{{ date('d-m-Y', strtotime($employees->created_at)) }}</span>  --}}
