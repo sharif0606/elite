@@ -1081,7 +1081,7 @@
                 </table>
                 <table style="width: 100%;">
                     {{--  <p style="text-align: center;">পৃষ্ঠা-৪</p>  --}}
-                    <div style="text-align: center;"> <h4 style="margin-top:2px !important;"><span style="border-bottom: solid 1px; margin-top:1px !important">অফিসে ব্যবহারের জন্য</span></h4></div>
+                    <div style="text-align: center;"> <h4 style="margin-top:10px !important;"><span style="border-bottom: solid 1px; margin-top:1px !important">অফিসে ব্যবহারের জন্য</span></h4></div>
                     <tbody>
                         <tr>
                             <td colspan="5" style='text-align:justify;'>
