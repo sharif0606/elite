@@ -182,22 +182,42 @@
             $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
             $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
             @endphp
-            <td>
+            {{--  <td>
                 {{ $footersetting1?->name }} <br>
                 {{ $footersetting1?->designation }} <br>
                 Cell: {{ $footersetting1?->phone  }}
             </td>
-            <td style="text-align: center;">
+            <td style="text-align: left; float: center;">
                 {{ $footersetting2?->name }} <br>
                 {{ $footersetting2?->designation }} <br>
                 Cell: {{ $footersetting2?->phone  }}
             </td>
-            <td  style="text-align: right;">
+            <td  style="text-align: left; float: right;">
                 {{ $footersetting3?->name }} <br>
                 {{ $footersetting3?->designation }} <br>
                 {{ $footersetting3?->phone  }}
-            </td>
+            </td>  --}}
+
         </tr>
     </table>
+    <div style="text-align: center;">
+
+        <div style="width: 200px; float: left; text-align: left;">
+            {{ $footersetting1?->name }} <br>
+            {{ $footersetting1?->designation }} <br>
+            Cell: {{ $footersetting1?->phone  }}
+        </div>
+        <div style="width: 200px; float: right; text-align: left;">
+            {{ $footersetting3?->name }} <br>
+            {{ $footersetting3?->designation }} <br>
+            {{ $footersetting3?->phone  }}
+        </div>
+        <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
+            {{ $footersetting2?->name }} <br>
+            {{ $footersetting2?->designation }} <br>
+            Cell: {{ $footersetting2?->phone  }}
+        </div>
+
+    </div>
 </body>
 </html>
