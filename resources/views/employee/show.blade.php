@@ -1060,19 +1060,19 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10%;">স্বাক্ষীর স্বাক্ষরঃ </td>
+                            <td style="text-align: left; width: 15%;">স্বাক্ষীর স্বাক্ষরঃ </td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
                             <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value=""></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10%;"></td>
+                            <td style="text-align: left; width: 15%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">আবেদনকারীর নামঃ</td>
                             <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
                         </tr>
                         <tr>
-                            <td style="text-align: left; width: 10%;"></td>
+                            <td style="text-align: left; width: 15%;"></td>
                             <td style="width: 30%;"></td>
                             <td style="text-align: end; width: 25%;">তারিখ</td>
                             <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value="{{ date('d-M-Y', strtotime($employees->created_at)) }}"></td>
