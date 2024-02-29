@@ -1015,7 +1015,7 @@
                 </table>
 
                 <div style="text-align: center;"> <h4 style="margin-bottom: 0px;"><span style="border-bottom: solid 1px;">অঙ্গীকারনামা</span></h4></div>
-                <table style="width: 100%;">
+                <table style="width: 100%; margin-bottom: 3rem;">
                     <tbody>
                         <tr>
                             <td colspan="5">
@@ -1079,7 +1079,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table style="width: 100%; margin-top:3rem;">
+                <table style="width: 100%;">
                     {{--  <p style="text-align: center;">পৃষ্ঠা-৪</p>  --}}
                     <div style="text-align: center;"> <h4 style="margin-top:2px !important;"><span style="border-bottom: solid 1px; margin-top:1px !important">অফিসে ব্যবহারের জন্য</span></h4></div>
                     <tbody>
