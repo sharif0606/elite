@@ -1468,7 +1468,7 @@
     </section>
     <section>
         <div class="row" style="margin-top: 15rem;">
-            <div class="col-12 text-center" style="margin-bottom: 50px !important;">
+            <div class="col-12 text-center" style="margin-bottom: 5px !important;">
                 <h5> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
                 {{--  <span class="text-end" style="padding-left: 50px !important;">তারিখ:{{ date('d-m-Y', strtotime($employees->created_at)) }}</span>  --}}
                 <p style="margin: 1px;"><b>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড,চট্টগ্রাম ।</b></p>
