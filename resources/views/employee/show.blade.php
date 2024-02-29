@@ -1572,9 +1572,9 @@
                                 <td style="text-align: left; width: 6% !important;">১৩।</td>
                                 <td style="width: 25% !important;"><h5 class="mb-0">‍শপথ বাক্য পাঠঃ-</h5></td>
                                 <td style="width: 10% !important;">আমি(নাম)</td>
-                                <td style="width: 22% !important;"><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                                <td style="width: 23% !important;"><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
                                 <td style="width: 13% !important;">{{ $employees->position?->name_bn }}</td>
-                                <td style="width: 24% !important;">হিসেবে মহান সৃষ্টিকর্তার</td>
+                                <td style="width: 23% !important;">হিসেবে মহান সৃষ্টিকর্তার</td>
                             </tr>
                         </table>
                     </td>
