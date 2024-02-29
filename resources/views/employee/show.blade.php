@@ -1467,9 +1467,9 @@
         </div>
     </section>
     <section>
-        <div class="row" style="margin-top: 13rem;">
-            <div class="col-12 text-center mb-5" style="margin-bottom: 50px !important;">
-                <h5 style="padding-top: 3rem;"> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
+        <div class="row" style="margin-top: 7rem;">
+            <div class="col-12 text-center" style="margin-bottom: 50px !important;">
+                <h5> <span> জনবল ভর্তির প্রাথমিক কার্যক্রম</span></h5>
                 {{--  <span class="text-end" style="padding-left: 50px !important;">তারিখ:{{ date('d-m-Y', strtotime($employees->created_at)) }}</span>  --}}
                 <p style="margin: 1px;"><b>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড,চট্টগ্রাম ।</b></p>
             </div>
@@ -1570,7 +1570,7 @@
                         <table style="width: 100%;">
                             <tr>
                                 <td style="text-align: left; width: 6% !important;">১৩।</td>
-                                <td style="width: 25% !important;"><h4 class="mb-0">‍শপথ বাক্য পাঠঃ-</h4></td>
+                                <td style="width: 25% !important;"><h5 class="mb-0">‍শপথ বাক্য পাঠঃ-</h5></td>
                                 <td style="width: 10% !important;">আমি(নাম)</td>
                                 <td style="width: 22% !important;"><input readonly type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
                                 <td style="width: 13% !important;">{{ $employees->position?->name_bn }}</td>
@@ -1610,9 +1610,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>১৬।</td>
-                    <td colspan="2">উক্ত গার্ডটি নতুন পোষ্টের জন্য ভর্তি করা হলে পোষ্টের নাম লিখুনঃ</td>
-                    <td colspan="2"><input readonly type="text" class="tinput" value=""></td>
+                    <td colspan="5">
+                        <table>
+                            <tr>
+                                <td style="text-align: left; width: 7% !important;">১৬।</td>
+                                <td style="width: 60% !important;">উক্ত গার্ডটি নতুন পোষ্টের জন্য ভর্তি করা হলে পোষ্টের নাম লিখুনঃ</td>
+                                <td style="width: 33% !important;"><input readonly type="text" class="tinput" value=""></td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
                 <tr>
                     <td>১৭।</td>
@@ -1651,7 +1657,7 @@
                     <td><input readonly type="text" class="tinput" value=""></td>
                     <td></td>
                     <td></td>
-                    <td class="text-end"><p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">স্টোরম্যানের সীল/স্বাক্ষর</b></p></td>
+                    <td class="text-end"><p style="margin: 1px;"><b style="border-top: solid 2px;">স্টোরম্যানের সীল/স্বাক্ষর</b></p></td>
                 </tr>
                 <tr>
                     <td>২০।</td>
@@ -1664,7 +1670,7 @@
                     <td><input readonly type="text" class="tinput" value=""></td>
                     <td></td>
                     <td></td>
-                    <td class="text-end"><p style="margin: 1px; margin-top: 50px !important;"><b style="border-top: solid 2px;">হিসাব শাখার প্রধান</b></p></td>
+                    <td class="text-end"><p style="margin-top: 1rem;"><b style="border-top: solid 2px;">হিসাব শাখার প্রধান</b></p></td>
                 </tr>
             </tbody>
         </table>
