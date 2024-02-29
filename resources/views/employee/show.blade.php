@@ -1059,11 +1059,11 @@
                                 </table>
                             </td>
                         </tr>
-                        <tr style="margin-top:1rem;">
-                            <td style="text-align: left; width: 15%;">স্বাক্ষীর স্বাক্ষরঃ </td>
-                            <td style="width: 30%;"></td>
-                            <td style="text-align: end; width: 25%;">স্বাক্ষরঃ</td>
-                            <td colspan="2" style="width: 30%;"><input readonly type="text" class="tinput"  value=""></td>
+                        <tr>
+                            <td style="text-align: left; width: 15%; margin-top:1rem;">স্বাক্ষীর স্বাক্ষরঃ </td>
+                            <td style="width: 30%; margin-top:1rem;"></td>
+                            <td style="text-align: end; width: 25%; margin-top:1rem;">স্বাক্ষরঃ</td>
+                            <td colspan="2" style="width: 30%; margin-top:1rem;"><input readonly type="text" class="tinput"  value=""></td>
                         </tr>
                         <tr>
                             <td style="text-align: left; width: 15%;"></td>
