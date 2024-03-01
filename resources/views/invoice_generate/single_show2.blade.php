@@ -6,7 +6,7 @@
     <title>{{ $invoice_id->customer?->name }} for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
 
 </head>
-<body style="font-size: 16px !important color:red;">
+<body style="font-size: 16px !important; color:red;">
     @if($headershow==1)
     <div style="text-align: center;"><h2>INVOICE</h2></div>
     <table width="100%">
