@@ -6,7 +6,7 @@
     <title>{{ $invoice_id->customer?->name }} for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
 
 </head>
-<body style="font-size: 16px !important; color:red;">
+<body style="font-size: 16px !important;">
     @if($headershow==1)
     <div style="text-align: center;"><h2>INVOICE</h2></div>
     <table width="100%">
@@ -37,7 +37,7 @@
     <table width="100%"style="padding: 2in 0px 30px 0px;">
         <tr style="font-size: 20px; position: relative;">
             <td width="20%" style="text-align: left;"></td>
-            <td style="position: absolute; top:-52px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td style="position: absolute; top:-47px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-52px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table>
