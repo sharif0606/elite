@@ -37,7 +37,7 @@
     <table width="100%"style="padding: 2in 0px 30px 0px;">
         <tr style="font-size: 20px; position: relative;">
             <td width="20%" style="text-align: left;"></td>
-            <td style="position: absolute; right:-175px; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td style="position: absolute; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-30px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table>
@@ -128,22 +128,24 @@
                         <td colspan="4">Sub Total</td>
                         <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                     </tr>
-                    {{--  @if ($invoice_id->less)  --}}
-                    @if (isset($invoice_id->less) && $invoice_id->less)
-                        @foreach ($invoice_id->less as $le)
-                            <tr style="text-align: center;">
-                                <td></td>
-                                <td colspan="4">{{ $le->description }}</td>
-                                <td>{{ $le->amount }}</td>
-                            </tr>
-                            @php $totalAddLess += $le->amount; @endphp
-                        @endforeach
-                    @endif
-                    {{--  <tr style="text-align: center;" class="d-none">
-                        <td></td>
-                        <th colspan="4">Total</th>
-                        <td>{{ money_format($invoice_id->total_tk)}}</td>
-                    </tr>  --}}
+                @endif
+                {{--  @if ($invoice_id->less)  --}}
+                @if (isset($invoice_id->less) && $invoice_id->less)
+                    @foreach ($invoice_id->less as $le)
+                        <tr style="text-align: center;">
+                            <td></td>
+                            <td colspan="4">{{ $le->description }}</td>
+                            <td>{{ $le->amount }}</td>
+                        </tr>
+                        @php $totalAddLess += $le->amount; @endphp
+                    @endforeach
+                @endif
+                {{--  <tr style="text-align: center;" class="d-none">
+                    <td></td>
+                    <th colspan="4">Total</th>
+                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                </tr>  --}}
+                @if($invoice_id->vat>0)
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
