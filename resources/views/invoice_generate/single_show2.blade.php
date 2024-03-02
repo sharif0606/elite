@@ -51,18 +51,22 @@
             </tr>
             <tr>
                 <td width="15%">To:</td>
-                <td><b>{{ $invoice_id->customer?->name }}</b></td>
+                <td>@if($branch->billing_person)
+                    <b>{{ $branch?->billing_person }} </b><br/>
+                    @endif
+                    <b>{{ $invoice_id->customer?->name }}</b>
+                </td>
                 @if($invoice_id->customer?->bin)
                 <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
                 @endif
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $branch?->brance_name }}</td>
+                <td colspan="2">{{ $branch?->brance_name }}</td>
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td>{{ $branch?->billing_address }}</td>
+                <td colspan="2">{{ $branch?->billing_address }}</td>
             </tr>
             @if($branch?->attention)
             <tr>
@@ -72,15 +76,16 @@
             </tr>
             <tr>
                 <td></td>
-                <td>{{ $branch?->attention_details }}</td>
+                <td colspan="2">{{ $branch?->attention_details }}</td>
             </tr>
             @endif
             <tr>
                 <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
-                <td style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+                <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             </tr>
             <tr>
                 <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
+                <td></td>
                 <td></td>
             </tr>
         </table>
