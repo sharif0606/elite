@@ -11,9 +11,9 @@
     <div style="text-align: center;"><h2>INVOICE</h2></div>
     <table width="100%">
         <tr>
-            <th width="50%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
 
-            <td width="50%">
+            <td width="55%">
                 <h3>
                     House #2, Lane #2, Road #2, Block-K,<br>
                 Halishahar Housing Estate, Chattogram-4224 <br>
