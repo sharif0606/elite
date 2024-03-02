@@ -76,8 +76,8 @@
             </tr>
             @endif
             <tr>
-                <td style="padding-top: 8px;" width="15%"><b>Subject:</b></td>
-                <td style="padding-top: 8px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+                <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
+                <td style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
             </tr>
             <tr>
                 <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
