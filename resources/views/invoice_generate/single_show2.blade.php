@@ -121,14 +121,15 @@
                 @endif
             </tbody>
             <tfoot>
+                @php $totalAddLess=0; @endphp
                 @if($invoice_id->vat>0)
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Sub Total</td>
                         <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                     </tr>
-                    @if ($invoice_id->less)
-                    @php $totalAddLess=0; @endphp
+                    {{--  @if ($invoice_id->less)  --}}
+                    @if (isset($invoice_id->less) && $invoice_id->less)
                         @foreach ($invoice_id->less as $le)
                             <tr style="text-align: center;">
                                 <td></td>
@@ -152,14 +153,14 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td>{{ money_format((($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount +$totalAddLess) }}</td>
+                    <td>{{ money_format((($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount + $totalAddLess) }}</td>
                 </tr>
             </tfoot>
         </table>
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount+$totalAddLess;
+                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount + $totalAddLess;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
