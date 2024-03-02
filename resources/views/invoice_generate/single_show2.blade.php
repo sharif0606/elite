@@ -110,7 +110,7 @@
                             </td>
                             <td>{{ $de->rate }} <br/>
                                 @if($de->type_houre )
-                                    ({{ $de->type_houre }} Hours)
+                                    ({{ $de->type_houre }} hours Rate)
                                 @endif
                             </td>
                             <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
