@@ -264,135 +264,137 @@
                         </tr>
                     </tbody>
                 </table>
-                <table style="width: 100%; margin-top: 1rem;">
-                    <tbody>
-                        <tr>
-                            <td colspan="2" style="text-align: left;">তারিখ: {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
-                        </tr>
-                        <tr>
-                            <td  style="text-align: left; padding-left: 45px;">
-                                <p style="padding-top: 10px; margin: 0px;">পরিচালক</p>
-                                <p style="margin: 0px;">এলিট সিকিউরিটি সার্ভিসেস লি:</p>
-                                <p style="margin: 0px;">বাড়ি-২, রোড-, লেন-২, ব্লক-কে,</p>
-                                <p style="margin: 0px;">হালিশহর হাউসিং এষ্টেট, চট্টগ্রাম।</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td  style="text-align: left; ">
-                                <label for="">বিষয়:</label>
-                                <span style="border-bottom: solid 1px;"><b>নিরাপত্তা প্রহরী/মহিলা প্রহরী/ সুপারভাইজার পদে নিয়োগের জন্য আবেদন।</b></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: left;">জনাব,</td>
-                        </tr>
-                        <tr>
-                            <td  style="text-align: left;">
-                                <p style="padding-top: 12px; margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;বিশ্বস্ত সূত্রে জানিতে পারলাম <b>"এলিট সিকিউরিটি সার্ভিসেস লি "</b> এর অধীনে কিছু সংখক নিরাপত্তা প্রহরী/মহিলা প্রহরী/সুপারভাইজার নিয়োগ করা হইব।  উক্ত নিরাপত্তা প্রহরী/মহিলা প্রহরী/সুপারভাইজার পদে একজন আগ্রহী প্রার্থী হিসেবে নিন্মে আমার জীবন বৃত্তান্ত পেশ করলাম:-</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="widht:100%;">
-                    <tbody>
-                        <tr>
-                            <th class="py-1" style="max-width: 25%;">১. নাম</th>
-                            <td class="py-1" style="width: 1%;">:</td>
-                            <td class="py-1" style="width: 74%;" colspan="2">{{ $employees->bn_applicants_name }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">২. পিতা নাম </th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_fathers_name }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৩. মাতার নাম </th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_mothers_name }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৪. স্থায়ী ঠিকানা </th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" style="width: 37%;">
-                                <p style="margin: 2px;">গ্রাম: {{ $employees->bn_parm_village_name }}</p>
-                                <p style="margin: 2px;">উপজেলা: {{ $employees->bn_parm_upazilla?->name_bn }}</p>
-                                <p style="margin: 2px;">মোবাইল নং: {{ $employees->bn_parm_phone_alt }}</p>
-                            </td>
-                            <td class="py-1" style="width: 37%;">
-                                <p style="margin: 2px;">পোঃ {{ $employees->bn_parm_post_ofc }}</p>
-                                <p style="margin: 2px;">জেলা: {{ $employees->bn_parm_district?->name_bn }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৫. বর্তমান ঠিকানা </th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" style="width: 36%;">
-                                <p style="margin: 2px;">হোল্ডিং/বাসা নং {{ $employees->bn_pre_holding_no }}</p>
-                                <p style="margin: 2px;">উপজেলা : {{ $employees->bn_upazilla?->name_bn }}</p>
-                            </td>
-                            <td class="py-1" style="width: 36%;">
-                                <p style="margin: 2px;">পোঃ {{ $employees->bn_pre_post_ofc }}</p>
-                                <p style="margin: 2px;">গ্রাম/সড়ক: {{ $employees->bn_pre_village_name }}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৬. শিক্ষাগতা যোগ্যতা</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2"> {{ $employees->bn_edu_qualification }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৭. জন্ম তারিখ</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_dob }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৮. বয়স</th>
-                            <td class="py-1">:</td>
-                            @php
-                            $birthDate = $employees->bn_dob;
-                            $age = \Carbon\Carbon::parse($birthDate)->age;
-                            @endphp
+                <div style="page-break-inside: avoid;">
+                    <table style="width: 100%; margin-top: 1rem;">
+                        <tbody>
+                            <tr>
+                                <td colspan="2" style="text-align: left;">তারিখ: {{ date('d-M-Y', strtotime($employees->created_at)) }}</td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: left; padding-left: 45px;">
+                                    <p style="padding-top: 10px; margin: 0px;">পরিচালক</p>
+                                    <p style="margin: 0px;">এলিট সিকিউরিটি সার্ভিসেস লি:</p>
+                                    <p style="margin: 0px;">বাড়ি-২, রোড-, লেন-২, ব্লক-কে,</p>
+                                    <p style="margin: 0px;">হালিশহর হাউসিং এষ্টেট, চট্টগ্রাম।</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: left; ">
+                                    <label for="">বিষয়:</label>
+                                    <span style="border-bottom: solid 1px;"><b>নিরাপত্তা প্রহরী/মহিলা প্রহরী/ সুপারভাইজার পদে নিয়োগের জন্য আবেদন।</b></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: left;">জনাব,</td>
+                            </tr>
+                            <tr>
+                                <td  style="text-align: left;">
+                                    <p style="padding-top: 12px; margin: 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;বিশ্বস্ত সূত্রে জানিতে পারলাম <b>"এলিট সিকিউরিটি সার্ভিসেস লি "</b> এর অধীনে কিছু সংখক নিরাপত্তা প্রহরী/মহিলা প্রহরী/সুপারভাইজার নিয়োগ করা হইব।  উক্ত নিরাপত্তা প্রহরী/মহিলা প্রহরী/সুপারভাইজার পদে একজন আগ্রহী প্রার্থী হিসেবে নিন্মে আমার জীবন বৃত্তান্ত পেশ করলাম:-</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="widht:100%;">
+                        <tbody>
+                            <tr>
+                                <th class="py-1" style="max-width: 25%;">১. নাম</th>
+                                <td class="py-1" style="width: 1%;">:</td>
+                                <td class="py-1" style="width: 74%;" colspan="2">{{ $employees->bn_applicants_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">২. পিতা নাম </th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_fathers_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৩. মাতার নাম </th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_mothers_name }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৪. স্থায়ী ঠিকানা </th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" style="width: 37%;">
+                                    <p style="margin: 2px;">গ্রাম: {{ $employees->bn_parm_village_name }}</p>
+                                    <p style="margin: 2px;">উপজেলা: {{ $employees->bn_parm_upazilla?->name_bn }}</p>
+                                    <p style="margin: 2px;">মোবাইল নং: {{ $employees->bn_parm_phone_alt }}</p>
+                                </td>
+                                <td class="py-1" style="width: 37%;">
+                                    <p style="margin: 2px;">পোঃ {{ $employees->bn_parm_post_ofc }}</p>
+                                    <p style="margin: 2px;">জেলা: {{ $employees->bn_parm_district?->name_bn }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৫. বর্তমান ঠিকানা </th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" style="width: 36%;">
+                                    <p style="margin: 2px;">হোল্ডিং/বাসা নং {{ $employees->bn_pre_holding_no }}</p>
+                                    <p style="margin: 2px;">উপজেলা : {{ $employees->bn_upazilla?->name_bn }}</p>
+                                </td>
+                                <td class="py-1" style="width: 36%;">
+                                    <p style="margin: 2px;">পোঃ {{ $employees->bn_pre_post_ofc }}</p>
+                                    <p style="margin: 2px;">গ্রাম/সড়ক: {{ $employees->bn_pre_village_name }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৬. শিক্ষাগতা যোগ্যতা</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2"> {{ $employees->bn_edu_qualification }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৭. জন্ম তারিখ</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_dob }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৮. বয়স</th>
+                                <td class="py-1">:</td>
+                                @php
+                                $birthDate = $employees->bn_dob;
+                                $age = \Carbon\Carbon::parse($birthDate)->age;
+                                @endphp
 
-                            <td class="py-1" colspan="2">{{ $age }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">৯. জাতীয়তা</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_nationality }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">১০. ধর্ম</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->religion?->name_bn }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">১১. অভিজ্ঞতা</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_experience }}</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1">১২. মোবাইল নং</th>
-                            <td class="py-1">:</td>
-                            <td class="py-1" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
-                        </tr>
-                        <tr>
-                            <td class="py-1" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
-                        </tr>
-                        <tr>
-                            <th class="py-1" colspan="3">বিনীত নিবেদক</th>
-                        </tr>
-                        <tr>
-                            <th colspan="3" style="">
-                                @if($employees->signature_img !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt=""><br/>
-                                @else
-                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
-                                @endif
-                                আবেদনকারীর স্বাক্ষর
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
+                                <td class="py-1" colspan="2">{{ $age }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">৯. জাতীয়তা</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_nationality }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">১০. ধর্ম</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->religion?->name_bn }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">১১. অভিজ্ঞতা</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_experience }}</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1">১২. মোবাইল নং</th>
+                                <td class="py-1">:</td>
+                                <td class="py-1" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
+                            </tr>
+                            <tr>
+                                <td class="py-1" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
+                            </tr>
+                            <tr>
+                                <th class="py-1" colspan="3">বিনীত নিবেদক</th>
+                            </tr>
+                            <tr>
+                                <th colspan="3" style="">
+                                    @if($employees->signature_img !='')
+                                    <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt=""><br/>
+                                    @else
+                                    <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                    @endif
+                                    আবেদনকারীর স্বাক্ষর
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div style="page-break-inside: avoid;">
                     <div class="text-center mt-5">
                         <h5 style="padding-top: 3rem;">ফরম নং-১৫ </h5>
@@ -518,392 +520,404 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="text-align: center; margin-top: 4rem;">
-                    <h4>{{ $jobdescription?->head_title }}</h4>
-                    <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
+                <div style="page-break-inside: avoid;">
+                    <div style="text-align: center; margin-top: 4rem;">
+                        <h4>{{ $jobdescription?->head_title }}</h4>
+                        <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
+                    </div>
+                    <table style="widht: 100%;">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <h6><span style="text-align: left; border-bottom: solid 1px;">পদবী :- {{ $jobdescription?->title_bn }}</span></h6>
+                                    <h6><span style="text-align: left; border-bottom: solid 1px;">বিভাগ :- {{ $jobdescription?->department_bn }}</span></h6>
+                                    <h6><span style="text-align: left; border-bottom: solid 1px;">দায়িত্ব ও কর্তব্য :</span></h6>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">
+                                    @if ($jobdescription?->details)
+                                        @foreach ($jobdescription->details as $d)
+                                            @if ($d->type == '1')
+                                                <p style="margin: 12px;">{{$d->description }}</p>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table style="widht: 100%;">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">পদবী :- {{ $jobdescription?->title_bn }}</span></h6>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">বিভাগ :- {{ $jobdescription?->department_bn }}</span></h6>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">দায়িত্ব ও কর্তব্য :</span></h6>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
+                <div style="page-break-inside: avoid;">
+                    <table style="widht: 100%; margin-top: 2rem;">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <h6><span style="text-align: left; border-bottom: solid 1px;">দক্ষতা:</span></h6>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">
+                                    @if ($jobdescription?->details)
+                                        @foreach ($jobdescription->details as $d)
+                                            @if ($d->type == '2')
+                                                <p style="margin: 12px;">{{$d->description }}</p>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <h6><span style="text-align: left; border-bottom: solid 1px;">ব্যাক্তিত্ব:</span></h6>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 2rem;">
+                                    @if ($jobdescription?->details)
                                     @foreach ($jobdescription->details as $d)
-                                        @if ($d->type == '1')
-                                            <p style="margin: 12px;">{{$d->description }}</p>
-                                        @endif
+                                        @if ($d->type == '3')
+                                    <p style="margin: 12px;">{{$d->description }}</p>
+                                    @endif
                                     @endforeach
                                 @endif
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="widht: 100%; margin-top: 2rem;">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">দক্ষতা:</span></h6>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
-                                    @foreach ($jobdescription->details as $d)
-                                        @if ($d->type == '2')
-                                            <p style="margin: 12px;">{{$d->description }}</p>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                <h6><span style="text-align: left; border-bottom: solid 1px;">ব্যাক্তিত্ব:</span></h6>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="padding-left: 2rem;">
-                                @if ($jobdescription?->details)
-                                @foreach ($jobdescription->details as $d)
-                                    @if ($d->type == '3')
-                                <p style="margin: 12px;">{{$d->description }}</p>
-                                @endif
-                                @endforeach
-                            @endif
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: .5rem; border: solid 1px; text-align:center;">
-                                <h6 class="py-2">আমি এই পত্রখানা পড়িয়া, বুঝিয়া সজ্ঞানে ও স্ব-ইচ্ছায় সাক্ষর করিয়া মূলকপি গ্রহণ করিলাম</h6>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mt-5" style="widht: 100%;">
-                    <tbody>
-                        <tr>
-                            <th>
-                                {{--  <img src="" alt="alt" width="120px" height="50px;"><br>  --}}
-                                <span style="border-top: solid 1px;">অনুমোদনকারী</span>
-                            </th>
-                            <th>
-                                <h6>স্বাক্ষর-</h6>
-                                <h6>পূর্ণ নাম-</h6>
-                                <h6>কার্ড নং-</h6>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%; margin-top: 10rem;">
-                    <tbody>
-                        <tr>
-                            <td style="width: 33%">
-                                <div>
-                                    <img  class="mt-4" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
-                                </div>
-                            </td>
-                            <td style="width: 67%; text-align:start;">
-                                <div>
-                                    <h5 class="ps-3">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
-                                    <p class="ps-5">বাড়ি নং-২, লেইন নং-২, রোড নং-২, ব্লক-"কে"</p>
-                                    <p style="padding-left:4rem;">হালিশহর হাউজিং এষ্টেট, চট্টগ্রাম- ৪২২</p>
-                                    <h6 style="padding-left:4rem;"><span style="border-bottom: solid 1px;">নিরাপত্তা প্রহরীদের পূর্ব পরিচিতি </span></h6>
-                                </div>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <th>১ । নাম</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
-                        </tr>
-                        <tr>
-                            <th>২ । পদবী</th>
-                            <th>:</th>
-                            <td colspan="2"><input type="text" class="tinput" value="{{ $employees->position?->name_bn }}"></td>
-                            <th>আইডি নং</th>
-                            <td><input type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৩ । পিতার নাম</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
-                        </tr>
-                        <tr>
-                            <th style="width: 25%;">৪। পিতার পেশা (প্রযোজ্য ক্ষেত্রে )</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $security?->bn_father_profession }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৫। মাতার নাম</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_mothers_name }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৬। স্বামী/স্ত্রীর নাম</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_spouse_name }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৭। স্বামীর পেশা (প্রযোজ্য ক্ষেত্রে )</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $security?->bn_husband_profession }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৮। জন্ম তারিখ</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_dob }}"></td>
-                        </tr>
-                        <tr>
-                            <th>৯ । শিক্ষাগতা যোগ্যতা</th>
-                            <th>:</th>
-                            <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_edu_qualification }}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <th style="width: 25%;">১০। স্থায়ী ঠিকানা:</th>
-                            <td >
-                               <label for="">গ্রাম/মহল্লা:</label>
-                               <input type="text" class="sbinput" value="{{ $employees->bn_parm_village_name }}">
-                               <label for="">ডাকঘর:</label>
-                               <input type="text" class="sbinput" value="{{ $employees->bn_parm_post_ofc }}">
-                               <label for="">উপজেলা:</label>
-                               <input type="text" class="sbinput" value="{{ $employees->bn_parm_upazilla?->name_bn }}">
-                               <label for="">জেলা:</label>
-                               <input type="text" class="sbinput" value="{{ $employees->bn_parm_district?->name_bn }}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th style="width: 25%;">১১। শশুর বাড়ীর স্থায়ী ঠিকানা (বিবাহিত মহিলাদের ক্ষেত্রে ):</th>
-                            <td >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: .5rem; border: solid 1px; text-align:center;">
+                                    <h6 class="py-2">আমি এই পত্রখানা পড়িয়া, বুঝিয়া সজ্ঞানে ও স্ব-ইচ্ছায় সাক্ষর করিয়া মূলকপি গ্রহণ করিলাম</h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="mt-5" style="widht: 100%;">
+                        <tbody>
+                            <tr>
+                                <th>
+                                    {{--  <img src="" alt="alt" width="120px" height="50px;"><br>  --}}
+                                    <span style="border-top: solid 1px;">অনুমোদনকারী</span>
+                                </th>
+                                <th>
+                                    <h6>স্বাক্ষর-</h6>
+                                    <h6>পূর্ণ নাম-</h6>
+                                    <h6>কার্ড নং-</h6>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="page-break-inside: avoid;">
+                    <table style="width: 100%; margin-top: 1rem;">
+                        <tbody>
+                            <tr>
+                                <td style="width: 33%">
+                                    <div>
+                                        <img  class="mt-4" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                                    </div>
+                                </td>
+                                <td style="width: 67%; text-align:start;">
+                                    <div>
+                                        <h5 class="ps-3">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
+                                        <p class="ps-5">বাড়ি নং-২, লেইন নং-২, রোড নং-২, ব্লক-"কে"</p>
+                                        <p style="padding-left:4rem;">হালিশহর হাউজিং এষ্টেট, চট্টগ্রাম- ৪২২</p>
+                                        <h6 style="padding-left:4rem;"><span style="border-bottom: solid 1px;">নিরাপত্তা প্রহরীদের পূর্ব পরিচিতি </span></h6>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th>১ । নাম</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_applicants_name }}"></td>
+                            </tr>
+                            <tr>
+                                <th>২ । পদবী</th>
+                                <th>:</th>
+                                <td colspan="2"><input type="text" class="tinput" value="{{ $employees->position?->name_bn }}"></td>
+                                <th>আইডি নং</th>
+                                <td><input type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৩ । পিতার নাম</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%;">৪। পিতার পেশা (প্রযোজ্য ক্ষেত্রে )</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $security?->bn_father_profession }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৫। মাতার নাম</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_mothers_name }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৬। স্বামী/স্ত্রীর নাম</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_spouse_name }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৭। স্বামীর পেশা (প্রযোজ্য ক্ষেত্রে )</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $security?->bn_husband_profession }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৮। জন্ম তারিখ</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_dob }}"></td>
+                            </tr>
+                            <tr>
+                                <th>৯ । শিক্ষাগতা যোগ্যতা</th>
+                                <th>:</th>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_edu_qualification }}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th style="width: 25%;">১০। স্থায়ী ঠিকানা:</th>
+                                <td >
                                 <label for="">গ্রাম/মহল্লা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_village_name }}">
+                                <input type="text" class="sbinput" value="{{ $employees->bn_parm_village_name }}">
                                 <label for="">ডাকঘর:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_post_office }}">
-                                <label for="">থানা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_upazilla_id }}">
-                                <label for="">জেলা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_district_id }}">
-                             </td>
-                        </tr>
-                        <tr>
-                            <th style="width: 25%;">১২।  বর্তমান ঠিকানা:</th>
-                            <td >
-                                <label for="">গ্রাম/মহল্লা:</label>
-                                <input type="text" class="sbinput" value="{{ $employees->bn_pre_village_name }}">
-                                <label for="">ডাকঘর:</label>
-                                <input type="text" class="sbinput" value="{{old('bn_pre_post_ofc',$employees->bn_pre_post_ofc)}}">
+                                <input type="text" class="sbinput" value="{{ $employees->bn_parm_post_ofc }}">
                                 <label for="">উপজেলা:</label>
-                                <input type="text" class="sbinput" value="{{ $employees->bn_upazilla?->name_bn }}">
+                                <input type="text" class="sbinput" value="{{ $employees->bn_parm_upazilla?->name_bn }}">
                                 <label for="">জেলা:</label>
-                                <input type="text" class="sbinput" value="{{ $employees->bn_district?->name_bn }}">
-                             </td>
-                        </tr>
-                        <tr>
-                            <th >১৩। জমিদারের নাম ও মোবাইল নং:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_landlord_name }} , {{ ($security?->bn_landlord_mobile_no) }}"></td>
-                        </tr>
-                        <tr>
-                            <th >১৪। বর্তমান ঠিকানায় কতদিন যাবৎ বাস করছেন:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_living_dur }}"></td>
-                        </tr>
-                        <tr>
-                            <th >১৫। বৈবাহিক অবস্থা:</th>
-                            <td>
-                                <input type="text" class="sbinput" @if($employees->bn_marital_status==1) value="{{ 'অবিবাহিত' }}" @else value="{{ 'বিবাহিত' }}" @endif>
-                                <label for="">জাতীয়তা :</label>
-                                <input type="text" class="sbinput" value="{{ $employees->bn_nationality }}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th >১৬। জাতীয় পরিচয়পত্র নং:</th>
-                            <td><input type="text" class="tinput" value="{{ $employees->bn_nid_no }}"></td>
-                        </tr>
-                        <tr>
-                            <th >১৭। পাসপোর্ট নং (যদি থাকে):</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_passport_no }}"></td>
-                        </tr>
-                        <tr>
-                            <th >১৮। পূর্বের কর্মস্থলের নাম কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_old_office_name }}"></td>
-                        </tr>
-                        <tr>
-                            <th >১৯। পূর্বের কর্মস্থলের ঠিকানা:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_old_office_address }}"></td>
-                        </tr>
-                        <tr>
-                            <th >২০। পূর্বের কর্মস্থল হতে চাকুরী ছাড়ার কারণ কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_resign_reason }}"></td>
-                        </tr>
-                        <tr>
-                            <th >২১। পূর্বের কর্মস্থল অব্যহতি পত্র দিয়েছিলেন কি:</th>
-                            <td><input type="text" class="tinput" value="@if ($security?->bn_resign_letter_status=='1') হা @else না @endif"></td>
-                        </tr>
-                        <tr>
-                            <th >২২। সার্ভিস বই আছে কি:</th>
-                            <td><input type="text" class="tinput" value="@if ($security?->bn_service_book_status=='1') হা @else না @endif"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="widht: 100%;">
-                    <tbody>
-                        <tr>
-                            <th colspan="">২৩। সার্ভিস বই নং (যদি থাকে ):</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_service_book_no }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৪। পূর্বের কর্মস্থলে কত টাকা বেতন ছিল:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_old_job_salary }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৫। পূর্বের কর্মস্থলে সর্বশেষ পদবী কি ছিল:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_old_job_last_desig }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৬। পূর্বের কর্মস্থলে মোট চাকুরীর বয়স কত:</th>
-                            <td>
-                                <input type="text" class="tinput" value="{{ $security?->bn_old_job_experience }}">
-                                {{--  <label for="">20 বছর</label>
-                                <label for="">11 মাস </label>
-                                <label for="">20 দিন </label>  --}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৭। বর্তমান কর্মস্থল হতে আপনার বাসায় যাতায়াতের মাধ্যম কি:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_new_job_transportation }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৮। বর্তমান ঠিকানায় কার সাথে বসবাস করছেন:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_current_living }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">২৯। পরিবারে মোট সদস্য সংখ্যা কত:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_total_member }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">৩০। পরিবারে উপার্জনকারী সদস্য সংখ্যা কত:</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_solvent_person }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">৩১। মোবাইল ফোন নং (যদি থাকে ):</th>
-                            <td><input type="text" class="tinput" value="{{ $security?->bn_mobile_no }}"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">৩২। সীম কার্ড রেজিস্টেশন করা আছে কি:</th>
-                            <td><input type="text" class="tinput" value="@if ($security?->bn_sim_card_reg_status=='1') হা @else না @endif"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">৩৩। আপনার দায়ের করা বা আপনার বিরুদ্ধে থানায় কিংবা আদালতে (স্থানীয় ও বর্তমান ) কোনো মামলা আছে কি:</th>
-                            <td><input type="text" class="tinput" value="@if ($security?->bn_case_filed_status=='1') হা @else না @endif"></td>
-                        </tr>
-                        <tr>
-                            <th colspan="">৩৪। পূর্বের কর্মস্থলের একজন কর্মকর্তার নাম:</th>
-                            <td>
-                                <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_name }}"><br>
-                                <label for="">পদবী</label>
-                                <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_post }}">
-                                <label for="">ফোন নং:</label>
-                                <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_mobile }}">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <th><span style="border-bottom: solid 1px;">৩৫।দুইজন সনাক্তকারী</span></th>
-                            <td>
-                                <label for="">(কে)নাম:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_name1 }}">
-                                <label for="">পেশা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_occupation1 }}">
-                                <label for="">ঠিকানা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address1 }}">
-                                <label for="">ফোন নং:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone1 }}">
-                                <label for="">(খ) নাম:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_name2 }}">
-                                <label for="">পেশা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_occupation2 }}"><br>
-                                <label for="">ঠিকানা:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address2 }}">
-                                <label for="">ফোন নং:</label>
-                                <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone2 }}">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th colspan="2">উপরের বর্ণিত তথ্যাদি সত্য ও সঠিক</th>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr style="text-align: center;">
-                            <th style="width: 50%; padding-bottom: 1rem;">
-                                @if($security?->informant_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt=""><br/>
-                                @else
-                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
-                                @endif
-                                <span style="border-top: solid 1px;">তথ্যদানকারীর স্বাক্ষর</span>
-                            </th>
-                            <th style="padding-bottom: 1rem;">
-                                @if($security?->data_collector_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/data_collector_sing/'.$security?->data_collector_sing)}}" alt=""><br/>
-                                @else
-                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
-                                @endif
-                                <span style="border-top: solid 1px;">তথ্য সংগ্রহকারীর স্বাক্ষর</span>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-                {{--  <hr>  --}}
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr>
-                            <th colspan="2"><h6 style="margin-bottom:0px !important;"><span style="border-bottom: solid 1px;">অফিস ব্যবহারের অংশ</span></h6></th>
-                        </tr>
-                        <tr>
-                            <th colspan="2" style="margin-bottom:0px !important;"><p>তথপ্রদানকারীর তথ্য ও সকল কাগজপত্র পর্যবেক্ষন ও সনাক্তকারীদের নিশ্চয়তার ভিত্তিতে তথ্য সমূহ সঠিক/সঠিক নহে বলে প্রতীয়মান হয়েছে।<br>উপরুক্ত তথ্য যাচাইয়ের ক্ষেত্রে ব্যবহৃত মাধ্যম : </p></th>
-                        </tr>
-                    </tbody>
-                </table>
-                <table style="width: 100%;">
-                    <tbody>
-                        <tr style="text-align: center">
-                            <th style="width: 50%;">
-                                @if($security?->executive_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/executive_sing/'.$security?->executive_sing)}}" alt=""><br/>
-                                @else
-                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
-                                @endif
-                                <span style="border-top: solid 1px;">এক্সেকিউটিভ(এইচআর)</span>
-                            </th>
-                            <th>
-                                @if($security?->manager_sing !='')
-                                <img height="50px" width="150px"  src="{{asset('uploads/manager_sing/'.$security?->manager_sing)}}" alt=""><br/>
-                                @else
-                                <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
-                                @endif
-                                <span style="border-top: solid 1px;">ম্যানেজার (অপারেশন )</span>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
+                                <input type="text" class="sbinput" value="{{ $employees->bn_parm_district?->name_bn }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%;">১১। শশুর বাড়ীর স্থায়ী ঠিকানা (বিবাহিত মহিলাদের ক্ষেত্রে ):</th>
+                                <td >
+                                    <label for="">গ্রাম/মহল্লা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_village_name }}">
+                                    <label for="">ডাকঘর:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_post_office }}">
+                                    <label for="">থানা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_upazilla_id }}">
+                                    <label for="">জেলা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_in_laws_district_id }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="width: 25%;">১২।  বর্তমান ঠিকানা:</th>
+                                <td >
+                                    <label for="">গ্রাম/মহল্লা:</label>
+                                    <input type="text" class="sbinput" value="{{ $employees->bn_pre_village_name }}">
+                                    <label for="">ডাকঘর:</label>
+                                    <input type="text" class="sbinput" value="{{old('bn_pre_post_ofc',$employees->bn_pre_post_ofc)}}">
+                                    <label for="">উপজেলা:</label>
+                                    <input type="text" class="sbinput" value="{{ $employees->bn_upazilla?->name_bn }}">
+                                    <label for="">জেলা:</label>
+                                    <input type="text" class="sbinput" value="{{ $employees->bn_district?->name_bn }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th >১৩। জমিদারের নাম ও মোবাইল নং:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_landlord_name }} , {{ ($security?->bn_landlord_mobile_no) }}"></td>
+                            </tr>
+                            <tr>
+                                <th >১৪। বর্তমান ঠিকানায় কতদিন যাবৎ বাস করছেন:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_living_dur }}"></td>
+                            </tr>
+                            <tr>
+                                <th >১৫। বৈবাহিক অবস্থা:</th>
+                                <td>
+                                    <input type="text" class="sbinput" @if($employees->bn_marital_status==1) value="{{ 'অবিবাহিত' }}" @else value="{{ 'বিবাহিত' }}" @endif>
+                                    <label for="">জাতীয়তা :</label>
+                                    <input type="text" class="sbinput" value="{{ $employees->bn_nationality }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th >১৬। জাতীয় পরিচয়পত্র নং:</th>
+                                <td><input type="text" class="tinput" value="{{ $employees->bn_nid_no }}"></td>
+                            </tr>
+                            <tr>
+                                <th >১৭। পাসপোর্ট নং (যদি থাকে):</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_passport_no }}"></td>
+                            </tr>
+                            <tr>
+                                <th >১৮। পূর্বের কর্মস্থলের নাম কি:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_old_office_name }}"></td>
+                            </tr>
+                            <tr>
+                                <th >১৯। পূর্বের কর্মস্থলের ঠিকানা:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_old_office_address }}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="page-break-inside: avoid;">
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th >২০। পূর্বের কর্মস্থল হতে চাকুরী ছাড়ার কারণ কি:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_resign_reason }}"></td>
+                            </tr>
+                            <tr>
+                                <th >২১। পূর্বের কর্মস্থল অব্যহতি পত্র দিয়েছিলেন কি:</th>
+                                <td><input type="text" class="tinput" value="@if ($security?->bn_resign_letter_status=='1') হা @else না @endif"></td>
+                            </tr>
+                            <tr>
+                                <th >২২। সার্ভিস বই আছে কি:</th>
+                                <td><input type="text" class="tinput" value="@if ($security?->bn_service_book_status=='1') হা @else না @endif"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="widht: 100%;">
+                        <tbody>
+                            <tr>
+                                <th colspan="">২৩। সার্ভিস বই নং (যদি থাকে ):</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_service_book_no }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৪। পূর্বের কর্মস্থলে কত টাকা বেতন ছিল:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_old_job_salary }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৫। পূর্বের কর্মস্থলে সর্বশেষ পদবী কি ছিল:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_old_job_last_desig }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৬। পূর্বের কর্মস্থলে মোট চাকুরীর বয়স কত:</th>
+                                <td>
+                                    <input type="text" class="tinput" value="{{ $security?->bn_old_job_experience }}">
+                                    {{--  <label for="">20 বছর</label>
+                                    <label for="">11 মাস </label>
+                                    <label for="">20 দিন </label>  --}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৭। বর্তমান কর্মস্থল হতে আপনার বাসায় যাতায়াতের মাধ্যম কি:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_new_job_transportation }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৮। বর্তমান ঠিকানায় কার সাথে বসবাস করছেন:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_current_living }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">২৯। পরিবারে মোট সদস্য সংখ্যা কত:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_total_member }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">৩০। পরিবারে উপার্জনকারী সদস্য সংখ্যা কত:</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_solvent_person }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">৩১। মোবাইল ফোন নং (যদি থাকে ):</th>
+                                <td><input type="text" class="tinput" value="{{ $security?->bn_mobile_no }}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">৩২। সীম কার্ড রেজিস্টেশন করা আছে কি:</th>
+                                <td><input type="text" class="tinput" value="@if ($security?->bn_sim_card_reg_status=='1') হা @else না @endif"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">৩৩। আপনার দায়ের করা বা আপনার বিরুদ্ধে থানায় কিংবা আদালতে (স্থানীয় ও বর্তমান ) কোনো মামলা আছে কি:</th>
+                                <td><input type="text" class="tinput" value="@if ($security?->bn_case_filed_status=='1') হা @else না @endif"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="">৩৪। পূর্বের কর্মস্থলের একজন কর্মকর্তার নাম:</th>
+                                <td>
+                                    <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_name }}"><br>
+                                    <label for="">পদবী</label>
+                                    <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_post }}">
+                                    <label for="">ফোন নং:</label>
+                                    <input type="text" class="semiSinput" value="{{ $security?->bn_old_job_officer_mobile }}">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th><span style="border-bottom: solid 1px;">৩৫।দুইজন সনাক্তকারী</span></th>
+                                <td>
+                                    <label for="">(কে)নাম:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_name1 }}">
+                                    <label for="">পেশা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_occupation1 }}">
+                                    <label for="">ঠিকানা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address1 }}">
+                                    <label for="">ফোন নং:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone1 }}">
+                                    <label for="">(খ) নাম:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_name2 }}">
+                                    <label for="">পেশা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_occupation2 }}"><br>
+                                    <label for="">ঠিকানা:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address2 }}">
+                                    <label for="">ফোন নং:</label>
+                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone2 }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">উপরের বর্ণিত তথ্যাদি সত্য ও সঠিক</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr style="text-align: center;">
+                                <th style="width: 50%; padding-bottom: 1rem;">
+                                    @if($security?->informant_sing !='')
+                                    <img height="50px" width="150px"  src="{{asset('uploads/informant_sing/'.$security?->informant_sing)}}" alt=""><br/>
+                                    @else
+                                    <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                    @endif
+                                    <span style="border-top: solid 1px;">তথ্যদানকারীর স্বাক্ষর</span>
+                                </th>
+                                <th style="padding-bottom: 1rem;">
+                                    @if($security?->data_collector_sing !='')
+                                    <img height="50px" width="150px"  src="{{asset('uploads/data_collector_sing/'.$security?->data_collector_sing)}}" alt=""><br/>
+                                    @else
+                                    <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                    @endif
+                                    <span style="border-top: solid 1px;">তথ্য সংগ্রহকারীর স্বাক্ষর</span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{--  <hr>  --}}
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr>
+                                <th colspan="2"><h6 style="margin-bottom:0px !important;"><span style="border-bottom: solid 1px;">অফিস ব্যবহারের অংশ</span></h6></th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" style="margin-bottom:0px !important;"><p>তথপ্রদানকারীর তথ্য ও সকল কাগজপত্র পর্যবেক্ষন ও সনাক্তকারীদের নিশ্চয়তার ভিত্তিতে তথ্য সমূহ সঠিক/সঠিক নহে বলে প্রতীয়মান হয়েছে।<br>উপরুক্ত তথ্য যাচাইয়ের ক্ষেত্রে ব্যবহৃত মাধ্যম : </p></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr style="text-align: center">
+                                <th style="width: 50%;">
+                                    @if($security?->executive_sing !='')
+                                    <img height="50px" width="150px"  src="{{asset('uploads/executive_sing/'.$security?->executive_sing)}}" alt=""><br/>
+                                    @else
+                                    <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                    @endif
+                                    <span style="border-top: solid 1px;">এক্সেকিউটিভ(এইচআর)</span>
+                                </th>
+                                <th>
+                                    @if($security?->manager_sing !='')
+                                    <img height="50px" width="150px"  src="{{asset('uploads/manager_sing/'.$security?->manager_sing)}}" alt=""><br/>
+                                    @else
+                                    <img height="50px" width="150px"  src="{{ asset('assets/images/defaultsing.png')}}" alt=""><br/>
+                                    @endif
+                                    <span style="border-top: solid 1px;">ম্যানেজার (অপারেশন )</span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="text-center" style="margin-top: 2rem;">
                     {{--  <h5><span style="border-bottom: solid 1px;">পৃষ্ঠা-২</span></h5>  --}}
                     <h4><span style="border-bottom: solid 1px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এ ভর্তি হয়ে চাকুরীকালীন সময়ে পালনীয় দায়িত্ব ও শর্তাবলী</span></h4>
