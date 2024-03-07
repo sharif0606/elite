@@ -296,84 +296,84 @@
                 <table style="widht:100%;">
                     <tbody>
                         <tr>
-                            <th class="py-2" style="width: 25%;">১. নাম</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_applicants_name }}</td>
+                            <th class="py-1" style="max-width: 25%;">১. নাম</th>
+                            <td class="py-1" style="width: 1%;">:</td>
+                            <td class="py-1" style="width: 74%;" colspan="2">{{ $employees->bn_applicants_name }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">২. পিতা নাম </th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_fathers_name }}</td>
+                            <th class="py-1">২. পিতা নাম </th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_fathers_name }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৩. মাতার নাম </th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_mothers_name }}</td>
+                            <th class="py-1">৩. মাতার নাম </th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_mothers_name }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৪. স্থায়ী ঠিকানা </th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 36%;">
+                            <th class="py-1">৪. স্থায়ী ঠিকানা </th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" style="width: 37%;">
                                 <p style="margin: 2px;">গ্রাম: {{ $employees->bn_parm_village_name }}</p>
                                 <p style="margin: 2px;">উপজেলা: {{ $employees->bn_parm_upazilla?->name_bn }}</p>
                                 <p style="margin: 2px;">মোবাইল নং: {{ $employees->bn_parm_phone_alt }}</p>
                             </td>
-                            <td class="py-2" style="width: 36%;">
+                            <td class="py-1" style="width: 37%;">
                                 <p style="margin: 2px;">পোঃ {{ $employees->bn_parm_post_ofc }}</p>
                                 <p style="margin: 2px;">জেলা: {{ $employees->bn_parm_district?->name_bn }}</p>
                             </td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৫. বর্তমান ঠিকানা </th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 36%;">
+                            <th class="py-1">৫. বর্তমান ঠিকানা </th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" style="width: 36%;">
                                 <p style="margin: 2px;">হোল্ডিং/বাসা নং {{ $employees->bn_pre_holding_no }}</p>
                                 <p style="margin: 2px;">উপজেলা : {{ $employees->bn_upazilla?->name_bn }}</p>
                             </td>
-                            <td class="py-2" style="width: 36%;">
+                            <td class="py-1" style="width: 36%;">
                                 <p style="margin: 2px;">পোঃ {{ $employees->bn_pre_post_ofc }}</p>
                                 <p style="margin: 2px;">গ্রাম/সড়ক: {{ $employees->bn_pre_village_name }}</p>
                             </td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৬. শিক্ষাগতা যোগ্যতা</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2"> {{ $employees->bn_edu_qualification }}</td>
+                            <th class="py-1">৬. শিক্ষাগতা যোগ্যতা</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2"> {{ $employees->bn_edu_qualification }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৭. জন্ম তারিখ</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_dob }}</td>
+                            <th class="py-1">৭. জন্ম তারিখ</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_dob }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৮. বয়স</th>
-                            <td class="py-2" style="width: 2%;">:</td>
+                            <th class="py-1">৮. বয়স</th>
+                            <td class="py-1">:</td>
                             @php
                             $birthDate = $employees->bn_dob;
                             $age = \Carbon\Carbon::parse($birthDate)->age;
                             @endphp
 
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $age }}</td>
+                            <td class="py-1" colspan="2">{{ $age }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">৯. জাতীয়তা</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_nationality }}</td>
+                            <th class="py-1">৯. জাতীয়তা</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_nationality }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">১০. ধর্ম</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->religion?->name_bn }}</td>
+                            <th class="py-1">১০. ধর্ম</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->religion?->name_bn }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">১১. অভিজ্ঞতা</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_experience }}</td>
+                            <th class="py-1">১১. অভিজ্ঞতা</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_experience }}</td>
                         </tr>
                         <tr>
-                            <th class="py-2" style="width: 25%;">১২. মোবাইল নং</th>
-                            <td class="py-2" style="width: 2%;">:</td>
-                            <td class="py-2" style="width: 73%;" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
+                            <th class="py-1">১২. মোবাইল নং</th>
+                            <td class="py-1">:</td>
+                            <td class="py-1" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
                         </tr>
                         <tr>
                             <td class="py-1" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
