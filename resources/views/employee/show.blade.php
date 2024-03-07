@@ -294,7 +294,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table style="widht:100%;">
+                    <table style="width:100%;">
                         <tbody>
                             <tr>
                                 <th class="py-1" style="max-width: 25%;">১. নাম</th>
@@ -525,7 +525,7 @@
                         <h4>{{ $jobdescription?->head_title }}</h4>
                         <h5><span style="border-bottom: solid 1px;">{{ $jobdescription?->head_title_bn }}</span></h5>
                     </div>
-                    <table style="widht: 100%;">
+                    <table style="width: 100%;">
                         <tbody>
                             <tr>
                                 <th>
@@ -549,7 +549,7 @@
                     </table>
                 </div>
                 <div style="page-break-inside: avoid;">
-                    <table style="widht: 100%; margin-top: 2rem;">
+                    <table style="width: 100%; margin-top: 2rem;">
                         <tbody>
                             <tr>
                                 <th>
@@ -590,7 +590,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table class="mt-5" style="widht: 100%;">
+                    <table class="mt-5" style="width: 100%;">
                         <tbody>
                             <tr>
                                 <th style="width: 50%">
@@ -771,7 +771,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <table style="widht: 100%;">
+                    <table style="width: 100%;">
                         <tbody>
                             <tr>
                                 <th colspan="">২৩। সার্ভিস বই নং (যদি থাকে ):</th>
@@ -1509,6 +1509,7 @@
         </div>
     </section>
     <section>
+        <div style="page-break-inside: avoid;">
         <div class="row" style="">
             <div class="col-12 text-center" style="margin-bottom: 5px !important;">
                 <h5 style="padding-top:5px !important;">জনবল ভর্তির প্রাথমিক কার্যক্রম</h5>
@@ -1716,6 +1717,7 @@
                 </tr>
             </tbody>
         </table>
+    </div>
     </section>
 
 </section>
