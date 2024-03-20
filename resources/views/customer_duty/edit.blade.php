@@ -57,6 +57,8 @@
                                                 <th scope="col">{{__('Duty Amount')}}</th>
                                                 <th scope="col">{{__('OT Amount')}}</th>
                                                 <th scope="col">{{__('Total')}}</th>
+                                                <th scope="col">{{__('Start Date')}}</th>
+                                                <th scope="col">{{__('End Date')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -88,6 +90,12 @@
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="{{ old('total_amount',$d->total_amount) }}" placeholder="Total Amount">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
                                                 </td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -269,6 +277,12 @@ var row=`
     </td>
     <td>
         <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
+    </td>
+    <td>
+        <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+    </td>
+    <td>
+        <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
     </td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>

@@ -47,11 +47,11 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control" type="date" name="start_date" value="" placeholder="Start Date">
+                                    <input class="form-control startDate" onblur="DetailsShow()" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input class="form-control endDate" onblur="DetailsShow()" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -68,6 +68,8 @@
                                                 <th scope="col">{{__('Duty Amount')}}</th>
                                                 <th scope="col">{{__('OT Amount')}}</th>
                                                 <th scope="col">{{__('Total')}}</th>
+                                                <th scope="col">{{__('Start Date')}}</th>
+                                                <th scope="col">{{__('End Date')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
@@ -99,6 +101,12 @@
                                                     <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
                                                 </td>
                                                 <td>
+                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+                                                </td>
+                                                <td>
+                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
+                                                </td>
+                                                <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
@@ -114,6 +122,8 @@
                                                 <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
                                                 <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
                                                 <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
@@ -133,6 +143,14 @@
 @endsection
 @push("scripts")
 <script>
+    function DetailsShow(){
+        var startdate = $('.startDate').val();
+        var enddate = $('.endDate').val();
+        $('.startDateDetail').val(startdate);
+        $('.endDateDetail').val(enddate);
+        console.log(startdate);
+    }
+
     function getEmployees(e){
         var customer_id = $('.customer_id');
         var customer_select_message = $('.customer_select_message');
@@ -148,7 +166,6 @@
          //       customer_select_message.html('Please select a customer').show();
         //    }
         //});
-
         var pa = '<div style="color:red">Invalid Employee ID</div>';
         $(e).closest('tr').find('.employee_data').html('');
         var message=$(e).closest('tr').find('.employee_data').append(pa);
@@ -163,6 +180,7 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
+                    //console.log(customer_id);
                     //console.log(employee_id);
                     if(data.length>0){
                         //console.log(data);
@@ -171,7 +189,6 @@
                         var contact = data[0].bn_parm_phone_my;
                         var position=data[0].position.name;
                         var positionid=data[0].bn_jobpost_id;
-                        //console.log('Customer'.customerId);
                         //console.log('Position'.positionid);
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
                         $(e).closest('tr').find('.job_post_id').val(positionid);
@@ -196,7 +213,7 @@
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
                 //console.log(dutyRate)
@@ -285,12 +302,19 @@ var row=`
         <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
     </td>
     <td>
+        <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+    </td>
+    <td>
+        <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
+    </td>
+    <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
     </td>
 </tr>
 `;
     $('#customerduty').append(row);
+    DetailsShow();
 }
 
 function removeRow(e) {

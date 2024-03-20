@@ -100,6 +100,8 @@ class CustomerDutyController extends Controller
                             $details->duty_amount=$request->duty_amount[$key];
                             $details->ot_amount=$request->ot_amount[$key];
                             $details->total_amount=$request->total_amount[$key];
+                            $details->start_date=$request->start_date_details[$key];
+                            $details->end_date=$request->end_date_details[$key];
                             $details->status=0;
                             $details->save();
                         }
@@ -186,6 +188,8 @@ class CustomerDutyController extends Controller
                             $details->duty_amount=$request->duty_amount[$key];
                             $details->ot_amount=$request->ot_amount[$key];
                             $details->total_amount=$request->total_amount[$key];
+                            $details->start_date=$request->start_date_details[$key];
+                            $details->end_date=$request->end_date_details[$key];
                             $details->status=0;
                             $details->save();
                         }

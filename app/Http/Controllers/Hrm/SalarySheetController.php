@@ -31,6 +31,16 @@ class SalarySheetController extends Controller
         $customer=Customer::all();
         return view('hrm.salary_sheet.create',compact('customer'));
     }
+    public function getsalarySheetOne()
+    {
+        $customer=Customer::all();
+        return view('hrm.salary_sheet.salarysheetOne',compact('customer'));
+    }
+    public function getsalarySheetTwo()
+    {
+        $customer=Customer::all();
+        return view('hrm.salary_sheet.salarysheetTwo',compact('customer'));
+    }
 
     /**
      * Store a newly created resource in storage.
