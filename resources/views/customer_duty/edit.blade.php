@@ -36,11 +36,11 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control" type="date" name="start_date" value="{{ old('start_date',$custduty->start_date) }}" placeholder="Start Date">
+                                    <input class="form-control" onblur="DetailsShow()" type="date" name="start_date" value="{{ old('start_date',$custduty->start_date) }}" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control" type="date" name="end_date" value="{{ old('end_date',$custduty->end_date) }}" placeholder="End Date">
+                                    <input class="form-control" onblur="DetailsShow()" type="date" name="end_date" value="{{ old('end_date',$custduty->end_date) }}" placeholder="End Date">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -92,10 +92,10 @@
                                                     <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="{{ old('total_amount',$d->total_amount) }}" placeholder="Total Amount">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="{{ old('start_date',$d->start_date) }}" placeholder="Start Date">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
+                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="{{ old('end_date',$d->end_date) }}" placeholder="End Date">
                                                 </td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -134,6 +134,14 @@
 @endsection
 @push("scripts")
 <script>
+    function DetailsShow(){
+        var startdate = $('.startDate').val();
+        var enddate = $('.endDate').val();
+        $('.startDateDetail').val(startdate);
+        $('.endDateDetail').val(enddate);
+        console.log(startdate);
+    }
+
     function getEmployees(e){
 
         var customer_id = $('.customer_id');
@@ -249,48 +257,48 @@
 
 </script>
 <script>
-    function addRow(){
-
-var row=`
-<tr>
-    <td>
-        <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
-        <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
-        <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
-        <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
-    </td>
-    <td>
-        <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
-    </td>
-    <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
-    <td>
-        <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty">
-    </td>
-    <td>
-        <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty">
-    </td>
-    <td>
-        <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
-    </td>
-    <td>
-        <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
-    </td>
-    <td>
-        <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
-    </td>
-    <td>
-        <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
-    </td>
-    <td>
-        <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
-    </td>
-    <td>
-        <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-        {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-    </td>
-</tr>
-`;
+function addRow(){
+    var row=`
+    <tr>
+        <td>
+            <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
+            <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
+            <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+            <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
+        </td>
+        <td>
+            <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
+        </td>
+        <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
+        <td>
+            <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty">
+        </td>
+        <td>
+            <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty">
+        </td>
+        <td>
+            <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
+        </td>
+        <td>
+            <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
+        </td>
+        <td>
+            <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
+        </td>
+        <td>
+            <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
+        </td>
+        <td>
+            <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="" placeholder="End Date">
+        </td>
+        <td>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+        </td>
+    </tr>
+    `;
     $('#customerduty').append(row);
+    DetailsShow();
 }
 
 function removeRow(e) {
