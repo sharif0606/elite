@@ -24,10 +24,10 @@
                                 <a href="{{route('salarySheetTwo')}}" class="btn btn-primary">Salary Sheet Two</a>
                             </div>
                             <div class="col-lg-3 mt-4 p-0">
-                                <button type="button" class="btn btn-primary">Salary Sheet Three</button>
+                                <a href="{{route('salarySheetThree')}}" class="btn btn-primary">Salary Sheet Three</a>
                             </div>
                             <div class="col-lg-3 mt-4 p-0">
-                                <button type="button" class="btn btn-primary">Salary Sheet Four</button>
+                                <a href="{{route('salarySheetFour')}}" class="btn btn-primary">Salary Sheet Four</a>
                             </div>
                         </div>
                     </div>

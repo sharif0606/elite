@@ -62,47 +62,34 @@
                                                 <th scope="col" rowspan="2">{{__('S/N')}}</th>
                                                 <th scope="col" rowspan="2">{{__('ID No')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Designation')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Payment Type')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Monthly Salary')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Working Days')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Taka')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Weekly Leave')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Basic')}}</th>
+                                                <th scope="col" rowspan="2">{{__('House rent')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Pre. Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                                <th scope="col" rowspan="2">{{__('OT Amount')}}</th>
-                                                <th scope="col" rowspan="2">{{__('HT/Ribon Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Gun Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Leave')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Extra Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Arrear')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Bonus')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Donation')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                                <th scope="col" colspan="16">{{__('DEDUCTION')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Signature')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Zone')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Amt')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Post Allow.')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Fuel Bill')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Total Salary')}}</th>
+                                                <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Total Payble')}}</th>
+                                                <th scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Sing of Acclunts')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
-                                                <th>Mattress & Pillow Cost</th>
-                                                <th>Tonic Sim</th>
-                                                <th>Over Payment Cutt</th>
-                                                <th>Fine</th>
-                                                <th>Loan</th>
-                                                <th>Long Loan</th>
-                                                <th>Cloth</th>
-                                                <th>HR</th>
-                                                <th>Jacket</th>
-                                                <th>Stamp</th>
-                                                <th>Training Cost</th>
-                                                <th>C/F</th>
-                                                <th>Medical</th>
+                                                <th>Excess Mobile</th>
+                                                <th>fine</th>
                                                 <th>Ins</th>
-                                                <th>P/F</th>
-                                                <th>Total</th>
+                                                <th>P.F</th>
+                                                <th>Mess</th>
+                                                <th>Loan</th>
+                                                <th>Training Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody class="salarySheet">

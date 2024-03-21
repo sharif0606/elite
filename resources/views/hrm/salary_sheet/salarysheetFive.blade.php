@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Salary Sheet Two'))
+@section('pageTitle',trans('Salary Sheet One'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -58,51 +58,36 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordered mb-0">
                                         <thead class="d-none show_click">
-                                            <tr class="text-center" id="">
-                                                <th scope="col" rowspan="2">{{__('S/N')}}</th>
+                                            <tr class="text-center myDIV" id="">
+                                                <th scope="col" rowspan="2" class="myDIV">{{__('SL.No')}}</th>
                                                 <th scope="col" rowspan="2">{{__('ID No')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Designation')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Rank')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Payment Type')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Monthly Salary')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Working Days')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Taka')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Weekly Leave')}}</th>
-                                                <th scope="col" rowspan="2">{{__('OT Days')}}</th>
-                                                <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                                <th scope="col" rowspan="2">{{__('OT Amount')}}</th>
-                                                <th scope="col" rowspan="2">{{__('HT/Ribon Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Gun Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Leave')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Extra Alice')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Arrear')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Bonus')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Donation')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                                <th scope="col" colspan="16">{{__('DEDUCTION')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Signature')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Zone')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT days')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Taka')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
+                                                <th scope="col" colspan="8-">{{__('DEDUCTION')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
+                                                <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Remark')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
-                                                <th>Mattress & Pillow Cost</th>
-                                                <th>Tonic Sim</th>
-                                                <th>Over Payment Cutt</th>
+                                                <th>Dress</th>
                                                 <th>Fine</th>
-                                                <th>Loan</th>
-                                                <th>Long Loan</th>
-                                                <th>Cloth</th>
-                                                <th>HR</th>
-                                                <th>Jacket</th>
-                                                <th>Stamp</th>
+                                                <th>Bank Charge/Exc</th>
+                                                <th>ins</th>
+                                                <th>P.F</th>
+                                                <th>stamp</th>
                                                 <th>Training Cost</th>
-                                                <th>C/F</th>
-                                                <th>Medical</th>
-                                                <th>Ins</th>
-                                                <th>P/F</th>
-                                                <th>Total</th>
+                                                <th>Loan</th>
                                             </tr>
                                         </thead>
                                         <tbody class="salarySheet">
@@ -156,7 +141,7 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate },
             success: function(salary_data) {
-                //console.log(salary_data);
+                console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
@@ -231,7 +216,7 @@
                                 <td>
                                     <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
                                 </td>
-                                <td width="40%">
+                                <td>
                                     <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
                                 </td>
                                 {{--  <td>
