@@ -291,8 +291,6 @@
             },
         });
         $('.show_click').removeClass('d-none');
-        var vat=$('#branch_id').find(":selected").data('vat');
-        $('.vat').val(vat);
      }
 </script>
 

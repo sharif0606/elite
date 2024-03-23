@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarySheet.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarySheet.store')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 {{--  <div class="col-lg-3 mt-2">
@@ -267,8 +267,6 @@
             },
         });
         $('.show_click').removeClass('d-none');
-        var vat=$('#branch_id').find(":selected").data('vat');
-        $('.vat').val(vat);
      }
 </script>
 
