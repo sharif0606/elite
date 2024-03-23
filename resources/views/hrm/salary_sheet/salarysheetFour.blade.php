@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Salary Sheet Two'))
+@section('pageTitle',trans('Salary Sheet Four'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -78,7 +78,7 @@
                                                 <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Total Payble')}}</th>
                                                 <th scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Sing of Acclunts')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
@@ -151,75 +151,83 @@
                             `<tr>
                                 <td>${counter + 1}</td>
                                 <td>${value.admission_id_no}
-                                    <input class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
+                                    <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>${value.start_date}
-                                    <input class="form-control join_date" type="hidden" name="join_date[]" value="" placeholder="Duty Rate">
+                                <td>
+                                    <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
                                 </td>
-                                <td>${value.jobpost_name}
-                                    <input class="form-control rank" type="hidden" name="rank[]" value="${value.jobpost_id}" placeholder="Rank"></td>
-                                <td>${value.en_applicants_name}
-                                    <input class="form-control duty_qty" type="hidden" name="duty_qty[]" placeholder="Duty Qty">
+                                <td>
+                                    <input style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
+                                    <input style="width:100px;" class="form-control rank" type="hidden" name="designation[]" value="${value.jobpost_id}" placeholder="Desingation">
+                                </td>
+                                <td>
+                                    <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>${value.duty_rate}
-                                    <input class="form-control duty_rate" type="hidden" name="duty_rate[]" placeholder="OT Qty">
+                                    <input style="width:100px;" class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control duty_rate" type="hidden" name="duty_rate[]" placeholder="">
+                                    <input style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent">
                                 </td>
                                 <td>
-                                    <input class="form-control ot_amount OtAmountFc" type="hidden" name="ot_amount[]" placeholder="Ot Amount">
+                                    <input style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="" placeholder="Medical Allowance">
+                                </td>
+                                <td>${value.duty_amount}
+                                    <input style="width:100px;" class="form-control duty_amount" type="hidden" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
+                                </td>
+                                <td>${value.duty_qty}
+                                    <input style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
                                 </td>
                                 <td>${value.ot_qty}
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
                                 </td>
                                 <td>${value.ot_rate}
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control ot_rate" type="hidden" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
+                                </td>
+                                <td>${value.ot_amount}
+                                    <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="" placeholder="Total Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="" placeholder="Excess Mobile">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="" placeholder="Ins">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="" placeholder="Mess">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="" placeholder="Total Payble">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
-                                </td>
-                                <td width="40%">
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="" placeholder="Remarks">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
