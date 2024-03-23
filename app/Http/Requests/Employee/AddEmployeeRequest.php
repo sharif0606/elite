@@ -26,6 +26,7 @@ class AddEmployeeRequest extends FormRequest
         return [
             'bn_applicants_name' => 'required',
             'admission_id_no'=>'required|unique:employees,admission_id_no',
+            'bn_jobpost_id' => 'required',
             // 'bn_parm_district_id' => 'required',
             // 'bn_parm_upazila_id' => 'required',
             // 'bn_parm_union_id' => 'required',
@@ -48,7 +49,6 @@ class AddEmployeeRequest extends FormRequest
             // 'bn_marital_status' => 'required',
             // 'bn_reference_admittee' => 'required',
             // 'bn_reference_adm_phone' => 'required',
-            // 'bn_jobpost_id' => 'required',
             // 'bn_reference_adm_adress' => 'required',
         ];
     }

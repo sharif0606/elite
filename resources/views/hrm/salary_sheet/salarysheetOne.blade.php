@@ -150,7 +150,7 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate },
             success: function(salary_data) {
-                console.log(salary_data);
+                //console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
@@ -164,7 +164,7 @@
                                     <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="" placeholder="Date of Joining">
+                                    <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
                                 </td>
                                 <td>
                                     <input style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
@@ -177,19 +177,19 @@
                                     <input style="width:100px;" class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>${value.duty_qty}
-                                    <input style="width:100px;" class="form-control ${value.duty_qty}" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
+                                    <input style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
                                 </td>
                                 <td>${value.duty_amount}
-                                    <input style="width:100px;" class="form-control ${value.duty_amount}" type="hidden" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
+                                    <input style="width:100px;" class="form-control duty_amount" type="hidden" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
                                 </td>
                                 <td>${value.ot_qty}
-                                    <input style="width:100px;" class="form-control ${value.ot_qty}" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
+                                    <input style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
                                 </td>
                                 <td>${value.ot_rate}
-                                    <input style="width:100px;" class="form-control ${value.ot_rate}" type="hidden" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
+                                    <input style="width:100px;" class="form-control ot_rate" type="hidden" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
                                 </td>
                                 <td>${value.ot_amount}
-                                    <input style="width:100px;" class="form-control ${value.ot_amount}" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
+                                    <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control fixed_ot" type="text" name="fixed_ot[]" value="" placeholder="Fixed Ot">

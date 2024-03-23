@@ -81,6 +81,28 @@
                             <input type="text" id="bn_mothers_name" value="{{old('bn_mothers_name')}}" class="form-control" placeholder="" name="bn_mothers_name">
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
+                            <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
+                                <option value="">নির্বাচন করুন</option>
+                                @forelse($jobposts as $d)
+                                <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                @empty
+                                    <option value="">No district found</option>
+                                @endforelse
+                            </select>
+                            @if($errors->has('bn_jobpost_id'))
+                                <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="joining_date">যোগদানের তারিখ</label>
+                            <input type="date" id="joining_date" value="{{old('joining_date')}}" class="form-control" placeholder="Joining Date" name="joining_date">
+                        </div>
+                    </div>
                     {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_applicants_name">স্বামীর নাম</label>
@@ -536,22 +558,6 @@
                             <input type="text" id="bn_reference_adm_adress" value="{{old('bn_reference_adm_adress')}}" class="form-control @error('bn_reference_adm_adress') is-invalid @enderror" placeholder="ঠিকানা" name="bn_reference_adm_adress">
                             @if($errors->has('bn_reference_adm_adress'))
                                 <span class="text-danger"> {{ $errors->first('bn_reference_adm_adress') }}</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="bn_jobpost_id">আবেদিত পদ</label>
-                            <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
-                                <option value="">নির্বাচন করুন</option>
-                                @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                            @if($errors->has('bn_jobpost_id'))
-                                <span class="text-danger"> {{ $errors->first('bn_jobpost_id') }}</span>
                             @endif
                         </div>
                     </div>

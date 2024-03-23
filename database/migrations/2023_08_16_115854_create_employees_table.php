@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('profile_img')->nullable();
             $table->string('signature_img')->nullable();
             $table->string('admission_id_no')->nullable();
+            $table->date('joining_date')->nullable();
 
             $table->text('bn_applicants_name')->nullable();
             $table->text('bn_fathers_name')->nullable();
@@ -100,7 +101,7 @@ return new class extends Migration
             $table->string('en_identification_mark')->nullable();
             $table->string('en_edu_qualification')->nullable();
             //$table->string('en_blood_id')->nullable();
-            $table->string('en_dob')->nullable();
+            $table->date('en_dob')->nullable();
             $table->integer('en_age')->nullable();
             $table->string('en_birth_certificate')->nullable();
             $table->string('en_nid_no')->nullable();

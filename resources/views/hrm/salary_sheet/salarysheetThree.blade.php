@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Salary Sheet Two'))
+@section('pageTitle',trans('Salary Sheet Three'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -156,75 +156,95 @@
                             `<tr>
                                 <td>${counter + 1}</td>
                                 <td>${value.admission_id_no}
-                                    <input class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
+                                    <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>${value.start_date}
-                                    <input class="form-control join_date" type="hidden" name="join_date[]" value="" placeholder="Duty Rate">
+                                <td>
+                                    <input style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
+                                    <input style="width:100px;" class="form-control rank" type="hidden" name="designation[]" value="${value.jobpost_id}" placeholder="Desingation">
                                 </td>
-                                <td>${value.jobpost_name}
-                                    <input class="form-control rank" type="hidden" name="rank[]" value="${value.jobpost_id}" placeholder="Rank"></td>
-                                <td>${value.en_applicants_name}
-                                    <input class="form-control duty_qty" type="hidden" name="duty_qty[]" placeholder="Duty Qty">
+                                <td>
+                                    <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
+                                </td>
+                                <td>
+                                    <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Joining Date">
                                 </td>
                                 <td>${value.duty_rate}
-                                    <input class="form-control duty_rate" type="hidden" name="duty_rate[]" placeholder="OT Qty">
+                                    <input style="width:100px;" class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control duty_rate" type="hidden" name="duty_rate[]" placeholder="">
+                                    <input style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent (50%)">
                                 </td>
                                 <td>
-                                    <input class="form-control ot_amount OtAmountFc" type="hidden" name="ot_amount[]" placeholder="Ot Amount">
-                                </td>
-                                <td>${value.ot_qty}
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
-                                </td>
-                                <td>${value.ot_rate}
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control medical" type="text" name="medical[]" value="" placeholder="Medical">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="" placeholder="Trans. Conve.">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control gross_wages" type="text" name="gross_wages[]" value="" placeholder="Gross Wages">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control total_workingDay" type="text" name="total_workingDay[]" value="" placeholder="Total Working Days">
+                                </td>
+                                <td>${value.duty_qty}
+                                    <input style="width:100px;" class="form-control present_day" type="hidden" name="present_day[]" value="${value.duty_qty}" placeholder="Pre. Days">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="" placeholder="Vacant">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="" placeholder="Absent">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="" placeholder="Vacant">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="" placeholder="H.rent">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="" placeholder="PF">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="" placeholder="Adv">
                                 </td>
-                                <td width="40%">
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                <td>
+                                    <input style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="" placeholder="Stm">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="" placeholder="Total">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="" placeholder="Net Wages">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control ot_hour" type="text" name="ot_hour[]" value="" placeholder="OT hour">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control ot_rate_basicDuble" type="text" name="ot_rate_basicDuble[]" value="" placeholder="OT rate(Basic*2)">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control ot_amt" type="text" name="ot_amt[]" value="" placeholder="OT Amt.">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control total_payable" type="text" name="total_payable[]" value="" placeholder="Total Payable">
+                                </td>
+                                <td>
+                                    <input style="width:100px;" class="form-control signature" type="text" name="signature[]" value="" placeholder="Signature">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
