@@ -16,20 +16,32 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarySheet.store')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarySheetOneStore')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
-                                {{--  <div class="col-lg-3 mt-2">
+                                <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
-                                        <option value="">Select Customer</option>
-                                        @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                        @empty
-                                        @endforelse
+                                    <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]">
+                                        <optgroup label="Select Customer">
+                                            @forelse ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </optgroup>
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                <div class="form-group col-lg-6 mt-2">
+                                    <label for=""><b>Customer Name Not</b></label>
+                                    <select class="choices form-select multiple-remove customer_id_not" multiple="multiple" name="customer_id_not[]">
+                                        <optgroup label="Select Customer">
+                                            @forelse ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                {{--  <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
                                         <option value="">Select Branch</option>
@@ -41,14 +53,33 @@
                                         <option value="">Select Atm</option>
                                     </select>
                                 </div>  --}}
-                                <div class="col-lg-3 mt-2">
+                                {{--  <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
                                     <input required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
                                     <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
+                                </div>  --}}
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Year</b></label>
+                                    <select required class="form-control year" name="year">
+                                        <option value="">Select Year</option>
+                                        @for($i=2023;$i<= date('Y');$i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
                                 </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Month</b></label>
+                                    <select required class="form-control month" name="month">
+                                        <option value="">Select Month</option>
+                                        @for($i=1;$i<= 12;$i++)
+                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
                                 </div>
@@ -132,23 +163,26 @@
 @push("scripts")
 <script>
     function getSalaryData(e){
-        if (!$('.start_date').val()) {
+        {{--  if (!$('.start_date').val()) {
             $('.start_date').focus();
             return false;
         }
         if (!$('.end_date').val()) {
             $('.end_date').focus();
             return false;
-        }
-        var startDate=$('.start_date').val();
-        var endDate=$('.end_date').val();
+        }  --}}
+        var startDate=$('.year').val()+'-'+$('.month').val()+'-01';
+        var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
+        var CustomerId=$('.customer_id').val();
+        var CustomerIdNot=$('.customer_id_not').val();
+        //console.log(CustomerId);
 
         let counter = 0;
         $.ajax({
             url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { start_date:startDate,end_date:endDate },
+            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
             success: function(salary_data) {
                 //console.log(salary_data);
                 let selectElement = $('.salarySheet');

@@ -138,10 +138,13 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('salarySheet', salarySheet::class);
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
+
+        /* Salary Sheet */
         Route::get('screen-salary-sheet-one', [salarySheet::class,'getsalarySheetOne'])->name('salarySheetOne');
         Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
         Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
+        Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarySheetOneStore');
 
         //Accounts
         Route::resource('master',master::class);

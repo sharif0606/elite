@@ -19,17 +19,29 @@
                         <form method="post" action="{{route('salarySheet.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
-                                {{--  <div class="col-lg-3 mt-2">
+                                <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
-                                        <option value="">Select Customer</option>
-                                        @forelse ($customer as $c)
-                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                                        @empty
-                                        @endforelse
+                                    <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]">
+                                        <optgroup label="Select Customer">
+                                            @forelse ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </optgroup>
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                <div class="form-group col-lg-6 mt-2">
+                                    <label for=""><b>Customer Name Not</b></label>
+                                    <select class="choices form-select multiple-remove customer_id_not" multiple="multiple" name="customer_id_not[]">
+                                        <optgroup label="Select Customer">
+                                            @forelse ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                {{--  <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
                                         <option value="">Select Branch</option>
@@ -148,13 +160,15 @@
         }
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
+        var CustomerId=$('.customer_id').val();
+        var CustomerIdNot=$('.customer_id_not').val();
 
         let counter = 0;
         $.ajax({
             url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { start_date:startDate,end_date:endDate },
+            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
             success: function(salary_data) {
                 //console.log(salary_data);
                 let selectElement = $('.salarySheet');

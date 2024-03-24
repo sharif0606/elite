@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Hrm;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Hrm\SalarySheet;
-use App\Models\Customer;
 use App\Models\Crm\CustomerDuty;
+use App\Http\Controllers\Controller;
 use App\Models\Crm\CustomerDutyDetail;
 
 class SalarySheetController extends Controller
@@ -52,12 +53,33 @@ class SalarySheetController extends Controller
         return view('hrm.salary_sheet.salarysheetFour',compact('customer'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function salarySheetOneStore(Request $request)
+    {
+        dd($request->all());
+        try{
+            $c=new SalarySheet;
+            $c->name=$request->name;
+            $c->code=$request->code;
+            $c->afford_range=$request->afford_range;
+            $c->high_grade_range	=$request->high_grade_range	;
+            $c->inspection	=$request->inspection;
+            $c->insurance	=$request->insurance;
+            $c->created_by=currentUserId();
+            if($c->save()){
+                $this->notice::success('Data Saved!');
+                return redirect()->route(currentUser().'.country.index');
+            }else{
+                $this->notice::error('Please try again!','Fail');
+                return redirect()->back()->withInput();
+            }
+        }catch(Exception $e){
+            dd($e);
+            $this->notice::error('Please try again!','Fail');
+            return redirect()->back()->withInput();
+        }
+    }
+
+
     public function store(Request $request)
     {
         //
@@ -125,32 +147,15 @@ class SalarySheetController extends Controller
                         ->whereDate('customer_duty_details.end_date', '<=', $endDate);
                 });
             });
-
-            // $query = $query->where(function($query) use ($startDate, $endDate) {
-            //     $query->where(function($query) use ($startDate, $endDate) {
-            //         $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
-            //         ->whereDate('customer_duty_details.end_date', '<=', $endDate);
-            //     });
-            //     $query->orWhere(function($query) use ($startDate, $endDate) {
-            //         $query->whereDate('customer_duty_details.start_date', '>=', $startDate)
-            //         ->whereNull('customer_duty_details.end_date');
-            //     });
-            //     $query->orWhere(function($query) use ($startDate, $endDate) {
-            //         $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
-            //         ->whereNull('customer_duty_details.end_date');
-            //     });
-            //     $query->orWhere(function($query) use ($startDate, $endDate) {
-            //         $query->whereDate('customer_duty_details.start_date', '<=', $startDate)
-            //         ->whereDate('customer_duty_details.end_date', '>=', $startDate);
-            //     });
-
-            //     $query->orWhere(function($query) use ($startDate, $endDate) {
-            //         $query->whereDate('customer_duty_details.start_date', '<=', $endDate)
-            //         ->whereDate('customer_duty_details.end_date', '>=', $endDate);
-            //     });
-            // });
         }
-
+            if ($request->customer_id) {
+                $customerId = $request->customer_id;
+                $query->whereIn('customer_duties.customer_id', $customerId);
+            }
+            if ($request->CustomerIdNot) {
+                $CustomerIdNot = $request->CustomerIdNot;
+                $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
+            }
         $data = $query->get();
 
         return response()->json($data, 200);
