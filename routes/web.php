@@ -144,7 +144,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
         Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
-        Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarySheetOneStore');
+        Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
+        Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
 
         //Accounts
         Route::resource('master',master::class);

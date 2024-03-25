@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('customer_id_not')->nullable();
             $table->integer('year')->nullable();
             $table->integer('month')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->nullable()->comment('1=SheetOne,2=sheetTwo,3=sheetThree,4=sheetFour');
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('company_branch_id')->nullable()->index()->foreign('company_branch_id')->references('id')->on('branches')->onDelete('cascade');
             $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

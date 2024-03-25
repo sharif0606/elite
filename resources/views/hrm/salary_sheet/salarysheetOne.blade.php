@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarySheetOneStore')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarysheet.salarySheetOneStore')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="form-group col-lg-6 mt-2">
@@ -62,7 +62,7 @@
                                     <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>  --}}
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Year</b></label>
+                                    <label for=""><b>Salary Year</b></label>
                                     <select required class="form-control year" name="year">
                                         <option value="">Select Year</option>
                                         @for($i=2023;$i<= date('Y');$i++)
@@ -71,7 +71,7 @@
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Month</b></label>
+                                    <label for=""><b>Salary Month</b></label>
                                     <select required class="form-control month" name="month">
                                         <option value="">Select Month</option>
                                         @for($i=1;$i<= 12;$i++)

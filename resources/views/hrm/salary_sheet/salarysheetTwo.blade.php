@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarySheet.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarysheet.salarySheetTwoStore')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="form-group col-lg-6 mt-2">
@@ -54,13 +54,31 @@
                                     </select>
                                 </div>  --}}
                                 <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Salary Year</b></label>
+                                    <select required class="form-control year" name="year">
+                                        <option value="">Select Year</option>
+                                        @for($i=2023;$i<= date('Y');$i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Salary Month</b></label>
+                                    <select required class="form-control month" name="month">
+                                        <option value="">Select Month</option>
+                                        @for($i=1;$i<= 12;$i++)
+                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                {{--  <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
                                     <input required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
                                     <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
-                                </div>
+                                </div>  --}}
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
                                 </div>
@@ -150,16 +168,16 @@
 @push("scripts")
 <script>
     function getSalaryData(e){
-        if (!$('.start_date').val()) {
+        {{--  if (!$('.start_date').val()) {
             $('.start_date').focus();
             return false;
         }
         if (!$('.end_date').val()) {
             $('.end_date').focus();
             return false;
-        }
-        var startDate=$('.start_date').val();
-        var endDate=$('.end_date').val();
+        }  --}}
+        var startDate=$('.year').val()+'-'+$('.month').val()+'-01';
+        var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
         var CustomerId=$('.customer_id').val();
         var CustomerIdNot=$('.customer_id_not').val();
 
@@ -191,7 +209,7 @@
                                     <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="" placeholder="Online Payment">
+                                    <input style="width:100px;" class="form-control payment_type" type="text" name="payment_type[]" value="" placeholder="Payment Type">
                                 </td>
                                 <td>${value.duty_rate}
                                     <input style="width:100px;" class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
