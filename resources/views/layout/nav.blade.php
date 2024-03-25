@@ -94,8 +94,27 @@
                                 <li class="submenu-item">
                                     <a href="{{route('employee.index', ['role' =>currentUser()])}}">Employee</a>
                                 </li>
-                                <li class="submenu-item">
-                                    <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>
+                                {{--  <li class="submenu-item">
+                                    <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>  --}}
+                                <li class="sidebar-item  has-sub">
+                                    <a href="#" class="sidebar-link">
+                                        <i class="bi bi-stack"></i>
+                                        <span>Salary Sheet</span>
+                                    </a>
+                                    <ul class="submenu ">
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarysheet.salarySheetOneIndex')}}">Salary Sheet One</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarySheetTwo')}}">Salary Sheet Two</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarySheetThree')}}">Salary Sheet Three</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
+                                        </li>
+                                    </ul>
                                 </li>
 
                             </ul>

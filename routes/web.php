@@ -141,6 +141,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         /* Salary Sheet */
         Route::resource('salarySheet', salarySheet::class);
         Route::get('screen-salary-sheet-one', [salarySheet::class,'getsalarySheetOne'])->name('salarySheetOne');
+        Route::get('salary-sheet-one-index', [salarySheet::class,'getsalarySheetOneIndex'])->name('salarysheet.salarySheetOneIndex');
+        Route::get('salary-sheet-one-show/{id}', [salarySheet::class,'getsalarySheetOneShow'])->name('salarysheet.salarySheetOneShow');
         Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
         Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');

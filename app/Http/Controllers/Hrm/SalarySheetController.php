@@ -17,21 +17,18 @@ use App\Http\Traits\ImageHandleTraits;
 
 class SalarySheetController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
+    public function getsalarySheetOneIndex()
+    {
+        $salarysheet=SalarySheet::where('status',1)->get();
+        return view('hrm.salary_sheet.salarysheetOneIndex',compact('salarysheet'));
+    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $customer=Customer::all();
@@ -123,7 +120,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetTwoStore(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -197,46 +194,30 @@ class SalarySheetController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
+    public function getsalarySheetOneShow($id)
+    {
+        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        //return $salary;
+        return view('hrm.salary_sheet.salarysheetOneShow',compact('salary'));
+    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //
