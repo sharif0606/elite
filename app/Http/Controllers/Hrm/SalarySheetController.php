@@ -27,6 +27,11 @@ class SalarySheetController extends Controller
         $salarysheet=SalarySheet::where('status',1)->get();
         return view('hrm.salary_sheet.salarysheetOneIndex',compact('salarysheet'));
     }
+    public function getsalarySheetTwoIndex()
+    {
+        $salarysheet=SalarySheet::where('status',2)->get();
+        return view('hrm.salary_sheet.salarysheetTwoIndex',compact('salarysheet'));
+    }
 
 
     public function create()
@@ -177,7 +182,7 @@ class SalarySheetController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Generate Salary Sheet Two',$request->getContent(),'SalarySheet,SalarySheetDetail');
-                return redirect()->route('salarySheet.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('salarysheet.salarySheetTwoIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
