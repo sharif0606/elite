@@ -32,6 +32,11 @@ class SalarySheetController extends Controller
         $salarysheet=SalarySheet::where('status',2)->get();
         return view('hrm.salary_sheet.salarysheetTwoIndex',compact('salarysheet'));
     }
+    public function getsalarySheetThreeIndex()
+    {
+        $salarysheet=SalarySheet::where('status',3)->get();
+        return view('hrm.salary_sheet.salarysheetThreeIndex',compact('salarysheet'));
+    }
 
 
     public function create()

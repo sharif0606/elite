@@ -109,7 +109,7 @@
                                             <a href="{{route('salarysheet.salarySheetTwoIndex')}}">Salary Sheet Two</a>
                                         </li>
                                         <li class="submenu-item">
-                                            <a href="{{route('salarySheetThree')}}">Salary Sheet Three</a>
+                                            <a href="{{route('salarysheet.salarySheetThreeIndex')}}">Salary Sheet Three</a>
                                         </li>
                                         <li class="submenu-item">
                                             <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
