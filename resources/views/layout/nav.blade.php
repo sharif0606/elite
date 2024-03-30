@@ -138,15 +138,43 @@
                                     <a href="{{route('wasaEmployeeAsign.index', ['role' =>currentUser()])}}">Wasa Employee's Assign</a>
                                 </li>
                                 <li class="submenu-item">
+                                    <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class="sidebar-link">
+                                <i class="bi bi-stack"></i>
+                                <span>Pay Roll</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item">
                                     <a href="{{route('employeeRate.index', ['role' =>currentUser()])}}">Employee's Salary</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>
                                 </li>
-                                <li class="submenu-item">
-                                    <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
+                                <li class="sidebar-item  has-sub">
+                                    <a href="#" class="sidebar-link">
+                                        <i class="bi bi-stack"></i>
+                                        <span>Salary Sheet</span>
+                                    </a>
+                                    <ul class="submenu ">
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarysheet.salarySheetOneIndex')}}">Salary Sheet One</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarysheet.salarySheetTwoIndex')}}">Salary Sheet Two</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarysheet.salarySheetThreeIndex')}}">Salary Sheet Three</a>
+                                        </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
+                                        </li>
+                                    </ul>
                                 </li>
-
                             </ul>
                         </li>
                         <li class="sidebar-item  has-sub">
