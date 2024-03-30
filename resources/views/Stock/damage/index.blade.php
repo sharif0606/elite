@@ -81,6 +81,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="my-3">
+                    {!! $damage->links()!!}
+                </div>
             </div>
         </div>
     </div>

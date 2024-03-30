@@ -81,6 +81,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="my-3">
+                    {!! $stockin->links()!!}
+                </div>
             </div>
         </div>
     </div>

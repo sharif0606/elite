@@ -90,6 +90,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="my-3">
+                    {!! $requisition->links()!!}
+                </div>
             </div>
         </div>
     </div>
