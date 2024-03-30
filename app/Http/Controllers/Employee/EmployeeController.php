@@ -117,6 +117,7 @@ class EmployeeController extends Controller
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
             $employee->bn_post_allowance = $request->bn_post_allowance;
             $employee->bn_traning_cost = $request->bn_traning_cost;
+            $employee->bn_remaining_cost = $request->bn_traning_cost;
             $employee->bn_traning_cost_byMonth = $request->bn_traning_cost_byMonth;
             $employee->bn_bank_name = $request->bn_bank_name;
             $employee->bn_brance_name = $request->bn_brance_name;
@@ -327,6 +328,7 @@ class EmployeeController extends Controller
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
             $employee->bn_post_allowance = $request->bn_post_allowance;
             $employee->bn_traning_cost = $request->bn_traning_cost;
+            $employee->bn_remaining_cost = $request->bn_traning_cost;
             $employee->bn_traning_cost_byMonth = $request->bn_traning_cost_byMonth;
             $employee->bn_bank_name = $request->bn_bank_name;
             $employee->bn_brance_name = $request->bn_brance_name;

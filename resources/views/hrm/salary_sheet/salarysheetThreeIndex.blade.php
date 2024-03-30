@@ -30,7 +30,7 @@
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td scope="row">{{$s->customer?->name}}</td>
                         <td>
-                            @for($i=1;$i<= 12;$i++)
+                            @for($i=1; $i<= 12; $i++)
                             @if($s->month==$i)
                             {{ date('F',strtotime("2022-$i-01")) }}
                             @endif
