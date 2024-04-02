@@ -44,8 +44,8 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
-                                            <label for="manual_employee_id">Mamual Employee Id</label>
-                                            <input class="form-control" type="text" name="manual_employee_id" value="{ old('manual_employee_id')}}" placeholder="Manual Employee Id">
+                                            <label for="manual_employee_id">Manual Employee Id</label>
+                                            <input class="form-control" type="text" name="manual_employee_id" value="{{ old('manual_employee_id')}}" placeholder="Manual Employee Id">
                                             @if($errors->has('manual_employee_id'))
                                                 <span class="text-danger"> {{ $errors->first('manual_employee_id') }}</span>
                                             @endif
