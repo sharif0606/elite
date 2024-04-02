@@ -11,7 +11,7 @@
 
             <div class="card">
                 <div>
-                <a class="btn btn-sm btn-primary float-end" href="{{route('deduction_asign.create')}}"><i class="bi bi-pencil-square"></i></a>
+                <a class="btn btn-sm btn-primary float-end" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square"></i></a>
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
@@ -33,7 +33,7 @@
                                 <th scope="col">{{__('Medical')}}</th>
                                 <th scope="col">{{__('Matterss Pillow Cost')}}</th>
                                 <th scope="col">{{__('Tonic Sim')}}</th>
-                                <th scope="col">{{__('CF')}}</th>
+                                <th scope="col">{{__('Over Payment')}}</th>
                                 <th scope="col">{{__('Status')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>

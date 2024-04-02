@@ -26,7 +26,7 @@ class ControllerDeduction extends Controller
      */
     public function create()
     {
-        //
+        return view('pay_roll.create');
     }
 
     /**
