@@ -71,6 +71,9 @@
                             </tbody>
                         </table>
                     </div>
+                    {{--  <div class="my-3">
+                        {!! $stock->links()!!}
+                    </div>  --}}
                 </div>
             </div>
         </div>

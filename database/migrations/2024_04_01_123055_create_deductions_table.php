@@ -23,11 +23,11 @@ return new class extends Migration
             $table->decimal('hr',10,2)->default(0);
             $table->decimal('c_f',10,2)->default(0);
             $table->decimal('medical',10,2)->default(0);
-            $table->string('revenue_stamp')->nullable();
             // uncommontow
             $table->decimal('matterss_pillowCost',10,2)->default(0);
             $table->decimal('tonic_sim',10,2)->default(0);
             $table->decimal('over_paymentCut',10,2)->default(0);
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

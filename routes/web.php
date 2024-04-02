@@ -33,6 +33,7 @@ use App\Http\Controllers\Settings\UserProfileController as userprofile;
 /* HRM */
 use App\Http\Controllers\Employee\EmployeeController as employee;
 use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
+use App\Http\Controllers\payroll\ControllerDeduction as deductionAsign;
 
 /*crm*/
 use App\Http\Controllers\CustomerController as customer;
@@ -150,6 +151,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
+        Route::resource('deduction_asign', deductionAsign::class);
 
         //Accounts
         Route::resource('master',master::class);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\payroll;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\payroll\Deduction;
 
 class ControllerDeduction extends Controller
 {
@@ -14,7 +15,8 @@ class ControllerDeduction extends Controller
      */
     public function index()
     {
-        //
+        $deductions=Deduction::all();
+        return view('pay_roll.index',compact('deductions'));
     }
 
     /**

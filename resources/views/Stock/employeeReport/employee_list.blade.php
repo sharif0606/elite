@@ -68,6 +68,9 @@
                             </tbody>
                         </table>
                     </div>
+                    {{--  <div class="my-3 text-end">
+                        {{ $stock->links() }}
+                    </div>  --}}
                 </div>
             </div>
         </div>

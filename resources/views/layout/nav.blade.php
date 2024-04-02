@@ -155,6 +155,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('deduction_asign.index')}}">Deduction Asign</a>
+                                </li>
                                 <li class="sidebar-item  has-sub">
                                     <a href="#" class="sidebar-link">
                                         <i class="bi bi-stack"></i>
