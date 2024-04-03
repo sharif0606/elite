@@ -54,14 +54,39 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 mt-2">
-                                        <div class="form-group">
-                                            <label for="amount">Taka</label>
-                                            <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount">
-                                            @if($errors->has('amount'))
-                                                <span class="text-danger"> {{ $errors->first('amount') }}</span>
-                                            @endif
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0 table-striped">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col">{{__('Employee')}}</th>
+                                                    <th scope="col">{{__('Taka')}}</th>
+                                                    <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="deductiorepet">
+                                                <tr>
+                                                    <td>
+                                                        <select class="form-control" name="employee_id[]" id="employee_id">
+                                                            <option value="0">Select</option>
+                                                            @foreach ($employees as $e)
+                                                            <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
+                                                        @if($errors->has('amount'))
+                                                            <span class="text-danger"> {{ $errors->first('amount') }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -79,3 +104,37 @@
     <!-- // Basic multiple Column Form section end -->
 </div>
 @endsection
+@push("scripts")
+<script>
+    function addRow(){
+    var row=`
+    <tr>
+        <td>
+            <select class="form-control" name="employee_id[]" id="employee_id">
+                <option value="0">Select</option>
+                @foreach ($employees as $e)
+                <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}</option>
+                @endforeach
+            </select>
+        </td>
+        <td>
+            <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
+            @if($errors->has('amount'))
+                <span class="text-danger"> {{ $errors->first('amount') }}</span>
+            @endif
+        </td>
+        <td>
+            <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+        </td>
+    </tr>
+    `;
+        $('#deductiorepet').append(row);
+    }
+
+    function removeRow(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+        }
+    }
+</script>
+@endpush
