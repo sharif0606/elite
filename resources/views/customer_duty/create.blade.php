@@ -180,7 +180,7 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
-                    //console.log(customer_id);
+                    console.log(data);
                     //console.log(employee_id);
                     if(data.length>0){
                         //console.log(data);
@@ -213,7 +213,7 @@
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
                 //console.log(dutyRate)
