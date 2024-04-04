@@ -9,34 +9,19 @@ use App\Models\Employee\Employee;
 
 class ControllerDeduction extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $deductions=Deduction::all();
-        return view('pay_roll.index',compact('deductions'));
+        return view('pay_roll.deduction.index',compact('deductions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $employees=Employee::select('id','admission_id_no','bn_applicants_name')->get();
-        return view('pay_roll.create',compact('employees'));
+        return view('pay_roll.deduction.create',compact('employees'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         dd($request->all());

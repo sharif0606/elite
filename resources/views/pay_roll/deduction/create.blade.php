@@ -71,7 +71,7 @@
                                                         <select class="form-control" name="employee_id[]" id="employee_id">
                                                             <option value="0">Select</option>
                                                             @foreach ($employees as $e)
-                                                            <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}</option>
+                                                            <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
                                                             @endforeach
                                                         </select>
                                                     </td>
