@@ -238,7 +238,7 @@ class SalarySheetController extends Controller
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
         ->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')
         ->join('employees','customer_duty_details.employee_id','=','employees.id')
-            ->select('customer_duties.*', 'customer_duty_details.*','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost');
+            ->select('customer_duties.*', 'customer_duty_details.*','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost');
 
         if ($request->start_date && $request->end_date) {
             $startDate = $request->start_date;

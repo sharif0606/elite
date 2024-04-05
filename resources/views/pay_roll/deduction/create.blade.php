@@ -125,6 +125,7 @@
         </td>
         <td>
             <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+            <span onClick='removeRow(this);' class="add-row text-danger"><i class="bi bi-trash-fill"></i></span>
         </td>
     </tr>
     `;

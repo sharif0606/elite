@@ -184,15 +184,29 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
             success: function(salary_data) {
-                console.log(salary_data);
+                //console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
+                        let traningCost=value.bn_traning_cost;
+                        let traningCostMonth=value.bn_traning_cost_byMonth;
+                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let remaining=value.bn_remaining_cost;
+                        //console.log(traningCostPerMonth);
+                        let joiningDate = new Date(value.joining_date);
+                        let sixMonthsLater = new Date(joiningDate);
+                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+
+                        // Deduction calculation
+                        let deduction = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            deduction = "130";
+                        }
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
                                 <td>
-                                    <input style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="" placeholder="Online Payment">
+                                    <input style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="Online" placeholder="Online Payment">
                                 </td>
                                 <td>${value.admission_id_no}
                                     <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
@@ -262,7 +276,7 @@
                                     <input style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="" placeholder="HR">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="" placeholder="Training Cost">
+                                    <input style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="" placeholder="C/F">
@@ -274,7 +288,7 @@
                                     <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="" placeholder="Ins">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="" placeholder="P/F">
+                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${deduction}" placeholder="P/F">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="" placeholder="Revenue Stamp">
