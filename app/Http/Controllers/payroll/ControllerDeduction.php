@@ -24,8 +24,23 @@ class ControllerDeduction extends Controller
     }
     public function fineIndex()
     {
-        $deductions=Deduction::where('deduction_type',1)->get();
+        $deductions=Deduction::where('fine', '>', 0)->get();
         return view('pay_roll.deduction.fineindex',compact('deductions'));
+    }
+    public function mobileBillIndex()
+    {
+        $deductions=Deduction::where('mobilebill', '>', 0)->get();
+        return view('pay_roll.deduction.mobilebillindex',compact('deductions'));
+    }
+    public function loanIndex()
+    {
+        $deductions=Deduction::where('loan', '>', 0)->get();
+        return view('pay_roll.deduction.loanindex',compact('deductions'));
+    }
+    public function clothIndex()
+    {
+        $deductions=Deduction::where('cloth', '>', 0)->get();
+        return view('pay_roll.deduction.clothindex',compact('deductions'));
     }
 
     public function create()
@@ -38,55 +53,73 @@ class ControllerDeduction extends Controller
     {
         //dd($request->all());
         try{
-            $data=new Deduction;
-            $data->year = $request->year;
-            $data->month = $request->month;
-            $data->deduction_type = $request->deduction_type;
-            $data->status = 0;
-            if($data->save()){
-                if($request->deduction_type=='1'){
-                    foreach($request->employee_id as $key => $value){
-                        if($value){
-                            $details = DeductionDetail::where('employee_id',$request->employee_id[$key])->firstOrNew();
-                            $details->deduction_id=$data->id;
-                            $details->employee_id=$request->employee_id[$key];
-                            $details->fine=$request->amount[$key];
-                            $details->status=0;
-                            $details->save();
-                        }
-                    }
-                }
-                if($request->deduction_type=='2'){
-                    foreach($request->employee_id as $key => $value){
-                        if($value){
-                            $details = DeductionDetail::where('employee_id',$request->employee_id[$key])->firstOrNew();
-                            $details->deduction_id=$data->id;
-                            $details->employee_id=$request->employee_id[$key];
-                            $details->mobilebill=$request->amount[$key];
-                            $details->status=0;
-                            $details->save();
-                        }
-                    }
-                }
-                if($request->deduction_type=='3'){
-                    foreach($request->employee_id as $key => $value){
-                        if($value){
-                            $details = DeductionDetail::where('employee_id',$request->employee_id[$key])->firstOrNew();
-                            $details->deduction_id=$data->id;
-                            $details->employee_id=$request->employee_id[$key];
-                            $details->loan=$request->amount[$key];
-                            $details->status=0;
-                            $details->save();
-                        }
+            if($request->deduction_type=='1'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->fine=$request->amount[$key];
+                        $deduction->status=1;
+                        $deduction->save();
                     }
                 }
             }
-            if ($data->save()) {
-                \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction,DeductionDetail');
-                return redirect()->route('deduction_asign.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-            } else {
-                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            if($request->deduction_type=='2'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->mobilebill=$request->amount[$key];
+                        $deduction->status=2;
+                        $deduction->save();
+                    }
+                }
             }
+            if($request->deduction_type=='3'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->loan=$request->amount[$key];
+                        $deduction->status=3;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='4'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->cloth=$request->amount[$key];
+                        $deduction->status=4;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='5'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->jacket=$request->amount[$key];
+                        $deduction->status=5;
+                        $deduction->save();
+                    }
+                }
+            }
+            \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction');
+            return redirect()->route('deduction_asign.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 
         } catch (Exception $e) {
             dd($e);

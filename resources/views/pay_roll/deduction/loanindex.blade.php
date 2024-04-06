@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Deduction Fine List'))
+@section('pageTitle',trans('Deduction Loan List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -24,7 +24,7 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Employee ID')}}</th>
-                                <th scope="col">{{__('Fine')}}</th>
+                                <th scope="col">{{__('Loan')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -34,7 +34,7 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$p->employee?->bn_applicants_name}}</td>
                                 <td>{{$p->employee?->admission_id_no}}</td>
-                                <td>{{$p->fine}}</td>
+                                <td>{{$p->loan}}</td>
                                 <td></td>
                             </tr>
                             @empty
