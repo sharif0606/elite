@@ -17,7 +17,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <!-- table bordered -->
-                <div class="table-responsive">
+                {{--  <div class="table-responsive">
                     <table class="table table-bordered mb-0">
 
                         <thead>
@@ -54,21 +54,6 @@
                                 <td>{{$p->tonic_sim}}</td>
                                 <td>{{$p->over_paymentCut}}</td>
                                 <td>@if($p->status == 1) {{__('Active') }} @else {{__('Inactive') }} @endif</td>
-                                {{--  <td><img width="50px" src="{{asset('uploads/users/'.$p->image)}}" alt=""></td>
-
-                                <!-- or <td>{{ $p->status == 1?"Active":"Inactive" }}</td>-->
-                                <td class="white-space-nowrap">
-                                    <a href="{{route(currentUser().'.users.edit',encryptor('encrypt',$p->id))}}">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                    <form id="form{{$p->id}}" action="{{route(currentUser().'.users.destroy',encryptor('encrypt',$p->id))}}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                    </form>
-                                </td>  --}}
                             </tr>
                             @empty
                             <tr>
@@ -77,6 +62,20 @@
                             @endforelse
                         </tbody>
                     </table>
+                </div>  --}}
+                <div class="row p-2 mt-4">
+                    <div class="col-lg-3 mt-4 p-0">
+                        <a href="{{route('fineIndex')}}" class="btn btn-primary">Fine List</a>
+                    </div>
+                    <div class="col-lg-3 mt-4 p-0">
+                        <a href="{{route('salarySheetTwo')}}" class="btn btn-primary">Salary Sheet Two</a>
+                    </div>
+                    <div class="col-lg-3 mt-4 p-0">
+                        <a href="{{route('salarySheetThree')}}" class="btn btn-primary">Salary Sheet Three</a>
+                    </div>
+                    <div class="col-lg-3 mt-4 p-0">
+                        <a href="{{route('salarySheetFour')}}" class="btn btn-primary">Salary Sheet Four</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@
                                     <div class="col-lg-4 mt-2">
                                         <div class="form-group">
                                             <label for="role_id">Deduction</label>
-                                            <select class="form-control" name="deduction" id="deduction">
+                                            <select class="form-control" name="deduction_type" id="deduction_type">
                                                 <option value="0">Select</option>
                                                 <option value="1">Fine</option>
                                                 <option value="2">Mobile Bill</option>

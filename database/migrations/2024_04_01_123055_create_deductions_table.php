@@ -15,19 +15,10 @@ return new class extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
-            $table->decimal('fine',10,2)->default(0);
-            $table->decimal('mobilebill',10,2)->default(0);
-            $table->decimal('loan',10,2)->default(0);
-            $table->decimal('cloth',10,2)->default(0);
-            $table->decimal('jacket',10,2)->default(0);
-            $table->decimal('hr',10,2)->default(0);
-            $table->decimal('c_f',10,2)->default(0);
-            $table->decimal('medical',10,2)->default(0);
-            // uncommontow
-            $table->decimal('matterss_pillowCost',10,2)->default(0);
-            $table->decimal('tonic_sim',10,2)->default(0);
-            $table->decimal('over_paymentCut',10,2)->default(0);
-            $table->string('status')->nullable();
+            $table->integer('year')->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('deduction_type')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

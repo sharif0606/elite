@@ -152,6 +152,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
         Route::resource('deduction_asign', deductionAsign::class);
+        Route::get('deduction-fine-index', [deductionAsign::class,'fineIndex'])->name('fineIndex');
 
         //Accounts
         Route::resource('master',master::class);
