@@ -26,7 +26,7 @@
                                 <th scope="col"><a href="{{route('mobileBillIndex')}}" class="btn btn-primary">Mobile Bill</a></th>
                                 <th scope="col"><a href="{{route('loanIndex')}}" class="btn btn-primary">Loan</a></th>
                                 <th scope="col"><a href="{{route('clothIndex')}}" class="btn btn-primary">Cloth</a></th>
-                                <th scope="col">{{__('Jacket')}}</th>
+                                <th scope="col"><a href="{{route('JacketIndex')}}" class="btn btn-primary">Jacket</a></th>
                                 <th scope="col">{{__('Hr')}}</th>
                                 <th scope="col">{{__('CF')}}</th>
                                 <th scope="col">{{__('Medical')}}</th>

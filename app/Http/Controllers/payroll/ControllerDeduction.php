@@ -42,6 +42,11 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('cloth', '>', 0)->get();
         return view('pay_roll.deduction.clothindex',compact('deductions'));
     }
+    public function JacketIndex()
+    {
+        $deductions=Deduction::where('jacket', '>', 0)->get();
+        return view('pay_roll.deduction.jacketindex',compact('deductions'));
+    }
 
     public function create()
     {
