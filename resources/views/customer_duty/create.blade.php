@@ -61,6 +61,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Employee ID')}}</th>
+                                                <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Duty Rate')}}</th>
                                                 <th scope="col">{{__('OT-Rate')}}</th>
                                                 <th scope="col">{{__('Duty Qty')}}</th>
@@ -78,8 +79,15 @@
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)"  value="" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
-                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
+                                                </td>
+                                                <td>
+                                                    <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                                                        <option value="0">Select</option>
+                                                        @foreach ($jobposts as $job)
+                                                            <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
@@ -148,7 +156,7 @@
         var enddate = $('.endDate').val();
         $('.startDateDetail').val(startdate);
         $('.endDateDetail').val(enddate);
-        console.log(startdate);
+       // console.log(startdate);
     }
 
     function getEmployees(e){
@@ -180,7 +188,7 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
-                    console.log(data);
+                   // console.log(data);
                     //console.log(employee_id);
                     if(data.length>0){
                         //console.log(data);
@@ -191,10 +199,12 @@
                         var positionid=data[0].bn_jobpost_id;
                         //console.log('Position'.positionid);
                         $(e).closest('tr').find('.employee_data').html(name+'-'+position);
-                        $(e).closest('tr').find('.job_post_id').val(positionid);
+                        // Select the corresponding option in the select element
+                        $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
+                        //$(e).closest('tr').find('.job_post_id').val(positionid);
                         $(e).closest('tr').find('.employee_id_primary').val(id);
                     }
-                    getDutyOtRate(e,customerId,positionid);
+                    getDutyOtRate(e);
                 },
             });
         } else {
@@ -204,9 +214,11 @@
         }
     }
 
-    function getDutyOtRate(e,customerId,positionid){
+    function getDutyOtRate(e){
+        let positionid = $(e).closest('tr').find('.job_post_id option:selected').data('jobpostid');
+        var customerId = $('.customer_id').val();
         //console.log('Customer'.customerId);
-        //console.log('Position'.positionid);
+        //console.log(customerId);
         $.ajax({
             url:"{{ route('get_employeedata') }}",
             type: "GET",
@@ -279,8 +291,15 @@ function addRow(){
         <td>
             <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
-            <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
+        </td>
+        <td>
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px">
+                <option value="0">Select</option>
+                @foreach ($jobposts as $job)
+                    <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
+                @endforeach
+            </select>
         </td>
         <td>
             <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">

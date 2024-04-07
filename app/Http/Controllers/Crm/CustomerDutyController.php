@@ -41,8 +41,9 @@ class CustomerDutyController extends Controller
      */
     public function create()
     {
+        $jobposts=JobPost::all();
         $customer=Customer::all();
-        return view('customer_duty.create',compact('customer'));
+        return view('customer_duty.create',compact('customer','jobposts'));
     }
 
     public function getEmployeeDuty(Request $request)
