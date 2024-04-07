@@ -27,14 +27,12 @@
                                 <th scope="col"><a href="{{route('loanIndex')}}" class="btn btn-primary">Loan</a></th>
                                 <th scope="col"><a href="{{route('clothIndex')}}" class="btn btn-primary">Cloth</a></th>
                                 <th scope="col"><a href="{{route('JacketIndex')}}" class="btn btn-primary">Jacket</a></th>
-                                <th scope="col">{{__('Hr')}}</th>
-                                <th scope="col">{{__('CF')}}</th>
-                                <th scope="col">{{__('Medical')}}</th>
-                                <th scope="col">{{__('Matterss Pillow Cost')}}</th>
-                                <th scope="col">{{__('Tonic Sim')}}</th>
-                                <th scope="col">{{__('Over Payment')}}</th>
-                                <th scope="col">{{__('Status')}}</th>
-                                <th class="white-space-nowrap">{{__('Action') }}</th>
+                                <th scope="col"><a href="{{route('HrIndex')}}" class="btn btn-primary">Hr</a></th>
+                                <th scope="col"><a href="{{route('CfIndex')}}" class="btn btn-primary">CF</a></th>
+                                <th scope="col"><a href="{{route('medicalIndex')}}" class="btn btn-primary">Medical</a></th>
+                                <th scope="col"><a href="{{route('MatterssPillowIndex')}}" class="btn btn-primary">Matterss Pillow Cost</a></th>
+                                <th scope="col"><a href="{{route('tonicSimIndex')}}" class="btn btn-primary">Tonic Sim</a></th>
+                                <th scope="col"><a href="{{route('overPaymentIndex')}}" class="btn btn-primary">Over Payment</a></th>
                             </tr>
                         </thead>
                     </table>
