@@ -145,10 +145,12 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('salary-sheet-one-index', [salarySheet::class,'getsalarySheetOneIndex'])->name('salarysheet.salarySheetOneIndex');
         Route::get('salary-sheet-two-index', [salarySheet::class,'getsalarySheetTwoIndex'])->name('salarysheet.salarySheetTwoIndex');
         Route::get('salary-sheet-three-index', [salarySheet::class,'getsalarySheetThreeIndex'])->name('salarysheet.salarySheetThreeIndex');
+        Route::get('salary-sheet-five-index', [salarySheet::class,'getsalarySheetFiveIndex'])->name('salarysheet.salarySheetFiveIndex');
         Route::get('salary-sheet-one-show/{id}', [salarySheet::class,'getsalarySheetOneShow'])->name('salarysheet.salarySheetOneShow');
         Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
         Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
+        Route::get('screen-salary-sheet-five', [salarySheet::class,'salarySheetFive'])->name('salarySheetFive');
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
         Route::resource('deduction_asign', deductionAsign::class);

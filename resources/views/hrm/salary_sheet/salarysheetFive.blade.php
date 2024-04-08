@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Salary Sheet One'))
+@section('pageTitle',trans('Salary Sheet Five(General)'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')

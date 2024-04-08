@@ -176,6 +176,9 @@
                                         <li class="submenu-item">
                                             <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
                                         </li>
+                                        <li class="submenu-item">
+                                            <a href="{{route('salarysheet.salarySheetFiveIndex')}}">Salary Sheet Five(General)</a>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

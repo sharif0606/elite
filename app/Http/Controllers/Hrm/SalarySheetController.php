@@ -37,6 +37,11 @@ class SalarySheetController extends Controller
         $salarysheet=SalarySheet::where('status',3)->get();
         return view('hrm.salary_sheet.salarysheetThreeIndex',compact('salarysheet'));
     }
+    public function getsalarySheetFiveIndex()
+    {
+        $salarysheet=SalarySheet::where('status',5)->get();
+        return view('hrm.salary_sheet.salarysheetFiveIndex',compact('salarysheet'));
+    }
 
 
     public function create()
@@ -63,6 +68,11 @@ class SalarySheetController extends Controller
     {
         $customer=Customer::all();
         return view('hrm.salary_sheet.salarysheetFour',compact('customer'));
+    }
+    public function salarySheetFive()
+    {
+        $customer=Customer::all();
+        return view('hrm.salary_sheet.salarysheetFive',compact('customer'));
     }
 
     public function salarySheetOneStore(Request $request)
