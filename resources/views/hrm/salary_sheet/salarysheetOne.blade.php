@@ -204,6 +204,14 @@
                         if (new Date() >= sixMonthsLater) {
                             deduction = "130";
                         }
+                        let Fine = (value.fine > 0) ? value.fine : '0';
+                        let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
+                        let Loan = (value.loan > 0) ? value.loan : '0';
+                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        let Hr = (value.hr > 0) ? value.hr : '0';
+                        let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Medical = (value.medical > 0) ? value.medical : '0';
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -257,34 +265,34 @@
                                     <input style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="" placeholder="Gross Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${value.fine}" placeholder="Fine">
+                                    <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${value.mobilebill}" placeholder="Mobile bill">
+                                    <input style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${MobileBill}" placeholder="Mobile bill">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${value.loan}" placeholder="Loan">
+                                    <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="" placeholder="Long Loan">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${value.cloth}" placeholder="Cloth">
+                                    <input style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${value.jacket}" placeholder="Jacket">
+                                    <input style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${value.hr}" placeholder="HR">
+                                    <input style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${value.c_f}" placeholder="C/F">
+                                    <input style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${value.medical}" placeholder="Medical">
+                                    <input style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="" placeholder="Ins">

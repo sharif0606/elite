@@ -96,27 +96,6 @@
                                 </li>
                                 {{--  <li class="submenu-item">
                                     <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>  --}}
-                                <li class="sidebar-item  has-sub">
-                                    <a href="#" class="sidebar-link">
-                                        <i class="bi bi-stack"></i>
-                                        <span>Salary Sheet</span>
-                                    </a>
-                                    <ul class="submenu ">
-                                        <li class="submenu-item">
-                                            <a href="{{route('salarysheet.salarySheetOneIndex')}}">Salary Sheet One</a>
-                                        </li>
-                                        <li class="submenu-item">
-                                            <a href="{{route('salarysheet.salarySheetTwoIndex')}}">Salary Sheet Two</a>
-                                        </li>
-                                        <li class="submenu-item">
-                                            <a href="{{route('salarysheet.salarySheetThreeIndex')}}">Salary Sheet Three</a>
-                                        </li>
-                                        <li class="submenu-item">
-                                            <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
-                                        </li>
-                                    </ul>
-                                </li>
-
                             </ul>
                         </li>
                         <li class="sidebar-item  has-sub">
@@ -177,7 +156,7 @@
                                             <a href="{{route('salarySheetFour')}}">Salary Sheet Four</a>
                                         </li>
                                         <li class="submenu-item">
-                                            <a href="{{route('salarysheet.salarySheetFiveIndex')}}">Salary Sheet Five(General)</a>
+                                            <a href="{{route('salarysheet.salarySheetFiveIndex')}}">Salary (General)</a>
                                         </li>
                                     </ul>
                                 </li>

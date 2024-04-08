@@ -241,8 +241,11 @@
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let dutyRateDay=dutyRate/30;
-        let otRateDay=otRate/30;
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth() + 1;
+        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let dutyRateDay=dutyRate/totalDaysInMonth;
+        let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
         let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
