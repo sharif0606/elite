@@ -4,6 +4,13 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
+<style>
+    @media (min-width: 1192px){
+        .select2{
+            width: 926px !important;
+        }
+    }
+</style>
   <!-- // Basic multiple Column Form section start -->
     <section id="multiple-column-form">
         <div class="row match-height">
@@ -68,7 +75,7 @@
                                             <tbody id="deductiorepet">
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control" name="employee_id[]" id="employee_id">
+                                                        <select class="form-control select2" name="employee_id[]" id="employee_id">
                                                             <option value="0">Select</option>
                                                             @foreach ($employees as $e)
                                                             <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>

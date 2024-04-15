@@ -34,6 +34,7 @@ use App\Http\Controllers\Settings\UserProfileController as userprofile;
 use App\Http\Controllers\Employee\EmployeeController as employee;
 use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 use App\Http\Controllers\payroll\ControllerDeduction as deductionAsign;
+use App\Http\Controllers\payroll\LongLoanController as long_loan;
 
 /*crm*/
 use App\Http\Controllers\CustomerController as customer;
@@ -154,6 +155,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
         Route::resource('deduction_asign', deductionAsign::class);
+        Route::resource('long_loan', long_loan::class);
         Route::get('deduction-fine-index', [deductionAsign::class,'fineIndex'])->name('fineIndex');
         Route::get('deduction-mobilebill-index', [deductionAsign::class,'mobileBillIndex'])->name('mobileBillIndex');
         Route::get('deduction-loan-index', [deductionAsign::class,'loanIndex'])->name('loanIndex');

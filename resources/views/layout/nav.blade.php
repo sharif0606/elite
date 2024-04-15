@@ -137,6 +137,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('deduction_asign.index')}}">Deduction Asign</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('long_loan.index')}}">Long Loan</a>
+                                </li>
                                 <li class="sidebar-item  has-sub">
                                     <a href="#" class="sidebar-link">
                                         <i class="bi bi-stack"></i>

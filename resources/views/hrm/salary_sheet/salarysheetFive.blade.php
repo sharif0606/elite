@@ -226,46 +226,46 @@
                                     <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input class="form-control post_allowance" type="text" name="post_allowance[]" placeholder="Post Allowance">
+                                    <input style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" placeholder="Post Allowance">
                                 </td>
                                 <td>
-                                    <input class="form-control gross_salary" type="text" name="gross_salary[]" placeholder="Gross Salary">
+                                    <input style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" placeholder="Gross Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_dress" type="text" name="deduction_dress[]" placeholder="Dress">
+                                    <input style="width:100px;" class="form-control deduction_dress" type="text" name="deduction_dress[]" placeholder="Dress">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">
+                                    <input style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_banck_charge" type="text" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">
+                                    <input style="width:100px;" class="form-control deduction_banck_charge" type="text" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_ins" type="text" name="deduction_ins[]" placeholder="ins">
+                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" placeholder="ins">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">
+                                    <input style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="10" placeholder="stamp">
+                                    <input style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="10" placeholder="stamp">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_training_cost" type="text" name="deduction_training_cost[]" placeholder="Training Cost">
+                                    <input style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
+                                    <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input class="form-control total_payable" type="text" name="total_payable[]" placeholder="Total Payable Salary">
+                                    <input style="width:100px;" class="form-control total_payable" type="text" name="total_payable[]" placeholder="Total Payable Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
+                                    <input style="width:100px;" class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
                                 </td>
                                 <td>
-                                    <input class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
+                                    <input style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
                                 </td>
                                 <td>
-                                    <input class="form-control remark" type="text" name="remark[]" placeholder="Remark">
+                                    <input style="width:100px;" class="form-control remark" type="text" name="remark[]" placeholder="Remark">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
