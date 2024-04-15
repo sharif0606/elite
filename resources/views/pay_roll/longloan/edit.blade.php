@@ -1,7 +1,7 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Create Deduction Long Loan'))
-@section('pageSubTitle',trans('Create'))
+@section('pageTitle',trans('Edit Deduction Long Loan'))
+@section('pageSubTitle',trans('Edit'))
 
 @section('content')
     <section id="multiple-column-form">
@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <form class="form" method="post" enctype="multipart/form-data" action="{{route('long_loan.store')}}">
+                            <form class="form" method="post" enctype="multipart/form-data" action="{{route('long_loan.update', [encryptor('encrypt',$loan->id)])}}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-4 mt-2">
@@ -18,27 +18,27 @@
                                         <select class="form-control select2" name="employee_id" id="employee_id">
                                             <option value="0">Select</option>
                                             @foreach ($employees as $e)
-                                            <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
+                                            <option value="{{ $e->id }}" {{ $e->id==$loan->employee_id?"selected":'' }}>{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Loan Amount</b></label>
-                                        <input type="text" id="loan_amount" onkeyup="perInstallment()" onblur="perInstallment()" onchange="perInstallment()" class="form-control loan_amount" value="{{ old('loan_amount')}}" name="loan_amount">
+                                        <input type="text" id="loan_amount" onkeyup="perInstallment()" onblur="perInstallment()" onchange="perInstallment()" class="form-control loan_amount" value="{{ old('loan_amount',$loan->loan_amount)}}" name="loan_amount">
                                         @if($errors->has('loan_amount'))
                                             <span class="text-danger"> {{ $errors->first('loan_amount') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Number Of Installment</b></label>
-                                        <input type="text" id="number_of_installment" onkeyup="perInstallment();endDate();" onblur="perInstallment();endDate();" onchange="perInstallment();endDate();" class="form-control number_of_installment" value="{{ old('number_of_installment')}}" name="number_of_installment">
+                                        <input type="text" id="number_of_installment" onkeyup="perInstallment();endDate();" onblur="perInstallment();endDate();" onchange="perInstallment();endDate();" class="form-control number_of_installment" value="{{ old('number_of_installment',$loan->number_of_installment)}}" name="number_of_installment">
                                         @if($errors->has('number_of_installment'))
                                             <span class="text-danger"> {{ $errors->first('number_of_installment') }}</span>
                                         @endif
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Purchase Date</b></label>
-                                        <input class="form-control" type="date" name="purchase_date" value="" placeholder="Purchase Date">
+                                        <input class="form-control" type="date" name="purchase_date" value="{{ old('purchase_date',$loan->purchase_date)}}" placeholder="Purchase Date">
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Installment Start Year</b></label>

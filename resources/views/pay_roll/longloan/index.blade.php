@@ -24,7 +24,9 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Amount')}}</th>
-                                <th scope="col">{{__('Loan')}}</th>
+                                <th scope="col">{{__('Purchase Date')}}</th>
+                                <th scope="col">{{__('Per Installment')}}</th>
+                                <th scope="col">{{__('Number Of Installment')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -32,10 +34,16 @@
                             @forelse($longloan as $p)
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$p->employee?->bn_applicants_name}}</td>
-                                <td>{{$p->employee?->admission_id_no}}</td>
-                                <td>{{$p->loan}}</td>
-                                <td></td>
+                                <td>{{$p->employee?->bn_applicants_name}}({{$p->employee?->admission_id_no}})</td>
+                                <td>{{$p->loan_amount}}</td>
+                                <td>{{$p->purchase_date}}</td>
+                                <td>{{$p->perinstallment_amount}}</td>
+                                <td>{{$p->number_of_installment}}</td>
+                                <td>
+                                    <a href="{{route('long_loan.edit',encryptor('encrypt',$p->id))}}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @empty
                             <tr>

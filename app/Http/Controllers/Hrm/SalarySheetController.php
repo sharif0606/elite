@@ -253,7 +253,11 @@ class SalarySheetController extends Controller
                  ->where('deductions.month', '=', $request->Month)
                  ->where('deductions.year', '=', $request->Year);
         })
-            ->select('customer_duties.*','deductions.*', 'customer_duty_details.*','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost');
+        ->leftjoin('long_loans', function ($j) use ($request) {
+            $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
+                 ->where('long_loans.installment_date', '>=',$request->start_date);
+        })
+            ->select('customer_duties.*','deductions.*', 'customer_duty_details.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost');
 
         if ($request->start_date && $request->end_date) {
             $startDate = $request->start_date;
