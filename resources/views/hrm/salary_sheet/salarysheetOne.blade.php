@@ -200,9 +200,9 @@
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
                         // Deduction calculation
-                        let deduction = "0";
+                        let pf = "0";
                         if (new Date() >= sixMonthsLater) {
-                            deduction = "130";
+                            pf = "130";
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
@@ -298,7 +298,7 @@
                                     <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="" placeholder="Ins">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${deduction}" placeholder="P/F">
+                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="10" placeholder="Revenue Stamp">

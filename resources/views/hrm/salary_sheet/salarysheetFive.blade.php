@@ -172,6 +172,27 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
+                        let traningCost=value.bn_traning_cost;
+                        let traningCostMonth=value.bn_traning_cost_byMonth;
+                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let remaining=value.bn_remaining_cost;
+                        //console.log(traningCostPerMonth);
+                        let joiningDate = new Date(value.joining_date);
+                        let sixMonthsLater = new Date(joiningDate);
+                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+                        // Deduction calculation
+                        let pf = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            pf = "130";
+                        }
+                        let Fine = (value.fine > 0) ? value.fine : '0';
+                        let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
+                        let Loan = (value.loan > 0) ? value.loan : '0';
+                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        let Hr = (value.hr > 0) ? value.hr : '0';
+                        let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Medical = (value.medical > 0) ? value.medical : '0';
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -205,46 +226,46 @@
                                     <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control post_allowance" type="text" name="post_allowance[]" placeholder="Post Allowance">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control gross_salary" type="text" name="gross_salary[]" placeholder="Gross Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_dress" type="text" name="deduction_dress[]" placeholder="Dress">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_banck_charge" type="text" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="hidden" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_ins" type="text" name="deduction_ins[]" placeholder="ins">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="10" placeholder="stamp">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_training_cost" type="text" name="deduction_training_cost[]" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control total_payable" type="text" name="total_payable[]" placeholder="Total Payable Salary">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
                                 </td>
                                 <td>
-                                    <input class="form-control total_amount TotalAmu" type="text" name="total_amount[]" placeholder="">
+                                    <input class="form-control remark" type="text" name="remark[]" placeholder="Remark">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
