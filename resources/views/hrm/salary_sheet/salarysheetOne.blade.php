@@ -222,7 +222,7 @@
                                 </td>
                                 <td>${value.admission_id_no}
                                     <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Employee Id">
-                                    <input style="width:100px;" type="hidden" name="customer_id[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value._ind}" placeholder="Customer Id">
                                 </td>
                                 <td>
                                     <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">

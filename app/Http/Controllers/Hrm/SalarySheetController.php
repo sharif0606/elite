@@ -93,7 +93,7 @@ class SalarySheetController extends Controller
                             $details = new SalarySheetDetail;
                             $details->salary_id=$salary->id;
                             $details->employee_id=$request->employee_id[$key];
-                            $details->customer_id=$request->customer_id[$key];
+                            $details->customer_id=$request->customer_id_ind[$key];
                             $details->online_payment=$request->online_payment[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
