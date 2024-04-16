@@ -167,6 +167,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('deduction-MatterssPillowIndex-index', [deductionAsign::class,'MatterssPillowIndex'])->name('MatterssPillowIndex');
         Route::get('deduction-tonicsim-index', [deductionAsign::class,'tonicSimIndex'])->name('tonicSimIndex');
         Route::get('deduction-overpayment-index', [deductionAsign::class,'overPaymentIndex'])->name('overPaymentIndex');
+        Route::get('deduction-bank-index', [deductionAsign::class,'bankChargeIndex'])->name('bankChargeIndex');
+        Route::get('deduction-dress-index', [deductionAsign::class,'DressIndex'])->name('DressIndex');
 
         //Accounts
         Route::resource('master',master::class);

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('salary_id')->nullable();
             $table->integer('employee_id')->nullable();
+            $table->integer('customer_id')->nullable();
             $table->string('online_payment')->nullable()->comment('payment_type');
             $table->decimal('duty_rate',10,2)->nullable()->comment('basic/monthly');
             $table->decimal('duty_qty',10,2)->nullable()->comment('days');

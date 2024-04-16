@@ -190,7 +190,7 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
-                        console.log(value);
+                        //console.log(value);
                         let traningCost=value.bn_traning_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
@@ -202,16 +202,18 @@
                         // Deduction calculation
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
-                            pf = "130";
+                            pf = "200";
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
+                        let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
                         let Cloth = (value.cloth > 0) ? value.cloth : '0';
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
+                        //let grossSlry=value.ot_amount + value.duty_amount;
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -219,7 +221,8 @@
                                     <input style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="Online" placeholder="Online Payment">
                                 </td>
                                 <td>${value.admission_id_no}
-                                    <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
+                                    <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Employee Id">
+                                    <input style="width:100px;" type="hidden" name="customer_id[]" value="${value.customer_id}" placeholder="Customer Id">
                                 </td>
                                 <td>
                                     <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
@@ -274,7 +277,7 @@
                                     <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="" placeholder="Long Loan">
+                                    <input style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="${LongLoan}" placeholder="Long Loan">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">
@@ -325,6 +328,9 @@
             },
         });
         $('.show_click').removeClass('d-none');
+     }
+     function GrossNet(){
+
      }
 </script>
 

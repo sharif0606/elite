@@ -77,6 +77,16 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
         return view('pay_roll.deduction.overPaymentindex',compact('deductions'));
     }
+    public function bankChargeIndex()
+    {
+        $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
+        return view('pay_roll.deduction.bankChargeIndex',compact('deductions'));
+    }
+    public function DressIndex()
+    {
+        $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
+        return view('pay_roll.deduction.DressIndex',compact('deductions'));
+    }
 
     public function create()
     {
@@ -226,6 +236,32 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->over_paymentCut=$request->amount[$key];
+                        $deduction->status=5;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='12'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->bank_charge_exc=$request->amount[$key];
+                        $deduction->status=5;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='13'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->dress=$request->amount[$key];
                         $deduction->status=5;
                         $deduction->save();
                     }

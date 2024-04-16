@@ -34,6 +34,10 @@
                                 <th scope="col"><a href="{{route('tonicSimIndex')}}" class="btn btn-primary">Tonic Sim</a></th>
                                 <th scope="col"><a href="{{route('overPaymentIndex')}}" class="btn btn-primary">Over Payment</a></th>
                             </tr>
+                            <tr>
+                                <th scope="col"><a href="{{route('bankChargeIndex')}}" class="btn btn-primary">Bank Charge/Exc</a></th>
+                                <th scope="col"><a href="{{route('DressIndex')}}" class="btn btn-primary">Dress</a></th>
+                            </tr>
                         </thead>
                     </table>
                 </div>

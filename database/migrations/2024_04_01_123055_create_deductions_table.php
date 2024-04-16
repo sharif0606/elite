@@ -30,6 +30,8 @@ return new class extends Migration
             $table->decimal('matterss_pillowCost',10,2)->default(0);
             $table->decimal('tonic_sim',10,2)->default(0);
             $table->decimal('over_paymentCut',10,2)->default(0);
+            $table->decimal('bank_charge_exc',10,2)->default(0);
+            $table->decimal('dress',10,2)->default(0);
             $table->integer('status')->nullable();
             $table->timestamps();
         });

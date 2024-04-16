@@ -183,7 +183,11 @@
                         // Deduction calculation
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
-                            pf = "130";
+                            pf = "200";
+                        }
+                        let Insurance = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
@@ -193,6 +197,8 @@
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
+                        let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
+                        let Dress = (value.dress > 0) ? value.dress : '0';
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -232,16 +238,16 @@
                                     <input style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" placeholder="Gross Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_dress" type="text" name="deduction_dress[]" placeholder="Dress">
+                                    <input style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_banck_charge" type="text" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">
+                                    <input style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" placeholder="ins">
+                                    <input style="width:100px;" class="form-control deduction_ins" type="text" value="${Insurance}" name="deduction_ins[]" placeholder="ins">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">
