@@ -154,6 +154,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('screen-salary-sheet-five', [salarySheet::class,'salarySheetFive'])->name('salarySheetFive');
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
+        Route::post('/salary-five-store', [salarySheet::class,'salarySheetFiveStore'])->name('salarysheet.salarySheetFiveStore');
         Route::resource('deduction_asign', deductionAsign::class);
         Route::resource('long_loan', long_loan::class);
         Route::get('deduction-fine-index', [deductionAsign::class,'fineIndex'])->name('fineIndex');
