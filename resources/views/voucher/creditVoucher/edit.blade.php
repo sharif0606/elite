@@ -17,7 +17,7 @@
                                 <input type="hidden" name="uptoken" value="{{encryptor('encrypt',$creditVoucher->id)}}">
                                 <div class="row">
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col-12 d-none">
                                         <div class="form-group">
                                             <label for="countryName">{{__('Voucher No')}}</label>
                                             <input type="text" id="voucher_no" class="form-control" value="{{old('voucher_no',$creditVoucher->voucher_no)}}" name="voucher_no" readonly>
@@ -33,7 +33,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col-12 d-none">
                                         <div class="form-group">
                                             <label for="name">{{__('Name')}}</label>
                                             <input type="text" id="pay_name" class="form-control" value="{{old('pay_name',$creditVoucher->pay_name)}}" name="pay_name">
@@ -68,14 +68,14 @@
                                                 <th>{{__('SN#')}}</th>
                                                 <th>{{__('A/C Head')}}</th>
                                                 <th>{{__('Amount')}}</th>
-                                                <th>{{__('Remarks')}}</th>
+                                                {{--  <th>{{__('Remarks')}}</th>  --}}
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th style="text-align:right;" colspan="2">{{__('Total Amount Tk.')}}</th>
                                                 <th>{{$creditVoucher->debit_sum}}</th>
-                                                <th></th>
+                                                {{--  <th></th>  --}}
                                             </tr>
                                         </tfoot>
                                         <tbody style="background:#eee;">
@@ -86,7 +86,7 @@
                                                         <td style='text-align:center;'>1</td>
                                                         <td style='text-align:left;'>{{$bk->account_code}}</td>
                                                         <td style='text-align:left;'>{{$bk->credit}}</td>
-                                                        <td style='text-align:left;'>{{$bk->particulars}}</td>
+                                                        {{--  <td style='text-align:left;'>{{$bk->particulars}}</td>  --}}
                                                     </tr>
                                                     @endif
                                                 @endforeach

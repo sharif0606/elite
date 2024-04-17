@@ -37,8 +37,8 @@
                                         @endif
                                     </div>
                                     <div class="col-lg-4 mt-2">
-                                        <label for=""><b>Purchase Date</b></label>
-                                        <input class="form-control" type="date" name="purchase_date" value="" placeholder="Purchase Date">
+                                        <label for=""><b>Approval Date</b></label>
+                                        <input class="form-control" type="date" name="purchase_date" value="" placeholder="Approval Date">
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Installment Start Year</b></label>

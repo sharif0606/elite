@@ -253,7 +253,7 @@
                                     <input style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="10" placeholder="stamp">
+                                    <input style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="stamp">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">

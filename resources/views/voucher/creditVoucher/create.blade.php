@@ -16,7 +16,7 @@
                                 @csrf
                                 <div class="row">
 
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col-12 d-none">
                                         <div class="form-group">
                                             <label for="countryName">{{__('Voucher No')}}</label>
                                             <input type="text" id="voucher_no" class="form-control" value="" name="voucher_no" readonly>
@@ -35,7 +35,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col-12 d-none">
                                         <div class="form-group">
                                             <label for="name">{{__('Name')}}</label>
                                             <input type="text" id="pay_name" class="form-control" value="{{ old('pay_name')}}" name="pay_name">
@@ -69,17 +69,17 @@
                                                 <th>{{__('SN#')}}</th>
                                                 <th>{{__('A/C Head')}}</th>
                                                 <th>{{__('Amount')}}</th>
-                                                <th>{{__('Remarks')}}</th>
+                                                {{--  <th>{{__('Remarks')}}</th>  --}}
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
                                                 <th style="text-align:right;" colspan="2">{{__('Total Amount Tk.')}}</th>
                                                 <th><input type='text' class='form-control' name='debit_sum' id='debit_sum' value='' style='text-align:center; border:none;' readonly autocomplete="off" /></th>
-                                                <th></th>
+                                                {{--  <th></th>  --}}
                                             </tr>
                                             <tr>
-                                                <th style="text-align:right;" colspan="4">
+                                                <th style="text-align:right;" colspan="3">
                                                     <input type='button' class='btn btn-primary' value='Add' onClick='add_row();'>
                                                     <input type='button' class='btn btn-danger' value='Remove' onClick='remove_row();'>
                                                 </th>
@@ -101,7 +101,6 @@
                                                 <td style='text-align:left;'>
                                                     <input type='text' name='debit[]' class='cls_debit form-control' value='' style='text-align:center; border:none;' maxlength='15' onkeyup='removeChar(this)' onBlur='return debit_entry(this);' autocomplete="off"/>
                                                 </td>
-                                                <td style='text-align:left;'><input type='text' class=" form-control" name='remarks[]' value='' maxlength='50' style='text-align:left;border:none;' /></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -189,7 +188,6 @@
 					<td style='text-align:left;'>\
 						<input type='text' name='debit[]' class='cls_debit form-control' value='' style='text-align:center; border:none;' maxlength='15' onkeyup='removeChar(this)' onBlur='return debit_entry(this);' autocomplete='off'/> \
 					</td>\
-					<td style='text-align:left;'><input type='text' name='remarks[]' value='' class=' form-control' maxlength='50' style='text-align:left;border:none;' /></td>\
 				</tr>";
 		$('#account tbody').append(row);
 	}
