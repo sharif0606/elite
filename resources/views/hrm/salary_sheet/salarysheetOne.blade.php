@@ -186,7 +186,7 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
             success: function(salary_data) {
-                console.log(salary_data);
+                //console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
@@ -204,6 +204,10 @@
                         if (new Date() >= sixMonthsLater) {
                             pf = "200";
                         }
+                        let Insurance = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
@@ -213,7 +217,12 @@
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
-                        //let grossSlry=value.ot_amount + value.duty_amount;
+                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                        let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let netSalary = '0';
+                        if (grossAmoun > totalDeduction) {
+                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                        }
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -265,7 +274,7 @@
                                     <input style="width:100px;" class="form-control arrear" type="text" name="arrear[]" value="" placeholder="Arrear">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="" placeholder="Gross Salary">
+                                    <input style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="${value.grossAmount}" placeholder="Gross Salary">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
@@ -298,7 +307,7 @@
                                     <input style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="" placeholder="Ins">
+                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">
@@ -307,10 +316,10 @@
                                     <input style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="" placeholder="Revenue Stamp">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="" placeholder="Total">
+                                    <input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="" placeholder="Net Salary">
+                                    <input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${netSalary}" placeholder="Net Salary">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control sing_of_ind" type="text" name="sing_of_ind[]" value="" placeholder="SIGN OF IND">

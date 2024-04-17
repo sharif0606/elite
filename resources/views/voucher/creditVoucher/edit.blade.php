@@ -59,8 +59,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id='account' cellspacing="0" width="100%">
                                         <thead>
@@ -94,8 +92,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-12 col-sm-4">
@@ -140,7 +136,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Submit')}}</button>
