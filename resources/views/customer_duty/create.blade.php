@@ -198,7 +198,7 @@
                         var position=data[0].position.name;
                         var positionid=data[0].bn_jobpost_id;
                         //console.log('Position'.positionid);
-                        $(e).closest('tr').find('.employee_data').html(name+'-'+position);
+                        $(e).closest('tr').find('.employee_data').html(name);
                         // Select the corresponding option in the select element
                         $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
                         //$(e).closest('tr').find('.job_post_id').val(positionid);
