@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('salary_id')->nullable();
             $table->integer('employee_id')->nullable();
+            $table->integer('designation_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->string('online_payment')->nullable()->comment('payment_type');
             $table->decimal('duty_rate',10,2)->nullable()->comment('basic/monthly');
@@ -55,6 +56,8 @@ return new class extends Migration
             $table->decimal('deduction_matterss_pillowCost',10,2)->default(0)->nullable();
             $table->decimal('deduction_tonic_sim',10,2)->default(0);
             $table->decimal('deduction_over_paymentCut',10,2)->default(0)->nullable();
+            $table->decimal('deduction_dress',10,2)->default(0)->nullable();
+            $table->decimal('deduction_banck_charge',10,2)->default(0)->nullable();
 
             $table->decimal('net_salary',10,2)->default(0)->nullable();
             $table->string('sing_of_ind')->nullable();

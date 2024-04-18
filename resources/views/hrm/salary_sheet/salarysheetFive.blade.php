@@ -103,7 +103,7 @@
                                                 <th scope="col" rowspan="2">{{__('OT Taka')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                                <th scope="col" colspan="8-">{{__('DEDUCTION')}}</th>
+                                                <th scope="col" colspan="8">{{__('DEDUCTION')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
@@ -209,9 +209,12 @@
                                     <input style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.joining_date}" placeholder="Duty Rate">
                                 </td>
                                 <td>
-                                    <input style="width:150px;" class="form-control rank" type="text" name="rank[]" value="${value.jobpost_name}" placeholder="Rank"></td>
+                                    <input style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
+                                    <input style="width:150px;" class="form-control" type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
+                                </td>
                                 <td>
                                     <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
+                                    <input style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
                                 </td>
                                 <td>${value.duty_rate}
                                     <input class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
