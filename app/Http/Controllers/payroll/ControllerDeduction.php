@@ -171,7 +171,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->hr=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=6;
                         $deduction->save();
                     }
                 }
@@ -184,7 +184,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->c_f=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=7;
                         $deduction->save();
                     }
                 }
@@ -197,7 +197,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->medical=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=8;
                         $deduction->save();
                     }
                 }
@@ -210,7 +210,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->matterss_pillowCost=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=9;
                         $deduction->save();
                     }
                 }
@@ -223,7 +223,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->tonic_sim=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=10;
                         $deduction->save();
                     }
                 }
@@ -236,7 +236,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->over_paymentCut=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=11;
                         $deduction->save();
                     }
                 }
@@ -249,7 +249,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->bank_charge_exc=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=12;
                         $deduction->save();
                     }
                 }
@@ -262,7 +262,46 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->dress=$request->amount[$key];
-                        $deduction->status=5;
+                        $deduction->status=13;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='14'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->matterss_pillowCost=$request->amount[$key];
+                        $deduction->status=14;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='15'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->tonic_sim=$request->amount[$key];
+                        $deduction->status=15;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='16'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->over_paymentCut=$request->amount[$key];
+                        $deduction->status=16;
                         $deduction->save();
                     }
                 }

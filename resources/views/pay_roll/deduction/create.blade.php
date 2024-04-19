@@ -57,6 +57,9 @@
                                                 <option value="11">Over Payment</option>
                                                 <option value="12">Bank Charge/Exc</option>
                                                 <option value="13">Dress</option>
+                                                <option value="14">Mattress & Pillow Cost</option>
+                                                <option value="15">Tonic Sim</option>
+                                                <option value="16">Over Payment Cutt</option>
                                             </select>
                                             @if($errors->has('deduction'))
                                                 <span class="text-danger"> {{ $errors->first('deduction') }}</span>

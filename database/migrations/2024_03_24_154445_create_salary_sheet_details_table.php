@@ -54,7 +54,7 @@ return new class extends Migration
             $table->decimal('deduction_total',10,2)->default(0)->nullable();
             // uncommontow
             $table->decimal('deduction_matterss_pillowCost',10,2)->default(0)->nullable();
-            $table->decimal('deduction_tonic_sim',10,2)->default(0);
+            $table->decimal('deduction_tonic_sim',10,2)->default(0)->nullable();
             $table->decimal('deduction_over_paymentCut',10,2)->default(0)->nullable();
             $table->decimal('deduction_dress',10,2)->default(0)->nullable();
             $table->decimal('deduction_banck_charge',10,2)->default(0)->nullable();
