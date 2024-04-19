@@ -190,7 +190,6 @@
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
-                        let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let Cloth = (value.cloth > 0) ? value.cloth : '0';
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
@@ -199,6 +198,12 @@
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
                         let Dress = (value.dress > 0) ? value.dress : '0';
+                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                        let totalDeduction = parseFloat(Fine) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let netSalary = '0';
+                        if (grossAmoun > totalDeduction) {
+                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                        }
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -215,6 +220,7 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input onkeyup="reCalcultateSalary(this)" class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}" placeholder="Customer Id">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
@@ -265,7 +271,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payable" type="text" name="total_payable[]" placeholder="Total Payable Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
@@ -310,14 +316,16 @@
         let traningCost=$(e).closest('tr').find('.deduction_traningcost').val()?parseFloat($(e).closest('tr').find('.deduction_traningcost').val()):0;
         let ins=$(e).closest('tr').find('.deduction_ins').val()?parseFloat($(e).closest('tr').find('.deduction_ins').val()):0;
         let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
-        let stamp=$(e).closest('tr').find('.deduction_revenue_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_revenue_stamp').val()):0;
+        let stamp=$(e).closest('tr').find('.deduction_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_stamp').val()):0;
+        let dress=$(e).closest('tr').find('.deduction_dress').val()?parseFloat($(e).closest('tr').find('.deduction_dress').val()):0;
+        let bank=$(e).closest('tr').find('.deduction_banck_charge').val()?parseFloat($(e).closest('tr').find('.deduction_banck_charge').val()):0;
         let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
         let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(allownce);
-        let td = parseFloat(Fine) + parseFloat(Loan) + parseFloat(Hr) + parseFloat(traningCost) + parseFloat(ins) + parseFloat(pf) + parseFloat(stamp);
+        let td = parseFloat(Fine) + parseFloat(Loan) + parseFloat(Hr) + parseFloat(dress)+ parseFloat(bank) + parseFloat(traningCost) + parseFloat(ins) + parseFloat(pf) + parseFloat(stamp);
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
-        $(e).closest('tr').find('.net_salary').val(parseFloat(net).toFixed(2));
+        $(e).closest('tr').find('.total_payable').val(parseFloat(net).toFixed(2));
     }
 </script>
 

@@ -203,7 +203,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFiveStore(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -211,7 +211,7 @@ class SalarySheetController extends Controller
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
-            $salary->status = 1;
+            $salary->status = 5;
             if ($salary->save()){
                 if($request->employee_id){
                     foreach($request->employee_id as $key => $value){
@@ -219,35 +219,28 @@ class SalarySheetController extends Controller
                             $details = new SalarySheetDetail;
                             $details->salary_id=$salary->id;
                             $details->employee_id=$request->employee_id[$key];
-                            $details->customer_id=$request->customer_id[$key];
-                            $details->online_payment=$request->online_payment[$key];
+                            $details->designation_id=$request->designation_id[$key];
+                            $details->customer_id=$request->customer_id_ind[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
                             $details->ot_qty=$request->ot_qty[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->ot_amount=$request->ot_amount[$key];
-                            $details->fixed_ot=$request->fixed_ot[$key];
-                            $details->allownce=$request->allownce[$key];
-                            $details->leave=$request->leave[$key];
-                            $details->arrear=$request->arrear[$key];
+                            $details->allownce=$request->post_allowance[$key];
                             $details->gross_salary=$request->gross_salary[$key];
                             $details->deduction_fine=$request->deduction_fine[$key];
-                            $details->deduction_mobilebill=$request->deduction_mobilebill[$key];
                             $details->deduction_loan=$request->deduction_loan[$key];
-                            $details->deduction_long_loan=$request->deduction_long_loan[$key];
-                            $details->deduction_cloth=$request->deduction_cloth[$key];
-                            $details->deduction_jacket=$request->deduction_jacket[$key];
-                            $details->deduction_hr=$request->deduction_hr[$key];
-                            $details->deduction_traningcost=$request->deduction_traningcost[$key];
-                            $details->deduction_c_f=$request->deduction_c_f[$key];
-                            $details->deduction_medical=$request->deduction_medical[$key];
+                            $details->deduction_traningcost=$request->deduction_training_cost[$key];
                             $details->deduction_ins=$request->deduction_ins[$key];
-                            $details->deduction_p_f=$request->deduction_p_f[$key];
-                            $details->deduction_revenue_stamp=$request->deduction_revenue_stamp[$key];
+                            $details->deduction_p_f=$request->deduction_pf[$key];
+                            $details->deduction_revenue_stamp=$request->deduction_stamp[$key];
                             $details->deduction_total=$request->deduction_total[$key];
-                            $details->net_salary=$request->net_salary[$key];
-                            $details->sing_of_ind=$request->sing_of_ind[$key];
+                            $details->net_salary=$request->total_payable[$key];
+                            $details->sing_of_ind=$request->sing_ind[$key];
+                            $details->sing_account=$request->sing_account[$key];
+                            $details->deduction_dress=$request->deduction_dress[$key];
+                            $details->deduction_banck_charge=$request->deduction_banck_charge[$key];
                             $details->remark=$request->remark[$key];
                             $details->status=0;
                             $details->save();
@@ -255,7 +248,7 @@ class SalarySheetController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Generate Salary Sheet',$request->getContent(),'SalarySheet,SalarySheetDetail');
-                return redirect()->route('salarysheet.salarySheetOneIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('salarysheet.salarySheetFiveIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -281,6 +274,12 @@ class SalarySheetController extends Controller
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
         //return $salary;
         return view('hrm.salary_sheet.salarysheetOneShow',compact('salary'));
+    }
+    public function getsalarySheetFiveShow($id)
+    {
+        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        //return $salary;
+        return view('hrm.salary_sheet.salarysheetFiveShow',compact('salary'));
     }
 
 

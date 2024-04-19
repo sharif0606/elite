@@ -61,6 +61,7 @@ return new class extends Migration
 
             $table->decimal('net_salary',10,2)->default(0)->nullable();
             $table->string('sing_of_ind')->nullable();
+            $table->string('sing_account')->nullable();
             $table->string('remark')->nullable();
             $table->string('zone')->nullable();
             $table->string('status')->default(0)->nullable();

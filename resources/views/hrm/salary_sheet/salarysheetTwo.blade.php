@@ -211,8 +211,8 @@
                                 <td>
                                     <input style="width:100px;" class="form-control payment_type" type="text" name="payment_type[]" value="" placeholder="Payment Type">
                                 </td>
-                                <td>${value.duty_rate}
-                                    <input style="width:100px;" class="form-control duty_rate" type="hidden" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
+                                <td>
+                                    <input style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>${value.duty_qty}
                                     <input style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
@@ -226,8 +226,8 @@
                                 <td>${value.ot_qty}
                                     <input style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
                                 </td>
-                                <td>${value.ot_rate}
-                                    <input style="width:100px;" class="form-control ot_rate" type="hidden" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
+                                <td>
+                                    <input style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
                                 </td>
                                 <td>${value.ot_amount}
                                     <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">

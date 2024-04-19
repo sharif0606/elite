@@ -38,9 +38,9 @@
                             -{{ $s->year }}
                         </td>
                         <td>
-                            {{--  <a href="{{route('salarysheet.salarySheetOneShow',[encryptor('encrypt',$s->id)])}}">
+                            <a href="{{route('salarysheet.salarySheetFiveShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
-                            </a>  --}}
+                            </a>
                             {{--  <a href="{{route('customerduty.edit',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>  --}}
