@@ -200,16 +200,11 @@
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
-                        let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
+                        let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
+                        let mess = (value.mess > 0) ? value.mess : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
-                        let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
-                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
-                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
-                        let Hr = (value.hr > 0) ? value.hr : '0';
-                        let Cf = (value.c_f > 0) ? value.c_f : '0';
-                        let Medical = (value.medical > 0) ? value.medical : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
-                        let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         let netSalary = '0';
                         if (grossAmoun > totalDeduction) {
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
@@ -261,10 +256,10 @@
                                     <input style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="" placeholder="Total Salary">
+                                    <input style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="${value.grossAmount}" placeholder="Total Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="" placeholder="Excess Mobile">
+                                    <input style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="${em}" placeholder="Excess Mobile">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
@@ -276,7 +271,7 @@
                                     <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="" placeholder="Mess">
+                                    <input style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="${mess}" placeholder="Mess">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
@@ -285,7 +280,7 @@
                                     <input style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="" placeholder="Total Payble">
+                                    <input style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="${netSalary}" placeholder="Total Payble">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">

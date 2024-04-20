@@ -32,6 +32,8 @@ return new class extends Migration
             $table->decimal('over_paymentCut',10,2)->default(0);
             $table->decimal('bank_charge_exc',10,2)->default(0);
             $table->decimal('dress',10,2)->default(0);
+            $table->decimal('excess_mobile',10,2)->default(0);
+            $table->decimal('mess',10,2)->default(0);
             $table->integer('status')->nullable();
             $table->timestamps();
         });

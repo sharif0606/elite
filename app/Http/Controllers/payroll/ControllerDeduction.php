@@ -306,6 +306,32 @@ class ControllerDeduction extends Controller
                     }
                 }
             }
+            if($request->deduction_type=='17'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->excess_mobile=$request->amount[$key];
+                        $deduction->status=16;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='18'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->mess=$request->amount[$key];
+                        $deduction->status=16;
+                        $deduction->save();
+                    }
+                }
+            }
             \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction');
             return redirect()->route('deduction_asign.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 
