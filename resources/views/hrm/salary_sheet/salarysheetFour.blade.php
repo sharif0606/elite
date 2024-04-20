@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarySheet.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarysheet.salarySheetFourStore')}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">
                                 <div class="form-group col-lg-6 mt-2">
@@ -55,11 +55,11 @@
                                 </div>  --}}
                                 {{--  <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input onkeyup="reCalcultateSalary(this)" required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
+                                    <input onkeyup="reCalcultateSalary(this)" onkeyup="reCalcultateSalary(this)" required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input onkeyup="reCalcultateSalary(this)" required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input onkeyup="reCalcultateSalary(this)" onkeyup="reCalcultateSalary(this)" required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>  --}}
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Salary Year</b></label>
@@ -131,11 +131,11 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td> Total</td>
-                                                <td><input class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
+                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
+                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
+                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
+                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
+                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
                                             </tr>  --}}
                                         </tfoot>
@@ -213,83 +213,83 @@
                             `<tr>
                                 <td>${counter + 1}</td>
                                 <td>${value.admission_id_no}
-                                    <input style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
                                 <td>
-                                    <input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
+                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
                                 </td>
                                 <td>
-                                    <input style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
-                                    <input style="width:100px;" class="form-control rank" type="hidden" name="designation[]" value="${value.jobpost_id}" placeholder="Desingation">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation[]" value="${value.jobpost_id}" placeholder="Desingation">
                                 </td>
                                 <td>
-                                    <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="" placeholder="Medical Allowance">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="" placeholder="Medical Allowance">
                                 </td>
                                 <td>${value.duty_amount}
-                                    <input style="width:100px;" class="form-control duty_amount" type="hidden" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_amount" type="hidden" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
                                 </td>
                                 <td>${value.duty_qty}
-                                    <input style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
                                 </td>
                                 <td>${value.ot_qty}
-                                    <input style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
                                 </td>
                                 <td>${value.ot_amount}
-                                    <input style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="hidden" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="${value.grossAmount}" placeholder="Total Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="${value.grossAmount}" placeholder="Total Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="${em}" placeholder="Excess Mobile">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="${em}" placeholder="Excess Mobile">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P.F">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P.F">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="${mess}" placeholder="Mess">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="${mess}" placeholder="Mess">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="${netSalary}" placeholder="Total Payble">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="${netSalary}" placeholder="Total Payble">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="" placeholder="Remarks">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="" placeholder="Remarks">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -302,6 +302,43 @@
         });
         $('.show_click').removeClass('d-none');
      }
+
+     function reCalcultateSalary(e) {
+
+        let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
+        let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
+        let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
+        let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
+        let Hor=$(e).closest('tr').find('.house_rent').val()?parseFloat($(e).closest('tr').find('.house_rent').val()):0;
+        let Mallownce=$(e).closest('tr').find('.medical_allowance').val()?parseFloat($(e).closest('tr').find('.medical_allowance').val()):0;
+        let Pallownce=$(e).closest('tr').find('.post_allow').val()?parseFloat($(e).closest('tr').find('.post_allow').val()):0;
+        let fbill=$(e).closest('tr').find('.fuel_bill').val()?parseFloat($(e).closest('tr').find('.fuel_bill').val()):0;
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth() + 1;
+        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let dutyRateDay=dutyRate/totalDaysInMonth;
+        let otRateDay=otRate/totalDaysInMonth;
+        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+        let otAmount=parseFloat(otRateDay*otQty);
+        $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
+        $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
+
+        let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;
+        let MobileBill=$(e).closest('tr').find('.deduction_excess_mobile').val()?parseFloat($(e).closest('tr').find('.deduction_excess_mobile').val()):0;
+        let Loan=$(e).closest('tr').find('.deduction_loan').val()?parseFloat($(e).closest('tr').find('.deduction_loan').val()):0;
+        let ins=$(e).closest('tr').find('.deduction_ins').val()?parseFloat($(e).closest('tr').find('.deduction_ins').val()):0;
+        let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
+        let traningCost=$(e).closest('tr').find('.deduction_traningcost').val()?parseFloat($(e).closest('tr').find('.deduction_traningcost').val()):0;
+        let mess=$(e).closest('tr').find('.deduction_mess').val()?parseFloat($(e).closest('tr').find('.deduction_mess').val()):0;
+        let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
+        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(Hor) + parseFloat(Mallownce) + parseFloat(Pallownce) + parseFloat(fbill);
+        let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCost) + parseFloat(ins) + parseFloat(pf);
+        let net = parseFloat(tg) - parseFloat(td);
+        $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
+        $(e).closest('tr').find('.total_salary').val(parseFloat(tg).toFixed(2));
+        $(e).closest('tr').find('.total_payble').val(parseFloat(net).toFixed(2));
+
+    }
 </script>
 
 @endpush
