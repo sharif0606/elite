@@ -156,6 +156,7 @@ class SalarySheetController extends Controller
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
+                            $details->weekly_leave=$request->weekly_leave[$key];
                             $details->ot_qty=$request->ot_qty[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->ot_amount=$request->ot_amount[$key];
@@ -276,6 +277,12 @@ class SalarySheetController extends Controller
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
         //return $salary;
         return view('hrm.salary_sheet.salarysheetOneShow',compact('salary'));
+    }
+    public function getsalarySheetTwoShow($id)
+    {
+        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        //return $salary;
+        return view('hrm.salary_sheet.salarysheetTwoShow',compact('salary'));
     }
     public function getsalarySheetFiveShow($id)
     {

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('duty_rate',10,2)->nullable()->comment('basic/monthly');
             $table->decimal('duty_qty',10,2)->nullable()->comment('days');
             $table->decimal('duty_amount',10,2)->nullable()->comment('tk');
+            $table->decimal('weekly_leave',10,2)->nullable();
             $table->decimal('ot_qty',10,2)->nullable()->comment('ot');
             $table->decimal('ot_rate',10,2)->nullable()->comment('ot');
             $table->decimal('ot_amount',10,2)->nullable()->comment('ot');
