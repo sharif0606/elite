@@ -32,7 +32,7 @@
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
-                                        <option value="{{ $branch->id }}">{{ $branch->brance_name }}</option>
+                                        <option value="{{ $branch?->id }}">{{ $branch?->brance_name }}</option>
                                     </select>
                                 </div>
                                 {{--  <div class="col-lg-4 mt-2">

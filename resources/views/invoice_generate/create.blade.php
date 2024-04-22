@@ -240,7 +240,7 @@
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>
-                                    <input readonly class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
+                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
                                     <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
@@ -364,17 +364,17 @@
             var reratePerHoures=((rate/workingDay)/typeHours);
             var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
             $(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
-            $(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
+           // $(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
 
-          //  var startDate=$('.start_date').val();
-          //  let workingdayinMonth= new Date(startDate);
-          //  let smonth=workingdayinMonth.getMonth()+1;
-           // let syear=workingdayinMonth.getFullYear();
-             //   workingdayinMonth= new Date(syear, smonth, 0).getDate();
-             //   ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
-             //   $(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
-            //let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
-                //$(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+           var startDate=$('.start_date').val();
+           let workingdayinMonth= new Date(startDate);
+           let smonth=workingdayinMonth.getMonth()+1;
+           let syear=workingdayinMonth.getFullYear();
+              workingdayinMonth= new Date(syear, smonth, 0).getDate();
+               ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
+               //$(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
+            let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
+                $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                 subtotalAmount();
                 addCount();
         }

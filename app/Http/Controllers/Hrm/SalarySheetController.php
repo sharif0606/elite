@@ -286,7 +286,7 @@ class SalarySheetController extends Controller
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
-            $salary->status = 3;
+            $salary->status = 4;
             if ($salary->save()){
                 if($request->employee_id){
                     foreach($request->employee_id as $key => $value){

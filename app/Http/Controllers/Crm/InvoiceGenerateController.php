@@ -121,20 +121,20 @@ class InvoiceGenerateController extends Controller
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('customer_id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show2',compact('invoice_id','branch','headershow'));
     }
     public function getSingleInvoice3(Request $request, $id)
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('customer_id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show3',compact('invoice_id','branch','headershow'));
     }
     public function getSingleInvoice4(Request $request, $id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('customer_id',$invoice_id->branch_id)->first();
     //     $summaryQuery = "SELECT
     //     SUM(`rate`) as total,
     //     (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
