@@ -18,19 +18,12 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        $product = Product::all();
-        $where = '';
-        if ($request->fdate) {
-            $tdate = $request->tdate ? $request->tdate : $request->fdate;
-            $where = " AND date(stocks.`created_at`) BETWEEN '" . $request->fdate . "' AND '" . $tdate . "'";
-        }
-
+        $product = Product::with('stock');
         if ($request->product) {
-            $where .= " AND products.id = '" . $request->product . "'";
+            $product =$product->where('id',$request->product);
         }
-
-        $stock=DB::select("SELECT products.product_name,stocks.product_id,sum(stocks.product_qty) as qty,product_sizes.name FROM `stocks` join products on products.id=stocks.product_id join product_sizes on product_sizes.id=stocks.size_id " . $where . " group by stocks.product_id,stocks.size_id order by stocks.product_id,product_sizes.name");
-        return view('Stock.stock.list',compact('stock','product'));
+        $product =$product->get();
+        return view('Stock.stock.list',compact('product'));
     }
 
     public function stockindividual(Request $request,$id)

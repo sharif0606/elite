@@ -8,18 +8,18 @@
         <div class="row">
             <div class="col-4 py-1">
                 <label for="fdate">{{__('From Date')}}</label>
-                <input type="date" id="fdate" class="form-control" value="{{ old('fdate')}}" name="fdate">
+                <input type="date" id="fdate" class="form-control" value="{{request()->get('fdate')}}" name="fdate">
             </div>
             <div class="col-4 py-1">
                 <label for="fdate">{{__('To Date')}}</label>
-                <input type="date" id="tdate" class="form-control" value="{{ old('tdate')}}" name="tdate">
+                <input type="date" id="tdate" class="form-control" value="{{ request()->get('tdate')}}" name="tdate">
             </div>
             <div class="col-4 py-1">
                 <label for="product">{{__('Product Name')}}</label>
                 <select name="product" class="choices form-select">
                     <option value="">Select</option>
                     @forelse ($product as $p)
-                        <option value="{{$p->id}}" {{ old('product')==$p->id?"selected":""}}>{{$p->product_name}}</option>
+                        <option value="{{$p->id}}" {{ old(request()->get('product'))==$p->id?"selected":""}}>{{$p->product_name}}</option>
                     @empty
                         <option value="">No Data Found</option>
                     @endforelse
@@ -45,18 +45,22 @@
                                 <tr class="text-center">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Product')}}</th>
-                                    <th scope="col">{{__('Size')}}</th>
                                     <th scope="col">{{__('Qty')}}</th>
                                     <th class="white-space-nowrap">{{__('Action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($stock as $d)
+                                @forelse($product as $d)
                                 <tr class="text-center">
                                     <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$d->product_name}}</td>
-                                    <td>{{$d->name}}</td>
-                                    <td>{{$d->qty}}</td>
+                                    <td>
+                                        @if(request()->get('fdate'))
+                                            {{$d->stock?->whereBetween('entry_date', [request()->get('fdate'),request()->get('tdate') ?? date('Y-m-d')])->sum('product_qty')}}</td>
+                                        @else
+                                            {{$d->stock?->sum('product_qty')}}
+                                        @endif
+                                    </td>
                                     <td class="white-space-nowrap">
                                         <a href="{{route('stock.individual',encryptor('encrypt',$d->product_id))}}">
                                             <i class="bi bi-eye"></i>
