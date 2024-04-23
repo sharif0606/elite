@@ -314,7 +314,7 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->excess_mobile=$request->amount[$key];
-                        $deduction->status=16;
+                        $deduction->status=17;
                         $deduction->save();
                     }
                 }
@@ -327,7 +327,46 @@ class ControllerDeduction extends Controller
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
                         $deduction->mess=$request->amount[$key];
-                        $deduction->status=16;
+                        $deduction->status=18;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='19'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->absent=$request->amount[$key];
+                        $deduction->status=19;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='20'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->vacant=$request->amount[$key];
+                        $deduction->status=20;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='21'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->adv=$request->amount[$key];
+                        $deduction->status=21;
                         $deduction->save();
                     }
                 }

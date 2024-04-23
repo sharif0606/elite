@@ -38,6 +38,19 @@ return new class extends Migration
             $table->decimal('extra_alice',10,2)->default(0)->nullable();
             $table->decimal('bonus',10,2)->default(0)->nullable();
             $table->decimal('donation',10,2)->default(0)->nullable();
+            $table->decimal('house_rent',10,2)->default(0)->nullable();
+            $table->decimal('medical',10,2)->default(0)->nullable();
+            $table->decimal('trans_conve',10,2)->default(0);
+            $table->decimal('gross_wages',10,2)->default(0);
+            $table->decimal('total_workingday',10,2)->default(0);
+            $table->decimal('present_day',10,2)->default(0);
+            $table->decimal('absent',10,2)->default(0);
+            $table->decimal('vacant',10,2)->default(0);
+            $table->decimal('holiday_festival',10,2)->default(0);
+            $table->decimal('leave_cl',10,2)->default(0);
+            $table->decimal('leave_sl',10,2)->default(0);
+            $table->decimal('leave_el',10,2)->default(0);
+            $table->decimal('total_payable',10,2)->default(0);
 
             $table->decimal('deduction_fine',10,2)->default(0)->nullable();
             $table->decimal('deduction_mobilebill',10,2)->default(0)->nullable();
@@ -59,6 +72,10 @@ return new class extends Migration
             $table->decimal('deduction_over_paymentCut',10,2)->default(0)->nullable();
             $table->decimal('deduction_dress',10,2)->default(0)->nullable();
             $table->decimal('deduction_banck_charge',10,2)->default(0)->nullable();
+            $table->decimal('deduction_absent',10,2)->default(0)->nullable();
+            $table->decimal('deduction_vacant',10,2)->default(0)->nullable();
+            $table->decimal('deduction_adv',10,2)->default(0)->nullable();
+            $table->decimal('ot_rate_basicDuble',10,2)->default(0)->nullable();
 
             $table->decimal('net_salary',10,2)->default(0)->nullable();
             $table->string('sing_of_ind')->nullable();

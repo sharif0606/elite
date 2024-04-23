@@ -34,6 +34,9 @@ return new class extends Migration
             $table->decimal('dress',10,2)->default(0);
             $table->decimal('excess_mobile',10,2)->default(0);
             $table->decimal('mess',10,2)->default(0);
+            $table->decimal('absent',10,2)->default(0);
+            $table->decimal('vacant',10,2)->default(0);
+            $table->decimal('adv',10,2)->default(0);
             $table->integer('status')->nullable();
             $table->timestamps();
         });

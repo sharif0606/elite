@@ -62,6 +62,9 @@
                                                 <option value="16">Over Payment Cutt</option>
                                                 <option value="17">Excess Mobile</option>
                                                 <option value="18">Mess</option>
+                                                <option value="19">Absent</option>
+                                                <option value="20">Vacant</option>
+                                                <option value="21">Adv.</option>
                                             </select>
                                             @if($errors->has('deduction'))
                                                 <span class="text-danger"> {{ $errors->first('deduction') }}</span>
