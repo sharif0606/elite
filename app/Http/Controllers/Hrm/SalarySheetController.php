@@ -418,6 +418,12 @@ class SalarySheetController extends Controller
         //return $salary;
         return view('hrm.salary_sheet.salarysheetTwoShow',compact('salary'));
     }
+    public function salarySheetThreeShow($id)
+    {
+        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        //return $salary;
+        return view('hrm.salary_sheet.salarysheetThreeShow',compact('salary'));
+    }
     public function getsalarySheetFiveShow($id)
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
