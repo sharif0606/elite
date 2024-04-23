@@ -199,7 +199,6 @@
                         let sixMonthsLater = new Date(joiningDate);
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
-                        // Deduction calculation
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
                             pf = "200";

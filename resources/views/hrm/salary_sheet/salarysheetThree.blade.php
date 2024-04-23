@@ -154,6 +154,44 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
+                        let traningCost=value.bn_traning_cost;
+                        let traningCostMonth=value.bn_traning_cost_byMonth;
+                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let remaining=value.bn_remaining_cost;
+                        let joiningDate = new Date(value.joining_date);
+                        let sixMonthsLater = new Date(joiningDate);
+                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+                        var currentDate = new Date();
+                        var month = parseInt($(".month").val());
+                        var currentYear = currentDate.getFullYear();
+                        var totalDays = new Date(currentYear, month, 0).getDate();
+                        let pf = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            pf = "200";
+                        }
+                        let Insurance = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }
+                        let Fine = (value.fine > 0) ? value.fine : '0';
+                        let pillCost = (value.matterss_pillowCost > 0) ? value.matterss_pillowCost : '0';
+                        let paCutt = (value.over_paymentCut > 0) ? value.over_paymentCut : '0';
+                        let Tsim = (value.tonic_sim > 0) ? value.tonic_sim : '0';
+                        let Loan = (value.loan > 0) ? value.loan : '0';
+                        let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        let Hr = (value.hr > 0) ? value.hr : '0';
+                        let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Medical = (value.medical > 0) ? value.medical : '0';
+                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                        let hR = (value.duty_rate > 0) ? ((value.duty_rate)*50)/100 : '0';
+                        let totalDeduction = parseFloat(Fine) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance) + parseFloat(pillCost) + parseFloat(Tsim) + parseFloat(paCutt);
+                        let netSalary = '0';
+                        if (grossAmoun > totalDeduction) {
+                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                        }
+                        let gr = parseFloat(value.duty_rate) + parseFloat(hR);
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -174,7 +212,7 @@
                                     <input style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent (50%)">
+                                    <input style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="${hR}" placeholder="House rent (50%)">
                                 </td>
                                 <td>
                                     <input style="width:100px;" class="form-control medical" type="text" name="medical[]" value="" placeholder="Medical">
@@ -183,10 +221,10 @@
                                     <input style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="" placeholder="Trans. Conve.">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control gross_wages" type="text" name="gross_wages[]" value="" placeholder="Gross Wages">
+                                    <input style="width:100px;" class="form-control gross_wages" type="text" name="gross_wages[]" value="${gr}" placeholder="Gross Wages">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control total_workingDay" type="text" name="total_workingDay[]" value="" placeholder="Total Working Days">
+                                    <input style="width:100px;" class="form-control total_workingDay" type="text" name="total_workingDay[]" value="${totalDays}" placeholder="Total Working Days">
                                 </td>
                                 <td>${value.duty_qty}
                                     <input style="width:100px;" class="form-control present_day" type="hidden" name="present_day[]" value="${value.duty_qty}" placeholder="Pre. Days">
