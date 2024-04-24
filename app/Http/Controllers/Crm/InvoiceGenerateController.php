@@ -14,6 +14,7 @@ use App\Models\Crm\EmployeeAssign;
 use App\Models\Crm\EmployeeAssignDetails;
 use App\Models\Crm\WasaInvoice;
 use App\Models\Crm\OnetripInvoice;
+use App\Models\Crm\InvoicePayment;
 
 use Toastr;
 use Carbon\Carbon;
@@ -92,6 +93,25 @@ class InvoiceGenerateController extends Controller
                     }
                 }
             }
+            \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
+    public function invoicePayment(Request $request)
+    {
+        try{
+            $data=new InvoicePayment;
+            $data->invoice_id = $request->invId;
+            $data->taka = $request->grand_total;
+            $data->date = $request->date;
+            $data->save();
+
+
             \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
             return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 

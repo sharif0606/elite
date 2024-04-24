@@ -234,6 +234,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show7/{id}', [invoiceGenerate::class, 'getSingleInvoice7'])->name('invoiceShow7');
         Route::get('/single-invoice-show8/{id}', [invoiceGenerate::class, 'getSingleInvoice8'])->name('invoiceShow8');
         Route::post('wasastoreInvoice', [wasaEmployeeAsign::class,'storeWasaInvoice'])->name('WasaInviceStore');
+        Route::post('invoicePayment', [invoiceGenerate::class,'invoicePayment'])->name('invoicePayment');
 
         /* stock */
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');
