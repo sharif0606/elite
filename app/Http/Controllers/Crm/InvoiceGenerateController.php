@@ -112,7 +112,7 @@ class InvoiceGenerateController extends Controller
             $data->save();
 
 
-            \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+            \LogActivity::addToLog('InvoicePayment',$request->getContent(),'InvoicePayment');
             return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
 
 

@@ -68,7 +68,7 @@
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header py-1">
-                                <h5 class="modal-title" id="batchTitle">Chech Status</h5>
+                                <h5 class="modal-title" id="batchTitle">Collection</h5>
                                 <button type="button" class="close text-danger" data-bs-dismiss="modal"  aria-label="Close">
                                     <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
                                 </button>
