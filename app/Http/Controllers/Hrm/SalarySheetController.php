@@ -37,6 +37,11 @@ class SalarySheetController extends Controller
         $salarysheet=SalarySheet::where('status',3)->get();
         return view('hrm.salary_sheet.salarysheetThreeIndex',compact('salarysheet'));
     }
+    public function getsalarySheetFourIndex()
+    {
+        $salarysheet=SalarySheet::where('status',4)->get();
+        return view('hrm.salary_sheet.salarysheetFourIndex',compact('salarysheet'));
+    }
     public function getsalarySheetFiveIndex()
     {
         $salarysheet=SalarySheet::where('status',5)->get();
@@ -268,7 +273,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFourStore(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -286,49 +291,37 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
-                            $details->online_payment=$request->payment_type[$key];
                             $details->duty_rate=$request->duty_rate[$key];
+                            $details->house_rent=$request->house_rent[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
-                            $details->weekly_leave=$request->weekly_leave[$key];
+                            $details->medical=$request->medical_allowance[$key];
                             $details->ot_qty=$request->ot_qty[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->ot_amount=$request->ot_amount[$key];
-                            $details->leave=$request->leave[$key];
-                            $details->arrear=$request->arrear[$key];
-                            $details->gross_salary=$request->gross_salary[$key];
+                            $details->allownce=$request->post_allow[$key];
+                            $details->fuel_bill=$request->fuel_bill[$key];
+                            $details->gross_salary=$request->total_salary[$key];
+                            $details->deduction_mobilebill=$request->deduction_excess_mobile[$key];
                             $details->deduction_fine=$request->deduction_fine[$key];
                             $details->deduction_loan=$request->deduction_loan[$key];
-                            $details->deduction_long_loan=$request->deduction_longLoan[$key];
-                            $details->deduction_cloth=$request->deduction_cloth[$key];
-                            $details->deduction_hr=$request->deduction_hr[$key];
-                            $details->deduction_jacket=$request->deduction_jacket[$key];
-                            $details->deduction_revenue_stamp=$request->deduction_stamp[$key];
-                            $details->deduction_traningcost=$request->deduction_traningCost[$key];
-                            $details->deduction_c_f=$request->deduction_c_f[$key];
-                            $details->deduction_medical=$request->deduction_medical[$key];
+                            $details->deduction_traningcost=$request->deduction_traning_cost[$key];
                             $details->deduction_ins=$request->deduction_ins[$key];
                             $details->deduction_p_f=$request->deduction_p_f[$key];
-                            $details->deduction_total=$request->deduction_total[$key];
-                            $details->net_salary=$request->net_salary[$key];
-                            $details->sing_of_ind=$request->signature[$key];
+                            $details->deduction_mess=$request->deduction_mess[$key];
+                            // $details->deduction_total=$request->deduction_total[$key];
                             // uncommon
-                            $details->ht_ribon_alice=$request->ht_ribon_alice[$key];
-                            $details->gun_alice=$request->gun_alice[$key];
-                            $details->extra_alice=$request->extra_alice[$key];
-                            $details->bonus=$request->bonus[$key];
-                            $details->donation=$request->donation[$key];
-                            $details->deduction_matterss_pillowCost=$request->deduction_matterss_pillowCost[$key];
-                            $details->deduction_tonic_sim=$request->deduction_tonic_sim[$key];
-                            $details->deduction_over_paymentCut=$request->deduction_over_paymentCut[$key];
-                            $details->zone=$request->zone[$key];
+                            $details->total_payable=$request->total_payble[$key];
+                            $details->sing_of_ind=$request->signature_ind[$key];
+                            $details->sing_account=$request->signature_accounts[$key];
+                            $details->remark=$request->remarks[$key];
                             $details->status=0;
                             $details->save();
                         }
                     }
                 }
-                \LogActivity::addToLog('Generate Salary Sheet Two',$request->getContent(),'SalarySheet,SalarySheetDetail');
-                return redirect()->route('salarysheet.salarySheetTwoIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                \LogActivity::addToLog('Generate Salary Sheet Four',$request->getContent(),'SalarySheet,SalarySheetDetail');
+                return redirect()->route('salarySheetFour')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -423,6 +416,12 @@ class SalarySheetController extends Controller
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
         //return $salary;
         return view('hrm.salary_sheet.salarysheetThreeShow',compact('salary'));
+    }
+    public function salarySheetFourShow($id)
+    {
+        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        //return $salary;
+        return view('hrm.salary_sheet.salarysheetFourShow',compact('salary'));
     }
     public function getsalarySheetFiveShow($id)
     {

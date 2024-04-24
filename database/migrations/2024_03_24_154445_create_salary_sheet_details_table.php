@@ -51,6 +51,7 @@ return new class extends Migration
             $table->decimal('leave_sl',10,2)->default(0)->nullable();
             $table->decimal('leave_el',10,2)->default(0)->nullable();
             $table->decimal('total_payable',10,2)->default(0)->nullable();
+            $table->decimal('fuel_bill',10,2)->default(0)->nullable();
 
             $table->decimal('deduction_fine',10,2)->default(0)->nullable();
             $table->decimal('deduction_mobilebill',10,2)->default(0)->nullable();
@@ -66,6 +67,7 @@ return new class extends Migration
             $table->decimal('deduction_p_f',10,2)->default(0)->nullable();
             $table->string('deduction_revenue_stamp')->nullable();
             $table->decimal('deduction_total',10,2)->default(0)->nullable();
+            $table->decimal('deduction_mess',10,2)->default(0)->nullable();
             // uncommontow
             $table->decimal('deduction_matterss_pillowCost',10,2)->default(0)->nullable();
             $table->decimal('deduction_tonic_sim',10,2)->default(0)->nullable();
