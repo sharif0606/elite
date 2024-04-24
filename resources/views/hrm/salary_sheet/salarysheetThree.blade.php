@@ -313,17 +313,17 @@
         let fixedOt=$(e).closest('tr').find('.fixed_ot').val()?parseFloat($(e).closest('tr').find('.fixed_ot').val()):0;
         let allownce=$(e).closest('tr').find('.allownce').val()?parseFloat($(e).closest('tr').find('.allownce').val()):0;
         let arrear=$(e).closest('tr').find('.arrear').val()?parseFloat($(e).closest('tr').find('.arrear').val()):0;
-        let gr = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon);
+        let grw = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon);
         let currentDate = new Date();
         let currentMonth = currentDate.getMonth() + 1;
         let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         let dutyRateDay=dutyRate/totalDaysInMonth;
-        let otRateDay=otRate/totalDaysInMonth;
-        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
-        let otAmount=parseFloat(otRateDay*otQty);
-        $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
-        $(e).closest('tr').find('.gross_wages').val(parseFloat(gr).toFixed(2));
-        $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
+        //let otRateDay=otRate/totalDaysInMonth;
+        //let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+       // let otAmount=parseFloat(otRateDay*otQty);
+        //$(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
+        $(e).closest('tr').find('.gross_wages').val(parseFloat(grw).toFixed(2));
+       // $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
 
         let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;
         let MobileBill=$(e).closest('tr').find('.deduction_mobilebill').val()?parseFloat($(e).closest('tr').find('.deduction_mobilebill').val()):0;
@@ -339,7 +339,7 @@
         let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_revenue_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_revenue_stamp').val()):0;
         let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
-        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(arrear);
+        let tg= parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(arrear);
         let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(traningCost) + parseFloat(Cf) + parseFloat(medical) + parseFloat(ins) + parseFloat(pf) + parseFloat(stamp);
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
