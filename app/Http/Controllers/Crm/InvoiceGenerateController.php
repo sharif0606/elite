@@ -110,12 +110,8 @@ class InvoiceGenerateController extends Controller
             $data->taka = $request->grand_total;
             $data->date = $request->date;
             $data->save();
-
-
             \LogActivity::addToLog('InvoicePayment',$request->getContent(),'InvoicePayment');
             return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-
-
         } catch (Exception $e) {
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
