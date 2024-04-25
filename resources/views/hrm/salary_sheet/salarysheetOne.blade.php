@@ -142,7 +142,7 @@
                                                 <td></td>
                                                 <td> Total</td>
                                                 <td><input readonly style="width:100px;" class="form-control total_slry" type="text" name="total_slry" placeholder="Monthly Salary"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
+                                                <td><input readonly style="width:100px;" class="form-control tdq" type="text" name="total_ot" placeholder="Total Days"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
@@ -386,10 +386,15 @@
     }
     function total_calculate() {
         var totalSlry = 0;
+        var dq = 0;
         $('.duty_rate').each(function() {
             totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.duty_qty').each(function() {
+            dq+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
+        $('.tdq').val(parseFloat(dq).toFixed(2));
        // console.log(totalSlry);
 
     }
