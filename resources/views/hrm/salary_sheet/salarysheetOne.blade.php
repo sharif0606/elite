@@ -133,18 +133,21 @@
                                         <tbody class="salarySheet">
 
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
+                                        <tfoot class="d-none show_click">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td> Total</td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
+                                                <td><input readonly style="width:100px;" class="form-control total_slry" type="text" name="total_slry" placeholder="Monthly Salary"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
                                                 <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
-                                            </tr>  --}}
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>
@@ -332,6 +335,7 @@
                             </tr>`
                         );
                         counter++;
+                        total_calculate();
                     });
             },
         });
@@ -377,6 +381,16 @@
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
         $(e).closest('tr').find('.net_salary').val(parseFloat(net).toFixed(2));
+        total_calculate();
+
+    }
+    function total_calculate() {
+        var totalSlry = 0;
+        $('.duty_rate').each(function() {
+            totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
+       // console.log(totalSlry);
 
     }
 </script>
