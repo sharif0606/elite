@@ -189,8 +189,8 @@
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let hR = (value.duty_rate > 0) ? ((value.duty_rate)*50)/100 : '0';
-                        let otR = (value.duty_rate > 0) ? ((value.duty_rate)*2) : '0';
-                        let otP = (value.ot_qty > 0) ? parseFloat(otR/(value.ot_qty)).toFixed(2) : '0';
+                        let otR = (value.duty_rate > 0) ? (((value.duty_rate)*2)/208).toFixed(2) : '0';
+                        let otP = (value.ot_qty > 0) ? parseFloat(otR*(value.ot_qty)).toFixed(2) : '0';
                         let totalDeduction = parseFloat(Hr) + parseFloat(Ab) + parseFloat(Va) + parseFloat(Ad) + parseFloat(pf);
                         let netSalary = '0';
                         if (grossAmoun > totalDeduction) {

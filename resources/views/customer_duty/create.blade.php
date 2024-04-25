@@ -124,6 +124,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
                                                 <td> Total</td>
                                                 <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
                                                 <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
