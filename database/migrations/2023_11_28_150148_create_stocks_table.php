@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id')->nullable();
+            $table->integer('product_stock_id')->nullable();
+            $table->integer('product_issue_id')->nullable();
+            $table->integer('product_condem_id')->nullable();
             $table->integer('product_id');
             $table->integer('size_id')->nullable();
             $table->integer('type')->comment('1=new, 2=used')->nullable();
