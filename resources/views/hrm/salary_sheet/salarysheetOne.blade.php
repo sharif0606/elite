@@ -143,9 +143,17 @@
                                                 <td> Total</td>
                                                 <td><input readonly style="width:100px;" class="form-control total_slry" type="text" name="total_slry" placeholder="Monthly Salary"></td>
                                                 <td><input readonly style="width:100px;" class="form-control tdq" type="text" name="total_ot" placeholder="Total Days"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
+                                                <td><input style="width:100px;" class="form-control dam" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
+                                                <td><input style="width:100px;" class="form-control otq" type="text" name="otq" placeholder="Duty Amount"></td>
+                                                <td><input style="width:100px;" class="form-control otr" type="text" name="otr" placeholder="Duty Amount"></td>
+                                                <td><input style="width:100px;" class="form-control ota" type="text" name="ota" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control fx" type="text" name="fx" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control al" type="text" name="al" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control le" type="text" name="le" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control arr" type="text" name="arr" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control grs" type="text" name="grs" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
+                                                <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
@@ -387,14 +395,59 @@
     function total_calculate() {
         var totalSlry = 0;
         var dq = 0;
+        var da = 0;
+        var otq = 0;
+        var otr = 0;
+        var ota = 0;
+        var fx = 0;
+        var al = 0;
+        var le = 0;
+        var arr = 0;
+        var grs = 0;
         $('.duty_rate').each(function() {
             totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
         $('.duty_qty').each(function() {
             dq+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.duty_amount').each(function() {
+            da+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_qty').each(function() {
+            otq+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_rate').each(function() {
+            otr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_amount').each(function() {
+            ota+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.fixed_ot').each(function() {
+            fx+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.allownce').each(function() {
+            al+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.leave').each(function() {
+            le+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.arrear').each(function() {
+            arr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gross_salary').each(function() {
+            grs+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
         $('.tdq').val(parseFloat(dq).toFixed(2));
+        $('.dam').val(parseFloat(da).toFixed(2));
+        $('.otq').val(parseFloat(otq).toFixed(2));
+        $('.otr').val(parseFloat(otr).toFixed(2));
+        $('.ota').val(parseFloat(ota).toFixed(2));
+        $('.fx').val(parseFloat(fx).toFixed(2));
+        $('.al').val(parseFloat(al).toFixed(2));
+        $('.le').val(parseFloat(le).toFixed(2));
+        $('.arr').val(parseFloat(arr).toFixed(2));
+        $('.grs').val(parseFloat(grs).toFixed(2));
        // console.log(totalSlry);
 
     }
