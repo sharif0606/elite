@@ -48,7 +48,7 @@
                                 <th scope="col">{{__('Qty')}}</th>
                                 <th scope="col">{{__('Entry Date')}}</th>
                                 <th scope="col">{{__('Type')}}</th>
-                                {{--  <th class="white-space-nowrap">{{__('Action') }}</th>  --}}
+                                <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,10 +60,10 @@
                                 <td>{{$d->product_qty}}</td>
                                 <td>{{$d->entry_date}}</td>
                                 <td>@if ($d->type==2) Used @else New @endif</td>
-                                {{--  <td class="white-space-nowrap">
-                                    <a href="{{route('product_stockin.edit',encryptor('encrypt',$d->id))}}">
+                                <td class="white-space-nowrap">
+                                    {{--  <a href="{{route('product_stockin.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
-                                    </a>
+                                    </a>  --}}
                                     <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a>
@@ -71,7 +71,7 @@
                                         @csrf
                                         @method('delete')
                                     </form>
-                                </td>  --}}
+                                </td>
                             </tr>
                             @empty
                             <tr>

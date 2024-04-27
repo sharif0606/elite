@@ -73,9 +73,9 @@
                                     {{--  <a href="{{route('product_issue.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>  --}}
-                                    {{--  <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
+                                    <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
-                                    </a>  --}}
+                                    </a>
                                     <form id="form{{ $d->id }}" action="{{ route('product_issue.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')

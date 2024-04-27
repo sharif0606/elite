@@ -87,6 +87,8 @@ class ProductRequisitionController extends Controller
                             if($details->save()){
                                 $stock=new Stock;
                                 $stock->employee_id=$request->employee_id;
+                                $stock->product_requisition_id=$data->id;
+                                $stock->product_issue_id=$details->id;
                                 $stock->entry_date=$formattedDate;
                                 $stock->note=$request->note;
                                 $stock->product_id=$request->product_id[$key];
@@ -151,6 +153,11 @@ class ProductRequisitionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data= ProductRequisition::findOrFail(encryptor('decrypt',$id));
+        $tdl=ProductRequisitionDetails::where('product_requisition_id',$data->id)->delete();
+        $tl=Stock::where('product_requisition_id',$data->id)->delete();
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 }

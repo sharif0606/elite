@@ -64,6 +64,7 @@ class ProductStockinController extends Controller
             if($pin->save()){
                 $stock=new Stock;
                 $stock->product_id=$request->product_id;
+                $stock->product_stock_id=$pin->id;
                 $stock->employee_id=$request->employee_id;
                 $stock->size_id=$request->size_id;
                 $stock->entry_date=$request->entry_date;
@@ -141,6 +142,10 @@ class ProductStockinController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data= ProductStockin::findOrFail(encryptor('decrypt',$id));
+        $tdl=Stock::where('product_stock_id',$data->id)->delete();
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 }

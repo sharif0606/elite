@@ -64,6 +64,7 @@ class ProductDamageController extends Controller
             if($damage->save()){
                 $stock=new Stock;
                 $stock->product_id=$request->product_id;
+                $stock->product_condem_id=$damage->id;
                 $stock->employee_id=$request->employee_id;
                 $stock->size_id=$request->size_id;
                 $stock->entry_date=$request->entry_date;
@@ -124,6 +125,10 @@ class ProductDamageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data= ProductDamage::findOrFail(encryptor('decrypt',$id));
+        $tl=Stock::where('product_condem_id',$data->id)->delete();
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 }
