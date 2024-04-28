@@ -53,7 +53,7 @@
                                         <div class="form-group">
                                             <label for="type">Product Type</label>
                                             <select name="type" class="form-control @error('hours') is-invalid @enderror" onclick="getEmployee()" id="type">
-                                                <option value="1">Intact</option>
+                                                <option value="1">New</option>
                                                 <option value="2">Used</option>
                                             </select>
                                         </div>
