@@ -157,6 +157,7 @@
                                                 <td><input style="width:100px;" class="form-control dl" type="text" name="dl" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control dll" type="text" name="dll" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control dc" type="text" name="dc" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dj" type="text" name="dj" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
                                                 <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
@@ -414,6 +415,8 @@
         var dl = 0;
         var dll = 0;
         var dc = 0;
+        var dj = 0;
+        var dh = 0;
         $('.duty_rate').each(function() {
             totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -462,6 +465,12 @@
         $('.deduction_cloth').each(function() {
             dc+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.deduction_jacket').each(function() {
+            dj+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_hr').each(function() {
+            dh+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
         $('.tdq').val(parseFloat(dq).toFixed(2));
         $('.dam').val(parseFloat(da).toFixed(2));
@@ -478,6 +487,8 @@
         $('.dl').val(parseFloat(dl).toFixed(2));
         $('.dll').val(parseFloat(dll).toFixed(2));
         $('.dc').val(parseFloat(dc).toFixed(2));
+        $('.dj').val(parseFloat(dj).toFixed(2));
+        $('.dh').val(parseFloat(dh).toFixed(2));
        // console.log(totalSlry);
 
     }
