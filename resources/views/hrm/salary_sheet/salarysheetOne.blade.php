@@ -140,7 +140,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td> Total</td>
+                                                <td class="text-end"> Total</td>
                                                 <td><input readonly style="width:100px;" class="form-control total_slry" type="text" name="total_slry" placeholder="Monthly Salary"></td>
                                                 <td><input readonly style="width:100px;" class="form-control tdq" type="text" name="total_ot" placeholder="Total Days"></td>
                                                 <td><input style="width:100px;" class="form-control dam" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
@@ -152,6 +152,11 @@
                                                 <td><input style="width:100px;" class="form-control le" type="text" name="le" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control arr" type="text" name="arr" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control grs" type="text" name="grs" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control fi" type="text" name="fi" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control mb" type="text" name="mb" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dl" type="text" name="dl" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dll" type="text" name="dll" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dc" type="text" name="dc" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
                                                 <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
                                                 <td></td>
@@ -404,6 +409,11 @@
         var le = 0;
         var arr = 0;
         var grs = 0;
+        var fi = 0;
+        var mb = 0;
+        var dl = 0;
+        var dll = 0;
+        var dc = 0;
         $('.duty_rate').each(function() {
             totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -437,6 +447,21 @@
         $('.gross_salary').each(function() {
             grs+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.deduction_fine').each(function() {
+            fi+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_mobilebill').each(function() {
+            mb+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_loan').each(function() {
+            dl+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_long_loan').each(function() {
+            dll+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_cloth').each(function() {
+            dc+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
         $('.tdq').val(parseFloat(dq).toFixed(2));
         $('.dam').val(parseFloat(da).toFixed(2));
@@ -448,6 +473,11 @@
         $('.le').val(parseFloat(le).toFixed(2));
         $('.arr').val(parseFloat(arr).toFixed(2));
         $('.grs').val(parseFloat(grs).toFixed(2));
+        $('.fi').val(parseFloat(fi).toFixed(2));
+        $('.mb').val(parseFloat(mb).toFixed(2));
+        $('.dl').val(parseFloat(dl).toFixed(2));
+        $('.dll').val(parseFloat(dll).toFixed(2));
+        $('.dc').val(parseFloat(dc).toFixed(2));
        // console.log(totalSlry);
 
     }
