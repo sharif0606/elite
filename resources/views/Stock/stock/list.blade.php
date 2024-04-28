@@ -62,7 +62,7 @@
                                         @endif
                                     </td>
                                     <td class="white-space-nowrap">
-                                        <a href="{{route('stock.individual',encryptor('encrypt',$d->product_id))}}">
+                                        <a href="{{route('stock.individual',encryptor('encrypt',$d->id))}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
