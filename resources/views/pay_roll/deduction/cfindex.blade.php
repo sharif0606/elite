@@ -25,6 +25,7 @@
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Employee ID')}}</th>
                                 <th scope="col">{{__('Cf')}}</th>
+                                <th scope="col">{{__('Remarks')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                 <td>{{$p->employee?->bn_applicants_name}}</td>
                                 <td>{{$p->employee?->admission_id_no}}</td>
                                 <td>{{$p->c_f}}</td>
+                                <td>{{$p->remarks}}</td>
                                 <td></td>
                             </tr>
                             @empty

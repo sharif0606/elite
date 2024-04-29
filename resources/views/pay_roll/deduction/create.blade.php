@@ -79,6 +79,7 @@
                                                 <tr class="text-center">
                                                     <th scope="col">{{__('Employee')}}</th>
                                                     <th scope="col">{{__('Taka')}}</th>
+                                                    <th scope="col">{{__('Remarks')}}</th>
                                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                                 </tr>
                                             </thead>
@@ -96,6 +97,12 @@
                                                         <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
                                                         @if($errors->has('amount'))
                                                             <span class="text-danger"> {{ $errors->first('amount') }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
+                                                        @if($errors->has('remarks'))
+                                                            <span class="text-danger"> {{ $errors->first('remarks') }}</span>
                                                         @endif
                                                     </td>
                                                     <td>
@@ -138,6 +145,12 @@
             <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
             @if($errors->has('amount'))
                 <span class="text-danger"> {{ $errors->first('amount') }}</span>
+            @endif
+        </td>
+        <td>
+            <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
+            @if($errors->has('remarks'))
+                <span class="text-danger"> {{ $errors->first('remarks') }}</span>
             @endif
         </td>
         <td>

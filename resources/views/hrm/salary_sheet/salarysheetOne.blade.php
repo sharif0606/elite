@@ -158,8 +158,15 @@
                                                 <td><input style="width:100px;" class="form-control dll" type="text" name="dll" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control dc" type="text" name="dc" placeholder="Amount"></td>
                                                 <td><input style="width:100px;" class="form-control dj" type="text" name="dj" placeholder="Amount"></td>
-                                                <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
+                                                <td><input style="width:100px;" class="form-control dh" type="text" name="dh" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dtr" type="text" name="dtr" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dcf" type="text" name="dcf" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dem" type="text" name="dem" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control din" type="text" name="din" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dpf" type="text" name="dpf" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dst" type="text" name="dst" placeholder="Amount"></td>
+                                                <td><input style="width:100px;" class="form-control dto" type="text" name="dto" placeholder="Total"></td>
+                                                <td><input style="width:100px;" class="form-control nts" type="text" name="nts" placeholder="Total"></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>
@@ -400,23 +407,7 @@
     }
     function total_calculate() {
         var totalSlry = 0;
-        var dq = 0;
-        var da = 0;
-        var otq = 0;
-        var otr = 0;
-        var ota = 0;
-        var fx = 0;
-        var al = 0;
-        var le = 0;
-        var arr = 0;
-        var grs = 0;
-        var fi = 0;
-        var mb = 0;
-        var dl = 0;
-        var dll = 0;
-        var dc = 0;
-        var dj = 0;
-        var dh = 0;
+        var dq = 0; var da = 0; var otq = 0; var otr = 0; var ota = 0; var fx = 0; var al = 0; var le = 0; var arr = 0; var grs = 0; var fi = 0; var mb = 0; var dl = 0; var dll = 0; var dc = 0; var dj = 0; var dh = 0; var dtr = 0; var dcf = 0; var dem = 0; var din = 0; var dpf = 0; var dst = 0; var dto = 0; var nts = 0;
         $('.duty_rate').each(function() {
             totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -471,12 +462,38 @@
         $('.deduction_hr').each(function() {
             dh+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.deduction_traningcost').each(function() {
+            dtr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_c_f').each(function() {
+            dcf+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_medical').each(function() {
+            dem+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_ins').each(function() {
+            din+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_p_f').each(function() {
+            dpf+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_revenue_stamp').each(function() {
+            dst+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_total').each(function() {
+            dto+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.net_salary').each(function() {
+            nts+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
+        $('.nts').val(parseFloat(nts).toFixed(2));
         $('.tdq').val(parseFloat(dq).toFixed(2));
-        $('.dam').val(parseFloat(da).toFixed(2));
         $('.otq').val(parseFloat(otq).toFixed(2));
         $('.otr').val(parseFloat(otr).toFixed(2));
         $('.ota').val(parseFloat(ota).toFixed(2));
+        $('.dam').val(parseFloat(da).toFixed(2));
+        $('.dh').val(parseFloat(dh).toFixed(2));
         $('.fx').val(parseFloat(fx).toFixed(2));
         $('.al').val(parseFloat(al).toFixed(2));
         $('.le').val(parseFloat(le).toFixed(2));
@@ -484,11 +501,17 @@
         $('.grs').val(parseFloat(grs).toFixed(2));
         $('.fi').val(parseFloat(fi).toFixed(2));
         $('.mb').val(parseFloat(mb).toFixed(2));
+        $('.din').val(parseFloat(din).toFixed(2));
+        $('.dto').val(parseFloat(dto).toFixed(2));
         $('.dl').val(parseFloat(dl).toFixed(2));
         $('.dll').val(parseFloat(dll).toFixed(2));
         $('.dc').val(parseFloat(dc).toFixed(2));
         $('.dj').val(parseFloat(dj).toFixed(2));
-        $('.dh').val(parseFloat(dh).toFixed(2));
+        $('.dtr').val(parseFloat(dtr).toFixed(2));
+        $('.dcf').val(parseFloat(dcf).toFixed(2));
+        $('.dem').val(parseFloat(dem).toFixed(2));
+        $('.dst').val(parseFloat(dst).toFixed(2));
+        $('.dpf').val(parseFloat(dpf).toFixed(2));
        // console.log(totalSlry);
 
     }
