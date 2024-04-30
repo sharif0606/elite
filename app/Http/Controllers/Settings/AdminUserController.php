@@ -72,10 +72,10 @@ class AdminUserController extends Controller
 
             if($request->has('image')) $user->image = $this->uploadImage($request->file('image'), 'uploads/admin');
 
-            if($user->save())
+            if($user->save()){
             \LogActivity::addToLog('Add User',$request->getContent(),'User');
                 return redirect()->route(currentUser().'.admin.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-            else
+            }else
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }catch(Exception $e){
             dd($e);
@@ -134,10 +134,10 @@ class AdminUserController extends Controller
             if($request->has('password') && $request->password)
                 $user->password=Hash::make($request->password);
 
-            if($user->save())
+            if($user->save()){
             \LogActivity::addToLog('Update User',$request->getContent(),'User');
                 return redirect()->route(currentUser().'.admin.index')->with(Toastr::success('Successfully updated!', 'Success', ["positionClass" => "toast-top-right"]));
-            else
+            }else
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }catch(Exception $e){
             //dd($e);

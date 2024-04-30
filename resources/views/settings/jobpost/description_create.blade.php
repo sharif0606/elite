@@ -81,7 +81,7 @@
                                                         <div class="col-lg-11 col-md-11 col-sm-11 mb-1 me-0 pe-0">
                                                             <div>
                                                                 <textarea class="form-control" name="responsibility_dutie[]" id="" rows="2" placeholder="১. কোম্পনির নিয়ম-নীতি ও কর্তৃপক্ষের নির্দেশ অনুযায়ী সকল কার্যক্রম পরিচালনা করা।">{{$d->description }}</textarea>
-                                                                <input type="hidden" name="type_responsibility[]" value="{{'1',$d->type}}">
+                                                                <input type="hidden" name="type_responsibility[]" value="{{$d->type?$d->type:'1'}}">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-1 col-md-1 col-sm-1 ms-0 ps-0 mt-3 text-left"><span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span></div>
