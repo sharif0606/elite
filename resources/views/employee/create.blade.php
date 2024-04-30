@@ -656,6 +656,42 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="emtype">Employee Type</label>
+                            <select name="employee_type" class="form-control @error('employee_type') is-invalid @enderror" onclick="getEmpInfo()" id="employee_type">
+                                <option value="1">Other Staff</option>
+                                <option value="2">Office Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none desig" id="desig">
+                        <div class="form-group">
+                            <label for="designation_id">Designation</label>
+                            <select name="designation_id" class=" form-control @error('designation_id') is-invalid @enderror" id="designation_id">
+                                <option value="">নির্বাচন করুন</option>
+                                @forelse($jobposts as $d)
+                                <option value="{{$d->id}}" {{ old('designation_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                @empty
+                                    <option value="">No district found</option>
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none gsalary" id="gsalary">
+                        <div class="form-group">
+                            <label for="gsalary">Gross Salary</label>
+                            <input type="text" id="gsalary" value="{{old('gsalary')}}" class="form-control" placeholder="" name="gsalary">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none otsalary" id="otsalary">
+                        <div class="form-group">
+                            <label for="otsalary">Ot Salary</label>
+                            <input type="text" id="otsalary" value="{{old('otsalary')}}" class="form-control" placeholder="" name="otsalary">
+                        </div>
+                    </div>
+                </div>
 {{--  English  --}}
                 <div class="row">
                     <h6 class="text-center my-3">Curriculum vitae/personal details/details</h6>
@@ -1172,6 +1208,19 @@
         }else {
             $('.bn_spouse_name1').addClass('d-none');
             $('.children_data').addClass('d-none');
+        }
+    }
+    function getEmpInfo() {
+        var sop = document.querySelector('select[name="employee_type"]').value;
+
+        if (sop === "2") {
+            $('.desig').removeClass('d-none');
+            $('.gsalary').removeClass('d-none');
+            $('.otsalary').removeClass('d-none');
+        }else {
+            $('.desig').addClass('d-none');
+            $('.gsalary').addClass('d-none');
+            $('.otsalary').addClass('d-none');
         }
     }
     function engetMarriedInfo() {

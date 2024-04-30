@@ -42,6 +42,10 @@ return new class extends Migration
             $table->text('bn_identification_mark')->nullable();
             $table->text('bn_edu_qualification')->nullable();
             $table->integer('bn_blood_id')->nullable();
+            $table->integer('employee_type')->nullable();
+            $table->integer('designation_id')->nullable();
+            $table->decimal('gross_salary',10,2)->default(0)->nullable();
+            $table->decimal('ot_salary',10,2)->default(0)->nullable();
             $table->date('bn_dob')->nullable();
             $table->integer('bn_age')->nullable();
             $table->string('bn_birth_certificate')->nullable();
