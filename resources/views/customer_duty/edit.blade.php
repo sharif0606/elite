@@ -36,11 +36,11 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control" onblur="DetailsShow()" type="date" name="start_date" value="{{ old('start_date',$custduty->start_date) }}" placeholder="Start Date">
+                                    <input class="form-control startDate" onblur="DetailsShow()" type="date" name="start_date" value="{{ old('start_date',$custduty->start_date) }}" placeholder="Start Date">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control" onblur="DetailsShow()" type="date" name="end_date" value="{{ old('end_date',$custduty->end_date) }}" placeholder="End Date">
+                                    <input class="form-control endDate" onblur="DetailsShow()" type="date" name="end_date" value="{{ old('end_date',$custduty->end_date) }}" placeholder="End Date">
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -50,6 +50,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Employee ID')}}</th>
+                                                <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Duty Rate')}}</th>
                                                 <th scope="col">{{__('OT-Rate')}}</th>
                                                 <th scope="col">{{__('Duty Qty')}}</th>
@@ -69,8 +70,16 @@
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="{{ $d->employee?->admission_id_no }}" placeholder="Employee Id">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }} -{{ $d->employee?->position?->name }}</div>
-                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+                                                    {{-- <input class="job_post_id" type="hidden" name="job_post_id[]" value=""> --}}
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ old('employee_id',$d->employee?->id) }}">
+                                                </td>
+                                                <td>
+                                                    <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                                                        <option value="0">Select</option>
+                                                        @foreach ($jobposts as $job)
+                                                            <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ old('duty_rate',$d->duty_rate) }}" placeholder="Duty Rate">
@@ -107,15 +116,13 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty" value="{{ old('total_duty',$custduty->total_duty) }}"></td>
-                                                <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot" value="{{ old('total_ot',$custduty->total_ot) }}"></td>
-                                                <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount" value="{{ old('total_duty_amount',$custduty->total_duty_amount) }}"></td>
-                                                <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount" value="{{ old('total_ot_amount',$custduty->total_ot_amount) }}"></td>
-                                                <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total" value="{{ old('finall_amount',$custduty->finall_amount) }}"></td>
-                                                <td></td>
+                                                <th colspan="4" class="text-center"> Total</th>
+                                                <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty" value="{{ old('total_duty',$custduty->total_duty) }}"></th>
+                                                <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot" value="{{ old('total_ot',$custduty->total_ot) }}"></th>
+                                                <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount" value="{{ old('total_duty_amount',$custduty->total_duty_amount) }}"></th>
+                                                <th><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount" value="{{ old('total_ot_amount',$custduty->total_ot_amount) }}"></th>
+                                                <th><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total" value="{{ old('finall_amount',$custduty->finall_amount) }}"></th>
+                                                <th></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -143,26 +150,26 @@
     }
 
     function getEmployees(e){
-
         var customer_id = $('.customer_id');
+        var customer_select_message = $('.customer_select_message');
         if (!customer_id.val()) {
             customer_id.focus();
-            $('.customer_select_message').html('Please select a customer');
+            customer_select_message.html('Please select a customer');
             return false;
         }
-        customer_id.on('change', function() {
-            if ($(this).val()) {
-                $('.customer_select_message').hide();
-            } else {
-                $('.customer_select_message').html('Please select a customer').show();
-            }
-        });
-
+        //customer_id.on('change', function() {
+         //   if ($(this).val()) {
+         //       customer_select_message.hide();
+        //    } else {
+         //       customer_select_message.html('Please select a customer').show();
+        //    }
+        //});
         var pa = '<div style="color:red">Invalid Employee ID</div>';
         $(e).closest('tr').find('.employee_data').html('');
         var message=$(e).closest('tr').find('.employee_data').append(pa);
 
         var employee_id=$(e).closest('tr').find('.employee_id').val();
+        //console.log('E='+employee_id);
         var customerId = document.getElementById('customer_id').value;
         if(employee_id){
             $.ajax({
@@ -171,19 +178,23 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
+                   // console.log(data);
+                    //console.log(employee_id);
                     if(data.length>0){
-                        console.log(data);
+                        //console.log(data);
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
                         var contact = data[0].bn_parm_phone_my;
                         var position=data[0].position.name;
                         var positionid=data[0].bn_jobpost_id;
-
-                        $(e).closest('tr').find('.employee_data').html(name+'-'+position);
-                        $(e).closest('tr').find('.job_post_id').val(positionid);
+                        //console.log('Position'.positionid);
+                        $(e).closest('tr').find('.employee_data').html(name);
+                        // Select the corresponding option in the select element
+                        $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
+                        //$(e).closest('tr').find('.job_post_id').val(positionid);
                         $(e).closest('tr').find('.employee_id_primary').val(id);
                     }
-                    getDutyOtRate(e,customerId,positionid);
+                    getDutyOtRate(e);
                 },
             });
         } else {
@@ -193,17 +204,21 @@
         }
     }
 
-    function getDutyOtRate(e,customerId,positionid){
+    function getDutyOtRate(e){
+        let positionid = $(e).closest('tr').find('.job_post_id option:selected').data('jobpostid');
+        var customerId = $('.customer_id').val();
+        //console.log('Customer'.customerId);
+        //console.log(customerId);
         $.ajax({
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
-                console.log(dutyRate)
+                //console.log(dutyRate)
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
 
@@ -216,11 +231,19 @@
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let dutyAmount=parseFloat(dutyRate*dutyQty);
-        let otAmount=parseFloat(otRate*otQty);
-        $(e).closest('tr').find('.duty_amount').val(dutyAmount);
-        $(e).closest('tr').find('.ot_amount').val(otAmount);
-        $(e).closest('tr').find('.total_amount').val(otAmount+dutyAmount);
+        //let currentDate = new Date();
+        //let currentMonth = currentDate.getMonth() + 1;
+        //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let currentDate = $('.startDate').val();
+        let currentMonth = new Date(currentDate).getMonth() + 1;
+        let totalDaysInMonth = new Date(new Date(currentDate).getFullYear(), currentMonth, 0).getDate();
+        let dutyRateDay=dutyRate/totalDaysInMonth;
+        let otRateDay=otRate/totalDaysInMonth;
+        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+        let otAmount=parseFloat(otRateDay*otQty);
+        $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
+        $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
+        $(e).closest('tr').find('.total_amount').val(parseFloat(otAmount+dutyAmount).toFixed(2));
 
         var totalDuty=0;
         var totalOt=0;
@@ -265,6 +288,14 @@ function addRow(){
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
             <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
+        </td>
+        <td>
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                <option value="0">Select</option>
+                @foreach ($jobposts as $job)
+                    <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
+                @endforeach
+            </select>
         </td>
         <td>
             <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">

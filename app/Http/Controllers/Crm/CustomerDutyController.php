@@ -141,11 +141,11 @@ class CustomerDutyController extends Controller
      */
     public function edit($id)
     {
-        $jobpost=JobPost::all();
+        $jobposts=JobPost::all();
         $customer=Customer::all();
         $employee=Employee::all();
         $custduty = CustomerDuty::findOrFail(encryptor('decrypt',$id));
-        return view('customer_duty.edit',compact('jobpost','customer','custduty','employee'));
+        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee'));
     }
 
     /**
