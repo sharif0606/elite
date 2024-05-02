@@ -242,9 +242,12 @@
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth() + 1;
-        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        //let currentDate = new Date();
+        //let currentMonth = currentDate.getMonth() + 1;
+        //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let currentDate = $('.startDate').val();
+        let currentMonth = new Date(currentDate).getMonth() + 1;
+        let totalDaysInMonth = new Date(new Date(currentDate).getFullYear(), currentMonth, 0).getDate();
         let dutyRateDay=dutyRate/totalDaysInMonth;
         let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
@@ -298,7 +301,7 @@ function addRow(){
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px">
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
                 <option value="0">Select</option>
                 @foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
