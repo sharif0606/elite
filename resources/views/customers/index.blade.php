@@ -16,6 +16,7 @@
                         <th scope="col">{{__('Contact')}}</th>
                         {{--  <th scope="col">{{__('Contact Person')}}</th>  --}}
                         <th scope="col">{{__('Address')}}</th>
+                        <th scope="col">{{__('Zone')}}</th>
                         <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                             <strong>Contact:</strong> {{$e->contact_number}}
                         </td>  --}}
                         <td>{{$e->address}}</td>
+                        <td>{{$e->zone?->name}}</td>
                         <td class="d-flex">
                             <a href="{{route('customer.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>

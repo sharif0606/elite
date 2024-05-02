@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
-use App\Models\Settings\Location\District;
-use App\Models\Settings\Location\Upazila;
-use App\Models\Settings\Location\Union;
-use App\Models\Settings\Location\Ward;
+
+use App\Models\Settings\Zone;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Crm\CustomerRequest;
 
 use Toastr;
-use Carbon\Carbon;
-use DB;
 use Exception;
 use App\Http\Traits\ImageHandleTraits;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
 {
@@ -29,7 +23,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(20);
+        $customers = Customer::with('zone')->paginate(20);
         return view('customers.index',compact('customers'));
     }
 
@@ -40,11 +34,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $districts = District::all();
-        $upazila = Upazila::all();
-        $union = Union::all();
-        $ward = Ward::all();
-        return view('customers.create',compact('districts','upazila','union','ward'));
+        $zones = Zone::all();
+        return view('customers.create',compact('zones'));
     }
 
     /**
@@ -64,15 +55,8 @@ class CustomerController extends Controller
             $data->bin = $request->bin;
             $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
-            // $data->contact_person = $request->contact_person;
-            // $data->contact_number = $request->contact_number;
-            // $data->billing_address = $request->billing_address;
-            // $data->billing_person = $request->billing_person;
-            // $data->agreement_date = $request->agreement_date;
-            // $data->renew_date = $request->renew_date;
-            // $data->validity_date = $request->validity_date;
+            $data->zone_id = $request->zone_id;
             $data->status = 1;
-
 
             if($request->has('file_upload'))
             $data->file_upload=$this->uploadImage($request->file_upload,'uploads/customer/file_upload/');
@@ -112,12 +96,10 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $districts = District::all();
-        $upazila = Upazila::all();
-        $union = Union::all();
-        $ward = Ward::all();
+        
+        $zones = Zone::all();
         $customer = Customer::findOrFail(encryptor('decrypt',$id));
-        return view('customers.edit',compact('districts','upazila','union','ward','customer'));
+        return view('customers.edit',compact('zones','customer'));
     }
 
     /**
@@ -138,13 +120,7 @@ class CustomerController extends Controller
             $data->bin = $request->bin;
             $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
-            // $data->contact_person = $request->contact_person;
-            // $data->contact_number = $request->contact_number;
-            // $data->billing_address = $request->billing_address;
-            // $data->billing_person = $request->billing_person;
-            // $data->agreement_date = $request->agreement_date;
-            // $data->renew_date = $request->renew_date;
-            // $data->validity_date = $request->validity_date;
+            $data->zone_id = $request->zone_id;
             $data->status = 1;
 
             if($request->has('file_upload'))

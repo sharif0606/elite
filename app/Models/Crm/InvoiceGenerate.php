@@ -15,6 +15,9 @@ class InvoiceGenerate extends Model
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
+    public function payment(){
+        return $this->hasMany(InvoicePayment::class,'invoice_id','id');
+    }
     public function branch(){
         return $this->belongsTo(CustomerBrance::class,'branch_id','id');
     }

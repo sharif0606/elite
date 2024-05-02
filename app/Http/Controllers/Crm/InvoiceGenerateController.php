@@ -28,7 +28,7 @@ class InvoiceGenerateController extends Controller
 
     public function index()
     {
-        $invoice=InvoiceGenerate::orderBy('id','DESC')->get();
+        $invoice=InvoiceGenerate::with('payment','customer','branch')->orderBy('id','DESC')->paginate(10);
         $customer=Customer::all();
         return view('invoice_generate.index',compact('invoice','customer'));
     }
@@ -47,6 +47,7 @@ class InvoiceGenerateController extends Controller
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
             $data->atm_id = $request->atm_id;
+            $data->zone_id = $request->zone_id;
             $data->start_date = $request->start_date;
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
@@ -100,22 +101,7 @@ class InvoiceGenerateController extends Controller
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
-    public function invoicePayment(Request $request)
-    {
-        try{
-            $data=new InvoicePayment;
-            $data->invoice_id = $request->invId;
-            $data->taka = $request->grand_total;
-            $data->date = $request->date;
-            $data->save();
-            \LogActivity::addToLog('InvoicePayment',$request->getContent(),'InvoicePayment');
-            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
-        } catch (Exception $e) {
-            dd($e);
-            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
-        }
-    }
-
+    
     public function show(Request $request,$id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));

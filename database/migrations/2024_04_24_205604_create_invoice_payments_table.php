@@ -15,9 +15,19 @@ return new class extends Migration
     {
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->id();
+            $table->integer('customer_id')->nullable();
+            $table->integer('zone_id')->nullable();
             $table->integer('invoice_id')->nullable();
-            $table->decimal('taka',10,2)->default(0)->nullable();
-            $table->date('date')->nullable();
+            $table->decimal('received_amount',10,2)->default(0)->nullable();
+            $table->decimal('vat',10,2)->default(0)->nullable();
+            $table->decimal('vat_amount',10,2)->default(0)->nullable();
+            $table->integer('payment_type')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('po_no')->nullable();
+            $table->date('po_date')->nullable();
+            $table->date('deposit_date')->nullable();
+            $table->date('pay_date')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

@@ -18,21 +18,20 @@
                     <div class="card-body">
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" name="zone_id" id="zone_id">
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
+                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                            <option data-zone="{{$c->zone_id}}" value="{{ $c->id }}">{{ $c->name }}</option>
+                                        <option value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this);addCount(this);checkZone(this);">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this),addCount(this)">
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
@@ -143,14 +142,6 @@
 @endsection
 @push("scripts")
 <script>
-    function checkZone(e){
-        let customer_zone=$('#customer_id').find(":selected").data('zone');
-        let branch_zone=$('#branch_id').find(":selected").data('zone');
-        if(branch_zone)
-            $('#zone_id').val(branch_zone);
-        else
-            $('#zone_id').val(customer_zone);
-    }
     function getInvoiceData(e){
 
         if (!$('.customer_id').val()) {

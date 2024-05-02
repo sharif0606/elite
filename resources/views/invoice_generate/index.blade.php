@@ -19,11 +19,14 @@
                         <th scope="col">{{__('End Date')}}</th>
                         <th scope="col">{{__('Bill Date')}}</th>
                         <th scope="col">{{__('Grand Total')}}</th>
+                        <th scope="col">{{__('Due')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     @forelse($invoice as $e)
+                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount'))); @endphp
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{ $e->customer?->name }}
@@ -35,6 +38,7 @@
                         <td>{{ $e->end_date }}</td>
                         <td>{{ $e->bill_date }}</td>
                         <td>{{ $e->grand_total }}</td>
+                        <td>{{ $due }}</td>
                         <td>
                             <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-eye"></i>
@@ -45,8 +49,10 @@
                             <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
                             data-bs-toggle="modal" data-bs-target="#invList"
                             data-inv-id="{{$e->id}}"
+                            data-zone-id="{{$e->zone_id}}"
                             data-customer-name="{{ $e->customer?->name }}"
-                            data-total-amount="{{$e->grand_total}}"
+                            data-customer-id="{{ $e->customer?->id }}"
+                            data-total-amount="{{$due}}">
                             {{-- data-check-update="{{route(currentUser().'.check_list_update',$d->id)}}" --}}
                             <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
                         </button>
@@ -60,56 +66,94 @@
                 </tbody>
             </table>
             <div class="pt-2">
-                {{--  {{$guards->links()}}  --}}
-            </div>
-            <div class="modal fade" id="invList" tabindex="-1" role="dialog" aria-labelledby="balanceTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                    <form method="post" id="invUpdate"  action="{{route('invoicePayment')}}">
-                        @csrf
-                        <div class="modal-content">
-                            <div class="modal-header py-1">
-                                <h5 class="modal-title" id="batchTitle">Collection</h5>
-                                <button type="button" class="close text-danger" data-bs-dismiss="modal"  aria-label="Close">
-                                    <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <table class="table table-bordered">
-                                    <input type="hidden" id="inv_id" name="invId" value="">
-                                    <tbody>
-                                        <tr class="bg-light">
-                                            <th>Customer Name</th>
-                                            <td id="name"></td>
-                                        </tr>
-                                        <tr class="bg-light">
-                                            <th>Amount</th>
-                                            <td id="totalAmount"></td>
-                                        </tr>
-                                        <tr class="bg-light">
-                                            <th>Amount</th>
-                                            <td>
-                                                <input type="text" class="form-control grand_total" name="grand_total" value="">
-                                            </td>
-                                        </tr>
-                                        <tr class="bg-light">
-                                            <th>Date</th>
-                                            <td>
-                                                <input type="date" class="form-control date" name="date" value="">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-sm btn-primary">Save</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                 {{$invoice->links()}} 
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="invList" tabindex="-1" role="dialog" aria-labelledby="balanceTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <form method="post" id="invUpdate"  action="{{route('invoice-payment.store')}}">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header py-1">
+                    <h5 class="modal-title" id="batchTitle">Collection</h5>
+                    <button type="button" class="close text-danger" data-bs-dismiss="modal"  aria-label="Close">
+                        <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="inv_id" name="invId">
+                    <input type="hidden" id="customer_id" name="customer_id">
+                    <input type="hidden" id="zone_id" name="zone_id">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr class="bg-light">
+                                        <th>Customer Name:</th>
+                                        <td id="name"></td>
+                                        <th>Due Amount:</th>
+                                        <td id="totalAmount"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Received Amount</label>
+                            <input type="text" id="received_amount" name="received_amount" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">VAT</label>
+                            <input type="text" onkeyup="vatcalc(this.value,'vat_amount')" id="vat" name="vat" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">VAT Amount</label>
+                            <input type="text" onkeyup="vatcalc(this.value,'vat')" id="vat_amount" name="vat_amount" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Payment Mode</label>
+                            <select name="payment_type" class="form-control">
+                                <option value="1">Cash</option>
+                                <option value="2">Pay Order</option>
+                                <option value="3">Fund Transfer</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Bank Name</label>
+                            <input type="text" name="bank_name" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">PO No</label>
+                            <input type="text" name="po_no" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">PO Date</label>
+                            <input type="date" name="po_date" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Pay Date</label>
+                            <input type="date" value="{{date('Y-m-d')}}" name="pay_date" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Deposit Date</label>
+                            <input type="date" name="deposit_date" class="form-control">
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="">Remarks</label>
+                            <textarea name="remarks" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -142,16 +186,33 @@
 @endsection
 @push('scripts')
 <script>
+    function vatcalc(v,place){
+        if(place=="vat_amount"){
+            let rec= $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let vat= v ? parseFloat(v) : 0;
+            let vamt=(rec*(vat/100));
+            $('#'+place).val(vamt.toFixed(2))
+        }else{
+            let rec=$('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let vamt=v ? parseFloat(v) : 0;
+            let vat=(100*(vamt/rec));
+            $('#'+place).val(vat.toFixed(2))
+        }
+    }
     $(document).ready(function () {
         $('#invList').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             var invId = button.data('inv-id');
             var cusName = button.data('customer-name');
+            var cusID = button.data('customer-id');
+            var zone = button.data('zone-id');
             var Amount = button.data('total-amount');
             // Set the values in the modal
             var modal = $(this);
             modal.find('#inv_id').val(invId);
             modal.find('#name').text(cusName);
+            modal.find('#customer_id').val(cusID);
+            modal.find('#zone_id').val(zone);
             modal.find('#totalAmount').text(Amount);
         });
     });

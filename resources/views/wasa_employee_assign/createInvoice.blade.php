@@ -20,6 +20,7 @@
                         {{--  <form method="post" action="{{route('WasaInviceStore',[encryptor('encrypt',$empasin?->id)])}}" enctype="multipart/form-data">  --}}
                             @csrf
                             @method('POST')
+                            <input type="text" name="zone_id" id="zone_id" value="{{$branch?->zone_id ?? $customer->zone_id}}">
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label> :  {{ $customer->name }}

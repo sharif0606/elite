@@ -107,7 +107,7 @@
                                                 <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
                                                 <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
                                                 <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
-                                                <td><input readonly class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
+                                                <td><input required class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
                                                 <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -218,7 +218,7 @@
             <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
             <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
             <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
-            <td><input readonly class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
+            <td><input required class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
             <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="" placeholder="Salary Amount"></td>
             <td>
                 <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>

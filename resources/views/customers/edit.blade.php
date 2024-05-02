@@ -22,15 +22,6 @@
                             <input type="text" id="name" value="{{old('name',$customer->name)}}" class="form-control" placeholder="Customer Name" name="name">
                         </div>
                     </div>
-                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="brance_name">Brance Name</label>
-                            <input type="text" id="brance_name" value="{{old('brance_name',$customer->brance_name)}}" class="form-control @error('brance_name') is-invalid @enderror" placeholder="Brance Name" name="brance_name">
-                            @if($errors->has('brance_name'))
-                                <span class="text-danger"> {{ $errors->first('brance_name') }}</span>
-                            @endif
-                        </div>
-                    </div>  --}}
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="contact">Contact Number</label>
@@ -45,42 +36,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="contact_person">Contact Person Name</label>
-                            <input type="text" id="contact_person" value="{{old('contact_person',$customer->contact_person)}}" class="form-control" placeholder="Contact Person" name="contact_person">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="contact_number">Contact Mobile No.</label>
-                            <input type="text" id="contact_number" value="{{old('contact_number',$customer->contact_number)}}" class="form-control" placeholder="Contact Mobile no." name="contact_number">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="billing_person">Billing Person Name</label>
-                            <input type="text" id="billing_person" value="{{old('billing_person',$customer->billing_person)}}" class="form-control" placeholder="Billing Person Name" name="billing_person">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="agreement_date">Agreement Date</label>
-                            <input type="date" id="agreement_date" value="{{old('agreement_date',$customer->agreement_date)}}" class="form-control" placeholder="" name="agreement_date">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="renew_date">Renew Date</label>
-                            <input type="date" id="renew_date" value="{{old('renew_date',$customer->renew_date)}}" class="form-control" placeholder="" name="renew_date">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <label for="validity_date">Validity Date</label>
-                            <input type="date" id="validity_date" value="{{old('validity_date',$customer->validity_date)}}" class="form-control" placeholder="" name="validity_date">
-                        </div>
-                    </div>  --}}
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="file_upload">Upload File</label>
@@ -105,12 +60,16 @@
                             <textarea class="form-control" id="address" rows="5" placeholder="Full Address" name="address">{{old('address',$customer->address)}}</textarea>
                         </div>
                     </div>
-                    {{--  <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="form-group">
-                            <label for="billing_address">Billing Address</label>
-                            <textarea class="form-control" id="billing_address" rows="5" placeholder="Billing Address" name="billing_address">{{old('billing_address',$customer->billing_address)}}</textarea>
-                        </div>
-                    </div>  --}}
+                    <div class="col-md-4 col-12">
+                        <label for=""><b>Zone</b></label>
+                        <select class="form-select" id="zone" name="zone_id">
+                            <option value="">Select Zone</option>
+                            @forelse ($zones as $z)
+                            <option value="{{ $z->id }}">{{ $z->name }}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="logo">Logo</label>

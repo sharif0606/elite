@@ -119,6 +119,9 @@
                                 <li class="submenu-item">
                                     <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
                                 </li>
+                                <li class="submenu-item">
+                                    <a href="{{route('invoice-payment.index', ['role' =>currentUser()])}}">Invoice Payment</a>
+                                </li>
 
                             </ul>
                         </li>
@@ -218,6 +221,13 @@
                                 <li class="py-1 submenu-item"><a href="{{route('credit_voucher.index')}}">{{__('Receive/Cr Voucher')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('debit_voucher.index')}}">{{__('Payment/Dr Voucher')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('journal_voucher.index')}}">{{__('Journal Voucher')}}</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item has-sub">
+                            <a href="#" class='sidebar-link'><i class="bi bi-receipt"></i><span>{{__('Report')}}</span>
+                            </a>
+                            <ul class="submenu">
+                                <li class="py-1 submenu-item"><a href="{{route('report.inv_payment')}}">{{__('Invoice Payment')}}</a></li>
                             </ul>
                         </li>
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->

@@ -157,8 +157,6 @@ class WasaEmployeeAssignController extends Controller
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
-
-
     public function destroy($id)
     {
         $crate=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
@@ -201,6 +199,7 @@ class WasaEmployeeAssignController extends Controller
             $data->vat_taka = $request->vat_tk_subtotal;
             $data->grand_total = $request->grand_total_tk;
             $data->footer_note = $request->footer_note;
+            $data->zone_id = $request->zone_id;
             $data->status = 0;
             if($data->save()){
                 $invoice=new WasaInvoice;

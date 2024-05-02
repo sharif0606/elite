@@ -42,6 +42,7 @@ use App\Http\Controllers\Crm\CustomerBranceController as customerbrance;
 use App\Http\Controllers\Crm\CustomerRateController as customerRate;
 use App\Http\Controllers\Crm\WasaEmployeeAssignController as wasaEmployeeAsign;
 use App\Http\Controllers\Crm\OnetripInvoiceController as oneTripInvoice;
+use App\Http\Controllers\Crm\InvoicePaymentController as invPayment;
 
 /* Stock */
 use App\Http\Controllers\Stock\CategoryController as category;
@@ -65,6 +66,8 @@ use App\Http\Controllers\Vouchers\CreditVoucherController as credit;
 use App\Http\Controllers\Vouchers\DebitVoucherController as debit;
 use App\Http\Controllers\Vouchers\JournalVoucherController as journal;
 
+/* report */
+use App\Http\Controllers\Report\ReportController as reports;
 
 /*
 
@@ -192,6 +195,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('debit_voucher',debit::class);
         Route::resource('journal_voucher',journal::class);
 
+        //report
+        Route::get('inv-pay-report',[reports::class,'invoicePayment'])->name('report.inv_payment');
+
     });
 
     Route::middleware(['checkauth'])->prefix('admin')->group(function(){
@@ -219,7 +225,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
-
+        Route::resource('invoice-payment',invPayment::class);
         /* employee security */
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
         Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');
@@ -234,7 +240,6 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show7/{id}', [invoiceGenerate::class, 'getSingleInvoice7'])->name('invoiceShow7');
         Route::get('/single-invoice-show8/{id}', [invoiceGenerate::class, 'getSingleInvoice8'])->name('invoiceShow8');
         Route::post('wasastoreInvoice', [wasaEmployeeAsign::class,'storeWasaInvoice'])->name('WasaInviceStore');
-        Route::post('invoicePayment', [invoiceGenerate::class,'invoicePayment'])->name('invoicePayment');
 
         /* stock */
         Route::get('/stock-report-individual/{id}',[stock::class,'stockindividual'])->name('stock.individual');

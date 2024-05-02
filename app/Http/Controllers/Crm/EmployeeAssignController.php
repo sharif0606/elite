@@ -185,7 +185,7 @@ class EmployeeAssignController extends Controller
     public function loadBranchAjax(Request $request)
     {
         $customerId = $request->customerId;
-        $branch = CustomerBrance::where('customer_id', $customerId)->select('id','brance_name','vat')->get();
+        $branch = CustomerBrance::where('customer_id', $customerId)->select('id','zone_id','brance_name','vat')->get();
         return response()->json($branch, 200);
     }
     public function loadAtmAjax(Request $request)
