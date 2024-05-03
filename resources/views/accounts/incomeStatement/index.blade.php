@@ -12,54 +12,121 @@
                 <div class="text-center">
                  <h3>Income Statement</h3>
                 </div>
-                <div class="row ps-2">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="form-label">Month</label>
-                            <select id="month" class="form-control">
-                            <option value="">Select Month</option>
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                            </select>
+                <form action="" method="get">
+                    <div class="row ps-2">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="form-label">Month</label>
+                                <select name="imonth" id="month" class="form-control">
+                                <option value="">Select Month</option>
+                                    <?php
+                                        $selected_tmonth = isset($_GET['imonth'])?$_GET['imonth']:\Carbon\Carbon::now()->format('m'); //current month
+                                        for ($i = 1; $i <= 12; $i++) {
+                                            $selected = $selected_tmonth == $i ? ' selected' : '';
+                                            echo '<option value="'.$i.'"'.$selected.'>'. date('F', mktime(0,0,0,$i,5)).'</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="form-label">Year</label>
+                                <select id="year" name="iyear" class="form-control">
+                                    <option value="">Select Year</option>
+                                    <?php
+                                        $selected_ty = isset($_GET['iyear'])?$_GET['iyear']:\Carbon\Carbon::now()->format('Y'); //current year
+                                        for ($i = 2023; $i <= \Carbon\Carbon::now()->format('Y'); $i++) {
+                                            $selected = $selected_ty == $i ? ' selected' : '';
+                                            echo '<option value="'.$i.'"'.$selected.'>'. $i.'</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 pt-3 mt-2">
+                            <button class="btn btn-primary btn-block" type="submit">Get Report</button>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label class="form-label">Year</label>
-                            <select id="year" class="form-control">
-                                <option value="">Select Year</option>
-                                @for($i=2021; $i<= date('Y'); $i++)
-                                    <option value="{{$i}}">{{$i}}</option>
-                                @endfor
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 pt-3 mt-2">
-                        <button class="btn btn-primary btn-block" type="button" onclick="get_details_report()">Get Report</button>
+                </form>
+                <div class="card">
+                    <div class="card-body">
+                        @php $inc=$exp=0; @endphp
+                        <table class="table table-bordered">
+                            <tr>
+                                <th colspan="2" class="text-center">For the month of {{date('F', mktime(0,0,0,$selected_tmonth,5))}}-{{$selected_ty}}</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="text-center">ELITE SECURITY SERVICES LIMITED</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center">Received</th>
+                                <th class="text-center">Payment</th>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;">
+                                    <table class="table">
+                                        <tr>
+                                            <th>#SL</th>
+                                            <th>Particulars</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        @forelse($opincome as $i=>$opi)
+                                            <tr>
+                                                <th>{{ ++$i }}</th>
+                                                <th>{{$opi->journal_title}}</th>
+                                                <th>{{$opi->cr}}</th>
+                                            </tr>
+                                        @empty
+
+                                        @endforelse
+                                        @forelse($nonopincome as $opi)
+                                            <tr>
+                                                <th>{{ ++$i }}</th>
+                                                <th>{{$opi->journal_title}}</th>
+                                                <th>{{$opi->cr}}</th>
+                                            </tr>
+                                        @empty
+
+                                        @endforelse
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="table">
+                                        <tr>
+                                            <th>#SL</th>
+                                            <th>Particulars</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        @forelse($opexpense as $i=>$opi)
+                                            <tr>
+                                                <th>{{ ++$i }}</th>
+                                                <th>{{$opi->journal_title}}</th>
+                                                <th>{{$opi->dr}}</th>
+                                            </tr>
+                                        @empty
+
+                                        @endforelse
+                                        @forelse($nonopexpense as $opi)
+                                            <tr>
+                                                <th>{{ ++$i }}</th>
+                                                <th>{{$opi->journal_title}}</th>
+                                                <th>{{$opi->dr}}</th>
+                                            </tr>
+                                        @empty
+
+                                        @endforelse
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div id="details">
-
-                        </div>
-
+                        
                     </div>
                 </div>
-
-                <br>
-
-
             </div>
         </div>
     </div>
@@ -69,38 +136,3 @@
 
 @endsection
 
-@push('scripts')
-<script>
-	function get_details_report() {
-		var month = $('#month').val();
-		var year = $('#year').val();
-		if (year) {
-			$.ajax({
-				url: "{{route('incomeStatement.details')}}",
-				data: {
-					'month': month,
-					'year': year
-				},
-				dataType: 'json',
-				success: function(data) {
-                    console.log(data);
-                    $('#details').html(data);
-					result = '' + data['result'] + '';
-					mainContent = '' + data['mainContent'] + '';
-
-					if (result == 'success')
-						$('#details').html(mainContent);
-
-				},
-				error: function(e) {
-					console.log(e);
-				}
-			});
-		} else {
-			alert("Please select any Year");
-			$('#year').focus();
-		}
-		return false; // keeps the page from not refreshing
-	}
-</script>
-@endpush

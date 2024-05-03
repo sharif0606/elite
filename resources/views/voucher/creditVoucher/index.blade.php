@@ -24,7 +24,7 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Voucher No')}}</th>
                                 <th scope="col">{{__('Date')}}</th>
-                                <th scope="col">{{__('Pay Name')}}</th>
+                                {{-- <th scope="col">{{__('Pay Name')}}</th> --}}
                                 <th scope="col">{{__('Purpose')}}</th>
                                 <th scope="col">{{__('Amount')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
@@ -36,7 +36,7 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$cr->voucher_no}}</td>
                                 <td>{{date('d/m,Y',strtotime($cr->current_date))}}</td>
-                                <td>{{$cr->pay_name}}</td>
+                                {{-- <td>{{$cr->pay_name}}</td> --}}
                                 <td>{{$cr->purpose}}</td>
                                 <td>{{$cr->debit_sum}}</td>
                                 <td class="white-space-nowrap">

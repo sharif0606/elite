@@ -59,7 +59,7 @@ use App\Http\Controllers\Accounts\SubHeadController as sub_head;
 use App\Http\Controllers\Accounts\ChildOneController as child_one;
 use App\Http\Controllers\Accounts\ChildTwoController as child_two;
 use App\Http\Controllers\Accounts\NavigationHeadViewController as navigate;
-use App\Http\Controllers\Accounts\IncomeStatementController as statement;
+use App\Http\Controllers\Accounts\Report\IncomeStatementController as statement;
 /*Vouchers */
 use App\Http\Controllers\Vouchers\VoucherController as vouchers;
 use App\Http\Controllers\Vouchers\CreditVoucherController as credit;
