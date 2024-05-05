@@ -10,9 +10,9 @@ use App\Models\Hrm\SalarySheetDetail;
 use App\Models\Crm\CustomerDuty;
 use App\Http\Controllers\Controller;
 use App\Models\Crm\CustomerDutyDetail;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
 
 class SalarySheetController extends Controller
