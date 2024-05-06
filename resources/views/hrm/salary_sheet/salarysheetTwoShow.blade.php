@@ -96,10 +96,10 @@
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
                                             <td>{{ $d->online_payment }}</td>
                                             <td>{{ $d->duty_rate }}</td>
-                                            <td>{{ $d->duty_qty }}</td>
+                                            <td>{{ (int)$d->duty_qty }}</td>
                                             <td>{{ $d->duty_amount }}</td>
-                                            <td>{{ $d->weekly_leave }}</td>
-                                            <td>{{ $d->ot_qty }}</td>
+                                            <td>{{ (int)$d->weekly_leave }}</td>
+                                            <td>{{ (int)$d->ot_qty }}</td>
                                             <td>{{ $d->ot_rate }}</td>
                                             <td>{{ $d->ot_amount }}</td>
                                             <td>{{ $d->ht_ribon_alice }}</td>

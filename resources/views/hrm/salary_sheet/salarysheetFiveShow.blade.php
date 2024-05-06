@@ -74,9 +74,9 @@
                                             <td>{{ $d->position?->name }}</td>
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
                                             <td>{{ $d->duty_rate }}</td>
-                                            <td>{{ $d->duty_qty }}</td>
+                                            <td>{{ (int)$d->duty_qty }}</td>
                                             <td>{{ $d->duty_amount }}</td>
-                                            <td>{{ $d->ot_qty }}</td>
+                                            <td>{{ (int)$d->ot_qty }}</td>
                                             <td>{{ $d->ot_rate }}</td>
                                             <td>{{ $d->ot_amount }}</td>
                                             <td>{{ $d->allownce }}</td>

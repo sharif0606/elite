@@ -82,7 +82,9 @@ class SalarySheetController extends Controller
 
     public function salarySheetOneStore(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
+        // die();
+        DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -123,6 +125,7 @@ class SalarySheetController extends Controller
                             $details->remark=$request->remark[$key];
                             $details->status=0;
                             $details->save();
+                            DB::commit();
                         }
                     }
                 }
@@ -133,13 +136,14 @@ class SalarySheetController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
     public function salarySheetTwoStore(Request $request)
     {
-        //dd($request->all());
+        DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -195,6 +199,7 @@ class SalarySheetController extends Controller
                             $details->zone=$request->zone[$key];
                             $details->status=0;
                             $details->save();
+                            DB::commit();
                         }
                     }
                 }
@@ -205,6 +210,7 @@ class SalarySheetController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -275,7 +281,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFourStore(Request $request)
     {
-        //dd($request->all());
+        DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -319,6 +325,7 @@ class SalarySheetController extends Controller
                             $details->remark=$request->remarks[$key];
                             $details->status=0;
                             $details->save();
+                            DB::commit();
                         }
                     }
                 }
@@ -329,13 +336,14 @@ class SalarySheetController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
     public function salarySheetFiveStore(Request $request)
     {
-        //dd($request->all());
+        DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -376,6 +384,7 @@ class SalarySheetController extends Controller
                             $details->remark=$request->remark[$key];
                             $details->status=0;
                             $details->save();
+                            DB::commit();
                         }
                     }
                 }
@@ -386,6 +395,7 @@ class SalarySheetController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
