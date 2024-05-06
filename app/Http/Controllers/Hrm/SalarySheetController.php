@@ -211,7 +211,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetThreeStore(Request $request)
     {
-        //dd($request->all());
+        DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
@@ -257,6 +257,7 @@ class SalarySheetController extends Controller
                             $details->sing_of_ind=$request->signature[$key];
                             $details->status=0;
                             $details->save();
+                            DB::commit();
                         }
                     }
                 }
@@ -267,6 +268,7 @@ class SalarySheetController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }

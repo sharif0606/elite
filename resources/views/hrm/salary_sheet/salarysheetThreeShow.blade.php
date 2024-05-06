@@ -21,10 +21,14 @@
                                 <img  class="mt-5" height="30px" width="60px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                             </div>
                             <div class="col-6 col-sm-6">
+                                @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
+                                    $month = $salary->month;
+                                    $getMonth = isset($mt[$month])?$mt[$month]:0;
+                                @endphp
                                 <div style="text-align: center;">
                                     <h5 class="pb-0" style="padding-top: 5px;">ELITE SECURITY SERVICES LTD</h5>
                                     <p class="text-center m-0 p-0">Houes-02,Road-02,Block-K,Halisahar H/E Chattogram</p>
-                                    <p class="text-center m-0 p-0">Salary for the Month of December-2024</p>
+                                    <p class="text-center m-0 p-0">Salary for the Month of {{$getMonth}}-{{$salary->year}}</p>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -87,14 +91,14 @@
                                             <td>{{ $d->medical }}</td>
                                             <td>{{ $d->trans_conve }}</td>
                                             <td>{{ $d->gross_wages }}</td>
-                                            <td>{{ $d->total_workingday }}</td>
-                                            <td>{{ $d->present_day }}</td>
-                                            <td>{{ $d->absent }}</td>
-                                            <td>{{ $d->vacant }}</td>
-                                            <td>{{ $d->holiday_festival }}</td>
-                                            <td>{{ $d->leave_cl }}</td>
-                                            <td>{{ $d->leave_sl }}</td>
-                                            <td>{{ $d->leave_el }}</td>
+                                            <td>{{ (int)$d->total_workingday }}</td>
+                                            <td>{{ (int)$d->present_day }}</td>
+                                            <td>{{ (int)$d->absent }}</td>
+                                            <td>{{ (int)$d->vacant }}</td>
+                                            <td>{{ (int)$d->holiday_festival }}</td>
+                                            <td>{{ (int)$d->leave_cl }}</td>
+                                            <td>{{ (int)$d->leave_sl }}</td>
+                                            <td>{{ (int)$d->leave_el }}</td>
                                             <td>{{ $d->deduction_absent }}</td>
                                             <td>{{ $d->deduction_vacant }}</td>
                                             <td>{{ $d->deduction_hr }}</td>
