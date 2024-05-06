@@ -88,7 +88,7 @@
                                                 <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Wages')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT hour')}}</th>
-                                                <th scope="col" rowspan="2">{{__('OT rate(Basic*2)')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT rate (basic*30)/208')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT Amt.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Total Payable')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Signature')}}</th>
@@ -97,10 +97,10 @@
                                                 <th>CL</th>
                                                 <th>SL</th>
                                                 <th>EL</th>
-                                                <th>Absent</th>
-                                                <th>Vacant</th>
+                                                <th data-title="(basic/30)*absent day">Absent</th>
+                                                <th data-title="(basic/30)*vacant day">Vacant</th>
                                                 <th>H.rent</th>
-                                                <th>PF</th>
+                                                <th data-title="(basic*7.5%) after one year of joining date">PF</th>
                                                 <th>Adv.</th>
                                                 <th>Stm</th>
                                                 <th>Total</th>
@@ -254,16 +254,16 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">
@@ -311,17 +311,7 @@
         let medi=$(e).closest('tr').find('.medical').val()?parseFloat($(e).closest('tr').find('.medical').val()):0;
         let trcon=$(e).closest('tr').find('.trans_conve').val()?parseFloat($(e).closest('tr').find('.trans_conve').val()):0;
         let grw = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon);
-        // let currentDate = new Date();
-        // let currentMonth = currentDate.getMonth() + 1;
-        // let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
-        // let dutyRateDay=dutyRate/totalDaysInMonth;
-        //let dutyAmount=parseFloat(dutyRateDay*dutyQty);
-        //$(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
         $(e).closest('tr').find('.gross_wages').val(parseFloat(grw).toFixed(2));
-
-        let MobileBill=$(e).closest('tr').find('.deduction_mobilebill').val()?parseFloat($(e).closest('tr').find('.deduction_mobilebill').val()):0;
-        let Hr=$(e).closest('tr').find('.deduction_hr').val()?parseFloat($(e).closest('tr').find('.deduction_hr').val()):0;
-        let medical=$(e).closest('tr').find('.deduction_medical').val()?parseFloat($(e).closest('tr').find('.deduction_medical').val()):0;
 
         let presentTotal=$(e).closest('tr').find('.present_day').val()?parseFloat($(e).closest('tr').find('.present_day').val()):0;
         let absenttTotal=$(e).closest('tr').find('.absent').val()?parseFloat($(e).closest('tr').find('.absent').val()):0;
@@ -330,31 +320,31 @@
         let levelClTotal=$(e).closest('tr').find('.leave_cl').val()?parseFloat($(e).closest('tr').find('.leave_cl').val()):0;
         let levelSlTotal=$(e).closest('tr').find('.leave_sl').val()?parseFloat($(e).closest('tr').find('.leave_sl').val()):0;
         let levelElTotal=$(e).closest('tr').find('.leave_el').val()?parseFloat($(e).closest('tr').find('.leave_el').val()):0;
-        let grossTotal=$(e).closest('tr').find('.gross_wages').val()?parseFloat($(e).closest('tr').find('.gross_wages').val()):0;
-        let otHour=$(e).closest('tr').find('.ot_hour').val()?parseFloat($(e).closest('tr').find('.ot_hour').val()):0;
-        let otRate=$(e).closest('tr').find('.ot_rate_basicDuble').val()?parseFloat($(e).closest('tr').find('.ot_rate_basicDuble').val()):0;
-        let netSalaryTotal=$(e).closest('tr').find('.net_wages').val()?parseFloat($(e).closest('tr').find('.net_wages').val()):0;
-        let otAmountTotal=$(e).closest('tr').find('.ot_amt').val()?parseFloat($(e).closest('tr').find('.ot_amt').val()):0;
+        let totalWorkingDay = parseFloat(presentTotal) + parseFloat(absenttTotal) + parseFloat(vacantTotal) + parseFloat(holyTotal) + parseFloat(levelClTotal) + parseFloat(levelSlTotal) + parseFloat(levelElTotal);
+        let absentDeduction = (dutyRate/30)*absenttTotal;
+        let vacantDeduction = (grw/30)*vacantTotal;
+        $(e).closest('tr').find('.total_workingDay').val(parseFloat(totalWorkingDay));
+        $(e).closest('tr').find('.deduction_absent').val(parseFloat(absentDeduction).toFixed(2));
+        $(e).closest('tr').find('.deduction_vacant').val(parseFloat(vacantDeduction).toFixed(2));
+
         let deductionAbsent=$(e).closest('tr').find('.deduction_absent').val()?parseFloat($(e).closest('tr').find('.deduction_absent').val()):0;
         let deductionVacant=$(e).closest('tr').find('.deduction_vacant').val()?parseFloat($(e).closest('tr').find('.deduction_vacant').val()):0;
         let deductionHr=$(e).closest('tr').find('.deduction_h_rent').val()?parseFloat($(e).closest('tr').find('.deduction_h_rent').val()):0;
         let deductionAdv=$(e).closest('tr').find('.deduction_adv').val()?parseFloat($(e).closest('tr').find('.deduction_adv').val()):0;
         let deductionPf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_stm').val()?parseFloat($(e).closest('tr').find('.deduction_stm').val()):0;
-        
-        let totalWorkingDay = parseFloat(presentTotal) + parseFloat(absenttTotal) + parseFloat(vacantTotal) + parseFloat(holyTotal) + parseFloat(levelClTotal) + parseFloat(levelSlTotal) + parseFloat(levelElTotal);
-        let absentDeduction = (dutyRate/30)*absenttTotal;
-        let vacantDeduction = (grossTotal/30)*vacantTotal;
-        let otAmount = otRate*otHour;
         let totalDeduction = parseFloat(deductionAbsent) + parseFloat(deductionVacant) + parseFloat(deductionHr) + parseFloat(deductionAdv) + parseFloat(deductionPf) + parseFloat(stamp);
         let net = parseFloat(dutyRate) - parseFloat(totalDeduction);
-        let payableTotal = netSalaryTotal+otAmountTotal;
-        $(e).closest('tr').find('.total_workingDay').val(parseFloat(totalWorkingDay));
-        $(e).closest('tr').find('.deduction_absent').val(parseFloat(absentDeduction).toFixed(2));
-        $(e).closest('tr').find('.deduction_vacant').val(parseFloat(vacantDeduction).toFixed(2));
-        $(e).closest('tr').find('.ot_amt').val(parseFloat(otAmount).toFixed(2));
         $(e).closest('tr').find('.deduction_total').val(parseFloat(totalDeduction).toFixed(2));
         $(e).closest('tr').find('.net_wages').val(parseFloat(net).toFixed(2));
+
+
+        let otHour=$(e).closest('tr').find('.ot_hour').val()?parseFloat($(e).closest('tr').find('.ot_hour').val()):0;
+        let otRate=$(e).closest('tr').find('.ot_rate_basicDuble').val()?parseFloat($(e).closest('tr').find('.ot_rate_basicDuble').val()):0;
+        let otAmount = otRate*otHour;
+        $(e).closest('tr').find('.ot_amt').val(parseFloat(otAmount).toFixed(2));
+
+        let payableTotal = net+otAmount;
         $(e).closest('tr').find('.total_payable').val(parseFloat(payableTotal).toFixed(2));
 
     }
