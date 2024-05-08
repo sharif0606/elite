@@ -41,6 +41,26 @@
                                         </optgroup>
                                     </select>
                                 </div>
+                                {{--  <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Branch Name</b></label>
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                        <option value="">Select Branch</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Atm</b></label>
+                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
+                                        <option value="">Select Atm</option>
+                                    </select>
+                                </div>  --}}
+                                {{--  <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Start Date</b></label>
+                                    <input onkeyup="reCalcultateSalary(this)" onkeyup="reCalcultateSalary(this)" required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>End Date</b></label>
+                                    <input onkeyup="reCalcultateSalary(this)" onkeyup="reCalcultateSalary(this)" required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
+                                </div>  --}}
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Salary Year</b></label>
                                     <select required class="form-control year" name="year">
@@ -167,19 +187,18 @@
                         let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
                         let joiningDate = new Date(value.joining_date);
-                        let threeMonthsLater = new Date(joiningDate);
-                        threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
+                        let sixMonthsLater = new Date(joiningDate);
+                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
                         // Deduction calculation
                         let pf = "0";
-                        if (new Date() >= threeMonthsLater) {
-                            pf = "1000";
+                        if (new Date() >= sixMonthsLater) {
+                            pf = "200";
                         }
-                        let Insurance = "100";
-                        let medical = "1500";
-                        // if (new Date() >= threeMonthsLater) {
-                        //     Insurance = (value.insurance > 0) ? value.insurance : '0';
-                        // }
+                        let Insurance = "0";
+                        if (new Date() >= sixMonthsLater) {
+                            Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
@@ -214,7 +233,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="${medical}" placeholder="Medical Allowance">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="" placeholder="Medical Allowance">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_amount" type="text" name="duty_amount[]" value="${value.duty_rate}" placeholder="Duty Amount">
@@ -310,8 +329,9 @@
         let Loan=$(e).closest('tr').find('.deduction_loan').val()?parseFloat($(e).closest('tr').find('.deduction_loan').val()):0;
         let ins=$(e).closest('tr').find('.deduction_ins').val()?parseFloat($(e).closest('tr').find('.deduction_ins').val()):0;
         let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
-        let traningCost=$(e).closest('tr').find('.deduction_traning_cost').val()?parseFloat($(e).closest('tr').find('.deduction_traning_cost').val()):0;
+        let traningCost=$(e).closest('tr').find('.deduction_traningcost').val()?parseFloat($(e).closest('tr').find('.deduction_traningcost').val()):0;
         let mess=$(e).closest('tr').find('.deduction_mess').val()?parseFloat($(e).closest('tr').find('.deduction_mess').val()):0;
+        let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
         let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(Hor) + parseFloat(Mallownce) + parseFloat(Pallownce) + parseFloat(fbill);
         let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCost) + parseFloat(ins) + parseFloat(pf);
         let net = parseFloat(tg) - parseFloat(td);
