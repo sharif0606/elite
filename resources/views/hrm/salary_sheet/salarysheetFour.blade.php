@@ -30,9 +30,9 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                <div class="form-group col-lg-6 mt-2">
+                                {{-- <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Name Not</b></label>
-                                    <select class="choices form-select multiple-remove customer_id_not" multiple="multiple" name="customer_id_not[]">
+                                    <select class="choices form-select multiple-remove customer_id_not" multiple="multiple" name="customer_id_not[]" readonly>
                                         <optgroup label="Select Customer">
                                             @forelse ($customer as $c)
                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -40,28 +40,32 @@
                                             @endforelse
                                         </optgroup>
                                     </select>
-                                </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Salary Year</b></label>
-                                    <select required class="form-control year" name="year">
-                                        <option value="">Select Year</option>
-                                        @for($i=2023;$i<= date('Y');$i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Salary Month</b></label>
-                                    <select required class="form-control month" name="month">
-                                        <option value="">Select Month</option>
-                                        @for($i=1;$i<= 12;$i++)
-                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-
-                                <div class="col-lg-3 mt-4 p-0">
-                                    <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
+                                </div> --}}
+                                <div class="form-group col-lg-6 mt-2">
+                                    <div class="row">
+                                        <div class="col-lg-4 mt-2">
+                                            <label for=""><b>Salary Year</b></label>
+                                            <select required class="form-control year" name="year">
+                                                <option value="">Select Year</option>
+                                                @for($i=2023;$i<= date('Y');$i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 mt-2">
+                                            <label for=""><b>Salary Month</b></label>
+                                            <select required class="form-control month selected_month" name="month">
+                                                <option value="">Select Month</option>
+                                                @for($i=1;$i<= 12;$i++)
+                                                <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+        
+                                        <div class="col-lg-4 mt-4 p-0">
+                                            <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -153,7 +157,7 @@
 
         let counter = 0;
         $.ajax({
-            url: "{{route('get_salary_data')}}",
+            url: "{{route('get_salary_four_data')}}",
             type: "GET",
             dataType: "json",
             data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
@@ -177,6 +181,9 @@
                         }
                         let Insurance = "100";
                         let medical = "1500";
+                        let grossSalaryAmount = (value.duty_rate > 0) ? value.duty_rate : '0';
+                        let basicSalary = ((value.duty_rate*70)/100).toFixed(2);
+                        let houseRent = (grossSalaryAmount - basicSalary - medical).toFixed(2);
                         // if (new Date() >= threeMonthsLater) {
                         //     Insurance = (value.insurance > 0) ? value.insurance : '0';
                         // }
@@ -184,11 +191,18 @@
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
-                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                        let postAllounce = (value.loan > 0) ? value.loan : '0';
+                        let fuelBill = (value.loan > 0) ? value.loan : '0';
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let currentMonth = $('.selected_month').val();
+                        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+                        let orRate = value.ot_rate/totalDaysInMonth;
+                        let otAmount=(orRate*value.ot_qty).toFixed(2);
+                        let grossSalary = ((grossSalaryAmount/totalDaysInMonth)*value.duty_qty).toFixed(2)
+                        let totalSalary = parseFloat(grossSalary) + parseFloat(otAmount);
                         let netSalary = '0';
-                        if (grossAmoun > totalDeduction) {
-                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                        if (totalSalary > totalDeduction) {
+                            netSalary = parseFloat(totalSalary) - parseFloat(totalDeduction);
                         }
                         selectElement.append(
                             `<tr>
@@ -208,16 +222,16 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${basicSalary}" placeholder="Monthlay Salary" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="" placeholder="House rent">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="${houseRent}" placeholder="House rent" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="${medical}" placeholder="Medical Allowance">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="${medical}" placeholder="Medical Allowance" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_amount" type="text" name="duty_amount[]" value="${value.duty_rate}" placeholder="Duty Amount">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="${grossSalaryAmount}" placeholder="Duty Amount">
                                 </td>
                                 <td>${value.duty_qty}
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Rate">
@@ -229,7 +243,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
                                 </td>
                                 <td>
-                                    <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
+                                    <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="${otAmount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
@@ -238,7 +252,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="${value.grossAmount}" placeholder="Total Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="${totalSalary}" placeholder="Total Salary" readonly>
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="${em}" placeholder="Excess Mobile">
@@ -287,22 +301,25 @@
 
      function reCalcultateSalary(e) {
 
-        let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
+        let grossTotal=$(e).closest('tr').find('.gross_salary').val()?parseFloat($(e).closest('tr').find('.gross_salary').val()):0;
+        let Mallownce=$(e).closest('tr').find('.medical_allowance').val()?parseFloat($(e).closest('tr').find('.medical_allowance').val()):0;
+        let basicSalary = (grossTotal*70)/100;
+        let houseRent = grossTotal-basicSalary-Mallownce;
+        $(e).closest('tr').find('.duty_rate').val(parseFloat(basicSalary).toFixed(2));
+        $(e).closest('tr').find('.house_rent').val(parseFloat(houseRent).toFixed(2));
+        //let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let Hor=$(e).closest('tr').find('.house_rent').val()?parseFloat($(e).closest('tr').find('.house_rent').val()):0;
-        let Mallownce=$(e).closest('tr').find('.medical_allowance').val()?parseFloat($(e).closest('tr').find('.medical_allowance').val()):0;
+        //let Hor=$(e).closest('tr').find('.house_rent').val()?parseFloat($(e).closest('tr').find('.house_rent').val()):0;
         let Pallownce=$(e).closest('tr').find('.post_allow').val()?parseFloat($(e).closest('tr').find('.post_allow').val()):0;
         let fbill=$(e).closest('tr').find('.fuel_bill').val()?parseFloat($(e).closest('tr').find('.fuel_bill').val()):0;
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth() + 1;
-        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
-        let dutyRateDay=dutyRate/totalDaysInMonth;
+        let currentMonth = $('.selected_month').val();
+        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        let dutyRateDay=grossTotal/totalDaysInMonth;
         let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
         let otAmount=parseFloat(otRateDay*otQty);
-        $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
         $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
 
         let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;
@@ -312,7 +329,7 @@
         let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let traningCost=$(e).closest('tr').find('.deduction_traning_cost').val()?parseFloat($(e).closest('tr').find('.deduction_traning_cost').val()):0;
         let mess=$(e).closest('tr').find('.deduction_mess').val()?parseFloat($(e).closest('tr').find('.deduction_mess').val()):0;
-        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(Hor) + parseFloat(Mallownce) + parseFloat(Pallownce) + parseFloat(fbill);
+        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(Pallownce) + parseFloat(fbill);
         let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCost) + parseFloat(ins) + parseFloat(pf);
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));

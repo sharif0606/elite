@@ -216,6 +216,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* Hrm */
         Route::get('get-salary-data',[salarySheet::class,'getSalaryData'])->name('get_salary_data');
+        Route::get('get-salary-four-data',[salarySheet::class,'getSalaryFourData'])->name('get_salary_four_data');
 
         /*Crm */
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
