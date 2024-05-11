@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Stock\Stock;
 use App\Models\Stock\Product;
 use App\Models\Employee\Employee;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
 {

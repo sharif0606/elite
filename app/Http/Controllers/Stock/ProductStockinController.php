@@ -10,10 +10,13 @@ use App\Models\Stock\ProductStockin;
 use App\Models\Stock\Stock;
 use App\Models\Employee\Employee;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\User;
 use Exception;
 use DB;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProductStockinController extends Controller
 {
@@ -140,12 +143,29 @@ class ProductStockinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     $data= ProductStockin::findOrFail(encryptor('decrypt',$id));
+    //     $tdl=Stock::where('product_stock_id',$data->id)->delete();
+    //     $data->delete();
+    //     Toastr::error('Opps!! You Delete Permanently!!');
+    //     return redirect()->back();
+    // }
+    public function productDelete(Request $request)
     {
-        $data= ProductStockin::findOrFail(encryptor('decrypt',$id));
-        $tdl=Stock::where('product_stock_id',$data->id)->delete();
-        $data->delete();
-        Toastr::error('Opps!! You Delete Permanently!!');
-        return redirect()->back();
+        $user= User::where('id',currentUserId())->first();
+        if($user){
+            if(!Hash::check($request->password, $user->password)){
+                Toastr::error('Opps!! Your provided password not matched!');
+                return redirect()->back();
+            }else{
+                $data= ProductStockin::where('id',$request->product_id)->first();
+                Stock::where('product_stock_id',$data->id)->delete();
+                $data->delete();
+                Toastr::success('You Delete Permanently!!');
+                return redirect()->back();
+            }
+        }
     }
+
 }

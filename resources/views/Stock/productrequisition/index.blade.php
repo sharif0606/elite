@@ -73,13 +73,18 @@
                                     {{--  <a href="{{route('product_issue.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>  --}}
-                                    <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
+                                    {{-- <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                     <form id="form{{ $d->id }}" action="{{ route('product_issue.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                    </form>
+                                    </form> --}}
+                                    <button class="text-danger p-0 m-0" type="button" style="background-color: transparent; border:none;"
+                                        data-bs-toggle="modal" data-bs-target="#profile"
+                                        data-product-id="{{$d->id}}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                             @empty
@@ -93,6 +98,30 @@
                 <div class="my-3">
                     {!! $requisition->links()!!}
                 </div>
+                <div class="modal fade" id="profile" tabindex="-1" role="dialog"
+                    aria-labelledby="balanceTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <form id="moreDetailsLink" method="post" action="{{route('issue_product.delete')}}">
+                            @csrf
+                            <div class="modal-content">
+                                <div class="modal-header py-1">
+                                    <h5 class="modal-title" id="batchTitle">Delete Confirmation</h5>
+                                    <button type="button" class="close text-danger" data-bs-dismiss="modal"  aria-label="Close" style="border:none;">
+                                        <i class="bi bi-x-lg" style="font-size: 1.5rem;"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" id="product_id" value="" name="product_id">
+                                    <label for="">পাসওয়ার্ড</label>
+                                    <input type="password" name="password" class="form-control" required>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-info text-white">Delete</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -105,5 +134,17 @@
             $('#form' + id).submit();
         }
     }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#profile').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            var productId = button.data('product-id');
+
+            var moreDetailsLink = modal.find('#moreDetailsLink');
+            modal.find('#product_id').val(productId);
+        });
+    });
 </script>
 @endpush

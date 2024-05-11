@@ -9,7 +9,7 @@ use App\Models\Stock\Category;
 use App\Http\Traits\ImageHandleTraits;
 use Exception;
 use DB;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Carbon;
 
 class ProductController extends Controller

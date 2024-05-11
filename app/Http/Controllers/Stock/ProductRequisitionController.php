@@ -13,9 +13,12 @@ use App\Models\Stock\ProductStockin;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
 use App\Http\Requests\Stock\ProductIssue\AddProductIssue;
+use App\Models\User;
 use Exception;
 use DB;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
 class ProductRequisitionController extends Controller
@@ -151,13 +154,30 @@ class ProductRequisitionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy($id)
+    // {
+    //     $data= ProductRequisition::findOrFail(encryptor('decrypt',$id));
+    //     $tdl=ProductRequisitionDetails::where('product_requisition_id',$data->id)->delete();
+    //     $tl=Stock::where('product_requisition_id',$data->id)->delete();
+    //     $data->delete();
+    //     Toastr::error('Opps!! You Delete Permanently!!');
+    //     return redirect()->back();
+    // }
+    public function issueProductDelete(Request $request)
     {
-        $data= ProductRequisition::findOrFail(encryptor('decrypt',$id));
-        $tdl=ProductRequisitionDetails::where('product_requisition_id',$data->id)->delete();
-        $tl=Stock::where('product_requisition_id',$data->id)->delete();
-        $data->delete();
-        Toastr::error('Opps!! You Delete Permanently!!');
-        return redirect()->back();
+        $user= User::where('id',currentUserId())->first();
+        if($user){
+            if(!Hash::check($request->password, $user->password)){
+                Toastr::error('Opps!! Your provided password not matched!');
+                return redirect()->back();
+            }else{
+                $data= ProductRequisition::where('id',$request->product_id)->first();
+                ProductRequisitionDetails::where('product_requisition_id',$data->id)->delete();
+                Stock::where('product_requisition_id',$data->id)->delete();
+                $data->delete();
+                Toastr::success('You Delete Permanently!!');
+                return redirect()->back();
+            }
+        }
     }
 }
