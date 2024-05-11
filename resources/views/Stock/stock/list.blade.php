@@ -37,8 +37,11 @@
             </div>
         </div>
         <div class="row" id="table-bordered">
+            <div class="text-end">
+                <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
+            </div>
             <div class="col-12">
-                <div class="card">
+                <div class="card" id="result_show">
                     <div class="table-responsive">
                         <table class="table table-bordered mb-0">
                             <thead>
