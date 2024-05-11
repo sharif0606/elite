@@ -90,9 +90,9 @@
                                             <td>{{ $d->ot_qty }}</td>
                                             <td>{{ $d->ot_rate }}</td>
                                             <td>{{ $d->ot_amount }}</td>
-                                            <td>{{ $d->post_allow }}</td>
+                                            <td>{{ $d->allownce }}</td>
                                             <td>{{ $d->fuel_bill }}</td>
-                                            <td>{{ $d->total_salary }}</td>
+                                            <td>{{ $d->total_salary_of_salary_sheet_four }}</td>
                                             <td>{{ $d->deduction_mobilebill }}</td>
                                             <td>{{ $d->deduction_fine }}</td>
                                             <td>{{ $d->deduction_ins }}</td>

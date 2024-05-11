@@ -21,7 +21,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]">
+                                    <select onchange="checkSelectBoxes()" class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]">
                                         <optgroup label="Select Customer">
                                             @forelse ($customer as $c)
                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -45,7 +45,7 @@
                                     <div class="row">
                                         <div class="col-lg-4 mt-2">
                                             <label for=""><b>Salary Year</b></label>
-                                            <select required class="form-control year" name="year">
+                                            <select onchange="checkSelectBoxes()" required class="form-control year" name="year">
                                                 <option value="">Select Year</option>
                                                 @for($i=2023;$i<= date('Y');$i++)
                                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="col-lg-4 mt-2">
                                             <label for=""><b>Salary Month</b></label>
-                                            <select required class="form-control month selected_month" name="month">
+                                            <select onchange="checkSelectBoxes()" required class="form-control month selected_month" name="month">
                                                 <option value="">Select Month</option>
                                                 @for($i=1;$i<= 12;$i++)
                                                 <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
@@ -63,7 +63,7 @@
                                         </div>
         
                                         <div class="col-lg-4 mt-4 p-0">
-                                            <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
+                                            <button id="generateButton" onclick="getSalaryData()" type="button" class="btn btn-primary" disabled>Generate Salary</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +127,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary" id="submitButton" >Save</button>
                             </div>
                         </form>
                     </div>
@@ -336,6 +336,24 @@
         $(e).closest('tr').find('.total_salary').val(parseFloat(tg).toFixed(2));
         $(e).closest('tr').find('.total_payble').val(parseFloat(net).toFixed(2));
 
+    }
+</script>
+<script>
+    function checkSelectBoxes() {
+        var customerSelect = document.querySelector('.customer_id');
+        var yearSelect = document.querySelector('.year');
+        var monthSelect = document.querySelector('.month');
+
+        var generateButton = document.getElementById('generateButton');
+        var submitButton = document.getElementById('submitButton');
+
+        if (customerSelect.value && yearSelect.value && monthSelect.value) {
+            generateButton.disabled = false;
+            submitButton.disabled = false;
+        } else {
+            generateButton.disabled = true;
+            submitButton.disabled = true;
+        }
     }
 </script>
 

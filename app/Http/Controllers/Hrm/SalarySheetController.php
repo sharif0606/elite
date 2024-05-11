@@ -301,14 +301,15 @@ class SalarySheetController extends Controller
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->house_rent=$request->house_rent[$key];
                             $details->duty_qty=$request->duty_qty[$key];
-                            $details->duty_amount=$request->duty_amount[$key];
+                            //$details->duty_amount=$request->duty_amount[$key];
                             $details->medical=$request->medical_allowance[$key];
                             $details->ot_qty=$request->ot_qty[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->ot_amount=$request->ot_amount[$key];
                             $details->allownce=$request->post_allow[$key];
                             $details->fuel_bill=$request->fuel_bill[$key];
-                            $details->gross_salary=$request->total_salary[$key];
+                            $details->gross_salary=$request->gross_salary[$key];
+                            $details->total_salary_of_salary_sheet_four=$request->total_salary[$key];
                             $details->deduction_mobilebill=$request->deduction_excess_mobile[$key];
                             $details->deduction_fine=$request->deduction_fine[$key];
                             $details->deduction_loan=$request->deduction_loan[$key];
@@ -316,7 +317,6 @@ class SalarySheetController extends Controller
                             $details->deduction_ins=$request->deduction_ins[$key];
                             $details->deduction_p_f=$request->deduction_p_f[$key];
                             $details->deduction_mess=$request->deduction_mess[$key];
-                            // $details->deduction_total=$request->deduction_total[$key];
                             // uncommon
                             $details->total_payable=$request->total_payble[$key];
                             $details->sing_of_ind=$request->signature_ind[$key];
@@ -329,7 +329,7 @@ class SalarySheetController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Generate Salary Sheet Four',$request->getContent(),'SalarySheet,SalarySheetDetail');
-                return redirect()->route('salarySheetFour')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('salarysheet.salarySheetFourIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

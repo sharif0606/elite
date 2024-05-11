@@ -32,6 +32,7 @@ return new class extends Migration
             $table->decimal('leave',10,2)->default(0)->nullable();
             $table->decimal('arrear',10,2)->default(0)->nullable();
             $table->decimal('gross_salary',10,2)->default(0)->comment('wages/gross')->nullable();
+            $table->decimal('total_salary_of_salary_sheet_four',10,2)->default(0)->nullable();
             // uncommon
             $table->decimal('ht_ribon_alice',10,2)->default(0)->nullable();
             $table->decimal('gun_alice',10,2)->default(0)->nullable();
