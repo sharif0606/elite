@@ -32,7 +32,7 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
+                                <table id="salaryTable" class="table table-bordered mb-0">
                                     <thead>
                                         <tr class="text-center" id="">
                                             <th scope="col" rowspan="2">{{__('SL.No')}}</th>
@@ -120,12 +120,45 @@
     </div>
 </section>
 <div class="row">
-    <div class="col-2">
-        <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
+    <div class="col-2 d-flex">
+        <button type="button" class="btn btn-info me-2" onclick="printDiv('result_show')">Print</button>
+        <button class="btn btn-sm btn-success float-end" onclick="get_print()" target="__blank"><i class="bi bi-filetype-xlsx"></i> Excel</button>
     </div>
 </div>
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
 @endsection
 @push("scripts")
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
+
+<script>
+    function exportReportToExcel(tableId, filename) {
+        let table = document.getElementById(tableId);
+        let tableToExport = table.cloneNode(true);
+
+        // Export the table as it is without removing any columns
+        TableToExcel.convert(tableToExport, {
+            name: `${filename}.xlsx`,
+            sheet: {
+                name: 'Salary'
+            }
+        });
+
+        $("#my-content-div").html("");
+        $('.full_page').html("");
+    }
+
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+
+        $.get("{{route('salarysheet.salarySheetFiveShow',[encryptor('encrypt',$salary->id)])}}{{ ltrim(Request()->fullUrl(),Request()->url()) }}", function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            // Export all columns
+            exportReportToExcel('salaryTable', 'Salary_Five-{{$getMonth}}-{{$salary->year}}');
+        });
+    }
+</script>
 <script>
     total_calculate();
     function total_calculate() {
