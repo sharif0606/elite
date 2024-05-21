@@ -18,6 +18,8 @@ use Toastr;
 use Carbon\Carbon;
 use DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\Atm;
+use App\Models\Crm\CustomerBrance;
 use Intervention\Image\Facades\Image;
 use Exception;
 
@@ -43,7 +45,9 @@ class CustomerDutyController extends Controller
     {
         $jobposts=JobPost::all();
         $customer=Customer::all();
-        return view('customer_duty.create',compact('customer','jobposts'));
+        $branch = CustomerBrance::all();
+        $atm = Atm::all();
+        return view('customer_duty.create',compact('customer','jobposts','branch','atm'));
     }
 
     public function getEmployeeDuty(Request $request)
@@ -58,6 +62,45 @@ class CustomerDutyController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
 
+    }
+    public function getDutyOtRateHourWise(Request $request){
+        try {
+            $customerId = $request->customer_id;
+            $jobpostId = $request->job_post_id;
+            $jobpostHour = $request->job_post_hour;
+            $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
+            $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+            return $data;
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function checkOthersCustomerDuty(Request $request){
+        try {
+            $employee = $request->employee_id;
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+
+            // Validate that the necessary request data is present
+            if (is_null($startDate) && is_null($endDate)) {
+                return response()->json(['error' => 'Both start date and end date are required to check duty'], 400);
+            } elseif (is_null($startDate)) {
+                return response()->json(['error' => 'Start date is required to check duty'], 400);
+            } elseif (is_null($endDate)) {
+                return response()->json(['error' => 'End date is required to check duty'], 400);
+            }
+
+            $data = CustomerDutyDetail::join('customers', 'customers.id', '=', 'customer_duty_details.customer_id')
+                ->where('customer_duty_details.employee_id', $employee)
+                ->where('customer_duty_details.start_date', '<=', $startDate)
+                ->where('customer_duty_details.end_date', '>=', $endDate)
+                ->select('customer_duty_details.duty_qty as general','customer_duty_details.ot_qty as overtime','customers.name as customer_name') // Select necessary columns
+                ->get();
+            return response()->json($data, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 
@@ -92,8 +135,7 @@ class CustomerDutyController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
-                            //$details->start_date = $request->start_date;
-                            //$details->end_date = $request->end_date;
+                            $details->hours=$request->job_post_hour[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
@@ -180,8 +222,7 @@ class CustomerDutyController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
-                            //$details->start_date = $request->start_date;
-                            //$details->end_date = $request->end_date;
+                            $details->hours=$request->job_post_hour[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];

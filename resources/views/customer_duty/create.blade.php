@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this);getEmployees(this)">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="ShowBranch(this);getEmployees(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -35,14 +35,24 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this)">
                                         <option value="">Select Branch</option>
+                                        @forelse ($branch as $b)
+                                            <option class="branch_hide" value="{{ $b->id }}">{{ $b->brance_name }}</option>
+                                        @empty
+                                        <option value="">No Data Found</option>
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
                                         <option value="">Select Atm</option>
+                                        @forelse ($atm as $b)
+                                            <option class="atm_hide" value="{{ $b->id }}">{{ $b->atm }}</option>
+                                        @empty
+                                        <option value="">No Data Found</option>
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
@@ -62,6 +72,7 @@
                                             <tr class="text-center">
                                                 <th scope="col">{{__('Employee ID')}}</th>
                                                 <th scope="col">{{__('Job Post')}}</th>
+                                                <th scope="col">{{__('Hours')}}</th>
                                                 <th scope="col">{{__('Duty Rate')}}</th>
                                                 <th scope="col">{{__('OT-Rate')}}</th>
                                                 <th scope="col">{{__('Duty Qty')}}</th>
@@ -77,12 +88,12 @@
                                         <tbody id="customerduty">
                                             <tr>
                                                 <td>
-                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)"  value="" placeholder="Employee Id">
+                                                    <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)"  value="" placeholder="Employee Id" style="width:150px;">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                                                    <select class="form-select job_post_id" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
                                                         <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                             <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -90,23 +101,29 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
-                                                </td>
-                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
-                                                <td>
-                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="0" placeholder="OT Qty">
+                                                    <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px" onchange="getDutyOtRateHourWise(this)">
+                                                        <option value="1">8 hours</option>
+                                                        <option value="2">12 hours</option>
+                                                    </select>
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
+                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
+                                                </td>
+                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
+                                                <td>
+                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty" style="width:60px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="0" placeholder="OT Qty" style="width:60px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
+                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
+                                                </td>
+                                                <td>
+                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
+                                                </td>
+                                                <td>
+                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
                                                 </td>
                                                 <td>
                                                     <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
@@ -122,18 +139,15 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <th colspan="5" class="text-center"> Total</th>
+                                                <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></th>
+                                                <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></th>
+                                                <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></th>
+                                                <th><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></th>
+                                                <th><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -151,6 +165,28 @@
 </section>
 @endsection
 @push("scripts")
+<script>
+    /* call on load page */
+    $(document).ready(function(){
+       $('.branch_hide').hide();
+       $('.atm_hide').hide();
+   })
+//    let old_branch_id=0;
+//    function showProduct(value){
+//         let supplier = value;
+//         let defaultTotalValue = 0;
+//          $('.selecet_hide').hide();
+//          $('.selecet_hide'+supplier).show();
+//          if(old_supplier_id!=supplier){
+//             $('#product_id').prop('selectedIndex', 0);
+//             $('.old_tr_remove').closest('tr').remove();
+//             $('.total_amount').val(defaultTotalValue);
+//             $('.total_qty').val(defaultTotalValue);
+//             $('.total_pcs_qty').val(defaultTotalValue);
+//              old_supplier_id=supplier;
+//          }
+//     }
+</script>
 <script>
     function DetailsShow(){
         var startdate = $('.startDate').val();
@@ -229,11 +265,64 @@
                 //console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
-                //console.log(dutyRate)
+                var dutyHour=data.hours;
+                console.log(dutyHour)
+                $(e).closest('tr').find('.job_post_hour option').prop('selected', false).filter('[value="' + dutyHour + '"]').prop('selected', true);
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
 
             },
+        });
+    }
+    function getDutyOtRateHourWise(e){
+        let positionid = $(e).closest('tr').find('.job_post_id').val();
+        var customerId = $('.customer_id').val();
+        var dutyHour = $(e).closest('tr').find('.job_post_hour').val();
+        //console.log('Customer'.customerId);
+        console.log(dutyHour);
+        $.ajax({
+            url:"{{ route('get_employeedata_hourewise') }}",
+            type: "GET",
+            dataType: "json",
+            data: { 'customer_id':customerId,'job_post_id':positionid, 'job_post_hour':dutyHour },
+            success: function(data) {
+                //console.log(data);
+                var dutyRate=data.duty_rate;
+                var otRate=data.ot_rate;
+                console.log(dutyRate)
+                $(e).closest('tr').find('.duty_rate').val(dutyRate);
+                $(e).closest('tr').find('.ot_rate').val(otRate);
+
+            },
+        });
+    }
+    function checkOthersCustomerDuty(e){
+        var employee = $(e).closest('tr').find('.employee_id_primary').val();
+        var startDate = $('.startDate').val();
+        var endDate = $('.endDate').val();
+        $.ajax({
+            url:"{{ route('get_employee_others_duty') }}",
+            type: "GET",
+            dataType: "json",
+            data: { 'employee_id':employee,'start_date':startDate, 'end_date':endDate },
+            success: function(data) {
+                if (data.length > 0) {
+                    // Construct the message
+                    var message = "<span style='border-bottom: solid 2px; color: yellow;'>Employee duties found:</span><br>";
+                    $.each(data, function(index, duty) {
+                    message +=  "Customer: " + duty.customer_name + "<br>" +
+                                "General Duty: " + duty.general + "<br>" +
+                                "OT Duty: " + duty.overtime + "<br>";
+                    });
+                    toastr.success(message);
+                } else {
+                    toastr.info("No duties found for the employee.");
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "An error occurred while processing your request.";
+                toastr.error(errorMessage);
+            }
         });
     }
 
@@ -296,12 +385,12 @@ function addRow(){
     var row=`
     <tr>
         <td>
-            <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id">
+            <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id" style="width:150px;">
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
                 <option value="0">Select</option>
                 @foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -309,23 +398,29 @@ function addRow(){
             </select>
         </td>
         <td>
-            <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate">
-        </td>
-        <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate"></td>
-        <td>
-            <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty">
-        </td>
-        <td>
-            <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty">
+            <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px;" onchange="getDutyOtRateHourWise(this)">
+                <option value="1">8 hours</option>
+                <option value="2">12 hours</option>
+            </select>
         </td>
         <td>
-            <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount">
+            <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
+        </td>
+        <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
+        <td>
+            <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty" style="width:60px;">
         </td>
         <td>
-            <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
+            <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty" style="width:60px;">
         </td>
         <td>
-            <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount">
+            <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
+        </td>
+        <td>
+            <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
+        </td>
+        <td>
+            <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
         </td>
         <td>
             <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">

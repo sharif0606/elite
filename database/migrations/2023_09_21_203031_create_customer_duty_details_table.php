@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('employee_id');
             $table->integer('customer_id')->nullable();
             $table->integer('job_post_id')->nullable();
+            $table->integer('hours')->comment('1=8hours, 2=12hours')->nullable();
             $table->decimal('duty_rate',10,2)->default(0);
             $table->decimal('ot_rate',10,2)->default(0);
             $table->integer('duty_qty');

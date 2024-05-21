@@ -227,6 +227,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
+        Route::get('/get-employee-hourewise-duty-ot-rate', [customerduty::class, 'getDutyOtRateHourWise'])->name('get_employeedata_hourewise');
+        Route::get('/checking-others-duty', [customerduty::class, 'checkOthersCustomerDuty'])->name('get_employee_others_duty');
         Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
