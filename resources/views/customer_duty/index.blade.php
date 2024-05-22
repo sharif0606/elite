@@ -28,7 +28,7 @@
                     @forelse($customerduty as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td scope="row">{{$e->customer?->name}}</td>
+                        <td scope="row"><span><b>{{$e->customer?->name}}</b></span><br><span>{{$e->customer_branch?->brance_name}}</span></td>
                         <td>
                             @if ($e->details)
                             <table class="table">

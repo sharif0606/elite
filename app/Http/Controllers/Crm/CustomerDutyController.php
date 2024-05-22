@@ -187,7 +187,9 @@ class CustomerDutyController extends Controller
         $customer=Customer::all();
         $employee=Employee::all();
         $custduty = CustomerDuty::findOrFail(encryptor('decrypt',$id));
-        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee'));
+        $branch = CustomerBrance::all();
+        $atm = Atm::all();
+        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee','branch','atm'));
     }
 
     /**

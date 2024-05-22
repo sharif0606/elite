@@ -25,7 +25,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Customer</b></label>
-                                    <select class="form-select customer_id" onchange="getEmployees(this)" id="customer_id" name="customer_id">
+                                    <select class="form-select customer_id" onchange="showBranch(this.value);getEmployees(this)" id="customer_id" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}" {{ $c->id==$custduty->customer_id?"selected":"" }}>{{ $c->name }}</option>
@@ -36,14 +36,24 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
                                         <option value="">Select Branch</option>
+                                        @forelse ($branch as $b)
+                                            <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->branch_id?"selected":"" }}>{{ $b->brance_name }}</option>
+                                        @empty
+                                        <option value="">No Data Found</option>
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
                                         <option value="">Select Atm</option>
+                                        @forelse ($atm as $b)
+                                            <option class="atm_hide atm_hide{{$b->branch_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->atm_id?"selected":"" }}>{{ $b->atm }}</option>
+                                        @empty
+                                        <option value="">No Data Found</option>
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
@@ -159,6 +169,35 @@
 </section>
 @endsection
 @push("scripts")
+<script>
+    /* call on load page */
+    $(document).ready(function(){
+       $('.branch_hide').hide();
+       $('.atm_hide').hide();
+   })
+   let old_customer_id=0;
+   function showBranch(value){
+        let customer = value;
+        console.log(customer);
+         $('.branch_hide').hide();
+         $('.branch_hide'+customer).show();
+         if(old_customer_id!=customer){
+            $('#branch_id').prop('selectedIndex', 0);
+            $('#atm_id').prop('selectedIndex', 0);
+             old_customer_id=customer;
+         }
+    }
+   let old_branch_id=0;
+   function showAtm(value){
+        let branch = value;
+         $('.atm_hide').hide();
+         $('.atm_hide'+branch).show();
+         if(old_branch_id!=branch){
+            $('#atm_id').prop('selectedIndex', 0);
+             old_branch_id=branch;
+         }
+    }
+</script>
 <script>
     function DetailsShow(){
         var startdate = $('.startDate').val();
