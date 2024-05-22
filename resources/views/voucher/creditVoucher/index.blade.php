@@ -40,6 +40,9 @@
                                 <td>{{$cr->purpose}}</td>
                                 <td>{{$cr->debit_sum}}</td>
                                 <td class="white-space-nowrap">
+                                    <a href="{{route('credit_voucher.show',encryptor('encrypt',$cr->id))}}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>&nbsp;
                                     <a href="{{route('credit_voucher.edit',encryptor('encrypt',$cr->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
