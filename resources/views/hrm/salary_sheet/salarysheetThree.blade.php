@@ -153,6 +153,7 @@
                 //console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
+                    var old_emp = '';
                     $.each(salary_data, function(index, value) {
                         let traningCost=value.bn_traning_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
@@ -197,6 +198,11 @@
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
                         let gr = parseFloat(value.duty_rate) + parseFloat(hR);
+                        if(old_emp == value.en_applicants_name){
+                            var en_applicants_name = value.customer_branch;
+                        }else{
+                            var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
+                        }
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -208,9 +214,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
-                                </td>
+                                <td>${en_applicants_name}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Joining Date">
                                 </td>
@@ -298,6 +302,7 @@
                             </tr>`
                         );
                         counter++;
+                        old_emp= value.en_applicants_name;
                     });
             },
         });

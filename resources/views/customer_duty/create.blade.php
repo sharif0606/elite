@@ -107,9 +107,9 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
+                                                    <input onkeyup="CalculateAmount(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
                                                 </td>
-                                                <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
+                                                <td><input onkeyup="CalculateAmount(this)" class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
                                                 <td>
                                                     <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty" style="width:60px;">
                                                 </td>
@@ -277,7 +277,7 @@
                 $(e).closest('tr').find('.job_post_hour option').prop('selected', false).filter('[value="' + dutyHour + '"]').prop('selected', true);
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
-
+                CalculateAmount(e);
             },
         });
     }
@@ -286,7 +286,7 @@
         var customerId = $('.customer_id').val();
         var dutyHour = $(e).closest('tr').find('.job_post_hour').val();
         //console.log('Customer'.customerId);
-        console.log(dutyHour);
+        //console.log(dutyHour);
         $.ajax({
             url:"{{ route('get_employeedata_hourewise') }}",
             type: "GET",
@@ -296,10 +296,10 @@
                 //console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
-                console.log(dutyRate)
+                //console.log(dutyRate)
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
-
+                CalculateAmount(e);
             },
         });
     }
@@ -334,6 +334,10 @@
     }
 
     function CalculateAmount(e){
+        var divideByDayTotal = 0;
+        var dutyRateDay=0;
+        var otRateDay=0;
+        var customer_id = $('.customer_id').val();
         let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
@@ -344,8 +348,20 @@
         let currentDate = $('.startDate').val();
         let currentMonth = new Date(currentDate).getMonth() + 1;
         let totalDaysInMonth = new Date(new Date(currentDate).getFullYear(), currentMonth, 0).getDate();
-        let dutyRateDay=dutyRate/totalDaysInMonth;
-        let otRateDay=otRate/totalDaysInMonth;
+        // evercare setting
+        if(totalDaysInMonth == 29){
+            var divideByDayTotal = (totalDaysInMonth - 5);
+        }else{
+            var divideByDayTotal = (totalDaysInMonth - 4);
+        }
+        // evercare setting
+        if(customer_id == 21){
+            var dutyRateDay=dutyRate/divideByDayTotal;
+            var otRateDay=otRate/divideByDayTotal;
+        }else{
+            var dutyRateDay=dutyRate/totalDaysInMonth;
+            var otRateDay=otRate/totalDaysInMonth;
+        }
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
         let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));

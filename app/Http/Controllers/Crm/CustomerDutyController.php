@@ -16,7 +16,7 @@ use App\Models\Customer;
 
 use Toastr;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Crm\Atm;
 use App\Models\Crm\CustomerBrance;
@@ -113,6 +113,7 @@ class CustomerDutyController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+        DB::beginTransaction();
         try{
             $data=new CustomerDuty;
             $data->customer_id = $request->customer_id;
@@ -150,6 +151,7 @@ class CustomerDutyController extends Controller
                         }
                     }
                 }
+                DB::commit();
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Add Duty',$request->getContent(),'CustomerDuty,CustomerDutyDetail');
@@ -159,6 +161,7 @@ class CustomerDutyController extends Controller
             }
 
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }

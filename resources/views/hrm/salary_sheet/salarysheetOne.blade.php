@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Salary Month</b></label>
-                                    <select required class="form-control month" name="month">
+                                    <select required class="form-control month selected_month" name="month">
                                         <option value="">Select Month</option>
                                         @for($i=1;$i<= 12;$i++)
                                         <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
@@ -213,6 +213,7 @@
                 //console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
+                    var old_emp = '';
                     $.each(salary_data, function(index, value) {
                         //console.log(value);
                         let traningCost=value.bn_traning_cost;
@@ -246,6 +247,11 @@
                         if (grossAmoun > totalDeduction) {
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
+                        if(old_emp == value.en_applicants_name){
+                            var en_applicants_name = value.customer_branch;
+                        }else{
+                            var en_applicants_name=`<input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
+                        }
                         selectElement.append(
                             `<tr>
                                 <td>${counter + 1}</td>
@@ -254,7 +260,7 @@
                                 </td>
                                 <td>${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Employee Id">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="ever_care_customer_id" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
@@ -263,9 +269,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
-                                </td>
+                                <td>${en_applicants_name}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
@@ -357,6 +361,7 @@
                         );
                         counter++;
                         total_calculate();
+                        old_emp= value.en_applicants_name;
                     });
             },
         });
@@ -364,6 +369,10 @@
      }
 
      function reCalcultateSalary(e) {
+        var divideByDayTotal = 0;
+        var dutyRateDay=0;
+        var otRateDay=0;
+        var customer_id = $(e).closest('tr').find('.ever_care_customer_id').val()?parseFloat($(e).closest('tr').find('.ever_care_customer_id').val()):0;
 
         let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
@@ -373,10 +382,24 @@
         let allownce=$(e).closest('tr').find('.allownce').val()?parseFloat($(e).closest('tr').find('.allownce').val()):0;
         let arrear=$(e).closest('tr').find('.arrear').val()?parseFloat($(e).closest('tr').find('.arrear').val()):0;
         let currentDate = new Date();
-        let currentMonth = currentDate.getMonth() + 1;
-        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
-        let dutyRateDay=dutyRate/totalDaysInMonth;
-        let otRateDay=otRate/totalDaysInMonth;
+        //let currentMonth = currentDate.getMonth() + 1;
+        //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let currentMonth = $('.selected_month').val();
+        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        // evercare setting
+        if(totalDaysInMonth == 29){
+            var divideByDayTotal = (totalDaysInMonth - 5);
+        }else{
+            var divideByDayTotal = (totalDaysInMonth - 4);
+        }
+        // evercare setting
+        if(customer_id == 21){
+            var dutyRateDay=dutyRate/divideByDayTotal;
+            var otRateDay=otRate/divideByDayTotal;
+        }else{
+            var dutyRateDay=dutyRate/totalDaysInMonth;
+            var otRateDay=otRate/totalDaysInMonth;
+        }
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
         let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));

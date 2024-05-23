@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Salary Sheet Four List')
+@section('pageTitle','Office Staff Salary List')
 @section('pageSubTitle','All')
 @section('content')
 <style>
