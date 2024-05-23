@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="col-lg-3 mt-2">
                                         <label for=""><b>Salary Month</b></label>
-                                        <select required class="form-control month" name="month">
+                                        <select required class="form-control month selected_month" name="month">
                                             <option value="">Select Month</option>
                                             @for($i=1;$i<= 12;$i++)
                                             <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
@@ -308,8 +308,10 @@
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
         let allownce=$(e).closest('tr').find('.post_allowance').val()?parseFloat($(e).closest('tr').find('.post_allowance').val()):0;
         let currentDate = new Date();
-        let currentMonth = currentDate.getMonth() + 1;
-        let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        //let currentMonth = currentDate.getMonth() + 1;
+        //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
+        let currentMonth = $('.selected_month').val();
+        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
         let dutyRateDay=dutyRate/totalDaysInMonth;
         let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
@@ -320,9 +322,9 @@
         let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;
         let Loan=$(e).closest('tr').find('.deduction_loan').val()?parseFloat($(e).closest('tr').find('.deduction_loan').val()):0;
         let Hr=$(e).closest('tr').find('.deduction_hr').val()?parseFloat($(e).closest('tr').find('.deduction_hr').val()):0;
-        let traningCost=$(e).closest('tr').find('.deduction_traningcost').val()?parseFloat($(e).closest('tr').find('.deduction_traningcost').val()):0;
+        let traningCost=$(e).closest('tr').find('.deduction_training_cost').val()?parseFloat($(e).closest('tr').find('.deduction_training_cost').val()):0;
         let ins=$(e).closest('tr').find('.deduction_ins').val()?parseFloat($(e).closest('tr').find('.deduction_ins').val()):0;
-        let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
+        let pf=$(e).closest('tr').find('.deduction_pf').val()?parseFloat($(e).closest('tr').find('.deduction_pf').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_stamp').val()):0;
         let dress=$(e).closest('tr').find('.deduction_dress').val()?parseFloat($(e).closest('tr').find('.deduction_dress').val()):0;
         let bank=$(e).closest('tr').find('.deduction_banck_charge').val()?parseFloat($(e).closest('tr').find('.deduction_banck_charge').val()):0;
