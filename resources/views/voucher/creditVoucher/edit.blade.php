@@ -33,7 +33,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12 d-none">
+                                    <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="name">{{__('Name')}}</label>
                                             <input type="text" id="pay_name" class="form-control" value="{{old('pay_name',$creditVoucher->pay_name)}}" name="pay_name">
@@ -139,7 +139,6 @@
                                 <div class="row">
                                     <div class="col-12 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">{{__('Submit')}}</button>
-
                                     </div>
                                 </div>
                             </form>
@@ -149,7 +148,5 @@
             </div>
         </div>
     </section>
-    <!-- // Basic multiple Column Form section end -->
-</div>
 @endsection
 

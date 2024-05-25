@@ -28,7 +28,11 @@
                     @forelse($salarysheet as $s)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td scope="row">{{$s->customer?->name}}</td>
+                        <td scope="row">
+                            @foreach($s->customers as $customer)
+                                <li>{{ $customer->name }}</li>
+                            @endforeach
+                        </td>
                         <td>
                             @for($i=1; $i<= 12; $i++)
                             @if($s->month==$i)

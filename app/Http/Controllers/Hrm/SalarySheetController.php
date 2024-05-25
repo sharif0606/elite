@@ -342,6 +342,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFiveStore(Request $request)
     {
+        //dd($request->all()); die();
         DB::beginTransaction();
         try {
             $salary = new SalarySheet;

@@ -35,7 +35,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12 d-none">
+                                    <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="name">{{__('Name')}}</label>
                                             <input type="text" id="pay_name" class="form-control" value="{{ old('pay_name')}}" name="pay_name">
@@ -165,8 +165,6 @@
             </div>
         </div>
     </section>
-    <!-- // Basic multiple Column Form section end -->
-</div>
 @endsection
 
 @push('scripts')

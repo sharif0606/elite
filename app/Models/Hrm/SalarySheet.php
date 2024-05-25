@@ -10,6 +10,12 @@ use App\Models\Hrm\SalarySheetDetail;
 class SalarySheet extends Model
 {
     use HasFactory;
+    public function getCustomersAttribute()
+    {
+        $customerIds = explode(',', $this->customer_id);
+        return Customer::whereIn('id', $customerIds)->get();
+        // here getCustomersAttribute-> "Customers" will be the variable to show customer in blade
+    }
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }

@@ -32,7 +32,11 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                {{$salary->customer?->name}}
+                                <ul class="text-start">
+                                    @foreach($salary->customers as $customer)
+                                        <li>{{ $customer->name }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                         <!-- table bordered -->

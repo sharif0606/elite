@@ -32,7 +32,11 @@
                                 </div>
                             </div>
                             <div class="col-3">
-                                {{$salary->customer?->name}}
+                                <ul class="text-start">
+                                    @foreach($salary->customers as $customer)
+                                        <li>{{ $customer->name }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                         <!-- table bordered -->
@@ -82,25 +86,101 @@
                                             <td>{{ $d->employee?->joining_date }}</td>
                                             <td>{{ $d->position?->name }}</td>
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
-                                            <td>{{ $d->duty_rate }}</td>
-                                            <td>{{ $d->house_rent }}</td>
-                                            <td>{{ $d->medical }}</td>
-                                            <td>{{ $d->gross_salary }}</td>
-                                            <td>{{ $d->duty_qty }}</td>
-                                            <td>{{ $d->ot_qty }}</td>
-                                            <td>{{ $d->ot_rate }}</td>
-                                            <td>{{ $d->ot_amount }}</td>
-                                            <td>{{ $d->allownce }}</td>
-                                            <td>{{ $d->fuel_bill }}</td>
-                                            <td>{{ $d->total_salary_of_salary_sheet_four }}</td>
-                                            <td>{{ $d->deduction_mobilebill }}</td>
-                                            <td>{{ $d->deduction_fine }}</td>
-                                            <td>{{ $d->deduction_ins }}</td>
-                                            <td>{{ $d->deduction_p_f }}</td>
-                                            <td>{{ $d->deduction_mess }}</td>
-                                            <td>{{ $d->deduction_loan }}</td>
-                                            <td>{{ $d->deduction_traningcost }}</td>
-                                            <td>{{ $d->total_payable }}</td>
+                                            <td>
+                                                @if ($d->duty_rate != 0)
+                                                {{ $d->duty_rate }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->house_rent != 0)
+                                                {{ $d->house_rent }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->medical != 0)
+                                                {{ $d->medical }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->gross_salary != 0)
+                                                {{ $d->gross_salary }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->duty_qty != 0)
+                                                {{ $d->duty_qty }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->ot_qty != 0)
+                                                {{ $d->ot_qty }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->ot_rate != 0)
+                                                {{ $d->ot_rate }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->ot_amount != 0)
+                                                {{ $d->ot_amount }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->allownce != 0)
+                                                {{ $d->allownce }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->fuel_bill != 0)
+                                                {{ $d->fuel_bill }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->total_salary_of_salary_sheet_four != 0)
+                                                {{ $d->total_salary_of_salary_sheet_four }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_mobilebill != 0)
+                                                {{ $d->deduction_mobilebill }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_fine != 0)
+                                                {{ $d->deduction_fine }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_ins != 0)
+                                                {{ $d->deduction_ins }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_p_f != 0)
+                                                {{ $d->deduction_p_f }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_mess != 0)
+                                                {{ $d->deduction_mess }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_loan != 0)
+                                                {{ $d->deduction_loan }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->deduction_traningcost != 0)
+                                                {{ $d->deduction_traningcost }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($d->total_payable != 0)
+                                                {{ $d->total_payable }}
+                                                @endif
+                                            </td>
                                             <td>{{ $d->sing_of_ind }}</td>
                                             <td>{{ $d->sing_account }}</td>
                                             <td>{{ $d->remark }}</td>

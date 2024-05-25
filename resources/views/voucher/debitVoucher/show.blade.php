@@ -140,11 +140,11 @@
             <thead>
                 <tr>
                     <th style="text-align: left; width: 10%;">নামঃ </th>
-                    <td style="text-align: left; width: 60%;">{{$creditVoucher->pay_name}}</td>
+                    <td style="text-align: left; width: 60%;">{{$dvoucher->pay_name}}</td>
                     <th style="width: 10%;">তারিখঃ</th>
                     <td style="width: 20%;"><span style="border-bottom: dashed 1px;">
-                        @if ($creditVoucher->current_date != '')
-                            {{ date('d-M-Y', strtotime($creditVoucher->current_date)) }}
+                        @if ($dvoucher->current_date != '')
+                            {{ date('d-M-Y', strtotime($dvoucher->current_date)) }}
                         @else
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         @endif
@@ -166,16 +166,16 @@
                     </tr>
                 </thead>
                 <tbody style="height: 350px;">
-                    @foreach ($crevoucherbkdn as $bk)
-                    @if ($bk->credit != 0)
+                    @foreach ($dvoucherbkdn as $bk)
+                    @if ($bk->debit != 0)
                         <tr style="vertical-align: top; height: 0;">
                             <th class="tbl_table_border_right" style="text-align: center; padding-left: 5px;">{{ +$loop->index }}</th>
                             <th class="tbl_table_border_right" style="text-align: left;">{{$bk->account_code}}</th>
-                            <th class="tbl_table_border_right" style="text-align: right;">{{$bk->credit}}</th>
+                            <th class="tbl_table_border_right" style="text-align: right;">{{$bk->debit}}</th>
                             <th class="tbl_table_border_right" style="text-align: right;"></th>
                         </tr>
                         @php
-                            $totalAmount =+ $bk->credit;
+                            $totalAmount =+ $bk->debit;
                         @endphp
                     @endif
                     @endforeach

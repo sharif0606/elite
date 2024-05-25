@@ -144,9 +144,11 @@ class DebitVoucherController extends VoucherController
      * @param  \App\Models\Voucher\DebitVoucher  $debitVoucher
      * @return \Illuminate\Http\Response
      */
-    public function show(DebitVoucher $debitVoucher)
+    public function show($id)
     {
-        //
+        $dvoucher=DebitVoucher::findOrFail(encryptor('decrypt',$id));
+		$dvoucherbkdn=DevoucherBkdn::where('debit_voucher_id',encryptor('decrypt',$id))->get();
+		return view('voucher.debitvoucher.show',compact('dvoucher','dvoucherbkdn'));
     }
 
     /**

@@ -3,8 +3,6 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
-<!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
@@ -40,6 +38,9 @@
                                 <td>{{$cr->purpose}}</td>
                                 <td>{{$cr->debit_sum}}</td>
                                 <td class="white-space-nowrap">
+                                    <a href="{{route('debit_voucher.show',encryptor('encrypt',$cr->id))}}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>&nbsp;
                                     <a href="{{route('debit_voucher.edit',encryptor('encrypt',$cr->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
@@ -57,7 +58,4 @@
         </div>
     </div>
 </section>
-<!-- Bordered table end -->
-
-
 @endsection
