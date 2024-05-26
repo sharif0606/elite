@@ -102,6 +102,8 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
@@ -160,6 +162,8 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->online_payment=$request->payment_type[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
@@ -234,6 +238,8 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->house_rent=$request->house_rent[$key];
                             $details->medical=$request->medical[$key];
@@ -298,6 +304,8 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->house_rent=$request->house_rent[$key];
                             $details->duty_qty=$request->duty_qty[$key];
@@ -361,6 +369,8 @@ class SalarySheetController extends Controller
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
                             $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];

@@ -215,8 +215,10 @@
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
+                                    <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
+                                    <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
+                                    <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">

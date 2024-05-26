@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('employee_id')->nullable();
             $table->integer('designation_id')->nullable();
             $table->integer('customer_id')->nullable();
+            $table->integer('branch_id')->nullable();
+            $table->integer('atm_id')->nullable();
             $table->string('online_payment')->nullable()->comment('payment_type');
             $table->decimal('duty_rate',10,2)->nullable()->comment('basic/monthly');
             $table->decimal('duty_qty',10,2)->nullable()->comment('days');

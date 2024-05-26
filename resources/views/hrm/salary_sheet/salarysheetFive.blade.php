@@ -221,13 +221,13 @@
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control" type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
+                                    <input type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
+                                    <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
+                                    <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
+                                    <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
+                                    <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
                                 </td>
-                                <td>
-                                    ${en_applicants_name}
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
-                                    <input onkeyup="reCalcultateSalary(this)" class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}" placeholder="Customer Id">
-                                </td>
+                                <td> ${en_applicants_name}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
                                 </td>

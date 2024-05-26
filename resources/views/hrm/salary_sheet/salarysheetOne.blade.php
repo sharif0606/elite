@@ -259,8 +259,10 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="Online" placeholder="Online Payment">
                                 </td>
                                 <td>${value.admission_id_no}
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Employee Id">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="ever_care_customer_id" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Employee Id">
+                                    <input class="ever_care_customer_id" type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
+                                    <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
+                                    <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">

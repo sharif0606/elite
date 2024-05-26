@@ -193,11 +193,11 @@
                         let otR = (value.duty_rate > 0) ? (((value.duty_rate)*2)/208).toFixed(2) : '0';
                         let otP = (value.ot_qty > 0) ? parseFloat(otR*(value.ot_qty)).toFixed(2) : '0';
                         let totalDeduction = parseFloat(Hr) + parseFloat(Ab) + parseFloat(Va) + parseFloat(Ad) + parseFloat(pf);
-                        let netSalary = '0';
-                        if (grossAmoun > totalDeduction) {
-                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
-                        }
                         let gr = parseFloat(value.duty_rate) + parseFloat(hR);
+                        let netSalary = '0';
+                        if (gr > totalDeduction) {
+                            netSalary = Math.round(parseFloat(gr) - parseFloat(totalDeduction));
+                        }
                         if(old_emp == value.en_applicants_name){
                             var en_applicants_name = value.customer_branch;
                         }else{
@@ -211,15 +211,17 @@
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" type="hidden" name="customer_id_ind[]" value="${value.customer_id}" placeholder="Customer Id">
+                                    <input class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
+                                    <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
+                                    <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
+                                    <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>${en_applicants_name}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Joining Date">
                                 </td>
                                 <td>
-                                    <input style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary" readonly>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="${hR}" placeholder="House rent (50%)">
@@ -312,10 +314,11 @@
      function reCalcultateSalary(e) {
 
         let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
-        let hore=$(e).closest('tr').find('.house_rent').val()?parseFloat($(e).closest('tr').find('.house_rent').val()):0;
+        let hore= (dutyRate*50)/100;
         let medi=$(e).closest('tr').find('.medical').val()?parseFloat($(e).closest('tr').find('.medical').val()):0;
         let trcon=$(e).closest('tr').find('.trans_conve').val()?parseFloat($(e).closest('tr').find('.trans_conve').val()):0;
         let grw = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon);
+        $(e).closest('tr').find('.house_rent').val(parseFloat(hore).toFixed(2));
         $(e).closest('tr').find('.gross_wages').val(parseFloat(grw).toFixed(2));
 
         let presentTotal=$(e).closest('tr').find('.present_day').val()?parseFloat($(e).closest('tr').find('.present_day').val()):0;
@@ -339,7 +342,7 @@
         let deductionPf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_stm').val()?parseFloat($(e).closest('tr').find('.deduction_stm').val()):0;
         let totalDeduction = parseFloat(deductionAbsent) + parseFloat(deductionVacant) + parseFloat(deductionHr) + parseFloat(deductionAdv) + parseFloat(deductionPf) + parseFloat(stamp);
-        let net = parseFloat(dutyRate) - parseFloat(totalDeduction);
+        let net = parseFloat(grw) - parseFloat(totalDeduction);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(totalDeduction).toFixed(2));
         $(e).closest('tr').find('.net_wages').val(parseFloat(net).toFixed(2));
 
@@ -347,10 +350,10 @@
         let otHour=$(e).closest('tr').find('.ot_hour').val()?parseFloat($(e).closest('tr').find('.ot_hour').val()):0;
         let otRate=$(e).closest('tr').find('.ot_rate_basicDuble').val()?parseFloat($(e).closest('tr').find('.ot_rate_basicDuble').val()):0;
         let otAmount = otRate*otHour;
-        $(e).closest('tr').find('.ot_amt').val(parseFloat(otAmount).toFixed(2));
+        $(e).closest('tr').find('.net_wages').val(Math.round(parseFloat(net)));
 
         let payableTotal = net+otAmount;
-        $(e).closest('tr').find('.total_payable').val(parseFloat(payableTotal).toFixed(2));
+        $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(payableTotal)));
 
     }
 </script>
