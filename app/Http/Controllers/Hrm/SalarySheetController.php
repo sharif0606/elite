@@ -89,6 +89,8 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
@@ -149,6 +151,8 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
@@ -225,6 +229,8 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
@@ -291,6 +297,8 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
@@ -356,6 +364,8 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();

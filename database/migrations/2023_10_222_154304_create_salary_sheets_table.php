@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('salary_sheets', function (Blueprint $table) {
             $table->id();
-            $table->integer('customer_id')->nullable();
-            $table->integer('customer_id_not')->nullable();
+            $table->string('customer_id')->nullable();
+            $table->string('customer_id_not')->nullable();
+            $table->string('branch_id')->nullable();
+            $table->string('atm_id')->nullable();
             $table->integer('year')->nullable();
             $table->integer('month')->nullable();
             $table->integer('status')->nullable()->comment('1=SheetOne,2=sheetTwo,3=sheetThree,4=sheetFour');
