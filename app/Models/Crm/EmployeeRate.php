@@ -13,6 +13,9 @@ class EmployeeRate extends Model
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
+    public function customer_branch(){
+        return $this->belongsTo(CustomerBrance::class,'branch_id','id');
+    }
 
     public function details(){
         return $this->hasMany(EmployeeRateDetails::class,'employee_rate_id','id');

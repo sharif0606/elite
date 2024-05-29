@@ -39,6 +39,7 @@ return new class extends Migration
             $table->decimal('adv',10,2)->default(0);
             $table->string('remarks')->nullable();
             $table->integer('status')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

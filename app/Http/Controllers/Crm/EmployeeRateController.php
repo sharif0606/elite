@@ -13,6 +13,8 @@ use Toastr;
 use Carbon\Carbon;
 use DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\Atm;
+use App\Models\Crm\CustomerBrance;
 use Intervention\Image\Facades\Image;
 use Exception;
 
@@ -38,7 +40,9 @@ class EmployeeRateController extends Controller
     {
         $jobpost=JobPost::all();
         $customer=Customer::all();
-        return view('employee_rate.create',compact('customer','jobpost'));
+        $branch = CustomerBrance::all();
+        $atm = Atm::all();
+        return view('employee_rate.create',compact('customer','jobpost','branch','atm'));
     }
 
     /**
@@ -52,6 +56,8 @@ class EmployeeRateController extends Controller
         try{
             $data=new EmployeeRate;
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
@@ -104,8 +110,10 @@ class EmployeeRateController extends Controller
     {
         $jobpost=JobPost::all();
         $customer=Customer::all();
+        $branch = CustomerBrance::all();
+        $atm = Atm::all();
         $emprate = EmployeeRate::findOrFail(encryptor('decrypt',$id));
-        return view('employee_rate.edit',compact('jobpost','customer','emprate'));
+        return view('employee_rate.edit',compact('jobpost','customer','emprate','branch','atm'));
     }
 
     /**
@@ -120,6 +128,8 @@ class EmployeeRateController extends Controller
         try{
             $data=EmployeeRate::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
