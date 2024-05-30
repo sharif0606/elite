@@ -265,13 +265,14 @@
     function getDutyOtRate(e){
         let positionid = $(e).closest('tr').find('.job_post_id option:selected').data('jobpostid');
         var customerId = $('.customer_id').val();
+        var branchId = $('.branch_id').val();
         //console.log('Customer'.customerId);
         //console.log(customerId);
         $.ajax({
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
-            data: { 'customer_id':customerId,'job_post_id':positionid },
+            data: { 'customer_id':customerId,'job_post_id':positionid,'branch_id':branchId },
             success: function(data) {
                 //console.log(data);
                 var dutyRate=data.duty_rate;
@@ -288,6 +289,7 @@
     function getDutyOtRateHourWise(e){
         let positionid = $(e).closest('tr').find('.job_post_id').val();
         var customerId = $('.customer_id').val();
+        var branchId = $('.branch_id').val();
         var dutyHour = $(e).closest('tr').find('.job_post_hour').val();
         //console.log('Customer'.customerId);
         console.log(dutyHour);
@@ -295,7 +297,7 @@
             url:"{{ route('get_employeedata_hourewise') }}",
             type: "GET",
             dataType: "json",
-            data: { 'customer_id':customerId,'job_post_id':positionid, 'job_post_hour':dutyHour },
+            data: { 'customer_id':customerId,'job_post_id':positionid, 'job_post_hour':dutyHour,'branch_id':branchId },
             success: function(data) {
                 //console.log(data);
                 var dutyRate=data.duty_rate;

@@ -55,9 +55,21 @@ class CustomerDutyController extends Controller
         try {
             $customerId = $request->customer_id;
             $jobpostId = $request->job_post_id;
+            $branch = $request->branch_id;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
-            $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
-            return $data;
+            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id',$branch)->pluck('id');
+            if($request->branch_id){
+                if($empRateIdWithBranch){
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                    return $data;
+                }else{
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                    return $data;
+                }
+            }else{
+                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                return $data;
+            }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -67,10 +79,22 @@ class CustomerDutyController extends Controller
         try {
             $customerId = $request->customer_id;
             $jobpostId = $request->job_post_id;
+            $branch = $request->branch_id;
             $jobpostHour = $request->job_post_hour;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
-            $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
-            return $data;
+            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id',$branch)->pluck('id');
+            if($request->branch_id){
+                if($empRateIdWithBranch){
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+                    return $data;
+                }else{
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+                    return $data;
+                }
+            }else{
+                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+                return $data;
+            }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
