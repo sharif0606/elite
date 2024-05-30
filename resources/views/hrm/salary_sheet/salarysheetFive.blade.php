@@ -204,7 +204,7 @@
                         let totalDeduction = parseFloat(Fine) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         let netSalary = '0';
                         if (grossAmoun > totalDeduction) {
-                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                            netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                         }
                         if(old_emp == value.en_applicants_name){
                             var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="join_date[]" value="${value.joining_date}">`;
@@ -217,7 +217,7 @@
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>`
                             var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
-                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${grossAmoun}" type="text" name="total_payable[]" placeholder="Total Payable Salary">`
+                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary">`
                         }else{
                             var customerName=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.joining_date}" placeholder="Duty Rate">`
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -335,7 +335,8 @@
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
-        $(e).closest('tr').find('.total_payable').val(parseFloat(net).toFixed(2));
+        //$(e).closest('tr').find('.total_payable').val(parseFloat(net).toFixed(2));
+        $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(net)));
     }
 </script>
 

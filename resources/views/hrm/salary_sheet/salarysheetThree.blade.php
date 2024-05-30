@@ -200,8 +200,20 @@
                         }
                         if(old_emp == value.en_applicants_name){
                             var en_applicants_name = value.customer_branch;
+                            var absentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_absent[]" value="0" readonly>`
+                            var vacantCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_vacant[]" value="0" readonly>`
+                            var hrentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_h_rent[]" value="0" readonly>`
+                            var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
+                            var advCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_adv[]" value="0" readonly>`
+                            var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stm[]" value="0" readonly>`
                         }else{
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
+                            var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>`
+                            var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>`
+                            var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
+                            var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
+                            var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="" placeholder="Stm">`
                         }
                         selectElement.append(
                             `<tr>
@@ -259,24 +271,12 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="" placeholder="Stm">
-                                </td>
+                                <td>${absentCondition}</td>
+                                <td>${vacantCondition}</td>
+                                <td>${hrentCondition}</td>
+                                <td>${pfCondition}</td>
+                                <td>${advCondition}</td>
+                                <td>${stmCondition}</td>
                                 <td>
                                     <input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>
                                 </td>
@@ -354,7 +354,6 @@
 
         let payableTotal = net+otAmount;
         $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(payableTotal)));
-
     }
 </script>
 
