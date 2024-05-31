@@ -1,0 +1,76 @@
+.tinput {
+    width: 100%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px !important;
+    border-color: blue;
+    background-color: transparent;
+    
+}
+.semiTinput {
+    width: 44%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+    
+}
+.semiSinput {
+    width: 64%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+    
+}
+.sbinput {
+    width: 36%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+   
+}
+.sinput {
+    width: 30%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+    
+}
+.sminput {
+    width: 18%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+   
+}
+.small {
+    width: 25%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+   
+}
+.verySmall {
+    width: 10%;
+    outline: 0;
+    border-style: dashed;
+    border-width: 0 0 1px;
+    border-color: blue;
+    background-color: transparent;
+    
+}
+.tbl_border{
+    border: 1px solid;
+    border-collapse: collapse;
+}
