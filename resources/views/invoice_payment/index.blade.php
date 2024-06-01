@@ -5,6 +5,53 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <form method="get" action="">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">Customer</label>
+                    <select name="customer_id" class="form-control">
+                        <option value="">Select Customer</option>
+                        @forelse ($customer as $c)
+                            <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
+                        @empty
+                            
+                        @endforelse
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label for="">Pay Mode</label>
+                    <select name="payment_type" class="form-control">
+                        <option value="1" {{request()->payment_type==1?'selected':''}}>Cash</option>
+                        <option value="2" {{request()->payment_type==2?'selected':''}}>Pay Order</option>
+                        <option value="3" {{request()->payment_type==3?'selected':''}}>Fund Transfer</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <label for="">PO No</label>
+                    <input type="text" name="po_no" class="form-control" value="{{ request()->po_no }}">
+                </div>
+                <div class="col-sm-3">
+                    <label for="">PO Date</label>
+                    <input type="date" name="po_date" class="form-control" value="{{ request()->po_date }}">
+                </div>
+                <div class="col-sm-3">
+                    <label for="">Pay Date</label>
+                    <input type="date" value="{{ request()->pay_date }}" name="pay_date" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                    <label for="">Receive Date</label>
+                    <input type="date" name="rcv_date" class="form-control" value="{{ request()->rcv_date }}">
+                </div>
+                <div class="col-sm-3">
+                    <label for="">Deposit Date</label>
+                    <input type="date" name="deposit_date" class="form-control" value="{{ request()->deposit_date }}">
+                </div>
+                <div class="col-sm-3 py-3">
+                    <button type="submit" class="btn btn-info">Search</button>
+                    <a href="{{route('invoice-payment.index')}}" class="btn btn-danger">Clear</a>
+                </div>
+            </div>
+        </form>
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
@@ -22,6 +69,7 @@
                         <th scope="col">{{__('PO No')}}</th>
                         <th scope="col">{{__('PO Date')}}</th>
                         <th scope="col">{{__('Pay Date')}}</th>
+                        <th scope="col">{{__('Receive Date')}}</th>
                         <th scope="col">{{__('Deposit Date')}}</th>
                         <th scope="col">{{__('Remarks')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
@@ -42,11 +90,12 @@
                         <td>{{ $e->po_no }}</td>
                         <td>{{ $e->po_date }}</td>
                         <td>{{ $e->pay_date }}</td>
+                        <td>{{ $e->rcv_date }}</td>
                         <td>{{ $e->deposit_date }}</td>
                         <td>{{ $e->remarks }}</td>
                         <td>
-                            <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id)])}}">
-                                <i class="bi bi-eye"></i>
+                            <a href="{{route('invoice-payment.edit',[encryptor('encrypt',$e->id)])}}">
+                                <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
                     </tr>

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('po_no')->nullable();
             $table->date('po_date')->nullable();
             $table->date('deposit_date')->nullable();
+            $table->date('rcv_date')->nullable();
             $table->date('pay_date')->nullable();
             $table->text('remarks')->nullable();
             $table->timestamps();

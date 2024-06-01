@@ -136,6 +136,10 @@
                             <input type="date" value="{{date('Y-m-d')}}" name="pay_date" class="form-control">
                         </div>
                         <div class="col-sm-4">
+                            <label for="">Receive Date</label>
+                            <input type="date" name="rcv_date" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">Deposit Date</label>
                             <input type="date" name="deposit_date" class="form-control">
                         </div>
