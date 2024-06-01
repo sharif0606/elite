@@ -227,9 +227,45 @@
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
                         if(old_emp == value.en_applicants_name){
+                            var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.joining_date}">`;
                             var en_applicants_name = value.customer_branch;
+                            var mpcCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_matterss_pillowCost[]" value="0" readonly>`
+                            var tonicsimCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_tonic_sim[]" value="0" readonly>`
+                            var opcCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_over_paymentCut[]" value="0" readonly>`
+                            var fineCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
+                            var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
+                            var longLoonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_longLoan[]" value="0" readonly>`
+                            var clothCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_cloth[]" value="0" readonly>`
+                            var hrCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_hr[]" value="0" readonly>`
+                            var jacketCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_jacket[]" value="0" readonly>`
+                            var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>`
+                            var trainingCostCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_traningCost[]" value="0" readonly>`
+                            var cfCondition=` <input style="width:100px;" class="form-control" type="text" name="deduction_c_f[]" value="0" readonly>`
+                            var medicalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_medical[]" value="0" readonly>`
+                            var insCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_ins[]" value="0" readonly>`
+                            var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
+                            var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
+                            var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
                         }else{
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
+                            var customerName =`<input style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" readonly>`;
+                            var mpcCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_matterss_pillowCost" type="text" name="deduction_matterss_pillowCost[]" value="" placeholder="Mattress & Pillow Cost">`
+                            var tonicsimCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_tonic_sim" type="text" name="deduction_tonic_sim[]" value="" placeholder="Tonic Sim">`
+                            var opcCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_over_paymentCut" type="text" name="deduction_over_paymentCut[]" value="" placeholder="Over Payment Cutt">`
+                            var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">`
+                            var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
+                            var longLoonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_longLoan" type="text" name="deduction_longLoan[]" value="${LongLoan}" placeholder="Long Loan">`
+                            var clothCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">`
+                            var hrCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">`
+                            var jacketCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="Stamp">`
+                            var trainingCostCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningCost[]" value="${traningCostPerMonth}" placeholder="Training Cost">`
+                            var cfCondition=` <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">`
+                            var medicalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">`
+                            var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">`
+                            var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">`
+                            var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
+                            var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
                         }
                         selectElement.append(
                             `<tr>
@@ -237,9 +273,7 @@
                                 <td>${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
-                                </td>
+                                <td>${customerName}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
                                     <input class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
@@ -296,57 +330,23 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="" placeholder="Gross Salary">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_matterss_pillowCost" type="text" name="deduction_matterss_pillowCost[]" value="" placeholder="Mattress & Pillow Cost">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_tonic_sim" type="text" name="deduction_tonic_sim[]" value="" placeholder="Tonic Sim">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_over_paymentCut" type="text" name="deduction_over_paymentCut[]" value="" placeholder="Over Payment Cutt">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_longLoan" type="text" name="deduction_longLoan[]" value="${LongLoan}" placeholder="Long Loan">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="Stamp">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningCost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${netSalary}" placeholder="Net Salary">
-                                </td>
+                                <td>${mpcCondition}</td>
+                                <td>${tonicsimCondition}</td>
+                                <td>${opcCondition}</td>
+                                <td>${fineCondition}</td>
+                                <td>${loonCondition}</td>
+                                <td>${longLoonCondition}</td>
+                                <td>${clothCondition}</td>
+                                <td>${hrCondition}</td>
+                                <td>${jacketCondition}</td>
+                                <td>${stmCondition}</td>
+                                <td>${trainingCostCondition}</td>
+                                <td>${cfCondition}</td>
+                                <td>${medicalCondition}</td>
+                                <td>${insCondition}</td>
+                                <td>${pfCondition}</td>
+                                <td>${deTotalCondition}</td>
+                                <td>${netSalaryCondition}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature" type="text" name="signature[]" value="" placeholder="Signature">
                                 </td>
@@ -402,7 +402,7 @@
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
-        $(e).closest('tr').find('.net_salary').val(parseFloat(net).toFixed(2));
+        $(e).closest('tr').find('.net_salary').val(Math.round(parseFloat(net)));
 
     }
 </script>

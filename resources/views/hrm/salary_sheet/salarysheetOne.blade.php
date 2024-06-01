@@ -233,6 +233,7 @@
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
+                        let Remarks = (value.remarks) ? value.remarks : '';
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
@@ -248,6 +249,7 @@
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
                         if(old_emp == value.en_applicants_name){
+                            var customerName=`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="join_date[]" value="${value.joining_date}">`
                             var en_applicants_name = value.customer_branch;
                             var fineCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
                             var mobileCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" readonly>`
@@ -265,6 +267,7 @@
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
                         }else{
+                            var customerName=`<input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">`
                             var en_applicants_name=`<input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">`
                             var mobileCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${MobileBill}" placeholder="Mobile bill">`
@@ -294,9 +297,7 @@
                                     <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
                                     <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
-                                </td>
+                                <td>${customerName}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
@@ -354,7 +355,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_of_ind" type="text" name="sing_of_ind[]" value="" placeholder="SIGN OF IND">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remark" type="text" name="remark[]" value="" placeholder="Remark">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}" placeholder="Remark">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>

@@ -199,6 +199,7 @@
                             netSalary = Math.round(parseFloat(gr) - parseFloat(totalDeduction));
                         }
                         if(old_emp == value.en_applicants_name){
+                            var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.joining_date}">`;
                             var en_applicants_name = value.customer_branch;
                             var absentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_absent[]" value="0" readonly>`
                             var vacantCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_vacant[]" value="0" readonly>`
@@ -206,7 +207,10 @@
                             var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
                             var advCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_adv[]" value="0" readonly>`
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stm[]" value="0" readonly>`
+                            var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
+                            var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(gr)}" readonly>`
                         }else{
+                            var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>`
                             var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>`
@@ -214,6 +218,8 @@
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
                             var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="" placeholder="Stm">`
+                            var deTotalCondition=`<input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>`
+                            var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(netSalary)}" placeholder="Net Wages" readonly>`
                         }
                         selectElement.append(
                             `<tr>
@@ -229,9 +235,7 @@
                                     <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                 </td>
                                 <td>${en_applicants_name}</td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Joining Date">
-                                </td>
+                                <td>${customerName}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="Monthlay Salary">
                                 </td>
@@ -277,12 +281,8 @@
                                 <td>${pfCondition}</td>
                                 <td>${advCondition}</td>
                                 <td>${stmCondition}</td>
-                                <td>
-                                    <input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>
-                                </td>
-                                <td>
-                                    <input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${netSalary}" placeholder="Net Wages" readonly>
-                                </td>
+                                <td>${deTotalCondition}</td>
+                                <td>${netSalaryCondition}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_hour" type="text" name="ot_hour[]" value="${value.ot_qty}" placeholder="OT hour">
                                 </td>
@@ -352,6 +352,7 @@
         let otAmount = otRate*otHour;
         $(e).closest('tr').find('.net_wages').val(Math.round(parseFloat(net)));
 
+        $(e).closest('tr').find('.ot_amt').val(parseFloat(otAmount).toFixed(2));
         let payableTotal = net+otAmount;
         $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(payableTotal)));
     }
