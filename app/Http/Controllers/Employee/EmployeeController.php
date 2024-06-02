@@ -39,7 +39,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::orderBy('id','DESC');
+        $employees = Employee::orderBy('id','ASC');
         if($request->admission_id_no){
             $employees = $employees->where('admission_id_no',$request->admission_id_no);
         }

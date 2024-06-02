@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-3 py-3">
                     <button type="submit" class="btn btn-info">Search</button>
-                    <a href="{{route('invoice-payment.index')}}" class="btn btn-danger">Clear</a>
+                    <a href="{{route('employee.index', ['role' =>currentUser()])}}" class="btn btn-danger">Clear</a>
                 </div>
                 <div class="col-sm-6 py-3">
                     <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
