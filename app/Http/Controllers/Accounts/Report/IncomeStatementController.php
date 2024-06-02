@@ -81,7 +81,7 @@ class IncomeStatementController extends Controller
             }else if($ah->head_code=="5000"){
                 if($ah->sub_head){
                     foreach($ah->sub_head as $sub_head){
-                        if($sub_head->head_code=="5100"){/* operating income */
+                        if($sub_head->head_code=="5100"){/* operating expense */
                             if($sub_head->child_one->count() > 0){
                                 foreach($sub_head->child_one as $child_one){
                                     if($child_one->child_two->count() > 0){
@@ -95,7 +95,7 @@ class IncomeStatementController extends Controller
                             }else{
                                 $expenseheadop[]=$sub_head->id;
                             }
-                        }else if ($sub_head->head_code=="5200"){ /* nonoperating income */
+                        }else if ($sub_head->head_code=="5200"){ /* nonoperating expense */
                             if($sub_head->child_one->count() > 0){
                                 foreach($sub_head->child_one as $child_one){
                                     if($child_one->child_two->count() > 0){
@@ -119,8 +119,8 @@ class IncomeStatementController extends Controller
         }
 
         if($month){
-            $datas=$year."-".$month."-01";
-            $datae=$year."-".$month."-31";
+            $datas=$year."-".str_pad($month,2,"0",STR_PAD_LEFT)."-01";
+            $datae=$year."-".str_pad($month,2,"0",STR_PAD_LEFT)."-31";
         }else{
             $datas=$year."-01-01";
             $datae=$year."-12-31";
@@ -128,7 +128,7 @@ class IncomeStatementController extends Controller
 
         //\DB::connection()->enableQueryLog();
         /* operating income */
-        $opincome=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
+        $opincome=GeneralLedger::select([DB::raw("SUM(cr) as cr"), DB::raw("SUM(dr) as dr"),DB::raw("journal_title")])->whereBetween('rec_date',[$datas,$datae])
         ->where(function($query) use ($incomeheadop,$incomeheadopone,$incomeheadoptwo){
             $query->orWhere(function($query) use ($incomeheadop){
                     $query->whereIn('sub_head_id',$incomeheadop);
@@ -140,42 +140,56 @@ class IncomeStatementController extends Controller
                     $query->whereIn('child_two_id',$incomeheadoptwo);
             });
         })
+        ->groupBy('sub_head_id','child_one_id','child_two_id')
         ->get();
 
         //$queries = \DB::getQueryLog();
         //dd($queries);
         /* nonoperating income */
-        $nonopincome=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
+        $nonopincome=GeneralLedger::select([DB::raw("SUM(cr) as cr"), DB::raw("SUM(dr) as dr"),DB::raw("journal_title")])->whereBetween('rec_date',[$datas,$datae])
         ->where(function($query) use ($incomeheadnop,$incomeheadnopone,$incomeheadnoptwo){
-            $query->orWhere(function($query) use ($incomeheadnop){
-                    $query->whereIn('sub_head_id',$incomeheadnop);
-            });
-            $query->orWhere(function($query) use ($incomeheadnopone){
-                    $query->whereIn('child_one_id',$incomeheadnopone);
-            });
-            $query->orWhere(function($query) use ($incomeheadnoptwo){
-                    $query->whereIn('child_two_id',$incomeheadnoptwo);
-            });
+            if($incomeheadnop){
+                $query->orWhere(function($query) use ($incomeheadnop){
+                        $query->whereIn('sub_head_id',$incomeheadnop);
+                });
+            }
+            if($incomeheadnopone){
+                $query->orWhere(function($query) use ($incomeheadnopone){
+                        $query->whereIn('child_one_id',$incomeheadnopone);
+                });
+            }
+            if($incomeheadnoptwo){
+                $query->orWhere(function($query) use ($incomeheadnoptwo){
+                        $query->whereIn('child_two_id',$incomeheadnoptwo);
+                });
+            }
         })
+        ->groupBy('sub_head_id','child_one_id','child_two_id')
         ->get();
 
         /* operating expense */
-        $opexpense=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
+        $opexpense=GeneralLedger::select([DB::raw("SUM(cr) as cr"), DB::raw("SUM(dr) as dr"),DB::raw("journal_title")])->whereBetween('rec_date',[$datas,$datae])
         ->where(function($query) use ($expenseheadop,$expenseheadopone,$expenseheadoptwo){
-            $query->orWhere(function($query) use ($expenseheadop){
-                    $query->whereIn('sub_head_id',$expenseheadop);
-            });
-            $query->orWhere(function($query) use ($expenseheadopone){
-                    $query->whereIn('child_one_id',$expenseheadopone);
-            });
-            $query->orWhere(function($query) use ($expenseheadoptwo){
-                    $query->whereIn('child_two_id',$expenseheadoptwo);
-            });
+            if($expenseheadop){
+                $query->orWhere(function($query) use ($expenseheadop){
+                        $query->whereIn('sub_head_id',$expenseheadop);
+                });
+            }
+            if($expenseheadopone){
+                $query->orWhere(function($query) use ($expenseheadopone){
+                        $query->whereIn('child_one_id',$expenseheadopone);
+                });
+            }
+            if($expenseheadoptwo){
+                $query->orWhere(function($query) use ($expenseheadoptwo){
+                        $query->whereIn('child_two_id',$expenseheadoptwo);
+                });
+            }
         })
+        ->groupBy('sub_head_id','child_one_id','child_two_id')
         ->get();
-
         /* nonoperating expense */
-        $nonopexpense=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
+        $nonopexpense=GeneralLedger::select([DB::raw("SUM(cr) as cr"), DB::raw("SUM(dr) as dr"),DB::raw("journal_title")])->whereBetween('rec_date',[$datas,$datae])
         ->where(function($query) use ($expenseheadnop,$expenseheadnopone,$expenseheadnoptwo){
             $query->orWhere(function($query) use ($expenseheadnop){
                     $query->whereIn('sub_head_id',$expenseheadnop);
@@ -187,14 +201,16 @@ class IncomeStatementController extends Controller
                     $query->whereIn('child_two_id',$expenseheadnoptwo);
             });
         })
+        ->groupBy('sub_head_id','child_one_id','child_two_id')
         ->get();
         /* tax expense */
-        $taxamount=GeneralLedger::whereBetween('rec_date',[$datas,$datae])
+        $taxamount=GeneralLedger::select([DB::raw("SUM(cr) as cr"), DB::raw("SUM(dr) as dr"),DB::raw("journal_title")])->whereBetween('rec_date',[$datas,$datae])
         ->where(function($query) use ($tax_data){
             $query->orWhere(function($query) use ($tax_data){
                     $query->whereIn('child_one_id',$tax_data);
             });
         })
+        ->groupBy('sub_head_id','child_one_id','child_two_id')
         ->get();
 
         $res=array(

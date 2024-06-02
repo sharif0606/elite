@@ -69,26 +69,29 @@
                                         <tr>
                                             <th>#SL</th>
                                             <th>Particulars</th>
-                                            <th>Amount</th>
+                                            <th class="text-end">Amount</th>
                                         </tr>
                                         @forelse($opincome as $i=>$opi)
+                                            @php $inc+=$opi->cr @endphp
                                             <tr>
                                                 <th>{{ ++$i }}</th>
                                                 <th>{{$opi->journal_title}}</th>
-                                                <th>{{$opi->cr}}</th>
+                                                <th class="text-end">{{$opi->cr}}</th>
                                             </tr>
                                         @empty
 
                                         @endforelse
                                         @forelse($nonopincome as $opi)
+                                            @php $inc+=$opi->cr @endphp
                                             <tr>
                                                 <th>{{ ++$i }}</th>
                                                 <th>{{$opi->journal_title}}</th>
-                                                <th>{{$opi->cr}}</th>
+                                                <th class="text-end">{{$opi->cr}}</th>
                                             </tr>
                                         @empty
 
                                         @endforelse
+                                        
                                     </table>
                                 </td>
                                 <td>
@@ -96,26 +99,55 @@
                                         <tr>
                                             <th>#SL</th>
                                             <th>Particulars</th>
-                                            <th>Amount</th>
+                                            <th class="text-end">Amount</th>
                                         </tr>
                                         @forelse($opexpense as $i=>$opi)
+                                            @php $exp+=$opi->dr @endphp
                                             <tr>
                                                 <th>{{ ++$i }}</th>
                                                 <th>{{$opi->journal_title}}</th>
-                                                <th>{{$opi->dr}}</th>
+                                                <th class="text-end">{{$opi->dr}}</th>
                                             </tr>
                                         @empty
 
                                         @endforelse
                                         @forelse($nonopexpense as $opi)
+                                            @php $exp+=$opi->dr @endphp
                                             <tr>
                                                 <th>{{ ++$i }}</th>
                                                 <th>{{$opi->journal_title}}</th>
-                                                <th>{{$opi->dr}}</th>
+                                                <th class="text-end">{{$opi->dr}}</th>
                                             </tr>
                                         @empty
 
                                         @endforelse
+                                        
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="table">
+                                        <tr>
+                                            <th colspan="2">Total Income</th>
+                                            <th class="text-end">{{$inc}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Balance</th>
+                                            <th class="text-end">{{$inc - $exp}}</th>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table class="table">
+                                        <tr>
+                                            <th colspan="2">Total Expense</th>
+                                            <th class="text-end">{{$exp}}</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2"></th>
+                                            <th class="text-end">&nbsp;</th>
+                                        </tr>
                                     </table>
                                 </td>
                             </tr>

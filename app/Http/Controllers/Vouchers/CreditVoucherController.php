@@ -131,10 +131,10 @@ class CreditVoucherController extends VoucherController
                 }
                 DB::commit();
 				\Toastr::success('Successfully created');
-				return redirect()->route('admin.credit_voucher.index');
+				return redirect()->route('credit_voucher.index');
 			}
 		}catch (Exception $e) {
-			// dd($e);
+			 dd($e);
 			\Toastr::error('Please try again');
 			DB::rollBack();
 			return redirect()->back()->withInput();
@@ -194,7 +194,7 @@ class CreditVoucherController extends VoucherController
                 GeneralLedger::where('credit_voucher_id',$cv->id)->update($gldata);
             
                 \Toastr::success('Successfully Updated');
-                return redirect()->route('admin.credit_voucher.index');
+                return redirect()->route('credit_voucher.index');
             }
 		}catch (Exception $e) {
 			// dd($e);
