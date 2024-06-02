@@ -455,12 +455,33 @@ class SalarySheetController extends Controller
         //return $salary;
         return view('hrm.salary_sheet.salarysheetFourShow',compact('salary'));
     }
+    // public function getsalarySheetFiveShow($id)
+    // {
+    //     $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
+    //     //return $salary;
+    //     return view('hrm.salary_sheet.salarysheetFiveShow',compact('salary'));
+    // }
     public function getsalarySheetFiveShow($id)
     {
-        $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
-        //return $salary;
-        return view('hrm.salary_sheet.salarysheetFiveShow',compact('salary'));
+        $salary = SalarySheet::findOrFail(encryptor('decrypt', $id));
+        
+        $customerIds = explode(',', $salary->customer_id);
+        $branchIds = explode(',', $salary->branch_id);
+
+        $groupedData = [];
+
+        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        foreach ($salaryDetails as $detail) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
+                $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+            }
+        }
+        return view('hrm.salary_sheet.salarysheetFiveShowBranch', [
+            'salary' => $salary,
+            'groupedData' => $groupedData
+        ]);
     }
+
 
 
     public function edit($id)

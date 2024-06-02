@@ -2,7 +2,7 @@
 
 namespace App\Models\Crm;
 use App\Models\Crm\Atm;
-
+use App\Models\Hrm\SalarySheetDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
