@@ -5,10 +5,25 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <form method="get" action="">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label for="">ID</label>
+                    <input type="text" name="admission_id_no" class="form-control" value="{{ request()->admission_id_no }}">
+                </div>
+                <div class="col-sm-3 py-3">
+                    <button type="submit" class="btn btn-info">Search</button>
+                    <a href="{{route('invoice-payment.index')}}" class="btn btn-danger">Clear</a>
+                </div>
+                <div class="col-sm-6 py-3">
+                    <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
+                </div>
+
+            </div>
+        </form>
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr>
                         <th scope="col" width="20px">{{__('#SL')}}</th>

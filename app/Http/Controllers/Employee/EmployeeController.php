@@ -37,9 +37,14 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::paginate(20);
+        $employees = Employee::orderBy('id','DESC');
+        if($request->admission_id_no){
+            $employees = $employees->where('admission_id_no',$request->admission_id_no);
+        }
+        
+        $employees = $employees->paginate(20);
         return view('employee.index',compact('employees'));
     }
     /**
