@@ -434,20 +434,50 @@ class SalarySheetController extends Controller
     public function getsalarySheetOneShow($id)
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
-        //return $salary;
-        return view('hrm.salary_sheet.salarysheetOneShow',compact('salary'));
+        $customerIds = explode(',', $salary->customer_id);
+        $branchIds = explode(',', $salary->branch_id);
+
+        $groupedData = [];
+
+        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        foreach ($salaryDetails as $detail) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
+                $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+            }
+        }
+        return view('hrm.salary_sheet.salarysheetOneShow',compact('salary','groupedData'));
     }
     public function getsalarySheetTwoShow($id)
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
-        //return $salary;
-        return view('hrm.salary_sheet.salarysheetTwoShow',compact('salary'));
+        $customerIds = explode(',', $salary->customer_id);
+        $branchIds = explode(',', $salary->branch_id);
+
+        $groupedData = [];
+
+        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        foreach ($salaryDetails as $detail) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
+                $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+            }
+        }
+        return view('hrm.salary_sheet.salarysheetTwoShow',compact('salary','groupedData'));
     }
     public function salarySheetThreeShow($id)
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
-        //return $salary;
-        return view('hrm.salary_sheet.salarysheetThreeShow',compact('salary'));
+        $customerIds = explode(',', $salary->customer_id);
+        $branchIds = explode(',', $salary->branch_id);
+
+        $groupedData = [];
+
+        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        foreach ($salaryDetails as $detail) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
+                $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+            }
+        }
+        return view('hrm.salary_sheet.salarysheetThreeShow',compact('salary','groupedData'));
     }
     public function salarySheetFourShow($id)
     {
