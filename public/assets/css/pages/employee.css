@@ -7,6 +7,9 @@
     background-color: transparent;
     
 }
+.tbborder{
+    border-bottom: 1px dashed blue !important;
+}
 .semiTinput {
     width: 44%;
     outline: 0;
