@@ -64,9 +64,9 @@
                                 <li class="submenu-item ">
                                     <a href="{{route('upazila.index')}}">{{__('Upazila')}}</a>
                                 </li>
-                                <li class="submenu-item ">
+                                {{-- <li class="submenu-item ">
                                     <a href="{{route('thana.index')}}">{{__('Thana')}}</a>
-                                </li>
+                                </li> --}}
                                 <li class="submenu-item ">
                                     <a href="{{route('union.index')}}">{{__('Unions')}}</a>
                                 </li>
