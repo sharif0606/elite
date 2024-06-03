@@ -35,153 +35,154 @@
                         </div>
                         <!-- table bordered -->
                         <div class="row mt-4">
-                            <table id="salaryTable" class="table  table-bordered mb-0">
-                            @foreach ($groupedData as $customerId => $branches)
-                                @foreach ($branches as $branchId => $details)
-                                <tr>
-                                    <td>
-                                        <div class="d-flex">
-                                            <h6>{{ $details[0]->customer?->name }},</h6>
-                                            <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered mb-0">
-                                                <thead>
-                                                    <tr class="text-center" id="">
-                                                        <th scope="col" rowspan="2">{{__('SL.No')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Rank')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('OT days')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('OT Taka')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                                        <th scope="col" colspan="8">{{__('DEDUCTION')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
-                                                        <th scope="col" rowspan="2">{{__('Remark')}}</th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Dress</th>
-                                                        <th>Fine</th>
-                                                        <th>Bank Charge/Exc</th>
-                                                        <th>ins</th>
-                                                        <th>P.F</th>
-                                                        <th>stamp</th>
-                                                        <th>Training Cost</th>
-                                                        <th>Loan</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="salarySheet">
-                                                    @forelse ($details as $d )
-                                                    <tr>
-                                                        <td>{{ ++$loop->index }}</td>
-                                                        <td>{{ $d->employee?->admission_id_no }}</td>
-                                                        <td>{{ $d->employee?->joining_date }}</td>
-                                                        <td>{{ $d->position?->name }}</td>
-                                                        <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                        <td>{{ $d->duty_rate }}</td>
-                                                        <td>
-                                                            @if ($d->duty_qty != 0)
-                                                            {{ (int)$d->duty_qty }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->duty_amount != 0)
-                                                            {{ $d->duty_amount }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->ot_qty != 0)
-                                                            {{ (int)$d->ot_qty }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->ot_rate != 0)
-                                                            {{ $d->ot_rate }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->ot_amount != 0)
-                                                            {{ $d->ot_amount }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->allownce != 0)
-                                                            {{ $d->allownce }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $d->gross_salary }}</td>
-                                                        <td>
-                                                            @if ($d->deduction_dress != 0)
-                                                            {{ $d->deduction_dress }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_fine != 0)
-                                                            {{ $d->deduction_fine }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_banck_charge != 0)
-                                                            {{ $d->deduction_banck_charge }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_ins != 0)
-                                                            {{ $d->deduction_ins }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_p_f != 0)
-                                                            {{ $d->deduction_p_f }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_revenue_stamp != 0)
-                                                            {{ $d->deduction_revenue_stamp }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_traningcost != 0)
-                                                            {{ $d->deduction_traningcost }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->deduction_loan != 0)
-                                                            {{ $d->deduction_loan }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @if ($d->net_salary != 0)
-                                                            {{ $d->net_salary }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ $d->sing_of_ind }}</td>
-                                                        <td>{{ $d->sing_account }}</td>
-                                                        <td>{{ $d->remark }}</td>
-                                                    </tr>
-                                                    @empty
-                                                    @endforelse
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            @endforeach
-                            </table>
-
+                            <div class="table-responsive">
+                                <table id="salaryTable" class="table  table-bordered mb-0">
+                                    @foreach ($groupedData as $customerId => $branches)
+                                        @foreach ($branches as $branchId => $details)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <h6>{{ $details[0]->customer?->name }},</h6>
+                                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <tr class="text-center" id="">
+                                                                <th scope="col" rowspan="2">{{__('SL.No')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('ID No')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Rank')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Name')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('OT days')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('OT Taka')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
+                                                                <th scope="col" colspan="8">{{__('DEDUCTION')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
+                                                                <th scope="col" rowspan="2">{{__('Remark')}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Dress</th>
+                                                                <th>Fine</th>
+                                                                <th>Bank Charge/Exc</th>
+                                                                <th>ins</th>
+                                                                <th>P.F</th>
+                                                                <th>stamp</th>
+                                                                <th>Training Cost</th>
+                                                                <th>Loan</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="salarySheet">
+                                                            @forelse ($details as $d )
+                                                            <tr>
+                                                                <td>{{ ++$loop->index }}</td>
+                                                                <td>{{ $d->employee?->admission_id_no }}</td>
+                                                                <td>{{ $d->employee?->joining_date }}</td>
+                                                                <td>{{ $d->position?->name }}</td>
+                                                                <td>{{ $d->employee?->en_applicants_name }}</td>
+                                                                <td>{{ $d->duty_rate }}</td>
+                                                                <td>
+                                                                    @if ($d->duty_qty != 0)
+                                                                    {{ (int)$d->duty_qty }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->duty_amount != 0)
+                                                                    {{ $d->duty_amount }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->ot_qty != 0)
+                                                                    {{ (int)$d->ot_qty }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->ot_rate != 0)
+                                                                    {{ $d->ot_rate }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->ot_amount != 0)
+                                                                    {{ $d->ot_amount }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->allownce != 0)
+                                                                    {{ $d->allownce }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $d->gross_salary }}</td>
+                                                                <td>
+                                                                    @if ($d->deduction_dress != 0)
+                                                                    {{ $d->deduction_dress }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_fine != 0)
+                                                                    {{ $d->deduction_fine }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_banck_charge != 0)
+                                                                    {{ $d->deduction_banck_charge }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_ins != 0)
+                                                                    {{ $d->deduction_ins }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_p_f != 0)
+                                                                    {{ $d->deduction_p_f }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_revenue_stamp != 0)
+                                                                    {{ $d->deduction_revenue_stamp }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_traningcost != 0)
+                                                                    {{ $d->deduction_traningcost }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->deduction_loan != 0)
+                                                                    {{ $d->deduction_loan }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    @if ($d->net_salary != 0)
+                                                                    {{ $d->net_salary }}
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $d->sing_of_ind }}</td>
+                                                                <td>{{ $d->sing_account }}</td>
+                                                                <td>{{ $d->remark }}</td>
+                                                            </tr>
+                                                            @empty
+                                                            @endforelse
+                                                        </tbody>
+                                                    </table>
+                                                
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    @endforeach
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
