@@ -41,12 +41,6 @@
                         </div>
                         <!-- table bordered -->
                         <div class="row mt-4">
-                            @foreach ($groupedData as $customerId => $branches)
-                                @foreach ($branches as $branchId => $details)
-                                <div class="d-flex">
-                                    <h6>{{ $details[0]->customer?->name }},</h6>
-                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
-                                </div>
                                 <div class="table-responsive">
                                     <table id="salaryTable" class="table table-bordered mb-0">
                                         <thead>
@@ -97,69 +91,66 @@
                                             </tr>
                                         </thead>
                                         <tbody class="salarySheet">
-                                            @forelse ($details as $d )
-                                            <tr>
-                                                <td>{{ ++$loop->index }}</td>
-                                                <td>{{ $d->employee?->admission_id_no }}</td>
-                                                <td>{{ $d->employee?->joining_date }}</td>
-                                                <td>{{ $d->position?->name }}</td>
-                                                <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                <td>{{ $d->online_payment }}</td>
-                                                <td>{{ $d->duty_rate }}</td>
-                                                <td>{{ (int)$d->duty_qty }}</td>
-                                                <td>{{ $d->duty_amount }}</td>
-                                                <td>{{ (int)$d->weekly_leave }}</td>
-                                                <td>{{ (int)$d->ot_qty }}</td>
-                                                <td>{{ $d->ot_rate }}</td>
-                                                <td>{{ $d->ot_amount }}</td>
-                                                <td>{{ $d->ht_ribon_alice }}</td>
-                                                <td>{{ $d->gun_alice }}</td>
-                                                <td>{{ $d->leave }}</td>
-                                                <td>{{ $d->extra_alice }}</td>
-                                                <td>{{ $d->arrear }}</td>
-                                                <td>{{ $d->bonus }}</td>
-                                                <td>{{ $d->donation }}</td>
-                                                <td>{{ $d->gross_salary }}</td>
-                                                <td>{{ $d->deduction_matterss_pillowCost }}</td>
-                                                <td>{{ $d->deduction_tonic_sim }}</td>
-                                                <td>{{ $d->deduction_over_paymentCut }}</td>
-                                                <td>{{ $d->deduction_fine }}</td>
-                                                <td>{{ $d->deduction_loan }}</td>
-                                                <td>{{ $d->deduction_long_loan }}</td>
-                                                <td>{{ $d->deduction_cloth }}</td>
-                                                <td>{{ $d->deduction_hr }}</td>
-                                                <td>{{ $d->deduction_jacket }}</td>
-                                                <td>{{ $d->deduction_revenue_stamp }}</td>
-                                                <td>{{ $d->deduction_traningcost }}</td>
-                                                <td>{{ $d->deduction_c_f }}</td>
-                                                <td>{{ $d->deduction_medical }}</td>
-                                                <td>{{ $d->deduction_ins }}</td>
-                                                <td>{{ $d->deduction_p_f }}</td>
-                                                <td>{{ $d->deduction_total }}</td>
-                                                <td>{{ $d->net_salary }}</td>
-                                                <td>{{ $d->sing_of_ind }}</td>
-                                                <td>{{ $d->zone }}</td>
-                                            </tr>
-                                            @empty
-                                            @endforelse
+                                            @foreach ($groupedData as $customerId => $branches)
+                                                @foreach ($branches as $branchId => $details)
+                                                    <tr>
+                                                        <td colspan="40">
+                                                            <div class="d-flex">
+                                                                <h6>{{ $details[0]->customer?->name }},</h6>
+                                                                <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    @forelse ($details as $d )
+                                                    <tr>
+                                                        <td>{{ ++$loop->index }}</td>
+                                                        <td>{{ $d->employee?->admission_id_no }}</td>
+                                                        <td>{{ $d->employee?->joining_date }}</td>
+                                                        <td>{{ $d->position?->name }}</td>
+                                                        <td>{{ $d->employee?->en_applicants_name }}</td>
+                                                        <td>{{ $d->online_payment }}</td>
+                                                        <td>{{ $d->duty_rate }}</td>
+                                                        <td>{{ (int)$d->duty_qty }}</td>
+                                                        <td>{{ $d->duty_amount }}</td>
+                                                        <td>{{ (int)$d->weekly_leave }}</td>
+                                                        <td>{{ (int)$d->ot_qty }}</td>
+                                                        <td>{{ $d->ot_rate }}</td>
+                                                        <td>{{ $d->ot_amount }}</td>
+                                                        <td>{{ $d->ht_ribon_alice }}</td>
+                                                        <td>{{ $d->gun_alice }}</td>
+                                                        <td>{{ $d->leave }}</td>
+                                                        <td>{{ $d->extra_alice }}</td>
+                                                        <td>{{ $d->arrear }}</td>
+                                                        <td>{{ $d->bonus }}</td>
+                                                        <td>{{ $d->donation }}</td>
+                                                        <td>{{ $d->gross_salary }}</td>
+                                                        <td>{{ $d->deduction_matterss_pillowCost }}</td>
+                                                        <td>{{ $d->deduction_tonic_sim }}</td>
+                                                        <td>{{ $d->deduction_over_paymentCut }}</td>
+                                                        <td>{{ $d->deduction_fine }}</td>
+                                                        <td>{{ $d->deduction_loan }}</td>
+                                                        <td>{{ $d->deduction_long_loan }}</td>
+                                                        <td>{{ $d->deduction_cloth }}</td>
+                                                        <td>{{ $d->deduction_hr }}</td>
+                                                        <td>{{ $d->deduction_jacket }}</td>
+                                                        <td>{{ $d->deduction_revenue_stamp }}</td>
+                                                        <td>{{ $d->deduction_traningcost }}</td>
+                                                        <td>{{ $d->deduction_c_f }}</td>
+                                                        <td>{{ $d->deduction_medical }}</td>
+                                                        <td>{{ $d->deduction_ins }}</td>
+                                                        <td>{{ $d->deduction_p_f }}</td>
+                                                        <td>{{ $d->deduction_total }}</td>
+                                                        <td>{{ $d->net_salary }}</td>
+                                                        <td>{{ $d->sing_of_ind }}</td>
+                                                        <td>{{ $d->zone }}</td>
+                                                    </tr>
+                                                    @empty
+                                                    @endforelse
+                                                @endforeach
+                                            @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input style="width:100px;" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input style="width:100px;" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input style="width:100px;" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                            </tr>  --}}
-                                        </tfoot>
                                     </table>
                                 </div>
-                                @endforeach
-                            @endforeach
                         </div>
                     </div>
                 </div>
