@@ -109,19 +109,36 @@
                                         <tbody class="salarySheet">
 
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                            </tr>  --}}
-                                        </tfoot>
+                                        <tfoot class="d-none show_click">
+                                            <tr>
+                                               <th colspan="5" class="text-end">Total</th>
+                                               <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
+                                               <th><input class="form-control houseRentTotal" type="text" disabled></th>
+                                               <th><input class="form-control medicalTotal" type="text" disabled></th>
+                                               <th><input class="form-control transConveTotal" type="text" disabled></th>
+                                               <th><input class="form-control grossTotal" type="text" disabled></th>
+                                               <th><input class="form-control workingTotal" type="text" style="width:60px;" disabled></th>
+                                               <th><input class="form-control preDaysTotal" type="text" style="width:60px;" disabled></th>
+                                               <th><input class="form-control absentTotal" type="text" disabled></th>
+                                               <th><input class="form-control vacantTotal" type="text" disabled></th>
+                                               <th><input class="form-control hollyFesTotal" type="text" disabled></th>
+                                               <th><input class="form-control leClTotal" type="text" disabled></th>
+                                               <th><input class="form-control leSlTotal" type="text" disabled></th>
+                                               <th><input class="form-control leElTotal" type="text" disabled></th>
+                                               <th><input class="form-control deAbsentTotal" type="text" disabled></th>
+                                               <th><input class="form-control deVacantTotal" type="text" disabled></th>
+                                               <th><input class="form-control deHrentTotal" type="text" disabled></th>
+                                               <th><input class="form-control dePfTotal" type="text" disabled></th>
+                                               <th><input class="form-control deAdvTotal" type="text" disabled></th>
+                                               <th><input class="form-control deStmpTotal" type="text" disabled></th>
+                                               <th><input class="form-control detotalDeduc" type="text" disabled></th>
+                                               <th><input class="form-control netWageTotal" type="text" disabled></th>
+                                               <th><input class="form-control otDayTotal" type="text" style="width:60px;" disabled></th>
+                                               <th><input class="form-control otRateTotal" type="text" disabled></th>
+                                               <th><input class="form-control otAmountTotal" type="text" disabled></th>
+                                               <th><input class="form-control payableTotal" type="text" disabled></th>
+                                           </tr> 
+                                       </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -304,6 +321,7 @@
                             </tr>`
                         );
                         counter++;
+                        total_calculate();
                         old_emp= value.en_applicants_name;
                     });
             },
@@ -355,6 +373,115 @@
         $(e).closest('tr').find('.ot_amt').val(parseFloat(otAmount).toFixed(2));
         let payableTotal = net+otAmount;
         $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(payableTotal)));
+        total_calculate();
+    }
+    function total_calculate() {
+        var payableTotal = 0;
+        var ratOfSalaryTotal = 0; var houseRentTotal = 0; var medicalTotal = 0; var transConveTotal=0; var grossTotal=0; var workingTotal=0; var preDaysTotal = 0; var absentTotal=0; var vacantTotal=0; var hollyFesTotal=0; var leClTotal=0; var leSlTotal=0; var leElTotal=0; var deAbsentTotal=0; var deVacantTotal=0; var deHrentTotal=0; var dePfTotal=0; var deAdvTotal=0; var deStmpTotal=0; var detotalDeduc=0; var netWageTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0;
+        $('.duty_rate').each(function() {
+            ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.house_rent').each(function() {
+            houseRentTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.medical').each(function() {
+            medicalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.trans_conve').each(function() {
+            transConveTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gross_wages').each(function() {
+            grossTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_workingDay').each(function() {
+            workingTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.present_day').each(function() {
+            preDaysTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.absent').each(function() {
+            absentTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.vacant').each(function() {
+            vacantTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.holiday_festival').each(function() {
+            hollyFesTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.leave_cl').each(function() {
+            leClTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.leave_sl').each(function() {
+            leSlTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.leave_el').each(function() {
+            leElTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_absent').each(function() {
+            deAbsentTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_vacant').each(function() {
+            deVacantTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_h_rent').each(function() {
+            deHrentTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_p_f').each(function() {
+            dePfTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_adv').each(function() {
+            deAdvTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_stm').each(function() {
+            deStmpTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_total').each(function() {
+            detotalDeduc+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.net_wages').each(function() {
+            netWageTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_hour').each(function() {
+            otDayTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_rate_basicDuble').each(function() {
+            otRateTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_amt').each(function() {
+            otAmountTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_payable').each(function() {
+            payableTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        
+        
+        $('.ratOfSalaryTotal').val(parseFloat(ratOfSalaryTotal).toFixed(2));
+        $('.houseRentTotal').val(parseFloat(houseRentTotal).toFixed(2));
+        $('.medicalTotal').val(parseFloat(medicalTotal).toFixed(2));
+        $('.transConveTotal').val(parseFloat(transConveTotal).toFixed(2));
+        $('.grossTotal').val(parseFloat(grossTotal).toFixed(2));
+        $('.workingTotal').val(parseFloat(workingTotal));
+        $('.preDaysTotal').val(parseFloat(preDaysTotal));
+        $('.absentTotal').val(parseFloat(absentTotal));
+        $('.vacantTotal').val(parseFloat(vacantTotal));
+        $('.hollyFesTotal').val(parseFloat(hollyFesTotal));
+        $('.leClTotal').val(parseFloat(leClTotal));
+        $('.leSlTotal').val(parseFloat(leSlTotal));
+        $('.leElTotal').val(parseFloat(leElTotal));
+        $('.deAbsentTotal').val(parseFloat(deAbsentTotal).toFixed(2));
+        $('.deVacantTotal').val(parseFloat(deVacantTotal).toFixed(2));
+        $('.deHrentTotal').val(parseFloat(deHrentTotal).toFixed(2));
+        $('.dePfTotal').val(parseFloat(dePfTotal).toFixed(2));
+        $('.deAdvTotal').val(parseFloat(deAdvTotal).toFixed(2));
+        $('.deStmpTotal').val(parseFloat(deStmpTotal).toFixed(2));
+        $('.detotalDeduc').val(parseFloat(detotalDeduc).toFixed(2));
+        $('.netWageTotal').val(parseFloat(netWageTotal).toFixed(2));
+        $('.otDayTotal').val(parseFloat(otDayTotal));
+        $('.otRateTotal').val(parseFloat(otRateTotal).toFixed(2));
+        $('.otAmountTotal').val(parseFloat(otAmountTotal).toFixed(2));
+        $('.payableTotal').val(parseFloat(payableTotal).toFixed(2));
+       // console.log(totalSlry);
+
     }
 </script>
 

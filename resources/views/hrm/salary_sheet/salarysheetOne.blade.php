@@ -41,26 +41,6 @@
                                         </optgroup>
                                     </select>
                                 </div>
-                                {{--  <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
-                                        <option value="">Select Branch</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Atm</b></label>
-                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
-                                        <option value="">Select Atm</option>
-                                    </select>
-                                </div>  --}}
-                                {{--  <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Start Date</b></label>
-                                    <input onkeyup="reCalcultateSalary(this)" required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
-                                </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>End Date</b></label>
-                                    <input onkeyup="reCalcultateSalary(this)" required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
-                                </div>  --}}
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Salary Year</b></label>
                                     <select required class="form-control year" name="year">
@@ -135,12 +115,7 @@
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td class="text-end"> Total</td>
+                                                <td colspan="6" class="text-end"> Total</td>
                                                 <td><input readonly style="width:100px;" class="form-control total_slry" type="text" name="total_slry" placeholder="Monthly Salary"></td>
                                                 <td><input readonly style="width:100px;" class="form-control tdq" type="text" name="total_ot" placeholder="Total Days"></td>
                                                 <td><input style="width:100px;" class="form-control dam" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
