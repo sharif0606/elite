@@ -14,6 +14,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Employee\Employee;
 
 class SalarySheetController extends Controller
 {
@@ -295,10 +296,6 @@ class SalarySheetController extends Controller
         DB::beginTransaction();
         try {
             $salary = new SalarySheet;
-            $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
-            $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
-            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
             $salary->created_by=currentUserId();
@@ -311,9 +308,6 @@ class SalarySheetController extends Controller
                             $details->salary_id=$salary->id;
                             $details->employee_id=$request->employee_id[$key];
                             $details->designation_id=$request->designation_id[$key];
-                            $details->customer_id=$request->customer_id_ind[$key];
-                            $details->branch_id=$request->customer_branch_id[$key];
-                            $details->atm_id=$request->customer_atm_id[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->house_rent=$request->house_rent[$key];
                             $details->duty_qty=$request->duty_qty[$key];
@@ -574,31 +568,51 @@ class SalarySheetController extends Controller
 
         return response()->json($data, 200);
     }
+    // public function getSalaryFourData(Request $request)
+    // {
+    //     $stdate=$request->start_date;
+    //     $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
+    //     ->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')
+    //     ->join('employees','customer_duty_details.employee_id','=','employees.id')
+    //     ->leftjoin('deductions', function ($join) use ($request) {
+    //         $join->on('customer_duty_details.employee_id', '=', 'deductions.employee_id')
+    //              ->where('deductions.month', '=', $request->Month)
+    //              ->where('deductions.year', '=', $request->Year);
+    //     })
+    //     ->leftjoin('long_loans', function ($j) use ($stdate) {
+    //         $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
+    //              ->whereDate('long_loans.installment_date', '<=',$stdate)
+    //              ->whereDate('long_loans.end_date', '>=',$stdate)
+    //              ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
+    //     })
+    //         ->select('customer_duties.*','deductions.*','customer_duty_details.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'));
+
+    //     if ($request->customer_id){
+    //         $customerId = $request->customer_id;
+    //         $query->whereIn('customer_duties.customer_id', $customerId);
+    //     }
+    //     $data = $query->get();
+
+    //     return response()->json($data, 200);
+    // }
     public function getSalaryFourData(Request $request)
     {
         $stdate=$request->start_date;
-        $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
-        ->join('job_posts','customer_duty_details.job_post_id','=','job_posts.id')
-        ->join('employees','customer_duty_details.employee_id','=','employees.id')
+        $query = Employee::join('job_posts', 'job_posts.id', '=', 'employees.designation_id')
         ->leftjoin('deductions', function ($join) use ($request) {
-            $join->on('customer_duty_details.employee_id', '=', 'deductions.employee_id')
+            $join->on('employees.id', '=', 'deductions.employee_id')
                  ->where('deductions.month', '=', $request->Month)
                  ->where('deductions.year', '=', $request->Year);
         })
         ->leftjoin('long_loans', function ($j) use ($stdate) {
-            $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
+            $j->on('employees.id', '=', 'long_loans.employee_id')
                  ->whereDate('long_loans.installment_date', '<=',$stdate)
                  ->whereDate('long_loans.end_date', '>=',$stdate)
                  ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
         })
-            ->select('customer_duties.*','deductions.*','customer_duty_details.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'));
+            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.employee_type','employees.gross_salary','employees.ot_salary');
 
-        if ($request->customer_id){
-            $customerId = $request->customer_id;
-            $query->whereIn('customer_duties.customer_id', $customerId);
-        }
         $data = $query->get();
-
         return response()->json($data, 200);
     }
 }
