@@ -138,19 +138,43 @@
                                         <tbody class="salarySheet">
 
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                            </tr>  --}}
-                                        </tfoot>
+                                        <tfoot class="d-none show_click">
+                                            <tr>
+                                               <th colspan="6" class="text-end"> Total</th>
+                                               <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
+                                               <th><input class="form-control prevDaysTotal" type="text" disabled></th>
+                                               <th><input class="form-control netTotal" type="text" disabled></th>
+                                               <th><input class="form-control weaklyLeveTotal" type="text" disabled></th>
+                                               <th><input class="form-control otDayTotal" type="text" disabled></th>
+                                               <th><input class="form-control otRateTotal" type="text" disabled></th>
+                                               <th><input class="form-control otAmountTotal" type="text" disabled></th>
+                                               <th><input class="form-control htRibonAliceTotal" type="text" disabled></th>
+                                               <th><input class="form-control gunAliceTotal" type="text" disabled></th>
+                                               <th><input class="form-control leaveTotal" type="text" disabled></th>
+                                               <th><input class="form-control extraAliceTotal" type="text" disabled></th>
+                                               <th><input class="form-control arrearTotal" type="text" disabled></th>
+                                               <th><input class="form-control bonusTotal" type="text" disabled></th>
+                                               <th><input class="form-control donationTotal" type="text" disabled></th>
+                                               <th><input class="form-control grossTotal" type="text" disabled></th>
+                                               <th><input class="form-control deMettersPillowCostTotal" type="text" disabled></th>
+                                               <th><input class="form-control deTonicSimTotal" type="text" disabled></th>
+                                               <th><input class="form-control deOverPayCuttTotal" type="text" disabled></th>
+                                               <th><input class="form-control deFineTotal" type="text" disabled></th>
+                                               <th><input class="form-control deLoonTotal" type="text" disabled></th>
+                                               <th><input class="form-control deLongLoonTotal" type="text" disabled></th>
+                                               <th><input class="form-control deClothTotal" type="text" disabled></th>
+                                               <th><input class="form-control deHrTotal" type="text" disabled></th>
+                                               <th><input class="form-control deJacketTotal" type="text" disabled></th>
+                                               <th><input class="form-control deStmpTotal" type="text" disabled></th>
+                                               <th><input class="form-control deTrainingTotal" type="text" disabled></th>
+                                               <th><input class="form-control deCfTotal" type="text" disabled></th>
+                                               <th><input class="form-control deMedicalTotal" type="text" disabled></th>
+                                               <th><input class="form-control deInsTotal" type="text" disabled></th>
+                                               <th><input class="form-control dePfTotal" type="text" disabled></th>
+                                               <th><input class="form-control deDeductTotal" type="text" disabled></th>
+                                               <th><input class="form-control netSalaryTotal" type="text" disabled></th>
+                                           </tr> 
+                                       </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -359,6 +383,7 @@
                             </tr>`
                         );
                         counter++;
+                        total_calculate();
                         old_emp= value.en_applicants_name;
                     });
             },
@@ -403,7 +428,140 @@
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
         $(e).closest('tr').find('.net_salary').val(Math.round(parseFloat(net)));
+        total_calculate();
+    }
+    function total_calculate() {
+        var ratOfSalaryTotal = 0; var prevDaysTotal = 0; var netTotal = 0; var weaklyLeveTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0; var htRibonAliceTotal = 0; var gunAliceTotal = 0; var leaveTotal = 0;  var extraAliceTotal = 0; var arrearTotal = 0; var bonusTotal = 0; var donationTotal = 0;  var grossTotal = 0; var deMettersPillowCostTotal = 0; var deTonicSimTotal = 0; var deOverPayCuttTotal = 0; var deFineTotal = 0;  var deLoonTotal = 0; var deLongLoonTotal = 0;  var deClothTotal = 0; var deHrTotal = 0; var deJacketTotal = 0; var deStmpTotal = 0; var deTrainingTotal = 0; var deCfTotal = 0; var deMedicalTotal = 0; var deInsTotal = 0; var dePfTotal = 0; var deDeductTotal = 0; var netSalaryTotal = 0;
 
+        $('.duty_rate').each(function() {
+            ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.duty_qty').each(function() {
+            prevDaysTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.duty_amount').each(function() {
+            netTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.weekly_leave').each(function() {
+            weaklyLeveTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_qty').each(function() {
+            otDayTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_rate').each(function() {
+            otRateTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_amount').each(function() {
+            otAmountTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ht_ribon_alice').each(function() {
+            htRibonAliceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gun_alice').each(function() {
+            gunAliceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.leave').each(function() {
+            leaveTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.extra_alice').each(function() {
+            extraAliceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.arrear').each(function() {
+            arrearTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.bonus').each(function() {
+            bonusTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.donation').each(function() {
+            donationTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gross_salary').each(function() {
+            grossTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_matterss_pillowCost').each(function() {
+            deMettersPillowCostTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_tonic_sim').each(function() {
+            deTonicSimTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_over_paymentCut').each(function() {
+            deOverPayCuttTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_fine').each(function() {
+            deFineTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_loan').each(function() {
+            deLoonTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_longLoan').each(function() {
+            deLongLoonTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_cloth').each(function() {
+            deClothTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_hr').each(function() {
+            deHrTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_jacket').each(function() {
+            deJacketTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_stamp').each(function() {
+            deStmpTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_traningcost').each(function() {
+            deTrainingTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_c_f').each(function() {
+            deCfTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_medical').each(function() {
+            deMedicalTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_ins').each(function() {
+            deInsTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_p_f').each(function() {
+            dePfTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_total').each(function() {
+            deDeductTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.net_salary').each(function() {
+            netSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        
+        $('.ratOfSalaryTotal').val(parseFloat(ratOfSalaryTotal).toFixed(2));
+        $('.prevDaysTotal').val(parseFloat(prevDaysTotal));
+        $('.netTotal').val(parseFloat(netTotal).toFixed(2));
+        $('.weaklyLeveTotal').val(parseFloat(weaklyLeveTotal).toFixed(2));
+        $('.otDayTotal').val(parseFloat(otDayTotal));
+        $('.otRateTotal').val(parseFloat(otRateTotal).toFixed(2));
+        $('.otAmountTotal').val(parseFloat(otAmountTotal).toFixed(2));
+        $('.htRibonAliceTotal').val(parseFloat(htRibonAliceTotal).toFixed(2));
+        $('.gunAliceTotal').val(parseFloat(gunAliceTotal).toFixed(2));
+        $('.leaveTotal').val(parseFloat(leaveTotal).toFixed(2));
+        $('.extraAliceTotal').val(parseFloat(extraAliceTotal).toFixed(2));
+        $('.arrearTotal').val(parseFloat(arrearTotal).toFixed(2));
+        $('.bonusTotal').val(parseFloat(bonusTotal).toFixed(2));
+        $('.donationTotal').val(parseFloat(donationTotal).toFixed(2));
+        $('.grossTotal').val(parseFloat(grossTotal).toFixed(2));
+        $('.deMettersPillowCostTotal').val(parseFloat(deMettersPillowCostTotal).toFixed(2));
+        $('.deTonicSimTotal').val(parseFloat(deTonicSimTotal).toFixed(2));
+        $('.deOverPayCuttTotal').val(parseFloat(deOverPayCuttTotal).toFixed(2));
+        $('.deFineTotal').val(parseFloat(deFineTotal).toFixed(2));
+        $('.deLoonTotal').val(parseFloat(deLoonTotal).toFixed(2));
+        $('.deLongLoonTotal').val(parseFloat(deLongLoonTotal).toFixed(2));
+        $('.deClothTotal').val(parseFloat(deClothTotal).toFixed(2));
+        $('.deHrTotal').val(parseFloat(deHrTotal).toFixed(2));
+        $('.deJacketTotal').val(parseFloat(deJacketTotal).toFixed(2));
+        $('.deStmpTotal').val(parseFloat(deStmpTotal).toFixed(2));
+        $('.deTrainingTotal').val(parseFloat(deTrainingTotal).toFixed(2));
+        $('.deCfTotal').val(parseFloat(deCfTotal).toFixed(2));
+        $('.deMedicalTotal').val(parseFloat(deMedicalTotal).toFixed(2));
+        $('.deInsTotal').val(parseFloat(deInsTotal).toFixed(2));
+        $('.dePfTotal').val(parseFloat(dePfTotal).toFixed(2));
+        $('.deDeductTotal').val(parseFloat(deDeductTotal).toFixed(2));
+        $('.netSalaryTotal').val(parseFloat(netSalaryTotal).toFixed(2));
     }
 </script>
 
