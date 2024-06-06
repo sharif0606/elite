@@ -69,7 +69,6 @@
                                                 <th scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remarks')}}</th>
-                                                {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
                                                 <th>Excess Mobile</th>
@@ -84,19 +83,30 @@
                                         <tbody class="salarySheet">
 
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                            </tr>  --}}
-                                        </tfoot>
+                                        <tfoot class="d-none show_click">
+                                            <tr>
+                                               <th colspan="5" class="text-end"> Total</th>
+                                               <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
+                                               <th><input class="form-control houseRentTotal" type="text" disabled></th>
+                                               <th><input class="form-control mediAllownTotal" type="text" disabled></th>
+                                               <th><input class="form-control grossSalaryTotal" type="text" disabled></th>
+                                               <th><input class="form-control presDaysTotal" type="text" disabled></th>
+                                               <th><input class="form-control otDayTotal" type="text" disabled></th>
+                                               <th><input class="form-control otRateTotal" type="text" disabled></th>
+                                               <th><input class="form-control otAmountTotal" type="text" disabled></th>
+                                               <th><input class="form-control postAllowTotal" type="text" disabled></th>
+                                               <th><input class="form-control fuelBillTotal" type="text" disabled></th>
+                                               <th><input class="form-control salaryTotal" type="text" disabled></th>
+                                               <th><input class="form-control deMobileExTotal" type="text" disabled></th>
+                                               <th><input class="form-control deFineTotal" type="text" disabled></th>
+                                               <th><input class="form-control deInsTotal" type="text" disabled></th>
+                                               <th><input class="form-control dePfTotal" type="text" disabled></th>
+                                               <th><input class="form-control deMessTotal" type="text" disabled></th>
+                                               <th><input class="form-control deLoonTotal" type="text" disabled></th>
+                                               <th><input class="form-control deTrainingTotal" type="text" disabled></th>
+                                               <th><input class="form-control payableTotal" type="text" disabled></th>
+                                           </tr> 
+                                       </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -246,6 +256,7 @@
                             </tr>`
                         );
                         counter++;
+                        total_calculate()
                     });
             },
         });
@@ -288,7 +299,88 @@
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
         $(e).closest('tr').find('.total_salary').val(parseFloat(tg).toFixed(2));
         $(e).closest('tr').find('.total_payble').val(Math.round(parseFloat(net)));
+        total_calculate();
+    }
+    function total_calculate() {
+        var ratOfSalaryTotal = 0, houseRentTotal = 0, mediAllownTotal = 0, grossSalaryTotal = 0, presDaysTotal = 0, otDayTotal = 0, otRateTotal = 0, otAmountTotal = 0, postAllowTotal = 0, fuelBillTotal = 0, salaryTotal = 0, deMobileExTotal = 0, deFineTotal = 0, deInsTotal = 0, dePfTotal = 0, deMessTotal = 0, deLoonTotal = 0, deTrainingTotal = 0, payableTotal = 0;
 
+        $('.duty_rate').each(function() {
+            ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.house_rent').each(function() {
+            houseRentTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.medical_allowance').each(function() {
+            mediAllownTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gross_salary').each(function() {
+            grossSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.duty_qty').each(function() {
+            presDaysTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_qty').each(function() {
+            otDayTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_rate').each(function() {
+            otRateTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_amount').each(function() {
+            otAmountTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.post_allow').each(function() {
+            postAllowTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.fuel_bill').each(function() {
+            fuelBillTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_salary').each(function() {
+            salaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_excess_mobile').each(function() {
+            deMobileExTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_fine').each(function() {
+            deFineTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_ins').each(function() {
+            deInsTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_p_f').each(function() {
+            dePfTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_mess').each(function() {
+            deMessTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_loan').each(function() {
+            deLoonTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_traning_cost').each(function() {
+            deTrainingTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_payble').each(function() {
+            payableTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        
+        $('.ratOfSalaryTotal').val(parseFloat(ratOfSalaryTotal).toFixed(2));
+        $('.houseRentTotal').val(parseFloat(houseRentTotal).toFixed(2));
+        $('.mediAllownTotal').val(parseFloat(mediAllownTotal).toFixed(2));
+        $('.grossSalaryTotal').val(parseFloat(grossSalaryTotal).toFixed(2));
+        $('.presDaysTotal').val(parseFloat(presDaysTotal));
+        $('.otDayTotal').val(parseFloat(otDayTotal));
+        $('.otRateTotal').val(parseFloat(otRateTotal).toFixed(2));
+        $('.otAmountTotal').val(parseFloat(otAmountTotal).toFixed(2));
+        $('.postAllowTotal').val(parseFloat(postAllowTotal).toFixed(2));
+        $('.fuelBillTotal').val(parseFloat(fuelBillTotal).toFixed(2));
+        $('.salaryTotal').val(parseFloat(salaryTotal).toFixed(2));
+        $('.deMobileExTotal').val(parseFloat(deMobileExTotal).toFixed(2));
+        $('.deFineTotal').val(parseFloat(deFineTotal).toFixed(2));
+        $('.deInsTotal').val(parseFloat(deInsTotal).toFixed(2));
+        $('.dePfTotal').val(parseFloat(dePfTotal).toFixed(2));
+        $('.deMessTotal').val(parseFloat(deMessTotal).toFixed(2));
+        $('.deLoonTotal').val(parseFloat(deLoonTotal).toFixed(2));
+        $('.deTrainingTotal').val(parseFloat(deTrainingTotal).toFixed(2));
+        $('.payableTotal').val(parseFloat(payableTotal).toFixed(2));
     }
 </script>
 <script>

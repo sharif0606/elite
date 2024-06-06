@@ -90,9 +90,13 @@
                             <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @if ($d->name_bn != '')
+                                        <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @else
+                                        <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                    @endif
                                 @empty
-                                    <option value="">No district found</option>
+                                    <option value="">No data found</option>
                                 @endforelse
                             </select>
                             @if($errors->has('bn_jobpost_id'))
