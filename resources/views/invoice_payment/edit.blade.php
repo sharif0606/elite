@@ -45,6 +45,14 @@
                                     <input type="text" onkeyup="vatcalc(this.value,'vat')" id="vat_amount" name="vat_amount" value="{{ $ivp->vat_amount }}" class="form-control">
                                 </div>
                                 <div class="col-sm-4">
+                                    <label for="">AIT</label>
+                                    <input type="text" onkeyup="aitcalc(this.value,'ait_amount')" id="ait"  name="ait" value="{{ $ivp->ait }}" class="form-control">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label for="">AIT Deduction</label>
+                                    <input type="text" onkeyup="aitcalc(this.value,'ait')" id="ait_amount"  name="ait_amount" value="{{ $ivp->ait_amount }}" class="form-control">
+                                </div>
+                                <div class="col-sm-4">
                                     <label for="">Payment Mode</label>
                                     <select name="payment_type" class="form-control">
                                         <option value="1" {{$ivp->payment_type==1?'selected':''}}>Cash</option>

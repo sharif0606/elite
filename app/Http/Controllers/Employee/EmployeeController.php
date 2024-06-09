@@ -307,6 +307,10 @@ class EmployeeController extends Controller
             $employee->bn_parm_post_ofc = $request->bn_parm_post_ofc;
             $employee->bn_parm_phone_my = $request->bn_parm_phone_my;
             $employee->bn_parm_phone_alt = $request->bn_parm_phone_alt;
+            $employee->employee_type = $request->employee_type;
+            $employee->designation_id = $request->designation_id;
+            $employee->gross_salary = $request->gsalary;
+            $employee->ot_salary = $request->otsalary;
 
             $employee->bn_pre_district_id = $request->bn_pre_district_id;
             $employee->bn_pre_upazila_id = $request->bn_pre_upazila_id;

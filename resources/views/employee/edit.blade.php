@@ -90,9 +90,13 @@
                             <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @if ($d->name_bn != '')
+                                        <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @else
+                                        <option value="{{$d->id}}" {{ $employees->bn_jobpost_id==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                    @endif
                                 @empty
-                                    <option value="">No district found</option>
+                                    <option value="">No data found</option>
                                 @endforelse
                             </select>
                             @if($errors->has('bn_jobpost_id'))
@@ -677,6 +681,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="emtype">Employee Type</label>
+                            <select name="employee_type" class="form-control @error('employee_type') is-invalid @enderror" onclick="getEmpInfo()" id="employee_type">
+                                <option value="1" {{ $employees->employee_type == 1?"selected":""}}>Other Staff</option>
+                                <option value="2" {{ $employees->employee_type == 2?"selected":""}}>Office Staff</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none desig" id="desig">
+                        <div class="form-group">
+                            <label for="designation_id">Designation</label>
+                            <select name="designation_id" class=" form-control @error('designation_id') is-invalid @enderror" id="designation_id">
+                                <option value="">নির্বাচন করুন</option>
+                                @forelse($jobposts as $d)
+                                    @if ($d->name_bn != null)
+                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->designation_id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @else
+                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->designation_id?"selected":""}}> {{ $d->name}}</option>
+                                    @endif
+                                @empty
+                                    <option value="">No district found</option>
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none gsalary">
+                        <div class="form-group">
+                            <label for="gsalary">Gross Salary</label>
+                            <input type="text" id="gsalary" value="{{old('gsalary',$employees->gross_salary)}}" class="form-control" placeholder="" name="gsalary">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none otsalary">
+                        <div class="form-group">
+                            <label for="otsalary">Ot Salary</label>
+                            <input type="text" id="otsalary" value="{{old('otsalary',$employees->ot_salary)}}" class="form-control" placeholder="" name="otsalary">
+                        </div>
+                    </div>
+                </div>
 {{--  English  --}}
                 <div class="row">
                     <h6 class="text-center my-3">Curriculum vitae/personal details/details</h6>
@@ -1159,6 +1203,9 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    window.onload = function() {
+        getEmpInfo();
+    };
     function addGallery(){
         $('.addbtn').before('<div class="col-5 col-sm-3 mb-3"><input class="form-control mb-1" type="text" name="document_caption[]" placeholder="Document Caption"/> <input type="file" class="dropify" data-height="100" name="document_img[]"/></div>');
         $(".dropify").dropify({messages:{default:"click here",replace:"Drag and drop or click to replace",remove:"Remove",error:"Ooops, something wrong appended."},error:{fileSize:"The file size is too big (1M max)."}});
@@ -1215,6 +1262,25 @@
             $('.children_data').addClass('d-none');
         }
     }
+    function getEmpInfo() {
+        var sop = document.querySelector('select[name="employee_type"]').value;
+
+        if (sop === "2") {
+            $('.desig').removeClass('d-none');
+            $('.gsalary').removeClass('d-none');
+            $('.otsalary').removeClass('d-none');
+        }else {
+            $('#designation_id').prop('selectedIndex', 0);
+            $('#gsalary').val('');
+            $('#otsalary').val('');
+            $('.desig').addClass('d-none');
+            $('.gsalary').addClass('d-none');
+            $('.otsalary').addClass('d-none');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        getEmpInfo();
+    });
     function engetMarriedInfo() {
         var selectedOption = document.querySelector('select[name="en_marital_status"]').value;
 

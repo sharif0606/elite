@@ -21,6 +21,8 @@ return new class extends Migration
             $table->decimal('received_amount',10,2)->default(0)->nullable();
             $table->decimal('vat',10,2)->default(0)->nullable();
             $table->decimal('vat_amount',10,2)->default(0)->nullable();
+            $table->decimal('ait',10,2)->default(0)->nullable();
+            $table->decimal('ait_amount',10,2)->default(0)->nullable();
             $table->integer('payment_type')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('po_no')->nullable();

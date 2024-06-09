@@ -87,7 +87,11 @@
                             <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @if ($d->name_bn != '')
+                                    <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @else
+                                    <option value="{{$d->id}}" {{ old('bn_jobpost_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                    @endif
                                 @empty
                                     <option value="">No district found</option>
                                 @endforelse
@@ -681,20 +685,24 @@
                             <select name="designation_id" class=" form-control @error('designation_id') is-invalid @enderror" id="designation_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
-                                <option value="{{$d->id}}" {{ old('designation_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @if ($d->name_bn != null)
+                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                    @else
+                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->id?"selected":""}}> {{ $d->name}}</option>
+                                    @endif
                                 @empty
                                     <option value="">No district found</option>
                                 @endforelse
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3 col-12 d-none gsalary" id="gsalary">
+                    <div class="col-md-3 col-12 d-none gsalary">
                         <div class="form-group">
                             <label for="gsalary">Gross Salary</label>
                             <input type="text" id="gsalary" value="{{old('gsalary')}}" class="form-control" placeholder="" name="gsalary">
                         </div>
                     </div>
-                    <div class="col-md-3 col-12 d-none otsalary" id="otsalary">
+                    <div class="col-md-3 col-12 d-none otsalary">
                         <div class="form-group">
                             <label for="otsalary">Ot Salary</label>
                             <input type="text" id="otsalary" value="{{old('otsalary')}}" class="form-control" placeholder="" name="otsalary">
@@ -1227,6 +1235,9 @@
             $('.gsalary').removeClass('d-none');
             $('.otsalary').removeClass('d-none');
         }else {
+            $('#designation_id').prop('selectedIndex', 0);
+            $('#gsalary').val('');
+            $('#otsalary').val('');
             $('.desig').addClass('d-none');
             $('.gsalary').addClass('d-none');
             $('.otsalary').addClass('d-none');

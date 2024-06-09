@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Salary Sheet Four View'))
+@section('pageTitle',trans('Office Staff Salary View'))
 @section('pageSubTitle',trans('Show'))
 
 @section('content')
@@ -31,13 +31,6 @@
                                     <p class="text-center m-0 p-0">Salary for the Month of {{$getMonth}}-{{$salary->year}}</p>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <ul class="text-start">
-                                    @foreach($salary->customers as $customer)
-                                        <li>{{ $customer->name }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
                         </div>
                         <!-- table bordered -->
                         <div class="row mt-4">
@@ -66,7 +59,6 @@
                                             <th scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
                                             <th scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
                                             <th scope="col" rowspan="2">{{__('Remarks')}}</th>
-                                            {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                         </tr>
                                         <tr>
                                             <th>Excess Mobile</th>
@@ -79,6 +71,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
+                                        <tr>
+                                            <th colspan="27">
+                                                <div><h6>Office Staff Salary</h6></div>
+                                            </th>
+                                        </tr>
                                         @forelse ($salary->details as $d )
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>

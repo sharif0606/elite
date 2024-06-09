@@ -124,18 +124,27 @@
                                         <tbody class="salarySheet">
 
                                         </tbody>
-                                        <tfoot>
-                                            {{--  <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td> Total</td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                                <td><input onkeyup="reCalcultateSalary(this)" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                                <td></td>
-                                            </tr>  --}}
+                                        <tfoot class="d-none show_click">
+                                             <tr>
+                                                <th colspan="5" class="text-end"> Total</th>
+                                                <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
+                                                <th><input class="form-control prevDaysTotal" type="text" style="width:60px;" disabled></th>
+                                                <th><input class="form-control netTotal" type="text" disabled></th>
+                                                <th><input class="form-control otDayTotal" type="text" style="width:60px;" disabled></th>
+                                                <th><input class="form-control otRateTotal" type="text" disabled></th>
+                                                <th><input class="form-control otAmountTotal" type="text" disabled></th>
+                                                <th><input class="form-control postAlownceTotal" type="text" disabled></th>
+                                                <th><input class="form-control grossTotal" type="text" disabled></th>
+                                                <th><input class="form-control deDressTotal" type="text" disabled></th>
+                                                <th><input class="form-control deFineTotal" type="text" disabled></th>
+                                                <th><input class="form-control deBankChargeTotal" type="text" disabled></th>
+                                                <th><input class="form-control deInsTotal" type="text" disabled></th>
+                                                <th><input class="form-control dePfTotal" type="text" disabled></th>
+                                                <th><input class="form-control deStmpTotal" type="text" disabled></th>
+                                                <th><input class="form-control deTrainingTotal" type="text" disabled></th>
+                                                <th><input class="form-control deLoonTotal" type="text" disabled></th>
+                                                <th><input class="form-control payableTotal" type="text" disabled></th>
+                                            </tr> 
                                         </tfoot>
                                     </table>
                                 </div>
@@ -217,7 +226,7 @@
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>`
                             var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
-                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary">`
+                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
                         }else{
                             var customerName=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.joining_date}" placeholder="Duty Rate">`
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -229,7 +238,7 @@
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="stamp">`
                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
-                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary">`
+                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
                         }
                         selectElement.append(
                             `<tr>
@@ -295,6 +304,7 @@
                             </tr>`
                         );
                         counter++;
+                        total_calculate();
                         old_emp= value.en_applicants_name;
                     });
             },
@@ -337,6 +347,83 @@
         $(e).closest('tr').find('.gross_salary').val(parseFloat(tg).toFixed(2));
         //$(e).closest('tr').find('.total_payable').val(parseFloat(net).toFixed(2));
         $(e).closest('tr').find('.total_payable').val(Math.round(parseFloat(net)));
+        total_calculate();
+    }
+    function total_calculate() {
+        var payableTotal = 0;
+        var ratOfSalaryTotal = 0; var prevDaysTotal = 0; var netTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0; var postAlownceTotal = 0; var grossTotal = 0; var deDressTotal = 0; var deFineTotal = 0; var deBankChargeTotal = 0; var deInsTotal = 0; var dePfTotal = 0; var deStmpTotal = 0; var deTrainingTotal = 0; var deLoonTotal = 0;
+        $('.duty_rate').each(function() {
+            ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.duty_qty').each(function() {
+            prevDaysTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.duty_amount').each(function() {
+            netTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_qty').each(function() {
+            otDayTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_rate').each(function() {
+            otRateTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.ot_amount').each(function() {
+            otAmountTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.post_allowance').each(function() {
+            postAlownceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.gross_salary').each(function() {
+            grossTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_dress').each(function() {
+            deDressTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_fine').each(function() {
+            deFineTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_banck_charge').each(function() {
+            deBankChargeTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_ins').each(function() {
+            deInsTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_pf').each(function() {
+            dePfTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_stamp').each(function() {
+            deStmpTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_training_cost').each(function() {
+            deTrainingTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduction_loan').each(function() {
+            deLoonTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_payable').each(function() {
+            payableTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        
+        
+        $('.ratOfSalaryTotal').val(parseFloat(ratOfSalaryTotal).toFixed(2));
+        $('.prevDaysTotal').val(parseFloat(prevDaysTotal));
+        $('.netTotal').val(parseFloat(netTotal).toFixed(2));
+        $('.otDayTotal').val(parseFloat(otDayTotal));
+        $('.otRateTotal').val(parseFloat(otRateTotal).toFixed(2));
+        $('.otAmountTotal').val(parseFloat(otAmountTotal).toFixed(2));
+        $('.postAlownceTotal').val(parseFloat(postAlownceTotal).toFixed(2));
+        $('.grossTotal').val(parseFloat(grossTotal).toFixed(2));
+        $('.deDressTotal').val(parseFloat(deDressTotal).toFixed(2));
+        $('.deFineTotal').val(parseFloat(deFineTotal).toFixed(2));
+        $('.deBankChargeTotal').val(parseFloat(deBankChargeTotal).toFixed(2));
+        $('.deInsTotal').val(parseFloat(deInsTotal).toFixed(2));
+        $('.dePfTotal').val(parseFloat(dePfTotal).toFixed(2));
+        $('.deStmpTotal').val(parseFloat(deStmpTotal).toFixed(2));
+        $('.deTrainingTotal').val(parseFloat(deTrainingTotal).toFixed(2));
+        $('.deLoonTotal').val(parseFloat(deLoonTotal).toFixed(2));
+        $('.payableTotal').val(parseFloat(payableTotal).toFixed(2));
+       // console.log(totalSlry);
+
     }
 </script>
 

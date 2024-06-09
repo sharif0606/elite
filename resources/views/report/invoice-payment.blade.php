@@ -85,7 +85,11 @@
                             <th scope="col">{{++$i}}</th>
                             <th scope="col">{{$cust->name}}</th>
                             @foreach ($period as $dt)
-                                <th scope="col">{{ $total+=$cust->invPayment->whereBetween('pay_date',[$dt->format("Y-m-d"),$dt->endOfMonth()->format("Y-m-d")])->sum('received_amount') }}</th>
+                            @php
+                                $monthly_total = $cust->invPayment->whereBetween('pay_date', [$dt->format("Y-m-d"), $dt->endOfMonth()->format("Y-m-d")])->sum('received_amount');
+                                $total += $monthly_total;
+                            @endphp
+                            <th scope="col">{{ $monthly_total }}</th>
                             @endforeach
                             <th scope="col">{{$total}}</th>
                         </tr>

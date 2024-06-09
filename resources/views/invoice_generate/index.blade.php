@@ -2,6 +2,48 @@
 @section('pageTitle','Invoice List')
 @section('pageSubTitle','All Invoice')
 @section('content')
+<style>
+    .last-receive, .due-details {
+        position: relative;
+        display: inline-block;
+    }
+
+    .last-amount {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        margin-top: 3px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 10px;
+        list-style: none;
+        z-index: 1;
+        width: max-content;
+    }
+    .due-amount {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        margin-top: 3px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 10px;
+        list-style: none;
+        z-index: 1;
+        width: max-content;
+    }
+    .last-receive:hover .last-amount {
+        display: block;
+    }
+    .due-details:hover .due-amount {
+        display: block;
+    }
+
+</style>
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
@@ -46,16 +88,20 @@
                             {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>  --}}
-                            <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
-                            data-bs-toggle="modal" data-bs-target="#invList"
-                            data-inv-id="{{$e->id}}"
-                            data-zone-id="{{$e->zone_id}}"
-                            data-customer-name="{{ $e->customer?->name }}"
-                            data-customer-id="{{ $e->customer?->id }}"
-                            data-total-amount="{{$due}}">
-                            {{-- data-check-update="{{route(currentUser().'.check_list_update',$d->id)}}" --}}
-                            <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
-                        </button>
+                            @if ($due > 0)
+                                <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
+                                    data-bs-toggle="modal" data-bs-target="#invList"
+                                    data-inv-id="{{ $e->id }}"
+                                    data-zone-id="{{ $e->zone_id }}"
+                                    data-customer-name="{{ $e->customer?->name }}"
+                                    data-customer-id="{{ $e->customer?->id }}"
+                                    data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                    data-vat-amount="{{ $e->vat_taka }}"
+                                    data-total-amount="{{ $due }}"
+                                    data-received-amounts='@json(App\Models\Crm\InvoicePayment::where('customer_id', $e->customer_id)->latest()->take(3)->pluck('received_amount'))'>
+                                    <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                     @empty
@@ -93,14 +139,26 @@
                                     <tr class="bg-light">
                                         <th>Customer Name:</th>
                                         <td id="name"></td>
-                                        <th>Due Amount:</th>
+                                        <th>
+                                            Due Amount:
+                                            
+                                        </th>
                                         <td id="totalAmount"></td>
+                                        <td><span class="due-details text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                            <ul class="due-amount">
+                                                <li>Sub Total: <span id="subAmount"></span></li>
+                                                <li>Vat: <span id="vatAmount"></span> </li>
+                                            </ul>
+                                        </span></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Received Amount</label>
+                            <span class="last-receive text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                <ul class="last-amount" id="receivedAmountsList"></ul>
+                            </span>
                             <input type="text" id="received_amount" name="received_amount" class="form-control">
                         </div>
                         <div class="col-sm-4">
@@ -108,8 +166,16 @@
                             <input type="text" onkeyup="vatcalc(this.value,'vat_amount')" id="vat" name="vat" class="form-control">
                         </div>
                         <div class="col-sm-4">
-                            <label for="">VAT Amount</label>
+                            <label for="">VAT Deduction</label>
                             <input type="text" onkeyup="vatcalc(this.value,'vat')" id="vat_amount" name="vat_amount" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">AIT</label>
+                            <input type="text" onkeyup="aitcalc(this.value,'ait_amount')" id="ait"  name="ait" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">AIT Deduction</label>
+                            <input type="text" onkeyup="aitcalc(this.value,'ait')" id="ait_amount"  name="ait_amount" class="form-control">
                         </div>
                         <div class="col-sm-4">
                             <label for="">Payment Mode</label>
@@ -203,22 +269,81 @@
             $('#'+place).val(vat.toFixed(2))
         }
     }
+    function aitcalc(v,place){
+        if(place=="ait_amount"){
+            let rec= $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let ait= v ? parseFloat(v) : 0;
+            let aamt=(rec*(ait/100));
+            $('#'+place).val(aamt.toFixed(2))
+        }else{
+            let rec=$('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let aamt=v ? parseFloat(v) : 0;
+            let ait=(100*(aamt/rec));
+            $('#'+place).val(ait.toFixed(2))
+        }
+    }
+    // $(document).ready(function () {
+    //     $('#invList').on('show.bs.modal', function (event) {
+    //         var button = $(event.relatedTarget);
+    //         var invId = button.data('inv-id');
+    //         var cusName = button.data('customer-name');
+    //         var cusID = button.data('customer-id');
+    //         var zone = button.data('zone-id');
+    //         var Amount = button.data('total-amount');
+    //         // Set the values in the modal
+    //         var modal = $(this);
+    //         modal.find('#inv_id').val(invId);
+    //         modal.find('#name').text(cusName);
+    //         modal.find('#customer_id').val(cusID);
+    //         modal.find('#zone_id').val(zone);
+    //         modal.find('#totalAmount').text(Amount);
+    //     });
+    // });
     $(document).ready(function () {
-        $('#invList').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var invId = button.data('inv-id');
-            var cusName = button.data('customer-name');
-            var cusID = button.data('customer-id');
-            var zone = button.data('zone-id');
-            var Amount = button.data('total-amount');
-            // Set the values in the modal
-            var modal = $(this);
-            modal.find('#inv_id').val(invId);
-            modal.find('#name').text(cusName);
-            modal.find('#customer_id').val(cusID);
-            modal.find('#zone_id').val(zone);
-            modal.find('#totalAmount').text(Amount);
+    $('#invList').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var invId = button.data('inv-id');
+        var cusName = button.data('customer-name');
+        var cusID = button.data('customer-id');
+        var zone = button.data('zone-id');
+        var Amount = button.data('total-amount');
+        var subAmount = button.data('sub-total-amount');
+        var vatAmount = button.data('vat-amount');
+        var receivedAmounts = button.attr('data-received-amounts');
+        // Try to parse the received amounts
+        var amountsArray = [];
+        try {
+            amountsArray = JSON.parse(receivedAmounts);
+        } catch (e) {
+            console.error("Error parsing received amounts: ", e);
+        }
+        amountsArray = amountsArray.filter(function(amount) {
+            return amount !== null && amount !== '';
         });
+
+        // Set the values in the modal
+        var modal = $(this);
+        modal.find('#inv_id').val(invId);
+        modal.find('#name').text(cusName);
+        modal.find('#customer_id').val(cusID);
+        modal.find('#zone_id').val(zone);
+        modal.find('#totalAmount').text(Amount);
+        modal.find('#subAmount').text(subAmount);
+        modal.find('#vatAmount').text(vatAmount);
+
+        var receivedAmountsList = modal.find('#receivedAmountsList');
+        receivedAmountsList.empty(); // Clear any existing items
+
+        if (amountsArray.length > 0) {
+            receivedAmountsList.append('<li><strong>Last 3 Received Amounts:</strong></li>');
+            amountsArray.forEach(function(amount) {
+                receivedAmountsList.append('<li>' + amount + '</li>');
+            });
+        } else {
+            receivedAmountsList.append('<li>No recent received amounts available.</li>');
+        }
     });
+});
+
 </script>
 @endpush
