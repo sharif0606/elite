@@ -64,6 +64,8 @@
                         <th scope="col">{{__('Amount')}}</th>
                         <th scope="col">{{__('Vat')}}</th>
                         <th scope="col">{{__('Vat Amount')}}</th>
+                        <th scope="col">{{__('Ait')}}</th>
+                        <th scope="col">{{__('Ait Amount')}}</th>
                         <th scope="col">{{__('Pay Mode')}}</th>
                         <th scope="col">{{__('Bank Name')}}</th>
                         <th scope="col">{{__('PO No')}}</th>
@@ -85,6 +87,8 @@
                         <td>{{ $e->received_amount }}</td>
                         <td>{{ $e->vat }}</td>
                         <td>{{ $e->vat_amount }}</td>
+                        <td>{{ $e->ait }}</td>
+                        <td>{{ $e->ait_amount }}</td>
                         <td>{{ $pm[$e->payment_type] }}</td>
                         <td>{{ $e->bank_name }}</td>
                         <td>{{ $e->po_no }}</td>

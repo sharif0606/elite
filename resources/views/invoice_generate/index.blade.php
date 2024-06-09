@@ -88,18 +88,20 @@
                             {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>  --}}
-                            <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
-                                data-bs-toggle="modal" data-bs-target="#invList"
-                                data-inv-id="{{ $e->id }}"
-                                data-zone-id="{{ $e->zone_id }}"
-                                data-customer-name="{{ $e->customer?->name }}"
-                                data-customer-id="{{ $e->customer?->id }}"
-                                data-sub-total-amount="{{ $e->sub_total_amount }}"
-                                data-vat-amount="{{ $e->vat_taka }}"
-                                data-total-amount="{{ $due }}"
-                                data-received-amounts='@json(App\Models\Crm\InvoicePayment::where('customer_id', $e->customer_id)->latest()->take(3)->pluck('received_amount'))'>
-                                <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
-                            </button>
+                            @if ($due > 0)
+                                <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
+                                    data-bs-toggle="modal" data-bs-target="#invList"
+                                    data-inv-id="{{ $e->id }}"
+                                    data-zone-id="{{ $e->zone_id }}"
+                                    data-customer-name="{{ $e->customer?->name }}"
+                                    data-customer-id="{{ $e->customer?->id }}"
+                                    data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                    data-vat-amount="{{ $e->vat_taka }}"
+                                    data-total-amount="{{ $due }}"
+                                    data-received-amounts='@json(App\Models\Crm\InvoicePayment::where('customer_id', $e->customer_id)->latest()->take(3)->pluck('received_amount'))'>
+                                    <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
+                                </button>
+                            @endif
                         </td>
                     </tr>
                     @empty
