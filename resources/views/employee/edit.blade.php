@@ -563,12 +563,22 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-12 d-none">
                         <div class="form-group">
                             <label for="bn_reference_adm_adress">ঠিকানা</label>
                             <input type="text" id="bn_reference_adm_adress" value="{{old('bn_reference_adm_adress',$employees->bn_reference_adm_adress)}}" class="form-control @error('bn_reference_adm_adress') is-invalid @enderror" placeholder="ঠিকানা" name="bn_reference_adm_adress">
                             @if($errors->has('bn_reference_adm_adress'))
                                 <span class="text-danger"> {{ $errors->first('bn_reference_adm_adress') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_addmit_post">ভর্তিকৃত পোষ্টের নাম</label>
+                            <input type="text" id="bn_addmit_post" value="{{old('bn_addmit_post',$employees->bn_addmit_post)}}" class="form-control @error('bn_addmit_post') is-invalid @enderror" placeholder="ভর্তিকৃত পোষ্টের নাম" name="bn_addmit_post">
+                            @if($errors->has('bn_addmit_post'))
+                                <span class="text-danger"> {{ $errors->first('bn_addmit_post') }}</span>
                             @endif
                         </div>
                     </div>

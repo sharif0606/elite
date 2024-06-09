@@ -123,6 +123,7 @@ class EmployeeController extends Controller
             $employee->bn_reference_admittee = $request->bn_reference_admittee;
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
+            $employee->bn_addmit_post = $request->bn_addmit_post;
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
             $employee->bn_post_allowance = $request->bn_post_allowance;
             $employee->bn_traning_cost = $request->bn_traning_cost;
@@ -334,6 +335,7 @@ class EmployeeController extends Controller
             $employee->bn_reference_admittee = $request->bn_reference_admittee;
             $employee->bn_reference_adm_phone = $request->bn_reference_adm_phone;
             $employee->bn_reference_adm_adress = $request->bn_reference_adm_adress;
+            $employee->bn_addmit_post = $request->bn_addmit_post;
             $employee->bn_jobpost_id = $request->bn_jobpost_id;
             $employee->bn_post_allowance = $request->bn_post_allowance;
             $employee->bn_traning_cost = $request->bn_traning_cost;

@@ -197,7 +197,8 @@
                             </tr>
                             <tr>
                                 <td class="py-1" style="text-align: left; width: 25%;">১৩ । আবেদিত পদ :</td>
-                                <td class="py-1" colspan="8" style="width: 75%;"><input type="text" class="tinput"  value="{{ $employees->position?->name_bn }}"></td>
+                                <td class="py-1" colspan="3"><input type="text" class="tinput"  value="{{ $employees->position?->name_bn }}"></td>
+                                <td class="py-1" colspan="5" style="text-align: left;">ভর্তিকৃত পোষ্টের নাম : <span class="tbborder d-inline-block" style="padding-right:18px; width:50%; padding-top:15px">{{ $employees->bn_addmit_post }}</span></td>
                             </tr>
                             <tr>
                                 <th class="py-1" colspan="9"  style="text-align: left;">
