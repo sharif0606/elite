@@ -201,6 +201,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         //report
         Route::get('inv-pay-report',[reports::class,'invoicePayment'])->name('report.inv_payment');
+        Route::get('inv-due-report',[reports::class,'invoiceDue'])->name('report.inv_due');
 
     });
 

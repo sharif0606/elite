@@ -227,6 +227,7 @@
                             </a>
                             <ul class="submenu">
                                 <li class="py-1 submenu-item"><a href="{{route('report.inv_payment')}}">{{__('Invoice Payment')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('report.inv_due')}}">{{__('Invoice Due')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('incomeStatement.list')}}">{{__('Income Statement')}}</a></li>
                             </ul>
                         </li>

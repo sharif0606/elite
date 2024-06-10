@@ -556,14 +556,14 @@ class SalarySheetController extends Controller
                 });
             });
         }
-            if ($request->customer_id){
-                $customerId = $request->customer_id;
-                $query->whereIn('customer_duties.customer_id', $customerId);
-            }
-            if ($request->CustomerIdNot){
-                $CustomerIdNot = $request->CustomerIdNot;
-                $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
-            }
+        if ($request->customer_id){
+            $customerId = $request->customer_id;
+            $query->whereIn('customer_duties.customer_id', $customerId);
+        }
+        if ($request->CustomerIdNot){
+            $CustomerIdNot = $request->CustomerIdNot;
+            $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
+        }
         $data = $query->get();
 
         return response()->json($data, 200);
