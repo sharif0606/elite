@@ -56,6 +56,7 @@ class CustomerController extends Controller
             $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
+            $data->customer_type = $request->customer_type;
             $data->status = 1;
 
             if($request->has('file_upload'))
@@ -121,6 +122,7 @@ class CustomerController extends Controller
             $data->invoice_number = $request->invoice_number;
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
+            $data->customer_type = $request->customer_type;
             $data->status = 1;
 
             if($request->has('file_upload'))

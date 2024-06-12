@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('bin')->nullable();
             $table->string('invoice_number')->nullable();
+            $table->integer('customer_type')->nullable();
             // $table->integer('district_id')->nullable();
             // $table->integer('upazila_id')->nullable();
             // $table->integer('union_id')->nullable();

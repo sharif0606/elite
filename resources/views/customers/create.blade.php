@@ -75,6 +75,14 @@
                             @endforelse
                         </select>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <label for=""><b>Customer Type</b></label>
+                        <select class="form-select" name="customer_type" required>
+                            <option value="">Select type</option>
+                            <option value="0">Institution</option>
+                            <option value="1">Bank</option>
+                        </select>
+                    </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="logo">Logo</label>

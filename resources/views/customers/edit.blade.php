@@ -65,9 +65,17 @@
                         <select class="form-select" id="zone" name="zone_id">
                             <option value="">Select Zone</option>
                             @forelse ($zones as $z)
-                            <option value="{{ $z->id }}">{{ $z->name }}</option>
+                            <option value="{{ $z->id }}" {{$customer->zone_id==$z->id?'selected':''}}>{{ $z->name }}</option>
                             @empty
                             @endforelse
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <label for=""><b>Customer Type</b></label>
+                        <select class="form-select" name="customer_type" required>
+                            <option value="">Select type</option>
+                            <option value="0" {{$customer->customer_type==0?'selected':''}}>Institution</option>
+                            <option value="1" {{$customer->customer_type==1?'selected':''}}>Bank</option>
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
