@@ -1772,8 +1772,8 @@ function printDivemp(divName) {
     WinPrint.document.close();
     WinPrint.onload =function(){
         WinPrint.focus();
-       // WinPrint.print();
-        //WinPrint.close();
+        WinPrint.print();
+        WinPrint.close();
     }
 }
 </script>
