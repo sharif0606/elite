@@ -60,6 +60,7 @@ class InvoicePaymentController extends Controller
             $data->vat_amount = $request->vat_amount;
             $data->ait = $request->ait;
             $data->ait_amount = $request->ait_amount;
+            $data->fine_deduction = $request->fine_deduction;
             $data->payment_type = $request->payment_type;
             $data->bank_name = $request->bank_name;
             $data->zone_id = $request->zone_id;
@@ -96,6 +97,7 @@ class InvoicePaymentController extends Controller
             $data->vat_amount = $request->vat_amount;
             $data->ait = $request->ait;
             $data->ait_amount = $request->ait_amount;
+            $data->fine_deduction = $request->fine_deduction;
             $data->payment_type = $request->payment_type;
             $data->bank_name = $request->bank_name;
             $data->po_no = $request->po_no;
