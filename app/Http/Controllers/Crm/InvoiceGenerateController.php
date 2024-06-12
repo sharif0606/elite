@@ -26,10 +26,30 @@ use Exception;
 class InvoiceGenerateController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $invoice=InvoiceGenerate::with('payment','customer','branch')->orderBy('id','DESC')->paginate(10);
+        $invoice=InvoiceGenerate::with('payment','customer','branch')->orderBy('id','DESC');
         $customer=Customer::all();
+        if ($request->fdate && $request->tdate){
+            $startDate = $request->fdate;
+            $endDate = $request->tdate;
+
+            $invoice->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($query) use ($startDate, $endDate) {
+                    $query->whereDate('invoice_generates.start_date', '>=',$startDate )
+                        ->whereDate('invoice_generates.end_date', '<=', $endDate);
+                });
+            });
+        }
+        if ($request->customer_id){
+            $customerId = $request->customer_id;
+            $invoice->where('invoice_generates.customer_id', $customerId);
+        }
+        if ($request->bill_date){
+            $billDate = $request->bill_date;
+            $invoice->where('invoice_generates.bill_date', $billDate);
+        }
+        $invoice = $invoice->paginate(10);
         return view('invoice_generate.index',compact('invoice','customer'));
     }
 

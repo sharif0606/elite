@@ -47,6 +47,41 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <form action="">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="fdate">{{__('From Date')}}</label>
+                    <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="fdate">{{__('To Date')}}</label>
+                    <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="billdate">{{__('Bill Date')}}</label>
+                    <input type="date" class="form-control" value="{{ request('bill_date')}}" name="bill_date">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="lcNo">{{__('Customer')}}</label>
+                    <select name="customer_id" class="select2 form-select">
+                        <option value="">Select</option>
+                        @forelse ($customer as $d)
+                            <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                        @empty
+                            <option value="">No Data Found</option>
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6 d-flex justify-content-end">
+                    <button type="#" class="btn btn-sm btn-success me-1 mb-1 ps-5 pe-5">{{__('Show')}}</button>
+                </div>
+                <div class="col-6 d-flex justify-content-Start">
+                    <a href="{{route('invoiceGenerate.index')}}" class="btn pbtn btn-sm btn-warning me-1 mb-1 ps-5 pe-5">{{__('Clear')}}</a>
+                </div>
+            </div>
+        </form>
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
