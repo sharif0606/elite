@@ -7,7 +7,16 @@
             <a class="nav-link step-1-tab active" id="step-1-tab" data-toggle="pill" href="#step-1" role="tab" aria-controls="step-1" aria-selected="true"><span>জীবন বৃত্তান্ত</span></a>
         </li>
         <li class="nav-item">
+            <a class="nav-link step-5-tab" id="step-5-tab" data-toggle="pill" href="#step-5" role="tab" aria-controls="step-5" aria-selected="false"><span>দায়িত্ব ও শর্তাবলী </span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link step-6-tab" id="step-6-tab" data-toggle="pill" href="#step-6" role="tab" aria-controls="step-6" aria-selected="false"><span>BIO-DATA </span></a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link step-2-tab" id="step-2-tab" data-toggle="pill" href="#step-2" role="tab" aria-controls="step-2" aria-selected="false"><span>নিয়োগের জন্য আবেদন</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link step-9-tab" id="step-9-tab" data-toggle="pill" href="#step-9" role="tab" aria-controls="step-9" aria-selected="false"><span>ফরম নং-১৫</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link step-3-tab" id="step-3-tab" data-toggle="pill" href="#step-3" role="tab" aria-controls="step-3" aria-selected="false"><span>গার্ডের কর্ম বিবরণী</span></a>
@@ -16,19 +25,10 @@
             <a class="nav-link step-4-tab" id="step-4-tab" data-toggle="pill" href="#step-4" role="tab" aria-controls="step-4" aria-selected="false"><span>পূর্ব পরিচিতি</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link step-5-tab" id="step-5-tab" data-toggle="pill" href="#step-5" role="tab" aria-controls="step-5" aria-selected="false"><span>দায়িত্ব ও শর্তাবলী </span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link step-6-tab" id="step-6-tab" data-toggle="pill" href="#step-6" role="tab" aria-controls="step-6" aria-selected="false"><span>BIO-DATA </span></a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link step-7-tab" id="step-7-tab" data-toggle="pill" href="#step-7" role="tab" aria-controls="step-7" aria-selected="false"><span>ভর্তি ফি সংক্রান্ত</span></a>
         </li>
         <li class="nav-item">
             <a class="nav-link step-8-tab" id="step-8-tab" data-toggle="pill" href="#step-8" role="tab" aria-controls="step-8" aria-selected="false"><span> ভর্তির প্রাথমিক কার্যক্রম</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link step-9-tab" id="step-9-tab" data-toggle="pill" href="#step-9" role="tab" aria-controls="step-9" aria-selected="false"><span>ফরম নং-১৫</span></a>
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
@@ -1767,6 +1767,7 @@ function printDivemp(divName) {
     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
+    WinPrint.document.write('<style> table tr td,table tr th{font-size:13px !important;} </style>');
     WinPrint.document.write(prtContent.innerHTML);
     WinPrint.document.close();
     WinPrint.onload =function(){
