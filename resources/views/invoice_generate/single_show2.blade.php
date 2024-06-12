@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td width="15%">To:</td>
-                <td>@if($branch->billing_person)
+                <td>@if($branch?->billing_person)
                     <b>{{ $branch?->billing_person }} </b><br/>
                     @endif
                     <b>{{ $invoice_id->customer?->name }}</b>

@@ -68,7 +68,7 @@
                 <tbody>
 
                     @forelse($invoice as $e)
-                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount'))); @endphp
+                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction'))); @endphp
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{ $e->customer?->name }}
@@ -89,6 +89,9 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>  --}}
                             @if ($due > 0)
+                            @php
+                                $d=App\Models\Crm\InvoicePayment::select(DB::raw("sum(received_amount) as `received_amount`"),DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))->groupby("year","month")->where("customer_id", $e->customer_id)->latest()->take(3)->pluck("received_amount","month");
+                            @endphp
                                 <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
                                     data-bs-toggle="modal" data-bs-target="#invList"
                                     data-inv-id="{{ $e->id }}"
@@ -98,10 +101,11 @@
                                     data-sub-total-amount="{{ $e->sub_total_amount }}"
                                     data-vat-amount="{{ $e->vat_taka }}"
                                     data-total-amount="{{ $due }}"
-                                    data-received-amounts='@json(App\Models\Crm\InvoicePayment::where('customer_id', $e->customer_id)->latest()->take(3)->pluck('received_amount'))'>
+                                    data-received-amounts='@json($d)'>
                                     <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
                                 </button>
                             @endif
+                            
                         </td>
                     </tr>
                     @empty
@@ -146,7 +150,7 @@
                                         <td id="totalAmount"></td>
                                         <td><span class="due-details text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                             <ul class="due-amount">
-                                                <li>Sub Total: <span id="subAmount"></span></li>
+                                                <li>Sub Total: <span id="subAmount"></span><input id="subAmountInput" type="hidden"></li>
                                                 <li>Vat: <span id="vatAmount"></span> </li>
                                             </ul>
                                         </span></td>
@@ -178,8 +182,12 @@
                             <input type="text" onkeyup="aitcalc(this.value,'ait')" id="ait_amount"  name="ait_amount" class="form-control">
                         </div>
                         <div class="col-sm-4">
+                            <label for="">Fine Deduction</label>
+                            <input type="text"  name="fine_deduction" class="form-control">
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">Payment Mode</label>
-                            <select name="payment_type" class="form-control">
+                            <select name="payment_type" class="form-control" onchange="paymethod()">
                                 <option value="1">Cash</option>
                                 <option value="2">Pay Order</option>
                                 <option value="3">Fund Transfer</option>
@@ -187,15 +195,18 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Bank Name</label>
-                            <input type="text" name="bank_name" class="form-control">
+                            <input type="text" name="bank_name" onchange="paymethod()" class="form-control po_bank error-msg">
+                            <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">PO No</label>
-                            <input type="text" name="po_no" class="form-control">
+                            <input type="text" name="po_no" onchange="paymethod()" class="form-control po_num error-msg">
+                            <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">PO Date</label>
-                            <input type="date" name="po_date" class="form-control">
+                            <input type="date" name="po_date" onchange="paymethod()" class="form-control po_date error-msg">
+                            <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Pay Date</label>
@@ -217,7 +228,7 @@
                     
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                    <button type="submit" id="buttonDisable" class="btn btn-sm btn-primary">Save</button>
                 </div>
             </div>
         </form>
@@ -258,12 +269,12 @@
 <script>
     function vatcalc(v,place){
         if(place=="vat_amount"){
-            let rec= $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let vat= v ? parseFloat(v) : 0;
             let vamt=(rec*(vat/100));
             $('#'+place).val(vamt.toFixed(2))
         }else{
-            let rec=$('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let vamt=v ? parseFloat(v) : 0;
             let vat=(100*(vamt/rec));
             $('#'+place).val(vat.toFixed(2))
@@ -271,15 +282,37 @@
     }
     function aitcalc(v,place){
         if(place=="ait_amount"){
-            let rec= $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let ait= v ? parseFloat(v) : 0;
             let aamt=(rec*(ait/100));
             $('#'+place).val(aamt.toFixed(2))
         }else{
-            let rec=$('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+            let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let aamt=v ? parseFloat(v) : 0;
             let ait=(100*(aamt/rec));
             $('#'+place).val(ait.toFixed(2))
+        }
+    }
+    function paymethod(){
+        let pmethod = document.querySelector('select[name="payment_type"]').value;
+        let poBank = $('.po_bank').val();
+        let poNo = $('.po_num').val();
+        let poDate = $('.po_date').val();
+        var errorMessage = $('.error-msg').next('.error-message');
+        if(pmethod == 2){
+            if(poNo == '' || poDate == '' || poBank == ''){
+                errorMessage.text('This field is required').css('color', 'red').show();
+                $('#buttonDisable').attr('disabled',true)
+            }else{
+                errorMessage.hide();
+                $('#buttonDisable').removeAttr('disabled',false)
+            }
+        }else{
+            errorMessage.hide();
+            $('.po_bank').val('')
+            $('.po_num').val('')
+            $('.po_date').val('');
+            $('#buttonDisable').removeAttr('disabled',false)
         }
     }
     // $(document).ready(function () {
@@ -317,9 +350,10 @@
         } catch (e) {
             console.error("Error parsing received amounts: ", e);
         }
-        amountsArray = amountsArray.filter(function(amount) {
-            return amount !== null && amount !== '';
-        });
+        
+        // amountsArray = amountsArray.filter(function(amount) {
+        //     return amount !== null && amount !== '';
+        // });
 
         // Set the values in the modal
         var modal = $(this);
@@ -329,15 +363,16 @@
         modal.find('#zone_id').val(zone);
         modal.find('#totalAmount').text(Amount);
         modal.find('#subAmount').text(subAmount);
+        modal.find('#subAmountInput').val(subAmount);
         modal.find('#vatAmount').text(vatAmount);
 
         var receivedAmountsList = modal.find('#receivedAmountsList');
         receivedAmountsList.empty(); // Clear any existing items
-
-        if (amountsArray.length > 0) {
+        let month=new Array("","January","February","March","April","May","June","July","August","September","October","November","December");
+        if (Object.keys(amountsArray).length > 0) {
             receivedAmountsList.append('<li><strong>Last 3 Received Amounts:</strong></li>');
-            amountsArray.forEach(function(amount) {
-                receivedAmountsList.append('<li>' + amount + '</li>');
+            Object.entries(amountsArray).forEach(function(k) {
+                receivedAmountsList.append('<li>' + month[k[0]] +'--'+k[1] + '</li>');
             });
         } else {
             receivedAmountsList.append('<li>No recent received amounts available.</li>');
