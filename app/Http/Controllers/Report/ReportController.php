@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Report;
 
 use App\Http\Controllers\Controller;
+use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\InvoiceGenerate;
 use App\Models\Settings\Zone;
 use Illuminate\Http\Request;
@@ -47,11 +48,13 @@ class ReportController extends Controller
     }
     public function paymentReceive(Request $request){
         $customer=Customer::all();
+        $branch=CustomerBrance::all();
         $zone=Zone::all();
-        $data = InvoicePayment::select('invoice_payments.*', 'customers.id as customer_id', 'customers.zone_id as zone_id','customers.customer_type as customer_type')
+        $data = InvoicePayment::select('invoice_payments.*', 'customers.id as customer_id', 'customers.zone_id as zone_id','customers.customer_type as customer_type','invoice_generates.branch_id as branch_id')
         ->leftJoin('customers','invoice_payments.customer_id','=','customers.id')
+        ->leftJoin('invoice_generates','invoice_payments.invoice_id','=','invoice_generates.id')
         ->join(
-            DB::raw('(SELECT MAX(id) as id FROM invoice_payments GROUP BY customer_id) as latest'),
+            DB::raw('(SELECT MAX(id) as id FROM invoice_payments GROUP BY invoice_id) as latest'),
             'invoice_payments.id',
             '=',
             'latest.id'
@@ -63,12 +66,16 @@ class ReportController extends Controller
             $customerId = $request->customer_id;
             $data->where('invoice_payments.customer_id', $customerId);
         }
+        if ($request->branch_id){
+            $branchId = $request->branch_id;
+            $data->where('invoice_generates.branch_id', $branchId);
+        }
         if ($request->zone_id){
             $zoneId = $request->zone_id;
             $data->where('customers.zone_id', $zoneId);
         }
         $data = $data->get();
-        return view('report.pay-received',compact('data','customer','zone'));
+        return view('report.pay-received',compact('data','customer','branch','zone'));
     }
     public function paymentReceiveDetails(Request $request, $id){
         $customer=Customer::where('id',$id)->first();

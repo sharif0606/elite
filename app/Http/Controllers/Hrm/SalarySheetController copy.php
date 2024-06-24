@@ -429,16 +429,13 @@ class SalarySheetController extends Controller
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
         $customerIds = explode(',', $salary->customer_id);
-        // Handle "null" string values in branch_id
-        $branchIds = array_filter(explode(',', $salary->branch_id), function($value) {
-            return $value !== "null";
-        });
+        $branchIds = explode(',', $salary->branch_id);
+
         $groupedData = [];
 
         $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
-
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
@@ -448,16 +445,13 @@ class SalarySheetController extends Controller
     {
         $salary=SalarySheet::findOrFail(encryptor('decrypt',$id));
         $customerIds = explode(',', $salary->customer_id);
-        // Handle "null" string values in branch_id
-        $branchIds = array_filter(explode(',', $salary->branch_id), function($value) {
-            return $value !== "null";
-        });
+        $branchIds = explode(',', $salary->branch_id);
+
         $groupedData = [];
 
         $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
-
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
@@ -519,16 +513,13 @@ class SalarySheetController extends Controller
         $salary = SalarySheet::findOrFail(encryptor('decrypt', $id));
         
         $customerIds = explode(',', $salary->customer_id);
-        // Handle "null" string values in branch_id
-        $branchIds = array_filter(explode(',', $salary->branch_id), function($value) {
-            return $value !== "null";
-        });
+        $branchIds = explode(',', $salary->branch_id);
+
         $groupedData = [];
 
         $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
-
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+            if (in_array($detail->customer_id, $customerIds) && in_array($detail->branch_id, $branchIds)) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }

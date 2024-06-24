@@ -301,7 +301,7 @@ class ControllerDeduction extends Controller
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
-                        $deduction->tonic_sim=$request->amount[$key];
+                        $deduction->stmp=$request->amount[$key];
                         $deduction->remarks=$request->remarks[$key];
                         $deduction->status=15;
                         $deduction->save();

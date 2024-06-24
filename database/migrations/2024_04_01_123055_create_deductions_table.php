@@ -37,7 +37,7 @@ return new class extends Migration
             $table->decimal('absent',10,2)->default(0);
             $table->decimal('vacant',10,2)->default(0);
             $table->decimal('adv',10,2)->default(0);
-            $table->string('remarks')->nullable();
+            $table->decimal('stmp',10,2)->default(0);
             $table->integer('status')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

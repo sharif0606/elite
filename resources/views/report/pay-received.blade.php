@@ -18,9 +18,21 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
                     <div class="form-group">
-                        <select name="zone_id" class="select2 form-select">
+                        <select name="branch_id" class="form-select">
+                            <option value="">Select Branch</option>
+                            @forelse ($branch as $d)
+                                <option value="{{$d->id}}" {{ request('branch_id')==$d->id?"selected":""}}>{{$d->brance_name}}</option>
+                            @empty
+                                <option value="">No Data Found</option>
+                            @endforelse
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                        <select name="zone_id" class="form-select">
                             <option value="">Select zone</option>
                             @forelse ($zone as $d)
                                 <option value="{{$d->id}}" {{ request('zone_id')==$d->id?"selected":""}}>{{$d->name}}</option>
@@ -30,7 +42,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
+                <div class="col-lg-2 col-sm-6">
                     <div class="form-group">
                         <select name="customer_type" class="form-select">
                             <option value="">Customer Type</option>
@@ -58,6 +70,7 @@
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
+                        <th scope="col">{{__('Branch')}}</th>
                         <th scope="col">{{__('Zone')}}</th>
                         <th scope="col">{{__('Received Amount')}}</th>
                     </tr>
@@ -74,6 +87,7 @@
                                 @endif
                             </a>
                         </td>
+                        <td>{{ $e->invoice?->branch?->brance_name }}</td>
                         <td>{{ $e->customer?->zone?->name }}</td>
                         <td>{{ $e->received_amount }}</td>
                     </tr>
