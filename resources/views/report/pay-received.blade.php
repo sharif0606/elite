@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-2 col-sm-6">
                     <div class="form-group">
-                        <select name="branch_id" class="form-select">
+                        <select name="branch_id" class="select2 form-select">
                             <option value="">Select Branch</option>
                             @forelse ($branch as $d)
                                 <option value="{{$d->id}}" {{ request('branch_id')==$d->id?"selected":""}}>{{$d->brance_name}}</option>
@@ -61,9 +61,9 @@
             </div>
         </form>
         <!-- table bordered -->
-        {{-- <div class="text-end">
+        <div class="text-end">
             <button type="button" class="btn btn-sm btn-info" onclick="printDiv('result_show')">Print</button>
-        </div> --}}
+        </div>
         <div class="table-responsive" id="result_show">
             <table class="table table-bordered mb-0">
                 <thead>
@@ -82,9 +82,6 @@
                         <td>
                             <a href="{{route('report.payment_receive_detail',$e->customer_id)}}">
                                 {{ $e->customer?->name }}
-                                @if($e->branch_id)
-                                ({{ $e->branch?->brance_name }})
-                                @endif
                             </a>
                         </td>
                         <td>{{ $e->invoice?->branch?->brance_name }}</td>

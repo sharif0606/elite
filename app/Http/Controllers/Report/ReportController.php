@@ -81,17 +81,9 @@ class ReportController extends Controller
         $customer=Customer::where('id',$id)->first();
         $data = InvoicePayment::where('customer_id',$id);
 
-        if ($request->pay_date){
-            $data->where('invoice_payments.pay_date', $request->pay_date);
-        }
-        if ($request->rec_date){
-            $data->where('invoice_payments.rcv_date', $request->rec_date);
-        }
-        if ($request->deposit_date){
-            $data->where('invoice_payments.deposit_date', $request->deposit_date);
-        }
-        if ($request->po_date){
-            $data->where('invoice_payments.po_date', $request->po_date);
+        if ($request->fdate) {
+            $tdate = $request->tdate ?: $request->fdate;
+            $data->whereBetween(DB::raw('date(invoice_payments.pay_date)'), [$request->fdate, $tdate]);
         }
         if ($request->po_date){
             $data->where('invoice_payments.po_date', $request->po_date);
@@ -99,8 +91,6 @@ class ReportController extends Controller
         if ($request->po_no){
             $data->where('invoice_payments.po_no', $request->po_no);
         }
-        if($request->bank_name)
-            $data=$data->where('bank_name','like','%'.$request->bank_name.'%');
 
         if ($request->payment_type){
             $data->where('invoice_payments.payment_type', $request->payment_type);

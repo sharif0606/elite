@@ -8,20 +8,14 @@
             <div class="row mb-2">
                 <div class="col-lg-3 col-sm-6">
                     <div class="form-group">
-                        <label for="">Payment Date</label>
-                        <input type="date" class="form-control" name="pay_date">
+                        <label for="">From Date</label>
+                        <input type="date" class="form-control" value="{{ request('fdate')}}" name="fdate">
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="form-group">
-                        <label for="">Receive Date</label>
-                        <input type="date" class="form-control" name="rec_date">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label for="">Deposit Date</label>
-                        <input type="date" class="form-control" name="deposit_date">
+                        <label for="">To Date</label>
+                        <input type="date" class="form-control" value="{{ request('tdate')}}" name="tdate">
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -34,12 +28,6 @@
                     <div class="form-group">
                         <label for="">PO NO</label>
                         <input type="text" class="form-control" name="po_no" placeholder="Po number">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label for="">Bank Name</label>
-                        <input type="text" class="form-control" name="bank_name" placeholder="bank name">
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -62,16 +50,17 @@
                 </div>
             </div>
         </form>
-        <div class="text-center">
-            <h5 class="m-0">Customer wise received details</h5>
-            <p class="m-0 p-0">{{$customer->name}}</p>
-            <span>{{$customer->zone?->name}}</span>
-        </div>
+        
         <!-- table bordered -->
-        {{-- <div class="text-end">
+        <div class="text-end">
             <button type="button" class="btn btn-sm btn-info" onclick="printDiv('result_show')">Print</button>
-        </div> --}}
+        </div>
         <div class="table-responsive" id="result_show">
+            <div class="text-center">
+                <h5 class="m-0">Customer wise received details</h5>
+                <p class="m-0 p-0">{{$customer->name}}</p>
+                <span>{{$customer->zone?->name}}</span>
+            </div>
             <table class="table table-bordered mb-0">
                 @php
                     $vatAmountTotal = 0;
@@ -88,7 +77,7 @@
                         <th scope="col">{{__('PO Date')}}</th>
                         <th scope="col">{{__('PO No')}}</th>
                         <th scope="col">{{__('Payment Method')}}</th>
-                        <th scope="col">{{__('Bank')}}</th>
+                        <th scope="col">{{__('Branch')}}</th>
                         <th scope="col">{{__('VAT')}}</th>
                         <th scope="col">{{__('Vat Amount')}}</th>
                         <th scope="col">{{__('AIT')}}</th>
@@ -101,10 +90,10 @@
                     @forelse($data as $e)
                      <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{$e->pay_date}}</td>
-                        <td>{{$e->rcv_date}}</td>
-                        <td>{{$e->deposit_date}}</td>
-                        <td>{{$e->po_date}}</td>
+                        <td>{{ !is_null($e->pay_date) ? date('d-M-Y', strtotime($e->pay_date)) : '' }}</td>
+                        <td>{{ !is_null($e->rcv_date) ? date('d-M-Y', strtotime($e->rcv_date)) : '' }}</td>
+                        <td>{{ !is_null($e->deposit_date) ? date('d-M-Y', strtotime($e->deposit_date)) : '' }}</td>
+                        <td>{{ !is_null($e->po_date) ? date('d-M-Y', strtotime($e->po_date)) : '' }}</td>
                         <td>{{$e->po_no}}</td>
                         <td>
                             @if ($e->payment_type == 1)
@@ -115,7 +104,7 @@
                                 Fund Transfer
                             @endif
                         </td>
-                        <td>{{$e->bank_name}}</td>
+                        <td>{{$e->invoice?->branch?->brance_name}}</td>
                         <td>{{$e->vat}}</td>
                         <td>{{$e->vat_amount}}</td>
                         <td>{{$e->ait}}</td>
