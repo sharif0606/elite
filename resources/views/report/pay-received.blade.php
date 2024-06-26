@@ -8,7 +8,7 @@
             <div class="row mb-2">
                 <div class="col-lg-3 col-sm-6">
                     <div class="form-group">
-                        <select name="customer_id" class="select2 form-select">
+                        <select name="customer_id" class="select2 form-select" onchange="getBranch(this);">
                             <option value="">Select Customer</option>
                             @forelse ($customer as $d)
                                 <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
@@ -20,13 +20,8 @@
                 </div>
                 <div class="col-lg-2 col-sm-6">
                     <div class="form-group">
-                        <select name="branch_id" class="select2 form-select">
+                        <select name="branch_id" class="select2 form-select" id="branch_id">
                             <option value="">Select Branch</option>
-                            @forelse ($branch as $d)
-                                <option value="{{$d->id}}" {{ request('branch_id')==$d->id?"selected":""}}>{{$d->brance_name}}</option>
-                            @empty
-                                <option value="">No Data Found</option>
-                            @endforelse
                         </select>
                     </div>
                 </div>

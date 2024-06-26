@@ -25,10 +25,18 @@ class EmployeeRateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $emRate=EmployeeRate::all();
-        return view('employee_rate.index',compact('emRate'));
+        $customer = Customer::select('id','name')->get();
+        $emRate=EmployeeRate::orderBy('id','DESC');
+        if ($request->customer_id){
+            $emRate->where('employee_rates.customer_id', $request->customer_id);
+        }
+        if ($request->branch_id){
+            $emRate->where('employee_rates.branch_id', $request->branch_id);
+        }
+        $emRate = $emRate->get();
+        return view('employee_rate.index',compact('emRate','customer'));
     }
 
     /**
@@ -133,7 +141,7 @@ class EmployeeRateController extends Controller
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
-                    $dl=EmployeeRateDetails::where('employee_rate_id',$data->id)->delete();
+                    EmployeeRateDetails::where('employee_rate_id',$data->id)->delete();
                     foreach($request->job_post_id as $key => $value){
                         if($value){
                             $details = new EmployeeRateDetails;
@@ -169,6 +177,9 @@ class EmployeeRateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $c=EmployeeRate::findOrFail(encryptor('decrypt',$id));
+        $dl=EmployeeRateDetails::where('employee_rate_id',$c->id)->delete();
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

@@ -27,10 +27,19 @@ class EmployeeAssignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $empasin=EmployeeAssign::all();
-        return view('employee_assign.index',compact('empasin'));
+        $customer = Customer::select('id','name')->get();
+        $empasin=EmployeeAssign::orderBy('id','DESC');
+        if ($request->customer_id){
+            $empasin->where('employee_assigns.customer_id', $request->customer_id);
+        }
+        if ($request->branch_id){
+            $empasin->where('employee_assigns.branch_id', $request->branch_id);
+        }
+        $empasin = $empasin->get();
+        
+        return view('employee_assign.index',compact('empasin','customer'));
 
     }
 

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Deduction Over Payment List'))
+@section('pageTitle',trans('Deduction Bank Charge exc List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -25,7 +25,7 @@
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Employee ID')}}</th>
                                 <th scope="col">{{__('Month')}}</th>
-                                <th scope="col">{{__('Over Payment')}}</th>
+                                <th scope="col">{{__('Bank Charge Exc')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -40,7 +40,7 @@
                                 <td>{{$p->employee?->bn_applicants_name}}</td>
                                 <td>{{$p->employee?->admission_id_no}}</td>
                                 <td>{{$getMonth}}--{{$p->year}}</td>
-                                <td>{{$p->over_paymentCut}}</td>
+                                <td>{{$p->bank_charge_exc}}</td>
                                 <td>
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
                                         <i class="bi bi-trash"></i>

@@ -3,49 +3,35 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
-<!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
 
             <div class="card">
                 <div>
-                <a class="btn btn-sm btn-primary float-end" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square"></i></a>
+                    <a class="float-end text-danger" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
+                    {{-- <a class="btn btn-sm btn-danger float-end" href="{{route('salaryStopCreate')}}">salary off</a> --}}
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
-                <!-- table bordered -->
                 <div class="table-responsive">
-                    <table class="table table-bordered mb-0">
-
-                        <thead>
-                            <tr>
-                                <th scope="col"><a href="{{route('fineIndex')}}" class="btn btn-primary">Fine List</a></th>
-                                <th scope="col"><a href="{{route('mobileBillIndex')}}" class="btn btn-primary">Mobile Bill</a></th>
-                                <th scope="col"><a href="{{route('loanIndex')}}" class="btn btn-primary">Loan</a></th>
-                                <th scope="col"><a href="{{route('clothIndex')}}" class="btn btn-primary">Cloth</a></th>
-                                <th scope="col"><a href="{{route('JacketIndex')}}" class="btn btn-primary">Jacket</a></th>
-                                <th scope="col"><a href="{{route('HrIndex')}}" class="btn btn-primary">Hr</a></th>
-                                <th scope="col"><a href="{{route('CfIndex')}}" class="btn btn-primary">CF</a></th>
-                                <th scope="col"><a href="{{route('medicalIndex')}}" class="btn btn-primary">Medical</a></th>
-                                <th scope="col"><a href="{{route('MatterssPillowIndex')}}" class="btn btn-primary">Matterss Pillow Cost</a></th>
-                                <th scope="col"><a href="{{route('tonicSimIndex')}}" class="btn btn-primary">Tonic Sim</a></th>
-                                <th scope="col"><a href="{{route('overPaymentIndex')}}" class="btn btn-primary">Over Payment</a></th>
-                            </tr>
-                            <tr>
-                                <th scope="col"><a href="{{route('bankChargeIndex')}}" class="btn btn-primary">Bank Charge/Exc</a></th>
-                                <th scope="col"><a href="{{route('DressIndex')}}" class="btn btn-primary">Dress</a></th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <a href="{{route('fineIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fine List</a>
+                    <a href="{{route('mobileBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Bill</a>
+                    <a href="{{route('loanIndex')}}" class="btn btn-danger py-1 px-2 m-1">Loan</a>
+                    <a href="{{route('clothIndex')}}" class="btn btn-danger py-1 px-2 m-1">Cloth</a>
+                    <a href="{{route('JacketIndex')}}" class="btn btn-danger py-1 px-2 m-1">Jacket</a>
+                    <a href="{{route('HrIndex')}}" class="btn btn-danger py-1 px-2 m-1">Hr</a>
+                    <a href="{{route('CfIndex')}}" class="btn btn-danger py-1 px-2 m-1">CF</a>
+                    <a href="{{route('medicalIndex')}}" class="btn btn-danger py-1 px-2 m-1">Medical</a>
+                    <a href="{{route('MatterssPillowIndex')}}" class="btn btn-danger py-1 px-2 m-1">Matterss Pillow Cost</a>
+                    <a href="{{route('tonicSimIndex')}}" class="btn btn-danger py-1 px-2 m-1">Tonic Sim</a>
+                    <a href="{{route('overPaymentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Over Payment</a>
+                    <a href="{{route('bankChargeIndex')}}" class="btn btn-danger py-1 px-2 m-1">Bank Charge/Exc</a>
+                    <a href="{{route('DressIndex')}}" class="btn btn-danger py-1 px-2 m-1">Dress</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Bordered table end -->
-
-
 @endsection

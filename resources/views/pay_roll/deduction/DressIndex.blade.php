@@ -1,10 +1,8 @@
 @extends('layout.app')
-@section('pageTitle',trans('Deduction Over Payment List'))
+@section('pageTitle',trans('Deduction Dress List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
-<!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
@@ -25,7 +23,7 @@
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Employee ID')}}</th>
                                 <th scope="col">{{__('Month')}}</th>
-                                <th scope="col">{{__('Over Payment')}}</th>
+                                <th scope="col">{{__('Dress')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -40,7 +38,7 @@
                                 <td>{{$p->employee?->bn_applicants_name}}</td>
                                 <td>{{$p->employee?->admission_id_no}}</td>
                                 <td>{{$getMonth}}--{{$p->year}}</td>
-                                <td>{{$p->over_paymentCut}}</td>
+                                <td>{{$p->dress}}</td>
                                 <td>
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
                                         <i class="bi bi-trash"></i>

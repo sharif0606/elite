@@ -206,7 +206,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td colspan="4" style="text-align: left;"><label for="">তারিখ : {{ date('d-M-Y', strtotime($employees->created_at)) }}</label></td>
+                                <td colspan="4" style="text-align: left;"><label for="">তারিখ :{{ !is_null($employees->joining_date) ? date('d-M-Y', strtotime($employees->joining_date)) : '' }}</label></td>
                                 <td colspan="5" style="text-align: right; padding-right: 30px;">
                                     @if($employees->signature_img !='')
                                     <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt=""><br/>

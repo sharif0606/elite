@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Create Deduction'))
+@section('pageTitle',trans('Salary Stop'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -38,38 +38,6 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="col-lg-4 mt-2">
-                                        <div class="form-group">
-                                            <label for="role_id">Deduction</label>
-                                            <select class="form-control" name="deduction_type" id="deduction_type">
-                                                <option value="0">Select</option>
-                                                <option value="1">Fine</option>
-                                                <option value="2">Mobile Bill</option>
-                                                <option value="3">Loan</option>
-                                                <option value="4">Cloth</option>
-                                                <option value="5">Jacket</option>
-                                                <option value="6">Hr</option>
-                                                <option value="7">CF</option>
-                                                <option value="8">Medical</option>
-                                                <option value="9">Matterss Pillow Cost</option>
-                                                <option value="10">Tonic Sim</option>
-                                                <option value="11">Over Payment</option>
-                                                <option value="12">Bank Charge/Exc</option>
-                                                <option value="13">Dress</option>
-                                                <option value="14">Mattress & Pillow Cost</option>
-                                                <option value="15">stmp</option>
-                                                <option value="16">Over Payment Cutt</option>
-                                                <option value="17">Excess Mobile</option>
-                                                <option value="18">Mess</option>
-                                                <option value="19">Absent</option>
-                                                <option value="20">Vacant</option>
-                                                <option value="21">Adv.</option>
-                                            </select>
-                                            @if($errors->has('deduction'))
-                                                <span class="text-danger"> {{ $errors->first('deduction') }}</span>
-                                            @endif
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="table-responsive">
@@ -77,8 +45,7 @@
                                             <thead>
                                                 <tr class="text-center">
                                                     <th scope="col">{{__('Employee')}}</th>
-                                                    <th scope="col">{{__('Taka')}}</th>
-                                                    <th scope="col">{{__('Remarks')}}</th>
+                                                    <th scope="col">{{__('Salary stop message')}}</th>
                                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                                 </tr>
                                             </thead>
@@ -93,16 +60,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
-                                                        @if($errors->has('amount'))
-                                                            <span class="text-danger"> {{ $errors->first('amount') }}</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
-                                                        @if($errors->has('remarks'))
-                                                            <span class="text-danger"> {{ $errors->first('remarks') }}</span>
-                                                        @endif
+                                                        <input type="text" class="form-control" value="{{ old('salary_stop_message')}}" name="salary_stop_message[]">
                                                     </td>
                                                     <td>
                                                         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -139,16 +97,7 @@
             </select>
         </td>
         <td>
-            <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
-            @if($errors->has('amount'))
-                <span class="text-danger"> {{ $errors->first('amount') }}</span>
-            @endif
-        </td>
-        <td>
-            <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
-            @if($errors->has('remarks'))
-                <span class="text-danger"> {{ $errors->first('remarks') }}</span>
-            @endif
+            <input type="text" class="form-control" value="{{ old('salary_stop_message')}}" name="salary_stop_message[]">
         </td>
         <td>
             <span onClick='removeRow(this);' class="add-row text-danger"><i class="bi bi-trash-fill"></i></span>

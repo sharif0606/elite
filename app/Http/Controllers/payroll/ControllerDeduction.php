@@ -79,7 +79,7 @@ class ControllerDeduction extends Controller
     }
     public function bankChargeIndex()
     {
-        $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
+        $deductions=Deduction::where('bank_charge_exc', '>', 0)->get();
         return view('pay_roll.deduction.bankChargeIndex',compact('deductions'));
     }
     public function DressIndex()
@@ -92,6 +92,11 @@ class ControllerDeduction extends Controller
     {
         $employees=Employee::select('id','admission_id_no','bn_applicants_name')->get();
         return view('pay_roll.deduction.create',compact('employees'));
+    }
+    public function salary_stop()
+    {
+        $employees=Employee::select('id','admission_id_no','bn_applicants_name')->get();
+        return view('pay_roll.deduction.salaryStop',compact('employees'));
     }
 
     public function store(Request $request)
@@ -422,6 +427,8 @@ class ControllerDeduction extends Controller
 
     public function destroy($id)
     {
-        //
+        $c=Deduction::findOrFail(encryptor('decrypt',$id));
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

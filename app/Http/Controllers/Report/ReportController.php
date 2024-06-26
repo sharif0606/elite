@@ -48,7 +48,6 @@ class ReportController extends Controller
     }
     public function paymentReceive(Request $request){
         $customer=Customer::all();
-        $branch=CustomerBrance::all();
         $zone=Zone::all();
         $data = InvoicePayment::select('invoice_payments.*', 'customers.id as customer_id', 'customers.zone_id as zone_id','customers.customer_type as customer_type','invoice_generates.branch_id as branch_id')
         ->leftJoin('customers','invoice_payments.customer_id','=','customers.id')
@@ -75,7 +74,7 @@ class ReportController extends Controller
             $data->where('customers.zone_id', $zoneId);
         }
         $data = $data->get();
-        return view('report.pay-received',compact('data','customer','branch','zone'));
+        return view('report.pay-received',compact('data','customer','zone'));
     }
     public function paymentReceiveDetails(Request $request, $id){
         $customer=Customer::where('id',$id)->first();

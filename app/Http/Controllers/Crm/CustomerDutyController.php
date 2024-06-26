@@ -30,10 +30,18 @@ class CustomerDutyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customerduty=CustomerDuty::all();
-        return view('customer_duty.index',compact('customerduty'));
+        $customer = Customer::select('id','name')->get();
+        $customerduty=CustomerDuty::orderBy('id','DESC');
+        if ($request->customer_id){
+            $customerduty->where('customer_duties.customer_id', $request->customer_id);
+        }
+        if ($request->branch_id){
+            $customerduty->where('customer_duties.branch_id', $request->branch_id);
+        }
+        $customerduty = $customerduty->get();
+        return view('customer_duty.index',compact('customerduty','customer'));
     }
 
     /**
@@ -287,6 +295,9 @@ class CustomerDutyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $c=CustomerDuty::findOrFail(encryptor('decrypt',$id));
+        $dl=CustomerDutyDetail::where('customerduty_id',$c->id)->delete();
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

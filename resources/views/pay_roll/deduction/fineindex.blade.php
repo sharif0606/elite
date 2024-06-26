@@ -11,7 +11,7 @@
 
             <div class="card">
                 <div>
-                <a class="btn btn-sm btn-primary float-end" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square"></i></a>
+                    <a class="float-end text-danger" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
@@ -24,6 +24,7 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Employee ID')}}</th>
+                                <th scope="col">{{__('Month')}}</th>
                                 <th scope="col">{{__('Fine')}}</th>
                                 <th scope="col">{{__('Remarks')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
@@ -31,17 +32,30 @@
                         </thead>
                         <tbody>
                             @forelse($deductions as $p)
+                            @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
+                                $month = $p->month;
+                                $getMonth = isset($mt[$month])?$mt[$month]:0;
+                            @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$p->employee?->bn_applicants_name}}</td>
                                 <td>{{$p->employee?->admission_id_no}}</td>
+                                <td>{{$getMonth}}--{{$p->year}}</td>
                                 <td>{{$p->fine}}</td>
                                 <td>{{$p->remarks}}</td>
-                                <td></td>
+                                <td>
+                                    <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    <form id="form{{ $p->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('deduction_asign.destroy', encryptor('encrypt', $p->id)) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                </td>
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="5" class="text-center">No Data Found</th>
+                                <th colspan="6" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                         </tbody>
@@ -51,7 +65,4 @@
         </div>
     </div>
 </section>
-<!-- Bordered table end -->
-
-
 @endsection

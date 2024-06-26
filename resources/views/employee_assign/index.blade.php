@@ -5,10 +5,46 @@
 <!-- Bordered table start -->
 <div class="col-12">
     <div class="card">
+        <form action="">
+            <div class="row mb-2">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <select name="customer_id" class="select2 form-select" onchange="getBranch(this);">
+                            <option value="">Select Customer</option>
+                            @forelse ($customer as $d)
+                                <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                            @empty
+                                <option value="">No Data Found</option>
+                            @endforelse
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                        <select name="branch_id" class="select2 form-select" id="branch_id">
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6 ps-0 ">
+                    <div class="form-group d-flex">
+                        <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
+                        <a class="btn btn-sm btn-danger ms-2" href="{{route('employee_assign.index')}}" title="Clear">Clear</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <!-- Empty div to push the link to the right side -->
+                </div>
+                <div class="col-lg-2 col-sm-6 d-flex justify-content-end align-items-center">
+                    <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser()])}}">
+                        <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
+                    </a>
+                </div>
+            </div>
+        </form>
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped mb-0">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('employee_assign.create', ['role' =>currentUser()])}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead class="table-dark">
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
