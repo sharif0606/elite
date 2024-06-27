@@ -7,7 +7,7 @@
 <style>
     @media (min-width: 1192px){
         .select2{
-            width: 926px !important;
+            width: 550px !important;
         }
     }
 </style>
@@ -44,8 +44,8 @@
                                         <table class="table table-bordered mb-0 table-striped">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th scope="col">{{__('Employee')}}</th>
-                                                    <th scope="col">{{__('Salary stop message')}}</th>
+                                                    <th scope="col" width=45%>{{__('Employee')}}</th>
+                                                    <th scope="col" width=45%>{{__('Salary stop message')}}</th>
                                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                                 </tr>
                                             </thead>

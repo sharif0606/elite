@@ -26,6 +26,7 @@ return new class extends Migration
             $table->decimal('hr',10,2)->default(0);
             $table->decimal('c_f',10,2)->default(0);
             $table->decimal('medical',10,2)->default(0);
+            $table->string('salary_stop_message')->nullable();
             // uncommontow
             $table->decimal('matterss_pillowCost',10,2)->default(0);
             $table->decimal('tonic_sim',10,2)->default(0);

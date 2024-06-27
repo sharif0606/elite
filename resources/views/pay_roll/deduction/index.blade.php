@@ -16,6 +16,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div class="table-responsive">
+                    <a href="{{route('salaryStopIndex')}}" class="btn btn-danger py-1 px-2 m-1">Salary Stop</a>
                     <a href="{{route('fineIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fine List</a>
                     <a href="{{route('mobileBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Bill</a>
                     <a href="{{route('loanIndex')}}" class="btn btn-danger py-1 px-2 m-1">Loan</a>

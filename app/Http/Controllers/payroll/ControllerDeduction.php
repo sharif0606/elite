@@ -87,6 +87,11 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
         return view('pay_roll.deduction.DressIndex',compact('deductions'));
     }
+    public function salaryStopIndex()
+    {
+        $deductions=Deduction::where('salary_stop_message', '>', 0)->get();
+        return view('pay_roll.deduction.salaryStopIndex',compact('deductions'));
+    }
 
     public function create()
     {
@@ -103,6 +108,18 @@ class ControllerDeduction extends Controller
     {
         //dd($request->all());
         try{
+            if($request->salary_stop_message){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->salary_stop_message=$request->salary_stop_message[$key];
+                        $deduction->save();
+                    }
+                }
+            }
             if($request->deduction_type=='1'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
