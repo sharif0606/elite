@@ -89,7 +89,7 @@ class ControllerDeduction extends Controller
     }
     public function salaryStopIndex()
     {
-        $deductions=Deduction::where('salary_stop_message', '>', 0)->get();
+        $deductions=Deduction::where('salary_stop_message', '!=', null)->get();
         return view('pay_roll.deduction.salaryStopIndex',compact('deductions'));
     }
 

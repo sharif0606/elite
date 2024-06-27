@@ -208,7 +208,12 @@
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
-                        let Remarks = (value.remarks) ? value.remarks : '';
+                        //let Remarks = (value.remarks) ? value.remarks : '';
+                        let RemarksArray = [
+                            (value.remarks) ? value.remarks : '',
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
+                        ];
+                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
@@ -241,6 +246,7 @@
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_revenue_stamp[]" value="0" readonly>`
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                         }else{
                             var customerName=`<input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">`
                             var en_applicants_name=`<input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -259,6 +265,7 @@
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="" placeholder="Revenue Stamp">`
                             var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="${Remarks}"><span>${Remarks}</span>`;
                         }
                         selectElement.append(
                             `<tr>
@@ -329,9 +336,7 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_of_ind" type="text" name="sing_of_ind[]" value="" placeholder="SIGN OF IND">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}" placeholder="Remark">
-                                </td>
+                                <td>${remarkCondition}</td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                 </td>  --}}
