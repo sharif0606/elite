@@ -550,12 +550,6 @@ class SalarySheetController extends Controller
         //
     }
 
-
-    public function destroy($id)
-    {
-        //
-    }
-
     public function getSalaryData(Request $request)
     {
         $stdate=$request->start_date;
@@ -646,5 +640,18 @@ class SalarySheetController extends Controller
 
         $data = $query->get();
         return response()->json($data, 200);
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $c=SalarySheet::findOrFail(encryptor('decrypt',$id));
+        $dl=SalarySheetDetail::where('salary_id',$c->id)->delete();
+        $c->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

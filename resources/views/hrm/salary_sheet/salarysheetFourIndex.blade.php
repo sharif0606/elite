@@ -37,6 +37,13 @@
                             <a href="{{route('salarysheet.salarySheetFourShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
+                            <a class="text-danger" href="javascript:void()" onclick="$('#form{{$s->id}}').submit()">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <form id="form{{ $s->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('salarySheet.destroy', encryptor('encrypt', $s->id)) }}" method="post">
+                                @csrf
+                                @method('delete')
+                            </form>
                         </td>
                     </tr>
                     @empty
