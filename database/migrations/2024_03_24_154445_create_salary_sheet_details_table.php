@@ -44,6 +44,7 @@ return new class extends Migration
             $table->decimal('house_rent',10,2)->default(0)->nullable();
             $table->decimal('medical',10,2)->default(0)->nullable();
             $table->decimal('trans_conve',10,2)->default(0)->nullable();
+            $table->decimal('food_allownce',10,2)->default(0)->nullable();
             $table->decimal('gross_wages',10,2)->default(0);
             $table->decimal('total_workingday',10,2)->default(0)->nullable();
             $table->decimal('present_day',10,2)->default(0)->nullable();

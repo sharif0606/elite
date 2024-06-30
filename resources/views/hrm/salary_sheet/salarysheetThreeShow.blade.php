@@ -54,6 +54,7 @@
                                             <th scope="col" rowspan="2">{{__('House rent (50%)')}}</th>
                                             <th scope="col" rowspan="2">{{__('Medical')}}</th>
                                             <th scope="col" rowspan="2">{{__('Trans. Conve.')}}</th>
+                                            <th scope="col" rowspan="2">{{__('Food Allownce')}}</th>
                                             <th scope="col" rowspan="2">{{__('Gross Wages')}}</th>
                                             <th scope="col" rowspan="2">{{__('Total Working Days')}}</th>
                                             <th scope="col" rowspan="2">{{__('Pre. Days')}}</th>
@@ -104,6 +105,7 @@
                                                     <td>{{ $d->house_rent }}</td>
                                                     <td>{{ $d->medical }}</td>
                                                     <td>{{ $d->trans_conve }}</td>
+                                                    <td>@if($d->food_allownce > 0){{ $d->food_allownce }}@endif</td>
                                                     <td>{{ $d->gross_wages }}</td>
                                                     <td>{{ (int)$d->total_workingday }}</td>
                                                     <td>{{ (int)$d->present_day }}</td>

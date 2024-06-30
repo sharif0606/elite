@@ -251,6 +251,7 @@ class SalarySheetController extends Controller
                             $details->house_rent=$request->house_rent[$key];
                             $details->medical=$request->medical[$key];
                             $details->trans_conve=$request->trans_conve[$key];
+                            $details->food_allownce=$request->food_allownce[$key];
                             $details->gross_wages=$request->gross_wages[$key];
                             $details->total_workingday=$request->total_workingDay[$key];
                             $details->present_day=$request->present_day[$key];

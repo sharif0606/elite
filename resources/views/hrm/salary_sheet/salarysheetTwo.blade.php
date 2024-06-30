@@ -250,7 +250,7 @@
                         if (grossAmoun > totalDeduction) {
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
-                        if(old_emp == value.en_applicants_name){
+                        if(old_emp == value.admission_id_no){
                             var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.joining_date}">`;
                             var en_applicants_name = value.customer_branch;
                             var mpcCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_matterss_pillowCost[]" value="0" readonly>`
@@ -384,7 +384,7 @@
                         );
                         counter++;
                         total_calculate();
-                        old_emp= value.en_applicants_name;
+                        old_emp= value.admission_id_no;
                     });
             },
         });
