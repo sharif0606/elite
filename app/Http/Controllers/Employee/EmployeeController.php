@@ -95,6 +95,7 @@ class EmployeeController extends Controller
             $employee->designation_id = $request->designation_id;
             $employee->gross_salary = $request->gsalary;
             $employee->ot_salary = $request->otsalary;
+            $employee->salary_serial = $request->salary_serial;
 
             $employee->bn_pre_district_id = $request->bn_pre_district_id;
             $employee->bn_pre_upazila_id = $request->bn_pre_upazila_id;
@@ -311,6 +312,7 @@ class EmployeeController extends Controller
             $employee->designation_id = $request->designation_id;
             $employee->gross_salary = $request->gsalary;
             $employee->ot_salary = $request->otsalary;
+            $employee->salary_serial = $request->salary_serial;
 
             $employee->bn_pre_district_id = $request->bn_pre_district_id;
             $employee->bn_pre_upazila_id = $request->bn_pre_upazila_id;

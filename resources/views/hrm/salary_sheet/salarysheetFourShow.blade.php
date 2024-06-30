@@ -76,11 +76,11 @@
                                                 <div><h6>Office Staff Salary</h6></div>
                                             </th>
                                         </tr>
-                                        @forelse ($salary->details as $d )
+                                        @forelse ($details as $d )
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>
                                             <td>{{ $d->employee?->admission_id_no }}</td>
-                                            <td>{{ $d->employee?->joining_date }}</td>
+                                            <td>{{ $d->employee?->joining_date ? \Carbon\Carbon::parse($d->employee->joining_date)->format('d/m/Y') : '' }}</td>
                                             <td>{{ $d->position?->name }}</td>
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
                                             <td>
@@ -180,7 +180,11 @@
                                             </td>
                                             <td>{{ $d->sing_of_ind }}</td>
                                             <td>{{ $d->sing_account }}</td>
-                                            <td>{{ $d->remark }}</td>
+                                            <td>
+                                                @if (!is_null($d->remark) && $d->remark !== '')
+                                                    {{ $d->remark }}
+                                                @endif
+                                            </td>
                                         </tr>
                                         @empty
                                         @endforelse

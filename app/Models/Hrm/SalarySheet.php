@@ -6,6 +6,7 @@ use App\Models\Crm\CustomerBrance;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer;
+use App\Models\Employee\Employee;
 use App\Models\Hrm\SalarySheetDetail;
 
 class SalarySheet extends Model
@@ -20,7 +21,6 @@ class SalarySheet extends Model
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }
-    
     public function details(){
         return $this->hasMany(SalarySheetDetail::class,'salary_id','id');
     }

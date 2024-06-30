@@ -708,6 +708,12 @@
                             <input type="text" id="otsalary" value="{{old('otsalary')}}" class="form-control" placeholder="" name="otsalary">
                         </div>
                     </div>
+                    <div class="col-md-3 col-12 d-none serialNo">
+                        <div class="form-group">
+                            <label for="serial">Salary Serial</label>
+                            <input type="number" id="serialNo" value="{{old('salary_serial')}}" class="form-control" placeholder="" name="salary_serial">
+                        </div>
+                    </div>
                 </div>
 {{--  English  --}}
                 <div class="row">
@@ -1234,13 +1240,16 @@
             $('.desig').removeClass('d-none');
             $('.gsalary').removeClass('d-none');
             $('.otsalary').removeClass('d-none');
+            $('.serialNo').removeClass('d-none');
         }else {
             $('#designation_id').prop('selectedIndex', 0);
             $('#gsalary').val('');
             $('#otsalary').val('');
+            $('#serialNo').val('');
             $('.desig').addClass('d-none');
             $('.gsalary').addClass('d-none');
             $('.otsalary').addClass('d-none');
+            $('.serialNo').addClass('d-none');
         }
     }
     function engetMarriedInfo() {

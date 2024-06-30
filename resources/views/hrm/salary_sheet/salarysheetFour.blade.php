@@ -156,6 +156,7 @@
                         let Insurance = "100";
                         let medical = "1500";
                         let grossSalaryAmount = (value.gross_salary > 0) ? value.gross_salary : '0';
+                        let otSalaryAmount = (value.ot_salary > 0) ? value.ot_salary : '0';
                         let basicSalary = ((value.gross_salary*70)/100).toFixed(2);
                         let houseRent = (grossSalaryAmount - basicSalary - medical).toFixed(2);
                         // if (new Date() >= threeMonthsLater) {
@@ -167,6 +168,7 @@
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let postAllounce = (value.loan > 0) ? value.loan : '0';
                         let fuelBill = (value.loan > 0) ? value.loan : '0';
+                        let remarks = (value.remarks != null) ? value.remarks : '';
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         selectElement.append(
                             `<tr>
@@ -203,7 +205,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="text" name="ot_qty[]" value="0" placeholder="Ot Qty">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_salary}" placeholder="Ot Rate">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${otSalaryAmount}" placeholder="Ot Rate">
                                 </td>
                                 <td>
                                     <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
@@ -248,7 +250,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${value.remarks}" placeholder="Remarks">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${remarks}" placeholder="Remarks">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>

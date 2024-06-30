@@ -711,13 +711,19 @@
                     <div class="col-md-3 col-12 d-none gsalary">
                         <div class="form-group">
                             <label for="gsalary">Gross Salary</label>
-                            <input type="text" id="gsalary" value="{{old('gsalary',$employees->gross_salary)}}" class="form-control" placeholder="" name="gsalary">
+                            <input type="text" id="gsalary" value="{{old('gsalary',$employees->gross_salary)}}" class="form-control" name="gsalary">
                         </div>
                     </div>
                     <div class="col-md-3 col-12 d-none otsalary">
                         <div class="form-group">
                             <label for="otsalary">Ot Salary</label>
-                            <input type="text" id="otsalary" value="{{old('otsalary',$employees->ot_salary)}}" class="form-control" placeholder="" name="otsalary">
+                            <input type="text" id="otsalary" value="{{old('otsalary',$employees->ot_salary)}}" class="form-control" name="otsalary">
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-12 d-none serialNo">
+                        <div class="form-group">
+                            <label for="serial">Salary Serial</label>
+                            <input type="number" id="serialNo" value="{{old('salary_serial',$employees->salary_serial)}}" class="form-control" name="salary_serial">
                         </div>
                     </div>
                 </div>
@@ -1269,13 +1275,16 @@
             $('.desig').removeClass('d-none');
             $('.gsalary').removeClass('d-none');
             $('.otsalary').removeClass('d-none');
+            $('.serialNo').removeClass('d-none');
         }else {
             $('#designation_id').prop('selectedIndex', 0);
             $('#gsalary').val('');
             $('#otsalary').val('');
+            $('#serialNo').val('');
             $('.desig').addClass('d-none');
             $('.gsalary').addClass('d-none');
             $('.otsalary').addClass('d-none');
+            $('.serialNo').addClass('d-none');
         }
     }
     document.addEventListener('DOMContentLoaded', function() {

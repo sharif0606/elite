@@ -169,7 +169,7 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
             success: function(salary_data) {
-                //console.log(salary_data);
+                console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     var old_emp = '';
