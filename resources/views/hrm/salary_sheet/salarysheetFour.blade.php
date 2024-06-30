@@ -283,9 +283,9 @@
         let currentMonth = $('.selected_month').val();
         let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
         let dutyRateDay=grossTotal/totalDaysInMonth;
-        let otRateDay=otRate/totalDaysInMonth;
+        //let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
-        let otAmount=parseFloat(otRateDay*otQty);
+        let otAmount=parseFloat(otRate*otQty);
         $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
 
         let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;

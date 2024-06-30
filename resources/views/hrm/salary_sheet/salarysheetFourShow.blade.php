@@ -76,6 +76,12 @@
                                                 <div><h6>Office Staff Salary</h6></div>
                                             </th>
                                         </tr>
+                                        @php
+                                            $deductionMessTotal = 0;
+                                            $deductionLoomTotal = 0;
+                                            $deductionTrainingTotal = 0;
+                                            $payableTotal = 0;
+                                        @endphp
                                         @forelse ($details as $d )
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>
@@ -161,21 +167,33 @@
                                             <td>
                                                 @if ($d->deduction_mess != 0)
                                                 {{ $d->deduction_mess }}
+                                                @php
+                                                    $deductionMessTotal += $d->deduction_mess;
+                                                @endphp
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($d->deduction_loan != 0)
                                                 {{ $d->deduction_loan }}
+                                                @php
+                                                    $deductionLoomTotal += $d->deduction_loan;
+                                                @endphp
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($d->deduction_traningcost != 0)
                                                 {{ $d->deduction_traningcost }}
+                                                @php
+                                                    $deductionTrainingTotal += $d->deduction_traningcost;
+                                                @endphp
                                                 @endif
                                             </td>
                                             <td>
                                                 @if ($d->total_payable != 0)
                                                 {{ $d->total_payable }}
+                                                @php
+                                                    $payableTotal += $d->total_payable;
+                                                @endphp
                                                 @endif
                                             </td>
                                             <td>{{ $d->sing_of_ind }}</td>
@@ -190,17 +208,14 @@
                                         @endforelse
                                     </tbody>
                                     <tfoot>
-                                        {{--  <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td> Total</td>
-                                            <td><input style="width:100px;" class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></td>
-                                            <td><input style="width:100px;" class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></td>
-                                            <td><input style="width:100px;" class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></td>
-                                            <td><input style="width:100px;" class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></td>
-                                            <td><input style="width:100px;" class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></td>
-                                            <td></td>
-                                        </tr>  --}}
+                                         <tr>
+                                            <th colspan="20" class="text-center">Total</th>
+                                            <th>{{$deductionMessTotal}}</th>
+                                            <th>{{$deductionLoomTotal}}</th>
+                                            <th>{{$deductionTrainingTotal}}</th>
+                                            <th>{{$payableTotal}}</th>
+                                            <th>{{$deductionMessTotal + $deductionLoomTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                        </tr> 
                                     </tfoot>
                                 </table>
                             </div>
