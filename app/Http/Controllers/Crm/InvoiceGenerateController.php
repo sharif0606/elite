@@ -148,13 +148,14 @@ class InvoiceGenerateController extends Controller
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->branch_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show3',compact('invoice_id','branch','headershow'));
     }
     public function getSingleInvoice4(Request $request, $id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->branch_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
     //     $summaryQuery = "SELECT
     //     SUM(`rate`) as total,
     //     (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
@@ -167,7 +168,7 @@ class InvoiceGenerateController extends Controller
     //         $textValue = getBangladeshCurrency($dueTotal);
     //     }
         // return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
-        return view('invoice_generate.single_show4',compact('invoice_id','branch'));
+        return view('invoice_generate.single_show4',compact('invoice_id','branch','headershow'));
     }
     public function getSingleInvoice5($id)
     {
@@ -181,19 +182,21 @@ class InvoiceGenerateController extends Controller
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
         return view('invoice_generate.single_show6',compact('invoice_id','branch'));
     }
-    public function getSingleInvoice7($id)
+    public function getSingleInvoice7(Request $request, $id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         $wasa=WasaInvoice::where('invoice_id',$invoice_id->id)->first();
-        return view('invoice_generate.single_show7',compact('invoice_id','branch','wasa'));
+        return view('invoice_generate.single_show7',compact('invoice_id','branch','wasa','headershow'));
     }
-    public function getSingleInvoice8($id)
+    public function getSingleInvoice8(Request $request, $id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         $onetrip=OnetripInvoice::where('invoice_id',$invoice_id->id)->first();
-        return view('invoice_generate.single_show8',compact('invoice_id','branch','onetrip'));
+        return view('invoice_generate.single_show8',compact('invoice_id','branch','onetrip','headershow'));
     }
 
     public function edit($id)

@@ -10,13 +10,93 @@
 </head>
 
 <body>
-    <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
+    @if($headershow==1)
+    <div style="text-align: center;"><h2>INVOICE</h2></div>
+    <table width="100%">
+        <tr>
+            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+
+            <td width="55%">
+                <h3>
+                    House #2, Lane #2, Road #2, Block-K,<br>
+                Halishahar Housing Estate, Chattogram-4224 <br>
+                Tel: 02333323387, 02333328707 <br>
+                Mobile: 01844-040714, 01844-040717 <br>
+                Email: ctg@elitebd.com
+                </h3>
+            </td>
+        </tr>
+    </table>
+    <hr style="height: 1px; background-color: red;">
+    <table width="100%"style="padding-left: 55px;">
+        <tr>
+            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%"></td>
+            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
+        </tr>
+    </table>
+    @else
+    <table width="100%"style="padding: 2in 0px 30px 0px;">
+        <tr style="font-size: 20px; position: relative;">
+            <td width="20%" style="text-align: left;"></td>
+            <td style="position: absolute; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-30px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+        </tr>
+    </table>
+    @endif
+    {{-- <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
             <th width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></th>
             <th style="text-align: right; padding-right: 50px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></th>
         </tr>
+    </table> --}}
+    <table width="100%">
+        <tr>
+            <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
+            <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
+        </tr>
+        <tr>
+            <td width="15%">To:</td>
+            <td>
+                @if($branch?->billing_person)
+                <b>{{ $branch?->billing_person }} </b><br/>
+                @endif
+                <b>{{ $invoice_id->customer?->name }}</b>
+            </td>
+            @if($invoice_id->customer?->bin)
+            <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
+            @endif
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{{ $branch?->brance_name }}</td>
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{!! nl2br(e(str_replace('.', "\n", $branch->billing_address))) !!}</td>
+        </tr>
+        @if($branch?->attention)
+        <tr>
+            <td style="padding-top: 8px;" width="15%">Attention:</td>
+            <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">{{ $branch?->attention_details }}</td>
+        </tr>
+        @endif
+        <tr>
+            <td width="15%"><b>Subject:</b></td>
+            <td><b>Submission of bill against security services/Security including Armed services for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+        </tr>
+        <tr>
+            <td width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
+            <td></td>
+        </tr>
     </table>
-    <br>
+    {{-- <br>
     <div>Invoice No. {{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</div>
     <br>
     <div>To</div>
@@ -28,7 +108,7 @@
     <div><b>Subject: Submission of bill against security services/Security including Armed services for the month of
         {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></div>
     <br>
-    <div>Dear Sir</div>
+    <div>Dear Sir</div> --}}
     <div>You are requested to pay the security bill/security including Armed services Bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}
         for providing security including service/security/including Armed services of your branch in favour of Elite
         Security Services Ltd.

@@ -9,7 +9,42 @@
 </head>
 
 <body>
-    <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
+    @if($headershow==1)
+    <div style="text-align: center;"><h2>INVOICE</h2></div>
+    <table width="100%">
+        <tr>
+            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+
+            <td width="55%">
+                <h3>
+                    House #2, Lane #2, Road #2, Block-K,<br>
+                Halishahar Housing Estate, Chattogram-4224 <br>
+                Tel: 02333323387, 02333328707 <br>
+                Mobile: 01844-040714, 01844-040717 <br>
+                Email: ctg@elitebd.com
+                </h3>
+            </td>
+        </tr>
+    </table>
+    <hr style="height: 1px; background-color: red;">
+    <table width="100%"style="padding-left: 55px;">
+        <tr>
+            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%"></td>
+            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
+        </tr>
+    </table>
+    @else
+    <table width="100%"style="padding: 2in 0px 30px 0px;">
+        <tr style="font-size: 20px; position: relative;">
+            <td width="20%" style="text-align: left;"></td>
+            <td style="position: absolute; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-30px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+        </tr>
+    </table>
+    @endif
+    {{-- <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
             <th width="50%">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</th>
             <th style="text-align: right; padding-right: 50px;">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</th>
@@ -33,10 +68,6 @@
             <td></td>
             <td>{{ $invoice_id->customer?->address }}</td>
         </tr>
-        {{--  <tr>
-            <td></td>
-            <td>Chattogram.</td>
-        </tr>  --}}
     </table>
     <br>
     <div>Subject:   <b> Security Service bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}.</b></div>
@@ -45,7 +76,56 @@
     <br>
     <div>Reference to the above subject, we herewith submitted the security services bill
         and account number at Prime Bank, Halisahar Branch.</div>
-    <br>
+    <br> --}}
+    <table width="100%">
+        <tr>
+            <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
+            <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
+        </tr>
+        <tr>
+            <td width="15%">To:</td>
+            <td>
+                @if($branch?->billing_person)
+                <b>{{ $branch?->billing_person }} </b><br/>
+                @endif
+                <b>{{ $invoice_id->customer?->name }}</b>
+            </td>
+            @if($invoice_id->customer?->bin)
+            <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
+            @endif
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{{ $branch?->brance_name }}</td>
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{!! nl2br(e(str_replace('.', "\n", $branch->billing_address))) !!}</td>
+        </tr>
+        @if($branch?->attention)
+        <tr>
+            <td style="padding-top: 8px;" width="15%">Attention:</td>
+            <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">{{ $branch?->attention_details }}</td>
+        </tr>
+        @endif
+        <tr>
+            <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
+            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+        </tr>
+        <tr>
+            <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+            <div style="padding-top: 8px; padding-bottom: 8px;">
+                {{ $invoice_id->header_note }}
+            </div>
     <table width="100%" border="1" cellspacing="0">
         <tr>
             <th width="3%">S.L</th>
@@ -57,54 +137,54 @@
             <th width="15%" >Account Number</th>
             <th width="13%">Salary Amount</th>
         </tr>
-            @if ($wasa->wasadetails)
-            @foreach ($wasa->wasadetails as $de)
-            <tr>
-                <td>{{ ++$loop->index  }}</td>
-                <td>{{ $de->employee?->admission_id_no }}</td>
-                <td>{{ $de->jobpost?->name }}</td>
-                <td>{{ $de->area }}</td>
-                <td>{{ $de->employee?->en_applicants_name }}</td>
-                <td>{{ $de->duty }}</td>
-                <td>{{ $de->employee?->bn_ac_no }}</td>
-                <td style="text-align: end;">{{ $de->salary_amount }}</td>
-            </tr>
-            @endforeach
+            @if ($wasa?->wasadetails)
+                @foreach ($wasa->wasadetails as $de)
+                    <tr>
+                        <td>{{ ++$loop->index }}</td>
+                        <td>{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
+                        <td>{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
+                        <td>{{ $de->area }}</td>
+                        <td>{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
+                        <td>{{ $de->duty }}</td>
+                        <td>{{ $de->employee ? $de->employee->bn_ac_no : '' }}</td>
+                        <td style="text-align: end;">{{ $de->salary_amount }}</td>
+                    </tr>
+                @endforeach
             @endif
         <tr>
             <th></th>
             <th colspan="6">Sub Total</th>
-            <th style="text-align: right;">{{ $wasa->sub_total_salary }}</th>
+            <th style="text-align: right;">{{ $wasa?->sub_total_salary }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">Add: Commission {{ $wasa->add_commission }}%</th>
-            <th style="text-align: right;">{{ $wasa->add_commission_tk }}</th>
+            <th colspan="6">Add: Commission {{ $wasa?->add_commission }}%</th>
+            <th style="text-align: right;">{{ $wasa?->add_commission_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">{{ $wasa->vat_on_commission }}% VAT+ {{ $wasa->ait_on_commission }}% AIT = {{ $wasa->vat_ait_on_commission }}% on Commission</th>
-            <th style="text-align: right;">{{ $wasa->vat_ait_on_commission_tk }}</th>
+            <th colspan="6">{{ $wasa?->vat_on_commission }}% VAT+ {{ $wasa?->ait_on_commission }}% AIT = {{ $wasa?->vat_ait_on_commission }}% on Commission</th>
+            <th style="text-align: right;">{{ $wasa?->vat_ait_on_commission_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">VAT {{ $wasa->vat_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ $wasa->vat_on_subtotal_tk }}</th>
+            <th colspan="6">VAT {{ $wasa?->vat_on_subtotal }}% on Sub Total</th>
+            <th style="text-align: right;">{{ $wasa?->vat_on_subtotal_tk }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">AIT {{ $wasa->ait_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ $wasa->ait_on_subtotal_tk }}</th>
+            <th colspan="6">AIT {{ $wasa?->ait_on_subtotal }}% on Sub Total</th>
+            <th style="text-align: right;">{{ $wasa?->ait_on_subtotal_tk }}</th>
         </tr>
         <tr>
             <th></th>
             <th colspan="6">Grand Total</th>
-            <th style="text-align: right;">{{ $wasa->grand_total_tk }}</th>
+            <th style="text-align: right;">{{ $wasa?->grand_total_tk }}</th>
         </tr>
         <tr>
             <td colspan="8">Total Amount(In Words): <b><i>
                 @php
-                $dueTotal = $wasa->grand_total_tk;
+                $dueTotal = $wasa?->grand_total_tk;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);

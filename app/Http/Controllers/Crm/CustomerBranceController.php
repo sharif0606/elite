@@ -165,7 +165,7 @@ class CustomerBranceController extends Controller
                     }
                 }
                 \LogActivity::addToLog('Update Branch',$request->getContent(),'CustomerBrance,Atm');
-                return redirect("admin/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::warning('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect("admin/customerbrance?customer_id=".encryptor('encrypt',$request->customer_id))->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

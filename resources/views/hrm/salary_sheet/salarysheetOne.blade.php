@@ -9,6 +9,9 @@
       writing-mode: vertical-lr;
       text-orientation: mixed;
     }
+    .selected-row {
+        background-color: rgb(189, 245, 189);
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -345,6 +348,12 @@
                         counter++;
                         total_calculate();
                         old_emp= value.admission_id_no;
+                    });
+                    // Add event listeners for focusing and blurring inputs
+                    $('.salarySheet').on('focus', 'input', function() {
+                        $(this).closest('tr').addClass('selected-row');
+                    }).on('blur', 'input', function() {
+                        $(this).closest('tr').removeClass('selected-row');
                     });
             },
         });

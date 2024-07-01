@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
+    {{-- <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
             <th width="50%">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y') }}</th>
             <th style="text-align: right; padding-right: 50px;">{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</th>
@@ -17,16 +17,98 @@
     </table>
     <br><br><br>
     <div>To</div>
-    {{--  <div>Manager and Branch In-Charge</div>  --}}
     <div>{{ $invoice_id->customer?->name }}.</div>
     <div>{{ $invoice_id->customer?->address }}</div>
-    {{--  <div>Chattogram.</div>  --}}
     <br>
     <div>Dear Sir</div>
     <div style="padding-left: 50px;">Monthly CIT bill for the period covering <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}</b> is
         submitted
         herewith please.
-    </div>
+    </div> --}}
+    @if($headershow==1)
+    <div style="text-align: center;"><h2>INVOICE</h2></div>
+    <table width="100%">
+        <tr>
+            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+
+            <td width="55%">
+                <h3>
+                    House #2, Lane #2, Road #2, Block-K,<br>
+                Halishahar Housing Estate, Chattogram-4224 <br>
+                Tel: 02333323387, 02333328707 <br>
+                Mobile: 01844-040714, 01844-040717 <br>
+                Email: ctg@elitebd.com
+                </h3>
+            </td>
+        </tr>
+    </table>
+    <hr style="height: 1px; background-color: red;">
+    <table width="100%"style="padding-left: 55px;">
+        <tr>
+            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%"></td>
+            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
+        </tr>
+    </table>
+    @else
+    <table width="100%"style="padding: 2in 0px 30px 0px;">
+        <tr style="font-size: 20px; position: relative;">
+            <td width="20%" style="text-align: left;"></td>
+            <td style="position: absolute; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+            <td width="30%" style="text-align: center;  position: absolute; right:-60px; top:-30px;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+        </tr>
+    </table>
+    @endif
+    <table width="100%">
+        <tr>
+            <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
+            <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('y') }}/{{ $invoice_id->id }}</td>
+        </tr>
+        <tr>
+            <td width="15%">To:</td>
+            <td>
+                @if($branch?->billing_person)
+                <b>{{ $branch?->billing_person }} </b><br/>
+                @endif
+                <b>{{ $invoice_id->customer?->name }}</b>
+            </td>
+            @if($invoice_id->customer?->bin)
+            <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
+            @endif
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{{ $branch?->brance_name }}</td>
+        </tr>
+        <tr>
+            <td width="15%"></td>
+            <td colspan="2">{!! nl2br(e(str_replace('.', "\n", $branch->billing_address))) !!}</td>
+        </tr>
+        @if($branch?->attention)
+        <tr>
+            <td style="padding-top: 8px;" width="15%">Attention:</td>
+            <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="2">{{ $branch?->attention_details }}</td>
+        </tr>
+        @endif
+        <tr>
+            <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
+            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
+        </tr>
+        <tr>
+            <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+            <div style="padding-top: 8px; padding-bottom: 8px;">
+                {{ $invoice_id->header_note }}
+            </div>
 
     <table width="100%" border="1" cellspacing="0" style="margin-top: 15px;">
         <thead>
@@ -40,7 +122,7 @@
             </tr>
         </thead>
         <tbody style="text-align: center;">
-            @if ($onetrip->onetripdetails)
+            @if ($onetrip?->onetripdetails)
             @foreach ($onetrip->onetripdetails as $de)
             <tr>
                 <td>{{ ++$loop->index  }}</td>
@@ -55,24 +137,24 @@
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Sub Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip->sub_total_amount) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->sub_total_amount) }}</td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="4" style="text-align: right; font-weight: bold;"> Vat@ {{ $onetrip->vat }} %= </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip->vat_taka) }}</td>
+                <td colspan="4" style="text-align: right; font-weight: bold;"> Vat@ {{ $onetrip?->vat }} %= </td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->vat_taka) }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Grand Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip->grand_total) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->grand_total) }}</td>
             </tr>
         </tbody>
     </table>
     <br>
     <div>Total Amount(In Words): <b><i>
         @php
-        $dueTotal = $onetrip->grand_total;
+        $dueTotal = $onetrip?->grand_total;
 
         if ($dueTotal > 0) {
             $textValue = getBangladeshCurrency($dueTotal);
