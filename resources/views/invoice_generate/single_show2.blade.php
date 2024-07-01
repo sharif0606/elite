@@ -43,7 +43,7 @@
     </table>
     @endif
     <div style="padding: 0 0px 0 0px;">
-
+       
         <table width="100%">
             <tr>
                 <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
@@ -54,19 +54,19 @@
                 <td>@if($branch?->billing_person)
                     <b>{{ $branch?->billing_person }} </b><br/>
                     @endif
-                    <b>{{ $invoice_id->customer?->name }}</b>
+                    {{-- <b>{{ $invoice_id->customer?->name }}</b> --}}
                 </td>
                 @if($invoice_id->customer?->bin)
                 <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
                 @endif
             </tr>
-            <tr>
+            {{-- <tr>
                 <td width="15%"></td>
                 <td colspan="2">{{ $branch?->brance_name }}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td width="15%"></td>
-                <td colspan="2">{{ $branch?->billing_address }}</td>
+                <td colspan="2">{!! nl2br(e(str_replace(',', ",\n", $branch->billing_address))) !!}</td>
             </tr>
             @if($branch?->attention)
             <tr>

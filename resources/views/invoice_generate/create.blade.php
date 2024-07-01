@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" name="zone_id" id="zone_id">
+                            <input type="hidden" name="zone_id" id="zone_id">
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>

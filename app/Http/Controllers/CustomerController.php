@@ -21,10 +21,15 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::with('zone')->paginate(20);
-        return view('customers.index',compact('customers'));
+        $customer = Customer::select('id','name')->get();
+        $data = Customer::with('zone');
+        if ($request->customer_id){
+            $data->where('id', $request->customer_id);
+        }
+        $data = $data->paginate(20);
+        return view('customers.index',compact('data','customer'));
     }
 
     /**
