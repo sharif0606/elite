@@ -83,7 +83,7 @@
         </tr>
         <tr>
             <td width="15%"></td>
-            <td colspan="2">{!! nl2br(e(str_replace('.', "\n", $branch?->billing_address))) !!}</td>
+            <td colspan="2">{!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}</td>
         </tr>
         @if($branch?->attention)
         <tr>
@@ -158,7 +158,7 @@
 
         if ($dueTotal > 0) {
             $textValue = getBangladeshCurrency($dueTotal);
-            echo "$textValue";
+            echo "$textValue"."only";
         } else {
             echo "Zero";
         }

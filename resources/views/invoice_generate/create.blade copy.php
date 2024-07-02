@@ -81,7 +81,7 @@
                                             <th>Rate</th>
                                             <th>Total Person</th>
                                             <th>Working Days</th>
-                                            <th>Duty</th>
+                                            <th>Duty Days</th>
                                             <th>Total Hours</th>
                                             <th>Rate per hours</th>
                                             <th>Total Amount</th>
@@ -245,7 +245,7 @@
                                     <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="">
+                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
@@ -253,14 +253,14 @@
                                     <input class="form-control input_css duty_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="duty_day[]" value="">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="">
+                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
                                     <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="">
+                                    <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${parseFloat(ratePerHoures).toFixed(2)}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="">
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
                                 </td>
                             </tr>`
                         );
@@ -338,7 +338,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
         </tr>
         `;
@@ -354,7 +354,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
             <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
         </tr>
         `;
@@ -370,15 +370,14 @@
             var rate=$(e).closest('tr').find('.rate_c').val();
             var person=$(e).closest('tr').find('.employee_qty_c').val();
             var workingDay=$(e).closest('tr').find('.warking_day_c').val();
-            var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
             var totalHours=$(e).closest('tr').find('.total_houres_c').val();
             var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
             var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
-            var reTotalHoure=(dutyDay*person);
-            var reratePerHoures=(rate/dutyDay);
+            var reTotalHoure=(workingDay*typeHours*person);
+            var reratePerHoures=((rate/workingDay)/typeHours);
             var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
-            //$(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
-            //$(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
+            $(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
+           // $(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
 
            var startDate=$('.start_date').val();
            let workingdayinMonth= new Date(startDate);
@@ -387,7 +386,7 @@
               workingdayinMonth= new Date(syear, smonth, 0).getDate();
                ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
                //$(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
-            let subTotalAmount=parseFloat(totalHours*ratePerHoures).toFixed(2);
+            let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
                 $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                 subtotalAmount();
                 addCount();
