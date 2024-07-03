@@ -22,7 +22,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
+                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                             <option data-zone="{{$c->zone_id}}" value="{{ $c->id }}">{{ $c->name }}</option>
@@ -224,10 +224,20 @@
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
+                            // updated new
+                            rate = (value.rate > 0) ? value.rate : '0';
+                            person = (value.qty > 0) ? value.qty : '0';
+                            totalAmount = parseFloat(rate)*parseFloat(person);
+                            // updated new
                             type_houre=8;
                         }else{
                             totalHoures=(12*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
+                            // updated new
+                            rate = (value.rate > 0) ? value.rate : '0';
+                            person = (value.qty > 0) ? value.qty : '0';
+                            totalAmount = parseFloat(rate)*parseFloat(person);
+                            // updated new
                             type_houre=12;
                         }
 
@@ -245,7 +255,8 @@
                                     <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="">
+                                    <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
+                                    <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
@@ -260,7 +271,7 @@
                                     <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="">
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${totalAmount}">
                                 </td>
                             </tr>`
                         );
@@ -369,28 +380,32 @@
         function reCalcultateInvoice(e) {
             var rate=$(e).closest('tr').find('.rate_c').val();
             var person=$(e).closest('tr').find('.employee_qty_c').val();
-            var workingDay=$(e).closest('tr').find('.warking_day_c').val();
             var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
-            var totalHours=$(e).closest('tr').find('.total_houres_c').val();
-            var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
-            var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
-            var reTotalHoure=(dutyDay*person);
-            var reratePerHoures=(rate/dutyDay);
-            var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
-            //$(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
-            //$(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
+            var totalHour = $(e).closest('tr').find('.total_houres_c').val();
+            var ratePerHour = $(e).closest('tr').find('.rate_per_houres_c').val();
 
-           var startDate=$('.start_date').val();
-           let workingdayinMonth= new Date(startDate);
-           let smonth=workingdayinMonth.getMonth()+1;
-           let syear=workingdayinMonth.getFullYear();
-              workingdayinMonth= new Date(syear, smonth, 0).getDate();
-               ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
-               //$(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
-            let subTotalAmount=parseFloat(totalHours*ratePerHoures).toFixed(2);
-                $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                subtotalAmount();
-                addCount();
+            var startDate=$('.start_date').val();
+            let workingdayinMonth= new Date(startDate);
+            let smonth=workingdayinMonth.getMonth()+1;
+            let syear=workingdayinMonth.getFullYear();
+                workingdayinMonth= new Date(syear, smonth, 0).getDate();
+
+            if(dutyDay > 0 && rate > 0){
+                let subTotalAmount=parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }else if(rate <= 0) {
+                let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }else{
+                let subTotalAmount=parseFloat(rate*person).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }    
         }
 </script>
 

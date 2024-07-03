@@ -18,12 +18,14 @@ return new class extends Migration
             $table->integer('invoice_id');
             $table->integer('job_post_id');
             $table->integer('atm_id')->nullable(); //real atm id
-            $table->decimal('rate',10,2)->default(0);
-            $table->integer('employee_qty')->default(0);
-            $table->integer('warking_day')->default(0);
-            $table->decimal('total_houres',14,2)->default(0);
+            $table->decimal('rate',10,2)->default(0)->nullable();
+            $table->integer('employee_qty')->default(0)->nullable();
+            $table->integer('warking_day')->default(0)->nullable();
+            $table->integer('actual_warking_day')->default(0)->nullable();
+            $table->integer('duty_day')->default(0)->nullable();
+            $table->decimal('total_houres',14,2)->default(0)->nullable();
             $table->decimal('type_houre',14,2)->comment('type=8 or 12')->nullable();
-            $table->decimal('rate_per_houres',14,2)->default(0);
+            $table->decimal('rate_per_houres',14,2)->default(0)->nullable();
             $table->decimal('total_amounts',14,2)->default(0);
             $table->date('st_date')->nullable();
             $table->date('ed_date')->nullable();

@@ -90,6 +90,8 @@ class InvoiceGenerateController extends Controller
                             $details->employee_qty=$request->employee_qty[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
+                            $details->actual_warking_day=$request->actual_warking_day[$key];
+                            $details->duty_day=$request->duty_day[$key];
                             $details->total_houres=$request->total_houres[$key];
                             $details->type_houre=$request->type_houre[$key];
                             $details->rate_per_houres=$request->rate_per_houres[$key];
