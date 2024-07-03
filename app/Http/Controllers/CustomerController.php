@@ -62,6 +62,18 @@ class CustomerController extends Controller
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
             $data->customer_type = $request->customer_type;
+            $data->contact_person = $request->contact_person;
+            $data->billing_person = $request->billing_person;
+            $data->agreement_date = $request->agreement_date;
+            $data->renew_date = $request->renew_date;
+            $data->validity_date = $request->validity_date;
+            $data->vat = $request->vat;
+            $data->take_home = $request->take_home;
+            $data->royal_tea = $request->royal_tea;
+            $data->ait = $request->ait;
+            $data->received_by_city = $request->received_by_city;
+            $data->attention = $request->attention;
+            $data->attention_details = $request->attention_details;
             $data->status = 1;
 
             if($request->has('file_upload'))
@@ -128,6 +140,18 @@ class CustomerController extends Controller
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
             $data->customer_type = $request->customer_type;
+            $data->contact_person = $request->contact_person;
+            $data->billing_person = $request->billing_person;
+            $data->agreement_date = $request->agreement_date;
+            $data->renew_date = $request->renew_date;
+            $data->validity_date = $request->validity_date;
+            $data->vat = $request->vat;
+            $data->take_home = $request->take_home;
+            $data->royal_tea = $request->royal_tea;
+            $data->ait = $request->ait;
+            $data->received_by_city = $request->received_by_city;
+            $data->attention = $request->attention;
+            $data->attention_details = $request->attention_details;
             $data->status = 1;
 
             if($request->has('file_upload'))

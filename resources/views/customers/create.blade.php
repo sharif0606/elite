@@ -60,12 +60,6 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <textarea class="form-control" id="address" rows="5" placeholder="Full Address" name="address">{{old('address')}}</textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
                         <label for=""><b>Zone</b></label>
                         <select class="form-select" id="zone" name="zone_id">
                             <option value="">Select Zone</option>
@@ -77,11 +71,94 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <label for=""><b>Customer Type</b></label>
-                        <select class="form-select" name="customer_type" required>
+                        <select class="form-select" name="customer_type" onchange="getCustomerType();" required>
                             <option value="">Select type</option>
                             <option value="0">Institution</option>
                             <option value="1">Bank</option>
                         </select>
+                    </div>
+                    <div class="col-12 d-none" id="billSection">
+                        <div class="row py-2 my-1" style="border: solid 1px red; border-radius: 8px;">
+                            <div class="text-center"><h5 class="text-danger">Billing Information</h5></div>
+                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label for="contact_person">Contact Person Name</label>
+                                    <input type="text" id="contact_person" value="{{old('contact_person')}}" class="form-control" placeholder="Contact Person" name="contact_person">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="billing_person">Billing Person Name</label>
+                                    <input type="text" id="billing_person" value="{{old('billing_person')}}" class="form-control" placeholder="Billing Person Name" name="billing_person">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="agreement_date">Agreement Date</label>
+                                    <input type="date" id="agreement_date" value="{{old('agreement_date')}}" class="form-control" name="agreement_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="renew_date">Renew Date</label>
+                                    <input type="date" id="renew_date" value="{{old('renew_date')}}" class="form-control" name="renew_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="validity_date">Validity Date</label>
+                                    <input type="date" id="validity_date" value="{{old('validity_date')}}" class="form-control" name="validity_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Vat(%)</b></label>
+                                    <input required class="form-control vat" id="vat" type="number" name="vat" value="{{old('vat')}}" placeholder="Vat">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Take Home Salary</b></label>
+                                    <input class="form-control take_home" id="take_home" type="text" name="take_home" value="{{old('take_home')}}" placeholder="Take Home Salary">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Royalty</b></label>
+                                    <input class="form-control royal_tea" type="text" name="royal_tea" value="{{old('royal_tea')}}" placeholder="Royalty">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>AIT</b></label>
+                                    <input class="form-control ait" type="text" name="ait" value="{{old('ait')}}" placeholder="AIT">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Received By Ctg</b></label>
+                                    <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city')}}" placeholder="Received By Ctg">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Attention</b></label>
+                                    <input class="form-control attention" type="text" name="attention" value="{{old('attention')}}" placeholder="Attention">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for=""><b>Attention Details</b></label>
+                                    <input class="form-control attention_details" type="text" name="attention_details" value="{{old('attention_details')}}" placeholder="Attention Details">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <textarea class="form-control" id="address" rows="2" placeholder="Full Address" name="address">{{old('address')}}</textarea>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
@@ -91,7 +168,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 d-flex justify-content-end">
+                <div class="col-12 d-flex justify-content-end my-2">
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </form>
@@ -117,7 +194,28 @@
          $('.upazila'+e).show();
     }
 
+    function getCustomerType() {
+        var ctype = document.querySelector('select[name="customer_type"]').value;
 
+        if (ctype === "0") {
+            $('#billSection').removeClass('d-none');
+        }else {
+            $('#contact_person').val('');
+            $('#billing_person').val('');
+            $('#agreement_date').val('');
+            $('#renew_date').val('');
+            $('#validity_date').val('');
+            $('#vat').val('');
+            $('#take_home').val('');
+            $('.royal_tea').val('');
+            $('.ait').val('');
+            $('.received_by_city').val('');
+            $('.attention').val('');
+            $('.attention_details').val('');
+            $('#address').val('');
+            $('#billSection').addClass('d-none');
+        }
+    }
 </script>
 
 <script src="{{ asset('/assets/extensions/filepond/filepond.js') }}"></script>
