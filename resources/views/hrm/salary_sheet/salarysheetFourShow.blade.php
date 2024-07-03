@@ -86,7 +86,7 @@
                                         <tr>
                                             <td>{{ ++$loop->index }}</td>
                                             <td>{{ $d->employee?->admission_id_no }}</td>
-                                            <td>{{ $d->employee?->joining_date ? \Carbon\Carbon::parse($d->employee->joining_date)->format('d/m/Y') : '' }}</td>
+                                            <td>{{ $d->employee?->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d/m/Y') : '' }}</td>
                                             <td>{{ $d->position?->name }}</td>
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
                                             <td>

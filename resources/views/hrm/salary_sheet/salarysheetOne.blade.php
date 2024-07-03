@@ -198,7 +198,7 @@
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
-                        let joiningDate = new Date(value.joining_date);
+                        let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
@@ -232,7 +232,7 @@
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
                         if(old_emp == value.admission_id_no){
-                            var customerName=`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="join_date[]" value="${value.joining_date}">`
+                            var customerName=`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="join_date[]" value="${value.salary_joining_date}">`
                             var en_applicants_name = value.customer_branch;
                             var fineCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
                             var mobileCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" readonly>`
@@ -251,7 +251,7 @@
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                         }else{
-                            var customerName=`<input readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">`
+                            var customerName=`<input readonly style="width:100px;" class="form-control salary_joining_date" type="text" name="salary_joining_date[]" value="${value.salary_joining_date}" placeholder="Date of Joining">`
                             var en_applicants_name=`<input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">`
                             var mobileCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${MobileBill}" placeholder="Mobile bill">`

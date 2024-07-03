@@ -147,7 +147,7 @@
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
-                        let joiningDate = new Date(value.joining_date);
+                        let joiningDate = new Date(value.salary_joining_date);
                         let threeMonthsLater = new Date(joiningDate);
                         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
 
@@ -180,7 +180,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.joining_date}" placeholder="Date of Joining">
+                                    <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" placeholder="Date of Joining">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">

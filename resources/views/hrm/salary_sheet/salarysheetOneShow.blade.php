@@ -94,7 +94,7 @@
                                                     <td>{{ ++$loop->index }}</td>
                                                     <td>{{ $d->online_payment }}</td>
                                                     <td>{{ $d->employee?->admission_id_no }}</td>
-                                                    <td>{{ $d->employee?->joining_date }}</td>
+                                                    <td>{{ $d->employee?->salary_joining_date }}</td>
                                                     <td>{{ $d->employee?->position?->name }}</td>
                                                     <td>{{ $d->employee?->en_applicants_name }}</td>
                                                     <td>{{ $d->duty_rate }}</td>

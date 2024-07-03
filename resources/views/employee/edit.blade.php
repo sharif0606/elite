@@ -114,6 +114,12 @@
                             <input type="date" id="joining_date" value="{{old('joining_date',$employees->joining_date)}}" class="form-control" placeholder="Joining Date" name="joining_date">
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="salary_joining_date">সেলারি তারিখ</label>
+                            <input type="date" value="{{old('salary_joining_date',$employees->salary_joining_date)}}" class="form-control" name="salary_joining_date">
+                        </div>
+                    </div>
                     {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_applicants_name">স্বামীর নাম</label>

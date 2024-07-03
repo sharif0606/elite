@@ -579,7 +579,7 @@ class SalarySheetController extends Controller
         })
         ->leftJoin('customer_brances','customer_duties.branch_id','=','customer_brances.id')
         ->leftJoin('customers','customer_duties.customer_id','=','customers.id')
-        ->select('customer_duties.*','deductions.*','customer_duty_details.*','customer_brances.brance_name as customer_branch','customers.name as customer_name','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'))->orderBy('admission_id_no','ASC')->orderBy('customer_duty_details.duty_qty','DESC');
+        ->select('customer_duties.*','deductions.*','customer_duty_details.*','customer_brances.brance_name as customer_branch','customers.name as customer_name','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'))->orderBy('admission_id_no','ASC')->orderBy('customer_duty_details.duty_qty','DESC');
 
         if ($request->start_date && $request->end_date){
             $startDate = $request->start_date;
@@ -621,7 +621,7 @@ class SalarySheetController extends Controller
     //              ->whereDate('long_loans.end_date', '>=',$stdate)
     //              ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
     //     })
-    //         ->select('customer_duties.*','deductions.*','customer_duty_details.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'));
+    //         ->select('customer_duties.*','deductions.*','customer_duty_details.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'));
 
     //     if ($request->customer_id){
     //         $customerId = $request->customer_id;
@@ -646,7 +646,7 @@ class SalarySheetController extends Controller
                  ->whereDate('long_loans.end_date', '>=',$stdate)
                  ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
         })
-            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial')->orderBy('employees.salary_serial','ASC');
+            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial')->orderBy('employees.salary_serial','ASC');
 
         $data = $query->get();
         return response()->json($data, 200);

@@ -100,7 +100,7 @@
                                                     <td>{{ $d->employee?->admission_id_no }}</td>
                                                     <td>{{ $d->position?->name }}</td>
                                                     <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                    <td>{{ $d->employee?->joining_date }}</td>
+                                                    <td>{{ $d->employee?->salary_joining_date }}</td>
                                                     <td>{{ $d->duty_rate }}</td>
                                                     <td>{{ $d->house_rent }}</td>
                                                     <td>{{ $d->medical }}</td>

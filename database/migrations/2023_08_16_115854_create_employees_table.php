@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('signature_img')->nullable();
             $table->string('admission_id_no')->nullable();
             $table->date('joining_date')->nullable();
+            $table->date('salary_joining_date')->nullable();
 
             $table->text('bn_applicants_name')->nullable();
             $table->text('bn_fathers_name')->nullable();
