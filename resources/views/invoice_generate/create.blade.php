@@ -25,7 +25,7 @@
                                     <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                            <option data-zone="{{$c->zone_id}}" value="{{ $c->id }}">{{ $c->name }}</option>
+                                            <option data-zone="{{$c->zone_id}}" data-ctype="{{$c->customer_type}}" data-ins-vat="{{$c->vat}}" value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
@@ -183,7 +183,7 @@
             dataType: "json",
             data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
             success: function(invoice_data) {
-                //console.log(invoice_data);
+                console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');
                     selectElement.empty();
                     $.each(invoice_data, function(index, value) {
@@ -284,7 +284,13 @@
         });
         $('.show_click').removeClass('d-none');
         var vat=$('#branch_id').find(":selected").data('vat');
-        $('.vat').val(vat);
+        var insVat=$('#customer_id').find(":selected").data('ins-vat');
+        var customerType=$('#customer_id').find(":selected").data('ctype');
+        if(customerType === 0){
+            $('.vat').val(insVat);
+        }else{
+            $('.vat').val(vat);
+        }
      }
      function subtotalAmount(){
         var subTotal=0;
