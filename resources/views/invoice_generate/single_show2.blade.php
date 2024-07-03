@@ -52,8 +52,12 @@
             <tr>
                 <td width="15%">To:</td>
                 <td>
-                    @if($branch?->billing_person)
-                    <b>{{ $branch?->billing_person }} </b><br/>
+                    @if ($invoice_id->customer?->customer_type === 0)
+                        <b>{{ $invoice_id->customer?->billing_person }} </b><br/>
+                    @else
+                        @if($branch?->billing_person)
+                            <b>{{ $branch?->billing_person }} </b><br/>
+                        @endif
                     @endif
                     <b>{{ $invoice_id->customer?->name }}</b>
                 </td>
@@ -63,29 +67,51 @@
             </tr>
             <tr>
                 <td width="15%"></td>
-                <td colspan="2">{{ $branch?->brance_name }}</td>
+                <td colspan="2">
+                    @if ($invoice_id->customer?->customer_type === 0)
+                    @else
+                        {{ $branch?->brance_name }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td width="15%"></td>
                 <td colspan="2">
-                    @if ($branch?->billing_address)
-                        {!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}
-                    @else
+                    @if ($invoice_id->customer?->customer_type === 0)
                         {!! nl2br(e(str_replace('^', "\n", $invoice_id->customer?->address))) !!}
+                    @else
+                        @if($branch?->billing_address)
+                            {!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}
+                        @endif
                     @endif
                 </td>
             </tr>
-            @if($branch?->attention)
-            <tr>
-                <td style="padding-top: 8px;" width="15%">Attention:</td>
-                <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2">{{ $branch?->attention_details }}</td>
-            </tr>
+            @if ($invoice_id->customer?->customer_type === 0)
+                @if($invoice_id->customer?->attention)
+                <tr>
+                    <td style="padding-top: 8px;" width="15%">Attention:</td>
+                    <td style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">{{ $invoice_id->customer?->attention_details }}</td>
+                </tr>
+                @endif
+            @else
+                @if($branch?->attention)
+                <tr>
+                    <td style="padding-top: 8px;" width="15%">Attention:</td>
+                    <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">{{ $branch?->attention_details }}</td>
+                </tr>
+                @endif
             @endif
+            
             <tr>
                 <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
                 <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></td>
