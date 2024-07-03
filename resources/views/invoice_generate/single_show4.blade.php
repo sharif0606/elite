@@ -74,7 +74,13 @@
         </tr>
         <tr>
             <td width="15%"></td>
-            <td colspan="2">{!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}</td>
+            <td colspan="2">
+                @if ($branch?->billing_address)
+                    {!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}
+                @else
+                    {!! nl2br(e(str_replace('^', "\n", $invoice_id->customer?->address))) !!}
+                @endif
+            </td>
         </tr>
         @if($branch?->attention)
         <tr>

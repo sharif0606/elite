@@ -62,8 +62,8 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-                                                <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
+                                                <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty" required></td>
+                                                <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate" required></td>
                                                 <td><input required class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
                                                 <td>

@@ -80,8 +80,8 @@
                                                         @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control" type="text" name="qty[]" value="{{ $d->qty }}" placeholder="qty"></td>
-                                                <td><input class="form-control" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate"></td>
+                                                <td><input class="form-control" type="text" name="qty[]" value="{{ $d->qty }}" placeholder="qty" required></td>
+                                                <td><input class="form-control" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate" required></td>
                                                 <td><input required class="form-control" type="date" name="start_date[]" value="{{ $d->start_date }}" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="{{ $d->end_date }}" placeholder="End Date"></td>
                                                 <td>
