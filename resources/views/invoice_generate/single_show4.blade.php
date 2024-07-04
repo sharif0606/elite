@@ -59,7 +59,7 @@
         <tr>
             <td width="15%">To:</td>
             <td>
-                @if ($invoice_id->customer?->customer_type === 0)
+                @if ($invoice_id->customer?->customer_type == 0)
                     <b>{{ $invoice_id->customer?->billing_person }} </b><br/>
                 @else
                     @if($branch?->billing_person)
@@ -75,7 +75,7 @@
         <tr>
             <td width="15%"></td>
             <td colspan="2">
-                @if ($invoice_id->customer?->customer_type === 0)
+                @if ($invoice_id->customer?->customer_type == 0)
                 @else
                     {{ $branch?->brance_name }}
                 @endif
@@ -84,7 +84,7 @@
         <tr>
             <td width="15%"></td>
             <td colspan="2">
-                @if ($invoice_id->customer?->customer_type === 0)
+                @if ($invoice_id->customer?->customer_type == 0)
                     {!! nl2br(e(str_replace('^', "\n", $invoice_id->customer?->address))) !!}
                 @else
                     @if($branch?->billing_address)
@@ -93,7 +93,7 @@
                 @endif
             </td>
         </tr>
-        @if ($invoice_id->customer?->customer_type === 0)
+        @if ($invoice_id->customer?->customer_type == 0)
             @if($invoice_id->customer?->attention)
             <tr>
                 <td style="padding-top: 8px;" width="15%">Attention:</td>

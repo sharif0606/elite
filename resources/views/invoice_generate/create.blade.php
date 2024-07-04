@@ -286,7 +286,7 @@
         var vat=$('#branch_id').find(":selected").data('vat');
         var insVat=$('#customer_id').find(":selected").data('ins-vat');
         var customerType=$('#customer_id').find(":selected").data('ctype');
-        if(customerType === 0){
+        if(customerType == 0){
             $('.vat').val(insVat);
         }else{
             $('.vat').val(vat);
