@@ -129,7 +129,7 @@
         @endif
         <tr>
             <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
-            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
         </tr>
         <tr>
             <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -168,17 +168,17 @@
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Sub Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->sub_total_amount) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->sub_total_amount }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right; font-weight: bold;"> Vat@ {{ $onetrip?->vat }} %= </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->vat_taka) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->vat_taka }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Grand Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->grand_total) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->grand_total }}</td>
             </tr>
         </tbody>
     </table>
@@ -189,7 +189,7 @@
 
         if ($dueTotal > 0) {
             $textValue = getBangladeshCurrency($dueTotal);
-            echo "$textValue"."only";
+            echo "$textValue";
         } else {
             echo "Zero";
         }
@@ -198,7 +198,7 @@
     <br>
     <div>{{ $invoice_id->footer_note }}. </div>
     <br><br><br><br><br>
-    <table width="100%">
+    <table width="100%" style="margin-top:1.5rem;">
         <tr>
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();

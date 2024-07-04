@@ -119,7 +119,7 @@ function getBangladeshCurrency( $number)
         19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
         40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
         70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
-    $digits = array('', 'hundred','thousand','lakh', 'crore');
+    $digits = array('', 'hundred','thousand','lac', 'crore');
     while( $i < $digits_length ) {
         $divider = ($i == 2) ? 10 : 100;
         $number = floor($no % $divider);

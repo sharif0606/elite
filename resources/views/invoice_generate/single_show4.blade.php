@@ -120,7 +120,7 @@
         @endif
         <tr>
             <td width="15%"><b>Subject:</b></td>
-            <td><b>Submission of bill against security services/Security including Armed services for the month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+            <td><b>Submission of bill against security services/Security including Armed services for the month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
         </tr>
         <tr>
             <td width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -164,19 +164,19 @@
             <tr style="text-align: center;">
                 <td>{{ ++$loop->index  }}</td>
                 <td>{{ $de->jobpost?->name }}</td>
-                <td>{{ ($de->rate*$de->employee_qty) }}
-                    <input type="hidden" class="month_service" name="" value="{{ $de->rate*$de->employee_qty }}">
+                <td>{{ ($de->total_amounts) }}
+                    <input type="hidden" class="month_service" name="" value="{{ $de->total_amounts }}">
                 </td>
                 <td>
                     @php
-                        $totalSalary=$de->rate*$de->employee_qty;
+                        $totalSalary=$de->total_amounts;
                         $vatAmount=(($totalSalary*$invoice_id->vat)/100);
                         $grandTotal=$totalSalary+$vatAmount;
                     @endphp
                     {{ $vatAmount }}
                     <input type="hidden" class="vat_amount" name="" value="{{ $vatAmount }}">
                 </td>
-                <td style="text-align: center;">{{ money_format($totalSalary+$vatAmount) }}
+                <td style="text-align: center;">{{ $totalSalary+$vatAmount }}
                     <input type="hidden" class="total_amount" name="" value="{{ $totalSalary+$vatAmount }}">
                 </td>
             </tr>
@@ -199,20 +199,20 @@
             @php
             if ($TotalTk > 0) {
                 $textValue = getBangladeshCurrency($TotalTk);
-                echo "$textValue"."only";
+                echo "$textValue"." only.";
             } else {
                 echo "Zero";
             }
             @endphp only.
-            </b> <br>
+            </b> <br><br>
             {{ $invoice_id->footer_note }}
     </p>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
     <br><br>
-    <i>With thanks & Regards</i>
+    <i>With thanks and Regards</i>
     <br>
-    <table width="100%" style="padding-top: 5px;">
+    <table width="100%" style="padding-top: 5px; margin-top:1.5rem;">
         <tr style="text-align: center;">
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
@@ -245,7 +245,7 @@
             $('.month_service').each(function(){
                 monthSer+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
             });
-            $('.tmonth_s').text(monthSer);
+            $('.tmonth_s').text(monthSer.toFixed(2));
 
             $('.vat_amount').each(function(){
                 vatAmount+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());

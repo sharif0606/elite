@@ -120,7 +120,7 @@
             @endif
             <tr>
                 <td width="15%"><b>Subject:</b></td>
-                <td><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+                <td><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
             </tr>
             <tr>
                 <td width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -165,7 +165,7 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Sub Total</th>
-                    <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
+                    <td>{{ $invoice_id->sub_total_amount }}</td>
                 </tr>
                 @if ($invoice_id->less)
                 @foreach ($invoice_id->less as $le)
@@ -179,7 +179,7 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Total</th>
-                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                    <td>{{ $invoice_id->total_tk}}</td>
                 </tr>
             </tfoot>
         </table>
@@ -191,19 +191,19 @@
 
                     if ($dueTotal > 0) {
                         $textValue = getBangladeshCurrency($dueTotal);
-                        echo "$textValue"."only";
+                        echo "$textValue"." only.";
                     } else {
                         echo "Zero";
                     }
                     @endphp
-                    </b> <br>
+                    </b> <br><br>
                     {{ $invoice_id->footer_note }}
             </p>
             Your Cooperation will be highly appreciated.
-            <p><i><b>With thanks of Regards</b></i></p>
+            <p><i><b>With thanks and Regards</b></i></p>
         </div>
     </div>
-    <table width="100%" style="padding-top: 5px;">
+    <table width="100%" style="padding-top: 5px; margin-top:1.5rem;">
         <tr style="text-align: center;">
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();

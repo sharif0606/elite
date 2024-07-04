@@ -114,7 +114,7 @@
             
             <tr>
                 <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
-                <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+                <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
             </tr>
             <tr>
                 <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -138,11 +138,14 @@
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $sl = 1;
+                @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                        @if ($de->rate > 0 && $de->employee_qty > 0)
+                        @if ($de->rate > 0 || $de->employee_qty > 0)
                             <tr style="text-align: center;">
-                                <td >{{ ++$loop->index  }}</td>
+                                <td >{{ $sl++  }}</td>
                                 <td>{{ $de->jobpost?->name }}
                                     <br/>
                                     {{ $de->atms?->atm }}
@@ -153,8 +156,18 @@
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
-                                <td>{{ $de->employee_qty }}</td>
-                                <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
+                                <td>
+                                    {{ $de->employee_qty }}<br>
+                                    @if ($de->duty_day > 0 && $de->total_houres > 0)
+                                        ({{ $de->duty_day }} duty)
+                                    @elseif($de->duty_day > 0 && $de->total_houres == '')
+                                        ({{ $de->duty_day }} duty)
+                                    @elseif($de->duty_day == '' && $de->total_houres > 0)
+                                        ({{ $de->total_houres }} duty hours)
+                                    @else
+                                    @endif
+                                </td>
+                                <td>{{ $de->total_amounts }}</td>
                             </tr>
                         @endif
                     @endforeach
@@ -166,7 +179,7 @@
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Sub Total</td>
-                        <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
+                        <td>{{ $invoice_id->sub_total_amount }}</td>
                     </tr>
                 @endif
                 {{--  @if ($invoice_id->less)  --}}
@@ -183,19 +196,19 @@
                 {{--  <tr style="text-align: center;" class="d-none">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                    <td>{{ $invoice_id->total_tk}}</td>
                 </tr>  --}}
                 @if($invoice_id->vat>0)
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
-                        <td>{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
+                        <td>{{ ($invoice_id->sub_total_amount*$invoice_id->vat)/100 }}</td>
                     </tr>
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td>{{ money_format((($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount + $totalAddLess) }}</td>
+                    <td>{{ (($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount + $totalAddLess }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -206,16 +219,16 @@
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
-                    echo "$textValue"."only";
+                    echo "$textValue"." only.";
                 } else {
                     echo "Zero";
                 }
             @endphp
-                </b> <br>
+                </b> <br><br>
                 {{ $invoice_id->footer_note }}
             </p>
             Your Cooperation will be highly appreciated.
-            <p><i><b>With thanks of Regards</b></i></p>
+            <p><i><b>With thanks and Regards</b></i></p>
         </div>
     </div>
     <table width="100%" style="padding-top: 5px;">
@@ -243,7 +256,7 @@
 
         </tr>
     </table>
-    <div style="text-align: center;">
+    <div style="text-align: center; margin-top:1.5rem;">
         <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>

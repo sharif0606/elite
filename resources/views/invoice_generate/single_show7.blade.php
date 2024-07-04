@@ -146,7 +146,7 @@
         @endif
         <tr>
             <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
-            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+            <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
         </tr>
         <tr>
             <td style="padding-top: 8px;" width="15%" style="padding:5px 0 0px 0;">Dear Sir,</td>
@@ -219,7 +219,7 @@
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
-                    echo "$textValue"."only";
+                    echo "$textValue";
                 } else {
                     echo "Zero";
                 }
@@ -233,9 +233,9 @@
     <br>
     <div>{{ $invoice_id->footer_note }}.</div>
     <br><br>
-    <i>With thanks & Regards</i>
+    <i>With thanks and Regards</i>
     <br><br><br><br><br>
-    <table width="100%">
+    <table width="100%" style="margin-top:1.5rem;">
         <tr>
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
