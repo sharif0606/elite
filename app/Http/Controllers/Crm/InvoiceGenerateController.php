@@ -18,7 +18,7 @@ use App\Models\Crm\InvoicePayment;
 
 use Toastr;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
 use Intervention\Image\Facades\Image;
 use Exception;
@@ -62,6 +62,7 @@ class InvoiceGenerateController extends Controller
     public function store(Request $request)
     {
         //dd($request->all());
+        DB::beginTransaction();
         try{
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
@@ -116,10 +117,12 @@ class InvoiceGenerateController extends Controller
                     }
                 }
             }
+            DB::commit();
             \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
             return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
-            dd($e);
+            // dd($e);
+            DB::rollback();
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }

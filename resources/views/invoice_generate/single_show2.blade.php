@@ -140,21 +140,23 @@
             <tbody>
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                        <tr style="text-align: center;">
-                            <td >{{ ++$loop->index  }}</td>
-                            <td>{{ $de->jobpost?->name }}
-                                <br/>
-                                {{ $de->atms?->atm }}
-                            </td>
-                            <td>{{ $de->rate }} <br/>
-                                @if($de->type_houre )
-                                    ({{ $de->type_houre }} hours Rate)
-                                @endif
-                            </td>
-                            <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
-                            <td>{{ $de->employee_qty }}</td>
-                            <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
-                        </tr>
+                        @if ($de->rate > 0 && $de->employee_qty > 0)
+                            <tr style="text-align: center;">
+                                <td >{{ ++$loop->index  }}</td>
+                                <td>{{ $de->jobpost?->name }}
+                                    <br/>
+                                    {{ $de->atms?->atm }}
+                                </td>
+                                <td>{{ $de->rate }} <br/>
+                                    @if($de->type_houre )
+                                        ({{ $de->type_houre }} hours Rate)
+                                    @endif
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
+                                <td>{{ $de->employee_qty }}</td>
+                                <td>{{ money_format(($de->rate)*($de->employee_qty)) }}</td>
+                            </tr>
+                        @endif
                     @endforeach
                 @endif
             </tbody>
