@@ -159,15 +159,15 @@
                                 <td>
                                     {{ $de->employee_qty }}<br>
                                     @if ($de->duty_day > 0 && $de->total_houres > 0)
-                                        ({{ $de->duty_day }} duty)
+                                        ({{ money_format($de->duty_day) }} duty)
                                     @elseif($de->duty_day > 0 && $de->total_houres == '')
-                                        ({{ $de->duty_day }} duty)
+                                        ({{ money_format($de->duty_day) }} duty)
                                     @elseif($de->duty_day == '' && $de->total_houres > 0)
-                                        ({{ $de->total_houres }} duty hours)
+                                        ({{ money_format($de->total_houres) }} duty hours)
                                     @else
                                     @endif
                                 </td>
-                                <td>{{ $de->total_amounts }}</td>
+                                <td>{{ money_format($de->total_amounts) }}</td>
                             </tr>
                         @endif
                     @endforeach
@@ -179,7 +179,7 @@
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Sub Total</td>
-                        <td>{{ $invoice_id->sub_total_amount }}</td>
+                        <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                     </tr>
                 @endif
                 {{--  @if ($invoice_id->less)  --}}
@@ -188,7 +188,7 @@
                         <tr style="text-align: center;">
                             <td></td>
                             <td colspan="4">{{ $le->description }}</td>
-                            <td>{{ $le->amount }}</td>
+                            <td>{{ money_format($le->amount) }}</td>
                         </tr>
                         @php $totalAddLess += $le->amount; @endphp
                     @endforeach
@@ -202,13 +202,13 @@
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
-                        <td>{{ ($invoice_id->sub_total_amount*$invoice_id->vat)/100 }}</td>
+                        <td>{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
                     </tr>
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td>{{ (($invoice_id->sub_total_amount*$invoice_id->vat)/100)+$invoice_id->sub_total_amount + $totalAddLess }}</td>
+                    <td>{{ money_format((($invoice_id->sub_total_amount * $invoice_id->vat) / 100) + $invoice_id->sub_total_amount + $totalAddLess) }}</td>
                 </tr>
             </tfoot>
         </table>

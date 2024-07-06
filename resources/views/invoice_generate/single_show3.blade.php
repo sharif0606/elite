@@ -151,12 +151,12 @@
                 <tr style="text-align: center;">
                     <td >{{ ++$loop->index  }}</td>
                     <td>{{ $de->jobpost?->name }}</td>
-                    <td>{{ $de->rate }}</td>
+                    <td>{{ money_format($de->rate) }}</td>
                     <td>{{ $de->employee_qty }}</td>
                     <td>{{ $de->warking_day }}</td>
-                    <td>{{ $de->total_houres }}</td>
-                    <td>{{ $de->rate_per_houres }}</td>
-                    <td>{{ $de->total_amounts }}</td>
+                    <td>{{ money_format($de->total_houres) }}</td>
+                    <td>{{ money_format($de->rate_per_houres) }}</td>
+                    <td>{{ money_format($de->total_amounts) }}</td>
                 </tr>
                 @endforeach
                 @endif
@@ -165,21 +165,21 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Sub Total</th>
-                    <td>{{ $invoice_id->sub_total_amount }}</td>
+                    <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
                 </tr>
                 @if ($invoice_id->less)
                 @foreach ($invoice_id->less as $le)
                 <tr style="text-align: center;">
                     <td></td>
                     <td colspan="6">{{ $le->description }}</td>
-                    <td>{{ $le->amount }}</td>
+                    <td>{{ money_format($le->amount) }}</td>
                 </tr>
                 @endforeach
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Total</th>
-                    <td>{{ $invoice_id->total_tk}}</td>
+                    <td>{{ money_format($invoice_id->total_tk)}}</td>
                 </tr>
             </tfoot>
         </table>

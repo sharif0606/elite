@@ -158,27 +158,27 @@
             <tr>
                 <td>{{ ++$loop->index  }}</td>
                 <td>{{ $de->service }}</td>
-                <td>{{ $de->rate }}</td>
+                <td>{{ money_format($de->rate) }}</td>
                 <td>{{ \Carbon\Carbon::parse($de->period)->format('d/m/Y')}}</td>
                 <td>{{ $de->trip }}</td>
-                <td style="text-align: end;"><b>{{ $de->amount}}</b></td>
+                <td style="text-align: end;"><b>{{ money_format($de->amount)}}</b></td>
             </tr>
             @endforeach
             @endif
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Sub Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->sub_total_amount }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->sub_total_amount) }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right; font-weight: bold;"> Vat@ {{ $onetrip?->vat }} %= </td>
-                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->vat_taka }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->vat_taka) }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="4" style="text-align: right;"> <b>Grand Total=</b> </td>
-                <td style="text-align: right;font-weight: bold;">{{ $onetrip?->grand_total }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($onetrip?->grand_total) }}</td>
             </tr>
         </tbody>
     </table>

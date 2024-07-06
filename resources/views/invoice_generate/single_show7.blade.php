@@ -178,39 +178,39 @@
                         <td>{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
                         <td>{{ $de->duty }}</td>
                         <td>{{ $de->employee ? $de->employee->bn_ac_no : '' }}</td>
-                        <td style="text-align: end;">{{ $de->salary_amount }}</td>
+                        <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
                     </tr>
                 @endforeach
             @endif
         <tr>
             <th></th>
             <th colspan="6">Sub Total</th>
-            <th style="text-align: right;">{{ $wasa?->sub_total_salary }}</th>
+            <th style="text-align: right;">{{ money_format($wasa?->sub_total_salary) }}</th>
         </tr>
         <tr>
             <th></th>
             <th colspan="6">Add: Commission {{ $wasa?->add_commission }}%</th>
-            <th style="text-align: right;">{{ $wasa?->add_commission_tk }}</th>
+            <th style="text-align: right;">{{ money_format($wasa?->add_commission_tk) }}</th>
         </tr>
         <tr>
             <th></th>
             <th colspan="6">{{ $wasa?->vat_on_commission }}% VAT+ {{ $wasa?->ait_on_commission }}% AIT = {{ $wasa?->vat_ait_on_commission }}% on Commission</th>
-            <th style="text-align: right;">{{ $wasa?->vat_ait_on_commission_tk }}</th>
+            <th style="text-align: right;">{{ money_format($wasa?->vat_ait_on_commission_tk) }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">VAT {{ $wasa?->vat_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ $wasa?->vat_on_subtotal_tk }}</th>
+            <th colspan="6">VAT {{ money_format($wasa?->vat_on_subtotal) }}% on Sub Total</th>
+            <th style="text-align: right;">{{ money_format($wasa?->vat_on_subtotal_tk) }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">AIT {{ $wasa?->ait_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ $wasa?->ait_on_subtotal_tk }}</th>
+            <th colspan="6">AIT {{ money_format($wasa?->ait_on_subtotal) }}% on Sub Total</th>
+            <th style="text-align: right;">{{ money_format($wasa?->ait_on_subtotal_tk) }}</th>
         </tr>
         <tr>
             <th></th>
             <th colspan="6">Grand Total</th>
-            <th style="text-align: right;">{{ $wasa?->grand_total_tk }}</th>
+            <th style="text-align: right;">{{ money_format($wasa?->grand_total_tk) }}</th>
         </tr>
         <tr>
             <td colspan="8">Total Amount(In Words): <b><i>

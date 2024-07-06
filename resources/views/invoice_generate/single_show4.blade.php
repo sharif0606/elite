@@ -158,26 +158,30 @@
         <tbody>
             @php
             $TotalTk = 0;
+            $totalVat = 0;
+            $totalMontly = 0;
             @endphp
             @if ($invoice_id->details)
             @foreach ($invoice_id->details as $de)
             <tr style="text-align: center;">
                 <td>{{ ++$loop->index  }}</td>
                 <td>{{ $de->jobpost?->name }}</td>
-                <td>{{ ($de->total_amounts) }}
-                    <input type="hidden" class="month_service" name="" value="{{ $de->total_amounts }}">
+                <td>{{ money_format($de->total_amounts) }}
+                    <input type="hidden" class="month_service" name="" value="{{ money_format($de->total_amounts) }}">
                 </td>
                 <td>
                     @php
                         $totalSalary=$de->total_amounts;
                         $vatAmount=(($totalSalary*$invoice_id->vat)/100);
                         $grandTotal=$totalSalary+$vatAmount;
+                        $totalVat += $vatAmount;
+                        $totalMontly += $totalSalary;
                     @endphp
-                    {{ $vatAmount }}
-                    <input type="hidden" class="vat_amount" name="" value="{{ $vatAmount }}">
+                    {{ money_format($vatAmount) }}
+                    <input type="hidden" class="vat_amount" name="" value="{{ money_format($vatAmount) }}">
                 </td>
-                <td style="text-align: center;">{{ $totalSalary+$vatAmount }}
-                    <input type="hidden" class="total_amount" name="" value="{{ $totalSalary+$vatAmount }}">
+                <td style="text-align: center;">{{ money_format($totalSalary+$vatAmount) }}
+                    <input type="hidden" class="total_amount" name="" value="{{ money_format($totalSalary+$vatAmount) }}">
                 </td>
             </tr>
             <?php $TotalTk += $grandTotal; ?>
@@ -186,10 +190,10 @@
         </tbody>
         <tfoot>
             <tr style="text-align: center;">
-                <td colspan="2"> Grand Total</td>
-                <td><b class="tmonth_s"></b></td>
-                <td><b class="tvat_amount"></b></td>
-                <td style="text-align: center;"><b class="ttotal_amount"></b></td>
+                <td colspan="2"> <b>Grand Total</b></td>
+                <td><b>{{money_format($totalMontly)}}</b></td>
+                <td><b>{{money_format($totalVat)}}</b></td>
+                <td style="text-align: center;"><b>{{ money_format($TotalTk)}}</b></td>
 
             </tr>
         </tfoot>
