@@ -104,45 +104,52 @@
 
                     @forelse($invoice as $e)
                         @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction'))); @endphp
-                    <tr class="text-center">
-                        <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{ $e->customer?->name }}
-                            @if($e->branch_id)
-                            ({{ $e->branch?->brance_name }})
-                            @endif
-                        </td>
-                        <td>{{ $e->start_date }}</td>
-                        <td>{{ $e->end_date }}</td>
-                        <td>{{ $e->bill_date }}</td>
-                        <td>{{ $e->grand_total }}</td>
-                        <td>{{ $due }}</td>
-                        <td>
-                            <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
-                                <i class="bi bi-eye"></i>
-                            </a>
-                            {{--  <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id)])}}">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>  --}}
-                            @if ($due > 0)
-                            @php
-                                $d=App\Models\Crm\InvoicePayment::select(DB::raw("sum(received_amount) as `received_amount`"),DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))->groupby("year","month")->where("customer_id", $e->customer_id)->latest()->take(3)->pluck("received_amount","month");
-                            @endphp
-                                <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
-                                    data-bs-toggle="modal" data-bs-target="#invList"
-                                    data-inv-id="{{ $e->id }}"
-                                    data-zone-id="{{ $e->zone_id }}"
-                                    data-customer-name="{{ $e->customer?->name }}"
-                                    data-customer-id="{{ $e->customer?->id }}"
-                                    data-sub-total-amount="{{ $e->sub_total_amount }}"
-                                    data-vat-amount="{{ $e->vat_taka }}"
-                                    data-total-amount="{{ $due }}"
-                                    data-received-amounts='@json($d)'>
-                                    <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
-                                </button>
-                            @endif
-                            
-                        </td>
-                    </tr>
+                    @if ($due != 0)
+                        <tr class="text-center">
+                            <td scope="row">{{ ++$loop->index }}</td>
+                            <td>{{ $e->customer?->name }}
+                                @if($e->branch_id)
+                                ({{ $e->branch?->brance_name }})
+                                @endif
+                            </td>
+                            <td>{{ $e->start_date }}</td>
+                            <td>{{ $e->end_date }}</td>
+                            <td>{{ $e->bill_date }}</td>
+                            <td>{{ $e->grand_total }}</td>
+                            <td>{{ $due }}</td>
+                            <td>
+                                <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                @if ($due > 0)
+                                @php
+                                    $d=App\Models\Crm\InvoicePayment::select(DB::raw("sum(received_amount) as `received_amount`"),DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))->groupby("year","month")->where("customer_id", $e->customer_id)->latest()->take(3)->pluck("received_amount","month");
+                                @endphp
+                                    <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
+                                        data-bs-toggle="modal" data-bs-target="#invList"
+                                        data-inv-id="{{ $e->id }}"
+                                        data-zone-id="{{ $e->zone_id }}"
+                                        data-customer-name="{{ $e->customer?->name }}"
+                                        data-customer-id="{{ $e->customer?->id }}"
+                                        data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                        data-vat-amount="{{ $e->vat_taka }}"
+                                        data-total-amount="{{ $due }}"
+                                        data-received-amounts='@json($d)'>
+                                        <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
+                                    </button>
+                                @endif
+                                @if ($e->grand_total == $due)
+                                    <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    <form id="form{{ $e->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('invoiceGenerate.destroy', encryptor('encrypt', $e->id)) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                     @empty
                     <tr>
                         <th colspan="6" class="text-center">No Data Found</th>

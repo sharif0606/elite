@@ -49,7 +49,7 @@ class InvoiceGenerateController extends Controller
             $billDate = $request->bill_date;
             $invoice->where('invoice_generates.bill_date', $billDate);
         }
-        $invoice = $invoice->paginate(10);
+        $invoice = $invoice->paginate(15);
         return view('invoice_generate.index',compact('invoice','customer'));
     }
 
@@ -214,9 +214,29 @@ class InvoiceGenerateController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        {
+            DB::beginTransaction();
+            try{
+                $invoice_id=encryptor('decrypt',$id);
+                $checkPayment = InvoicePayment::where('invoice_id',$invoice_id)->first();
+                if(!$checkPayment){
+                    InvoiceGenerate::where('id',$invoice_id)->delete();
+                    InvoiceGenerateDetails::where('invoice_id',$invoice_id)->delete();
+                    InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
+
+                    DB::commit();
+                    \LogActivity::addToLog('Invoice Delete',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+                    return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Delete!', 'Success', ["positionClass" => "toast-top-right"]));
+                }else
+                    return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }catch(Exception $e){
+                DB::rollback();
+                  dd($e);
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+        }
     }
 
     // public function getInvoiceData(Request $request)
