@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('agreement_date')->nullable()->after('billing_person');
             $table->date('renew_date')->nullable()->after('agreement_date');
             $table->date('validity_date')->nullable()->after('renew_date');
-            $table->decimal('vat',10,2)->default(0)->after('validity_date');
+            $table->decimal('vat',10,2)->default(0)->nullable()->after('validity_date');
             $table->text('attention')->nullable()->after('vat');
             $table->text('attention_details')->nullable()->after('attention');
             $table->string('take_home')->nullable()->after('attention_details');

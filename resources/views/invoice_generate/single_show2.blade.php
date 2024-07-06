@@ -159,11 +159,11 @@
                                 <td>
                                     {{ $de->employee_qty }}<br>
                                     @if ($de->duty_day > 0 && $de->total_houres > 0)
-                                        ({{ money_format($de->duty_day) }} duty)
+                                        ({{ $de->duty_day }} duty)
                                     @elseif($de->duty_day > 0 && $de->total_houres == '')
-                                        ({{ money_format($de->duty_day) }} duty)
+                                        ({{ $de->duty_day }} duty)
                                     @elseif($de->duty_day == '' && $de->total_houres > 0)
-                                        ({{ money_format($de->total_houres) }} duty hours)
+                                        ({{ (int) $de->total_houres }} duty hours)
                                     @else
                                     @endif
                                 </td>

@@ -45,7 +45,7 @@
                         <th scope="col">{{__('Name')}}</th>
                         <th scope="col">{{__('Contact')}}</th>
                         {{--  <th scope="col">{{__('Contact Person')}}</th>  --}}
-                        <th scope="col">{{__('Address')}}</th>
+                        {{-- <th scope="col">{{__('Address')}}</th> --}}
                         <th scope="col">{{__('Zone')}}</th>
                         <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>
                     </tr>
@@ -60,22 +60,22 @@
                             <strong>Name:</strong> {{$e->contact_person}}<br/>
                             <strong>Contact:</strong> {{$e->contact_number}}
                         </td>  --}}
-                        <td>{{$e->address}}</td>
+                        {{-- <td>{{$e->address}}</td> --}}
                         <td>{{$e->zone?->name}}</td>
                         <td class="d-flex">
-                            <a href="{{route('customer.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a class="mx-1" href="{{route('customer.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a class="mx-1" href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a title="Branch" href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
+                            <a class="mx-1" title="Branch" href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
                                 <i class="bi bi-list"></i>
                             </a>
-                            <a title="Rate" href="{{route('customerRate.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
+                            <a class="mx-1" title="Rate" href="{{route('customerRate.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
                                 <i class="bi bi-aspect-ratio"></i>
                             </a>
-                            <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
+                            <a class="text-danger mx-1" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
                                 <i class="bi bi-trash"></i>
                             </a>
                             <form id="form{{ $e->id }}" action="{{ route('customer.destroy', encryptor('encrypt', $e->id)) }}" method="post">
@@ -89,7 +89,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <th colspan="6" class="text-center">No Data Found</th>
+                        <th colspan="5" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>

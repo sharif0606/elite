@@ -113,7 +113,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for=""><b>Vat(%)</b></label>
-                                    <input required class="form-control vat" id="vat" type="number" name="vat" value="{{old('vat')}}" placeholder="Vat">
+                                    <input class="form-control vat" id="vat" type="number" name="vat" value="{{old('vat')}}" placeholder="Vat">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">

@@ -54,7 +54,6 @@ class CustomerController extends Controller
         try {
             $data = new Customer();
             $data->name = $request->name;
-            // $data->brance_name = $request->brance_name;
             $data->contact = $request->contact;
             $data->address = $request->address;
             $data->bin = $request->bin;
