@@ -30,6 +30,8 @@
                     <a href="{{route('overPaymentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Over Payment</a>
                     <a href="{{route('bankChargeIndex')}}" class="btn btn-danger py-1 px-2 m-1">Bank Charge/Exc</a>
                     <a href="{{route('DressIndex')}}" class="btn btn-danger py-1 px-2 m-1">Dress</a>
+                    <a href="{{route('stmpIndex')}}" class="btn btn-danger py-1 px-2 m-1">Stmp</a>
+                    <a href="{{route('advIndex')}}" class="btn btn-danger py-1 px-2 m-1">Adv</a>
                 </div>
             </div>
         </div>

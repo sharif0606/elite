@@ -165,12 +165,14 @@
         var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
         var CustomerId=$('.customer_id').val();
         var CustomerIdNot=$('.customer_id_not').val();
+        var Year=$('.year').val();
+        var Month=$('.month').val();
         let counter = 0;
         $.ajax({
             url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
+            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
             success: function(salary_data) {
                 console.log(salary_data);
                 let selectElement = $('.salarySheet');
@@ -208,6 +210,7 @@
                         let Ab = (value.absent > 0) ? value.absent : '0';
                         let Va = (value.vacant > 0) ? value.vacant : '0';
                         let Ad = (value.adv > 0) ? value.adv : '0';
+                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
@@ -239,7 +242,7 @@
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
                             var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="" placeholder="Stm">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="${Stmp}" placeholder="Stm">`
                             var deTotalCondition=`<input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(netSalary)}" placeholder="Net Wages" readonly>`
                         }

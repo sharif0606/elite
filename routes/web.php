@@ -186,6 +186,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('deduction-overpayment-index', [deductionAsign::class,'overPaymentIndex'])->name('overPaymentIndex');
         Route::get('deduction-bank-index', [deductionAsign::class,'bankChargeIndex'])->name('bankChargeIndex');
         Route::get('deduction-dress-index', [deductionAsign::class,'DressIndex'])->name('DressIndex');
+        Route::get('deduction-stmp-index', [deductionAsign::class,'stmpIndex'])->name('stmpIndex');
+        Route::get('deduction-adv-index', [deductionAsign::class,'advIndex'])->name('advIndex');
 
         //Accounts
         Route::resource('master',master::class);

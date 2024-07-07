@@ -207,13 +207,15 @@
         var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
         var CustomerId=$('.customer_id').val();
         var CustomerIdNot=$('.customer_id_not').val();
+        var Year=$('.year').val();
+        var Month=$('.month').val();
 
         let counter = 0;
         $.ajax({
             url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot },
+            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
             success: function(salary_data) {
                 console.log(salary_data);
                 let selectElement = $('.salarySheet');

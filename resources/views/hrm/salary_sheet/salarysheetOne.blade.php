@@ -188,7 +188,7 @@
             dataType: "json",
             data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
             success: function(salary_data) {
-                //console.log(salary_data);
+                console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     var old_emp = '';
@@ -224,6 +224,7 @@
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
@@ -265,7 +266,7 @@
                             var medicalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">`
                             var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="" placeholder="Revenue Stamp">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="${Stmp}" placeholder="Revenue Stamp">`
                             var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="${Remarks}"><span>${Remarks}</span>`;
