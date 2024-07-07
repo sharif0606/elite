@@ -191,7 +191,7 @@
 
                     if ($dueTotal > 0) {
                         $textValue = getBangladeshCurrency($dueTotal);
-                        echo "$textValue"." only.";
+                        echo "$textValue";
                     } else {
                         echo "Zero";
                     }

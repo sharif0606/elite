@@ -131,15 +131,19 @@
                 <tr>
                     <th>S.L</th>
                     <th>Service</th>
-                    <th>Rate</th>
+                    <th>Rate Per Month</th>
                     <th>Period</th>
-                    <th>Person</th>
+                    <th>Persons</th>
+                    <th>Total Duty</th>
+                    <th>Total Hours</th>
+                    <th>Rate Per Hour</th>
                     <th>Total Amount</th>
                 </tr>
             </thead>
             <tbody>
                 @php
                     $sl = 1;
+                    $totalAmount = 0;
                 @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
@@ -156,66 +160,31 @@
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
-                                <td>
-                                    {{ $de->employee_qty }}<br>
-                                    @if ($de->duty_day > 0 && $de->total_houres > 0)
-                                        ({{ $de->duty_day }} duty)
-                                    @elseif($de->duty_day > 0 && $de->total_houres == '')
-                                        ({{ $de->duty_day }} duty)
-                                    @elseif($de->duty_day == '' && $de->total_houres > 0)
-                                        ({{ (int) $de->total_houres }} duty hours)
-                                    @else
-                                    @endif
-                                </td>
+                                <td>{{ $de->employee_qty }}</td>
+                                <td>{{ $de->duty_day }}</td>
+                                <td>{{ $de->total_houres }}</td>
+                                <td>{{ $de->rate_per_houres }}</td>
                                 <td>{{ money_format($de->total_amounts) }}</td>
                             </tr>
+                            @php
+                                $totalAmount += $de->total_amounts;
+                            @endphp
                         @endif
                     @endforeach
                 @endif
             </tbody>
             <tfoot>
-                @php $totalAddLess=0; @endphp
-                @if($invoice_id->vat>0)
-                    <tr style="text-align: center;">
-                        <td></td>
-                        <td colspan="4">Sub Total</td>
-                        <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
-                    </tr>
-                @endif
-                {{--  @if ($invoice_id->less)  --}}
-                @if (isset($invoice_id->less) && $invoice_id->less)
-                    @foreach ($invoice_id->less as $le)
-                        <tr style="text-align: center;">
-                            <td></td>
-                            <td colspan="4">{{ $le->description }}</td>
-                            <td>{{ money_format($le->amount) }}</td>
-                        </tr>
-                        @php $totalAddLess += $le->amount; @endphp
-                    @endforeach
-                @endif
-                {{--  <tr style="text-align: center;" class="d-none">
-                    <td></td>
-                    <th colspan="4">Total</th>
-                    <td>{{ $invoice_id->total_tk}}</td>
-                </tr>  --}}
-                @if($invoice_id->vat>0)
-                    <tr style="text-align: center;">
-                        <td></td>
-                        <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
-                        <td>{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
-                    </tr>
-                @endif
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="4">Total</th>
-                    <td>{{ money_format((($invoice_id->sub_total_amount * $invoice_id->vat) / 100) + $invoice_id->sub_total_amount + $totalAddLess) }}</td>
+                    <th colspan="7">Total</th>
+                    <td>{{ money_format($totalAmount) }}</td>
                 </tr>
             </tfoot>
         </table>
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount + $totalAddLess;
+                $dueTotal = $totalAmount;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
@@ -238,21 +207,6 @@
             $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
             $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
             @endphp
-            {{--  <td>
-                {{ $footersetting1?->name }} <br>
-                {{ $footersetting1?->designation }} <br>
-                Cell: {{ $footersetting1?->phone  }}
-            </td>
-            <td style="text-align: left; float: center;">
-                {{ $footersetting2?->name }} <br>
-                {{ $footersetting2?->designation }} <br>
-                Cell: {{ $footersetting2?->phone  }}
-            </td>
-            <td  style="text-align: left; float: right;">
-                {{ $footersetting3?->name }} <br>
-                {{ $footersetting3?->designation }} <br>
-                {{ $footersetting3?->phone  }}
-            </td>  --}}
 
         </tr>
     </table>

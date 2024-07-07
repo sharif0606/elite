@@ -203,11 +203,11 @@
             @php
             if ($TotalTk > 0) {
                 $textValue = getBangladeshCurrency($TotalTk);
-                echo "$textValue"." only.";
+                echo "$textValue";
             } else {
                 echo "Zero";
             }
-            @endphp only.
+            @endphp.
             </b> <br><br>
             {{ $invoice_id->footer_note }}
     </p>

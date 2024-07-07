@@ -224,7 +224,7 @@
                     echo "Zero";
                 }
             @endphp
-                only.</i></b></td>
+                </i></b></td>
 
         </tr>
 

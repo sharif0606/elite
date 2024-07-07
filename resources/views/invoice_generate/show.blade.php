@@ -54,6 +54,11 @@
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_4.png')}}" alt="No Image Found">
                     </a>
                 </div>
+                <div class="col-4 text-center mb-2">
+                    <a href="{{route('invoiceShow9',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
+                        <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_7.png')}}" alt="No Image Found">
+                    </a>
+                </div>
                 {{-- <div class="col-4 text-center mb-2">
                     <a href="{{route('invoiceShow5',[encryptor('encrypt',$invoice_id->id),'header' =>'0'])}}" class="invoiceshow">
                         <img class="img-thumbnail" height="300px" width="350px" src="{{ asset('assets/billcopy/Screenshot_5.png')}}" alt="No Image Found">

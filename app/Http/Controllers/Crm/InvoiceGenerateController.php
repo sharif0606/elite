@@ -203,6 +203,13 @@ class InvoiceGenerateController extends Controller
         $onetrip=OnetripInvoice::where('invoice_id',$invoice_id->id)->first();
         return view('invoice_generate.single_show8',compact('invoice_id','branch','onetrip','headershow'));
     }
+    public function getSingleInvoice9(Request $request,$id)
+    {
+        $headershow=$request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        return view('invoice_generate.single_show9',compact('invoice_id','branch','headershow'));
+    }
 
     public function edit($id)
     {
