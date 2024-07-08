@@ -45,7 +45,7 @@
                                             <th scope="col" rowspan="2">{{__('Rank')}}</th>
                                             <th scope="col" rowspan="2">{{__('Name')}}</th>
                                             <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
+                                            <th scope="col" rowspan="2">{{__('Pre Days')}}</th>
                                             <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
                                             <th scope="col" rowspan="2">{{__('OT days')}}</th>
                                             <th scope="col" rowspan="2">{{__('OT Rate')}}</th>

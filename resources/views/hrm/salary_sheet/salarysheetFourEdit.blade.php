@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('pageTitle',trans('Office Staff Salary'))
-@section('pageSubTitle',trans('Create'))
+@section('pageSubTitle',trans('Update'))
 
 @section('content')
 <style>
@@ -19,15 +19,16 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarysheet.salarySheetFourStore')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarysheet.salarySheetFourUpdate',[encryptor('encrypt',$salary->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
+                            @method('POST')
                             <div class="row">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Salary Year</b></label>
                                     <select onchange="checkSelectBoxes()" required class="form-control year" name="year">
                                         <option value="">Select Year</option>
                                         @for($i=2023;$i<= date('Y');$i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        <option value="{{ $i }}" {{$salary->year== $i? 'selected' : '' }}>{{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -36,12 +37,12 @@
                                     <select onchange="checkSelectBoxes()" required class="form-control month selected_month" name="month">
                                         <option value="">Select Month</option>
                                         @for($i=1;$i<= 12;$i++)
-                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                        <option value="{{ $i }}" {{$salary->month== $i ? 'selected' : '' }}>{{ date('F',strtotime("2022-$i-01")) }}</option>
                                         @endfor
                                     </select>
                                 </div>
 
-                                <div class="col-lg-4 mt-4 p-0">
+                                <div class="col-lg-4 mt-4 p-0 d-none">
                                     <button id="generateButton" onclick="getSalaryData()" type="button" class="btn btn-primary" disabled>Generate Salary</button>
                                 </div>
                             </div>
@@ -49,7 +50,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
                                     <table class="table table-bordered mb-0">
-                                        <thead class="d-none show_click">
+                                        <thead class=" show_click">
                                             <tr class="text-center" id="">
                                                 <th scope="col" rowspan="2">{{__('S/N')}}</th>
                                                 <th scope="col" rowspan="2">{{__('ID No')}}</th>
@@ -84,7 +85,88 @@
                                             </tr>
                                         </thead>
                                         <tbody class="salarySheet">
-
+                                            @foreach ($salaryDetail as $d)
+                                                <tr>
+                                                    <td>{{++$loop->index}}</td>
+                                                    <td>{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="{{$d->employee?->salary_joining_date}}" placeholder="Date of Joining">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="{{$d->position?->name}}" placeholder="Name">
+                                                        <input class="form-control rank" type="hidden" name="designation_id[]" value="{{$d->designation_id}}" placeholder="Desingation">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="{{$d->employee?->en_applicants_name}}" placeholder="Name">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{$d->duty_rate}}" placeholder="Monthlay Salary" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="{{$d->house_rent}}" placeholder="House rent" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical_allowance" type="text" name="medical_allowance[]" value="{{$d->medical}}" placeholder="Medical Allowance" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="{{$d->gross_salary}}" placeholder="Duty Amount">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="text" name="duty_qty[]" value="{{$d->duty_qty}}" placeholder="Duty qty">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="text" name="ot_qty[]" value="{{$d->ot_qty}}" placeholder="Ot Qty">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="{{$d->ot_rate}}" placeholder="Ot Rate">
+                                                    </td>
+                                                    <td>
+                                                        <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="{{$d->ot_amount}}" placeholder="Ot Amount">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="{{$d->allownce}}" placeholder="Post Allow.">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="{{$d->fuel_bill}}" placeholder="Fuel Bill">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="{{$d->total_salary_of_salary_sheet_four}}" placeholder="Total Salary" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_excess_mobile" type="text" name="deduction_excess_mobile[]" value="{{$d->deduction_mobilebill}}" placeholder="Excess Mobile">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="{{$d->deduction_fine}}" placeholder="Fine">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="{{$d->deduction_ins}}" placeholder="Ins">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="{{$d->deduction_p_f}}" placeholder="P.F">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mess" type="text" name="deduction_mess[]" value="{{$d->deduction_mess}}" placeholder="Mess">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="{{$d->deduction_loan}}" placeholder="Loan">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="{{$d->deduction_traningcost}}" placeholder="Training Cost">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="{{$d->total_payable}}" placeholder="Total Payble">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="{{$d->remark}}" placeholder="Remarks">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                             <tr>
@@ -114,7 +196,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
-                                <button type="submit" class="btn btn-primary" id="submitButton" >Save</button>
+                                <button type="submit" class="btn btn-info" id="submitButton" >Update</button>
                             </div>
                         </form>
                     </div>
@@ -263,9 +345,6 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${remarks}" placeholder="Remarks">
                                 </td>
-                                {{--  <td>
-                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                </td>  --}}
                             </tr>`
                         );
                         counter++;

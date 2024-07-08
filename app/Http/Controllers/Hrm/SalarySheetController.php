@@ -351,6 +351,71 @@ class SalarySheetController extends Controller
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
+    public function editSalaryFour($id){
+        $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+        $salaryDetail = SalarySheetDetail::where('salary_id',$salary->id)->get();
+        return view('hrm.salary_sheet.salarySheetFourEdit',compact('salary','salaryDetail'));
+    }
+    public function salarySheetFourUpdate(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+            $salary->year = $request->year;
+            $salary->month = $request->month;
+            $salary->created_by=currentUserId();
+            $salary->status = 4;
+            if ($salary->save()){
+                if($request->employee_id){
+                    SalarySheetDetail::where('salary_id',$salary->id)->delete();
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $details = new SalarySheetDetail;
+                            $details->salary_id=$salary->id;
+                            $details->employee_id=$request->employee_id[$key];
+                            $details->designation_id=$request->designation_id[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
+                            $details->house_rent=$request->house_rent[$key];
+                            $details->duty_qty=$request->duty_qty[$key];
+                            //$details->duty_amount=$request->duty_amount[$key];
+                            $details->medical=$request->medical_allowance[$key];
+                            $details->ot_qty=$request->ot_qty[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
+                            $details->ot_amount=$request->ot_amount[$key];
+                            $details->allownce=$request->post_allow[$key];
+                            $details->fuel_bill=$request->fuel_bill[$key];
+                            $details->gross_salary=$request->gross_salary[$key];
+                            $details->total_salary_of_salary_sheet_four=$request->total_salary[$key];
+                            $details->deduction_mobilebill=$request->deduction_excess_mobile[$key];
+                            $details->deduction_fine=$request->deduction_fine[$key];
+                            $details->deduction_loan=$request->deduction_loan[$key];
+                            $details->deduction_traningcost=$request->deduction_traning_cost[$key];
+                            $details->deduction_ins=$request->deduction_ins[$key];
+                            $details->deduction_p_f=$request->deduction_p_f[$key];
+                            $details->deduction_mess=$request->deduction_mess[$key];
+                            // uncommon
+                            $details->total_payable=$request->total_payble[$key];
+                            $details->sing_of_ind=$request->signature_ind[$key];
+                            $details->sing_account=$request->signature_accounts[$key];
+                            $details->remark=$request->remarks[$key];
+                            $details->status=0;
+                            $details->save();
+                            DB::commit();
+                        }
+                    }
+                }
+                \LogActivity::addToLog('Generate Salary Sheet Four',$request->getContent(),'SalarySheet,SalarySheetDetail');
+                return redirect()->route('salarysheet.salarySheetFourIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
     public function salarySheetFiveStore(Request $request)
     {
         //dd($request->all()); die();
@@ -367,6 +432,81 @@ class SalarySheetController extends Controller
             $salary->status = 5;
             if ($salary->save()){
                 if($request->employee_id){
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $details = new SalarySheetDetail;
+                            $details->salary_id=$salary->id;
+                            $details->employee_id=$request->employee_id[$key];
+                            $details->designation_id=$request->designation_id[$key];
+                            $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
+                            $details->duty_qty=$request->duty_qty[$key];
+                            $details->duty_amount=$request->duty_amount[$key];
+                            $details->ot_qty=$request->ot_qty[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
+                            $details->ot_amount=$request->ot_amount[$key];
+                            $details->allownce=$request->post_allowance[$key];
+                            $details->gross_salary=$request->gross_salary[$key];
+                            $details->deduction_fine=$request->deduction_fine[$key];
+                            $details->deduction_loan=$request->deduction_loan[$key];
+                            $details->deduction_traningcost=$request->deduction_training_cost[$key];
+                            $details->deduction_ins=$request->deduction_ins[$key];
+                            $details->deduction_p_f=$request->deduction_pf[$key];
+                            $details->deduction_revenue_stamp=$request->deduction_stamp[$key];
+                            $details->deduction_total=$request->deduction_total[$key];
+                            $details->net_salary=$request->total_payable[$key];
+                            $details->sing_of_ind=$request->sing_ind[$key];
+                            $details->sing_account=$request->sing_account[$key];
+                            $details->deduction_dress=$request->deduction_dress[$key];
+                            $details->deduction_banck_charge=$request->deduction_banck_charge[$key];
+                            $details->remark=$request->remark[$key];
+                            $details->status=0;
+                            $details->save();
+                            DB::commit();
+                        }
+                    }
+                }
+                \LogActivity::addToLog('Generate Salary Sheet',$request->getContent(),'SalarySheet,SalarySheetDetail');
+                return redirect()->route('salarysheet.salarySheetFiveIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
+    public function editSalaryFive($id){
+        $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+        $selectedCustomerIds = explode(',', $salary->customer_id);
+        $selectedCustomerIdsNot = explode(',', $salary->customer_id_not);
+        $branchIds = explode(',', $salary->branch_id);
+        $atmIds = explode(',', $salary->atm_id);
+        $customer=Customer::all();
+        $salaryDetail = SalarySheetDetail::where('salary_id',$salary->id)->get();
+        return view('hrm.salary_sheet.salarySheetFiveEdit',compact('salary','salaryDetail','customer','selectedCustomerIds','selectedCustomerIdsNot','branchIds','atmIds'));
+    }
+
+    public function salarySheetFiveUpdate(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+            $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
+            $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
+            $salary->year = $request->year;
+            $salary->month = $request->month;
+            $salary->created_by=currentUserId();
+            $salary->status = 5;
+            if ($salary->save()){
+                if($request->employee_id){
+                    SalarySheetDetail::where('salary_id',$salary->id)->delete();
                     foreach($request->employee_id as $key => $value){
                         if($value){
                             $details = new SalarySheetDetail;

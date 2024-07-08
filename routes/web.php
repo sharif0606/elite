@@ -149,26 +149,36 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* Salary Sheet */
         Route::resource('salarySheet', salarySheet::class);
-        Route::get('screen-salary-sheet-one', [salarySheet::class,'getsalarySheetOne'])->name('salarySheetOne');
+         // salary 1
         Route::get('salary-sheet-one-index', [salarySheet::class,'getsalarySheetOneIndex'])->name('salarysheet.salarySheetOneIndex');
-        Route::get('salary-sheet-two-index', [salarySheet::class,'getsalarySheetTwoIndex'])->name('salarysheet.salarySheetTwoIndex');
-        Route::get('salary-sheet-three-index', [salarySheet::class,'getsalarySheetThreeIndex'])->name('salarysheet.salarySheetThreeIndex');
-        Route::get('salary-sheet-four-index', [salarySheet::class,'getsalarySheetFourIndex'])->name('salarysheet.salarySheetFourIndex');
-        Route::get('salary-sheet-five-index', [salarySheet::class,'getsalarySheetFiveIndex'])->name('salarysheet.salarySheetFiveIndex');
-        Route::get('salary-sheet-one-show/{id}', [salarySheet::class,'getsalarySheetOneShow'])->name('salarysheet.salarySheetOneShow');
-        Route::get('salary-sheet-two-show/{id}', [salarySheet::class,'getsalarySheetTwoShow'])->name('salarysheet.salarySheetTwoShow');
-        Route::get('salary-sheet-three-show/{id}', [salarySheet::class,'salarySheetThreeShow'])->name('salarysheet.salarySheetThreeShow');
-        Route::get('salary-sheet-four-show/{id}', [salarySheet::class,'salarySheetFourShow'])->name('salarysheet.salarySheetFourShow');
-        Route::get('salary-sheet-five-show/{id}', [salarySheet::class,'getsalarySheetFiveShow'])->name('salarysheet.salarySheetFiveShow');
-        Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
-        Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
-        Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
-        Route::get('screen-salary-sheet-five', [salarySheet::class,'salarySheetFive'])->name('salarySheetFive');
+        Route::get('screen-salary-sheet-one', [salarySheet::class,'getsalarySheetOne'])->name('salarySheetOne');
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
+        Route::get('salary-sheet-one-show/{id}', [salarySheet::class,'getsalarySheetOneShow'])->name('salarysheet.salarySheetOneShow');
+         // salary 2
+        Route::get('salary-sheet-two-index', [salarySheet::class,'getsalarySheetTwoIndex'])->name('salarysheet.salarySheetTwoIndex');
+        Route::get('screen-salary-sheet-two', [salarySheet::class,'getsalarySheetTwo'])->name('salarySheetTwo');
         Route::post('/salary-two-store', [salarySheet::class,'salarySheetTwoStore'])->name('salarysheet.salarySheetTwoStore');
+        Route::get('salary-sheet-two-show/{id}', [salarySheet::class,'getsalarySheetTwoShow'])->name('salarysheet.salarySheetTwoShow');
+        // salary 3
+        Route::get('salary-sheet-three-index', [salarySheet::class,'getsalarySheetThreeIndex'])->name('salarysheet.salarySheetThreeIndex');
+        Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::post('/salary-three-store', [salarySheet::class,'salarySheetThreeStore'])->name('salarysheet.salarySheetThreeStore');
+        Route::get('salary-sheet-three-show/{id}', [salarySheet::class,'salarySheetThreeShow'])->name('salarysheet.salarySheetThreeShow');
+        // salary 4 office staff
+        Route::get('salary-sheet-four-index', [salarySheet::class,'getsalarySheetFourIndex'])->name('salarysheet.salarySheetFourIndex');
+        Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
         Route::post('/salary-four-store', [salarySheet::class,'salarySheetFourStore'])->name('salarysheet.salarySheetFourStore');
+        Route::get('salary-sheet-four-edit/{id}', [salarySheet::class,'editSalaryFour'])->name('editSalaryFour');
+        Route::post('/salary-four-update/{id}', [salarySheet::class,'salarySheetFourUpdate'])->name('salarysheet.salarySheetFourUpdate');
+        Route::get('salary-sheet-four-show/{id}', [salarySheet::class,'salarySheetFourShow'])->name('salarysheet.salarySheetFourShow');
+        // salary 5
+        Route::get('salary-sheet-five-index', [salarySheet::class,'getsalarySheetFiveIndex'])->name('salarysheet.salarySheetFiveIndex');
+        Route::get('screen-salary-sheet-five', [salarySheet::class,'salarySheetFive'])->name('salarySheetFive');
         Route::post('/salary-five-store', [salarySheet::class,'salarySheetFiveStore'])->name('salarysheet.salarySheetFiveStore');
+        Route::get('screen-salary-sheet-five-edit/{id}', [salarySheet::class,'editSalaryFive'])->name('salarySheetFiveEdit');
+        Route::post('/salary-five-update/{id}', [salarySheet::class,'salarySheetFiveUpdate'])->name('salarysheet.salarySheetFiveUpdate');
+        Route::get('salary-sheet-five-show/{id}', [salarySheet::class,'getsalarySheetFiveShow'])->name('salarysheet.salarySheetFiveShow');
+
         Route::resource('deduction_asign', deductionAsign::class);
         Route::resource('long_loan', long_loan::class);
         Route::get('salary-stop-index', [deductionAsign::class,'salaryStopIndex'])->name('salaryStopIndex');
