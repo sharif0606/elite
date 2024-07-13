@@ -18,6 +18,7 @@
                     <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Month')}}</th>
+                        <th scope="col">{{__('Created at')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -33,6 +34,7 @@
                             @endfor
                             -{{ $s->year }}
                         </td>
+                        <td>{{ \Carbon\Carbon::parse($s->created_at)->format('d-m-Y h:i:s A') }}</td>
                         <td>
                             <a class="px-1" href="{{route('salarysheet.salarySheetFourShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
@@ -51,7 +53,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="3" class="text-center">No Data Found</td>
+                        <td colspan="4" class="text-center">No Data Found</td>
                     </tr>
                     @endforelse
                 </tbody>
