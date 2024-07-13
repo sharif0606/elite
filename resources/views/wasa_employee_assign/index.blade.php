@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('pageTitle','List')
-@section('pageSubTitle','All Assign Employee')
+@section('pageSubTitle','Wasa Assign Employee')
 @section('content')
 <!-- Bordered table start -->
 <div class="col-12">
@@ -13,6 +13,7 @@
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
+                        <th scope="col">{{__('Month')}}</th>
                         <th scope="col">{{__('Details')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -22,6 +23,7 @@
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td scope="row">{{$e->customer?->name}}</td>
+                        <td scope="row">{{ date('M-Y', strtotime($e->end_date)) }}</td>
                         <td>
                             @if ($e->details)
                             <table class="table">
@@ -47,9 +49,9 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{route('wasaEmployeeAsign.show',[encryptor('encrypt',$e->id)])}}">
+                            {{-- <a href="{{route('wasaEmployeeAsign.show',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-eye"></i>
-                            </a>
+                            </a> --}}
                             <a href="{{route('wasaEmployeeAsign.edit',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>

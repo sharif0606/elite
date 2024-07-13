@@ -24,6 +24,8 @@ return new class extends Migration
             $table->decimal('vat_on_subtotal',10,2)->default(0);
             $table->decimal('ait_on_subtotal',10,2)->default(0);
             $table->decimal('sub_total_salary',10,2)->default(0);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             //$table->integer('atm_id')->nullable();
             $table->string('status')->nullable();
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

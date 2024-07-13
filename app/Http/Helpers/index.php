@@ -149,7 +149,7 @@ function getBangladeshCurrency($number) {
                 $poysa_words .= ' ' . $words[$units];
             }
         }
-        $poysa = " and " . $poysa_words . ' Poysa';
+        $poysa = " and " . $poysa_words . ' Paisa';
     }
     return ($Taka ? $Taka . 'Taka' : '') . $poysa .' '. 'Only.';
 }

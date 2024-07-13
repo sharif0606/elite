@@ -12,10 +12,10 @@
                     <div class="card-body">
                         <form method="post" action="{{route('wasaEmployeeAsign.store')}}" enctype="multipart/form-data">
                             @csrf
-                            <div class="row p-2 mt-4">
+                            <div class="row mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -23,12 +23,12 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                {{-- <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="branch_change()">
                                         <option value="">Select Branch</option>
                                     </select>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 mt-2">
@@ -51,6 +51,14 @@
                                     <label for=""><b>AIT on Sub-Total(%)</b></label>
                                     <input required class="form-control ait_on_subtotal" step="0.01" type="number" name="ait_on_subtotal" value="" placeholder="AIT on Sub-Total">
                                 </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>Start Date</b></label>
+                                    <input required class="form-control start_date" type="date" name="start_date" value="">
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <label for=""><b>End Date</b></label>
+                                    <input required class="form-control end_date" type="date" name="end_date" value="">
+                                </div>
                             </div>
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
@@ -58,11 +66,12 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('ATM')}}</th>
-                                                <th scope="col">{{__('ID No')}}</th>
+                                                {{-- <th scope="col">{{__('ATM')}}</th> --}}
+                                                <th scope="col" width="10%">{{__('ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
                                                 <th scope="col">{{__('Area')}}</th>
                                                 <th scope="col">{{__('Name')}}</th>
+                                                <th scope="col">{{__('rate')}}</th>
                                                 <th scope="col">{{__('Duty')}}</th>
                                                 <th scope="col">{{__('Account No')}}</th>
                                                 <th scope="col">{{__('Salary')}}</th>
@@ -71,11 +80,11 @@
                                         </thead>
                                         <tbody id="empassign">
                                             <tr>
-                                                <td>
+                                                {{-- <td>
                                                     <select class="form-select atm_id" id="atm_id" name="atm_id[]">
                                                         <option value="0">Select Atm</option>
                                                     </select>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
@@ -97,9 +106,10 @@
                                                 </td>
                                                 <td><input class="form-control" type="text" required name="area[]" value="" placeholder="Area"></td>
                                                 <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
-                                                <td><input required class="form-control not-hide" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+                                                <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
+                                                <td><input required onkeyup="salaryCalculate(this)" class="form-control not-hide duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
                                                 <td><input class="form-control account_no" required type="text" name="account_no[]" value="" placeholder="Account No"></td>
-                                                <td><input class="form-control salary_amount" type="text" onkeyup="subtotalAmount();" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
+                                                <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
@@ -131,13 +141,6 @@
 @endsection
 @push("scripts")
 <script>
-    function subtotalAmount(){
-        var subTotal=0;
-        $('.salary_amount').each(function(){
-            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
-        });
-        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
-    }
     function getEmployees(e){
        // if (!$('.customer_id').val()) {
         //    $('.customer_id').focus();
@@ -176,16 +179,12 @@
         }
     }
 
+    let counter = 0;
     function addRow(){
     var row=`
     <tr class="new_rows">
         <td>
-            <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                <option value="0">Select Atm</option>
-            </select>
-        </td>
-        <td>
-            <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
+            <select class="select2 form-select employee_id" id="employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
                 <option value="">Select</option>
                 @forelse ($employee as $em)
                 <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
@@ -205,16 +204,18 @@
         </td>
         <td><input class="form-control" type="text" required name="area[]" value="" placeholder="Area"></td>
         <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
-        <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+        <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
+        <td><input required onkeyup="salaryCalculate(this)" class="form-control duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
         <td><input class="form-control account_no" required type="text" name="account_no[]" value="" placeholder="Account No"></td>
-        <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="" placeholder="Salary Amount"></td>
+        <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-            <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
         </td>
     </tr>
     `;
         $('#empassign').append(row);
+        $(`#employee_id${counter}`).select2();
+        counter++;
     }
 
     function removeRow(e) {
@@ -224,34 +225,62 @@
         }
     }
 
+    function salaryCalculate(e){
+        if (!$('.start_date').val()) {
+            $('.start_date').focus();
+            return false;
+        }
+        if (!$('.end_date').val()) {
+            $('.end_date').focus();
+            return false;
+        }
+        var rate = $(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
+        var duty = $(e).closest('tr').find('.duty').val()?parseFloat($(e).closest('tr').find('.duty').val()):0;
+        var startDate=$('.start_date').val();
+        var endDate=$('.end_date').val();
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+        var timeDiff = end.getTime() - start.getTime();
+        var workingDay = timeDiff / (1000 * 3600 * 24)+1;
+        var salaryTotal= (rate/workingDay)*duty;
+        $(e).closest('tr').find('.salary_amount').val(parseFloat(salaryTotal).toFixed(2));
+        subtotalAmount();
+    }
+    function subtotalAmount(){
+        var subTotal=0;
+        $('.salary_amount').each(function(){
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
+    }
 </script>
 <script>
-    function branch_change(){
-        $('.new_rows').remove();
-        $('#empassign').find(':input').not(':button, :submit, :reset, :hidden, .not-hide').val('');
-        EmployeeAsignGetAtm()
-    }
-    function EmployeeAsignGetAtm() {
-        let branchId=$('.branch_id').val();
-        $.ajax({
-            url: "{{ route('get_ajax_atm') }}",
-            type: "GET",
-            dataType: "json",
-            data: { branchId: branchId },
-            success: function (data) {
-                //console.log(data)
-                var d = $('.atm_id:last').empty();
-                $('.atm_id:last').append('<option data-vat="0" value="0">Select ATM</option>');
-                //$('#atm_id').append('<option value="1">All ATM</option>');
-                $.each(data, function(key, value) {
-                    $('.atm_id:last').append('<option value="' + value.id + '">' + value.atm + '</option>');
-                });
-            },
-            error: function () {
-                console.error("Error fetching data from the server.");
-            },
-        });
-    }
+    // function branch_change(){
+    //     $('.new_rows').remove();
+    //     $('#empassign').find(':input').not(':button, :submit, :reset, :hidden, .not-hide').val('');
+    //     EmployeeAsignGetAtm()
+    // }
+    // function EmployeeAsignGetAtm() {
+    //     let branchId=$('.branch_id').val();
+    //     $.ajax({
+    //         url: "{{ route('get_ajax_atm') }}",
+    //         type: "GET",
+    //         dataType: "json",
+    //         data: { branchId: branchId },
+    //         success: function (data) {
+    //             //console.log(data)
+    //             var d = $('.atm_id:last').empty();
+    //             $('.atm_id:last').append('<option data-vat="0" value="0">Select ATM</option>');
+    //             //$('#atm_id').append('<option value="1">All ATM</option>');
+    //             $.each(data, function(key, value) {
+    //                 $('.atm_id:last').append('<option value="' + value.id + '">' + value.atm + '</option>');
+    //             });
+    //         },
+    //         error: function () {
+    //             console.error("Error fetching data from the server.");
+    //         },
+    //     });
+    // }
 </script>
 {{--  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>  --}}
 @endpush

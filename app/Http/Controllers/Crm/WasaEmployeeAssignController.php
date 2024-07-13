@@ -53,13 +53,14 @@ class WasaEmployeeAssignController extends Controller
         try{
             $data=new WasaEmployeeAssign;
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
             $data->add_commission = $request->add_commission;
             $data->vat_on_commission = $request->vat_on_commission;
             $data->ait_on_commission = $request->ait_on_commission;
             $data->vat_on_subtotal = $request->vat_on_subtotal;
             $data->ait_on_subtotal = $request->ait_on_subtotal;
             $data->sub_total_salary = $request->sub_total_salary;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){
@@ -67,11 +68,11 @@ class WasaEmployeeAssignController extends Controller
                         if($value){
                             $details = new WasaEmployeeAssignDetails;
                             $details->wasa_employee_assign_id=$data->id;
-                            $details->atm_id = $request->atm_id[$key];
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->area=$request->area[$key];
                             $details->employee_name=$request->employee_name[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
                             $details->duty=$request->duty[$key];
                             $details->account_no=$request->account_no[$key];
                             $details->salary_amount=$request->salary_amount[$key];
@@ -118,13 +119,14 @@ class WasaEmployeeAssignController extends Controller
         try{
             $data=WasaEmployeeAssign::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
             $data->add_commission = $request->add_commission;
             $data->vat_on_commission = $request->vat_on_commission;
             $data->ait_on_commission = $request->ait_on_commission;
             $data->vat_on_subtotal = $request->vat_on_subtotal;
             $data->ait_on_subtotal = $request->ait_on_subtotal;
             $data->sub_total_salary = $request->sub_total_salary;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
             $data->status = 0;
             if($data->save()){
                 if($request->employee_id){
@@ -133,11 +135,11 @@ class WasaEmployeeAssignController extends Controller
                         if($value){
                             $details = new WasaEmployeeAssignDetails;
                             $details->wasa_employee_assign_id=$data->id;
-                            $details->atm_id = $request->atm_id[$key];
                             $details->employee_id=$request->employee_id[$key];
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->area=$request->area[$key];
                             $details->employee_name=$request->employee_name[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
                             $details->duty=$request->duty[$key];
                             $details->account_no=$request->account_no[$key];
                             $details->salary_amount=$request->salary_amount[$key];
