@@ -10,23 +10,22 @@
 
 <body>
     @if($headershow==1)
-    <div style="text-align: center;"><h2>INVOICE</h2></div>
+    <div style="text-align: center;"><h2><span style="border-bottom: solid 1px;">INVOICE</span></h2></div>
     <table width="100%">
         <tr>
-            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="100px" width="280px" alt="logo" srcset=""></th>
+            <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="90px" width="auto" alt="logo" srcset=""></th>
 
             <td width="55%">
-                <h3>
-                    House #2, Lane #2, Road #2, Block-K,<br>
-                Halishahar Housing Estate, Chattogram-4224 <br>
-                Tel: 02333323387, 02333328707 <br>
-                Mobile: 01844-040714, 01844-040717 <br>
-                Email: ctg@elitebd.com
-                </h3>
+                <h4 style="margin: 0; padding-left: 45px;">House #2, Lane #2, Road #2, Block-K,</h4>
+                <h4 style="margin: 0; padding-left: 45px;">Halishahar Housing Estate, Chattogram-4224</h4>
+                <h4 style="margin: 0; padding-left: 45px;">Tel: 02333323387, 02333328707</h4>
+                <h4 style="margin: 0; padding-left: 45px;">Mobile: 01844-040714, 01844-040717</h4>
+                <h4 style="margin: 0; padding-left: 45px;">Email: ctg@elitebd.com</h4>
             </td>
         </tr>
     </table>
-    <hr style="height: 1px; background-color: red;">
+    <div style="height: 2px; background-color: red; margin-top: 0.5rem; margin-bottom: 0.5rem;"></div>
+    {{-- <hr class="hrcs" style="height: 1px; background-color: red;"> --}}
     <table width="100%"style="padding-left: 55px;">
         <tr>
             <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
