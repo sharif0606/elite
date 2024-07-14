@@ -186,12 +186,12 @@ class WasaEmployeeAssignController extends Controller
         //dd($request->all());
         try{
             $billDate = Carbon::parse($request->bill_date);
-            $firstDayOfMonth = $billDate->firstOfMonth();
-            $lastDayOfMonth = $billDate->lastOfMonth();
+            $firstDayOfMonth = $request->start_date;
+            $lastDayOfMonth = $request->end_date;
 
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            // $data->branch_id = $request->branch_id;
             $data->start_date = $firstDayOfMonth;
             $data->end_date = $lastDayOfMonth;
             $data->bill_date = $request->bill_date;
@@ -200,6 +200,7 @@ class WasaEmployeeAssignController extends Controller
             //$data->total_tk = $request->total_tk;
             $data->vat_taka = $request->vat_tk_subtotal;
             $data->grand_total = $request->grand_total_tk;
+            $data->header_note = $request->header_note;
             $data->footer_note = $request->footer_note;
             $data->zone_id = $request->zone_id;
             $data->status = 0;
@@ -238,6 +239,8 @@ class WasaEmployeeAssignController extends Controller
                             $invoiceDetail->employee_id=$request->employee_id[$key];
                             $invoiceDetail->job_post_id=$request->job_post_id[$key];
                             $invoiceDetail->area=$request->area[$key];
+                            $invoiceDetail->account_no=$request->account_no[$key];
+                            $invoiceDetail->duty_rate=$request->duty_rate[$key];
                             $invoiceDetail->duty=$request->duty[$key];
                             $invoiceDetail->start_date=$firstDayOfMonth;
                             $invoiceDetail->end_date = $lastDayOfMonth;
@@ -247,22 +250,19 @@ class WasaEmployeeAssignController extends Controller
                         }
                     }
                     // $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id','atm_id','duty', DB::raw('SUM(salary_amount) as total_amounts'))->groupBy('job_post_id')->get();
-                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty','salary_amount','start_date','end_date', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
+                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty_rate','duty','salary_amount','start_date','end_date', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
 
                     foreach ($wasaInvoice as $winvoice) {
                         $details = new InvoiceGenerateDetails;
                         $details->invoice_id = $data->id;
                         $details->job_post_id = $winvoice->job_post_id;
-                        $details->total_amounts=$winvoice->total_amounts;
-                        $details->rate = $winvoice->salary_amount;
+                        $details->rate = $winvoice->duty_rate;
+                        $details->total_amounts = $winvoice->salary_amount;
                         $details->employee_qty = $winvoice->employee_count;
                         $details->total_houres = ($winvoice->employee_count*$winvoice->duty*8);
-                        //$details->rate_per_houres = $winvoice->rate_per_houres;
-                        $details->atm_id = $winvoice->atm_id;
                         $details->warking_day = $winvoice->duty;
                         $details->st_date=$winvoice->start_date;
                         $details->ed_date =$winvoice->end_date;
-                        // You may add other fields as needed
                         $details->status = 0;
                         $details->save();
                     }

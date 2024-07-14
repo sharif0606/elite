@@ -83,16 +83,20 @@
             <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
         </tr>
         <tr>
-            <td width="15%">To:</td>
+            <td width="15%">To: <br>&nbsp;&nbsp;</td>
             <td>
-                @if ($invoice_id->customer?->customer_type == 0)
-                    <b>{{ $invoice_id->customer?->billing_person }} </b><br/>
-                @else
-                    @if($branch?->billing_person)
-                        <b>{{ $branch?->billing_person }} </b><br/>
+                <p style="padding:0; margin:0;">
+                    @if ($invoice_id->customer?->customer_type == 0)
+                    <b>{{ $invoice_id->customer?->billing_person }} </b>
+                    @else
+                        @if($branch?->billing_person)
+                            <b>{{ $branch?->billing_person }} </b>
+                        @endif
                     @endif
-                @endif
-                <b>{{ $invoice_id->customer?->name }}</b>
+                </p>
+                <p style="margin:0; padding-top:5px;">
+                    <b>{{ $invoice_id->customer?->name }}</b>
+                </p>
             </td>
             @if($invoice_id->customer?->bin)
             <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
@@ -155,7 +159,11 @@
         </tr>
     </table>
             <div style="padding-top: 8px; padding-bottom: 8px;">
-                {{ $invoice_id->header_note }}
+                @php
+                    $header_note = $invoice_id->header_note;
+                    $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $header_note);
+                @endphp
+                {!! $bolded_note !!}
             </div>
     <table width="100%" border="1" cellspacing="0">
         <tr>
@@ -171,13 +179,19 @@
             @if ($wasa?->wasadetails)
                 @foreach ($wasa->wasadetails as $de)
                     <tr>
-                        <td>{{ ++$loop->index }}</td>
-                        <td>{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
-                        <td>{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
-                        <td>{{ $de->area }}</td>
-                        <td>{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
-                        <td>{{ $de->duty }}</td>
-                        <td>{{ $de->employee ? $de->employee->bn_ac_no : '' }}</td>
+                        <td style="text-align: center;">{{ ++$loop->index }}</td>
+                        <td style="text-align: center;">{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
+                        <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
+                        <td style="text-align: center;">{{ $de->area }}</td>
+                        <td style="text-align: center;">{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
+                        <td style="text-align: center;">{{ $de->duty }}</td>
+                        <td style="text-align: center;">
+                            @if ($de->account_no != '')
+                                {{ $de->account_no }}
+                            @else
+                                {{ $de->employee ? $de->employee->bn_ac_no : '' }}
+                            @endif
+                        </td>
                         <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
                     </tr>
                 @endforeach
@@ -231,7 +245,13 @@
     </table>
 
     <br>
-    <div>{{ $invoice_id->footer_note }}.</div>
+    <div>
+        @php
+            $footer_note = $invoice_id->footer_note;
+            $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $footer_note);
+        @endphp
+        {!! $bolded_note !!}
+        .</div>
     <br><br>
     <i>With thanks and Regards</i>
     <br><br><br><br><br>

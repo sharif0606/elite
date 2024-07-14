@@ -57,16 +57,20 @@
                 <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
             </tr>
             <tr>
-                <td width="15%">To:</td>
+                <td width="15%">To: <br>&nbsp;&nbsp;</td>
                 <td>
-                    @if ($invoice_id->customer?->customer_type == 0)
-                        <b>{{ $invoice_id->customer?->billing_person }} </b><br/>
-                    @else
-                        @if($branch?->billing_person)
-                            <b>{{ $branch?->billing_person }} </b><br/>
+                    <p style="padding:0; margin:0;">
+                        @if ($invoice_id->customer?->customer_type == 0)
+                        <b>{{ $invoice_id->customer?->billing_person }} </b>
+                        @else
+                            @if($branch?->billing_person)
+                                <b>{{ $branch?->billing_person }} </b>
+                            @endif
                         @endif
-                    @endif
-                    <b>{{ $invoice_id->customer?->name }}</b>
+                    </p>
+                    <p style="margin:0; padding-top:5px;">
+                        <b>{{ $invoice_id->customer?->name }}</b>
+                    </p>
                 </td>
                 @if($invoice_id->customer?->bin)
                 <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
@@ -142,7 +146,7 @@
                     <th>Working Days</th>
                     <th>Total Hours</th>
                     <th>Rate per hours</th>
-                    <th>Total Amount</th>
+                    <th>Total Amount(BDT)</th>
                 </tr>
             </thead>
             <tbody>
@@ -156,7 +160,7 @@
                     <td>{{ $de->warking_day }}</td>
                     <td>{{ money_format($de->total_houres) }}</td>
                     <td>{{ money_format($de->rate_per_houres) }}</td>
-                    <td>{{ money_format($de->total_amounts) }}</td>
+                    <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                 </tr>
                 @endforeach
                 @endif
@@ -165,21 +169,21 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Sub Total</th>
-                    <td>{{ money_format($invoice_id->sub_total_amount) }}</td>
+                    <td style="text-align: end;">{{ money_format($invoice_id->sub_total_amount) }}</td>
                 </tr>
                 @if ($invoice_id->less)
                 @foreach ($invoice_id->less as $le)
                 <tr style="text-align: center;">
                     <td></td>
                     <td colspan="6">{{ $le->description }}</td>
-                    <td>{{ money_format($le->amount) }}</td>
+                    <td style="text-align: end;">{{ money_format($le->amount) }}</td>
                 </tr>
                 @endforeach
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Total</th>
-                    <td>{{ money_format($invoice_id->total_tk)}}</td>
+                    <td style="text-align: end;">{{ money_format($invoice_id->total_tk)}}</td>
                 </tr>
             </tfoot>
         </table>
@@ -197,7 +201,11 @@
                     }
                     @endphp
                     </b> <br><br>
-                    {{ $invoice_id->footer_note }}
+                    @php
+                        $footer_note = $invoice_id->footer_note;
+                        $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $footer_note);
+                    @endphp
+                    {!! $bolded_note !!}
             </p>
             Your Cooperation will be highly appreciated.
             <p><i><b>With thanks and Regards</b></i></p>

@@ -57,16 +57,20 @@
             <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
         </tr>
         <tr>
-            <td width="15%">To:</td>
+            <td width="15%">To: <br>&nbsp;&nbsp;</td>
             <td>
-                @if ($invoice_id->customer?->customer_type == 0)
-                    <b>{{ $invoice_id->customer?->billing_person }} </b><br/>
-                @else
-                    @if($branch?->billing_person)
-                        <b>{{ $branch?->billing_person }} </b><br/>
+                <p style="padding:0; margin:0;">
+                    @if ($invoice_id->customer?->customer_type == 0)
+                    <b>{{ $invoice_id->customer?->billing_person }} </b>
+                    @else
+                        @if($branch?->billing_person)
+                            <b>{{ $branch?->billing_person }} </b>
+                        @endif
                     @endif
-                @endif
-                <b>{{ $invoice_id->customer?->name }}</b>
+                </p>
+                <p style="margin:0; padding-top:5px;">
+                    <b>{{ $invoice_id->customer?->name }}</b>
+                </p>
             </td>
             @if($invoice_id->customer?->bin)
             <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
@@ -152,7 +156,7 @@
                 <th width="35%">Description</th>
                 <th width="20%">Monthly Service Charge</th>
                 <th width="20%">VAT @ {{ $invoice_id->vat }}%</th>
-                <th width="20%">Total</th>
+                <th width="20%">Total(BDT)</th>
             </tr>
         </thead>
         <tbody>
@@ -180,7 +184,7 @@
                     {{ money_format($vatAmount) }}
                     <input type="hidden" class="vat_amount" name="" value="{{ money_format($vatAmount) }}">
                 </td>
-                <td style="text-align: center;">{{ money_format($totalSalary+$vatAmount) }}
+                <td style="text-align: end;">{{ money_format($totalSalary+$vatAmount) }}
                     <input type="hidden" class="total_amount" name="" value="{{ money_format($totalSalary+$vatAmount) }}">
                 </td>
             </tr>
@@ -193,7 +197,7 @@
                 <td colspan="2"> <b>Grand Total</b></td>
                 <td><b>{{money_format($totalMontly)}}</b></td>
                 <td><b>{{money_format($totalVat)}}</b></td>
-                <td style="text-align: center;"><b>{{ money_format($TotalTk)}}</b></td>
+                <td style="text-align: end;"><b>{{ money_format($TotalTk)}}</b></td>
 
             </tr>
         </tfoot>
@@ -209,7 +213,11 @@
             }
             @endphp.
             </b> <br><br>
-            {{ $invoice_id->footer_note }}
+            @php
+                $footer_note = $invoice_id->footer_note;
+                $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $footer_note);
+            @endphp
+            {!! $bolded_note !!}
     </p>
     <br>
     <div>Your Cooperation will be highly appreciated.</div>
