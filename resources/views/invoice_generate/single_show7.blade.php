@@ -174,7 +174,7 @@
             <th width="34%">Name of the Security Person</th>
             <th width="6%" >Duty </th>
             <th width="15%" >Account Number</th>
-            <th width="13%">Salary Amount</th>
+            <th width="13%">Salary Amount(BDT)</th>
         </tr>
             @if ($wasa?->wasadetails)
                 @foreach ($wasa->wasadetails as $de)
@@ -203,22 +203,22 @@
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">Add: Commission {{ $wasa?->add_commission }}%</th>
+            <th colspan="6">Add: Commission {{ (int)$wasa?->add_commission }}%</th>
             <th style="text-align: right;">{{ money_format($wasa?->add_commission_tk) }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">{{ $wasa?->vat_on_commission }}% VAT+ {{ $wasa?->ait_on_commission }}% AIT = {{ $wasa?->vat_ait_on_commission }}% on Commission</th>
+            <th colspan="6">{{ (int)$wasa?->vat_on_commission }}% VAT+ {{ (int)$wasa?->ait_on_commission }}% AIT = {{ (int)$wasa?->vat_ait_on_commission }}% on Commission</th>
             <th style="text-align: right;">{{ money_format($wasa?->vat_ait_on_commission_tk) }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">VAT {{ money_format($wasa?->vat_on_subtotal) }}% on Sub Total</th>
+            <th colspan="6">VAT {{ (int)$wasa?->vat_on_subtotal }}% on Sub Total</th>
             <th style="text-align: right;">{{ money_format($wasa?->vat_on_subtotal_tk) }}</th>
         </tr>
         <tr>
             <th></th>
-            <th colspan="6">AIT {{ money_format($wasa?->ait_on_subtotal) }}% on Sub Total</th>
+            <th colspan="6">AIT {{ (int)$wasa?->ait_on_subtotal }}% on Sub Total</th>
             <th style="text-align: right;">{{ money_format($wasa?->ait_on_subtotal_tk) }}</th>
         </tr>
         <tr>
