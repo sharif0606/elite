@@ -48,7 +48,7 @@
             <td width="30%" style="text-align: center;"><b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table> --}}
-    <div style="padding: 0 70px 0 80px;">
+    <div style="padding: 0 70px 0 80px; margin-top: 1rem;">
 
         <table width="100%">
             <tr>

@@ -41,8 +41,7 @@
         </tr>
     </table>
     @endif
-    <div style="padding: 0 0px 0 0px;">
-       
+    <div style="padding: 0 0px 0 0px; margin-top: 1rem;">
         <table width="100%">
             <tr>
                 <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>

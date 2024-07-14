@@ -59,7 +59,7 @@
         </tr>
     </table>
     @endif
-    <table width="100%">
+    <table width="100%" style="margin-top: 1rem;">
         <tr>
             <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
             <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
