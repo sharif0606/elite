@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificate</title>
+    <title>ELITE FORCE | @yield('siteTitle', 'Dashboard')</title>
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/png">
     <link href="https://fonts.maateen.me/adorsho-lipi/font.css" rel="stylesheet">
     <style>
         @media print
@@ -164,7 +165,7 @@
                     </tr>
                 </table>
                 <div style="width: 95%; text-align: center; margin: auto;">
-                    <p style="line-height: 1.5;">
+                    <p style="line-height: 1.9; font-size: 14px;">
                         গত <input type="text" class="sinput" value="{{ !is_null($emp->joining_date) ? date('d-M-Y', strtotime($emp->joining_date)) : '' }}"> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
                     </p>
                 </div>

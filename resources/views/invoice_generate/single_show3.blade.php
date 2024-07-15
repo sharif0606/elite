@@ -94,7 +94,7 @@
             @if ($invoice_id->customer?->customer_type == 0)
                 @if($invoice_id->customer?->attention)
                 <tr>
-                    <td style="padding-top: 8px;" width="15%">Attention:</td>
+                    <td style="padding-top: 8px;" width="15%">Attention:@if($invoice_id->customer?->attention_details != '')<br>&nbsp;&nbsp; @endif</td>
                     <td colspan="2" style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b><br>{{ $invoice_id->customer?->attention_details }}</td>
                     
                 </tr>
@@ -102,7 +102,7 @@
             @else
                 @if($branch?->attention)
                 <tr>
-                    <td style="padding-top: 8px;" width="15%">Attention:</td>
+                    <td style="padding-top: 8px;" width="15%">Attention: @if($branch?->attention_details != '')<br>&nbsp;&nbsp; @endif</td>
                     <td colspan="2" style="padding-top: 8px;"><b>{{ $branch?->attention }}</b><br>{{ $branch?->attention_details }}</td>
                 </tr>
                 @endif
@@ -131,7 +131,7 @@
                     <th>Working Days</th>
                     <th>Total Hours</th>
                     <th>Rate per hours</th>
-                    <th>Total Amount(BDT)</th>
+                    <th>Total Amount (BDT)</th>
                 </tr>
             </thead>
             <tbody>
@@ -229,7 +229,7 @@
         <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
-            Cell: {{ $footersetting1?->phone  }}
+            {{ $footersetting1?->phone  }}
         </div>
         <div style="width: 200px; float: right; text-align: left;">
             {{ $footersetting3?->name }} <br>
@@ -239,7 +239,7 @@
         <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
             {{ $footersetting2?->name }} <br>
             {{ $footersetting2?->designation }} <br>
-            Cell: {{ $footersetting2?->phone  }}
+            {{ $footersetting2?->phone  }}
         </div>
     </div>
 </body>
