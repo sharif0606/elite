@@ -262,6 +262,12 @@ class EmployeeController extends Controller
         return view('employee.show', compact('employees','security','jobposts','jobdescription','employeeDocuments'));
     }
 
+    public function certificate($id)
+    {
+        $emp = Employee::findOrFail(encryptor('decrypt', $id));
+        return view('employee.certificate', compact('emp'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

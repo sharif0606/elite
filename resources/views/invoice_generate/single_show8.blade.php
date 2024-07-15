@@ -59,7 +59,11 @@
         </tr>
     </table>
     @endif
-    <table width="100%" style="margin-top: 1rem;">
+    @if($headershow==1)
+        <table width="100%" style="margin-top: 1rem;">
+    @else
+        <table width="100%">
+    @endif
         <tr>
             <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
             <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
@@ -76,22 +80,20 @@
                         @endif
                     @endif
                 </p>
-                <p style="margin:0; padding-top:5px;"><b>{{ $invoice_id->customer?->name }}</b></p>
+                <p style="margin:0;"><b>{{ $invoice_id->customer?->name }}</b></p>
                 
             </td>
             @if($invoice_id->customer?->bin)
             <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
             @endif
         </tr>
+        @if ($invoice_id->customer?->customer_type == 0)
+        @else
         <tr>
             <td width="15%"></td>
-            <td colspan="2">
-                @if ($invoice_id->customer?->customer_type == 0)
-                @else
-                    {{ $branch?->brance_name }}
-                @endif
-            </td>
+            <td colspan="2">{{ $branch?->brance_name }}</td>
         </tr>
+        @endif
         <tr>
             <td width="15%"></td>
             <td colspan="2">
@@ -108,24 +110,15 @@
             @if($invoice_id->customer?->attention)
             <tr>
                 <td style="padding-top: 8px;" width="15%">Attention:</td>
-                <td style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2">{{ $invoice_id->customer?->attention_details }}</td>
+                <td colspan="2" style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b><br>{{ $invoice_id->customer?->attention_details }}</td>
+                
             </tr>
             @endif
         @else
             @if($branch?->attention)
             <tr>
                 <td style="padding-top: 8px;" width="15%">Attention:</td>
-                <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td colspan="2">{{ $branch?->attention_details }}</td>
+                <td colspan="2" style="padding-top: 8px;"><b>{{ $branch?->attention }}</b><br>{{ $branch?->attention_details }}</td>
             </tr>
             @endif
         @endif
@@ -206,7 +199,7 @@
         {!! $bolded_note !!}
     . </div>
     <br><br><br><br><br>
-    <table width="100%" style="margin-top:1.5rem;">
+    {{-- <table width="100%" style="margin-top:1.5rem;">
         <tr>
             @php
             $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
@@ -229,8 +222,29 @@
                 {{ $footersetting3?->phone  }}
             </td>
         </tr>
-    </table>
-
+    </table> --}}
+    @php
+        $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+        $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+        $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+    @endphp
+    <div style="text-align: center; margin-top:1.5rem;">
+        <div style="width: 200px; float: left; text-align: left;">
+            {{ $footersetting1?->name }} <br>
+            {{ $footersetting1?->designation }} <br>
+            Cell: {{ $footersetting1?->phone  }}
+        </div>
+        <div style="width: 200px; float: right; text-align: left;">
+            {{ $footersetting3?->name }} <br>
+            {{ $footersetting3?->designation }} <br>
+            {{ $footersetting3?->phone  }}
+        </div>
+        <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
+            {{ $footersetting2?->name }} <br>
+            {{ $footersetting2?->designation }} <br>
+            Cell: {{ $footersetting2?->phone  }}
+        </div>
+    </div>
 </body>
 
 </html>

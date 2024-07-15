@@ -25,11 +25,11 @@
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Bangla')}}</th>
                         <th scope="col">{{__('English')}}</th>
-                        <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>
+                        <th class="white-space-nowrap" width=20%>{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,19 +48,19 @@
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
                             <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
                         </td>
-                        <td>
-                            <a href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
+                        <td class="text-center">
+                            <a class="px-1" href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a class="ms-2" href="{{route('employee.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a class="px-1" href="{{route('employee.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
-                            </a><br/>
-                            <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
+                            </a>
+                            <a class="btn btn-sm btn-primary px-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
                                 Security
-                            </a> <br/>
-                            {{--  <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
+                            </a>
+                            <a class="btn btn-sm btn-success px-2" target="_blank" href="{{route('employee.certificate',encryptor('encrypt',$e->id))}}">
                                 Certificate
-                            </a>  --}}
+                            </a>
                         </td>
                     </tr>
                     @empty

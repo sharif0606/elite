@@ -41,8 +41,12 @@
         </tr>
     </table>
     @endif
-    <div style="padding: 0 0px 0 0px; margin-top: 1rem;">
-       
+    @if($headershow==1)
+        <div style="padding: 0 0px 0 0px; margin-top: 1rem;">
+    @else
+        <div style="padding: 0 0px 0 0px;">
+    @endif
+        
         <table width="100%">
             <tr>
                 <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
@@ -60,22 +64,20 @@
                             @endif
                         @endif
                     </p>
-                    <p style="margin:0; padding-top:5px;"><b>{{ $invoice_id->customer?->name }}</b></p>
+                    <p style="margin:0;"><b>{{ $invoice_id->customer?->name }}</b></p>
                     
                 </td>
                 @if($invoice_id->customer?->bin)
                 <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
                 @endif
             </tr>
+            @if ($invoice_id->customer?->customer_type == 0)
+            @else
             <tr>
                 <td width="15%"></td>
-                <td colspan="2">
-                    @if ($invoice_id->customer?->customer_type == 0)
-                    @else
-                        {{ $branch?->brance_name }}
-                    @endif
-                </td>
+                <td colspan="2">{{ $branch?->brance_name }}</td>
             </tr>
+            @endif
             <tr>
                 <td width="15%"></td>
                 <td colspan="2">
@@ -92,28 +94,18 @@
                 @if($invoice_id->customer?->attention)
                 <tr>
                     <td style="padding-top: 8px;" width="15%">Attention:</td>
-                    <td style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="2">{{ $invoice_id->customer?->attention_details }}</td>
+                    <td colspan="2" style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b><br>{{ $invoice_id->customer?->attention_details }}</td>
+                    
                 </tr>
                 @endif
             @else
                 @if($branch?->attention)
                 <tr>
                     <td style="padding-top: 8px;" width="15%">Attention:</td>
-                    <td style="padding-top: 8px;"><b>{{ $branch?->attention }}</b></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td colspan="2">{{ $branch?->attention_details }}</td>
+                    <td colspan="2" style="padding-top: 8px;"><b>{{ $branch?->attention }}</b><br>{{ $branch?->attention_details }}</td>
                 </tr>
                 @endif
             @endif
-            
             <tr>
                 <td style="padding-top: 12px;" width="15%"><b>Subject:</b></td>
                 <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
@@ -206,16 +198,28 @@
             <p><i><b>With thanks and Regards</b></i></p>
         </div>
     </div>
-    <table width="100%" style="padding-top: 5px;">
-        <tr style="text-align: left;">
-            @php
-            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
-            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
-            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
-            @endphp
-
-        </tr>
-    </table>
+    {{-- <div style="text-align: center; margin-top:1.5rem;">
+        <div style="width: 200px; float: left; text-align: left;">
+            {{ $footersetting1?->name }} <br>
+            {{ $footersetting1?->designation }} <br>
+            Cell: {{ $footersetting1?->phone  }}
+        </div>
+        <div style="width: 200px; float: right; text-align: left;">
+            {{ $footersetting3?->name }} <br>
+            {{ $footersetting3?->designation }} <br>
+            {{ $footersetting3?->phone  }}
+        </div>
+        <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
+            {{ $footersetting2?->name }} <br>
+            {{ $footersetting2?->designation }} <br>
+            Cell: {{ $footersetting2?->phone  }}
+        </div>
+    </div> --}}
+    @php
+        $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
+        $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
+        $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
+    @endphp
     <div style="text-align: center; margin-top:1.5rem;">
         <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>

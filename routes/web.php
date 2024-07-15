@@ -145,6 +145,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         /* HRM */
         Route::resource('employee', employee::class);
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
+        Route::get('employee-certificate/{id}', [employee::class,'certificate'])->name('employee.certificate');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
 
         /* Salary Sheet */
