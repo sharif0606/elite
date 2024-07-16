@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Bill Date</b></label>
-                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date" required>
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
