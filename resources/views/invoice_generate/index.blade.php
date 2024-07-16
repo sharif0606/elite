@@ -107,11 +107,11 @@
                 </thead>
                 <tbody>
 
-                    @forelse($invoice as $e)
+                    @forelse($invoice as $key=>$e)
                         @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction'))); @endphp
-                    @if ($due != 0)
+                    {{-- @if ($due != 0) --}}
                         <tr class="text-center">
-                            <td scope="row">{{ ++$loop->index }}</td>
+                            <td scope="row">{{ $invoice->firstItem() + $key }}</td>
                             <td>{{ $e->customer?->name }}
                                 @if($e->branch_id)
                                 ({{ $e->branch?->brance_name }})
@@ -154,7 +154,7 @@
                                 @endif
                             </td>
                         </tr>
-                    @endif
+                    {{-- @endif --}}
                     @empty
                     <tr>
                         <th colspan="6" class="text-center">No Data Found</th>
