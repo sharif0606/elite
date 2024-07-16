@@ -91,7 +91,7 @@
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
-                <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="bi bi-plus-square"></i> Add Different</button>
+                <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#wasaInvoice"> <i class="bi bi-plus-square"></i> Add Different</button>
                 {{--  <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('wasaEmployeeAsign.createInvoice')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>  --}}
                 <thead>
                     <tr class="text-center">
@@ -106,12 +106,14 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @php
+                        $totalItems = $invoice->total();
+                    @endphp
                     @forelse($invoice as $key=>$e)
                         @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction'))); @endphp
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
-                            <td scope="row">{{ $invoice->firstItem() + $key }}</td>
+                            <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
                             <td>{{ $e->customer?->name }}
                                 @if($e->branch_id)
                                 ({{ $e->branch?->brance_name }})
@@ -163,7 +165,7 @@
                 </tbody>
             </table>
             <div class="pt-2">
-                 {{$invoice->links()}} 
+                 {!! $invoice->withQueryString()->links()!!}
             </div>
         </div>
     </div>
@@ -283,16 +285,16 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="wasaInvoice" tabindex="-1" aria-labelledby="wasaInvoiceLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
         <form action="{{route('wasaEmployeeAsign.createInvoice')}}">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Wasa or One Trip</h1>
+                <h1 class="modal-title fs-5" id="wasaInvoiceLabel">Select Wasa or One Trip</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex">
-                <select  class=" form-select" name="customer_id"  style="width:500px;" required>
+                <select  class="select2 form-select" name="customer_id"  style="width:500px;" required>
                     <option value="">Select Customer</option>
                     @forelse ($customer as $c)
                     <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -377,6 +379,13 @@
     //         modal.find('#totalAmount').text(Amount);
     //     });
     // });
+
+    $('#wasaInvoice').on('shown.bs.modal', function () {
+        $('.select2').select2({
+            dropdownParent: $('#wasaInvoice')
+        });
+    });
+
     $(document).ready(function () {
     $('#invList').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);

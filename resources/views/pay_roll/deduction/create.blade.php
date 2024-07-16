@@ -6,7 +6,7 @@
 @section('content')
 <style>
     @media (min-width: 1192px){
-        .select2{
+        .repeater.select2{
             width: 926px !important;
         }
     }
@@ -41,7 +41,7 @@
                                     <div class="col-lg-4 mt-2">
                                         <div class="form-group">
                                             <label for="role_id">Deduction</label>
-                                            <select class="form-control" name="deduction_type" id="deduction_type">
+                                            <select class="select2 form-control" name="deduction_type" id="deduction_type">
                                                 <option value="0">Select</option>
                                                 <option value="1">Fine</option>
                                                 <option value="2">Mobile Bill</option>
@@ -85,7 +85,7 @@
                                             <tbody id="deductiorepet">
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control select2" name="employee_id[]" id="employee_id">
+                                                        <select class="form-control repeater select2" name="employee_id[]" id="employee_id">
                                                             <option value="0">Select</option>
                                                             @foreach ($employees as $e)
                                                             <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
@@ -127,11 +127,12 @@
 @endsection
 @push("scripts")
 <script>
+    let counter = 0;
     function addRow(){
     var row=`
     <tr>
         <td>
-            <select class="form-control" name="employee_id[]" id="employee_id">
+            <select class="form-control" name="employee_id[]" id="employee_id${counter}">
                 <option value="0">Select</option>
                 @foreach ($employees as $e)
                 <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}</option>
@@ -156,6 +157,8 @@
     </tr>
     `;
         $('#deductiorepet').append(row);
+        $(`#employee_id${counter}`).select2();
+        counter++;
     }
 
     function removeRow(e) {

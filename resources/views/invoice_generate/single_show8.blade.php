@@ -42,12 +42,11 @@
         </tr>
     </table>
     <div style="height: 2px; background-color: red; margin-top: 0.5rem; margin-bottom: 0.5rem;"></div>
-    {{-- <hr class="hrcs" style="height: 1px; background-color: red;"> --}}
-    <table width="100%"style="padding-left: 55px;">
+    <table width="100%">
         <tr>
             <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
             <td width="30%"></td>
-            <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
+            <td width="30%" style="text-align: right;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
             {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
         </tr>
     </table>
@@ -229,7 +228,7 @@
         $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
         $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
     @endphp
-    <div style="text-align: center; margin-top:1.5rem;">
+    <div style="text-align: center; margin-top:2rem;">
         <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
