@@ -22,6 +22,11 @@
         z-index: 1;
         width: max-content;
     }
+    
+    .modal-body .select2{
+
+    }
+
     .due-amount {
         display: none;
         position: absolute;
@@ -279,29 +284,27 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
         <form action="{{route('wasaEmployeeAsign.createInvoice')}}">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Select Wasa or One Trip</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                {{--  <label for=""><b>Customer Name</b></label>  --}}
-                <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+            </div>
+            <div class="modal-body d-flex">
+                <select  class=" form-select" name="customer_id"  style="width:500px;" required>
                     <option value="">Select Customer</option>
                     @forelse ($customer as $c)
                     <option value="{{ $c->id }}">{{ $c->name }}</option>
                     @empty
                     @endforelse
                 </select>
-                <br/>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Go</button>
-              </div>
-              <div class="modal-footer">
-                <a class="btn btn-sm btn-primary my-2" href="{{route('oneTripInvoice.create')}}"><i class="bi bi-plus-square"></i> One Trip</a>
-              </div>
+                <button type="submit" class="btn btn-sm btn-primary mx-2">Wasa</button>
+                <a class="btn btn-sm btn-primary" href="{{route('oneTripInvoice.create')}}">One Trip</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">Close</button>
+            </div>
         </form>
     </div>
   </div>

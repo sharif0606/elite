@@ -33,6 +33,14 @@
             padding: 50px;
             box-sizing: border-box;
         }
+        .bg-jolchap {
+            background: url("{{ asset('assets/billcopy/jolchap.png') }}") repeat;
+            background-size: 25% calc(100%); /* Adjust the height to divide into 4 parts */
+            background-repeat: repeat-x; /* Repeat vertically */
+            height: 100%; /* Make sure the container is full height */
+            opacity: 80%;
+        }
+        
         .certificate-content {
             position: relative;
             text-align: center;
@@ -138,7 +146,7 @@
             <img src="{{ asset('assets/billcopy/logo.png') }}" height="100px;" alt="">
             <h2>নিরাপত্তা প্রশিক্ষণ সনদ পত্র</h2>
             <div style="width: 90%; margin: auto;">
-                <table style="width:100%;">
+                <table class="bg-jolchap" style="width:100%;">
                     <tr>
                         <th style="text-align: left; width: 15%;">আইডি নং :</th>
                         <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->admission_id_no}}</td>
