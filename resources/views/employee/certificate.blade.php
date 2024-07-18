@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE FORCE | @yield('siteTitle', 'Dashboard')</title>
+    <title>ELITE FORCE | @yield('siteTitle', 'Certificate')</title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/png">
     <link href="https://fonts.maateen.me/adorsho-lipi/font.css" rel="stylesheet">
     <style>
@@ -26,7 +26,7 @@
         }
         .certificate-container {
             position: relative;
-            width: 1000px;
+            width: 975px;
             height: auto;
             background: url("{{ asset('assets/billcopy/certificateborder.png')}}") no-repeat center center;
             background-size: cover;
@@ -161,21 +161,24 @@
                     </tr>
                     <tr>
                         <th style="text-align: left; width: 15%;">গ্রামঃ</th>
-                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_pre_village_name}}</td>
+                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_parm_village_name}}</td>
                         <th style="text-align: center; width: 15%;">পোস্টঃ</th>
-                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_pre_post_ofc}}</td>
+                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_parm_post_ofc}}</td>
                     </tr>
                     <tr>
                         <th style="text-align: left; width: 15%;">থানা/উপজেলাঃ</th>
-                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_upazilla?->name_bn}}</td>
+                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_parm_upazilla?->name_bn}}</td>
                         <th style="text-align: center; width: 15%;">জেলাঃ</th>
-                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_district?->name_bn}}</td>
+                        <td style="text-align: center; border-bottom: dotted 1px; width: 35%;">{{$emp->bn_parm_district?->name_bn}}</td>
                     </tr>
                 </table>
                 <div style="width: 95%; text-align: center; margin: auto;">
                     <p style="line-height: 1.9; font-size: 14px;">
-                        গত <input type="text" class="sinput" value="{{ !is_null($emp->joining_date) ? date('d-M-Y', strtotime($emp->joining_date)) : '' }}"> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
+                        গত <input type="text" class="sinput" value=""> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
                     </p>
+                    {{-- <p style="line-height: 1.9; font-size: 14px;">
+                        গত <input type="text" class="sinput" value="{{ !is_null($emp->joining_date) ? date('d-M-Y', strtotime($emp->joining_date)) : '' }}"> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
+                    </p> --}}
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 2rem; margin-bottom: .9rem;">
                     <div>
