@@ -7,7 +7,7 @@
 <style>
     @media (min-width: 1192px){
         .repeater.select2{
-            width: 926px !important;
+            width: 250px !important;
         }
     }
 </style>
@@ -22,7 +22,7 @@
                                 <div class="row">
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Salary Year</b></label>
-                                        <select required class="form-control year" name="year">
+                                        <select required class="form-control form-select year" name="year">
                                             <option value="">Select Year</option>
                                             @for($i=2023;$i<= date('Y');$i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Salary Month</b></label>
-                                        <select required class="form-control month" name="month">
+                                        <select required class="form-control form-select month" name="month">
                                             <option value="">Select Month</option>
                                             @for($i=1;$i<= 12;$i++)
                                             <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
@@ -41,29 +41,27 @@
                                     <div class="col-lg-4 mt-2">
                                         <div class="form-group">
                                             <label for="role_id">Deduction</label>
-                                            <select class="select2 form-control" name="deduction_type" id="deduction_type">
-                                                <option value="0">Select</option>
-                                                <option value="1">Fine</option>
-                                                <option value="2">Mobile Bill</option>
-                                                <option value="3">Loan</option>
-                                                <option value="4">Cloth</option>
-                                                <option value="5">Jacket</option>
-                                                <option value="6">Hr</option>
-                                                <option value="7">CF</option>
-                                                <option value="8">Medical</option>
-                                                <option value="9">Matterss Pillow Cost</option>
-                                                <option value="10">Tonic Sim</option>
-                                                <option value="11">Over Payment</option>
-                                                <option value="12">Bank Charge/Exc</option>
-                                                <option value="13">Dress</option>
-                                                <option value="14">Mattress & Pillow Cost</option>
-                                                <option value="15">stmp</option>
-                                                <option value="16">Over Payment Cutt</option>
-                                                <option value="17">Excess Mobile</option>
-                                                <option value="18">Mess</option>
-                                                <option value="19">Absent</option>
-                                                <option value="20">Vacant</option>
-                                                <option value="21">Adv.</option>
+                                            <select class="form-control form-select" name="deduction_type" id="deduction_type">
+                                                <option value="">Select</option>
+                                                <option value="1" {{$did==1?'selected': ''}}>Fine</option>
+                                                <option value="2" {{$did==2?'selected': ''}}>Mobile Bill</option>
+                                                <option value="3" {{$did==3?'selected': ''}}>Loan</option>
+                                                <option value="4" {{$did==4?'selected': ''}}>Cloth</option>
+                                                <option value="5" {{$did==5?'selected': ''}}>Jacket</option>
+                                                <option value="6" {{$did==6?'selected': ''}}>Hr</option>
+                                                <option value="7" {{$did==7?'selected': ''}}>CF</option>
+                                                <option value="8" {{$did==8?'selected': ''}}>Medical</option>
+                                                <option value="9" {{$did==9?'selected': ''}}>Matterss Pillow Cost</option>
+                                                <option value="10" {{$did==10?'selected': ''}}>Tonic Sim</option>
+                                                <option value="11" {{$did==11?'selected': ''}}>Over Payment Cutt</option>
+                                                <option value="12" {{$did==12?'selected': ''}}>Bank Charge/Exc</option>
+                                                <option value="13" {{$did==13?'selected': ''}}>Dress</option>
+                                                <option value="14" {{$did==14?'selected': ''}}>stmp</option>
+                                                <option value="15" {{$did==15?'selected': ''}}>Excess Mobile</option>
+                                                <option value="16" {{$did==16?'selected': ''}}>Mess</option>
+                                                <option value="17" {{$did==17?'selected': ''}}>Absent</option>
+                                                <option value="18" {{$did==18?'selected': ''}}>Vacant</option>
+                                                <option value="19" {{$did==19?'selected': ''}}>Adv.</option>
                                             </select>
                                             @if($errors->has('deduction'))
                                                 <span class="text-danger"> {{ $errors->first('deduction') }}</span>
@@ -76,34 +74,24 @@
                                         <table class="table table-bordered mb-0 table-striped">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th scope="col">{{__('Employee')}}</th>
-                                                    <th scope="col">{{__('Taka')}}</th>
-                                                    <th scope="col">{{__('Remarks')}}</th>
+                                                    <th scope="col" width="20%">{{__('Employee')}}</th>
+                                                    <th scope="col" width="15%">{{__('Taka')}}</th>
+                                                    <th scope="col" width="60%">{{__('Remarks')}}</th>
                                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="deductiorepet">
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control repeater select2" name="employee_id[]" id="employee_id">
+                                                        <select class="form-control repeater select2" name="employee_id[]" id="employee_id" onchange="getEmpDeduction(this)">
                                                             <option value="0">Select</option>
                                                             @foreach ($employees as $e)
                                                             <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
                                                             @endforeach
                                                         </select>
                                                     </td>
-                                                    <td>
-                                                        <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
-                                                        @if($errors->has('amount'))
-                                                            <span class="text-danger"> {{ $errors->first('amount') }}</span>
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
-                                                        @if($errors->has('remarks'))
-                                                            <span class="text-danger"> {{ $errors->first('remarks') }}</span>
-                                                        @endif
-                                                    </td>
+                                                    <td><input type="text" class="form-control amount" value="{{ old('amount')}}" name="amount[]"></td>
+                                                    <td><input type="text" class="form-control remarks" value="{{ old('remarks')}}" name="remarks[]"></td>
                                                     <td>
                                                         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                     </td>
@@ -113,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 d-flex justify-content-end">
+                                    <div class="col-12 my-2 d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary me-1 mb-1">Save</button>
                                     </div>
                                 </div>
@@ -132,25 +120,15 @@
     var row=`
     <tr>
         <td>
-            <select class="form-control" name="employee_id[]" id="employee_id${counter}">
+            <select class="form-control" name="employee_id[]" id="employee_id${counter}" onchange="getEmpDeduction(this)">
                 <option value="0">Select</option>
                 @foreach ($employees as $e)
-                <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}</option>
+                <option value="{{ $e->id }}">{{ $e->bn_applicants_name }}({{ $e->admission_id_no }})</option>
                 @endforeach
             </select>
         </td>
-        <td>
-            <input type="text" id="amount" class="form-control" value="{{ old('amount')}}" name="amount[]">
-            @if($errors->has('amount'))
-                <span class="text-danger"> {{ $errors->first('amount') }}</span>
-            @endif
-        </td>
-        <td>
-            <input type="text" id="remarks" class="form-control" value="{{ old('remarks')}}" name="remarks[]">
-            @if($errors->has('remarks'))
-                <span class="text-danger"> {{ $errors->first('remarks') }}</span>
-            @endif
-        </td>
+        <td><input type="text" class="form-control amount" value="{{ old('amount')}}" name="amount[]"></td>
+        <td><input type="text" class="form-control remarks" value="{{ old('remarks')}}" name="remarks[]"></td>
         <td>
             <span onClick='removeRow(this);' class="add-row text-danger"><i class="bi bi-trash-fill"></i></span>
         </td>
@@ -164,6 +142,61 @@
     function removeRow(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
+        }
+    }
+    function getEmpDeduction(e){
+        let employee_id = $(e).val();
+        let fine = $('#deduction_type').val();
+        let year = $('.year').val();
+        let month = $('.month').val();
+        if(employee_id){
+            $.ajax({
+                url:"{{ route('get_old_deduction') }}",
+                type: "GET",
+                dataType: "json",
+                data: { 'employee_id':employee_id,'fine':fine,'year':year,'month':month },
+                success: function(response) {
+
+                    if (response.status === 1 && response.data && Object.keys(response.data).length > 0) {
+                        var data = response.data;
+
+                        var statusMapping = [
+                            {},
+                            { amount: data.fine, remarks: data.fine_rmk },
+                            { amount: data.mobilebill, remarks: data.mobilebill_rmk },
+                            { amount: data.loon, remarks: data.loon_rmk },
+                            { amount: data.cloth, remarks: data.cloth_rmk },
+                            { amount: data.jacket, remarks: data.jacket_rmk },
+                            { amount: data.hr, remarks: data.hr_rmk },
+                            { amount: data.c_f, remarks: data.c_f_rmk },
+                            { amount: data.medical, remarks: data.medical_rmk },
+                            { amount: data.matterss_pillowCost, remarks: data.matterss_pillowCost_rmk },
+                            { amount: data.tonic_sim, remarks: data.tonic_sim_rmk },
+                            { amount: data.over_paymentCut, remarks: data.over_paymentCut_rmk },
+                            { amount: data.bank_charge_exc, remarks: data.bank_charge_exc_rmk },
+                            { amount: data.dress, remarks: data.dress_rmk },
+                            { amount: data.stmp, remarks: data.stmp_rmk },
+                            { amount: data.excess_mobile, remarks: data.excess_mobile_rmk },
+                            { amount: data.mess, remarks: data.mess_rmk },
+                            { amount: data.absent, remarks: data.absent_rmk },
+                            { amount: data.vacant, remarks: data.vacant_rmk },
+                            { amount: data.adv, remarks: data.adv_rmk }
+                        ];
+
+                        var statusData = statusMapping[data.status] || { amount: '', remarks: '' };
+
+                        $(e).closest('tr').find('.amount').val(statusData.amount);
+                        $(e).closest('tr').find('.remarks').val(statusData.remarks);
+                    } else {
+                        $(e).closest('tr').find('.amount').val('');
+                        $(e).closest('tr').find('.remarks').val('');
+                    }
+                }
+
+            });
+        } else {
+            $(e).closest('tr').find('.amount').val('');
+            $(e).closest('tr').find('.remarks').val('');
         }
     }
 </script>

@@ -8,10 +8,6 @@
         <div class="col-12">
 
             <div class="card">
-                <div>
-                    <a class="float-end text-danger" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
-                    {{-- <a class="btn btn-sm btn-danger float-end" href="{{route('salaryStopCreate')}}">salary off</a> --}}
-                </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
@@ -31,6 +27,10 @@
                     <a href="{{route('bankChargeIndex')}}" class="btn btn-danger py-1 px-2 m-1">Bank Charge/Exc</a>
                     <a href="{{route('DressIndex')}}" class="btn btn-danger py-1 px-2 m-1">Dress</a>
                     <a href="{{route('stmpIndex')}}" class="btn btn-danger py-1 px-2 m-1">Stmp</a>
+                    <a href="{{route('mobileExcessIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Excess</a>
+                    <a href="{{route('messIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mess</a>
+                    <a href="{{route('absentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Absent</a>
+                    <a href="{{route('vacantIndex')}}" class="btn btn-danger py-1 px-2 m-1">Vacant</a>
                     <a href="{{route('advIndex')}}" class="btn btn-danger py-1 px-2 m-1">Adv</a>
                 </div>
             </div>

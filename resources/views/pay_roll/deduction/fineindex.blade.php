@@ -3,15 +3,13 @@
 @section('pageSubTitle',trans('List'))
 
 @section('content')
-
-<!-- Bordered table start -->
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
 
             <div class="card">
                 <div>
-                    <a class="float-end text-danger" href="{{route('deduction_asign.create')}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
+                    <a class="float-end text-danger" href="{{route('deductionCreate',['deduction_id' => 1])}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
@@ -23,7 +21,6 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Employee Name')}}</th>
-                                <th scope="col">{{__('Employee ID')}}</th>
                                 <th scope="col">{{__('Month')}}</th>
                                 <th scope="col">{{__('Fine')}}</th>
                                 <th scope="col">{{__('Remarks')}}</th>
@@ -38,11 +35,10 @@
                             @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
-                                <td>{{$p->employee?->bn_applicants_name}}</td>
-                                <td>{{$p->employee?->admission_id_no}}</td>
+                                <td>{{$p->employee?->bn_applicants_name}}({{$p->employee?->admission_id_no}})</td>
                                 <td>{{$getMonth}}--{{$p->year}}</td>
                                 <td>{{$p->fine}}</td>
-                                <td>{{$p->remarks}}</td>
+                                <td>{{$p->fine_rmk}}</td>
                                 <td>
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
                                         <i class="bi bi-trash"></i>

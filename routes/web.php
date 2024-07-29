@@ -182,6 +182,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         Route::resource('deduction_asign', deductionAsign::class);
         Route::resource('long_loan', long_loan::class);
+        Route::get('deduction-create/{deduction_id}', [deductionAsign::class,'createDeduction'])->name('deductionCreate');
+        Route::get('get-old-deduction-data', [deductionAsign::class,'getOldDeduction'])->name('get_old_deduction');
         Route::get('salary-stop-index', [deductionAsign::class,'salaryStopIndex'])->name('salaryStopIndex');
         Route::get('salary-stop', [deductionAsign::class,'salary_stop'])->name('salaryStopCreate');
         Route::get('deduction-fine-index', [deductionAsign::class,'fineIndex'])->name('fineIndex');
@@ -198,6 +200,10 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('deduction-bank-index', [deductionAsign::class,'bankChargeIndex'])->name('bankChargeIndex');
         Route::get('deduction-dress-index', [deductionAsign::class,'DressIndex'])->name('DressIndex');
         Route::get('deduction-stmp-index', [deductionAsign::class,'stmpIndex'])->name('stmpIndex');
+        Route::get('deduction-mobile-excess-index', [deductionAsign::class,'mobileExcessIndex'])->name('mobileExcessIndex');
+        Route::get('deduction-mess-index', [deductionAsign::class,'messIndex'])->name('messIndex');
+        Route::get('deduction-absent-index', [deductionAsign::class,'absentIndex'])->name('absentIndex');
+        Route::get('deduction-vacant-index', [deductionAsign::class,'vacantIndex'])->name('vacantIndex');
         Route::get('deduction-adv-index', [deductionAsign::class,'advIndex'])->name('advIndex');
 
         //Accounts
