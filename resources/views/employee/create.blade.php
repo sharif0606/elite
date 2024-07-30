@@ -113,6 +113,12 @@
                             <input type="date" value="{{old('salary_joining_date')}}" class="form-control" name="salary_joining_date">
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="salary-status">Salary Status</label>
+                            <input type="text" value="{{old('salary_status')}}" class="form-control" name="salary_status">
+                        </div>
+                    </div>
                     {{--  <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_applicants_name">স্বামীর নাম</label>

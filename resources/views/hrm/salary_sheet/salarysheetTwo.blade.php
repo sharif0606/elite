@@ -117,6 +117,7 @@
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Signature')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Zone')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
@@ -238,6 +239,23 @@
                         if (new Date() >= sixMonthsLater) {
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
+
+                        //remarks
+                        let RemarksArray = [
+                            (value.matterss_pillowCost_rmk) ? value.matterss_pillowCost_rmk : '',
+                            (value.tonic_sim_rmk) ? value.tonic_sim_rmk : '',
+                            (value.over_paymentCut_rmk) ? value.over_paymentCut_rmk : '',
+                            (value.fine_rmk) ? value.fine_rmk : '',
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.cloth_rmk) ? value.cloth_rmk : '',
+                            (value.hr_rmk) ? value.hr_rmk : '',
+                            (value.jacket_rmk) ? value.jacket_rmk : '',
+                            (value.stmp_rmk) ? value.stmp_rmk : '',
+                            (value.c_f_rmk) ? value.c_f_rmk : '',
+                            (value.medical_rmk) ? value.medical_rmk : '',
+                            (value.salary_status) ? value.salary_status : ''
+                        ];
+                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let pillCost = (value.matterss_pillowCost > 0) ? value.matterss_pillowCost : '0';
                         let paCutt = (value.over_paymentCut > 0) ? value.over_paymentCut : '0';
@@ -246,6 +264,7 @@
                         let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
                         let Cloth = (value.cloth > 0) ? value.cloth : '0';
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
@@ -275,6 +294,7 @@
                             var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                         }else{
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var customerName =`<input style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
@@ -287,7 +307,7 @@
                             var clothCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">`
                             var hrCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">`
                             var jacketCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="Stamp">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="${Stmp}" placeholder="Stamp">`
                             var trainingCostCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningCost[]" value="${traningCostPerMonth}" placeholder="Training Cost">`
                             var cfCondition=` <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">`
                             var medicalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">`
@@ -295,6 +315,7 @@
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">`
                             var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
                         }
                         selectElement.append(
                             `<tr>
@@ -382,9 +403,7 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control zone" type="text" name="zone[]" value="" placeholder="Zone">
                                 </td>
-                                {{--  <td>
-                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                </td>  --}}
+                                <td>${remarkCondition}</td>
                             </tr>`
                         );
                         counter++;

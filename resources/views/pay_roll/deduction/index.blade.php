@@ -12,7 +12,7 @@
                     {!!Session::get('response')['message']!!}
                 @endif
                 <div class="table-responsive">
-                    <a href="{{route('salaryStopIndex')}}" class="btn btn-danger py-1 px-2 m-1">Salary Stop</a>
+                    {{-- <a href="{{route('salaryStopIndex')}}" class="btn btn-danger py-1 px-2 m-1">Salary Stop</a> --}}
                     <a href="{{route('fineIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fine List</a>
                     <a href="{{route('mobileBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Bill</a>
                     <a href="{{route('loanIndex')}}" class="btn btn-danger py-1 px-2 m-1">Loan</a>
@@ -29,8 +29,8 @@
                     <a href="{{route('stmpIndex')}}" class="btn btn-danger py-1 px-2 m-1">Stmp</a>
                     <a href="{{route('mobileExcessIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Excess</a>
                     <a href="{{route('messIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mess</a>
-                    <a href="{{route('absentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Absent</a>
-                    <a href="{{route('vacantIndex')}}" class="btn btn-danger py-1 px-2 m-1">Vacant</a>
+                    {{-- <a href="{{route('absentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Absent</a>
+                    <a href="{{route('vacantIndex')}}" class="btn btn-danger py-1 px-2 m-1">Vacant</a> --}}
                     <a href="{{route('advIndex')}}" class="btn btn-danger py-1 px-2 m-1">Adv</a>
                 </div>
             </div>

@@ -59,8 +59,8 @@
                                                 <option value="14" {{$did==14?'selected': ''}}>stmp</option>
                                                 <option value="15" {{$did==15?'selected': ''}}>Excess Mobile</option>
                                                 <option value="16" {{$did==16?'selected': ''}}>Mess</option>
-                                                <option value="17" {{$did==17?'selected': ''}}>Absent</option>
-                                                <option value="18" {{$did==18?'selected': ''}}>Vacant</option>
+                                                {{-- <option value="17" {{$did==17?'selected': ''}}>Absent</option>
+                                                <option value="18" {{$did==18?'selected': ''}}>Vacant</option> --}}
                                                 <option value="19" {{$did==19?'selected': ''}}>Adv.</option>
                                             </select>
                                             @if($errors->has('deduction'))

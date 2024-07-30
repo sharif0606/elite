@@ -205,8 +205,11 @@
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         //let Remarks = (value.remarks) ? value.remarks : '';
                         let RemarksArray = [
-                            (value.remarks) ? value.remarks : '',
-                            (value.salary_stop_message) ? value.salary_stop_message : ''
+                            (value.dress_rmk) ? value.dress_rmk : '',
+                            (value.fine_rmk) ? value.fine_rmk : '',
+                            (value.bank_charge_exc_rmk) ? value.bank_charge_exc_rmk : '',
+                            (value.stmp_rmk) ? value.stmp_rmk : '',
+                            (value.salary_status) ? value.salary_status : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let Loan = (value.loan > 0) ? value.loan : '0';
@@ -214,6 +217,7 @@
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
                         let Dress = (value.dress > 0) ? value.dress : '0';
@@ -244,11 +248,11 @@
                             var backChargeCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">`
                             var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" value="${Insurance}" name="deduction_ins[]" placeholder="ins">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="" placeholder="stamp">`
+                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="${Stmp}" placeholder="stamp">`
                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="${Remarks}"><span>${Remarks}</span>`;
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
                         }
                         selectElement.append(
                             `<tr>

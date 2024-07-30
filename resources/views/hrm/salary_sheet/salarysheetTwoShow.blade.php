@@ -70,6 +70,7 @@
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Signature')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Zone')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                             </tr>
                                             <tr>
                                                 <th>Mattress & Pillow Cost</th>
@@ -143,6 +144,7 @@
                                                         <td>{{ $d->net_salary }}</td>
                                                         <td>{{ $d->sing_of_ind }}</td>
                                                         <td>{{ $d->zone }}</td>
+                                                        <td>{{ $d->remark }}</td>
                                                     </tr>
                                                     @empty
                                                     @endforelse

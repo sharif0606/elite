@@ -213,8 +213,16 @@
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         //let Remarks = (value.remarks) ? value.remarks : '';
                         let RemarksArray = [
-                            (value.remarks) ? value.remarks : '',
-                            (value.salary_stop_message) ? value.salary_stop_message : ''
+                            (value.fine_rmk) ? value.fine_rmk : '',
+                            (value.mobilebill_rmk_rmk) ? value.mobilebill_rmk_rmk : '',
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.cloth_rmk) ? value.cloth_rmk : '',
+                            (value.jacket_rmk) ? value.jacket_rmk : '',
+                            (value.hr_rmk) ? value.hr_rmk : '',
+                            (value.c_f_rmk) ? value.c_f_rmk : '',
+                            (value.medical_rmk) ? value.medical_rmk : '',
+                            (value.stmp_rmk) ? value.stmp_rmk : '',
+                            (value.salary_status) ? value.salary_status : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
@@ -269,7 +277,7 @@
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="${Stmp}" placeholder="Revenue Stamp">`
                             var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="${Remarks}"><span>${Remarks}</span>`;
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
                         }
                         selectElement.append(
                             `<tr>

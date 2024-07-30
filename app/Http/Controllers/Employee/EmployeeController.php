@@ -81,6 +81,7 @@ class EmployeeController extends Controller
             $employee->admission_id_no = $request->admission_id_no;
             $employee->joining_date = $request->joining_date;
             $employee->salary_joining_date = $request->salary_joining_date;
+            $employee->salary_status = $request->salary_status;
             // $employee->admission_id_no = 'AD-'.Carbon::now()->format('m-y').'-'. str_pad((Employee::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
 
             $employee->bn_parm_district_id = $request->bn_parm_district_id;
@@ -305,6 +306,7 @@ class EmployeeController extends Controller
             $employee->admission_id_no = $request->admission_id_no;
             $employee->joining_date = $request->joining_date;
             $employee->salary_joining_date = $request->salary_joining_date;
+            $employee->salary_status = $request->salary_status;
             // $employee->admission_id_no = 'AD-'.Carbon::now()->format('m-y').'-'. str_pad((Employee::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
 
             $employee->bn_parm_district_id = $request->bn_parm_district_id;

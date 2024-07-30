@@ -69,6 +69,7 @@
                                             <th scope="col" rowspan="2">{{__('OT Amt.')}}</th>
                                             <th scope="col" rowspan="2">{{__('Total Payable')}}</th>
                                             <th scope="col" rowspan="2">{{__('Signature')}}</th>
+                                            <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                         </tr>
                                         <tr>
                                             <th>CL</th>
@@ -128,6 +129,7 @@
                                                     <td>{{ $d->ot_amount }}</td>
                                                     <td>{{ $d->total_payable }}</td>
                                                     <td>{{ $d->sing_of_ind }}</td>
+                                                    <td>{{ $d->remark }}</td>
                                                 </tr>
                                                 @empty
                                                 @endforelse

@@ -84,7 +84,7 @@ class ControllerDeduction extends Controller
     }
     public function DressIndex()
     {
-        $deductions=Deduction::where('over_paymentCut', '>', 0)->get();
+        $deductions=Deduction::where('dress', '>', 0)->get();
         return view('pay_roll.deduction.DressIndex',compact('deductions'));
     }
     public function advIndex()
@@ -99,22 +99,22 @@ class ControllerDeduction extends Controller
     }
     public function mobileExcessIndex()
     {
-        $deductions=Deduction::where('stmp', '>', 0)->get();
+        $deductions=Deduction::where('excess_mobile', '>', 0)->get();
         return view('pay_roll.deduction.mobileExcessIndex',compact('deductions'));
     }
     public function messIndex()
     {
-        $deductions=Deduction::where('stmp', '>', 0)->get();
+        $deductions=Deduction::where('mess', '>', 0)->get();
         return view('pay_roll.deduction.messIndex',compact('deductions'));
     }
     public function absentIndex()
     {
-        $deductions=Deduction::where('stmp', '>', 0)->get();
+        $deductions=Deduction::where('absent', '>', 0)->get();
         return view('pay_roll.deduction.absentIndex',compact('deductions'));
     }
     public function vacantIndex()
     {
-        $deductions=Deduction::where('stmp', '>', 0)->get();
+        $deductions=Deduction::where('vacant', '>', 0)->get();
         return view('pay_roll.deduction.vacantIndex',compact('deductions'));
     }
     public function salaryStopIndex()

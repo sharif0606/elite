@@ -96,6 +96,7 @@
                                                 <th scope="col" rowspan="2">{{__('OT Amt.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Total Payable')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Signature')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Remarks')}}</th>
                                             </tr>
                                             <tr>
                                                 <th>CL</th>
@@ -198,26 +199,33 @@
                         if (new Date() >= sixMonthsLater) {
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
                         }
-                        let Fine = (value.fine > 0) ? value.fine : '0';
-                        let pillCost = (value.matterss_pillowCost > 0) ? value.matterss_pillowCost : '0';
-                        let paCutt = (value.over_paymentCut > 0) ? value.over_paymentCut : '0';
-                        let Tsim = (value.tonic_sim > 0) ? value.tonic_sim : '0';
-                        let Loan = (value.loan > 0) ? value.loan : '0';
-                        let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
-                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
-                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        //remarks
+                        let RemarksArray = [
+                            (value.adv_rmk) ? value.adv_rmk : '',
+                            (value.stmp_rmk) ? value.stmp_rmk : '',
+                            (value.salary_status) ? value.salary_status : ''
+                        ];
+                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
+                        // let Fine = (value.fine > 0) ? value.fine : '0';
+                        // let pillCost = (value.matterss_pillowCost > 0) ? value.matterss_pillowCost : '0';
+                        // let paCutt = (value.over_paymentCut > 0) ? value.over_paymentCut : '0';
+                        // let Tsim = (value.tonic_sim > 0) ? value.tonic_sim : '0';
+                        // let Loan = (value.loan > 0) ? value.loan : '0';
+                        // let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                        // let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                        // let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                        // let Ab = (value.absent > 0) ? value.absent : '0';
+                        // let Va = (value.vacant > 0) ? value.vacant : '0';
+                        // let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        // let Medical = (value.medical > 0) ? value.medical : '0';
+                        // let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
-                        let Ab = (value.absent > 0) ? value.absent : '0';
-                        let Va = (value.vacant > 0) ? value.vacant : '0';
                         let Ad = (value.adv > 0) ? value.adv : '0';
                         let Stmp = (value.stmp > 0) ? value.stmp : '0';
-                        let Cf = (value.c_f > 0) ? value.c_f : '0';
-                        let Medical = (value.medical > 0) ? value.medical : '0';
-                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let hR = (value.duty_rate > 0) ? ((value.duty_rate)*50)/100 : '0';
                         let otR = (value.duty_rate > 0) ? (((value.duty_rate)*2)/208).toFixed(2) : '0';
                         let otP = (value.ot_qty > 0) ? parseFloat(otR*(value.ot_qty)).toFixed(2) : '0';
-                        let totalDeduction = parseFloat(Hr) + parseFloat(Ab) + parseFloat(Va) + parseFloat(Ad) + parseFloat(pf);
+                        let totalDeduction = parseFloat(Hr) + parseFloat(Stmp) + parseFloat(Ad) + parseFloat(pf);
                         let gr = parseFloat(value.duty_rate) + parseFloat(hR);
                         let netSalary = '0';
                         if (gr > totalDeduction) {
@@ -234,17 +242,19 @@
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stm[]" value="0" readonly>`
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(gr)}" readonly>`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                         }else{
                             var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
-                            var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Ab}" placeholder="Absent" readonly>`
-                            var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Va}" placeholder="Vacant" readonly>`
+                            var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="" placeholder="Absent" readonly>`
+                            var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="" placeholder="Vacant" readonly>`
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
                             var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="${Stmp}" placeholder="Stm">`
                             var deTotalCondition=`<input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(netSalary)}" placeholder="Net Wages" readonly>`
+                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
                         }
                         selectElement.append(
                             `<tr>
@@ -326,9 +336,7 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature" type="text" name="signature[]" value="" placeholder="Signature">
                                 </td>
-                                {{--  <td>
-                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                </td>  --}}
+                                <td>${remarkCondition}</td>
                             </tr>`
                         );
                         counter++;
