@@ -120,7 +120,7 @@
                             <input type="date" value="{{old('salary_joining_date',$employees->salary_joining_date)}}" class="form-control" name="salary_joining_date">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-12 d-none">
                         <div class="form-group">
                             <label for="salary-status">Salary Status</label>
                             <input type="text" value="{{old('salary_status',$employees->salary_status)}}" class="form-control" name="salary_status">

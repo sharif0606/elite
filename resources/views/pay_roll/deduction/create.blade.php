@@ -41,7 +41,7 @@
                                     <div class="col-lg-4 mt-2">
                                         <div class="form-group">
                                             <label for="role_id">Deduction</label>
-                                            <select class="form-control form-select" name="deduction_type" id="deduction_type">
+                                            <select required class="form-control form-select" name="deduction_type" id="deduction_type">
                                                 <option value="">Select</option>
                                                 <option value="1" {{$did==1?'selected': ''}}>Fine</option>
                                                 <option value="2" {{$did==2?'selected': ''}}>Mobile Bill</option>
@@ -159,12 +159,13 @@
 
                     if (response.status === 1 && response.data && Object.keys(response.data).length > 0) {
                         var data = response.data;
+                        console.log(data);
 
                         var statusMapping = [
                             {},
                             { amount: data.fine, remarks: data.fine_rmk },
                             { amount: data.mobilebill, remarks: data.mobilebill_rmk },
-                            { amount: data.loon, remarks: data.loon_rmk },
+                            { amount: data.loan, remarks: data.loan_rmk },
                             { amount: data.cloth, remarks: data.cloth_rmk },
                             { amount: data.jacket, remarks: data.jacket_rmk },
                             { amount: data.hr, remarks: data.hr_rmk },
