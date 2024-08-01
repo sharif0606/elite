@@ -97,32 +97,137 @@
                                                     <td>{{ $d->employee?->salary_joining_date }}</td>
                                                     <td>{{ $d->employee?->position?->name }}</td>
                                                     <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                    <td>{{ $d->duty_rate }}</td>
-                                                    <td>{{ $d->duty_qty }}</td>
-                                                    <td>{{ $d->duty_amount }}</td>
-                                                    <td>{{ $d->ot_qty }}</td>
-                                                    <td>{{ $d->ot_rate }}</td>
-                                                    <td>{{ $d->ot_amount }}</td>
-                                                    <td>{{ $d->fixed_ot }}</td>
-                                                    <td>{{ $d->allownce }}</td>
-                                                    <td>{{ $d->leave }}</td>
-                                                    <td>{{ $d->arrear }}</td>
-                                                    <td>{{ $d->gross_salary }}</td>
-                                                    <td>{{ $d->deduction_fine }}</td>
-                                                    <td>{{ $d->deduction_mobilebill }}</td>
-                                                    <td>{{ $d->deduction_loan }}</td>
-                                                    <td>{{ $d->deduction_long_loan }}</td>
-                                                    <td>{{ $d->deduction_cloth }}</td>
-                                                    <td>{{ $d->deduction_jacket }}</td>
-                                                    <td>{{ $d->deduction_hr }}</td>
-                                                    <td>{{ $d->deduction_traningcost }}</td>
-                                                    <td>{{ $d->deduction_c_f }}</td>
-                                                    <td>{{ $d->deduction_medical }}</td>
-                                                    <td>{{ $d->deduction_ins }}</td>
-                                                    <td>{{ $d->deduction_p_f }}</td>
-                                                    <td>{{ $d->deduction_revenue_stamp }}</td>
-                                                    <td>{{ $d->deduction_total }}</td>
-                                                    <td>{{ $d->net_salary }}</td>
+                                                    <td>
+
+                                                        @if ($d->duty_rate != 0)
+                                                        {{ round($d->duty_rate) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->duty_qty != 0)
+                                                        {{ round($d->duty_qty) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->duty_amount != 0)
+                                                        {{ round($d->duty_amount) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->ot_qty != 0)
+                                                        {{ round($d->ot_qty) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->ot_rate != 0)
+                                                        {{ round($d->ot_rate) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->ot_amount != 0)
+                                                        {{ round($d->ot_amount) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->fixed_ot != 0)
+                                                        {{ round($d->fixed_ot) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->allownce != 0)
+                                                        {{ round($d->allownce) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->leave != 0)
+                                                        {{ round($d->leave) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->arrear != 0)
+                                                        {{ round($d->arrear) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->gross_salary != 0)
+                                                        {{ round($d->gross_salary) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_fine != 0)
+                                                        {{ round($d->deduction_fine) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_mobilebill != 0)
+                                                        {{ round($d->deduction_mobilebill) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_loan != 0)
+                                                        {{ round($d->deduction_loan) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_long_loan != 0)
+                                                        {{ round($d->deduction_long_loan) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_cloth != 0)
+                                                        {{ round($d->deduction_cloth) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_jacket != 0)
+                                                        {{ round($d->deduction_jacket) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_hr != 0)
+                                                        {{ round($d->deduction_hr) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_traningcost != 0)
+                                                        {{ round($d->deduction_traningcost) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_c_f != 0)
+                                                        {{ round($d->deduction_c_f) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_medical != 0)
+                                                        {{ round($d->deduction_medical) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_ins != 0)
+                                                        {{ round($d->deduction_ins) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_p_f != 0)
+                                                        {{ round($d->deduction_p_f) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_revenue_stamp != 0)
+                                                        {{ round($d->deduction_revenue_stamp) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->deduction_total != 0)
+                                                        {{ round($d->deduction_total) }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($d->net_salary != 0)
+                                                        {{ round($d->net_salary) }}
+                                                        @endif
+                                                    </td>
                                                     <td>{{ $d->sing_of_ind }}</td>
                                                     <td>{{ $d->remark }}</td>
                                                     {{--  <td>

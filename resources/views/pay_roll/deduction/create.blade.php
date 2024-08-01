@@ -115,6 +115,11 @@
 @endsection
 @push("scripts")
 <script>
+    document.getElementById('deduction_type').addEventListener('change', function (e) {
+        e.preventDefault();
+        this.value = this.dataset.value;
+    });
+    document.getElementById('deduction_type').dataset.value = document.getElementById('deduction_type').value;
     let counter = 0;
     function addRow(){
     var row=`
@@ -184,7 +189,7 @@
                             { amount: data.adv, remarks: data.adv_rmk }
                         ];
 
-                        var statusData = statusMapping[data.status] || { amount: '', remarks: '' };
+                        var statusData = statusMapping[fine] || { amount: '', remarks: '' };
 
                         $(e).closest('tr').find('.amount').val(statusData.amount);
                         $(e).closest('tr').find('.remarks').val(statusData.remarks);

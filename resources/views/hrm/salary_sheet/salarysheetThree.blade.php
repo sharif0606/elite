@@ -201,9 +201,8 @@
                         }
                         //remarks
                         let RemarksArray = [
-                            (value.adv_rmk) ? value.adv_rmk : '',
-                            (value.stmp_rmk) ? value.stmp_rmk : '',
-                            (value.salary_status) ? value.salary_status : ''
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         // let Fine = (value.fine > 0) ? value.fine : '0';

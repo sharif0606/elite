@@ -213,16 +213,8 @@
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         //let Remarks = (value.remarks) ? value.remarks : '';
                         let RemarksArray = [
-                            (value.fine_rmk) ? value.fine_rmk : '',
-                            (value.mobilebill_rmk_rmk) ? value.mobilebill_rmk_rmk : '',
                             (value.loan_rmk) ? value.loan_rmk : '',
-                            (value.cloth_rmk) ? value.cloth_rmk : '',
-                            (value.jacket_rmk) ? value.jacket_rmk : '',
-                            (value.hr_rmk) ? value.hr_rmk : '',
-                            (value.c_f_rmk) ? value.c_f_rmk : '',
-                            (value.medical_rmk) ? value.medical_rmk : '',
-                            (value.stmp_rmk) ? value.stmp_rmk : '',
-                            (value.salary_status) ? value.salary_status : ''
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';

@@ -205,11 +205,8 @@
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         //let Remarks = (value.remarks) ? value.remarks : '';
                         let RemarksArray = [
-                            (value.dress_rmk) ? value.dress_rmk : '',
-                            (value.fine_rmk) ? value.fine_rmk : '',
-                            (value.bank_charge_exc_rmk) ? value.bank_charge_exc_rmk : '',
-                            (value.stmp_rmk) ? value.stmp_rmk : '',
-                            (value.salary_status) ? value.salary_status : ''
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let Loan = (value.loan > 0) ? value.loan : '0';

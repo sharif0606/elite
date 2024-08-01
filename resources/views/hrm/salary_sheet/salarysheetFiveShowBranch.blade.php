@@ -63,6 +63,11 @@
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
+                                        @php
+                                            $deductionLoanTotal = 0;
+                                            $deductionTrainingTotal = 0;
+                                            $payableTotal = 0;
+                                        @endphp
                                         @foreach ($groupedData as $customerId => $branches)
                                             @foreach ($branches as $branchId => $details)
                                                 <tr>
@@ -80,7 +85,7 @@
                                                     <td>{{ $d->employee?->salary_joining_date }}</td>
                                                     <td>{{ $d->position?->name }}</td>
                                                     <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                    <td>{{ $d->duty_rate }}</td>
+                                                    <td>{{ round($d->duty_rate) }}</td>
                                                     <td>
                                                         @if ($d->duty_qty != 0)
                                                         {{ (int)$d->duty_qty }}
@@ -88,7 +93,7 @@
                                                     </td>
                                                     <td>
                                                         @if ($d->duty_amount != 0)
-                                                        {{ $d->duty_amount }}
+                                                        {{ round($d->duty_amount) }}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -98,63 +103,72 @@
                                                     </td>
                                                     <td>
                                                         @if ($d->ot_rate != 0)
-                                                        {{ $d->ot_rate }}
+                                                        {{ round($d->ot_rate) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->ot_amount != 0)
-                                                        {{ $d->ot_amount }}
+                                                        {{ round($d->ot_amount) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->allownce != 0)
-                                                        {{ $d->allownce }}
+                                                        {{ round($d->allownce) }}
                                                         @endif
                                                     </td>
-                                                    <td>{{ $d->gross_salary }}</td>
+                                                    <td>{{ round($d->gross_salary) }}</td>
                                                     <td>
                                                         @if ($d->deduction_dress != 0)
-                                                        {{ $d->deduction_dress }}
+                                                        {{ round($d->deduction_dress) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_fine != 0)
-                                                        {{ $d->deduction_fine }}
+                                                        {{ round($d->deduction_fine) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_banck_charge != 0)
-                                                        {{ $d->deduction_banck_charge }}
+                                                        {{ round($d->deduction_banck_charge) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_ins != 0)
-                                                        {{ $d->deduction_ins }}
+                                                        {{ round($d->deduction_ins) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_p_f != 0)
-                                                        {{ $d->deduction_p_f }}
+                                                        {{ round($d->deduction_p_f) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_revenue_stamp != 0)
-                                                        {{ $d->deduction_revenue_stamp }}
+                                                        {{ round($d->deduction_revenue_stamp) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_traningcost != 0)
-                                                        {{ $d->deduction_traningcost }}
+                                                        {{ round($d->deduction_traningcost) }}
+                                                        @php
+                                                            $deductionTrainingTotal += $d->deduction_traningcost;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_loan != 0)
-                                                        {{ $d->deduction_loan }}
+                                                        {{ round($d->deduction_loan) }}
+                                                        @php
+                                                            $deductionLoanTotal += $d->deduction_loan;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->net_salary != 0)
                                                         {{ $d->net_salary }}
+                                                        @php
+                                                            $payableTotal += $d->net_salary;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->sing_of_ind }}</td>
@@ -166,6 +180,15 @@
                                             @endforeach
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                           <th colspan="19" class="text-center">Total</th>
+                                           <th>{{$deductionTrainingTotal}}</th>
+                                           <th>{{$deductionLoanTotal}}</th>
+                                           <th>{{$payableTotal}}</th>
+                                           <th>{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                       </tr> 
+                                   </tfoot>
                                 </table>
                             </div>
                         </div>

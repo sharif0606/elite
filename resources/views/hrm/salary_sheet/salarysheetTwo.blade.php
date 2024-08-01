@@ -242,18 +242,8 @@
 
                         //remarks
                         let RemarksArray = [
-                            (value.matterss_pillowCost_rmk) ? value.matterss_pillowCost_rmk : '',
-                            (value.tonic_sim_rmk) ? value.tonic_sim_rmk : '',
-                            (value.over_paymentCut_rmk) ? value.over_paymentCut_rmk : '',
-                            (value.fine_rmk) ? value.fine_rmk : '',
                             (value.loan_rmk) ? value.loan_rmk : '',
-                            (value.cloth_rmk) ? value.cloth_rmk : '',
-                            (value.hr_rmk) ? value.hr_rmk : '',
-                            (value.jacket_rmk) ? value.jacket_rmk : '',
-                            (value.stmp_rmk) ? value.stmp_rmk : '',
-                            (value.c_f_rmk) ? value.c_f_rmk : '',
-                            (value.medical_rmk) ? value.medical_rmk : '',
-                            (value.salary_status) ? value.salary_status : ''
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let Fine = (value.fine > 0) ? value.fine : '0';

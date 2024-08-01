@@ -136,7 +136,7 @@ class ControllerDeduction extends Controller
     }
 
     public function getOldDeduction(Request $request) {
-        $data = Deduction::where('employee_id', $request->employee_id)->where('year', $request->year)->where('month', $request->month)->where('status', $request->fine)->first();
+        $data = Deduction::where('employee_id', $request->employee_id)->where('year', $request->year)->where('month', $request->month)->first();
     
         if ($data) {
             return response()->json([

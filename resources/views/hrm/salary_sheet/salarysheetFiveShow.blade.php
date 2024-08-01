@@ -77,7 +77,7 @@
                                             <td>{{ $d->employee?->salary_joining_date }}</td>
                                             <td>{{ $d->position?->name }}</td>
                                             <td>{{ $d->employee?->en_applicants_name }}</td>
-                                            <td>{{ $d->duty_rate }}</td>
+                                            <td>{{ (int) round($d->duty_rate) }}</td>
                                             <td>
                                                 @if ($d->duty_qty != 0)
                                                 {{ (int)$d->duty_qty }}
@@ -85,7 +85,7 @@
                                             </td>
                                             <td>
                                                 @if ($d->duty_amount != 0)
-                                                {{ $d->duty_amount }}
+                                                {{ (int) round($d->duty_amount) }}
                                                 @endif
                                             </td>
                                             <td>

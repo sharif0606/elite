@@ -166,7 +166,7 @@
                             { remarks: data.salary_stop_message }
                         ];
 
-                        var statusData = statusMapping[data.status] || { amount: '', remarks: '' };
+                        var statusData = statusMapping[fine] || { amount: '', remarks: '' };
 
                         $(e).closest('tr').find('.salary_off_msg').val(statusData.remarks);
                     } else {
