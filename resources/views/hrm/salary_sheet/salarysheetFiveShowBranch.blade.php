@@ -67,6 +67,7 @@
                                             $deductionLoanTotal = 0;
                                             $deductionTrainingTotal = 0;
                                             $payableTotal = 0;
+                                            $serial = 1;
                                         @endphp
                                         @php
                                             // Grouping data by admission_id_no
@@ -113,13 +114,13 @@
                                         
                                             @foreach ($details as $index => $d)
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $serial++ }}</td>
                                                     <td>{{ $d->employee?->admission_id_no }}</td>
                                                     <td>
                                                         @if ($d->duty_qty != 0)
                                                             {{ $d->employee?->salary_joining_date }}
                                                         @else
-                                                            {{ $branchName }}
+                                                            {{ $d->branches?->brance_name }}
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->position?->name }}</td>
