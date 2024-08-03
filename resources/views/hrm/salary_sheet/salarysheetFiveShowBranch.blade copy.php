@@ -68,152 +68,115 @@
                                             $deductionTrainingTotal = 0;
                                             $payableTotal = 0;
                                         @endphp
-                                        @php
-                                            // Grouping data by admission_id_no
-                                            $groupedByAdmissionId = [];
-                                        
-                                            foreach ($groupedData as $customerId => $branches) {
-                                                foreach ($branches as $branchId => $details) {
-                                                    foreach ($details as $detail) {
-                                                        $admissionId = $detail->employee?->admission_id_no;
-                                                        $groupedByAdmissionId[$admissionId][] = $detail;
-                                                    }
-                                                }
-                                            }
-                                        
-                                            // Track displayed customer and branch combinations
-                                            $displayedCustomerBranch = [];
-                                        @endphp
-                                    
-                                        @foreach ($groupedByAdmissionId as $admissionId => $details)
-                                            @php
-                                                $firstDetail = $details[0];
-                                                $customerName = $firstDetail->customer?->name;
-                                                $branchName = $firstDetail->branches?->brance_name;
-                                                $customerBranchKey = $customerName . '-' . $branchName;
-
-                                                usort($details, function ($a, $b) {
-                                                    return ($b->duty_qty != 0) <=> ($a->duty_qty != 0);
-                                                });
-                                            @endphp
-                                        
-                                            @if (!in_array($customerBranchKey, $displayedCustomerBranch))
-                                                @php
-                                                    $displayedCustomerBranch[] = $customerBranchKey;
-                                                @endphp
+                                        @foreach ($groupedData as $customerId => $branches)
+                                            @foreach ($branches as $branchId => $details)
                                                 <tr>
                                                     <td colspan="25">
                                                         <div class="d-flex">
-                                                            <h6>{{ $customerName }},</h6>
-                                                            <span>&nbsp;&nbsp;&nbsp;<b>{{ $branchName }}</b></span>
+                                                            <h6>{{ $details[0]->customer?->name }},</h6>
+                                                            <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endif
-                                        
-                                            @foreach ($details as $index => $d)
+                                                @forelse ($details as $d )
                                                 <tr>
-                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ ++$loop->index }}</td>
                                                     <td>{{ $d->employee?->admission_id_no }}</td>
-                                                    <td>
-                                                        @if ($d->duty_qty != 0)
-                                                            {{ $d->employee?->salary_joining_date }}
-                                                        @else
-                                                            {{ $branchName }}
-                                                        @endif
-                                                    </td>
+                                                    <td>{{ $d->employee?->salary_joining_date }}</td>
                                                     <td>{{ $d->position?->name }}</td>
                                                     <td>{{ $d->employee?->en_applicants_name }}</td>
                                                     <td>{{ round($d->duty_rate) }}</td>
                                                     <td>
                                                         @if ($d->duty_qty != 0)
-                                                            {{ (int)$d->duty_qty }}
+                                                        {{ (int)$d->duty_qty }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->duty_amount != 0)
-                                                            {{ round($d->duty_amount) }}
+                                                        {{ round($d->duty_amount) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->ot_qty != 0)
-                                                            {{ (int)$d->ot_qty }}
+                                                        {{ (int)$d->ot_qty }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->ot_rate != 0)
-                                                            {{ round($d->ot_rate) }}
+                                                        {{ round($d->ot_rate) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->ot_amount != 0)
-                                                            {{ round($d->ot_amount) }}
+                                                        {{ round($d->ot_amount) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->allownce != 0)
-                                                            {{ round($d->allownce) }}
+                                                        {{ round($d->allownce) }}
                                                         @endif
                                                     </td>
                                                     <td>{{ round($d->gross_salary) }}</td>
                                                     <td>
                                                         @if ($d->deduction_dress != 0)
-                                                            {{ round($d->deduction_dress) }}
+                                                        {{ round($d->deduction_dress) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_fine != 0)
-                                                            {{ round($d->deduction_fine) }}
+                                                        {{ round($d->deduction_fine) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_banck_charge != 0)
-                                                            {{ round($d->deduction_banck_charge) }}
+                                                        {{ round($d->deduction_banck_charge) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_ins != 0)
-                                                            {{ round($d->deduction_ins) }}
+                                                        {{ round($d->deduction_ins) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_p_f != 0)
-                                                            {{ round($d->deduction_p_f) }}
+                                                        {{ round($d->deduction_p_f) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_revenue_stamp != 0)
-                                                            {{ round($d->deduction_revenue_stamp) }}
+                                                        {{ round($d->deduction_revenue_stamp) }}
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_traningcost != 0)
-                                                            {{ round($d->deduction_traningcost) }}
-                                                            @php
-                                                                $deductionTrainingTotal += $d->deduction_traningcost;
-                                                            @endphp
+                                                        {{ round($d->deduction_traningcost) }}
+                                                        @php
+                                                            $deductionTrainingTotal += $d->deduction_traningcost;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->deduction_loan != 0)
-                                                            {{ round($d->deduction_loan) }}
-                                                            @php
-                                                                $deductionLoanTotal += $d->deduction_loan;
-                                                            @endphp
+                                                        {{ round($d->deduction_loan) }}
+                                                        @php
+                                                            $deductionLoanTotal += $d->deduction_loan;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>
                                                         @if ($d->net_salary != 0)
-                                                            {{ $d->net_salary }}
-                                                            @php
-                                                                $payableTotal += $d->net_salary;
-                                                            @endphp
+                                                        {{ $d->net_salary }}
+                                                        @php
+                                                            $payableTotal += $d->net_salary;
+                                                        @endphp
                                                         @endif
                                                     </td>
                                                     <td>{{ $d->sing_of_ind }}</td>
                                                     <td>{{ $d->sing_account }}</td>
                                                     <td>{{ $d->remark }}</td>
                                                 </tr>
+                                                @empty
+                                                @endforelse
                                             @endforeach
                                         @endforeach
                                     </tbody>
