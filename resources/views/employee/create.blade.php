@@ -650,6 +650,15 @@
                             @endif
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="">Salary type (For Accounts)</label>
+                            <select name="salary_prepared_type" class="form-control form-select">
+                                <option value="0">Others</option>
+                                <option value="1">DBBL</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <p>প্রত্যয়ন পত্রের জন্য:</p>

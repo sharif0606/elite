@@ -79,6 +79,7 @@ return new class extends Migration
             $table->text('bn_brance_name')->nullable();
             $table->text('bn_ac_no')->nullable();
             $table->text('bn_routing_number')->nullable();
+            $table->integer('salary_prepared_type')->nullable();
             $table->decimal('insurance',14,2)->default(130);
             $table->decimal('p_f',14,2)->comment('by 6 month from joining')->default(200);
 /*End Of Bangla Form */

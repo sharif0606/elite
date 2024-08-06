@@ -9,6 +9,8 @@ use App\Models\Settings\Zone;
 use Illuminate\Http\Request;
 use App\Models\Crm\InvoicePayment;
 use App\Models\Customer;
+use App\Models\Hrm\SalarySheet;
+use App\Models\Hrm\SalarySheetDetail;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -96,5 +98,19 @@ class ReportController extends Controller
         }
         $data = $data->get();
         return view('report.pay-received-detail',compact('data','customer'));
+    }
+    public function salaryReport(){
+        return view('report.salary-report');
+    }
+    public function salaryReportDetil(Request $request){
+        $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
+        $salary= SalarySheet::where('year',$request->year)->where('month',$request->month)->first();
+        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','net_salary')->whereIn('salary_id',$salaryIds)->get();
+        if($request->type==0){
+            return view('report.salary-details',compact('salary','data'));
+        }else{
+            return view('report.salary-details-dbbl',compact('salary','data'));
+
+        }
     }
 }
