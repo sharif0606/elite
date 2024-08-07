@@ -125,6 +125,7 @@ class SalarySheetController extends Controller
                             $details->deduction_revenue_stamp=$request->deduction_revenue_stamp[$key];
                             $details->deduction_total=$request->deduction_total[$key];
                             $details->net_salary=$request->net_salary[$key];
+                            $details->common_net_salary=$request->net_salary[$key];
                             $details->sing_of_ind=$request->sing_of_ind[$key];
                             $details->remark=$request->remark[$key];
                             $details->status=0;
@@ -194,6 +195,7 @@ class SalarySheetController extends Controller
                             $details->deduction_p_f=$request->deduction_p_f[$key];
                             $details->deduction_total=$request->deduction_total[$key];
                             $details->net_salary=$request->net_salary[$key];
+                            $details->common_net_salary=$request->net_salary[$key];
                             $details->sing_of_ind=$request->signature[$key];
                             // uncommon
                             $details->ht_ribon_alice=$request->ht_ribon_alice[$key];
@@ -274,6 +276,7 @@ class SalarySheetController extends Controller
                             $details->ot_rate_basicDuble=$request->ot_rate_basicDuble[$key];
                             $details->ot_amount=$request->ot_amt[$key];
                             $details->total_payable=$request->total_payable[$key];
+                            $details->common_net_salary=$details->total_payable;
                             $details->sing_of_ind=$request->signature[$key];
                             $details->remark=$request->remark[$key];
                             $details->status=0;
@@ -332,6 +335,7 @@ class SalarySheetController extends Controller
                             $details->deduction_mess=$request->deduction_mess[$key];
                             // uncommon
                             $details->total_payable=$request->total_payble[$key];
+                            $details->common_net_salary=$request->total_payble[$key];
                             $details->sing_of_ind=$request->signature_ind[$key];
                             $details->sing_account=$request->signature_accounts[$key];
                             $details->remark=$request->remarks[$key];
@@ -397,6 +401,7 @@ class SalarySheetController extends Controller
                             $details->deduction_mess=$request->deduction_mess[$key];
                             // uncommon
                             $details->total_payable=$request->total_payble[$key];
+                            $details->common_net_salary=$request->total_payble[$key];
                             $details->sing_of_ind=$request->signature_ind[$key];
                             $details->sing_account=$request->signature_accounts[$key];
                             $details->remark=$request->remarks[$key];
@@ -459,6 +464,7 @@ class SalarySheetController extends Controller
                             $details->deduction_revenue_stamp=$request->deduction_stamp[$key];
                             $details->deduction_total=$request->deduction_total[$key];
                             $details->net_salary=$request->total_payable[$key];
+                            $details->common_net_salary=$request->total_payable[$key];
                             $details->sing_of_ind=$request->sing_ind[$key];
                             $details->sing_account=$request->sing_account[$key];
                             $details->deduction_dress=$request->deduction_dress[$key];
@@ -534,6 +540,7 @@ class SalarySheetController extends Controller
                             $details->deduction_revenue_stamp=$request->deduction_stamp[$key];
                             $details->deduction_total=$request->deduction_total[$key];
                             $details->net_salary=$request->total_payable[$key];
+                            $details->common_net_salary=$request->total_payable[$key];
                             $details->sing_of_ind=$request->sing_ind[$key];
                             $details->sing_account=$request->sing_account[$key];
                             $details->deduction_dress=$request->deduction_dress[$key];

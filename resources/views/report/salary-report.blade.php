@@ -6,7 +6,7 @@
     <div class="card">
         <form action="{{route('report.salary_report_details')}}">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for=""><b>Salary Year</b></label>
                     <select required class="form-control form-select year" name="year">
                         <option value="">Select Year</option>
@@ -15,7 +15,7 @@
                         @endfor
                     </select>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for=""><b>Salary Month</b></label>
                     <select required class="form-control form-select month selected_month" name="month">
                         <option value="">Select Month</option>
@@ -24,7 +24,7 @@
                         @endfor
                     </select>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="billdate">{{__('Salary Type')}}</label>
                     <select name="type" class="form-control form-select" required>
                         <option value="">Select</option>
@@ -32,10 +32,8 @@
                         <option value="1">DBBL</option>
                     </select>
                 </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-6 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-success me-1 mb-1 ps-5 pe-5">{{__('Show')}}</button>
+                <div class="col-lg-3">
+                    <button type="submit" class="btn btn-sm btn-success btn-block mt-4">{{__('Show')}}</button>
                 </div>
             </div>
         </form>

@@ -2,44 +2,107 @@
 @section('pageTitle','Salary Report')
 @section('pageSubTitle','report')
 @section('content')
+
 <div class="col-12">
     <div class="card">
         <form action="">
             <div class="row">
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
-                    <label for=""><b>Salary Year</b></label>
-                    <select required class="form-control form-select year" name="year">
-                        <option value="">Select Year</option>
-                        @for($i=2023;$i<= date('Y');$i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
+                @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
+                    $month = $getMonth;
+                    $getMonth = isset($mt[$month])?$mt[$month]:0;
+                    $sl=1;
+                    $totalAmount=0;
+                @endphp
+                <div class="d-flex justify-content-between">
+                    <a class="btn btn-sm btn-danger float-start my-1 pt-2" href="{{route('report.salary_report')}}">Back</a>
+                    <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
                 </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
-                    <label for=""><b>Salary Month</b></label>
-                    <select required class="form-control form-select month selected_month" name="month">
-                        <option value="">Select Month</option>
-                        @for($i=1;$i<= 12;$i++)
-                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 py-1">
-                    <label for="billdate">{{__('Salary Type')}}</label>
-                    <select name="type" class="form-control form-select" required>
-                        <option value="">Select</option>
-                        <option value="0">DBBL</option>
-                        <option value="1">Others</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-6 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-sm btn-success me-1 mb-1 ps-5 pe-5">{{__('Show')}}</button>
+                <div class="table-responsive" id="result_show">
+                    <style>
+                        .tbl_border{
+                        border: 1px solid;
+                        border-collapse: collapse;
+                        }
+                    </style>
+                    <table class="table tbl_border">
+                        <thead>
+                            <tr class="text-center tbl_border"><th colspan="11" class="tbl_border">Release Salary Sheet For The Month of {{$getMonth}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
+                            <tr class="text-center tbl_border">
+                                <th class="tbl_border">SL</th>
+                                <th class="tbl_border">Bank's Branch With Location</th>
+                                <th class="tbl_border">Rounting No</th>
+                                <th class="tbl_border">Account Holder's Name</th>
+                                <th class="tbl_border">Account Number</th>
+                                <th class="tbl_border">Benefitiery Branches</th>
+                                <th class="tbl_border">Salary Amount</th>
+                                <th class="tbl_border">Total Amount</th>
+                                <th class="tbl_border">Designation & ID No</th>
+                                <th class="tbl_border">Mobile No</th>
+                                <th class="tbl_border">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($data as $d)
+                                @if ($d->employee?->salary_prepared_type != 0)
+                                    <tr class="tbl_border">
+                                        <th class="tbl_border text-center">{{ $sl++}}</th>
+                                        <th class="tbl_border text-center">{{$d->customer?->name}}</th>
+                                        <th class="tbl_border text-center">{{$d->employee?->bn_routing_number}}</th>
+                                        <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
+                                        <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
+                                        <th class="tbl_border">{{$d->branches?->brance_name}}</th>
+                                        <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
+                                        <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
+                                        <th class="tbl_border text-center">{{$d->position?->name}} <br> ID No- {{$d->employee?->admission_id_no}} </th>
+                                        <th class="tbl_border text-center">{{$d->employee?->en_parm_phone_my}}</th>
+                                        <th class="tbl_border text-center">{{$d->remark}}</th>
+                                    </tr>
+                                    @php
+                                        $totalAmount += $d->common_net_salary;
+                                    @endphp
+                                @else
+                                @endif
+                            @empty
+                            @endforelse
+                        </tbody>
+                        <tfoot>
+                            <tr class="tbl_border">
+                                <th class="tbl_border"></th>
+                                <th class="tbl_border text-left" colspan="4">
+                                    @php
+                                        if ($totalAmount > 0) {
+                                            $textValue = getBangladeshCurrency($totalAmount);
+                                            echo "<em> In Words: $textValue </em>";
+                                        } else {
+                                            echo "Zero";
+                                        }
+                                    @endphp
+                                </th>
+                                <th class="tbl_border text-center" colspan="2">Total =</th>
+                                <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
+                                <th class="tbl_border"></th>
+                                <th class="tbl_border"></th>
+                                <th class="tbl_border"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="d-flex justify-content-between" style="text-align: center; margin-top:2rem;">
+                        <div style="text-align:left;">
+                            <p class="mb-5"><b>Prepared By</b></p>
+                            <span><b>Mr. Sreekanta Dey</b></span><br>
+                            <span><b>Deputy Manager (Accounts Finance)</b></span><br>
+                            <span><b>Cell: 01844-040716</b></span>
+                        </div>
+                        <div>
+                            <p class="mb-5">&nbsp;&nbsp;&nbsp;</p>
+                            <span>&nbsp;&nbsp;&nbsp;</span><br>
+                            <span><b>Senior Manager</b></span><br>
+                            <span><b>Accounts & Finance</b></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
 </div>
 @endsection
-
