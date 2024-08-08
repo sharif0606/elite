@@ -139,6 +139,12 @@
               </svg>
             Print
         </button>
+        <a class="no-print" href="{{ route('download.cradditional1') }}">
+            <button class="btn btn-sm">file 1</button>
+        </a>
+        <a class="no-print" href="{{ route('download.cradditional2') }}">
+            <button class="btn btn-sm">file 2</button>
+        </a>
     </div>
     <div class="certificate-container">
         <div class="certificate-content">
@@ -174,7 +180,7 @@
                 </table>
                 <div style="width: 95%; text-align: center; margin: auto;">
                     <p style="line-height: 1.9; font-size: 14px;">
-                        গত <input type="text" class="sinput" value=""> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
+                        গত <input type="text" class="sinput" value=""> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স<br>(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
                     </p>
                     {{-- <p style="line-height: 1.9; font-size: 14px;">
                         গত <input type="text" class="sinput" value="{{ !is_null($emp->joining_date) ? date('d-M-Y', strtotime($emp->joining_date)) : '' }}"> ইং তারিখে এলিট লিঃ এ  সার্ভিসেস যোগদান করেছেন। তাহার শিক্ষাগত যোগ্যতা <input type="text" class="sinput"> শ্রেণী পাস এবং তিনি অপর পৃষ্ঠায় বর্ণিত বিষয়ে কোম্পানীর ট্রেনিং একাডেমি থেকে <input type="text" class="ssinput"> দিন এর প্রশিক্ষণ কোর্স(<input type="text" class="sinput"> ইং হতে <input type="text" class="sinput">) ইং পর্যন্ত সাফল্যের সাথে সম্পন্ন করেছেন।
