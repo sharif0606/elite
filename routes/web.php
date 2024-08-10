@@ -147,17 +147,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
         Route::get('employee-certificate/{id}', [employee::class,'certificate'])->name('employee.certificate');
-        
-        // certificate additional document download
-        Route::get('/download/cradditional1', function () {
-            $file = public_path('assets/certificate/cradditional1.jpeg');
-            return response()->download($file);
-        })->name('download.cradditional1');
-        Route::get('/download/cradditional2', function () {
-            $file = public_path('assets/certificate/cradditional2.jpeg');
-            return response()->download($file);
-        })->name('download.cradditional2');
-        // certificate additional document download
+        Route::get('additional-file', [employee::class,'additionalFile'])->name('employee.additionalFile');
 
         /* Salary Sheet */
         Route::resource('salarySheet', salarySheet::class);

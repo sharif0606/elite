@@ -269,6 +269,10 @@ class EmployeeController extends Controller
         $emp = Employee::findOrFail(encryptor('decrypt', $id));
         return view('employee.certificate', compact('emp'));
     }
+    public function additionalFile()
+    {
+        return view('employee.additional-file');
+    }
 
     /**
      * Show the form for editing the specified resource.

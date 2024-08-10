@@ -139,11 +139,8 @@
               </svg>
             Print
         </button>
-        <a class="no-print" href="{{ route('download.cradditional1') }}">
-            <button class="btn btn-sm">file 1</button>
-        </a>
-        <a class="no-print" href="{{ route('download.cradditional2') }}">
-            <button class="btn btn-sm">file 2</button>
+        <a class="no-print" href="{{ route('employee.additionalFile') }}" target="_blank">
+            <button class="btn btn-sm">file</button>
         </a>
     </div>
     <div class="certificate-container">

@@ -754,7 +754,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_mothers_name">Mather's Name</label>
+                            <label for="en_mothers_name">Mother's Name</label>
                             <input type="text" id="en_mothers_name" value="{{old('en_mothers_name')}}" class="form-control" placeholder="" name="en_mothers_name">
                         </div>
                     </div>
@@ -857,7 +857,7 @@
                     </div>
                 </div>
                 <div class="row mt-2">
-                    <h6 class="">Prensent Address </h6>
+                    <h6 class="">Present Address </h6>
                     {{--  <p>Check if permanent and current address are same<input class="ms-2" type="checkbox" id="copyCheckbox" onclick="copyAddress();"></p>  --}}
 
                 </div>
