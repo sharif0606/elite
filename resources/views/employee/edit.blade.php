@@ -209,7 +209,7 @@
                             <select name="bn_parm_ward_id" class=" form-control js-example-basic-single @error('bn_parm_ward_id') is-invalid @enderror" id="bn_parm_ward_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($ward as $d)
-                                <option value="{{$d->id}}" {{ $employees->bn_parm_ward_id==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
+                                <option value="{{$d->id}}" {{ $employees->bn_parm_ward_id==$d->id?"selected" : ""}}> {{ $d->name_bn}}</option>
                                 @empty
                                     <option value="">No district found</option>
                                 @endforelse
@@ -271,7 +271,7 @@
                 </div>
                 <div class="row mt-2">
                     <h6 class="">বর্তমান ঠিকানা </h6>
-                    <p>যদি স্থায়ী ও বর্তমান ঠিকানা একই হলে চেক দিন<input class="ms-2" type="checkbox" id="copyCheckbox" onclick="copyAddress();"></p>
+                    <p>যদি স্থায়ী ও বর্তমান ঠিকানা একই হলে টিক দিন<input class="ms-2" type="checkbox" id="copyCheckbox" onclick="copyAddress();"></p>
 
                 </div>
                 <div class="row">
@@ -777,65 +777,13 @@
                 <div class="row">
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_parm_district_id">District</label>
-                            <select onchange="show_upazila(this.value)" name="en_parm_district_id" class="choices form-control js-example-basic-single" id="en_parm_district_id">
-                                <option value="">select</option>
-                                @forelse($districts as $d)
-                                <option value="{{$d->id}}" {{ $employees->en_parm_district_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No Country found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_parm_upazila_id">Upazila</label>
-                            <select onchange="show_unions(this.value)" name="en_parm_upazila_id" class=" form-control js-example-basic-single" id="en_parm_upazila_id">
-                                <option value="">select</option>
-                                @forelse($upazila as $d)
-                                <option class="district district{{$d->district_id}}" value="{{$d->id}}" {{ $employees->en_parm_upazila_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_parm_union_id">Union</label>
-                            <select name="en_parm_union_id" class=" form-control" id="en_parm_union_id">
-                                <option value="">select</option>
-                                @forelse($union as $u)
-                                <option class="upazila upazila{{$u->upazila_id}}" value="{{$u->id}}" {{ $employees->en_parm_union_id==$u->id?"selected":""}}> {{ $u->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_parm_ward_id">Ward no</label>
-                            <select name="en_parm_ward_id" class=" form-control js-example-basic-single" id="en_parm_ward_id">
-                                <option value="">select</option>
-                                @forelse($ward as $d)
-                                <option value="{{$d->id}}" {{ $employees->en_parm_ward_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
                             <label for="en_parm_holding_name">Holding no</label>
                             <input type="text" id="en_parm_holding_name" value="{{old('en_parm_holding_name',$employees->en_parm_holding_name)}}" class="form-control" placeholder="Holding no" name="en_parm_holding_name">
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_parm_village_name">village Name</label>
+                            <label for="en_parm_village_name">Village Name</label>
                             <input type="text" id="en_parm_village_name" value="{{old('en_parm_village_name',$employees->en_parm_village_name)}}" class="form-control" placeholder="village Name" name="en_parm_village_name">
                         </div>
                     </div>
@@ -845,16 +793,6 @@
                             <input type="text" id="en_parm_post_ofc" value="{{old('en_parm_post_ofc',$employees->en_parm_post_ofc)}}" class="form-control" placeholder="Po:" name="en_parm_post_ofc">
                         </div>
                     </div>
-                    {{--  <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_pre_thana_id">Thana</label>
-                            <select name="en_pre_thana_id" class="form-control js-example-basic-single" id="en_pre_thana_id">
-                                <option value="">Select Thana</option>
-                                <option value="1">Panchlaish</option>
-                                <option value="2">Halishahar</option>
-                            </select>
-                        </div>
-                    </div>  --}}
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_parm_phone_my">Mobile no</label>
@@ -870,62 +808,10 @@
                 </div>
                 <div class="row mt-2">
                     <h6 class="">Present Address </h6>
-                    {{--  <p>Check if permanent and current address are same<input class="ms-2" type="checkbox" id="copyCheckbox" onclick="copyAddress();"></p>  --}}
+                    <p><b>Same As Permanent Address?</b><input class="ms-2" type="checkbox" id="enAddressCopy" onclick="copyEnAddress();"></p>
 
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_pre_district_id">District</label>
-                            <select onchange="show_upazila(this.value)" name="en_pre_district_id" class=" form-control js-example-basic-single" id="en_pre_district_id">
-                                <option value="">Select Discrict</option>
-                                @forelse($districts as $d)
-                                <option value="{{$d->id}}" {{ $employees->en_pre_district_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No Country found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_pre_upazila_id">Upazila</label>
-                            <select onchange="show_unions(this.value)" name="en_pre_upazila_id" class="form-control js-example-basic-single" id="en_pre_upazila_id">
-                                <option value="">Select Upazila</option>
-                                @forelse($upazila as $d)
-                                <option class="district district{{$d->district_id}}" value="{{$d->id}}" {{$employees->en_pre_upazila_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_pre_union_id">Union</label>
-                            <select name="en_pre_union_id" class="form-control js-example-basic-single" id="en_pre_union_id">
-                                <option value="">Select Union</option>
-                                @forelse($union as $u)
-                                <option class="upazila upazila{{$u->upazila_id}}" value="{{$u->id}}" {{ $employees->en_pre_union_id==$u->id?"selected":""}}> {{ $u->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_pre_ward_no">Ward no</label>
-                            <select name="en_pre_ward_id" class=" form-control" id="en_pre_ward_no">
-                                <option value="">Select</option>
-                                @forelse($ward as $d)
-                                <option value="{{$d->id}}" {{ $employees->en_pre_ward_id==$d->id?"selected":""}}> {{ $d->name}}</option>
-                                @empty
-                                    <option value="">No district found</option>
-                                @endforelse
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="en_pre_holding_no">Holding no</label>
@@ -934,7 +820,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="en_pre_village_name">village name</label>
+                            <label for="en_pre_village_name">Village name</label>
                             <input type="text" id="en_pre_village_name" value="{{old('en_pre_village_name',$employees->en_pre_village_name)}}" class="form-control" placeholder="village name" name="en_pre_village_name">
                         </div>
                     </div>
@@ -944,16 +830,6 @@
                             <input type="text" id="en_pre_post_ofc" value="{{old('en_pre_post_ofc',$employees->en_pre_post_ofc)}}" class="form-control" placeholder="পোঃ" name="en_pre_post_ofc">
                         </div>
                     </div>
-                    {{--  <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="en_applicants_name">Thana</label>
-                            <select name="en_prem_thana_id" class="form-control js-example-basic-single" id="en_prem_thana_id">
-                                <option value="">Select Thana</option>
-                                <option value="1">Panchlaish</option>
-                                <option value="2">Halishahar</option>
-                            </select>
-                        </div>
-                    </div>  --}}
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-12">
@@ -1031,7 +907,7 @@
                     </div>
                     <div class="col-md-3 col-12">
                         <div class="form-group">
-                            <label for="en_height_foot">Foot</label>
+                            <label for="en_height_foot">Feet</label>
                             <input type="text" id="en_height_foot" value="{{old('en_height_foot',$employees->en_height_foot)}}" class="form-control" placeholder="" name="en_height_foot">
                         </div>
                     </div>
@@ -1370,6 +1246,24 @@
             preUpazila.value = '';
             preUnion.value = '';
             preWard.value = '';
+            preHold.value = '';
+            preVill.value = '';
+            prePost.value = '';
+        }
+    }
+    function copyEnAddress() {
+        var holding = document.getElementById("en_parm_holding_name").value;
+        var village = document.getElementById("en_parm_village_name").value;
+        var postoff = document.getElementById("en_parm_post_ofc").value;
+        var preHold = document.getElementById("en_pre_holding_no");
+        var preVill = document.getElementById("en_pre_village_name");
+        var prePost = document.getElementById("en_pre_post_ofc");
+
+        if (document.getElementById("enAddressCopy").checked) {
+            preHold.value = holding;
+            preVill.value = village;
+            prePost.value = postoff;
+        } else {
             preHold.value = '';
             preVill.value = '';
             prePost.value = '';

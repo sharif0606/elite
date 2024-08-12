@@ -159,7 +159,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='1'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -173,7 +173,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='2'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -187,7 +187,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='3'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -201,7 +201,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='4'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -215,7 +215,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='5'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -229,7 +229,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='6'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -243,7 +243,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='7'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -257,7 +257,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='8'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -271,7 +271,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='9'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -285,7 +285,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='10'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -299,7 +299,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='11'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -313,7 +313,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='12'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -327,7 +327,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='13'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -341,7 +341,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='14'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -355,7 +355,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='15'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -369,7 +369,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='16'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -383,7 +383,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='17'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -397,7 +397,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='18'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -411,7 +411,7 @@ class ControllerDeduction extends Controller
             if($request->deduction_type=='19'){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
@@ -425,7 +425,7 @@ class ControllerDeduction extends Controller
             if($request->salary_stop_message){
                 foreach($request->employee_id as $key => $value){
                     if($value){
-                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->where('status',$request->deduction_type)->firstOrNew();
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
                         $deduction->year=$request->year;
                         $deduction->month=$request->month;
                         $deduction->employee_id=$request->employee_id[$key];
