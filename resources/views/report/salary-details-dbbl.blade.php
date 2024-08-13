@@ -26,19 +26,16 @@
                     </style>
                     <table class="table tbl_border">
                         <thead>
-                            <tr class="text-center tbl_border"><th colspan="11" class="tbl_border">Release Salary Sheet For The Month of {{$getMonth}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
+                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Release Salary Sheet For The Month of {{$getMonth}}-{{$getYear}}</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
-                                <th class="tbl_border">Bank's Branch With Location</th>
-                                <th class="tbl_border">Rounting No</th>
-                                <th class="tbl_border">Account Holder's Name</th>
+                                <th class="tbl_border">ID NO</th>
+                                <th class="tbl_border">Rank</th>
+                                <th class="tbl_border">Name</th>
                                 <th class="tbl_border">Account Number</th>
-                                <th class="tbl_border">Benefitiery Branches</th>
                                 <th class="tbl_border">Salary Amount</th>
                                 <th class="tbl_border">Total Amount</th>
-                                <th class="tbl_border">Designation & ID No</th>
-                                <th class="tbl_border">Mobile No</th>
-                                <th class="tbl_border">Remarks</th>
+                                <th class="tbl_border">Post</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,29 +43,23 @@
                                 @if ($d->employee?->salary_prepared_type != 0)
                                     <tr class="tbl_border">
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
-                                        <th class="tbl_border text-center">{{$d->customer?->name}}</th>
-                                        <th class="tbl_border text-center">{{$d->employee?->bn_routing_number}}</th>
+                                        <th class="tbl_border text-center">{{$d->employee?->admission_id_no}}</th>
+                                        <th class="tbl_border text-center">{{$d->position?->name}}</th>
                                         <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
-                                        <th class="tbl_border">{{$d->branches?->brance_name}}</th>
-                                        <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
-                                        <th class="tbl_border text-center">{{$d->position?->name}} <br> ID No- {{$d->employee?->admission_id_no}} </th>
-                                        <th class="tbl_border text-center">{{$d->employee?->en_parm_phone_my}}</th>
-                                        <th class="tbl_border text-center">{{$d->remark}}</th>
+                                        <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
+                                        <th class="tbl_border">{{$d->branches?->brance_name}}</th>
                                     </tr>
                                     @php
                                         $totalAmount += $d->common_net_salary;
                                     @endphp
-                                @else
                                 @endif
                             @empty
                             @endforelse
-                        </tbody>
-                        <tfoot>
                             <tr class="tbl_border">
                                 <th class="tbl_border"></th>
-                                <th class="tbl_border text-left" colspan="4">
+                                <th class="tbl_border text-left" colspan="3">
                                     @php
                                         if ($totalAmount > 0) {
                                             $textValue = getBangladeshCurrency($totalAmount);
@@ -81,10 +72,8 @@
                                 <th class="tbl_border text-center" colspan="2">Total =</th>
                                 <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
                                 <th class="tbl_border"></th>
-                                <th class="tbl_border"></th>
-                                <th class="tbl_border"></th>
                             </tr>
-                        </tfoot>
+                        </tbody>
                     </table>
                     <div class="d-flex justify-content-between" style="text-align: center; margin-top:2rem;">
                         <div style="text-align:left;">

@@ -29,8 +29,8 @@
         .sinput {
             width: 60%;
             outline: 0;
-            border-style: solid;
-            border-width: 1px 0 0;
+            border-style: dotted;
+            border-width: 0 0 1px;
             border-color: #4F709C;
             background-color: transparent;
         }
@@ -129,7 +129,7 @@
                 <tr>
                     <th style="text-align: left; width: 20%;"><img src="{{ asset('assets/images/logo/logo.png')}}" width="200px;" height="auto" alt=""></th>
                     <th style="text-align: center; width: 60%;">
-                        <h3 style="margin: 0px 0px 0px 0px">খরচ/ব্যায় পরিশোধের বিল ভাউচার</h3>
+                        <h3 style="margin: 0px 0px 0px 0px">খরচ/ব্যয় পরিশোধের বিল ভাউচার</h3>
                         <h3 style="margin: 0px 0px 6px 0px">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড, চট্টগ্রাম</h3>
                     </th>
                     <th style="width: 20%;"></th>
@@ -140,13 +140,28 @@
             <thead>
                 <tr>
                     <th style="text-align: left; width: 10%;">নামঃ </th>
-                    <td style="text-align: left; width: 60%;">{{$creditVoucher->pay_name}}</td>
+                    <td style="text-align: left; width: 35%;">{{$creditVoucher->pay_name}}</td>
+                    <th style="text-align: left; width: 25%;">পদবীঃ <input type="text" class="sinput"></th>
                     <th style="width: 10%;">তারিখঃ</th>
                     <td style="width: 20%;"><span style="border-bottom: dashed 1px;">
                         @if ($creditVoucher->current_date != '')
                             {{ date('d-M-Y', strtotime($creditVoucher->current_date)) }}
                         @else
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        @endif
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left;">Purpose:</th>
+                    <td colspan="2" style="text-align: left;">{{$creditVoucher->purpose}}</td>
+                    <th >Account:</th>
+                    <td style="text-align: left;">
+                        @if($crevoucherbkdn)
+                            @foreach($crevoucherbkdn as $bk)
+                                @if($bk->particulars=="Received from")
+                                    {{$bk->account_code}}
+                                @endif
+                            @endforeach
                         @endif
                     </td>
                 </tr>
@@ -165,13 +180,13 @@
                         <th class="tbl_table" style="width: 7%;">পঃ</th>
                     </tr>
                 </thead>
-                <tbody style="height: 350px;">
+                <tbody style="height: 300px;">
                     @foreach ($crevoucherbkdn as $bk)
                     @if ($bk->credit != 0)
                         <tr style="vertical-align: top; height: 0;">
                             <th class="tbl_table_border_right" style="text-align: center; padding-left: 5px;">{{ +$loop->index }}</th>
                             <th class="tbl_table_border_right" style="text-align: left;">{{$bk->account_code}}</th>
-                            <th class="tbl_table_border_right" style="text-align: right;">{{$bk->credit}}</th>
+                            <th class="tbl_table_border_right" style="text-align: right;">{{money_format($bk->credit)}}</th>
                             <th class="tbl_table_border_right" style="text-align: right;"></th>
                         </tr>
                         @php
@@ -191,7 +206,7 @@
                 <tfoot>
                     <th class="tbl_table tbl_table_border_right" style="padding-left: 5px;"></th>
                     <th class="tbl_table tbl_table_border_right" style="text-align: right; padding-right:5px;">মোট টাকা=</th>
-                    <th class="tbl_table tbl_table_border_right" style="text-align: right;">{{$totalAmount}}</th>
+                    <th class="tbl_table tbl_table_border_right" style="text-align: right;">{{money_format($totalAmount)}}/-</th>
                     <th class="tbl_table tbl_table_border_right"></th>
                 </tfoot>
             </table>

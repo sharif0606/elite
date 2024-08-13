@@ -106,7 +106,9 @@ class ReportController extends Controller
         $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
         $getYear = $request->year;
         $getMonth = $request->month;
-        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','common_net_salary')->whereIn('salary_id',$salaryIds)->get();
+        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','common_net_salary')
+        ->whereIn('salary_id',$salaryIds)
+        ->get();
         if($request->type==0){
             return view('report.salary-details',compact('getYear','getMonth','data'));
         }else{
