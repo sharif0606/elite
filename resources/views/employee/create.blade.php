@@ -589,7 +589,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_post_allowance">পোস্ট এলাউন্স</label>
-                            <input type="text" id="bn_post_allowance" value="{{old('bn_post_allowance')}}" class="form-control @error('bn_post_allowance') is-invalid @enderror" placeholder="পোস্ট এলাউন্স" name="bn_post_allowance">
+                            <input type="number" id="bn_post_allowance" value="{{old('bn_post_allowance')}}" class="form-control @error('bn_post_allowance') is-invalid @enderror" placeholder="পোস্ট এলাউন্স" name="bn_post_allowance">
                             @if($errors->has('bn_post_allowance'))
                                 <span class="text-danger"> {{ $errors->first('bn_post_allowance') }}</span>
                             @endif
@@ -597,13 +597,19 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_traning_cost">ট্রেনিং ফি</label>
-                            <input type="text" id="bn_traning_cost" value="{{old('bn_traning_cost')}}" class="form-control @error('bn_traning_cost') is-invalid @enderror" placeholder="ট্রেনিং খরচ" name="bn_traning_cost">
+                            <label for="bn_traning_cost">ট্রেনিং ফি জমা</label>
+                            <input type="number" id="bn_traning_cost" value="{{old('bn_traning_cost')}}" class="form-control @error('bn_traning_cost') is-invalid @enderror" placeholder="ট্রেনিং খরচ জমা" name="bn_traning_cost">
                             @if($errors->has('bn_traning_cost'))
                                 <span class="text-danger"> {{ $errors->first('bn_traning_cost') }}</span>
                             @endif
                             <input type="hidden" id="bn_traning_cost_byMonth" value="6" class="form-control @error('bn_traning_cost_byMonth') is-invalid @enderror" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
                         </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_remaining_cost">ট্রেনিং ফি বাকি</label>
+                            <input type="number" id="bn_remaining_cost" value="{{old('bn_remaining_cost')}}" class="form-control" placeholder="ট্রেনিং খরচ বাকি" name="bn_remaining_cost">
+                         </div>
                     </div>
                     {{--  <div class="col-md-4 col-12">
                         <div class="form-group">

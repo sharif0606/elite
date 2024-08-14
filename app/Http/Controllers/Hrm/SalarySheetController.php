@@ -448,6 +448,7 @@ class SalarySheetController extends Controller
                             $details->customer_id=$request->customer_id_ind[$key];
                             $details->branch_id=$request->customer_branch_id[$key];
                             $details->atm_id=$request->customer_atm_id[$key];
+                            $details->divided_by=$request->divided_by[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
@@ -524,6 +525,7 @@ class SalarySheetController extends Controller
                             $details->customer_id=$request->customer_id_ind[$key];
                             $details->branch_id=$request->customer_branch_id[$key];
                             $details->atm_id=$request->customer_atm_id[$key];
+                            $details->divided_by=$request->divided_by[$key];
                             $details->duty_rate=$request->duty_rate[$key];
                             $details->duty_qty=$request->duty_qty[$key];
                             $details->duty_amount=$request->duty_amount[$key];
@@ -728,7 +730,7 @@ class SalarySheetController extends Controller
         })
         ->leftJoin('customer_brances','customer_duties.branch_id','=','customer_brances.id')
         ->leftJoin('customers','customer_duties.customer_id','=','customers.id')
-        ->select('customer_duties.*','deductions.*','customer_duty_details.*','customer_brances.brance_name as customer_branch','customers.name as customer_name','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.salary_status','employees.bn_remaining_cost','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'))->orderBy('admission_id_no','ASC')->orderBy('customer_duty_details.duty_qty','DESC');
+        ->select('customer_duties.*','deductions.*','customer_duty_details.*','customer_brances.brance_name as customer_branch','customers.name as customer_name','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.salary_status','employees.bn_remaining_cost','employees.bn_post_allowance','employees.insurance',DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'))->orderBy('admission_id_no','ASC')->orderBy('customer_duty_details.duty_qty','DESC');
 
         if ($request->start_date && $request->end_date){
             $startDate = $request->start_date;

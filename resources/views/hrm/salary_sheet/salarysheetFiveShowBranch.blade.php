@@ -5,6 +5,13 @@
 
 @section('content')
 <section id="result_show">
+<style>
+
+    .tbl_border{
+    border: 1px solid rgb(46, 46, 46);
+    border-collapse: collapse;
+    }
+</style>
     <div class="row match-height">
         <div class="col-12">
             <div class="card">
@@ -29,37 +36,37 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table id="salaryTable" class="table table-bordered mb-0">
+                                <table id="salaryTable" class="table mb-0">
                                     <thead>
-                                        <tr class="text-center" id="">
-                                            <th scope="col" rowspan="2">{{__('SL.No')}}</th>
-                                            <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Rank')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Taka')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                            <th scope="col" colspan="8">{{__('DEDUCTION')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
-                                            <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Remark')}}</th>
+                                        <tr class="text-center tbl_border" id="">
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('SL No')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Date of Joining')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Pre Days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Net Salary')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Rate')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Taka')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Post Allowance')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Salary')}}</th>
+                                            <th class="tbl_border" scope="col" colspan="8">{{__('DEDUCTION')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Sign of Account')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Remark')}}</th>
                                         </tr>
-                                        <tr>
-                                            <th>Dress</th>
-                                            <th>Fine</th>
-                                            <th>Bank Charge/Exc</th>
-                                            <th>ins</th>
-                                            <th>P.F</th>
-                                            <th>stamp</th>
-                                            <th>Training Cost</th>
-                                            <th>Loan</th>
+                                        <tr class="text-center tbl_border">
+                                            <th class="tbl_border">Dress</th>
+                                            <th class="tbl_border">Fine</th>
+                                            <th class="tbl_border">Bank Charge/ Exc</th>
+                                            <th class="tbl_border">ins</th>
+                                            <th class="tbl_border">P.F</th>
+                                            <th class="tbl_border">stamp</th>
+                                            <th class="tbl_border">Training Cost</th>
+                                            <th class="tbl_border">Loan</th>
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
@@ -67,166 +74,138 @@
                                             $deductionLoanTotal = 0;
                                             $deductionTrainingTotal = 0;
                                             $payableTotal = 0;
-                                            $serial = 1;
                                         @endphp
-                                        @php
-                                            // Grouping data by admission_id_no
-                                            $groupedByAdmissionId = [];
-                                        
-                                            foreach ($groupedData as $customerId => $branches) {
-                                                foreach ($branches as $branchId => $details) {
-                                                    foreach ($details as $detail) {
-                                                        $admissionId = $detail->employee?->admission_id_no;
-                                                        $groupedByAdmissionId[$admissionId][] = $detail;
-                                                    }
-                                                }
-                                            }
-                                        
-                                            // Track displayed customer and branch combinations
-                                            $displayedCustomerBranch = [];
-                                        @endphp
-                                    
-                                        @foreach ($groupedByAdmissionId as $admissionId => $details)
-                                            @php
-                                                $firstDetail = $details[0];
-                                                $customerName = $firstDetail->customer?->name;
-                                                $branchName = $firstDetail->branches?->brance_name;
-                                                $customerBranchKey = $customerName . '-' . $branchName;
-
-                                                usort($details, function ($a, $b) {
-                                                    return ($b->duty_qty != 0) <=> ($a->duty_qty != 0);
-                                                });
-                                            @endphp
-                                        
-                                            @if (!in_array($customerBranchKey, $displayedCustomerBranch))
-                                                @php
-                                                    $displayedCustomerBranch[] = $customerBranchKey;
-                                                @endphp
-                                                <tr>
-                                                    <td colspan="25">
+                                        @foreach ($groupedData as $customerId => $branches)
+                                            @foreach ($branches as $branchId => $details)
+                                                <tr class="tbl_border">
+                                                    <td class="tbl_border" colspan="25">
                                                         <div class="d-flex">
-                                                            <h6>{{ $customerName }},</h6>
-                                                            <span>&nbsp;&nbsp;&nbsp;<b>{{ $branchName }}</b></span>
+                                                            <h6>{{ $details[0]->customer?->name }},</h6>
+                                                            <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endif
-                                        
-                                            @foreach ($details as $index => $d)
-                                                <tr>
-                                                    <td>{{ $serial++ }}</td>
-                                                    <td>{{ $d->employee?->admission_id_no }}</td>
-                                                    <td>
+                                                @forelse ($details as $d )
+                                                <tr class="text-center tbl_border">
+                                                    <td class="tbl_border">{{ ++$loop->index }}</td>
+                                                    <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
+                                                    <td class="tbl_border">
+                                                        {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
+                                                    </td>
+                                                    <td class="tbl_border">{{ $d->position?->name }}</td>
+                                                    <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
+                                                    <td class="tbl_border">
                                                         @if ($d->duty_qty != 0)
-                                                            {{ $d->employee?->salary_joining_date }}
-                                                        @else
-                                                            {{ $d->branches?->brance_name }}
+                                                            {{ round($d->duty_rate) }}
                                                         @endif
                                                     </td>
-                                                    <td>{{ $d->position?->name }}</td>
-                                                    <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                    <td>{{ round($d->duty_rate) }}</td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->duty_qty != 0)
-                                                            {{ (int)$d->duty_qty }}
+                                                        {{ (int)$d->duty_qty }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->duty_amount != 0)
-                                                            {{ round($d->duty_amount) }}
+                                                        {{ round($d->duty_amount) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->ot_qty != 0)
-                                                            {{ (int)$d->ot_qty }}
+                                                        {{ (int)$d->ot_qty }}
                                                         @endif
                                                     </td>
-                                                    <td>
-                                                        @if ($d->ot_rate != 0)
+                                                    <td class="tbl_border">
+                                                        @if ($d->ot_qty != 0)
+                                                            @if ($d->ot_rate != 0)
                                                             {{ round($d->ot_rate) }}
+                                                            @endif
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->ot_amount != 0)
-                                                            {{ round($d->ot_amount) }}
+                                                        {{ round($d->ot_amount) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->allownce != 0)
-                                                            {{ round($d->allownce) }}
+                                                        {{ round($d->allownce) }}
                                                         @endif
                                                     </td>
-                                                    <td>{{ round($d->gross_salary) }}</td>
-                                                    <td>
+                                                    <td class="tbl_border">{{ round($d->gross_salary) }}</td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_dress != 0)
-                                                            {{ round($d->deduction_dress) }}
+                                                        {{ round($d->deduction_dress) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_fine != 0)
-                                                            {{ round($d->deduction_fine) }}
+                                                        {{ round($d->deduction_fine) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_banck_charge != 0)
-                                                            {{ round($d->deduction_banck_charge) }}
+                                                        {{ round($d->deduction_banck_charge) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_ins != 0)
-                                                            {{ round($d->deduction_ins) }}
+                                                        {{ round($d->deduction_ins) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_p_f != 0)
-                                                            {{ round($d->deduction_p_f) }}
+                                                        {{ round($d->deduction_p_f) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_revenue_stamp != 0)
-                                                            {{ round($d->deduction_revenue_stamp) }}
+                                                        {{ round($d->deduction_revenue_stamp) }}
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_traningcost != 0)
-                                                            {{ round($d->deduction_traningcost) }}
-                                                            @php
-                                                                $deductionTrainingTotal += $d->deduction_traningcost;
-                                                            @endphp
+                                                        {{ round($d->deduction_traningcost) }}
+                                                        @php
+                                                            $deductionTrainingTotal += $d->deduction_traningcost;
+                                                        @endphp
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_loan != 0)
-                                                            {{ round($d->deduction_loan) }}
-                                                            @php
-                                                                $deductionLoanTotal += $d->deduction_loan;
-                                                            @endphp
+                                                        {{ round($d->deduction_loan) }}
+                                                        @php
+                                                            $deductionLoanTotal += $d->deduction_loan;
+                                                        @endphp
                                                         @endif
                                                     </td>
-                                                    <td>
+                                                    <td class="tbl_border">
                                                         @if ($d->net_salary != 0)
-                                                            {{ $d->net_salary }}
-                                                            @php
-                                                                $payableTotal += $d->net_salary;
-                                                            @endphp
+                                                        {{ $d->net_salary }}
+                                                        @php
+                                                            $payableTotal += $d->net_salary;
+                                                        @endphp
                                                         @endif
                                                     </td>
-                                                    <td>{{ $d->sing_of_ind }}</td>
-                                                    <td>{{ $d->sing_account }}</td>
-                                                    <td>{{ $d->remark }}</td>
+                                                    <td class="tbl_border">{{ $d->sing_of_ind }}</td>
+                                                    <td class="tbl_border">{{ $d->sing_account }}</td>
+                                                    <td class="tbl_border">{{ $d->remark }}</td>
                                                 </tr>
+                                                @empty
+                                                @endforelse
                                             @endforeach
                                         @endforeach
+                                        {{-- footer --}}
+                                        <tr class="tbl_border">
+                                            <th colspan="19" class="text-center tbl_border">Total</th>
+                                            <th class="tbl_border text-center">{{$deductionTrainingTotal}}</th>
+                                            <th class="tbl_border text-center">{{$deductionLoanTotal}}</th>
+                                            <th class="tbl_border text-center">{{$payableTotal}}</th>
+                                            <th class="tbl_border text-center">{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                            <th class="tbl_border"></th>
+                                            <th class="tbl_border"></th>
+                                        </tr> 
+                                        {{-- footer --}}
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                           <th colspan="19" class="text-center">Total</th>
-                                           <th>{{$deductionTrainingTotal}}</th>
-                                           <th>{{$deductionLoanTotal}}</th>
-                                           <th>{{$payableTotal}}</th>
-                                           <th>{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal}}</th>
-                                       </tr> 
-                                   </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -298,4 +277,3 @@
 }
 </script>
 @endpush  --}}
-

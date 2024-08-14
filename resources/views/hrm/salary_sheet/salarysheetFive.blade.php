@@ -98,6 +98,7 @@
                                                 <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Rank')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Divide By')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
@@ -129,7 +130,7 @@
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                              <tr>
-                                                <th colspan="5" class="text-end"> Total</th>
+                                                <th colspan="6" class="text-end"> Total</th>
                                                 <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
                                                 <th><input class="form-control prevDaysTotal" type="text" style="width:60px;" disabled></th>
                                                 <th><input class="form-control netTotal" type="text" disabled></th>
@@ -185,10 +186,10 @@
                     selectElement.empty();
                     var old_emp = '';
                     $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
-                        let remaining=value.bn_remaining_cost;
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let postAllowance=value.bn_post_allowance;
                         //console.log(traningCostPerMonth);
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
@@ -221,6 +222,8 @@
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let totalDeduction = parseFloat(Fine) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         let netSalary = '0';
+                        let currentMonth = $('.selected_month').val();
+                        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
                         if (grossAmoun > totalDeduction) {
                             netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                         }
@@ -237,6 +240,7 @@
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
+                            var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="post_allowance[]">`
                         }else{
                             var customerName=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">`
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -250,6 +254,7 @@
                             var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
+                            var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="${postAllowance}">`
                         }
                         selectElement.append(
                             `<tr>
@@ -267,6 +272,9 @@
                                     <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
                                 </td>
                                 <td> ${en_applicants_name}</td>
+                                <td>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
                                 </td>
@@ -286,7 +294,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" placeholder="Post Allowance">
+                                    ${pAllowance}
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" value="${value.grossAmount}" type="text" name="gross_salary[]" placeholder="Gross Salary">
@@ -337,7 +345,8 @@
         //let currentMonth = currentDate.getMonth() + 1;
         //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         let currentMonth = $('.selected_month').val();
-        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        // let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        let totalDaysInMonth = $(e).closest('tr').find('.divided_by').val()?parseFloat($(e).closest('tr').find('.divided_by').val()):30;
         let dutyRateDay=dutyRate/totalDaysInMonth;
         let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
