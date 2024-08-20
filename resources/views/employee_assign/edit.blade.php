@@ -25,13 +25,13 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="branch_change()">
                                         <option value="{{ $branch?->id }}">{{ $branch?->brance_name }}</option>
                                     </select>
                                 </div>
@@ -72,7 +72,7 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select" id="job_post_id" name="job_post_id[]">
+                                                    <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
                                                         <option value="">Select Post</option>
                                                         @forelse ($jobpost as $job)
                                                         <option value="{{ $job->id }}" {{ $d->job_post_id==$job->id?"selected":""}}>{{ $job->name }}</option>
@@ -81,7 +81,7 @@
                                                     </select>
                                                 </td>
                                                 <td><input class="form-control" type="text" name="qty[]" value="{{ $d->qty }}" placeholder="qty" required></td>
-                                                <td><input class="form-control" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate" required></td>
+                                                <td><input class="form-control rate" type="text" name="rate[]" value="{{ $d->rate }}" placeholder="rate" required></td>
                                                 <td><input required class="form-control" type="date" name="start_date[]" value="{{ $d->start_date }}" placeholder="Start Date"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="{{ $d->end_date }}" placeholder="End Date"></td>
                                                 <td>
@@ -125,7 +125,7 @@ var row=`
         </select>
     </td>
     <td>
-        <select class="form-select" id="job_post_id" name="job_post_id[]">
+        <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
             <option value="">Select Post</option>
             @forelse ($jobpost as $job)
             <option value="{{ $job->id }}">{{ $job->name }}</option>
@@ -133,9 +133,9 @@ var row=`
             @endforelse
         </select>
     </td>
-    <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-    <td><input class="form-control" type="text" name="rate[]" value="" placeholder="rate"></td>
-    <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
+    <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty" required></td>
+    <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate" required></td>
+    <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date" required></td>
     <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
     <td>
         <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
@@ -160,7 +160,33 @@ function RemoveRow(e) {
 
 </script>
 <script>
-    function EmployeeAsignGetAtm(e) {
+    // function EmployeeAsignGetAtm(e) {
+    //     let branchId=$('.branch_id').val();
+    //     $.ajax({
+    //         url: "{{ route('get_ajax_atm') }}",
+    //         type: "GET",
+    //         dataType: "json",
+    //         data: { branchId: branchId },
+    //         success: function (data) {
+    //             //console.log(data)
+    //             //var d = $('.atm_id').empty();
+    //             //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+    //             //$('#atm_id').append('<option value="1">All ATM</option>');
+    //             $.each(data, function(key, value) {
+    //                 $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+    //             });
+    //         },
+    //         error: function () {
+    //             console.error("Error fetching data from the server.");
+    //         },
+    //     });
+    // }
+    function branch_change(){
+        $('.new_rows').remove();
+        $('#empassign').find(':input').not(':button, :submit, :reset, :hidden, .not-hide').val('');
+        EmployeeAsignGetAtm()
+    }
+    function EmployeeAsignGetAtm() {
         let branchId=$('.branch_id').val();
         $.ajax({
             url: "{{ route('get_ajax_atm') }}",
@@ -169,11 +195,11 @@ function RemoveRow(e) {
             data: { branchId: branchId },
             success: function (data) {
                 //console.log(data)
-                //var d = $('.atm_id').empty();
-                //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                var d = $('.atm_id:last').empty();
+                $('.atm_id:last').append('<option data-vat="0" value="0">Select ATM</option>');
                 //$('#atm_id').append('<option value="1">All ATM</option>');
                 $.each(data, function(key, value) {
-                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                    $('.atm_id:last').append('<option value="' + value.id + '">' + value.atm + '</option>');
                 });
             },
             error: function () {
