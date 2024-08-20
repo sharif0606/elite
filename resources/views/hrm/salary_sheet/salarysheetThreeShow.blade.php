@@ -10,6 +10,10 @@
           writing-mode: vertical-lr;
           text-orientation: mixed;
         }
+        .tbl_border{
+        border: 1px solid rgb(46, 46, 46);
+        border-collapse: collapse;
+        }
     </style>
     <div class="row match-height">
         <div class="col-12">
@@ -42,53 +46,53 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table id="salaryTable" class="table table-bordered mb-0">
+                                <table id="salaryTable" class="table mb-0">
                                     <thead>
-                                        <tr class="text-center" id="">
-                                            <th scope="col" rowspan="2">{{__('S/N')}}</th>
-                                            <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Rank')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Joining Date')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Basic')}}</th>
-                                            <th scope="col" rowspan="2">{{__('House rent (50%)')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Medical')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Trans. Conve.')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Food Allownce')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Gross Wages')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Total Working Days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Pre. Days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Absent')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Vacant')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
-                                            <th scope="col" colspan="3">{{__('Leave')}}</th>
-                                            <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Net Wages')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT hour')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT rate(Basic*2)')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Amt.')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Total Payable')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Signature')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Remarks')}}</th>
+                                        <tr class="text-center tbl_border" id="">
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Joining Date')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Basic')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('House rent (50%)')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Medical')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Trans. Conve.')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Food Allownce')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Wages')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Working Days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Pre. Days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Absent')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Vacant')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
+                                            <th class="tbl_border" scope="col" colspan="3">{{__('Leave')}}</th>
+                                            <th class="tbl_border" scope="col" colspan="7">{{__('DEDUCTION')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Net Wages')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT hour')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT rate(Basic*2)')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Amt.')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Payable')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Signature')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Remarks')}}</th>
                                         </tr>
-                                        <tr>
-                                            <th>CL</th>
-                                            <th>SL</th>
-                                            <th>EL</th>
-                                            <th>Absent</th>
-                                            <th>Vacant</th>
-                                            <th>H.rent</th>
-                                            <th>PF</th>
-                                            <th>Adv.</th>
-                                            <th>Stm</th>
-                                            <th>Total</th>
+                                        <tr class="tbl_border text-center">
+                                            <th class="tbl_border">CL</th>
+                                            <th class="tbl_border">SL</th>
+                                            <th class="tbl_border">EL</th>
+                                            <th class="tbl_border">Absent</th>
+                                            <th class="tbl_border">Vacant</th>
+                                            <th class="tbl_border">H.rent</th>
+                                            <th class="tbl_border">PF</th>
+                                            <th class="tbl_border">Adv.</th>
+                                            <th class="tbl_border">Stm</th>
+                                            <th class="tbl_border">Total</th>
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
                                         @foreach ($groupedData as $customerId => $branches)
                                             @foreach ($branches as $branchId => $details)
-                                                <tr>
-                                                    <td colspan="31">
+                                                <tr class="tbl_border">
+                                                    <td class="tbl_border" colspan="31">
                                                         <div class="d-flex">
                                                             <h6>{{ $details[0]->customer?->name }},</h6>
                                                             <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
@@ -96,40 +100,142 @@
                                                     </td>
                                                 </tr>
                                                 @forelse ($details as $d )
-                                                <tr>
-                                                    <td>{{ ++$loop->index }}</td>
-                                                    <td>{{ $d->employee?->admission_id_no }}</td>
-                                                    <td>{{ $d->position?->name }}</td>
-                                                    <td>{{ $d->employee?->en_applicants_name }}</td>
-                                                    <td>{{ $d->employee?->salary_joining_date }}</td>
-                                                    <td>{{ $d->duty_rate }}</td>
-                                                    <td>{{ $d->house_rent }}</td>
-                                                    <td>{{ $d->medical }}</td>
-                                                    <td>{{ $d->trans_conve }}</td>
-                                                    <td>@if($d->food_allownce > 0){{ $d->food_allownce }}@endif</td>
-                                                    <td>{{ $d->gross_wages }}</td>
-                                                    <td>{{ (int)$d->total_workingday }}</td>
-                                                    <td>{{ (int)$d->present_day }}</td>
-                                                    <td>{{ (int)$d->absent }}</td>
-                                                    <td>{{ (int)$d->vacant }}</td>
-                                                    <td>{{ (int)$d->holiday_festival }}</td>
-                                                    <td>{{ (int)$d->leave_cl }}</td>
-                                                    <td>{{ (int)$d->leave_sl }}</td>
-                                                    <td>{{ (int)$d->leave_el }}</td>
-                                                    <td>{{ $d->deduction_absent }}</td>
-                                                    <td>{{ $d->deduction_vacant }}</td>
-                                                    <td>{{ $d->deduction_hr }}</td>
-                                                    <td>{{ $d->deduction_p_f }}</td>
-                                                    <td>{{ $d->deduction_adv }}</td>
-                                                    <td>{{ $d->deduction_revenue_stamp }}</td>
-                                                    <td>{{ $d->deduction_total }}</td>
-                                                    <td>{{ $d->net_salary }}</td>
-                                                    <td>{{ $d->ot_qty }}</td>
-                                                    <td>{{ $d->ot_rate_basicDuble }}</td>
-                                                    <td>{{ $d->ot_amount }}</td>
-                                                    <td>{{ $d->total_payable }}</td>
-                                                    <td>{{ $d->sing_of_ind }}</td>
-                                                    <td>{{ $d->remark }}</td>
+                                                <tr class="tbl_border text-center">
+                                                    <td class="tbl_border">{{ ++$loop->index }}</td>
+                                                    <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
+                                                    <td class="tbl_border">{{ $d->position?->name }}</td>
+                                                    <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
+                                                    <td class="tbl_border">
+                                                        {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->duty_rate != 0)
+                                                            {{ round($d->duty_rate) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->house_rent != 0)
+                                                            {{ round($d->house_rent) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->medical != 0)
+                                                            {{ round($d->medical) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->trans_conve != 0)
+                                                            {{ round($d->trans_conve) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if($d->food_allownce > 0)
+                                                            {{ round($d->food_allownce) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->gross_wages != 0)
+                                                            {{ round($d->gross_wages) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->total_workingday != 0)
+                                                            {{ round($d->total_workingday) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->present_day != 0)
+                                                            {{ round($d->present_day) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->absent != 0)
+                                                            {{ round($d->absent) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->vacant != 0)
+                                                            {{ round($d->vacant) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->holiday_festival != 0)
+                                                            {{ round($d->holiday_festival) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->leave_cl != 0)
+                                                            {{ round($d->leave_cl) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->leave_sl != 0)
+                                                            {{ round($d->leave_sl) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->leave_el != 0)
+                                                            {{ round($d->leave_el) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_absent != 0)
+                                                            {{ round($d->deduction_absent) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_vacant != 0)
+                                                            {{ round($d->deduction_vacant) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_hr != 0)
+                                                            {{ round($d->deduction_hr) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_p_f != 0)
+                                                            {{ round($d->deduction_p_f) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_adv != 0)
+                                                            {{ round($d->deduction_adv) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_revenue_stamp != 0)
+                                                            {{ round($d->deduction_revenue_stamp) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->deduction_total != 0)
+                                                            {{ round($d->deduction_total) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->net_salary != 0)
+                                                            {{ round($d->net_salary) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->ot_qty != 0)
+                                                            {{ round($d->ot_qty) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->ot_rate_basicDuble != 0)
+                                                            {{ round($d->ot_rate_basicDuble) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if ($d->ot_amount != 0)
+                                                            {{ round($d->ot_amount) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">{{ $d->total_payable }}</td>
+                                                    <td class="tbl_border">{{ $d->sing_of_ind }}</td>
+                                                    <td class="tbl_border">{{ $d->remark }}</td>
                                                 </tr>
                                                 @empty
                                                 @endforelse

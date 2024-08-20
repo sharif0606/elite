@@ -14,6 +14,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\CustomerBrance;
 use App\Models\Employee\Employee;
 
 class SalarySheetController extends Controller
@@ -90,7 +91,11 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
             $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
@@ -153,7 +158,11 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
             $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
@@ -233,7 +242,11 @@ class SalarySheetController extends Controller
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
             $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
@@ -425,13 +438,17 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFiveStore(Request $request)
     {
-        //dd($request->all()); die();
+        // dd($request->all()); die();
         DB::beginTransaction();
         try {
             $salary = new SalarySheet;
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
             $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
@@ -507,7 +524,11 @@ class SalarySheetController extends Controller
             $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
             $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
             $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
-            $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
             $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
             $salary->year = $request->year;
             $salary->month = $request->month;
@@ -711,6 +732,13 @@ class SalarySheetController extends Controller
         //
     }
 
+    public function getSalaryBranch(Request $request)
+    {
+        $customerIds = $request->customer_ids;
+        $branch = CustomerBrance::whereIn('customer_id', $customerIds)->select('id','brance_name')->get();
+        return response()->json($branch, 200);
+    }
+
     public function getSalaryData(Request $request)
     {
         $stdate=$request->start_date;
@@ -746,6 +774,10 @@ class SalarySheetController extends Controller
         if ($request->customer_id){
             $customerId = $request->customer_id;
             $query->whereIn('customer_duties.customer_id', $customerId);
+        }
+        if ($request->customer_branch_id){
+            $branchId = $request->customer_branch_id;
+            $query->whereIn('customer_duties.branch_id', $branchId);
         }
         if ($request->CustomerIdNot){
             $CustomerIdNot = $request->CustomerIdNot;
