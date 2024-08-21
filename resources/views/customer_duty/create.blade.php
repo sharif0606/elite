@@ -319,9 +319,10 @@
                     // Construct the message
                     var message = "<span style='border-bottom: solid 2px; color: yellow;'>Employee duties found:</span><br>";
                     $.each(data, function(index, duty) {
-                    message +=  "Customer: " + duty.customer_name + "<br>" +
+                    message +=  "Customer: " + duty.customer_name + (duty.customer_branch ? ', ' + duty.customer_branch : '') + "<br>" +
                                 "General Duty: " + duty.general + "<br>" +
-                                "OT Duty: " + duty.overtime + "<br>";
+                                "OT Duty: " + duty.overtime + "<br>" +
+                                "Total Amount: " + duty.total + "<br>";
                     });
                     toastr.success(message);
                 } else {

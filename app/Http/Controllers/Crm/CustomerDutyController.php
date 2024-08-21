@@ -127,7 +127,9 @@ class CustomerDutyController extends Controller
                 ->where('customer_duty_details.employee_id', $employee)
                 ->where('customer_duty_details.start_date', '<=', $startDate)
                 ->where('customer_duty_details.end_date', '>=', $endDate)
-                ->select('customer_duty_details.duty_qty as general','customer_duty_details.ot_qty as overtime','customers.name as customer_name') // Select necessary columns
+                ->leftJoin('customer_duties','customer_duties.id','=','customer_duty_details.customerduty_id')
+                ->leftJoin('customer_brances','customer_duties.branch_id','=','customer_brances.id')
+                ->select('customer_duty_details.duty_qty as general','customer_duty_details.customerduty_id','customer_duty_details.ot_qty as overtime','customer_duty_details.total_amount as  total','customer_duties.id','customer_duties.branch_id','customers.name as customer_name','customer_brances.brance_name as customer_branch') // Select necessary columns
                 ->get();
             return response()->json($data, 200);
         } catch (Exception $e) {
