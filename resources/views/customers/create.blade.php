@@ -166,6 +166,18 @@
                             <input type="file" name="logo" value="" data-height="110" data-default-file="{{ asset('assets/images/customerdefault.png') }}" class="form-control dropify">
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="header-note">Header Note</label>
+                            <textarea class="form-control" name="header_note"  rows="3">{{old('header_note')}}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label for="header-note">Footer Note</label>
+                            <textarea class="form-control" name="footer_note"  rows="3">{{old('footer_note')}}</textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-12 d-flex justify-content-end my-2">

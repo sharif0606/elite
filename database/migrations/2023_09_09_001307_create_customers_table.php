@@ -33,6 +33,8 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable()->index()->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('updated_by')->nullable()->index()->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->string('status')->nullable();
+            $table->text('header_note')->nullable();
+            $table->text('footer_note')->nullable();
             $table->timestamps();
         });
     }

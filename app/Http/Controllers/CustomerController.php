@@ -73,6 +73,8 @@ class CustomerController extends Controller
             $data->received_by_city = $request->received_by_city;
             $data->attention = $request->attention;
             $data->attention_details = $request->attention_details;
+            $data->header_note = $request->header_note;
+            $data->footer_note = $request->footer_note;
             $data->status = 1;
 
             if($request->has('file_upload'))
@@ -151,6 +153,8 @@ class CustomerController extends Controller
             $data->received_by_city = $request->received_by_city;
             $data->attention = $request->attention;
             $data->attention_details = $request->attention_details;
+            $data->header_note = $request->header_note;
+            $data->footer_note = $request->footer_note;
             $data->status = 1;
 
             if($request->has('file_upload'))

@@ -252,6 +252,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /*Crm */
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
+        Route::get('get-customer-header-footer',[invoiceGenerate::class,'getHeaderFooterNote'])->name('get_customer_header_footer');
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');

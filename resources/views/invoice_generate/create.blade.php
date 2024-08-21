@@ -22,7 +22,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
+                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                             <option data-zone="{{$c->zone_id}}" data-ctype="{{$c->customer_type}}" data-ins-vat="{{$c->vat}}" value="{{ $c->id }}">{{ $c->name }}</option>
@@ -60,12 +60,12 @@
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
-                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
+                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note">
                                     </textarea>
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Header Note</b></label>
-                                    <textarea class="form-control" name="header_note" id="" cols="30" rows="5" placeholder="Please enter Header Note">Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.
+                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note">
                                     </textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
@@ -144,6 +144,28 @@
 @endsection
 @push("scripts")
 <script>
+    function getNote(e){
+        let customerId = $(e).val();
+            $('#headerNote').val('');
+            $('#footerNote').val('');
+            $.ajax({
+                url: "{{route('get_customer_header_footer')}}",
+                type: "GET",
+                dataType: "json",
+                data:{customer_id:customerId},
+                success: function(data) {
+                    console.log(data);
+                    let header = data.footer_note? data.header_note : 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                    let footer = data.footer_note? data.footer_note : 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                    $('#headerNote').val(header);
+                    $('#footerNote').val(footer);
+                    //oldCustomer = data.id;
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error: " + error);
+                }
+            });
+    }
     function checkZone(e){
         let customer_zone=$('#customer_id').find(":selected").data('zone');
         let branch_zone=$('#branch_id').find(":selected").data('zone');

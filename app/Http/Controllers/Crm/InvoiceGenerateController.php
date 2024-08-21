@@ -59,6 +59,11 @@ class InvoiceGenerateController extends Controller
         return view('invoice_generate.create',compact('customer'));
     }
 
+    public function getHeaderFooterNote(Request $request){
+        $data = Customer::select('id','header_note','footer_note')->where('id',$request->customer_id)->first();
+        return response()->json($data, 200);
+    }
+
     public function store(Request $request)
     {
         //dd($request->all());
