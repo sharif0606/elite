@@ -226,17 +226,17 @@
         $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
     @endphp
     <div style="text-align: center; margin-top:2rem;">
-        <div style="width: 300px; float: left; text-align: left;">
+        <div style="width: 200px; float: left; text-align: left;">
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
             {{ $footersetting1?->phone  }}
         </div>
-        <div style="width: 300px; float: right; text-align: left;">
+        <div style="width: 200px; float: right; text-align: left;">
             {{ $footersetting3?->name }} <br>
             {{ $footersetting3?->designation }} <br>
             {{ $footersetting3?->phone  }}
         </div>
-        <div style="width: 300px; margin-left: auto; margin-right: auto; text-align: left;">
+        <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
             {{ $footersetting2?->name }} <br>
             {{ $footersetting2?->designation }} <br>
             {{ $footersetting2?->phone  }}
