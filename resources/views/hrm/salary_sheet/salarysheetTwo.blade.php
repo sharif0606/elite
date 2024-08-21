@@ -249,9 +249,9 @@
                     selectElement.empty();
                     var old_emp = '';
                     $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);

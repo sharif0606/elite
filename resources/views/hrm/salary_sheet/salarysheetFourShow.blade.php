@@ -10,6 +10,10 @@
           writing-mode: vertical-lr;
           text-orientation: mixed;
         }
+        .tbl_border{
+            border: 1px solid rgb(46, 46, 46);
+            border-collapse: collapse;
+        }
     </style>
     <div class="row match-height">
         <div class="col-12">
@@ -35,44 +39,44 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table id="salaryTable" class="table table-bordered mb-0">
+                                <table id="salaryTable" class="table mb-0">
                                     <thead>
-                                        <tr class="text-center" id="">
-                                            <th scope="col" rowspan="2">{{__('S/N')}}</th>
-                                            <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Basic')}}</th>
-                                            <th scope="col" rowspan="2">{{__('House rent')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Pre. Days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Days')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                            <th scope="col" rowspan="2">{{__('OT Amt')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Post Allow.')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Fuel Bill')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Total Salary')}}</th>
-                                            <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Total Payble')}}</th>
-                                            <th scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
-                                            <th scope="col" rowspan="2">{{__('Remarks')}}</th>
+                                        <tr class="text-center tbl_border" id="">
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Date of Joining')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Basic')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('House rent')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Salary')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Pre. Days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Days')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Rate')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Amt')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Post Allow.')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Fuel Bill')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Salary')}}</th>
+                                            <th class="tbl_border" scope="col" colspan="7">{{__('DEDUCTION')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Payble')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Remarks')}}</th>
                                         </tr>
-                                        <tr>
-                                            <th>Excess Mobile</th>
-                                            <th>fine</th>
-                                            <th>Ins</th>
-                                            <th>P.F</th>
-                                            <th>Mess</th>
-                                            <th>Loan</th>
-                                            <th>Training Cost</th>
+                                        <tr class="tbl_border text-center">
+                                            <th class="tbl_border">Excess Mobile</th>
+                                            <th class="tbl_border">fine</th>
+                                            <th class="tbl_border">Ins</th>
+                                            <th class="tbl_border">P.F</th>
+                                            <th class="tbl_border">Mess</th>
+                                            <th class="tbl_border">Loan</th>
+                                            <th class="tbl_border">Training Cost</th>
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
-                                        <tr>
-                                            <th colspan="27">
+                                        <tr class="tbl_border">
+                                            <th class="tbl_border" colspan="27">
                                                 <div><h6>Office Staff Salary</h6></div>
                                             </th>
                                         </tr>
@@ -83,88 +87,88 @@
                                             $payableTotal = 0;
                                         @endphp
                                         @forelse ($details as $d )
-                                        <tr>
-                                            <td>{{ ++$loop->index }}</td>
-                                            <td>{{ $d->employee?->admission_id_no }}</td>
-                                            <td>{{ $d->employee?->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d/m/Y') : '' }}</td>
-                                            <td>{{ $d->position?->name }}</td>
-                                            <td>{{ $d->employee?->en_applicants_name }}</td>
-                                            <td>
+                                        <tr class="tbl_border text-center">
+                                            <td class="tbl_border">{{ ++$loop->index }}</td>
+                                            <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
+                                            <td class="tbl_border">{{ $d->employee?->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d/m/Y') : '' }}</td>
+                                            <td class="tbl_border">{{ $d->position?->name }}</td>
+                                            <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
+                                            <td class="tbl_border">
                                                 @if ($d->duty_rate != 0)
                                                 {{ round($d->duty_rate) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->house_rent != 0)
                                                 {{ round($d->house_rent) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->medical != 0)
                                                 {{ round($d->medical) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->gross_salary != 0)
                                                 {{ round($d->gross_salary) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->duty_qty != 0)
                                                 {{ round($d->duty_qty) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->ot_qty != 0)
                                                 {{ round($d->ot_qty) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->ot_rate != 0)
                                                 {{ round($d->ot_rate) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->ot_amount != 0)
                                                 {{ round($d->ot_amount) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->allownce != 0)
                                                 {{ round($d->allownce) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->fuel_bill != 0)
                                                 {{ round($d->fuel_bill) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->total_salary_of_salary_sheet_four != 0)
                                                 {{ round($d->total_salary_of_salary_sheet_four) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_mobilebill != 0)
                                                 {{ round($d->deduction_mobilebill) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_fine != 0)
                                                 {{ round($d->deduction_fine) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_ins != 0)
                                                 {{ round($d->deduction_ins) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_p_f != 0)
                                                 {{ round($d->deduction_p_f) }}
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_mess != 0)
                                                 {{ round($d->deduction_mess) }}
                                                 @php
@@ -172,7 +176,7 @@
                                                 @endphp
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_loan != 0)
                                                 {{ round($d->deduction_loan) }}
                                                 @php
@@ -180,7 +184,7 @@
                                                 @endphp
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->deduction_traningcost != 0)
                                                 {{ round($d->deduction_traningcost) }}
                                                 @php
@@ -188,7 +192,7 @@
                                                 @endphp
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td class="tbl_border">
                                                 @if ($d->total_payable != 0)
                                                 {{ $d->total_payable }}
                                                 @php
@@ -196,9 +200,9 @@
                                                 @endphp
                                                 @endif
                                             </td>
-                                            <td>{{ $d->sing_of_ind }}</td>
-                                            <td>{{ $d->sing_account }}</td>
-                                            <td>
+                                            <td class="tbl_border">{{ $d->sing_of_ind }}</td>
+                                            <td class="tbl_border">{{ $d->sing_account }}</td>
+                                            <td class="tbl_border">
                                                 @if (!is_null($d->remark) && $d->remark !== '')
                                                     {{ $d->remark }}
                                                 @endif
@@ -208,13 +212,13 @@
                                         @endforelse
                                     </tbody>
                                     <tfoot>
-                                         <tr>
-                                            <th colspan="20" class="text-center">Total</th>
-                                            <th>{{$deductionMessTotal}}</th>
-                                            <th>{{$deductionLoomTotal}}</th>
-                                            <th>{{$deductionTrainingTotal}}</th>
-                                            <th>{{$payableTotal}}</th>
-                                            <th>{{$deductionMessTotal + $deductionLoomTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                         <tr class="tbl_border text-center">
+                                            <th colspan="20" class="tbl_border text-center">Total</th>
+                                            <th class="tbl_border">{{$deductionMessTotal}}</th>
+                                            <th class="tbl_border">{{$deductionLoomTotal}}</th>
+                                            <th class="tbl_border">{{$deductionTrainingTotal}}</th>
+                                            <th class="tbl_border">{{$payableTotal}}</th>
+                                            <th class="tbl_border">{{$deductionMessTotal + $deductionLoomTotal + $deductionTrainingTotal + $payableTotal}}</th>
                                         </tr> 
                                     </tfoot>
                                 </table>

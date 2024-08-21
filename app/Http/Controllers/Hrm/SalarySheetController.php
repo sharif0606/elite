@@ -124,6 +124,7 @@ class SalarySheetController extends Controller
                             $details->gross_salary=$request->gross_salary[$key];
                             $details->deduction_fine=$request->deduction_fine[$key];
                             $details->deduction_loan=$request->deduction_loan[$key];
+                            $details->deduction_long_loan=$request->deduction_long_loan[$key];
                             $details->deduction_traningcost=$request->deduction_traningcost[$key];
                             $details->deduction_ins=$request->deduction_ins[$key];
                             $details->deduction_p_f=$request->deduction_p_f[$key];

@@ -232,10 +232,11 @@
                     var old_emp = '';
                     $.each(salary_data, function(index, value) {
                         //console.log(value);
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
+                        let postAllowance=value.bn_post_allowance;
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
@@ -289,6 +290,7 @@
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
+                            var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="allownce[]" value="">`
                         }else{
                             var customerName=`<input readonly style="width:100px;" class="form-control salary_joining_date" type="text" name="salary_joining_date[]" value="${value.salary_joining_date}" placeholder="Date of Joining">`
                             var en_applicants_name=`<input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -308,6 +310,7 @@
                             var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
                             var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
                             var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
+                            var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control allownce" type="text" name="allownce[]" value="${postAllowance}" placeholder="Allownce">`
                         }
                         selectElement.append(
                             `<tr>
@@ -349,7 +352,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fixed_ot" type="text" name="fixed_ot[]" value="" placeholder="Fixed Ot">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control allownce" type="text" name="allownce[]" value="" placeholder="Allownce">
+                                    ${pAllowance}
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave" type="text" name="leave[]" value="" placeholder="Leave">
