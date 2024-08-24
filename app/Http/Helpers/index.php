@@ -218,9 +218,14 @@ function getBangladeshCurrency($number) {
 //       }
 // }
 if (!function_exists('money_format')) {
-
     function money_format($number)
     {
+        // Check if the number is negative
+        $isNegative = $number < 0;
+
+        // Work with the absolute value of the number
+        $number = abs($number);
+
         // Separate the number into its integer and decimal parts
         $decimal = number_format($number - floor($number), 2, '.', '');
         $money = floor($number);
@@ -242,7 +247,11 @@ if (!function_exists('money_format')) {
         // Append the decimal part to the result
         $result = $result . $decimal;
 
+        // Add the minus sign back if the number was negative
+        if ($isNegative) {
+            $result = '-' . $result;
+        }
+
         return $result;
     }
 }
-
