@@ -32,6 +32,7 @@ use App\Http\Controllers\Settings\UserProfileController as userprofile;
 
 /* HRM */
 use App\Http\Controllers\Employee\EmployeeController as employee;
+use App\Http\Controllers\Release\ReleaseEmployeeController as relEmployee;
 use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 use App\Http\Controllers\payroll\ControllerDeduction as deductionAsign;
 use App\Http\Controllers\payroll\LongLoanController as long_loan;
@@ -144,6 +145,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* HRM */
         Route::resource('employee', employee::class);
+        Route::resource('relEmployee', relEmployee::class);
+        Route::get('employee-release', [relEmployee::class,'startRelease'])->name('employee.release');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
         Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
         Route::get('employee-certificate/{id}', [employee::class,'certificate'])->name('employee.certificate');

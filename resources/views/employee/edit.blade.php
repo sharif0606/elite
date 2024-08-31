@@ -725,9 +725,9 @@
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
                                     @if ($d->name_bn != null)
-                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->designation_id?"selected":""}}> {{ $d->name_bn}}</option>
+                                        <option value="{{$d->id}}" {{ old('designation_id',$employees->designation_id)==$d->id?"selected":""}}> {{ $d->name_bn}}</option>
                                     @else
-                                        <option value="{{$d->id}}" {{ old('designation_id')==$d->designation_id?"selected":""}}> {{ $d->name}}</option>
+                                        <option value="{{$d->id}}" {{ old('designation_id',$employees->designation_id)==$d->id?"selected":""}}> {{ $d->name}}</option>
                                     @endif
                                 @empty
                                     <option value="">No district found</option>
