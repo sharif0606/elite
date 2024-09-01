@@ -12,6 +12,60 @@
     .selected-row {
         background-color: rgb(189, 245, 189);
     }
+    .table {
+        width: 100%;
+        overflow-x: auto; /* Ensures the table can be scrolled horizontally */
+    }
+
+    .table thead th.fixed,
+    .table tbody td.fixed {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-2,
+    .table tbody td.fixed-2 {
+        position: sticky;
+        left: 28px; /* Ensure this matches the total width of the preceding column(s) */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-3,
+    .table tbody td.fixed-3 {
+        position: sticky;
+        left: 71px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-4,
+    .table tbody td.fixed-4 {
+        position: sticky;
+        left: 176px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-5,
+    .table tbody td.fixed-5 {
+        position: sticky;
+        left: 333px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table tbody tr.selected-row td.fixed,
+    .table tbody tr.selected-row td.fixed-2,
+    .table tbody tr.selected-row td.fixed-3,
+    .table tbody tr.selected-row td.fixed-4,
+    .table tbody tr.selected-row td.fixed-5 {
+        background-color: rgb(189, 245, 189); /* Match selected-row background color */
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -51,11 +105,11 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class="d-none show_click">
                                             <tr class="text-center" id="">
-                                                <th scope="col" rowspan="2">{{__('S/N')}}</th>
-                                                <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed">{{__('S/N')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-2">{{__('ID No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-3">{{__('Date of Joining')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-4">{{__('Rank & Joining date')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-5">{{__('Name')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Basic')}}</th>
                                                 <th scope="col" rowspan="2">{{__('House rent')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
@@ -183,18 +237,18 @@
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         selectElement.append(
                             `<tr>
-                                <td>${counter + 1}</td>
-                                <td>${value.admission_id_no}
+                                <td class="fixed">${counter + 1}</td>
+                                <td class="fixed-2">${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>
+                                <td class="fixed-3">
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" placeholder="Date of Joining">
                                 </td>
-                                <td>
+                                <td class="fixed-4">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
                                     <input class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
                                 </td>
-                                <td>
+                                <td class="fixed-5">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>

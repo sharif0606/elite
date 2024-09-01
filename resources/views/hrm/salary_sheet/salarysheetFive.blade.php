@@ -12,6 +12,61 @@
     .selected-row {
         background-color: rgb(189, 245, 189);
     }
+    .table {
+        width: 100%;
+        overflow-x: auto; /* Ensures the table can be scrolled horizontally */
+    }
+
+    .table thead th.fixed,
+    .table tbody td.fixed {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-2,
+    .table tbody td.fixed-2 {
+        position: sticky;
+        left: 28px; /* Ensure this matches the total width of the preceding column(s) */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-3,
+    .table tbody td.fixed-3 {
+        position: sticky;
+        left: 71px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-4,
+    .table tbody td.fixed-4 {
+        position: sticky;
+        left: 176px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-5,
+    .table tbody td.fixed-5 {
+        position: sticky;
+        left: 333px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table tbody tr.selected-row td.fixed,
+    .table tbody tr.selected-row td.fixed-2,
+    .table tbody tr.selected-row td.fixed-3,
+    .table tbody tr.selected-row td.fixed-4,
+    .table tbody tr.selected-row td.fixed-5 {
+        background-color: rgb(189, 245, 189); /* Match selected-row background color */
+    }
+
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -78,12 +133,13 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class="d-none show_click">
                                             <tr class="text-center myDIV" id="">
-                                                <th scope="col" rowspan="2" class="myDIV">{{__('SL.No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Rank')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Name')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Divide By')}}</th>
+                                                <th scope="col" rowspan="2" class="myDIV fixed">{{__('SL.No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-2">{{__('ID No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-3">{{__('Date of Joining')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-4">{{__('Rank')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-5">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Name_of_bank')}}</th>
+                                                <th scope="col" rowspan="2">{{__('branch_name')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Pre.Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
@@ -97,6 +153,7 @@
                                                 <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remark')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Divide By')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
@@ -115,7 +172,7 @@
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                              <tr>
-                                                <th colspan="6" class="text-end"> Total</th>
+                                                <th colspan="7" class="text-end"> Total</th>
                                                 <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
                                                 <th><input class="form-control prevDaysTotal" type="text" style="width:60px;" disabled></th>
                                                 <th><input class="form-control netTotal" type="text" disabled></th>
@@ -247,8 +304,6 @@
                             netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                         }
                         if(old_emp == value.admission_id_no){
-                            var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="join_date[]" value="${value.salary_joining_date}">`;
-                            var en_applicants_name = value.customer_branch;
                             var dressCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_dress[]" readonly>`
                             var fineCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_fine[]" readonly>`
                             var backChargeCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_banck_charge[]" readonly>`
@@ -258,11 +313,8 @@
                             var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                             var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="post_allowance[]">`
                         }else{
-                            var customerName=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">`
-                            var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
                             var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">`
                             var backChargeCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">`
@@ -272,17 +324,18 @@
                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}">`;
                             var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="${postAllowance}">`
                         }
                         selectElement.append(
                             `<tr>
-                                <td>${counter + 1}</td>
-                                <td>${value.admission_id_no}
+                                <td class="fixed">${counter + 1}</td>
+                                <td class="fixed-2">${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>${customerName}</td>
-                                <td>
+                                <td class="fixed-3">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">
+                                </td>
+                                <td class="fixed-4">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
                                     <input type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
                                     <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
@@ -290,10 +343,11 @@
                                     <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                     <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
                                 </td>
-                                <td> ${en_applicants_name}</td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                <td class="fixed-5">
+                                     <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
+                                <td width="300px"> ${value.customer_name}</td>
+                                <td width="300px"> ${value.customer_branch}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
                                 </td>
@@ -333,7 +387,10 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
                                 </td>
-                                <td>${remarkCondition}</td>
+                                <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}"></td>
+                                <td>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                 </td>  --}}

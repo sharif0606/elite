@@ -144,28 +144,35 @@
 @endsection
 @push("scripts")
 <script>
-    function getNote(e){
+    function getNote(e) {
         let customerId = $(e).val();
-            $('#headerNote').val('');
-            $('#footerNote').val('');
-            $.ajax({
-                url: "{{route('get_customer_header_footer')}}",
-                type: "GET",
-                dataType: "json",
-                data:{customer_id:customerId},
-                success: function(data) {
-                    console.log(data);
-                    let header = data.footer_note? data.header_note : 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
-                    let footer = data.footer_note? data.footer_note : 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
-                    $('#headerNote').val(header);
-                    $('#footerNote').val(footer);
-                    //oldCustomer = data.id;
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
+        $('#headerNote').val('');
+        $('#footerNote').val('');
+        
+        $.ajax({
+            url: "{{route('get_customer_header_footer')}}",
+            type: "GET",
+            dataType: "json",
+            data: { customer_id: customerId },
+            success: function(data) {
+                console.log(data);
+                
+                let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                
+                let header = data.header_note !== null ? data.header_note : defaultHeader;
+                let footer = data.footer_note !== null ? data.footer_note : defaultFooter;
+                
+                $('#headerNote').val(header);
+                $('#footerNote').val(footer);
+                //oldCustomer = data.id;
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
     }
+
     function checkZone(e){
         let customer_zone=$('#customer_id').find(":selected").data('zone');
         let branch_zone=$('#branch_id').find(":selected").data('zone');

@@ -14,6 +14,9 @@
             border: 1px solid rgb(46, 46, 46);
             border-collapse: collapse;
         }
+        thead {
+    border-bottom: 2px solid rgb(46, 46, 46); /* Increase the thickness for visibility */
+}
     </style>
     <div class="row match-height">
         <div class="col-12">
@@ -39,13 +42,13 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table id="salaryTable" class="table mb-0">
-                                    <thead>
+                                <table id="salaryTable" class=" mb-0" style="width: 2000px !important;">
+                                    <thead class="tbl_border">
                                         <tr class="text-center tbl_border" id="">
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
                                             <th class="tbl_border" class="myDIV" scope="col" rowspan="2">{{__('Online Payment')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Date of Joining')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 80px;">{{__('Date of Joining')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Designation')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Monthly Salary')}}</th>

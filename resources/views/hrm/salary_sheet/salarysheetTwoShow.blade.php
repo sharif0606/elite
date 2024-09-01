@@ -46,12 +46,12 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                                 <div class="table-responsive">
-                                    <table id="salaryTable" class="table mb-0">
+                                    <table id="salaryTable" class=" mb-0" style="width: 2200px !important;">
                                         <thead>
                                             <tr class="text-center tbl_border" id="">
                                                 <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
                                                 <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                <th class="tbl_border" scope="col" rowspan="2">{{__('Date of Joining')}}</th>
+                                                <th class="tbl_border" scope="col" rowspan="2" style="width: 80px;">{{__('Date of Joining')}}</th>
                                                 <th class="tbl_border" scope="col" rowspan="2">{{__('Designation')}}</th>
                                                 <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
                                                 <th class="tbl_border" scope="col" rowspan="2">{{__('Payment Type')}}</th>
