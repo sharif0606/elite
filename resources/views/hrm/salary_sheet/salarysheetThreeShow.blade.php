@@ -46,7 +46,7 @@
                         <!-- table bordered -->
                         <div class="row mt-4">
                             <div class="table-responsive">
-                                <table id="salaryTable" class=" mb-0" style="width: 2300px !important;">
+                                <table id="salaryTable" class=" mb-0" style="width: 1900px !important;">
                                     <thead>
                                         <tr class="text-center tbl_border" id="">
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
