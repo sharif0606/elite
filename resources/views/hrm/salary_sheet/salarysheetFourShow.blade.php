@@ -44,7 +44,7 @@
                                         <tr class="text-center tbl_border" id="">
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 80px !important;">{{__('Date of Joining')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 100px !important;">{{__('Date of Joining')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Basic')}}</th>

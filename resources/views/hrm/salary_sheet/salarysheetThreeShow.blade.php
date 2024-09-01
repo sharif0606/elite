@@ -53,7 +53,7 @@
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Rank')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 80px;">{{__('Joining Date')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 100px !important;">{{__('Joining Date')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Basic')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('House rent (50%)')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Medical')}}</th>
