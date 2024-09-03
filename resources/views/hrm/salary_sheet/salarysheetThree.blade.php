@@ -276,6 +276,7 @@
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
+                        let foodAllowance= (value.bn_food_allowance > 0) ? value.bn_food_allowance : '0';
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 12);
@@ -325,6 +326,7 @@
                         if(old_emp == value.admission_id_no){
                             var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.salary_joining_date}">`;
                             var en_applicants_name = value.customer_branch;
+                            var food=`<input style="width:100px;" class="form-control" type="hidden" name="food_allownce[]" value="0" readonly>`;
                             var absentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_absent[]" value="0" readonly>`
                             var vacantCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_vacant[]" value="0" readonly>`
                             var hrentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_h_rent[]" value="0" readonly>`
@@ -337,6 +339,7 @@
                         }else{
                             var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
+                            var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="${foodAllowance}">`;
                             var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="" placeholder="Absent" readonly>`
                             var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="" placeholder="Vacant" readonly>`
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
@@ -374,9 +377,7 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="" placeholder="Trans. Conve.">
                                 </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="" placeholder="food allownce">
-                                </td>
+                                <td>${food}</td>
                                 <td>
                                     <input style="width:100px;" class="form-control gross_wages" type="text" name="gross_wages[]" value="${gr}" placeholder="Gross Wages" readonly>
                                 </td>

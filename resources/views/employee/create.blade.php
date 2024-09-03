@@ -589,10 +589,19 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_post_allowance">পোস্ট এলাউন্স</label>
-                            <input type="number" id="bn_post_allowance" value="{{old('bn_post_allowance')}}" class="form-control @error('bn_post_allowance') is-invalid @enderror" placeholder="পোস্ট এলাউন্স" name="bn_post_allowance">
-                            @if($errors->has('bn_post_allowance'))
-                                <span class="text-danger"> {{ $errors->first('bn_post_allowance') }}</span>
-                            @endif
+                            <input type="number" id="bn_post_allowance" value="{{old('bn_post_allowance')}}" class="form-control" name="bn_post_allowance">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_food_allowance">Food Allownce</label>
+                            <input type="number" value="{{old('bn_food_allowance')}}" class="form-control" name="bn_food_allowance">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_fuel_bill">Fuel Bill</label>
+                            <input type="number" value="{{old('bn_fuel_bill')}}" class="form-control" name="bn_fuel_bill">
                         </div>
                     </div>
                     <div class="col-md-4 col-12">

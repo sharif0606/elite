@@ -205,10 +205,12 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
+                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                        let fuelAllowance= (value.bn_fuel_bill > 0) ? value.bn_fuel_bill : '0';
                         let joiningDate = new Date(value.salary_joining_date);
                         let threeMonthsLater = new Date(joiningDate);
                         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
@@ -228,12 +230,16 @@
                         //     Insurance = (value.insurance > 0) ? value.insurance : '0';
                         // }
                         let Fine = (value.fine > 0) ? value.fine : '0';
+                        let RemarksArray = [
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
+                        ];
+                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let postAllounce = (value.loan > 0) ? value.loan : '0';
                         let fuelBill = (value.loan > 0) ? value.loan : '0';
-                        let remarks = (value.remarks != null) ? value.remarks : '';
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         selectElement.append(
                             `<tr>
@@ -276,10 +282,10 @@
                                     <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="${postAllowance}" placeholder="Post Allow.">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="${fuelAllowance}" placeholder="Fuel Bill">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="0" placeholder="Total Salary" readonly>
@@ -315,7 +321,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${remarks}" placeholder="Remarks">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${Remarks}" placeholder="Remarks">
                                 </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>

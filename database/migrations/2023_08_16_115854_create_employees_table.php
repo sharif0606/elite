@@ -71,7 +71,9 @@ return new class extends Migration
             $table->string('bn_song_name')->nullable();
             $table->string('bn_daughters_name')->nullable();
 
-            $table->string('bn_post_allowance')->nullable();
+            $table->decimal('bn_post_allowance',10,2)->nullable();
+            $table->decimal('bn_food_allowance',10,2)->default(0)->nullable();
+            $table->decimal('bn_fuel_bill',10,2)->default(0)->nullable();
             $table->decimal('bn_traning_cost',14,2)->nullable();
             $table->decimal('bn_remaining_cost',14,2)->nullable();
             $table->integer('bn_traning_cost_byMonth')->comment('detaction by 6 month')->default(6);

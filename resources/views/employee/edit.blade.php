@@ -609,6 +609,18 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
+                            <label for="bn_food_allowance">Food Allownce</label>
+                            <input type="number" value="{{old('bn_food_allowance',$employees->bn_food_allowance)}}" class="form-control" name="bn_food_allowance">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_fuel_bill">Fuel Bill</label>
+                            <input type="number" value="{{old('bn_fuel_bill',$employees->bn_fuel_bill)}}" class="form-control" name="bn_fuel_bill">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
                             <label for="bn_traning_cost">ট্রেনিং খরচ জমা</label>
                             <input type="number" id="bn_traning_cost" value="{{old('bn_traning_cost',$employees->bn_traning_cost)}}" class="form-control @error('bn_traning_cost') is-invalid @enderror" placeholder="ট্রেনিং খরচ" name="bn_traning_cost">
                             @if($errors->has('bn_traning_cost'))

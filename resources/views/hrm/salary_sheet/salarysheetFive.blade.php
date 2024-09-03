@@ -265,7 +265,7 @@
                         let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
-                        let postAllowance=value.bn_post_allowance;
+                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
                         //console.log(traningCostPerMonth);
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
