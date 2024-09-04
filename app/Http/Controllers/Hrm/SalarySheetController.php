@@ -374,7 +374,7 @@ class SalarySheetController extends Controller
     public function editSalaryFour($id){
         $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
         $salaryDetail = SalarySheetDetail::where('salary_id',$salary->id)->get();
-        return view('hrm.salary_sheet.salarySheetFourEdit',compact('salary','salaryDetail'));
+        return view('hrm.salary_sheet.salarysheetFourEdit',compact('salary','salaryDetail'));
     }
     public function salarySheetFourUpdate(Request $request, $id)
     {
