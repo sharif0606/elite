@@ -141,7 +141,7 @@
                                     <a href="{{route('customerduty.index', ['role' =>currentUser()])}}">Customer Duty</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route('deduction_asign.index')}}">Deduction Asign</a>
+                                    <a href="{{route('deduction_asign.index')}}">Deduction & Allownce</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('long_loan.index')}}">Long Loan</a>

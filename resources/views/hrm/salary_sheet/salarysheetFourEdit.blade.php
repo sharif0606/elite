@@ -12,6 +12,60 @@
     .selected-row {
         background-color: rgb(189, 245, 189);
     }
+    .table {
+        width: 100%;
+        overflow-x: auto; /* Ensures the table can be scrolled horizontally */
+    }
+
+    .table thead th.fixed,
+    .table tbody td.fixed {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-2,
+    .table tbody td.fixed-2 {
+        position: sticky;
+        left: 28px; /* Ensure this matches the total width of the preceding column(s) */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-3,
+    .table tbody td.fixed-3 {
+        position: sticky;
+        left: 71px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-4,
+    .table tbody td.fixed-4 {
+        position: sticky;
+        left: 176px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-5,
+    .table tbody td.fixed-5 {
+        position: sticky;
+        left: 333px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table tbody tr.selected-row td.fixed,
+    .table tbody tr.selected-row td.fixed-2,
+    .table tbody tr.selected-row td.fixed-3,
+    .table tbody tr.selected-row td.fixed-4,
+    .table tbody tr.selected-row td.fixed-5 {
+        background-color: rgb(189, 245, 189); /* Match selected-row background color */
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -52,11 +106,11 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class=" show_click">
                                             <tr class="text-center" id="">
-                                                <th scope="col" rowspan="2">{{__('S/N')}}</th>
-                                                <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed">{{__('S/N')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-2">{{__('ID No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-3">{{__('Date of Joining')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-4">{{__('Rank & Joining date')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-5">{{__('Name')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Basic')}}</th>
                                                 <th scope="col" rowspan="2">{{__('House rent')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
@@ -87,16 +141,16 @@
                                         <tbody class="salarySheet">
                                             @foreach ($salaryDetail as $d)
                                                 <tr>
-                                                    <td>{{++$loop->index}}</td>
-                                                    <td>{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
-                                                    <td>
+                                                    <td class="fixed">{{++$loop->index}}</td>
+                                                    <td class="fixed-2">{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
+                                                    <td class="fixed-3">
                                                         <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="{{$d->employee?->salary_joining_date}}" placeholder="Date of Joining">
                                                     </td>
-                                                    <td>
+                                                    <td class="fixed-4">
                                                         <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="{{$d->position?->name}}" placeholder="Name">
                                                         <input class="form-control rank" type="hidden" name="designation_id[]" value="{{$d->designation_id}}" placeholder="Desingation">
                                                     </td>
-                                                    <td>
+                                                    <td class="fixed-5">
                                                         <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="{{$d->employee?->en_applicants_name}}" placeholder="Name">
                                                     </td>
                                                     <td>
@@ -233,10 +287,12 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
+                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                        let fuelAllowance= (value.bn_fuel_bill > 0) ? value.bn_fuel_bill : '0';
                         let joiningDate = new Date(value.salary_joining_date);
                         let threeMonthsLater = new Date(joiningDate);
                         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
@@ -256,27 +312,31 @@
                         //     Insurance = (value.insurance > 0) ? value.insurance : '0';
                         // }
                         let Fine = (value.fine > 0) ? value.fine : '0';
+                        let RemarksArray = [
+                            (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.salary_stop_message) ? value.salary_stop_message : ''
+                        ];
+                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         let postAllounce = (value.loan > 0) ? value.loan : '0';
                         let fuelBill = (value.loan > 0) ? value.loan : '0';
-                        let remarks = (value.remarks != null) ? value.remarks : '';
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         selectElement.append(
                             `<tr>
-                                <td>${counter + 1}</td>
-                                <td>${value.admission_id_no}
+                                <td class="fixed">${counter + 1}</td>
+                                <td class="fixed-2">${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>
+                                <td class="fixed-3">
                                     <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" placeholder="Date of Joining">
                                 </td>
-                                <td>
+                                <td class="fixed-4">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" readonly class="form-control" type="text" value="${value.jobpost_name}" placeholder="Name">
                                     <input class="form-control rank" type="hidden" name="designation_id[]" value="${value.jobpost_id}" placeholder="Desingation">
                                 </td>
-                                <td>
+                                <td class="fixed-5">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
                                 </td>
                                 <td>
@@ -304,10 +364,10 @@
                                     <input readonly onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="" placeholder="Post Allow.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="${postAllowance}" placeholder="Post Allow.">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="" placeholder="Fuel Bill">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="${fuelAllowance}" placeholder="Fuel Bill">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="0" placeholder="Total Salary" readonly>
@@ -343,7 +403,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_accounts" type="text" name="signature_accounts[]" value="" placeholder="Sing of Accounts">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${remarks}" placeholder="Remarks">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control remarks" type="text" name="remarks[]" value="${Remarks}" placeholder="Remarks">
                                 </td>
                             </tr>`
                         );

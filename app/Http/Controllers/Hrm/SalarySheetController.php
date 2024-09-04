@@ -514,8 +514,9 @@ class SalarySheetController extends Controller
         $branchIds = explode(',', $salary->branch_id);
         $atmIds = explode(',', $salary->atm_id);
         $customer=Customer::all();
+        $branch=CustomerBrance::select('id','brance_name','customer_id')->whereIn('customer_id',$selectedCustomerIds)->get();
         $salaryDetail = SalarySheetDetail::where('salary_id',$salary->id)->get();
-        return view('hrm.salary_sheet.salarySheetFiveEdit',compact('salary','salaryDetail','customer','selectedCustomerIds','selectedCustomerIdsNot','branchIds','atmIds'));
+        return view('hrm.salary_sheet.salarySheetFiveEdit',compact('salary','salaryDetail','customer','branch','selectedCustomerIds','selectedCustomerIdsNot','branchIds','atmIds'));
     }
 
     public function salarySheetFiveUpdate(Request $request, $id)

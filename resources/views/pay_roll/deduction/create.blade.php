@@ -62,6 +62,7 @@
                                                 {{-- <option value="17" {{$did==17?'selected': ''}}>Absent</option>
                                                 <option value="18" {{$did==18?'selected': ''}}>Vacant</option> --}}
                                                 <option value="19" {{$did==19?'selected': ''}}>Adv.</option>
+                                                <option value="21" {{$did==21?'selected': ''}}>Fuel Bill</option>
                                             </select>
                                             @if($errors->has('deduction'))
                                                 <span class="text-danger"> {{ $errors->first('deduction') }}</span>
@@ -186,7 +187,9 @@
                             { amount: data.mess, remarks: data.mess_rmk },
                             { amount: data.absent, remarks: data.absent_rmk },
                             { amount: data.vacant, remarks: data.vacant_rmk },
-                            { amount: data.adv, remarks: data.adv_rmk }
+                            { amount: data.adv, remarks: data.adv_rmk },
+                            { amount: data.salary_stop_message},
+                            { amount: data.fuel_bill, remarks: data.fuel_bill_rmk }
                         ];
 
                         var statusData = statusMapping[fine] || { amount: '', remarks: '' };

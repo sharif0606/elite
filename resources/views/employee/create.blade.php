@@ -598,7 +598,7 @@
                             <input type="number" value="{{old('bn_food_allowance')}}" class="form-control" name="bn_food_allowance">
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
+                    <div class="col-md-4 col-12 d-none">
                         <div class="form-group">
                             <label for="bn_fuel_bill">Fuel Bill</label>
                             <input type="number" value="{{old('bn_fuel_bill')}}" class="form-control" name="bn_fuel_bill">

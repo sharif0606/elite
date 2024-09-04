@@ -12,6 +12,60 @@
     .selected-row {
         background-color: rgb(189, 245, 189);
     }
+    .table {
+        width: 100%;
+        overflow-x: auto; /* Ensures the table can be scrolled horizontally */
+    }
+
+    .table thead th.fixed,
+    .table tbody td.fixed {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-2,
+    .table tbody td.fixed-2 {
+        position: sticky;
+        left: 28px; /* Ensure this matches the total width of the preceding column(s) */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+
+    .table thead th.fixed-3,
+    .table tbody td.fixed-3 {
+        position: sticky;
+        left: 71px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-4,
+    .table tbody td.fixed-4 {
+        position: sticky;
+        left: 176px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table thead th.fixed-5,
+    .table tbody td.fixed-5 {
+        position: sticky;
+        left: 333px; /* Cumulative width of previous columns */
+        z-index: 2;
+        background-color: white;
+        border-left: 1px solid #ddd;
+    }
+    .table tbody tr.selected-row td.fixed,
+    .table tbody tr.selected-row td.fixed-2,
+    .table tbody tr.selected-row td.fixed-3,
+    .table tbody tr.selected-row td.fixed-4,
+    .table tbody tr.selected-row td.fixed-5 {
+        background-color: rgb(189, 245, 189); /* Match selected-row background color */
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -26,7 +80,7 @@
                                 <div class="row p-2 mt-4">
                                     <div class="form-group col-lg-6 mt-2">
                                         <label for=""><b>Customer Name</b></label>
-                                        <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]">
+                                        <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]" id="customerSelect">
                                             <optgroup label="Select Customer">
                                                 @forelse ($customer as $c)
                                                 <option value="{{ $c->id }}" {{ in_array($c->id, $selectedCustomerIds) ? 'selected' : '' }}>{{ $c->name }}</option>
@@ -44,6 +98,14 @@
                                                 @empty
                                                 @endforelse
                                             </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-lg-6 mt-2">
+                                        <label for=""><b>Customer Branch</b></label>
+                                        <select class="select2 multiselect form-select customer_branch_id" name="branch_id[]" multiple="multiple" id="customerBranch">
+                                            @foreach ($branch as $brn)
+                                                <option value="{{ $brn->id }}" {{ in_array($brn->id, $branchIds) ? 'selected' : '' }}>{{ $brn->brance_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-3 mt-2">
@@ -74,11 +136,13 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class="show_click">
                                             <tr class="text-center myDIV" id="">
-                                                <th scope="col" rowspan="2" class="myDIV">{{__('SL.No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('ID No')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Date of Joining')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Rank')}}</th>
-                                                <th scope="col" rowspan="2">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2" class="myDIV fixed">{{__('SL.No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-2">{{__('ID No')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-3">{{__('Date of Joining')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-4">{{__('Rank')}}</th>
+                                                <th scope="col" rowspan="2" class="fixed-5">{{__('Name')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Name_of_bank')}}</th>
+                                                <th scope="col" rowspan="2">{{__('branch_name')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Pre Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
@@ -92,6 +156,7 @@
                                                 <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remark')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Divide By')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
@@ -122,7 +187,6 @@
                                                     $stmCondition='<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>';
                                                     $trainingChargCondition='<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>';
                                                     $loonCondition='<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>';
-                                                    $remarkCondition='<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="">';
                                                 } else {
                                                     $customer_name = '<input style="width:100px;" class="form-control" type="text" name="join_date[]" value="' .$d->employee?->salary_joining_date . '">';
                                                     $en_applicants_name = '<input style="width:200px;" readonly class="form-control" type="text" value="' .$d->employee?->en_applicants_name . '" placeholder="Name">';
@@ -134,15 +198,14 @@
                                                     $stmCondition='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="'.$d->deduction_revenue_stamp.'">';
                                                     $trainingChargCondition='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="'.$d->deduction_traningcost.'" name="deduction_training_cost[]">';
                                                     $loonCondition='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="'.$d->deduction_loan.'">';
-                                                    $remarkCondition='<input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="'.$d->remark.'">';
                                                 }
                                             @endphp
                                         
                                                 <tr>
-                                                    <td>{{++$loop->index}}</td>
-                                                    <td>{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
-                                                    <td>{!! $customer_name !!}</td>
-                                                    <td>
+                                                    <td  class="fixed">{{++$loop->index}}</td>
+                                                    <td class="fixed-2">{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
+                                                    <td class="fixed-3">{!! $customer_name !!}</td>
+                                                    <td class="fixed-4">
                                                         <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="{{$d->position?->name}}" placeholder="Rank">
                                                         <input type="hidden" name="designation_id[]" value="{{$d->designation_id}}" placeholder="Jobpost Id">
                                                         <input type="hidden" name="customer_id_ind[]" value="{{$d->customer_id}}">
@@ -150,7 +213,9 @@
                                                         <input type="hidden" name="customer_atm_id[]" value="{{$d->atm_id}}">
                                                         <input class="deduction_total" type="hidden" name="deduction_total[]" value="{{$d->deduction_total}}">
                                                     </td>
-                                                    <td>{!! $en_applicants_name !!}</td>
+                                                    <td class="fixed-5">{!! $en_applicants_name !!}</td>
+                                                    <td>{{$d->customer?->name}}</td>
+                                                    <td>{{$d->branches?->brance_name}}</td>
                                                     <td>
                                                         <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{$d->duty_rate}}" placeholder="OT Qty">
                                                     </td>
@@ -192,7 +257,8 @@
                                                     <td>
                                                         <input style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
                                                     </td>
-                                                    <td>{!! $remarkCondition !!}</td>
+                                                    <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="{{$d->remark}}"></td>
+                                                    <td><input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="{{$d->divided_by}}"></td>
                                                 </tr>
                                                 @php
                                                     $old_emp = $d->employee?->admission_id_no;
@@ -201,7 +267,7 @@
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                              <tr>
-                                                <th colspan="5" class="text-end">Total</th>
+                                                <th colspan="7" class="text-end">Total</th>
                                                 <th><input class="form-control ratOfSalaryTotal" type="text" disabled></th>
                                                 <th><input class="form-control prevDaysTotal" type="text" style="width:60px;" disabled></th>
                                                 <th><input class="form-control netTotal" type="text" disabled></th>
@@ -244,6 +310,39 @@
     });
 </script>
 <script>
+    $(document).ready(function() {
+        $('#customerSelect').change(function() {
+            var selectedCustomers = $(this).val();
+
+            if (selectedCustomers.length > 0) {
+                $.ajax({
+                    url: "{{route('get_ajax_salary_branch')}}",
+                    type: "GET",
+                    dataType: "json",
+                    data: { customer_ids:selectedCustomers },
+                    success: function(data) {
+                        console.log(data);
+                        let optBranch = `<option value="">Select Branch</option>`;
+                        if (data.length > 0) {
+                            data.forEach(item => {
+                                optBranch += `<option value="${item.id}">${item.brance_name}</option>`;
+                            });
+                        }
+                        $('#customerBranch').html(optBranch).promise().done(function() {
+                            $('.multiselect').select2();
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                });
+            } else {
+                console.log("No customers selected.");
+            }
+        });
+    });
+
     function getSalaryData(e){
         var startDate=$('.year').val()+'-'+$('.month').val()+'-01';
         var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
@@ -299,6 +398,8 @@
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let totalDeduction = parseFloat(Fine) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         let netSalary = '0';
+                        let currentMonth = $('.selected_month').val();
+                        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
                         if (grossAmoun > totalDeduction) {
                             netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                         }
@@ -314,7 +415,6 @@
                             var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="">`;
                         }else{
                             var customerName=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">`
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
@@ -327,16 +427,15 @@
                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
                             var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
-                            var remarkCondition=`<input style="width:100px;" class="form-control remark" type="hidden" name="remark[]" value="${Remarks}"><span>${Remarks}</span>`;
                         }
                         selectElement.append(
                             `<tr>
-                                <td>${counter + 1}</td>
-                                <td>${value.admission_id_no}
+                                <td class="fixed">${counter + 1}</td>
+                                <td class="fixed-2">${value.admission_id_no}
                                     <input onkeyup="reCalcultateSalary(this)" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
                                 </td>
-                                <td>${customerName}</td>
-                                <td>
+                                <td class="fixed-3">${customerName}</td>
+                                <td class="fixed-4">
                                     <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
                                     <input type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
                                     <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
@@ -344,7 +443,9 @@
                                     <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                     <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
                                 </td>
-                                <td> ${en_applicants_name}</td>
+                                <td class="fixed-5"> ${en_applicants_name}</td>
+                                <td width="300px"> ${value.customer_name}</td>
+                                <td width="300px"> ${value.customer_branch}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
                                 </td>
@@ -384,7 +485,10 @@
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
                                 </td>
-                                <td>${remarkCondition}</td>
+                                <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}"></td>
+                                <td>
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                </td>
                                 {{--  <td>
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                 </td>  --}}
@@ -410,7 +514,8 @@
         //let currentMonth = currentDate.getMonth() + 1;
         //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         let currentMonth = $('.selected_month').val();
-        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        //let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+        let totalDaysInMonth = $(e).closest('tr').find('.divided_by').val()?parseFloat($(e).closest('tr').find('.divided_by').val()):30;
         let dutyRateDay=dutyRate/totalDaysInMonth;
         let otRateDay=otRate/totalDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);

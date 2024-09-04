@@ -209,6 +209,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('deduction-mess-index', [deductionAsign::class,'messIndex'])->name('messIndex');
         Route::get('deduction-absent-index', [deductionAsign::class,'absentIndex'])->name('absentIndex');
         Route::get('deduction-vacant-index', [deductionAsign::class,'vacantIndex'])->name('vacantIndex');
+        Route::get('allownce-fuel-index', [deductionAsign::class,'fuelIndex'])->name('fuelBillIndex');
         Route::get('deduction-adv-index', [deductionAsign::class,'advIndex'])->name('advIndex');
 
         //Accounts

@@ -210,7 +210,6 @@
                         let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
                         let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
-                        let fuelAllowance= (value.bn_fuel_bill > 0) ? value.bn_fuel_bill : '0';
                         let joiningDate = new Date(value.salary_joining_date);
                         let threeMonthsLater = new Date(joiningDate);
                         threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
@@ -238,8 +237,8 @@
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
                         let Loan = (value.loan > 0) ? value.loan : '0';
-                        let postAllounce = (value.loan > 0) ? value.loan : '0';
-                        let fuelBill = (value.loan > 0) ? value.loan : '0';
+                        // there fuel is allownce. it will add with total salary
+                        let fuelBill = (value.fuel_bill > 0) ? value.fuel_bill : '0';
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         selectElement.append(
                             `<tr>
@@ -285,7 +284,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allow" type="text" name="post_allow[]" value="${postAllowance}" placeholder="Post Allow.">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="${fuelAllowance}" placeholder="Fuel Bill">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fuel_bill" type="text" name="fuel_bill[]" value="${fuelBill}" placeholder="Fuel Bill">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_salary" type="text" name="total_salary[]" value="0" placeholder="Total Salary" readonly>

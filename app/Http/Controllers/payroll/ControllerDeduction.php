@@ -117,6 +117,11 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('vacant', '>', 0)->get();
         return view('pay_roll.deduction.vacantIndex',compact('deductions'));
     }
+    public function fuelIndex()
+    {
+        $deductions=Deduction::where('fuel_bill', '>', 0)->get();
+        return view('pay_roll.deduction.fuelIndex',compact('deductions'));
+    }
     public function salaryStopIndex()
     {
         $deductions=Deduction::where('salary_stop_message', '!=', null)->get();
@@ -134,7 +139,6 @@ class ControllerDeduction extends Controller
         $employees=Employee::select('id','admission_id_no','bn_applicants_name')->get();
         return view('pay_roll.deduction.salaryStop',compact('employees'));
     }
-
     public function getOldDeduction(Request $request) {
         $data = Deduction::where('employee_id', $request->employee_id)->where('year', $request->year)->where('month', $request->month)->first();
     
@@ -435,6 +439,20 @@ class ControllerDeduction extends Controller
                     }
                 }
             }
+            if($request->deduction_type=='21'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->fuel_bill=$request->amount[$key];
+                        $deduction->fuel_bill_rmk=$request->remarks[$key];
+                        $deduction->status=21;
+                        $deduction->save();
+                    }
+                }
+            }
             \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction');
             $deductionRoutes = [
                 1 => 'fineIndex',
@@ -457,6 +475,7 @@ class ControllerDeduction extends Controller
                 18=> 'vacantIndex',
                 19=> 'advIndex',
                 20=> 'salaryStopIndex',
+                21=> 'fuelBillIndex',
                 'default' => 'deduction_asign.index',
             ];
             

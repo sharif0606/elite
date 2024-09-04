@@ -33,6 +33,8 @@ return new class extends Migration
             $table->string('vacant_rmk')->nullable()->after('vacant');
             $table->string('adv_rmk')->nullable()->after('adv');
             $table->string('stmp_rmk')->nullable()->after('stmp');
+            $table->decimal('fuel_bill',10,2)->default(0)->nullable()->after('stmp_rmk');
+            $table->string('fuel_bill_rmk')->nullable()->after('fuel_bill');
         });
     }
 
@@ -63,6 +65,8 @@ return new class extends Migration
             $table->dropColumn('vacant_rmk');
             $table->dropColumn('adv_rmk');
             $table->dropColumn('stmp_rmk');
+            $table->dropColumn('fuel_bill');
+            $table->dropColumn('fuel_bill_rmk');
         });
     }
 };

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Deduction Asign List'))
+@section('pageTitle',trans('Deduction & Allownce Asign List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -11,7 +11,8 @@
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
                 @endif
-                <div class="table-responsive">
+                <div class="">
+                    <div class=""><h5>Deduction</h5></div>
                     <a href="{{route('salaryStopIndex')}}" class="btn btn-danger py-1 px-2 m-1">Salary Stop</a>
                     <a href="{{route('fineIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fine List</a>
                     <a href="{{route('mobileBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Mobile Bill</a>
@@ -32,6 +33,10 @@
                     {{-- <a href="{{route('absentIndex')}}" class="btn btn-danger py-1 px-2 m-1">Absent</a>
                     <a href="{{route('vacantIndex')}}" class="btn btn-danger py-1 px-2 m-1">Vacant</a> --}}
                     <a href="{{route('advIndex')}}" class="btn btn-danger py-1 px-2 m-1">Adv</a>
+                </div>
+                <div class="mt-3">
+                    <div class=""><h5>Allownce</h5></div>
+                    <a href="{{route('fuelBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fuel Bill</a>
                 </div>
             </div>
         </div>
