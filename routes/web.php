@@ -168,6 +168,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('salary-sheet-three-index', [salarySheet::class,'getsalarySheetThreeIndex'])->name('salarysheet.salarySheetThreeIndex');
         Route::get('screen-salary-sheet-three', [salarySheet::class,'salarySheetThree'])->name('salarySheetThree');
         Route::post('/salary-three-store', [salarySheet::class,'salarySheetThreeStore'])->name('salarysheet.salarySheetThreeStore');
+        Route::get('screen-salary-sheet-three-edit/{id}', [salarySheet::class,'editSalaryThree'])->name('salarySheetThreeEdit');
+        Route::post('/salary-three-update/{id}', [salarySheet::class,'salarySheetThreeUpdate'])->name('salarysheet.salarySheetThreeUpdate');
         Route::get('salary-sheet-three-show/{id}', [salarySheet::class,'salarySheetThreeShow'])->name('salarysheet.salarySheetThreeShow');
         // salary 4 office staff
         Route::get('salary-sheet-four-index', [salarySheet::class,'getsalarySheetFourIndex'])->name('salarysheet.salarySheetFourIndex');
