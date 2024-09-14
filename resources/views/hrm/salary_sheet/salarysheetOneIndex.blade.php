@@ -47,6 +47,9 @@
                             <a href="{{route('salarysheet.salarySheetOneShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
+                            <a class="px-1" href="{{route('salarySheetOneEdit',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
                             <a class="text-danger" href="javascript:void()" onclick="$('#form{{$s->id}}').submit()">
                                 <i class="bi bi-trash"></i>
                             </a>

@@ -118,14 +118,21 @@ class SalarySheetController extends Controller
                             $details->ot_qty=$request->ot_qty[$key];
                             $details->ot_rate=$request->ot_rate[$key];
                             $details->ot_amount=$request->ot_amount[$key];
+                            $details->fixed_ot=$request->fixed_ot[$key];
                             $details->leave=$request->leave[$key];
                             $details->arrear=$request->arrear[$key];
                             $details->allownce=$request->allownce[$key];
                             $details->gross_salary=$request->gross_salary[$key];
                             $details->deduction_fine=$request->deduction_fine[$key];
+                            $details->deduction_mobilebill=$request->deduction_mobilebill[$key];
                             $details->deduction_loan=$request->deduction_loan[$key];
                             $details->deduction_long_loan=$request->deduction_long_loan[$key];
+                            $details->deduction_cloth=$request->deduction_cloth[$key];
+                            $details->deduction_jacket=$request->deduction_jacket[$key];
+                            $details->deduction_hr=$request->deduction_hr[$key];
                             $details->deduction_traningcost=$request->deduction_traningcost[$key];
+                            $details->deduction_c_f=$request->deduction_c_f[$key];
+                            $details->deduction_medical=$request->deduction_medical[$key];
                             $details->deduction_ins=$request->deduction_ins[$key];
                             $details->deduction_p_f=$request->deduction_p_f[$key];
                             $details->deduction_revenue_stamp=$request->deduction_revenue_stamp[$key];
@@ -142,6 +149,95 @@ class SalarySheetController extends Controller
                 }
                 \LogActivity::addToLog('Generate Salary Sheet',$request->getContent(),'SalarySheet,SalarySheetDetail');
                 return redirect()->route('salarysheet.salarySheetOneIndex')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            DB::rollback();
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
+    public function editSalaryOne($id){
+        $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+        $selectedCustomerIds = explode(',', $salary->customer_id);
+        $selectedCustomerIdsNot = explode(',', $salary->customer_id_not);
+        $branchIds = explode(',', $salary->branch_id);
+        $atmIds = explode(',', $salary->atm_id);
+        $customer=Customer::all();
+        $branch=CustomerBrance::select('id','brance_name','customer_id')->whereIn('customer_id',$selectedCustomerIds)->get();
+        $salaryDetail = SalarySheetDetail::where('salary_id',$salary->id)->get();
+        return view('hrm.salary_sheet.salarysheetOneEdit',compact('salary','salaryDetail','customer','branch','selectedCustomerIds','selectedCustomerIdsNot','branchIds','atmIds'));
+    }
+    public function salarySheetOneUpdate(Request $request, $id)
+    {
+        // dd($request->all());
+        // die();
+        DB::beginTransaction();
+        try {
+            $salary = SalarySheet::findOrFail(encryptor('decrypt',$id));
+            $salary->customer_id = $request->customer_id?implode(',',$request->customer_id):'';
+            $salary->customer_id_not = $request->customer_id_not?implode(',',$request->customer_id_not):'';
+            if($request->branch_id){
+                $salary->branch_id = $request->branch_id?implode(',',$request->branch_id):'';
+            }else{
+                $salary->branch_id = $request->customer_branch_id?implode(',',$request->customer_branch_id):'';
+            }
+            $salary->atm_id = $request->customer_atm_id?implode(',',$request->customer_atm_id):'';
+            $salary->year = $request->year;
+            $salary->month = $request->month;
+            $salary->created_by=currentUserId();
+            $salary->status = 1;
+            if ($salary->save()){
+                if($request->employee_id){
+                    SalarySheetDetail::where('salary_id',$salary->id)->delete();
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $details = new SalarySheetDetail;
+                            $details->salary_id=$salary->id;
+                            $details->employee_id=$request->employee_id[$key];
+                            $details->designation_id=$request->designation_id[$key];
+                            $details->customer_id=$request->customer_id_ind[$key];
+                            $details->branch_id=$request->customer_branch_id[$key];
+                            $details->atm_id=$request->customer_atm_id[$key];
+                            $details->duty_rate=$request->duty_rate[$key];
+                            $details->duty_qty=$request->duty_qty[$key];
+                            $details->duty_amount=$request->duty_amount[$key];
+                            $details->ot_qty=$request->ot_qty[$key];
+                            $details->ot_rate=$request->ot_rate[$key];
+                            $details->ot_amount=$request->ot_amount[$key];
+                            $details->fixed_ot=$request->fixed_ot[$key];
+                            $details->leave=$request->leave[$key];
+                            $details->arrear=$request->arrear[$key];
+                            $details->allownce=$request->allownce[$key];
+                            $details->gross_salary=$request->gross_salary[$key];
+                            $details->deduction_fine=$request->deduction_fine[$key];
+                            $details->deduction_mobilebill=$request->deduction_mobilebill[$key];
+                            $details->deduction_loan=$request->deduction_loan[$key];
+                            $details->deduction_long_loan=$request->deduction_long_loan[$key];
+                            $details->deduction_cloth=$request->deduction_cloth[$key];
+                            $details->deduction_jacket=$request->deduction_jacket[$key];
+                            $details->deduction_hr=$request->deduction_hr[$key];
+                            $details->deduction_traningcost=$request->deduction_traningcost[$key];
+                            $details->deduction_c_f=$request->deduction_c_f[$key];
+                            $details->deduction_medical=$request->deduction_medical[$key];
+                            $details->deduction_ins=$request->deduction_ins[$key];
+                            $details->deduction_p_f=$request->deduction_p_f[$key];
+                            $details->deduction_revenue_stamp=$request->deduction_revenue_stamp[$key];
+                            $details->deduction_total=$request->deduction_total[$key];
+                            $details->net_salary=$request->net_salary[$key];
+                            $details->common_net_salary=$request->net_salary[$key];
+                            $details->sing_of_ind=$request->sing_of_ind[$key];
+                            $details->remark=$request->remark[$key];
+                            $details->status=0;
+                            $details->save();
+                            DB::commit();
+                        }
+                    }
+                }
+                \LogActivity::addToLog('Generate Salary Sheet',$request->getContent(),'SalarySheet,SalarySheetDetail');
+                return redirect()->route('salarysheet.salarySheetOneIndex')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

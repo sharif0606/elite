@@ -158,6 +158,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('salary-sheet-one-index', [salarySheet::class,'getsalarySheetOneIndex'])->name('salarysheet.salarySheetOneIndex');
         Route::get('screen-salary-sheet-one', [salarySheet::class,'getsalarySheetOne'])->name('salarySheetOne');
         Route::post('/salary-one-store', [salarySheet::class,'salarySheetOneStore'])->name('salarysheet.salarySheetOneStore');
+        Route::get('screen-salary-sheet-one-edit/{id}', [salarySheet::class,'editSalaryOne'])->name('salarySheetOneEdit');
+        Route::post('/salary-one-update/{id}', [salarySheet::class,'salarySheetOneUpdate'])->name('salarysheet.salarySheetOneUpdate');
         Route::get('salary-sheet-one-show/{id}', [salarySheet::class,'getsalarySheetOneShow'])->name('salarysheet.salarySheetOneShow');
          // salary 2
         Route::get('salary-sheet-two-index', [salarySheet::class,'getsalarySheetTwoIndex'])->name('salarysheet.salarySheetTwoIndex');

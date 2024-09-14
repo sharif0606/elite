@@ -375,6 +375,13 @@
 @endsection
 @push("scripts")
 <script>
+    $('.salarySheet').on('focus', 'input', function() {
+        $(this).closest('tr').addClass('selected-row');
+    }).on('blur', 'input', function() {
+        $(this).closest('tr').removeClass('selected-row');
+    });
+</script>
+<script>
     $(document).ready(function() {
         $('#customerSelect').change(function() {
             var selectedCustomers = $(this).val();
@@ -610,12 +617,6 @@
                         counter++;
                         total_calculate();
                         old_emp= value.admission_id_no;
-                    });
-                    // Add event listeners for focusing and blurring inputs
-                    $('.salarySheet').on('focus', 'input', function() {
-                        $(this).closest('tr').addClass('selected-row');
-                    }).on('blur', 'input', function() {
-                        $(this).closest('tr').removeClass('selected-row');
                     });
             },
         });

@@ -1,7 +1,7 @@
 @extends('layout.app')
 
 @section('pageTitle',trans('Salary Sheet One'))
-@section('pageSubTitle',trans('Create'))
+@section('pageSubTitle',trans('Update'))
 
 @section('content')
 <style>
@@ -73,15 +73,16 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('salarysheet.salarySheetOneStore')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('salarysheet.salarySheetOneUpdate',[encryptor('encrypt',$salary->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
+                            @method('POST')
                             <div class="row p-2 mt-4">
                                 <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Name</b></label>
                                     <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]" id="customerSelect">
                                         <optgroup label="Select Customer">
                                             @forelse ($customer as $c)
-                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            <option value="{{ $c->id }}" {{ in_array($c->id, $selectedCustomerIds) ? 'selected' : '' }}>{{ $c->name }}</option>
                                             @empty
                                             @endforelse
                                         </optgroup>
@@ -92,7 +93,7 @@
                                     <select class="choices form-select multiple-remove customer_id_not" multiple="multiple" name="customer_id_not[]">
                                         <optgroup label="Select Customer">
                                             @forelse ($customer as $c)
-                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            <option value="{{ $c->id }}" {{ in_array($c->id, $selectedCustomerIdsNot) ? 'selected' : '' }}>{{ $c->name }}</option>
                                             @empty
                                             @endforelse
                                         </optgroup>
@@ -101,6 +102,9 @@
                                 <div class="form-group col-lg-6 mt-2">
                                     <label for=""><b>Customer Branch</b></label>
                                     <select class="select2 multiselect form-select customer_branch_id" name="branch_id[]" multiple="multiple" id="customerBranch">
+                                        @foreach ($branch as $brn)
+                                            <option value="{{ $brn->id }}" {{ in_array($brn->id, $branchIds) ? 'selected' : '' }}>{{ $brn->brance_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
@@ -108,7 +112,7 @@
                                     <select required class="form-control year" name="year">
                                         <option value="">Select Year</option>
                                         @for($i=2023;$i<= date('Y');$i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
+                                        <option value="{{ $i }}" {{$salary->year== $i? 'selected' : '' }}>{{ $i }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -117,7 +121,7 @@
                                     <select required class="form-control month selected_month" name="month">
                                         <option value="">Select Month</option>
                                         @for($i=1;$i<= 12;$i++)
-                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                        <option value="{{ $i }}" {{$salary->month== $i ? 'selected' : '' }}>{{ date('F',strtotime("2022-$i-01")) }}</option>
                                         @endfor
                                     </select>
                                 </div>
@@ -130,7 +134,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
                                     <table class="table table-bordered mb-0">
-                                        <thead class="d-none show_click">
+                                        <thead class="">
                                             <tr class="text-center" id="">
                                                 <th scope="col" rowspan="2" class="fixed">{{__('S/N')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Online Payment')}}</th>
@@ -175,7 +179,120 @@
                                             </tr>
                                         </thead>
                                         <tbody class="salarySheet">
-
+                                            @php
+                                                $old_emp = '';
+                                            @endphp
+                                            @foreach ($salaryDetail as $d)
+                                            @php
+                                                if($old_emp == $d->employee?->admission_id_no){
+                                                    $fineCon='<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0">';
+                                                    $mobileCon='<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" >';
+                                                    $loonCon='<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0">';
+                                                    $longLoonCon='<input style="width:100px;" class="form-control" type="text" name="deduction_long_loan[]" value="0">';
+                                                    $clothCon='<input style="width:100px;" class="form-control" type="text" name="deduction_cloth[]" value="0" >';
+                                                    $jacketCon='<input style="width:100px;" class="form-control" type="text" name="deduction_jacket[]" value="0" >';
+                                                    $hrCon='<input style="width:100px;" class="form-control" type="text" name="deduction_hr[]" value="0" >';
+                                                    $trainingCon='<input style="width:100px;" class="form-control" type="text" name="deduction_traningcost[]" value="0">';
+                                                    $cfCon='<input style="width:100px;" class="form-control" type="text" name="deduction_c_f[]" value="0">';
+                                                    $medicalCon='<input style="width:100px;" class="form-control" type="text" name="deduction_medical[]" value="0">';
+                                                    $insCon='<input style="width:100px;" class="form-control" type="text" name="deduction_ins[]" value="0">';
+                                                    $pfCon='<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0">';
+                                                    $stmCon='<input style="width:100px;" class="form-control" type="text" name="deduction_revenue_stamp[]" value="0">';
+                                                    $deTotalCon='<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0">';
+                                                    $netSalaryCon='<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="'.$d->net_salary.'">';
+                                                    $pAllowanCon='<input style="width:100px;" class="form-control" type="text" name="allownce[]" value="0">';
+                                                } else {
+                                                    $fineCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="'.$d->deduction_fine.'" placeholder="Fine">';
+                                                    $mobileCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="'.$d->deduction_mobilebill.'" placeholder="Mobile bill">';
+                                                    $loonCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="'.$d->deduction_loan.'" placeholder="Loan">';
+                                                    $longLoonCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="'.$d->deduction_long_loan.'" placeholder="Long Loan">';
+                                                    $clothCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="'.$d->deduction_cloth.'" placeholder="Cloth">';
+                                                    $jacketCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="'.$d->deduction_jacket.'" placeholder="Jacket">';
+                                                    $hrCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="'.$d->deduction_hr.'" placeholder="HR">';
+                                                    $trainingCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="'.$d->deduction_traningcost.'" placeholder="Training Cost">';
+                                                    $cfCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="'.$d->deduction_c_f.'" placeholder="C/F">';
+                                                    $medicalCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="'.$d->deduction_medical.'" placeholder="Medical">';
+                                                    $insCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="'.$d->deduction_ins.'" placeholder="Ins">';
+                                                    $pfCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="'.$d->deduction_p_f.'" placeholder="P/F">';
+                                                    $stmCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="'.$d->deduction_revenue_stamp.'" placeholder="Revenue Stamp">';
+                                                    $deTotalCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="'.$d->deduction_total.'" placeholder="Total">';
+                                                    $netSalaryCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="'.$d->net_salary.'" placeholder="Net Salary">';
+                                                    $pAllowanCon='<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control allownce" type="text" name="allownce[]" value="'.$d->allownce.'" placeholder="Allownce">'; 
+                                                }
+                                            @endphp
+                                        
+                                                <tr>
+                                                    <td  class="fixed">{{++$loop->index}}</td>
+                                                    <td ><input style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="Online" placeholder="Online Payment"></td>
+                                                    <td class="fixed-2">{{$d->employee?->admission_id_no}}<input class="form-control employee_id" type="hidden" name="employee_id[]" value="{{$d->employee_id}}"></td>
+                                                    <td class="fixed-3"><input readonly style="width:100px;" class="form-control salary_joining_date" type="text" name="salary_joining_date[]" value="{{$d->employee?->salary_joining_date}}" placeholder="Date of Joining"></td>
+                                                    <td class="fixed-4">
+                                                        <input style="width:150px;" class="form-control rank" type="text" value="{{$d->position?->name}}" placeholder="Rank">
+                                                        <input type="hidden" name="designation_id[]" value="{{$d->designation_id}}" placeholder="Jobpost Id">
+                                                        <input type="hidden" name="customer_id_ind[]" value="{{$d->customer_id}}">
+                                                        <input type="hidden" name="customer_branch_id[]" value="{{$d->branch_id}}">
+                                                        <input type="hidden" name="customer_atm_id[]" value="{{$d->atm_id}}">
+                                                    </td>
+                                                    <td class="fixed-5"><input style="width:200px;" readonly class="form-control" type="text" value="{{$d->employee?->en_applicants_name}}" placeholder="Name"></td>
+                                                    <td>{{$d->customer?->name}}</td>
+                                                    <td>{{$d->branches?->brance_name}}</td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{$d->duty_rate}}" placeholder="Monthlay Salary">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control duty_qty" type="text" name="duty_qty[]" value="{{$d->duty_qty}}" placeholder="Duty Rate">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control duty_amount" type="text" name="duty_amount[]" value="{{$d->duty_amount}}" placeholder="Duty Amount">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control ot_qty" type="text" name="ot_qty[]" value="{{$d->ot_qty}}" placeholder="Ot Qty">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="{{$d->ot_rate}}" placeholder="Ot Rate">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" readonly style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="{{$d->ot_amount}}" placeholder="Ot Amount">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control fixed_ot" type="text" name="fixed_ot[]" value="{{$d->fixed_ot}}" placeholder="Fixed Ot">
+                                                    </td>
+                                                    <td>
+                                                        {!! $pAllowanCon !!}
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave" type="text" name="leave[]" value="{{$d->leave}}" placeholder="Leave">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control arrear" type="text" name="arrear[]" value="{{$d->arrear}}" placeholder="Arrear">
+                                                    </td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="{{$d->gross_salary}}" placeholder="Gross Salary">
+                                                    </td>
+                                                    <td>{!! $fineCon !!}</td>
+                                                    <td>{!! $mobileCon !!}</td>
+                                                    <td>{!! $loonCon !!}</td>
+                                                    <td>{!! $longLoonCon !!}</td>
+                                                    <td>{!! $clothCon !!}</td>
+                                                    <td>{!! $jacketCon !!}</td>
+                                                    <td>{!! $hrCon !!}</td>
+                                                    <td>{!! $trainingCon !!}</td>
+                                                    <td>{!! $cfCon !!}</td>
+                                                    <td>{!! $medicalCon !!}</td>
+                                                    <td>{!! $insCon !!}</td>
+                                                    <td>{!! $pfCon !!}</td>
+                                                    <td>{!! $stmCon !!}</td>
+                                                    <td>{!! $deTotalCon !!}</td>
+                                                    <td>{!! $netSalaryCon !!}</td>
+                                                    <td>
+                                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_of_ind" type="text" name="sing_of_ind[]" value="" placeholder="SIGN OF IND">
+                                                    </td>
+                                                    <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="{{$d->remark}}"></td>
+                                                </tr>
+                                                @php
+                                                    $old_emp = $d->employee?->admission_id_no;
+                                                @endphp
+                                            @endforeach
                                         </tbody>
                                         <tfoot class="d-none show_click">
                                             <tr>
@@ -213,7 +330,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-info">Update</button>
                             </div>
                         </form>
                     </div>
@@ -224,6 +341,13 @@
 </section>
 @endsection
 @push("scripts")
+<script>
+    $('.salarySheet').on('focus', 'input', function() {
+        $(this).closest('tr').addClass('selected-row');
+    }).on('blur', 'input', function() {
+        $(this).closest('tr').removeClass('selected-row');
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#customerSelect').change(function() {
