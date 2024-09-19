@@ -63,7 +63,7 @@ class ProductRequisitionController extends Controller
         //dd($request->all());
         try{
             $data=new ProductRequisition;
-            if($request->employee_id){
+            if($request->employee_id != null){
                 $data->employee_id=$request->employee_id;
             }else{
                 $employee= new Employee;
@@ -89,7 +89,7 @@ class ProductRequisitionController extends Controller
                             $details->type=$request->type[$key];
                             if($details->save()){
                                 $stock=new Stock;
-                                $stock->employee_id=$request->employee_id;
+                                $stock->employee_id=$data->employee_id;
                                 $stock->product_requisition_id=$data->id;
                                 $stock->product_issue_id=$details->id;
                                 $stock->entry_date=$formattedDate;

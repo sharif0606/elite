@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Release;
 use App\Http\Controllers\Controller;
 use App\Models\Employee\Employee;
 use App\Models\Release\ReleaseEmployee;
+use App\Models\Stock\Stock;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -34,14 +35,11 @@ class ReleaseEmployeeController extends Controller
         return view('release.create',compact('employee'));
     }
     public function startRelease(Request $request){
-        $data = Employee::join('product_requisitions','product_requisitions.employee_id','=','employees.id')
-        ->select('product_requisitions.id as pro_req_id','employees.id','employees.admission_id_no','employees.bn_applicants_name','employees.joining_date','bn_parm_village_name')
-        ->where('employees.id',$request->employee_id)->get();
+        $emp = Employee::select('id','admission_id_no','bn_applicants_name','joining_date','bn_jobpost_id','bn_parm_village_name')->where('id',$request->employee_id)->first();
+        $data= Stock::where('employee_id',$request->employee_id)->where('status',1)->get();
 
         //dd($data->toSql()); // This will show the raw SQL query
-
-        
-        return view('release.releaseForm',compact('data'));
+        return view('release.releaseForm',compact('emp','data'));
     }
 
     /**
