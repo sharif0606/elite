@@ -95,7 +95,7 @@
                                     <a href="{{route('employee.index', ['role' =>currentUser()])}}">Employee</a>
                                 </li>
                                 <li class="submenu-item">
-                                    {{-- <a href="{{route('relEmployee.index', ['role' =>currentUser()])}}">Release List</a> --}}
+                                    <a href="{{route('relEmployee.index', ['role' =>currentUser()])}}">Release List</a>
                                 </li>
                                 {{--  <li class="submenu-item">
                                     <a href="{{route('salarySheet.create', ['role' =>currentUser()])}}">Salary Sheet</a>  --}}

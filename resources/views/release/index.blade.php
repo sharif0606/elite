@@ -32,7 +32,10 @@
                                 <td>{{$d->employee?->bn_applicants_name}}({{$d->employee?->admission_id_no}})</td>
                                 <td>{{$d->resign_date}}</td>
                                 <td>
-                                    <a href="{{route('long_loan.edit',encryptor('encrypt',$d->id))}}">
+                                    <a href="{{route('relEmployee.show',encryptor('encrypt',$d->id))}}">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{route('relEmployee.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>

@@ -1,14 +1,15 @@
 @extends('layout.app')
 @section('pageTitle',trans('Release'))
-@section('pageSubTitle',trans('release'))
+@section('pageSubTitle',trans('Update'))
 
 @section('content')
 <section class="section">
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                <form method="post" action="{{route('relEmployee.store', ['role' =>currentUser()])}}">
+                <form method="post" action="{{route('relEmployee.update', [encryptor('encrypt',$emRel->id),'role' =>currentUser()])}}">
                     @csrf
+                    @method('PATCH')
                     <div class="row">
                         <div class="text-center">
                             <h5 class="mb-2">ছাড়পত্র</h5>
@@ -16,24 +17,24 @@
                         </div>
                         <div class="col-3">
                             <label for="">Employee ID</label>
-                            <input type="text" class="form-control" name="addmission_id_no" value="{{$emp->admission_id_no}}" readonly>
-                            <input type="hidden" class="form-control" name="employee_id" value="{{$emp->id}}">
+                            <input type="text" class="form-control" name="addmission_id_no" value="{{$emRel->employee?->admission_id_no}}" readonly>
+                            <input type="hidden" class="form-control" name="employee_id" value="{{$emRel->employee_id}}">
                         </div>
                         <div class="col-3">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" value="{{$emp->bn_applicants_name}}" readonly>
+                            <input type="text" class="form-control" value="{{$emRel->employee?->bn_applicants_name}}" readonly>
                         </div>
                         <div class="col-3">
                             <label for="">Joining Date</label>
-                            <input type="date" class="form-control joining_date" name="joining_date" value="{{$emp->joining_date}}">
+                            <input type="date" class="form-control joining_date" name="joining_date" value="{{$emRel->employee?->joining_date}}">
                         </div>
                         <div class="col-3">
                             <label for="">Job Post</label>
-                            <input type="text" class="form-control" name="job_post" value="{{$emp->position?->name_bn}}">
+                            <input type="text" class="form-control" name="job_post" value="{{$emRel->employee?->position?->name_bn}}">
                         </div>
                         <div class="col-3">
                             <label for="">Resign Date</label>
-                            <input type="date" class="form-control resign_date" onchange="profidentFund(this);" name="resign_date" value="" required>
+                            <input type="date" class="form-control resign_date" onchange="profidentFund(this);" name="resign_date" value="{{$emRel->resign_date}}" required>
                         </div>
                         <table class="table table-bordered" width="100%">
                             <tr class="text-center">
@@ -48,47 +49,47 @@
                                 <th>সংখ্যা</th>
                                 <th>টাকা</th>
                             </tr>
-                            @foreach ($data as $d)
+                            @foreach ($relDetail as $d)
                                 <tr class="text-center">
                                     <td>{{++$loop->index}}</td>
-                                    <td class="text-start">{{$d->product?->product_name}}<input type="hidden" class="form-control" name="issue_item_id[]" value="{{$d->product_id}}"></td>
-                                    <td><input type="text" class="form-control text-center issue_qty" name="issue_qty[]" value="{{abs($d->product_qty)}}" readonly></td>
-                                    <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-center receive_qty" name="receive_qty[]"></td>
-                                    <td><input type="number" class="form-control text-center not_receive_qty" name="not_receive_qty[]" readonly></td>
-                                    <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="not_receive_qty_amount[]"></td>
-                                    <td><input type="text" class="form-control" name="comment[]"></td>
+                                    <td class="text-start">{{$d->product?->product_name}}<input type="hidden" class="form-control" name="issue_item_id[]" value="{{$d->issue_item_id}}"></td>
+                                    <td><input type="text" class="form-control text-center issue_qty" name="issue_qty[]" value="{{abs($d->issue_qty)}}" readonly></td>
+                                    <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-center receive_qty" name="receive_qty[]" value="{{$d->receive_qty}}"></td>
+                                    <td><input type="number" class="form-control text-center not_receive_qty" name="not_receive_qty[]" value="{{$d->not_receive_qty}}" readonly></td>
+                                    <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="not_receive_qty_amount[]" value="{{$d->not_receive_qty_amount}}"></td>
+                                    <td><input type="text" class="form-control" name="comment[]" value="{{$d->comment}}"></td>
                                 </tr>
                             @endforeach
                             <tr class="text-center">
                                 <td></td>
-                                <td class="text-start">ধোলাই খরচ বাবদ <input type="hidden" name="wash_cost" value="ধোলাই খরচ বাবদ"></td>
+                                <td class="text-start">ধোলাই খরচ বাবদ <input type="hidden" name="wash_cost" value="{{$emRel->wash_cost}}"></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="wash_cost_amount"></td>
+                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="wash_cost_amount" value="{{$emRel->wash_cost_amount}}"></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <th colspan="5" class="text-end">মোট কর্তনকৃত টাকা=</th>
-                                <td><input type="number" class="form-control text-end amount_deducted" name="amount_deducted"></td>
+                                <td><input type="number" class="form-control text-end amount_deducted" name="amount_deducted" value="{{$emRel->amount_deducted}}"></td>
                             </tr>
                         </table>
                         <div class="row mb-5">
                             <div class="col-12">
                                 <label for="">নোট</label>
-                                <textarea class="form-control" name="others_note" rows="2"></textarea>
+                                <textarea class="form-control" name="others_note" rows="2">{{$emRel->others_note}}</textarea>
                             </div>
                             <div class="col-2">
                                 <label for="">জমাকারীর মোবাইল নং</label>
-                                <input type="number" class="form-control" name="issue_submiter_mobile">
+                                <input type="number" class="form-control" name="issue_submiter_mobile" value="{{$emRel->issue_submiter_mobile}}">
                             </div>
                             <div class="col-5">
                                 <label for="">গ্রাহক কর্তৃপক্ষ মন্তব্য</label>
-                                <input type="text" class="form-control" name="cus_authority_comment">
+                                <input type="text" class="form-control" name="cus_authority_comment" value="{{$emRel->cus_authority_comment}}">
                             </div>
                             <div class="col-5">
                                 <label for="">জোন কমান্ডার মন্তব্য</label>
-                                <input type="text" class="form-control" name="zone_commander_comment">
+                                <input type="text" class="form-control" name="zone_commander_comment" value="{{$emRel->zone_commander_comment}}">
                             </div>
                         </div>
                         <div class="text-center">
@@ -103,81 +104,123 @@
                             </tr>
                             <tr>
                                 <td class="text-center">১।</td>
-                                <td>
-                                    <textarea name="due_salary" class="form-control" rows="2">বকেয়া বেতন</textarea>
+                                <td class="text-left">
+                                    <textarea name="due_salary" class="form-control" rows="2">
+                                        @if($emRel->due_salary != '')
+                                            {{$emRel->due_salary}}
+                                        @else
+                                            বকেয়া বেতন
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end due_salary_amount" onkeyup="pfCollection(this);" name="due_salary_amount"></td>
-                                <td><input type="text" class="form-control" name="due_salary_comment"></td>
+                                <td><input type="text" class="form-control text-end due_salary_amount" onkeyup="pfCollection(this);" name="due_salary_amount" value="{{$emRel->due_salary_amount}}" ></td>
+                                <td><input type="text" class="form-control" name="due_salary_comment" value="{{$emRel->due_salary_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center">২।</td>
-                                <td>
-                                    <textarea name="pf_a" class="form-control" rows="2">(ক) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১০  ইং পর্যন্ত) মাসিক ৫০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে</textarea>
+                                <td class="text-left">
+                                    <textarea name="pf_a" class="form-control" rows="2">
+                                        @if($emRel->pf_a != '')
+                                            {{$emRel->pf_a}}
+                                        @else
+                                            (ক) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১০  ইং পর্যন্ত) মাসিক ৫০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end pf_a_amount" onkeyup="pfCollection(this);" name="pf_a_amount"></td>
-                                <td><input type="text" class="form-control" name="pf_a_comment"></td>
+                                <td><input type="text" class="form-control text-end pf_a_amount" onkeyup="pfCollection(this);" name="pf_a_amount" value="{{$emRel->pf_a_amount}}"></td>
+                                <td><input type="text" class="form-control" name="pf_a_comment" value="{{$emRel->pf_a_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>
-                                    <textarea name="pf_b" class="form-control" rows="2">(খ) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১৭ ইং পর্যন্ত) মাসিক ১০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
+                                <td class="text-left">
+                                    <textarea name="pf_b" class="form-control" rows="2">
+                                        @if($emRel->pf_b != '')
+                                            {{$emRel->pf_b}}
+                                        @else
+                                            (খ) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১৭ ইং পর্যন্ত) মাসিক ১০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end pf_b_amount" onkeyup="pfCollection(this);" name="pf_b_amount"></td>
-                                <td><input type="text" class="form-control" name="pf_b_comment"></td>
+                                <td><input type="text" class="form-control text-end pf_b_amount" onkeyup="pfCollection(this);" name="pf_b_amount" value="{{$emRel->pf_b_amount}}"></td>
+                                <td><input type="text" class="form-control" name="pf_b_comment" value="{{$emRel->pf_b_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>
-                                    <textarea name="pf_c" class="form-control" rows="2">(গ) প্রভিডেন্ট ফান্ড (জানুয়ারী -২০১৮ ইং থেকে চলিত) মাসিক ২০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
+                                <td class="text-left">
+                                    <textarea name="pf_c" class="form-control" rows="2">
+                                        @if($emRel->pf_c != '')
+                                            {{$emRel->pf_c}}
+                                        @else
+                                            (গ) প্রভিডেন্ট ফান্ড (জানুয়ারী -২০১৮ ইং থেকে চলিত) মাসিক ২০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end pf_c_amount" onkeyup="pfCollection(this);" name="pf_c_amount"></td>
-                                <td><input type="text" class="form-control" name="pf_c_comment"></td>
+                                <td><input type="text" class="form-control text-end pf_c_amount" onkeyup="pfCollection(this);" name="pf_c_amount" value="{{$emRel->pf_c_amount}}"></td>
+                                <td><input type="text" class="form-control" name="pf_c_comment" value="{{$emRel->pf_c_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center">৩।</td>
-                                <td>
-                                    <textarea name="leave" class="form-control" rows="2">ছুটির টাকা (কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
+                                <td class="text-left">
+                                    <textarea name="leave" class="form-control" rows="2">
+                                        @if($emRel->leave != '')
+                                            {{$emRel->leave}}
+                                        @else
+                                            ছুটির টাকা (কমপক্ষে ৬ মাস চাকুরী করলে)
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end leave_amount" onkeyup="pfCollection(this);" name="leave_amount"></td>
-                                <td><input type="text" class="form-control" name="leave_comment"></td>
+                                <td><input type="text" class="form-control text-end leave_amount" onkeyup="pfCollection(this);" name="leave_amount" value="{{$emRel->leave_amount}}"></td>
+                                <td><input type="text" class="form-control" name="leave_comment" value="{{$emRel->leave_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center">৪।</td>
-                                <td>
-                                    <textarea name="addmission" class="form-control" rows="2">ভর্তির নগদ জামানত বাবদ ১০০০/- ফেরত যোগ্য যদি ৩০/০৬/২০০৯ তারিখের পূর্বে ভর্তি হয়ে থাকে।  তার পরের ভর্তির ফি বাবদ অফেরতযোগ্য  (চুক্তি মোতাবেক)</textarea>
+                                <td class="text-left">
+                                    <textarea name="addmission" class="form-control" rows="2">
+                                        @if($emRel->addmission != '')
+                                            {{$emRel->addmission}}
+                                        @else
+                                           ভর্তির নগদ জামানত বাবদ ১০০০/- ফেরত যোগ্য যদি ৩০/০৬/২০০৯ তারিখের পূর্বে ভর্তি হয়ে থাকে।  তার পরের ভর্তির ফি বাবদ অফেরতযোগ্য  (চুক্তি মোতাবেক)
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end addmission_amount" onkeyup="pfCollection(this);" name="addmission_amount"></td>
-                                <td><input type="text" class="form-control" name="addmission_comment"></td>
+                                <td><input type="text" class="form-control text-end addmission_amount" onkeyup="pfCollection(this);" name="addmission_amount" value="{{$emRel->addmission_amount}}"></td>
+                                <td><input type="text" class="form-control" name="addmission_comment" value="{{$emRel->addmission_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center">৫।</td>
-                                <td>
-                                    <textarea name="others" class="form-control" rows="2">অন্যান্য</textarea>
+                                <td class="text-left">
+                                    <textarea name="others" class="form-control" rows="2">
+                                        @if($emRel->others != '')
+                                            {{$emRel->others}}
+                                        @else
+                                           অন্যান্য
+                                        @endif
+                                    </textarea>
                                 </td>
-                                <td><input type="text" class="form-control text-end others_amount" onkeyup="pfCollection(this);" name="others_amount"></td>
-                                <td><input type="text" class="form-control" name="others_comment"></td>
+                                <td><input type="text" class="form-control text-end others_amount" onkeyup="pfCollection(this);" name="others_amount" value="{{$emRel->others_amount}}"></td>
+                                <td><input type="text" class="form-control" name="others_comment" value="{{$emRel->others_comment}}"></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
                                 <td>মোট হিসাব =</td>
-                                <td><input type="text" class="form-control text-end subtotal_amount" name="subtotal" readonly></td>
+                                <td><input type="text" class="form-control text-end subtotal_amount" name="subtotal" value="{{$emRel->subtotal}}" readonly></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
                                 <td>কর্তনকৃত টাকা =</td>
-                                <td><input type="text" class="form-control text-end final_deducted" name="final_deducted" readonly></td>
+                                <td><input type="text" class="form-control text-end final_deducted" name="final_deducted" value="{{$emRel->final_deducted}}" readonly></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
                                 <td>চূড়ান্ত পাওনা =</td>
-                                <td><input type="text" class="form-control text-end final_total" name="final_total" readonly></td>
+                                <td><input type="text" class="form-control text-end final_total" name="final_total" value="{{$emRel->final_total}}" readonly></td>
                                 <td></td>
                             </tr>
                         </table>
                         <div class="col-12 text-end">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-info">Update</button>
                         </div>
                     </div>
                 </form>
