@@ -235,16 +235,25 @@
     @endphp
     <div style="text-align: center; margin-top:2rem;">
         <div style="width: 200px; float: left; text-align: left;">
+            @if ($footersetting1->signature != '')
+                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting1->signature)}}" class="my-1" width="100px" alt=""><br>
+            @endif
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
             {{ $footersetting1?->phone  }}
         </div>
         <div style="width: 200px; float: right; text-align: left;">
+            @if ($footersetting3->signature != '')
+                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting3->signature)}}" class="my-1" width="100px" alt=""><br>
+            @endif
             {{ $footersetting3?->name }} <br>
             {{ $footersetting3?->designation }} <br>
             {{ $footersetting3?->phone  }}
         </div>
         <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
+            @if ($footersetting2->signature != '')
+                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting2->signature)}}" class="my-1" width="100px" alt=""><br>
+            @endif
             {{ $footersetting2?->name }} <br>
             {{ $footersetting2?->designation }} <br>
             {{ $footersetting2?->phone  }}

@@ -24,6 +24,7 @@
                                 <th scope="col">{{__('Name')}}</th>
                                 <th scope="col">{{__('Designation')}}</th>
                                 <th scope="col">{{__('Phone')}}</th>
+                                <th scope="col">{{__('Signature')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -34,6 +35,7 @@
                                 <td>{{$d->name}}</td>
                                 <td>{{$d->designation}}</td>
                                 <td>{{$d->phone}}</td>
+                                <td><img src="{{asset('uploads/invoice/signatureImg/'.$d->signature)}}" id="photo_p" class="my-1" width="100px" alt=""></td>
                                 <td class="white-space-nowrap">
                                     <a href="{{route('invoicesetting.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
@@ -49,7 +51,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <th colspan="8" class="text-center">No invoicesetting Found</th>
+                                <th colspan="6" class="text-center">No Data Found</th>
                             </tr>
                             @endforelse
                         </tbody>

@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 
 class InvoiceSettingController extends Controller
 {
+    use ImageHandleTraits;
     /**
      * Display a listing of the resource.
      *
@@ -82,6 +83,9 @@ class InvoiceSettingController extends Controller
             $c->name=$request->name;
             $c->designation=$request->designation;
             $c->phone=$request->phone;
+            if($request->has('signature_img')){
+                $c->signature=$this->uploadImage($request->signature_img,'uploads/invoice/signatureImg/');
+            }
             $c->status=1;
             if($c->save()){
                 \LogActivity::addToLog('Update InvoiceSetting',$request->getContent(),'InvoiceSetting');
