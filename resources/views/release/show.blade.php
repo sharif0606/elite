@@ -78,7 +78,7 @@
                             <td class="tbl_border text-center">{{$emRel->amount_deducted}}</td>
                         </tr>
                     </table>
-                    <div><p class="p-0 m-0">{{$emRel->others_note}}</p></div>
+                    <div><p class="p-0 mb-4">{{$emRel->others_note}}</p></div>
                 </div>
                 <div class="row p-3 ">
                     <div class="d-flex justify-content-between">
@@ -132,7 +132,7 @@
                 .tbl_two_border {
                     border: 1px solid rgb(46, 46, 46);
                     border-collapse: collapse;
-                    padding: 8px; /* Add padding inside th and td */
+                    padding: 12px; /* Add padding inside th and td */
                 }
             </style>
             <div class="text-center m-2">
@@ -258,7 +258,7 @@
                 <div class="row p-3 mt-3">
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <span>তারিখঃ</span>
+                            <span>তারিখঃ</span><span style="border-bottom: 2px dashed;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         </div>
                         <div class="">
                             <span >স্বাক্ষর (অব্যহতিকারীর)</span><span style="border-bottom: 2px dashed;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

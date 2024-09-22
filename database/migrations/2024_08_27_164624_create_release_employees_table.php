@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('release_employees', function (Blueprint $table) {
             $table->id();
             $table->integer('employee_id');
+            $table->integer('post_id')->nullable();
             $table->date('resign_date')->nullable();
             $table->text('others_note')->nullable();
             $table->string('issue_submiter_mobile')->nullable();
