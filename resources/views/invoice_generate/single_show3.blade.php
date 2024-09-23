@@ -121,17 +121,19 @@
                 <td></td>
             </tr>
         </table>
-                <div>
+                {{-- <div>
                     Reference to the above subject, We herewith submitted the security services bill for the period covering
                     <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}</b>.
+                </div> --}}
+                <div style="padding-top: 8px; padding-bottom: 8px;">
+                    {{ $invoice_id->header_note }}
                 </div>
-
         <table border="1" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>S.L</th>
-                    <th>Service</th>
-                    <th>Rate</th>
+                    <th width="18%">Service</th>
+                    <th width="16%">Rate</th>
                     <th>Total Person</th>
                     <th>Working Days</th>
                     <th>Total Hours</th>
@@ -156,20 +158,21 @@
                 @endif
             </tbody>
             <tfoot>
-                <tr style="text-align: center;">
-                    <td></td>
-                    <th colspan="6">Sub Total</th>
-                    <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
-                </tr>
-                @if ($invoice_id->less)
-                @foreach ($invoice_id->less as $le)
-                <tr style="text-align: center;">
-                    <td></td>
-                    <td colspan="6">{{ $le->description }}</td>
-                    <td style="text-align: end;"><b>{{ money_format($le->amount) }}</b></td>
-                </tr>
-                @endforeach
+                @if($invoice_id->less && $invoice_id->less->isNotEmpty())
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="6">Sub Total</th>
+                        <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
+                    </tr>
+                    @foreach ($invoice_id->less as $le)
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <td colspan="6">{{ $le->description }}</td>
+                        <td style="text-align: end;"><b>{{ money_format($le->amount) }}</b></td>
+                    </tr>
+                    @endforeach
                 @endif
+
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="6">Total</th>
