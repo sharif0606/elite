@@ -288,20 +288,6 @@
             {{-- Align center of the body --}}
             <div style="display: inline-block; text-align: left;">
                 @if($headershow==1)
-                    @if ($footersetting3->signature != '')
-                        <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting3->signature) }}" class="my-1" width="100px" alt=""><br>
-                    @endif
-                @endif
-                {{ $footersetting3?->name }} <br>
-                {{ $footersetting3?->designation }} <br>
-                {{ $footersetting3?->phone }}
-            </div>
-        </div>
-        
-        <div style="flex: 1; text-align: right;">
-            {{-- Align right side of the body but content left-aligned --}}
-            <div style="display: inline-block; text-align: left;">
-                @if($headershow==1)
                     @if ($footersetting2->signature != '')
                         <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting2->signature) }}" class="my-1" width="100px" alt=""><br>
                     @endif
@@ -309,6 +295,21 @@
                 {{ $footersetting2?->name }} <br>
                 {{ $footersetting2?->designation }} <br>
                 {{ $footersetting2?->phone }}
+            </div>
+            
+        </div>
+        
+        <div style="flex: 1; text-align: right;">
+            {{-- Align right side of the body but content left-aligned --}}
+            <div style="display: inline-block; text-align: left;">
+                @if($headershow==1)
+                    @if ($footersetting3->signature != '')
+                        <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting3->signature) }}" class="my-1" width="100px" alt=""><br>
+                    @endif
+                @endif
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone }}
             </div>
         </div>
     </div>
