@@ -267,31 +267,83 @@
 
         </tr>
     </table>
-    <div style="text-align: center; margin-top:2rem;">
+    @if($headershow==1)
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left;">
+    @else
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left; margin-top:2rem;">
+    @endif
+        <div style="flex: 1; text-align: left; padding-right: 10px;">
+            {{-- Align left side of the body --}}
+            @if($headershow==1)
+                @if ($footersetting1->signature != '')
+                    <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting1->signature) }}" class="my-1" width="100px" alt=""><br>
+                @endif
+            @endif
+            {{ $footersetting1?->name }} <br>
+            {{ $footersetting1?->designation }} <br>
+            {{ $footersetting1?->phone }}
+        </div>
+        
+        <div style="flex: 1; text-align: center; padding-right: 10px;">
+            {{-- Align center of the body --}}
+            <div style="display: inline-block; text-align: left;">
+                @if($headershow==1)
+                    @if ($footersetting3->signature != '')
+                        <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting3->signature) }}" class="my-1" width="100px" alt=""><br>
+                    @endif
+                @endif
+                {{ $footersetting3?->name }} <br>
+                {{ $footersetting3?->designation }} <br>
+                {{ $footersetting3?->phone }}
+            </div>
+        </div>
+        
+        <div style="flex: 1; text-align: right;">
+            {{-- Align right side of the body but content left-aligned --}}
+            <div style="display: inline-block; text-align: left;">
+                @if($headershow==1)
+                    @if ($footersetting2->signature != '')
+                        <img src="{{ asset('uploads/invoice/signatureImg/'.$footersetting2->signature) }}" class="my-1" width="100px" alt=""><br>
+                    @endif
+                @endif
+                {{ $footersetting2?->name }} <br>
+                {{ $footersetting2?->designation }} <br>
+                {{ $footersetting2?->phone }}
+            </div>
+        </div>
+    </div>
+    
+    {{-- <div style="text-align: center; margin-top:2rem;">
         <div style="width: 200px; float: left; text-align: left;">
-            @if ($footersetting1->signature != '')
-                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting1->signature)}}" class="my-1" width="100px" alt=""><br>
+            @if($headershow==1)
+                @if ($footersetting1->signature != '')
+                    <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting1->signature)}}" class="my-1" width="100px" alt=""><br>
+                @endif
             @endif
             {{ $footersetting1?->name }} <br>
             {{ $footersetting1?->designation }} <br>
             {{ $footersetting1?->phone  }}
         </div>
         <div style="width: 200px; float: right; text-align: left;">
-            @if ($footersetting3->signature != '')
-                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting3->signature)}}" class="my-1" width="100px" alt=""><br>
+            @if($headershow==1)
+                @if ($footersetting3->signature != '')
+                    <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting3->signature)}}" class="my-1" width="100px" alt=""><br>
+                @endif
             @endif
             {{ $footersetting3?->name }} <br>
             {{ $footersetting3?->designation }} <br>
             {{ $footersetting3?->phone  }}
         </div>
         <div style="width: 200px; margin-left: auto; margin-right: auto; text-align: left;">
-            @if ($footersetting2->signature != '')
-                <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting2->signature)}}" class="my-1" width="100px" alt=""><br>
+            @if($headershow==1)
+                @if ($footersetting2->signature != '')
+                    <img src="{{asset('uploads/invoice/signatureImg/'.$footersetting2->signature)}}" class="my-1" width="100px" alt=""><br>
+                @endif
             @endif
             {{ $footersetting2?->name }} <br>
             {{ $footersetting2?->designation }} <br>
             {{ $footersetting2?->phone  }}
         </div>
-    </div>
+    </div> --}}
 </body>
 </html>
