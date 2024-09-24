@@ -141,6 +141,7 @@
         {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></div>
     <br>
     <div>Dear Sir</div> --}}
+    <br>
     <div>You are requested to pay the security bill/security including Armed services Bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}
         for providing security including service/security/including Armed services of your branch in favour of Elite
         Security Services Ltd.
@@ -208,7 +209,7 @@
             } else {
                 echo "Zero";
             }
-            @endphp.
+            @endphp
             </b> <br><br>
             @php
                 $footer_note = $invoice_id->footer_note;
