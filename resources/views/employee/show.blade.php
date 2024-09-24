@@ -1080,13 +1080,33 @@
                 <section>
                     <div style="page-break-inside: avoid;">
                         <div class="row" style="margin-top: 2rem;">
-                            <div class="col-9 text-center mb-5" style="margin-bottom: 50px !important;">
+                            <div class="col-3">
+                                <img  class="mt-5" height="80px" width="160px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                            </div>
+                            <div class="col-6 text-center mb-5" style="margin-bottom: 50px !important;">
                                 <h5 style="padding-top: 3rem;">ELITE SECURITY SERVICES LIMITED </h5>
                                 <p style="margin: 1px;">BIO-DATA</p>
                                 <p style="margin: 1px;"><b style="border-bottom: solid 1px;">{{ $employees->position?->name }}</b></p>
                             </div>
                             <div class="col-3">
                                 <img class="tbl_border" height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="No Img">
+                            </div>
+                        </div>
+                        <div class="row p-3 d-none">
+                            <div class="col-3">
+                                <img  class="mt-5" height="80px" width="160px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                            </div>
+                            <div class="col-6 col-sm-6" style="padding-left: 10px;">
+                                <div style="text-align: center;">
+                                    <h5 style="padding-top: 5px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
+                                    <p class="text-center m-0 p-0">ভর্তি ফরম:সকল অস্থায়ী পদের জন্য</p>
+                                    <p class="text-center m-0 p-0">বাড়ি নং-২,লেইন নং-২,রোড নং-২,ব্লক-''কে''</p>
+                                    <p class="text-center m-0 p-0">হালিশহর হাউজিং এষ্টেট,চট্টগ্রাম-৪২২৪</p>
+                                    <h6 class="text-center m-0 p-0"><u>জীবন বৃত্তান্ত/ব্যক্তিগত বিবরন/তথ্যাদি</u></h6>
+                                </div>
+                            </div>
+                            <div class="col-3" style="padding-left: 10px;">
+                                <img class="tbl_border" height="150px" width="150px"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">
                             </div>
                         </div>
                         <table class="tbl_border" style="width: 100%;">
