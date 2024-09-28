@@ -158,7 +158,8 @@
                                         ({{ (int)$de->type_houre }} hourly shift per month)
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
+                                {{-- <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td> --}}
+                                <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                                 <td>{{ $de->employee_qty }}</td>
                                 <td>{{ $de->duty_day }}</td>
                                 <td>{{ $de->total_houres }}</td>

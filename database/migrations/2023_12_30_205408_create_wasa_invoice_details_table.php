@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('area')->nullable();
             $table->string('account_no')->nullable();
             $table->decimal('duty_rate',10,2)->default(0)->nullable();
-            $table->integer('duty');
+            $table->decimal('duty',10,2)->default(0)->nullable();
             $table->decimal('salary_amount',10,2)->default(0)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
