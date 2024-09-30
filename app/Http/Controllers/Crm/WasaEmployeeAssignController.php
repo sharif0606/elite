@@ -203,6 +203,8 @@ class WasaEmployeeAssignController extends Controller
             $data->header_note = $request->header_note;
             $data->footer_note = $request->footer_note;
             $data->zone_id = $request->zone_id;
+            $data->invoice_type = 2;
+            // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
             if($data->save()){
                 $invoice=new WasaInvoice;
@@ -308,6 +310,114 @@ class WasaEmployeeAssignController extends Controller
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
+
+    public function wasaInvoiceEdit($id){
+        $inv = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        $invWasa = WasaInvoice::where('invoice_id',$inv->id)->first();
+        $invWasaDetail = WasaInvoiceDetails::where('wasa_invoice_id',$invWasa->id)->get();
+        return view('wasa_employee_assign.editInvoice',compact('inv','invWasa','invWasaDetail'));
+    }
+
+    public function wasaInvoiceUpdate(Request $request, $id){
+        try{
+            $billDate = Carbon::parse($request->bill_date);
+            $firstDayOfMonth = $request->start_date;
+            $lastDayOfMonth = $request->end_date;
+
+            $data= InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            // $data->branch_id = $request->branch_id;
+            $data->start_date = $firstDayOfMonth;
+            $data->end_date = $lastDayOfMonth;
+            $data->bill_date = $request->bill_date;
+            $data->vat = $request->vat_on_subtotal;
+            $data->sub_total_amount = $request->sub_total_salary;
+            //$data->total_tk = $request->total_tk;
+            $data->vat_taka = $request->vat_tk_subtotal;
+            $data->grand_total = $request->grand_total_tk;
+            $data->header_note = $request->header_note;
+            $data->footer_note = $request->footer_note;
+            $data->zone_id = $request->zone_id;
+            $data->invoice_type = 2;
+            // invoice_type 1= general, 2=wasa, 3=onetrip
+            $data->status = 0;
+            if($data->save()){
+                $invoice= WasaInvoice::where('invoice_id',$data->id)->first();
+                $invoice->invoice_id=$data->id;
+                $invoice->customer_id = $request->customer_id;
+                $invoice->branch_id = $request->branch_id;
+                $invoice->sub_total_salary = $request->sub_total_salary;
+                $invoice->add_commission = $request->add_commission_percentage;
+                $invoice->add_commission_tk = $request->add_commission_tk;
+                $invoice->vat_on_commission = $request->vat_commission_percentage;
+                $invoice->vat_on_commission_tk = $request->vat_commission_percentage_tk;
+                $invoice->ait_on_commission = $request->ait_commission_percentage;
+                $invoice->ait_on_commission_tk = $request->ait_commission_percentage_tk;
+                $invoice->vat_ait_on_commission = $request->vat_ait_commission_percentage;
+                $invoice->vat_ait_on_commission_tk = $request->vat_ait_commission_tk;
+                $invoice->vat_on_subtotal = $request->vat_on_subtotal;
+                $invoice->vat_on_subtotal_tk = $request->vat_tk_subtotal;
+                $invoice->ait_on_subtotal = $request->ait_on_subtotal;
+                $invoice->ait_on_subtotal_tk = $request->ait_tk_subtotal;
+                $invoice->grand_total_tk = $request->grand_total_tk;
+                $invoice->footer_note = $request->footer_note;
+                $invoice->bill_date = $request->bill_date;
+                $invoice->start_date = $firstDayOfMonth;
+                $invoice->end_date = $lastDayOfMonth;
+                $invoice->status = 0;
+                $invoice->save();
+                if($request->employee_id){
+                    WasaInvoiceDetails::where('wasa_invoice_id',$invoice->id)->delete();
+                    InvoiceGenerateDetails::where('invoice_id',$data->id)->delete();
+                    foreach($request->employee_id as $key => $value){
+                        if($value){
+                            $invoiceDetail = new WasaInvoiceDetails;
+                            $invoiceDetail->wasa_invoice_id=$invoice->id;
+                            $invoiceDetail->invoice_id=$data->id;
+                            $invoiceDetail->atm_id = $request->atm_id[$key];
+                            $invoiceDetail->employee_id=$request->employee_id[$key];
+                            $invoiceDetail->job_post_id=$request->job_post_id[$key];
+                            $invoiceDetail->area=$request->area[$key];
+                            $invoiceDetail->account_no=$request->account_no[$key];
+                            $invoiceDetail->duty_rate=$request->duty_rate[$key];
+                            $invoiceDetail->duty=$request->duty[$key];
+                            $invoiceDetail->start_date=$firstDayOfMonth;
+                            $invoiceDetail->end_date = $lastDayOfMonth;
+                            $invoiceDetail->salary_amount=$request->salary_amount[$key];
+                            $invoiceDetail->status=0;
+                            $invoiceDetail->save();
+                        }
+                    }
+                    // $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id','atm_id','duty', DB::raw('SUM(salary_amount) as total_amounts'))->groupBy('job_post_id')->get();
+                    $wasaInvoice = WasaInvoiceDetails::where('wasa_invoice_id', $invoice->id)->select('job_post_id', 'atm_id','duty_rate','duty','salary_amount','start_date','end_date', DB::raw('SUM(salary_amount) as total_amounts'),DB::raw('COUNT(employee_id) as employee_count'))->groupBy('job_post_id')->get();
+
+                    foreach ($wasaInvoice as $winvoice) {
+                        $details = new InvoiceGenerateDetails;
+                        $details->invoice_id = $data->id;
+                        $details->job_post_id = $winvoice->job_post_id;
+                        $details->rate = $winvoice->duty_rate;
+                        $details->total_amounts = $winvoice->salary_amount;
+                        $details->employee_qty = $winvoice->employee_count;
+                        $details->total_houres = ($winvoice->employee_count*$winvoice->duty*8);
+                        $details->warking_day = $winvoice->duty;
+                        $details->st_date=$winvoice->start_date;
+                        $details->ed_date =$winvoice->end_date;
+                        $details->status = 0;
+                        $details->save();
+                    }
+                }
+                \LogActivity::addToLog('Wasa invoice Update',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails');
+                return redirect()->route('invoiceGenerate.index')->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+            } else {
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
+
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
+
     public function createOneTrip(Request $request)
     {
         //

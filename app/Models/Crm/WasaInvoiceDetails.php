@@ -16,4 +16,7 @@ class WasaInvoiceDetails extends Model
     public function jobpost(){
         return $this->belongsTo(JobPost::class,'job_post_id','id');
     }
+    public function atms(){
+        return $this->belongsTo(Atm::class,'atm_id','id');
+    }
 }

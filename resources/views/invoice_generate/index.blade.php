@@ -146,6 +146,16 @@
                                     </button>
                                 @endif
                                 @if ($e->grand_total == $due)
+                                    {{-- @if ($e->invoice_type == 1)
+                                        <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    @elseif($e->invoice_type == 2)
+                                        <a href="{{route('wasaEmployeeAsign.editInvoice',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    @else
+                                    @endif --}}
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">
                                         <i class="bi bi-trash"></i>
                                     </a>

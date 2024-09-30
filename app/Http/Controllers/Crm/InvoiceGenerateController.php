@@ -20,6 +20,7 @@ use Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\WasaInvoiceDetails;
 use Intervention\Image\Facades\Image;
 use Exception;
 
@@ -84,6 +85,8 @@ class InvoiceGenerateController extends Controller
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
             $data->header_note = $request->header_note;
+            $data->invoice_type = 1;
+            // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
             if($data->save()){
                 if($request->job_post_id){
@@ -218,12 +221,82 @@ class InvoiceGenerateController extends Controller
 
     public function edit($id)
     {
-        //
+        $customer=Customer::all();
+        $inv = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        $invDetail = InvoiceGenerateDetails::where('invoice_id',$inv->id)->get();
+        $invLess = InvoiceGenerateLess::where('invoice_id',$inv->id)->get();
+        return view('invoice_generate.edit',compact('customer','inv','invDetail','invLess'));
     }
 
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $data= InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
+            $data->atm_id = $request->atm_id;
+            $data->zone_id = $request->zone_id;
+            $data->start_date = $request->start_date;
+            $data->end_date = $request->end_date;
+            $data->bill_date = $request->bill_date;
+            $data->vat = $request->vat;
+            $data->sub_total_amount = $request->sub_total_amount;
+            $data->total_tk = $request->total_tk;
+            $data->vat_taka = $request->vat_taka;
+            $data->grand_total = $request->grand_total;
+            $data->footer_note = $request->footer_note;
+            $data->header_note = $request->header_note;
+            $data->invoice_type = 1;
+            // invoice_type 1= general, 2=wasa, 3=onetrip
+            $data->status = 0;
+            if($data->save()){
+                if($request->job_post_id){
+                    InvoiceGenerateDetails::where('invoice_id',$data->id)->delete();
+                    foreach($request->job_post_id as $key => $value){
+                        if($value){
+                            $details = new InvoiceGenerateDetails;
+                            $details->invoice_id=$data->id;
+                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->rate=$request->rate[$key];
+                            $details->employee_qty=$request->employee_qty[$key];
+                            $details->atm_id = $request->detail_atm_id[$key];
+                            $details->warking_day=$request->warking_day[$key];
+                            $details->actual_warking_day=$request->actual_warking_day[$key];
+                            $details->duty_day=$request->duty_day[$key];
+                            $details->total_houres=$request->total_houres[$key];
+                            $details->type_houre=$request->type_houre[$key];
+                            $details->rate_per_houres=$request->rate_per_houres[$key];
+                            $details->st_date=$request->st_date[$key];
+                            $details->ed_date=$request->ed_date[$key];
+                            $details->total_amounts=$request->total_amounts[$key];
+                            $details->status=0;
+                            $details->save();
+                        }
+                    }
+                }
+            }
+            if($request->add_amount){
+                InvoiceGenerateLess::where('invoice_id',$data->id)->delete();
+                foreach($request->add_amount as $i=>$add_amount){
+                    if($add_amount){
+                        $olddue=new InvoiceGenerateLess;
+                        $olddue->invoice_id=$data->id;
+                        $olddue->description=$request->add_description[$i];
+                        $olddue->amount=$add_amount;
+                        $olddue->status=0;
+                        $olddue->save();
+                    }
+                }
+            }
+            DB::commit();
+            \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+        } catch (Exception $e) {
+            // dd($e);
+            DB::rollback();
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     public function destroy(Request $request, $id)
@@ -236,6 +309,8 @@ class InvoiceGenerateController extends Controller
                 if(!$checkPayment){
                     InvoiceGenerate::where('id',$invoice_id)->delete();
                     InvoiceGenerateDetails::where('invoice_id',$invoice_id)->delete();
+                    WasaInvoice::where('invoice_id',$invoice_id)->delete();
+                    WasaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
                     InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
 
                     DB::commit();
