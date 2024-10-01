@@ -84,6 +84,7 @@ class ReleaseEmployeeController extends Controller
             $data->others_comment = $request->others_comment;
             $data->subtotal = $request->subtotal;
             $data->final_deducted = $request->final_deducted;
+            $data->final_deducted_note = $request->final_deducted_note;
             $data->final_total = $request->final_total;
             $data->wash_cost = $request->wash_cost;
             $data->wash_cost_amount = $request->wash_cost_amount;
@@ -181,6 +182,7 @@ class ReleaseEmployeeController extends Controller
             $data->others_comment = $request->others_comment;
             $data->subtotal = $request->subtotal;
             $data->final_deducted = $request->final_deducted;
+            $data->final_deducted_note = $request->final_deducted_note;
             $data->final_total = $request->final_total;
             $data->wash_cost = $request->wash_cost;
             $data->wash_cost_amount = $request->wash_cost_amount;

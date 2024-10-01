@@ -46,6 +46,7 @@ return new class extends Migration
             $table->text('others_comment')->nullable();
             $table->decimal('subtotal',10,2)->default(0)->nullable();
             $table->decimal('final_deducted',10,2)->default(0)->nullable();
+            $table->string('final_deducted_note')->nullable();
             $table->decimal('final_total',10,2)->default(0)->nullable();
             $table->string('wash_cost')->nullable();
             $table->decimal('wash_cost_amount',10,2)->default(0)->nullable();

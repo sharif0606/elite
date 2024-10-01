@@ -242,7 +242,7 @@
                         </tr>
                         <tr class="tbl_two_border">
                             <td class="text-center tbl_two_border"></td>
-                            <td class="tbl_two_border">কর্তনকৃত টাকা =</td>
+                            <td class="tbl_two_border">কর্তনকৃত টাকা = {{$emRel->final_deducted_note}}</td>
                             <td class="tbl_two_border text-end">{{$emRel->final_deducted}}</td>
                             <td class="tbl_two_border"></td>
                         </tr>

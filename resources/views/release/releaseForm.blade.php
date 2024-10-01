@@ -97,13 +97,13 @@
                         <table class="table table-bordered" width="100%">
                             <tr class="text-center">
                                 <th>ক্রমিক নং</th>
-                                <th width="60%">বিবরণ</th>
+                                <th width="60%" colspan="2">বিবরণ</th>
                                 <th width="18%">টাকা</th>
                                 <th width="15%">মন্তব্য</th>
                             </tr>
                             <tr>
                                 <td class="text-center">১।</td>
-                                <td>
+                                <td colspan="2">
                                     <textarea name="due_salary" class="form-control" rows="2">বকেয়া বেতন</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end due_salary_amount" onkeyup="pfCollection(this);" name="due_salary_amount"></td>
@@ -111,31 +111,31 @@
                             </tr>
                             <tr>
                                 <td class="text-center">২।</td>
-                                <td>
-                                    <textarea name="pf_a" class="form-control" rows="2">(ক) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১০  ইং পর্যন্ত) মাসিক ৫০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে</textarea>
+                                <td colspan="2">
+                                    <textarea name="pf_a" class="form-control pf_a" rows="3">(ক) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১০  ইং পর্যন্ত) মাসিক ৫০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end pf_a_amount" onkeyup="pfCollection(this);" name="pf_a_amount"></td>
                                 <td><input type="text" class="form-control" name="pf_a_comment"></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>
-                                    <textarea name="pf_b" class="form-control" rows="2">(খ) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১৭ ইং পর্যন্ত) মাসিক ১০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
+                                <td colspan="2">
+                                    <textarea name="pf_b" class="form-control pf_b" rows="3">(খ) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১৭ ইং পর্যন্ত) মাসিক ১০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end pf_b_amount" onkeyup="pfCollection(this);" name="pf_b_amount"></td>
                                 <td><input type="text" class="form-control" name="pf_b_comment"></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>
-                                    <textarea name="pf_c" class="form-control" rows="2">(গ) প্রভিডেন্ট ফান্ড (জানুয়ারী -২০১৮ ইং থেকে চলিত) মাসিক ২০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
+                                <td colspan="2">
+                                    <textarea name="pf_c" class="form-control pf_c" rows="3">(গ) প্রভিডেন্ট ফান্ড (জানুয়ারী -২০১৮ ইং থেকে চলিত) মাসিক ২০০/- টাকা এবং লভ্যাংশ ৪০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end pf_c_amount" onkeyup="pfCollection(this);" name="pf_c_amount"></td>
                                 <td><input type="text" class="form-control" name="pf_c_comment"></td>
                             </tr>
                             <tr>
                                 <td class="text-center">৩।</td>
-                                <td>
+                                <td colspan="2">
                                     <textarea name="leave" class="form-control" rows="2">ছুটির টাকা (কমপক্ষে ৬ মাস চাকুরী করলে)</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end leave_amount" onkeyup="pfCollection(this);" name="leave_amount"></td>
@@ -143,7 +143,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center">৪।</td>
-                                <td>
+                                <td colspan="2">
                                     <textarea name="addmission" class="form-control" rows="2">ভর্তির নগদ জামানত বাবদ ১০০০/- ফেরত যোগ্য যদি ৩০/০৬/২০০৯ তারিখের পূর্বে ভর্তি হয়ে থাকে।  তার পরের ভর্তির ফি বাবদ অফেরতযোগ্য  (চুক্তি মোতাবেক)</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end addmission_amount" onkeyup="pfCollection(this);" name="addmission_amount"></td>
@@ -151,7 +151,7 @@
                             </tr>
                             <tr>
                                 <td class="text-center">৫।</td>
-                                <td>
+                                <td colspan="2">
                                     <textarea name="others" class="form-control" rows="2">অন্যান্য</textarea>
                                 </td>
                                 <td><input type="text" class="form-control text-end others_amount" onkeyup="pfCollection(this);" name="others_amount"></td>
@@ -159,19 +159,20 @@
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>মোট হিসাব =</td>
+                                <td colspan="2">মোট হিসাব =</td>
                                 <td><input type="text" class="form-control text-end subtotal_amount" name="subtotal" readonly></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
                                 <td>কর্তনকৃত টাকা =</td>
+                                <td><input type="text" class="form-control" name="final_deducted_note" value="" placeholder="কর্তনকৃত টাকা"></td>
                                 <td><input type="text" class="form-control text-end final_deducted" name="final_deducted" readonly></td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td class="text-center"></td>
-                                <td>চূড়ান্ত পাওনা =</td>
+                                <td colspan="2">চূড়ান্ত পাওনা =</td>
                                 <td><input type="text" class="form-control text-end final_total" name="final_total" readonly></td>
                                 <td></td>
                             </tr>
@@ -216,11 +217,14 @@
     function profidentFund(e) {
         let joiningDate = new Date($('.joining_date').val());
         let resignDate = new Date($(e).val());
+        let pfaMessage = $('.pf_a').val()? $('.pf_a').val():'';
+        let pfbMessage = $('.pf_b').val()? $('.pf_b').val():'';
+        let pfcMessage = $('.pf_c').val()? $('.pf_c').val():'';
         let jamanotDate = new Date('2009-06-30');
-        let pfActOneStart = new Date('2010-12-31'); 
+        let pfActOneEnd = new Date('2010-12-31'); 
         let pfActOne = new Date('2017-12-31'); 
-        let pfActTwoStart = new Date('2017-12-31'); 
-        let pfActTwoEnd = new Date('2018-01-01');
+        let pfActTwoStart = new Date('2011-01-01'); 
+        let pfActTwoEnd = new Date('2017-12-31');
         let pfActThreeStart = new Date('2018-01-01');
     
         // Ensure that joiningDate and resignDate are valid
@@ -244,31 +248,37 @@
         let pf_a_amount = 0, pf_b_amount = 0, pf_c_amount = 0;
     
         //(ক) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১০  ইং পর্যন্ত) মাসিক ৫০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে
-        if (joiningDate <= pfActOneStart) {
-            let endPfA = resignDate < pfActOneStart ? resignDate : pfActOne;
+        if (joiningDate < pfActOneEnd) {
+            let endPfA = resignDate <= pfActOneEnd ? resignDate : pfActOneEnd;
             let monthsInPfA = calculateMonths(joiningDate, endPfA);
             pf_a_amount = monthsInPfA * 70;
+            pfaMessage = pfaMessage + '\n' + new Date(joiningDate).toLocaleDateString() + '--' + new Date(endPfA).toLocaleDateString() + '=' + monthsInPfA + '*' + '70';
         }
 
         //this is for
         //(খ) প্রভিডেন্ট ফান্ড (ডিসেম্বর-২০১৭ ইং পর্যন্ত) মাসিক ১০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)
-        if (joiningDate <= pfActTwoStart) {
+        if (joiningDate <= pfActTwoEnd) {
+            // pfActOneEnd = 31-12-2010
+            // pfActTwoStart = 01-01-2011
+            // pfActThreeStart = 01-01-2018
             let endPfB = resignDate > pfActTwoStart ? resignDate : joiningDate;
             if(endPfB < pfActThreeStart){
-                if(endPfB < pfActOneStart){
-                    endPfB=pfActOneStart
+                if(endPfB < pfActOneEnd){
+                    endPfB=pfActOneEnd
                     let monthsInPfB = calculateMonths(joiningDate, endPfB);
                     if(monthsInPfB >= 6){
                         pf_b_amount = monthsInPfB * 120;
+                        pfbMessage = pfbMessage + '\n' + new Date(joiningDate).toLocaleDateString() + '--' + new Date(endPfB).toLocaleDateString() + '=' + monthsInPfB + '*' + '120';
                     }else{
                         pf_b_amount = 0;
                     }
                 }else{
                     endPfB=resignDate
-                    if(joiningDate < pfActOneStart){
-                        let monthsInPfB = calculateMonths(pfActOneStart, endPfB);
+                    if(joiningDate < pfActOneEnd){
+                        let monthsInPfB = calculateMonths(pfActTwoStart, endPfB);
                         if(monthsInPfB >= 6){
                             pf_b_amount = monthsInPfB * 120;
+                            pfbMessage = pfbMessage + '\n' + new Date(pfActOneEnd).toLocaleDateString() + '--' + new Date(endPfB).toLocaleDateString() + '=' + monthsInPfB + '*' + '120';
                         }else{
                             pf_b_amount = 0;
                         }
@@ -276,17 +286,19 @@
                         let monthsInPfB = calculateMonths(joiningDate, endPfB);
                         if(monthsInPfB >= 6){
                             pf_b_amount = monthsInPfB * 120;
+                            pfbMessage = pfbMessage + '\n' + new Date(joiningDate).toLocaleDateString() + '--' + new Date(endPfB).toLocaleDateString() + '=' + monthsInPfB + '*' + '120';
                         }else{
                             pf_b_amount = 0;
                         }
                     }
                 }
             }else{
-                endPfB = pfActThreeStart
-                if(joiningDate < pfActOneStart){
-                    let monthsInPfB = calculateMonths(pfActOneStart, endPfB);
+                endPfB = pfActTwoEnd
+                if(joiningDate < pfActOneEnd){
+                    let monthsInPfB = calculateMonths(pfActTwoStart, endPfB);
                     if(monthsInPfB >= 6){
                         pf_b_amount = monthsInPfB * 120;
+                        pfbMessage = pfbMessage + '\n' + new Date(pfActTwoStart).toLocaleDateString() + '--' + new Date(endPfB).toLocaleDateString() + '=' + monthsInPfB + '*' + '120';
                     }else{
                         pf_b_amount = 0;
                     }
@@ -294,6 +306,7 @@
                     let monthsInPfB = calculateMonths(joiningDate, endPfB);
                     if(monthsInPfB >= 6){
                         pf_b_amount = monthsInPfB * 120;
+                        pfbMessage = pfbMessage + '\n' + new Date(joiningDate).toLocaleDateString() + '--' + new Date(endPfB).toLocaleDateString() + '=' + monthsInPfB + '*' + '120';
                     }else{
                         pf_b_amount = 0;
                     }
@@ -304,31 +317,37 @@
 
         //(গ) প্রভিডেন্ট ফান্ড (জানুয়ারী -২০১৮ ইং থেকে চলিত) মাসিক ২০০/- টাকা এবং লভ্যাংশ ২০/- টাকা হারে (লভ্যাংশ  পাবে কমপক্ষে ৬ মাস চাকুরী করলে)
         if (joiningDate <= pfActThreeStart) {
+            // pfActOneEnd = 31-12-2010
+            // pfActTwoStart = 01-01-2011
+            // pfActThreeStart = 01-01-2018
             let endPfC = resignDate > pfActThreeStart ? resignDate : joiningDate;
-            if(joiningDate < pfActTwoStart){
-                let monthsInPfC = calculateMonths(pfActTwoStart, endPfC);
-                if(monthsInPfC >= 6){
-                    pf_c_amount = monthsInPfC * 240;
-                }else{
-                    pf_c_amount = 0;
-                }
-                //console.log(monthsInPfC);
+            let monthsInPfC = calculateMonths(pfActThreeStart, endPfC);
+            //var getExactDate = new Date(pfActTwoStart);
+            //getExactDate.setDate(getExactDate.getDate() + 1);
+            if(monthsInPfC >= 6){
+                pf_c_amount = monthsInPfC * 240;
+                pfcMessage = pfcMessage + '\n' + new Date(pfActThreeStart).toLocaleDateString() + '--' + new Date(endPfC).toLocaleDateString() + '=' + monthsInPfC + '*' + '240';
             }else{
-                let monthsInPfC = calculateMonths(joiningDate, endPfC);
-                if(monthsInPfC >= 6){
-                    pf_c_amount = monthsInPfC * 240;
-                }else{
-                    pf_c_amount = 0;
-                }
+                pf_c_amount = 0;
+            }
+        }else if(joiningDate > pfActThreeStart){
+            let endPfC = resignDate;
+            let monthsInPfC = calculateMonths(joiningDate, endPfC);
+            if(monthsInPfC >= 6){
+                pf_c_amount = monthsInPfC * 240;
+                pfcMessage = pfcMessage + '\n' + new Date(joiningDate).toLocaleDateString() + '--' + new Date(endPfC).toLocaleDateString() + '=' + monthsInPfC + '*' + '240';
+            }else{
+                pf_c_amount = 0;
             }
         }
         //console.log('PF A Amount:', pf_a_amount);
-        //console.log('PF B Amount:', pf_b_amount);
-        //console.log('PF C Amount:', pf_c_amount);
     
         $('.pf_a_amount').val(pf_a_amount);
         $('.pf_b_amount').val(pf_b_amount);
         $('.pf_c_amount').val(pf_c_amount);
+        $('.pf_a').val(pfaMessage);
+        $('.pf_b').val(pfbMessage);
+        $('.pf_c').val(pfcMessage);
     
         if (joiningDate < jamanotDate) {
             $('.addmission_amount').val(1000);
