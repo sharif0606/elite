@@ -146,7 +146,7 @@
                                     </button>
                                 @endif
                                 @if ($e->grand_total == $due)
-                                    {{-- @if ($e->invoice_type == 1)
+                                    @if ($e->invoice_type == 1)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
@@ -155,7 +155,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     @else
-                                    @endif --}}
+                                    @endif
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">
                                         <i class="bi bi-trash"></i>
                                     </a>

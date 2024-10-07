@@ -51,7 +51,7 @@
                                 @forelse($stock as $d)
                                 <tr class="text-center">
                                     <th scope="row">{{ ++$loop->index }}</th>
-                                    <td>{{$d->employee?->bn_applicants_name}}</td>
+                                    <td>{{$d->employee?->bn_applicants_name}}({{$d->employee?->admission_id_no}})</td>
                                     {{--  <td>{{$d->name}}</td>
                                     <td>{{$d->qty}}</td>  --}}
                                     <td class="white-space-nowrap">
