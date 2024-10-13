@@ -1778,7 +1778,7 @@
                             <p style="margin: 0; font-weight:bold; padding-left: 40px;">Email: ctg@elitebd.com</p>
                         </div>
                     </div>
-                    <div class="red-line" style="height: 2px; background-color: red; margin-bottom: 0.5rem;"></div>
+                    <div class="red-line" style="height: 2px; background-color: red; margin-bottom: 0.5rem;">&nbsp;&nbsp;</div>
                     <table class="mx-2" width="100%">
                         <tr>
                             <td width="40%" style="text-align: left;"> <b>File No ESSL/CTG/ID:&nbsp;<span style="border-bottom: 1px dashed;">{{ $employees->admission_id_no }}</span></b></td>
@@ -1952,6 +1952,5 @@ function printDivemp(divName) {
         WinPrint.close();
     };
 }
-
 </script>
 @endsection
