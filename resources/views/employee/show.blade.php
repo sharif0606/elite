@@ -30,6 +30,9 @@
         <li class="nav-item">
             <a class="nav-link step-8-tab" id="step-8-tab" data-toggle="pill" href="#step-8" role="tab" aria-controls="step-8" aria-selected="false"><span> ভর্তির প্রাথমিক কার্যক্রম</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link step-10-tab" id="step-10-tab" data-toggle="pill" href="#step-10" role="tab" aria-controls="step-10" aria-selected="false"><span>পুলিশ ভেরিফিকেশন</span></a>
+        </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="step-1" role="tabpanel" aria-labelledby="step-1-tab">
@@ -1758,6 +1761,117 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="step-10" role="tabpanel" aria-labelledby="step-10-tab">
+            <div class="text-center m-2">
+                <a href="#" class="no_print" title="print" onclick="printDivemp('result_show_ten')"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 16 16"><g fill="currentColor"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M4.603 12.087a.81.81 0 0 1-.438-.42c-.195-.388-.13-.776.08-1.102c.198-.307.526-.568.897-.787a7.68 7.68 0 0 1 1.482-.645a19.701 19.701 0 0 0 1.062-2.227a7.269 7.269 0 0 1-.43-1.295c-.086-.4-.119-.796-.046-1.136c.075-.354.274-.672.65-.823c.192-.077.4-.12.602-.077a.7.7 0 0 1 .477.365c.088.164.12.356.127.538c.007.187-.012.395-.047.614c-.084.51-.27 1.134-.52 1.794a10.954 10.954 0 0 0 .98 1.686a5.753 5.753 0 0 1 1.334.05c.364.065.734.195.96.465c.12.144.193.32.2.518c.007.192-.047.382-.138.563a1.04 1.04 0 0 1-.354.416a.856.856 0 0 1-.51.138c-.331-.014-.654-.196-.933-.417a5.716 5.716 0 0 1-.911-.95a11.642 11.642 0 0 0-1.997.406a11.311 11.311 0 0 1-1.021 1.51c-.29.35-.608.655-.926.787a.793.793 0 0 1-.58.029zm1.379-1.901c-.166.076-.32.156-.459.238c-.328.194-.541.383-.647.547c-.094.145-.096.25-.04.361c.01.022.02.036.026.044a.27.27 0 0 0 .035-.012c.137-.056.355-.235.635-.572a8.18 8.18 0 0 0 .45-.606zm1.64-1.33a12.647 12.647 0 0 1 1.01-.193a11.666 11.666 0 0 1-.51-.858a20.741 20.741 0 0 1-.5 1.05zm2.446.45c.15.162.296.3.435.41c.24.19.407.253.498.256a.107.107 0 0 0 .07-.015a.307.307 0 0 0 .094-.125a.436.436 0 0 0 .059-.2a.095.095 0 0 0-.026-.063c-.052-.062-.2-.152-.518-.209a3.881 3.881 0 0 0-.612-.053zM8.078 5.8a6.7 6.7 0 0 0 .2-.828c.031-.188.043-.343.038-.465a.613.613 0 0 0-.032-.198a.517.517 0 0 0-.145.04c-.087.035-.158.106-.196.283c-.04.192-.03.469.046.822c.024.111.054.227.09.346z"/></g></svg></a>           
+            </div>
+            <div id="result_show_ten">
+                <div class="row p-3">
+                    <div class="row" style="">
+                        <div class="col-5">
+                            <img  class="" height="80px" width="160px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                        </div>
+                        <div class="col-7 text-left mb-3" style="">
+                            <p style="margin: 0; font-weight:bold; padding-left: 40px;">House #2, Lane #2, Road #2, Block-K,</p>
+                            <p style="margin: 0; font-weight:bold; padding-left: 40px;">Halishahar Housing Estate, Chattogram-4224</p>
+                            <p style="margin: 0; font-weight:bold; padding-left: 40px;">Tel: 02333323387, Mobile: 01841117770,01844-040715</p>
+                            <p style="margin: 0; font-weight:bold; padding-left: 40px;">Email: ctg@elitebd.com</p>
+                        </div>
+                    </div>
+                    <div class="red-line" style="height: 2px; background-color: red; margin-bottom: 0.5rem;"></div>
+                    <table class="mx-2" width="100%">
+                        <tr>
+                            <td width="40%" style="text-align: left;"> <b>File No ESSL/CTG/ID:&nbsp;<span style="border-bottom: 1px dashed;">{{ $employees->admission_id_no }}</span></b></td>
+                            <td width="30%"></td>
+                            <td width="30%" style="text-align: right;"> <b>Date :<input type="text" value="" style="border: none; border-bottom: 1px dashed; background-color:transparent;"></b></td>
+                        </tr>
+                    </table>
+                    <div class="col-12 mt-2">
+                        <div class="row">
+                            <div class="col-7">
+                                <span class="police-vf-font"><b>প্রতি,</b></span><br>
+                                <span class="police-vf-font"><b>অতিরিক্ত আইজিপি</b></span><br>
+                                <span class="police-vf-font"><b>স্পেশাল ব্রাঞ্চ (ভিআর)</b></span><br>
+                                <span class="police-vf-font"><b>বাংলাদেশ পুলিশ, মালিবাগ, ঢাকা- ১২১৭।</b></span><br><br>
+                                <span class="police-vf-font"><b>বিষয় : পুলিশ ভেরিফিকেশন প্রসঙ্গে।</b></span><br><br>
+                                <span class="police-vf-font"><b>বরাত: বে-সরকারি নিরাপত্তা সেবা বিধিমালা ২০০৭ এর বিধি ৮ এর ৩ উপবিধি।</b></span><br><br>
+                                <span class="police-vf-font"><b>মহাত্মন,</b></span><br>
+                            </div>
+                            <div class="col-5 text-end">
+                                <img class="tbl_border" height="160px" width="auto"  src="{{asset('uploads/profile_img/'.$employees->profile_img)}}" onerror="this.onerror=null;this.src='{{ asset('assets/images/logo/onerror.jpg')}}';" alt="কোন ছবি পাওয়া যায় নি">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 mb-3">
+                        <span class="police-vf-font"><b>১। ইহা একটি বেসরকারি নিরাপত্তা সেবা প্রদানকারী প্রতিষ্ঠান।  আপনার থানার আওতাধীন নিন্মোক্ত ব্যক্তি এলিট সিকিউরিটি সার্ভিসেস লিঃ (এলিট ফোর্স ) এর অধীনে {{ $employees->position?->name_bn }} পদে নিয়োগের জন্য প্রাথমিকভাবে নির্বাচিত হয়েছেন:</b></span><br>
+                        <table style="width: 100%; margin-top: 1rem;">
+                            <tr class="police-vf-font">
+                                <th width="25%">নাম:</th>
+                                <th>{{ $employees->bn_applicants_name }}</th>
+                                <th>বয়স:</th>
+                                <th>{{$age}}</th>
+                            </tr>
+                            <tr class="police-vf-font">
+                                <th>পিতা:</th>
+                                <th>{{ $employees->bn_fathers_name }}</th>
+                                <th>মাতা:</th>
+                                <th>{{ $employees->bn_mothers_name }}</th>
+                            </tr>
+                            <tr class="police-vf-font">
+                                <th>গ্রাম:</th>
+                                <th>{{ $employees->bn_parm_village_name }}</th>
+                                <th>ওয়ার্ড নং:</th>
+                                <th>{{ $employees->bn_parm_ward?->name_bn }}</th>
+                            </tr>
+                            <tr class="police-vf-font">
+                                <th>ইউনিয়ন:</th>
+                                <th>{{ $employees->bn_parm_union?->name_bn }}</th>
+                                <th>ডাকঘর:</th>
+                                <th>{{ $employees->bn_parm_post_ofc }}</th>
+                            </tr>
+                            <tr class="police-vf-font">
+                                <th>থানা/উপজেলা:</th>
+                                <th>{{ $employees->bn_parm_upazilla?->name_bn }}</th>
+                                <th>জেলা:</th>
+                                <th>{{ $employees->bn_parm_district?->name_bn }}</th>
+                            </tr>
+                            <tr class="police-vf-font">
+                                <th>এনআইডি/জন্ম নিবন্ধন নং:</th>
+                                <th>
+                                    @if ($employees->bn_nid_no != '')
+                                        {{$employees->bn_nid_no}}
+                                    @else
+                                        {{ $employees->bn_birth_certificate }}
+                                    @endif
+                                </th>
+                                <th>মোবাইল নং:</th>
+                                <th>{{ $employees->bn_parm_phone_alt }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <span class="police-vf-font">নিরাপত্তার মতো একটি স্পর্শকাতর পেশায় নিয়োজিত ব্যক্তিবর্গের প্রাক-পরিচয় যাচাই করা খুবই জরুরী। উল্লেখিত ব্যক্তির প্রাক-পরিচিতি (এটি ) যাচাই এর জন্য বাংলাদেশ পুলিশ অধিদপ্তর খাত (কোড নং: ১- ৭৩০১-০০০১-২৬৮১) এর অনুকূলে ১০০-/ টাকা জমা ট্রেজারী চালান নম্বর <input type="text" value="" style="border: none; border-bottom: 1px dashed; background-color:transparent; width: 90px;"> তাং <input type="text" value="" style="border: none; border-bottom: 1px dashed; background-color:transparent; width: 90px;"> (মূল কপি) আপনার সমীপে প্রেরণ করলাম।</span><br><br>
+                        <span class="police-vf-font">২। প্রহরীটি গরিব পরিবারের সদস্য। তাকে এই চাকুরীতে রাখার স্বার্থে আপনার মূল্যবান মতামত অতীব জরুরী বিধায় যত দ্রুত সম্ভব আপনার মতামতটি অত্র প্রতিষ্ঠানে প্রেরণের জন্য বিশেষভাবে অনুরোধ করছি। </span><br><br>
+                        <span class="police-vf-font">ধন্যবাদান্তে</span><br>
+                        @if ($employees->signature_img != '')
+                        <span class="police-vf-font">আপনার বিশ্বস্ত</span><br>
+                        <img height="40px" width="100px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}"><br><br><br>
+                        @else
+                        <span class="police-vf-font">আপনার বিশ্বস্ত</span><br><br><br>
+                        @endif
+                        <span class="police-vf-font"><b>মেজর (অবঃ) মোহাম্মদ মোস্তফা</b></span><br>
+                        <span class="police-vf-font"><b>এক্সেকিউটিভ ডাইরেক্টর, চট্টগ্রাম</b></span><br>
+                        <span class="police-vf-font"><b>মোবা: ০১৮১৯-৮১৪৯৯৯</b></span>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <span class="police-vf-font">সংযুক্ত:</span><br>
+                        <span class="police-vf-font"><b>১) ব্যাংকে টাকা জমা সংক্রান্ত চালানের কপি</b></span><br>
+                        <span class="police-vf-font"><b>২) এনআইডি/ জন্মনিবন্ধন কপি</b></span><br>
+                        <span class="police-vf-font"><b>৩) জাতীয়তা সনদপত্র</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         
     </div>
 </div>
@@ -1787,19 +1901,57 @@ $('.nav-item a').click(function(e) {
     e.preventDefault();
   });
 
+// function printDivemp(divName) {
+//     var prtContent = document.getElementById(divName);
+//     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+//     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+//     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
+//     WinPrint.document.write('<style> table tr td,table tr th{font-size:13px !important;} </style>');
+//     WinPrint.document.write(prtContent.innerHTML);
+//     WinPrint.document.close();
+//     WinPrint.onload =function(){
+//         WinPrint.focus();
+//         WinPrint.print();
+//         WinPrint.close();
+//     }
+// }
 function printDivemp(divName) {
-    var prtContent = document.getElementById(divName);
+    var prtContent = document.getElementById(divName).cloneNode(true);
+    
+    // Get all inputs within the div and update their values in the cloned content
+    var inputs = prtContent.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].type === 'text' || inputs[i].type === 'date') {
+            inputs[i].setAttribute('value', inputs[i].value);
+        }
+    }
+    
+    // Get all textareas within the div and update their text in the cloned content
+    var textareas = prtContent.getElementsByTagName('textarea');
+    for (var i = 0; i < textareas.length; i++) {
+        textareas[i].innerHTML = textareas[i].value;
+    }
+    
+    // Get all selects within the div and update their selected options in the cloned content
+    var selects = prtContent.getElementsByTagName('select');
+    for (var i = 0; i < selects.length; i++) {
+        var selectedOption = selects[i].options[selects[i].selectedIndex];
+        selectedOption.setAttribute('selected', 'selected');
+    }
+
     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
-    WinPrint.document.write('<style> table tr td,table tr th{font-size:13px !important;} </style>');
+    WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; } .police-vf-font{font-size: 13px;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; } </style>');
     WinPrint.document.write(prtContent.innerHTML);
     WinPrint.document.close();
-    WinPrint.onload =function(){
+
+    WinPrint.onload = function () {
         WinPrint.focus();
         WinPrint.print();
         WinPrint.close();
-    }
+    };
 }
+
 </script>
 @endsection
