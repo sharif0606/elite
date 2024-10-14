@@ -1771,11 +1771,13 @@
                         <div class="col-5">
                             <img  class="" height="80px" width="auto" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                         </div>
-                        <div class="col-7 text-left mb-3" style="">
-                            <p style="margin: 0; font-weight:bold;">House #2, Lane #2, Road #2, Block-K,</p>
-                            <p style="margin: 0; font-weight:bold;">Halishahar Housing Estate, Chattogram-4224</p>
-                            <p style="margin: 0; font-weight:bold;">Tel: 02333323387, Mobile: 01841117770, 01844-040715</p>
-                            <p style="margin: 0; font-weight:bold;">Email: ctg@elitebd.com</p>
+                        <div class="col-7 text-end mb-3" style="">
+                            <div style="display: inline-block; text-align: left;">
+                                <span style="margin: 0; font-size: 13px; font-weight:bold;">House #2, Lane #2, Road #2, Block-K,</span><br>
+                                <span style="margin: 0; font-size: 13px; font-weight:bold;">Halishahar Housing Estate, Chattogram-4224</span><br>
+                                <span style="margin: 0; font-size: 13px; font-weight:bold;">Tel: 02333323387, Mobile: 01841117770, 01844-040715</span><br>
+                                <span style="margin: 0; font-size: 13px; font-weight:bold;">Email: ctg@elitebd.com</span>
+                            </div>
                         </div>
                     </div>
                     <div class="red-line" style="height: 2px; background-color: red; margin-bottom: 0.5rem;">&nbsp;&nbsp;</div>
@@ -1865,7 +1867,7 @@
                         <span class="police-vf-font"><b>২) এনআইডি/ জন্মনিবন্ধন কপি</b></span><br>
                         <span class="police-vf-font"><b>৩) জাতীয়তা সনদপত্র</b></span>
                     </div>
-                    <div class="red-line" style="height: 1px; background-color: red; margin-bottom: 0.2rem; margin-top: 0.3rem;">&nbsp;&nbsp;</div>
+                    <div class="black-line" style="height: 1px; background-color: #000; margin-bottom: 0.2rem; margin-top: 0.3rem;">&nbsp;&nbsp;</div>
                     <div>
                         <span class="police-vf-foot-font"><b>Dhaka Head Office:</b> Elite Tower, House #3, Road #6/A, Block-J, Baridara, Dhaka-1212, E-mail: wecare@elitebd.com, wwwe.elitebd.com, Tel: 02-8821289, 9885141</span><br>
                         <span class="police-vf-foot-font"><b>Sylhet Office:</b> 58, Kismat Complex, Block-A, Main Road, Sahjalal Upashahar, Sylhet-3100. Tel: 0821-760807</span><br>
@@ -1951,7 +1953,7 @@ function printDivemp(divName) {
     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
-    WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; } .police-vf-font{font-size: 13px;} .police-vf-foot-font{font-size: 11px;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; } .no-print { display: none !important;} </style>');
+    WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; } .police-vf-font{font-size: 13px;} .police-vf-foot-font{font-size: 9px;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; } .no-print { display: none !important;} </style>');
     WinPrint.document.write(prtContent.innerHTML);
     WinPrint.document.close();
 
