@@ -82,6 +82,9 @@
                                 <li class="submenu-item ">
                                     <a href="{{route('invoicesetting.index')}}">{{__('Invoice Setting')}}</a>
                                 </li>
+                                <li class="submenu-item ">
+                                    <a href="{{route('hour.index')}}">{{__('Hour')}}</a>
+                                </li>
                             </ul>
                         </li>
 

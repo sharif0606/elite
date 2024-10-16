@@ -14,6 +14,8 @@ use App\Models\JobPost;
 
 use App\Models\Customer;
 
+Use App\Models\Hour;
+
 use Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -55,7 +57,8 @@ class CustomerDutyController extends Controller
         $customer=Customer::all();
         $branch = CustomerBrance::all();
         $atm = Atm::all();
-        return view('customer_duty.create',compact('customer','jobposts','branch','atm'));
+        $hours = Hour::get();
+        return view('customer_duty.create',compact('customer','jobposts','branch','atm','hours'));
     }
 
     public function getEmployeeDuty(Request $request)
@@ -226,7 +229,8 @@ class CustomerDutyController extends Controller
         $custduty = CustomerDuty::findOrFail(encryptor('decrypt',$id));
         $branch = CustomerBrance::all();
         $atm = Atm::all();
-        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee','branch','atm'));
+        $hours = Hour::get();
+        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee','branch','atm','hours'));
     }
 
     /**

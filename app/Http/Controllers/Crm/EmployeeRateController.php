@@ -8,6 +8,7 @@ use App\Models\Crm\EmployeeRate;
 use App\Models\Crm\EmployeeRateDetails;
 use App\Models\JobPost;
 use App\Models\Customer;
+Use App\Models\Hour;
 
 use Toastr;
 use Carbon\Carbon;
@@ -50,7 +51,8 @@ class EmployeeRateController extends Controller
         $customer=Customer::all();
         $branch = CustomerBrance::all();
         $atm = Atm::all();
-        return view('employee_rate.create',compact('customer','jobpost','branch','atm'));
+        $hours = Hour::get();
+        return view('employee_rate.create',compact('customer','jobpost','branch','atm','hours'));
     }
 
     /**
@@ -121,7 +123,8 @@ class EmployeeRateController extends Controller
         $branch = CustomerBrance::all();
         $atm = Atm::all();
         $emprate = EmployeeRate::findOrFail(encryptor('decrypt',$id));
-        return view('employee_rate.edit',compact('jobpost','customer','emprate','branch','atm'));
+        $hours = Hour::get();
+        return view('employee_rate.edit',compact('jobpost','customer','emprate','branch','atm','hours'));
     }
 
     /**

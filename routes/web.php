@@ -17,7 +17,7 @@ use App\Http\Controllers\Settings\Location\WardController as ward;
 use App\Http\Controllers\Settings\JobPostController as jobpost;
 use App\Http\Controllers\Settings\ZoneController as zone;
 use App\Http\Controllers\Settings\InvoiceSettingController as invoicesetting;
-
+use App\Http\Controllers\HourController as hour;
 
 use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
 use App\Http\Controllers\Crm\EmployeeAssignController as empasign;
@@ -109,6 +109,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('jobpost',jobpost::class);
         Route::resource('zone',zone::class);
         Route::resource('invoicesetting',invoicesetting::class);
+        Route::resource('hour',hour::class);
         Route::get('/jobpost_description/{id}', [jobpost::class,'jobpostDescription'])->name('jobpost.description');
         Route::post('/jobpost_description/{id}', [jobpost::class,'jobpostDescriptionStore'])->name('jobpost_descriptionstor');
         Route::resource('user', user::class);

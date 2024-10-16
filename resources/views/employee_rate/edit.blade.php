@@ -74,10 +74,22 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                                    {{-- <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
                                                         <option value="1" {{ $d->hours=='1'?"selected":""}}>8 Hour's</option>
                                                         <option value="2" {{ $d->hours=='2'?"selected":""}}>12 Hour's</option>
-                                                    </select>
+                                                    </select> --}}
+                                                    <select name="hours[]"
+                                                    class="form-control @error('hours') is-invalid @enderror"
+                                                    id="hours">
+                                                    @forelse ($hours as $hour)
+                                                        <option value="{{ $hour->id }}"
+                                                            {{ $hour->id == $d->hours ? 'selected' : '' }}>
+                                                            {{ $hour->hour }} Hour's
+                                                        </option>
+                                                    @empty
+                                                        <option value="">No hours available</option>
+                                                    @endforelse
+                                                </select>
                                                 </td>
                                                 <td><input class="form-control" type="text" name="duty_rate[]" value="{{ $d->duty_rate }}" placeholder="Duty-rate"></td>
                                                 <td><input class="form-control" type="text" name="ot_rate[]" value="{{ $d->ot_rate }}" placeholder="Ot-rate"></td>

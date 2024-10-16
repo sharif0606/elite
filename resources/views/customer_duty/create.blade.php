@@ -101,9 +101,20 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px" onchange="getDutyOtRateHourWise(this)">
+                                                    {{-- <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px" onchange="getDutyOtRateHourWise(this)">
                                                         <option value="1">8 hours</option>
                                                         <option value="2">12 hours</option>
+                                                    </select> --}}
+                                                    <select name="hours[]"
+                                                            class="form-control @error('hours') is-invalid @enderror"
+                                                            id="hours">
+                                                            @forelse ($hours as $hour)
+                                                                <option value="{{ $hour->id }}">
+                                                                    {{ $hour->hour }} Hour's
+                                                                </option>
+                                                            @empty
+                                                                <option value="">No hours available</option>
+                                                            @endforelse
                                                     </select>
                                                 </td>
                                                 <td>

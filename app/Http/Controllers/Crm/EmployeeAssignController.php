@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\Atm;
 use App\Models\Crm\CustomerRate;
+Use App\Models\Hour;
 
 use Toastr;
 use Carbon\Carbon;
@@ -52,7 +53,8 @@ class EmployeeAssignController extends Controller
     {
         $jobpost=JobPost::all();
         $customer=Customer::all();
-        return view('employee_assign.create',compact('customer','jobpost'));
+        $hours = Hour::get();
+        return view('employee_assign.create',compact('customer','jobpost','hours'));
     }
 
     /**
@@ -125,7 +127,8 @@ class EmployeeAssignController extends Controller
         $branch=CustomerBrance::where('id',$empasin->branch_id)->first();
         $customer=Customer::where('id',$empasin->customer_id)->first();
         $atm=Atm::where('branch_id',$empasin->branch_id)->get();
-        return view('employee_assign.edit',compact('jobpost','customer','empasin','branch','atm'));
+        $hours = Hour::get();
+        return view('employee_assign.edit',compact('jobpost','customer','empasin','branch','atm','hours'));
     }
 
     /**
