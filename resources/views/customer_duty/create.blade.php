@@ -437,7 +437,7 @@ function addRow(){
                 {{--<option value="1">8 hours</option>
                 <option value="2">12 hours</option>--}}
                 @forelse ($hours as $hour)
-                <option value="{{ $hour->id }}"{{ $hour->id == $d->hours ? 'selected' : '' }}>{{ $hour->hour }} Hour's</option>
+                <option value="{{ $hour->id }}">{{ $hour->hour }} Hour's</option>
                 @empty
                 <option value="">No hours available</option>
                 @endforelse
