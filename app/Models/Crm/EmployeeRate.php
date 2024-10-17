@@ -5,6 +5,7 @@ namespace App\Models\Crm;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer;
+
 use App\Models\Crm\EmployeeRateDetails;
 
 class EmployeeRate extends Model
@@ -20,4 +21,5 @@ class EmployeeRate extends Model
     public function details(){
         return $this->hasMany(EmployeeRateDetails::class,'employee_rate_id','id');
     }
+
 }

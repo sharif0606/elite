@@ -83,7 +83,8 @@
                                     @foreach ($e->details as $de)
                                     <tr>
                                         <td>{{$de->jobpost?->name }}</td>
-                                        <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
+                                        {{-- <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td> --}}
+                                        <td>{{$de->hour?->hour}} Hour's</td>
                                         <td>{{ $de->duty_rate }}</td>
                                         <td>{{ $de->ot_rate }}</td>
                                     </tr>

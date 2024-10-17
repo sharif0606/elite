@@ -298,7 +298,6 @@
     }
     function getDutyOtRateHourWise(e){
         let positionid = $(e).closest('tr').find('.job_post_id').val();
-        alert(positionid);
         var customerId = $('.customer_id').val();
         var branchId = $('.branch_id').val();
         var dutyHour = $(e).closest('tr').find('.job_post_hour').val();

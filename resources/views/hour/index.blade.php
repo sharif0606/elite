@@ -31,7 +31,7 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->hour}}</td>
                                 <td class="white-space-nowrap">
-                                    <a href="{{route('hour.edit',encryptor('encrypt',$d->id))}}">
+                                    {{--<a href="{{route('hour.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $d->id }})">
@@ -40,7 +40,7 @@
                                     <form id="form{{ $d->id }}" action="{{ route('hour.destroy', encryptor('encrypt', $d->id)) }}" method="post">
                                         @csrf
                                         @method('delete')
-                                    </form>
+                                    </form>--}}
                                 </td>
                             </tr>
                             @empty
