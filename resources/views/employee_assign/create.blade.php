@@ -139,9 +139,20 @@
         <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
         <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
         <td>
-            <select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+            {{--<select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
                 <option value="1">8 Hour's</option>
                 <option value="2">12 Hour's</option>
+            </select>--}}
+            <select name="hours[]"
+                                                            class="form-control @error('hours') is-invalid @enderror"
+                                                            id="hours">
+                                                            @forelse ($hours as $hour)
+                                                                <option value="{{ $hour->id }}">
+                                                                    {{ $hour->hour }} Hour's
+                                                                </option>
+                                                            @empty
+                                                                <option value="">No hours available</option>
+                                                            @endforelse
             </select>
         </td>
         <td>
