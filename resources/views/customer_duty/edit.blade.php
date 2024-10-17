@@ -298,6 +298,7 @@
     }
     function getDutyOtRateHourWise(e){
         let positionid = $(e).closest('tr').find('.job_post_id').val();
+        alert(positionid);
         var customerId = $('.customer_id').val();
         var branchId = $('.branch_id').val();
         var dutyHour = $(e).closest('tr').find('.job_post_hour').val();
@@ -426,7 +427,7 @@ function addRow(){
         <td>
             <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id" style="width:150px;">
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
-            <input class="job_post_id" type="hidden" name="job_post_id[]" value="">
+            {{--<input class="job_post_id" type="text" name="job_post_id[]" value="">--}}
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
