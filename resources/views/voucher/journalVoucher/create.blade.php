@@ -50,6 +50,12 @@
                                                             <input type="text" class="form-control" name="purpose" value="{{old('purpose')}}">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-6 col-12">
+                                                        <div class="form-group">
+                                                            <label for="vehicle_no">{{__('Vehicle No')}}</label>
+                                                            <input type="text" id="vehicle_no" class="form-control" value="{{ old('vehicle_no')}}" name="vehicle_no">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
