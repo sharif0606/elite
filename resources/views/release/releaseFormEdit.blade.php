@@ -7,7 +7,7 @@
     <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
-                <form method="post" action="{{route('relEmployee.update', [encryptor('encrypt',$emRel->id),'role' =>currentUser()])}}">
+                <form method="post" action="{{route('relEmployee.update', [encryptor('encrypt',$emRel->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="row">
@@ -31,6 +31,10 @@
                         <div class="col-3">
                             <label for="">Job Post</label>
                             <input type="text" class="form-control" name="job_post" value="{{$emRel->employee?->position?->name_bn}}">
+                        </div>
+                        <div class="col-3">
+                            <label for="">Post Name</label>
+                            <input type="text" class="form-control" name="appoint_customer_name" value="{{$emRel->appoint_customer_name}}" required>
                         </div>
                         <div class="col-3">
                             <label for="">Resign Date</label>
@@ -69,6 +73,15 @@
                                 <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="wash_cost_amount" value="{{$emRel->wash_cost_amount}}"></td>
                                 <td></td>
                             </tr>
+                            <tr class="text-center">
+                                <td></td>
+                                <td class="text-start"><textarea class="form-control" name="others_issue"  rows="2">@if($emRel->others_issue != '') {{$emRel->others_issue}} @else() অন্যান্য @endif</textarea></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="others_issue_amount" value="{{$emRel->others_issue_amount}}"></td>
+                                <td></td>
+                            </tr>
                             <tr>
                                 <th colspan="5" class="text-end">মোট কর্তনকৃত টাকা=</th>
                                 <td><input type="number" class="form-control text-end amount_deducted" name="amount_deducted" value="{{$emRel->amount_deducted}}"></td>
@@ -82,6 +95,16 @@
                             <div class="col-2">
                                 <label for="">জমাকারীর মোবাইল নং</label>
                                 <input type="number" class="form-control" name="issue_submiter_mobile" value="{{$emRel->issue_submiter_mobile}}">
+                            </div>
+                            <div class="col-3">
+                                <label for="">জমাকারীর স্বাক্ষর</label>
+                                <input type="file" class="form-control" name="issue_submiter_sign">
+                                <img width="80px" height="40px" class="float-first" src="{{asset('uploads/release/submiter/'.$emRel->issue_submiter_sign)}}" alt="">
+                            </div>
+                            <div class="col-3">
+                                <label for="">জমাগ্রহণকারীর স্বাক্ষর</label>
+                                <input type="file" class="form-control" name="issue_receiver_sign">
+                                <img width="80px" height="40px" class="float-first" src="{{asset('uploads/release/receiver/'.$emRel->issue_receiver_sign)}}" alt="">
                             </div>
                             <div class="col-5">
                                 <label for="">গ্রাহক কর্তৃপক্ষ মন্তব্য</label>

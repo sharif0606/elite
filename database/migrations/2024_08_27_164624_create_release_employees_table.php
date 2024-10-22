@@ -20,6 +20,9 @@ return new class extends Migration
             $table->date('resign_date')->nullable();
             $table->text('others_note')->nullable();
             $table->string('issue_submiter_mobile')->nullable();
+            $table->string('appoint_customer_name')->nullable();
+            $table->string('issue_submiter_sign')->nullable();
+            $table->string('issue_receiver_sign')->nullable();
             $table->string('cus_authority_comment')->nullable();
             $table->string('zone_commander_comment')->nullable();
             $table->decimal('amount_deducted',10,2)->default(0)->nullable();
@@ -50,6 +53,8 @@ return new class extends Migration
             $table->decimal('final_total',10,2)->default(0)->nullable();
             $table->string('wash_cost')->nullable();
             $table->decimal('wash_cost_amount',10,2)->default(0)->nullable();
+            $table->text('others_issue')->nullable();
+            $table->decimal('others_issue_amount',10,2)->default(0)->nullable();
             $table->timestamps();
         });
     }

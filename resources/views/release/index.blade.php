@@ -35,9 +35,16 @@
                                     <a href="{{route('relEmployee.show',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="{{route('relEmployee.edit',encryptor('encrypt',$d->id))}}">
+                                    <a class="mx-2" href="{{route('relEmployee.edit',encryptor('encrypt',$d->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
+                                     <a class="text-danger" href="javascript:void(0)" onclick="$('#form{{$d->id}}').submit()">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    <form id="form{{ $d->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('relEmployee.destroy', encryptor('encrypt', $d->id)) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form> 
                                 </td>
                             </tr>
                             @empty

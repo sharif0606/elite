@@ -32,18 +32,18 @@
                         <div style="text-align: center;">
                             <h5 style="padding-top: 5px;">ছাড়পত্র</h5>
                             <h5 style="padding-top: 5px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
-                            <p class="text-center m-0 p-0">বাড়ি নং-২, লেইন নং-২, রোড নং-২ ব্লক-কে হালিশহর হাউজিং এস্টেড চট্টগ্রাম-৪২২৪</p>
+                            <p class="text-center m-0 p-0">বাড়ি নং-২, লেইন নং-২, রোড নং-২  ব্লক-কে  হালিশহর হাউজিং এষ্টেট চট্টগ্রাম-৪২২৪</p>
                         </div>
                     </div>
                     <div class="col-12 mt-3">
-                        <p>১। আইডি নং <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->admission_id_no}}</span> পদবী <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->position?->name_bn}}</span> নামঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->bn_applicants_name}}</span> ভর্তির তারিখঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->joining_date}}</span> পোস্টের নামঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->position?->name_bn}}</span> অব্যহতির কারণ ব্যক্তিগত অনুরোধে এবং স্বইচ্ছায়/পারিবারিক সমস্যা/ শৃঙ্খলাজনিত কারণে/অসুস্থতা/বার্ধক্যজনিত/বিদেশগমন/অযোগ্যতার কারণে <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->resign_date}}</span> ইং তারিখঅব্যহতি দেয়া হইলো। তার নিন্ম বর্ণিত পোশাকগুলো অফিসে জমা করা হইলো:-</p>
+                        <p>১। আইডি নং <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->admission_id_no}}</span> পদবী <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->position?->name_bn}}</span> নামঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->bn_applicants_name}}</span> ভর্তির তারিখঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->employee?->joining_date}}</span> পোষ্টের নামঃ <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->appoint_customer_name}}</span> অব্যহতির কারণ ব্যক্তিগত অনুরোধে এবং স্বইচ্ছায়/পারিবারিক সমস্যা/ শৃঙ্খলাজনিত কারণে/অসুস্থতা/বার্ধক্যজনিত/বিদেশগমন/অযোগ্যতার কারণে <span style="border-bottom: 2px dashed; font-weight:bold;">{{$emRel->resign_date}}</span> ইং তারিখ অব্যহতি দেয়া হইলো। তার নিন্ম বর্ণিত পোশাকগুলো অফিসে জমা করা হইলো:-</p>
                     </div>
                 </div>
                 <div class="row px-4">
                     <table class="tbl_border" style="width:100%">
                         <tr class="text-center tbl_border">
                             <th class="tbl_border" rowspan="2">ক্রমিক নং</th>
-                            <th class="tbl_border" rowspan="2" width="25%">পোষাকের নাম</th>
+                            <th class="tbl_border" rowspan="2" width="25%">আইটেমের নাম</th>
                             <th class="tbl_border" rowspan="2">ইস্যু সংখ্যা</th>
                             <th class="tbl_border" rowspan="2">জমার সংখ্যা</th>
                             <th class="tbl_border" colspan="2">জমা না করার সংখ্যা ও উহার মূল্য</th>
@@ -73,6 +73,15 @@
                             <td class="tbl_border">{{$emRel->wash_cost_amount}}</td>
                             <td class="tbl_border"></td>
                         </tr>
+                        <tr class="text-center tbl_border">
+                            <td class="tbl_border"></td>
+                            <td class="text-start tbl_border">{{$emRel->others_issue}}</td>
+                            <td class="tbl_border"></td>
+                            <td class="tbl_border"></td>
+                            <td class="tbl_border"></td>
+                            <td class="tbl_border">{{$emRel->others_issue_amount}}</td>
+                            <td class="tbl_border"></td>
+                        </tr>
                         <tr class="tbl_border">
                             <th colspan="5" class="text-end tbl_border">মোট কর্তনকৃত টাকা=</th>
                             <td class="tbl_border text-center">{{$emRel->amount_deducted}}</td>
@@ -83,12 +92,24 @@
                 <div class="row p-3 ">
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <span style="border-top: 2px solid;">জমাকারীর স্বাক্ষর</span><br>
-                            <span>জমাকারীর মোবাইল নং <b>{{$emRel->issue_submiter_mobile}}</b></span>
+                            @if ($emRel->issue_submiter_sign != '')
+                                <img width="auto" height="40px" class="float-first" src="{{asset('uploads/release/submiter/'.$emRel->issue_submiter_sign)}}" alt=""><br>
+                                <span style="border-top: 2px solid;">জমাকারীর স্বাক্ষর</span><br>
+                                <span>জমাকারীর মোবাইল নং <b>{{$emRel->issue_submiter_mobile}}</b></span>
+                            @else 
+                                <span style="border-top: 2px solid;">জমাকারীর স্বাক্ষর</span><br>
+                                <span>জমাকারীর মোবাইল নং <b>{{$emRel->issue_submiter_mobile}}</b></span>
+                            @endif
                         </div>
                         <div class="">
-                            <span style="border-top: 2px solid">জমাগ্রহণকারীর স্বাক্ষর</span><br>
-                            <span>ষ্টোর শাখা</span>
+                            @if ($emRel->issue_receiver_sign != '')
+                                <img width="auto" height="40px" class="float-first" src="{{asset('uploads/release/receiver/'.$emRel->issue_receiver_sign)}}" alt=""><br>
+                                <span style="border-top: 2px solid">জমাগ্রহণকারীর স্বাক্ষর</span><br>
+                                <span>ষ্টোর শাখা</span>
+                            @else
+                                <span style="border-top: 2px solid">জমাগ্রহণকারীর স্বাক্ষর</span><br>
+                                <span>ষ্টোর শাখা</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -96,29 +117,29 @@
                     <p class="p-0 m-0">২। নিন্মেবর্ণিত ব্যক্তিবর্গ থেকে ছাড়পত্র নিতে হবে।</p>
                     <table class="tbl_border" style="width:100%">
                         <tr class="text-center tbl_border">
-                            <th class="tbl_border" width="10%">ক্রমিক নং</th>
-                            <th class="tbl_border"></th>
-                            <th class="tbl_border" width="40%">মন্তব্য</th>
-                            <th class="tbl_border">স্বাক্ষর</th>
+                            <th class="tbl_border" width="10%" style="padding: 7px;">ক্রমিক নং</th>
+                            <th class="tbl_border" style="padding: 7px;"></th>
+                            <th class="tbl_border" width="40%" style="padding: 7px;">মন্তব্য</th>
+                            <th class="tbl_border" style="padding: 7px;">স্বাক্ষর</th>
                         </tr>
                         <tr class="text-center tbl_border">
-                            <td class="tbl_border">ক।</td>
-                            <td class="text-start tbl_border">গ্রাহক কর্তৃপক্ষ</td>
-                            <td class="text-start tbl_border">{{$emRel->cus_authority_comment}}</td>
-                            <td class="tbl_border"></td>
+                            <td class="tbl_border" style="padding: 15px 0px 15px 0px;">ক।</td>
+                            <td class="text-start tbl_border" style="padding: 15px 0px 15px 0px;">গ্রাহক কর্তৃপক্ষ</td>
+                            <td class="text-start tbl_border" style="padding: 15px 0px 15px 0px;">{{$emRel->cus_authority_comment}}</td>
+                            <td class="tbl_border" style="padding: 15px 0px 15px 0px;"></td>
                         </tr>
                         <tr class="text-center tbl_border">
-                            <td class="tbl_border">খ।</td>
-                            <td class="text-start tbl_border">জোন কমান্ডার</td>
-                            <td class="text-start tbl_border">{{$emRel->zone_commander_comment}}</td>
-                            <td class="tbl_border"></td>
+                            <td class="tbl_border" style="padding: 15px 0px 15px 0px;">খ।</td>
+                            <td class="text-start tbl_border" style="padding: 15px 0px 15px 0px;">জোন কমান্ডার</td>
+                            <td class="text-start tbl_border" style="padding: 15px 0px 15px 0px;">{{$emRel->zone_commander_comment}}</td>
+                            <td class="tbl_border" style="padding: 15px 0px 15px 0px;"></td>
                         </tr>
                     </table>
                 </div>
                 <div class="row p-3 mt-5">
                     <div class="d-flex justify-content-between">
                         <div class="">
-                            <span style="border-top: 2px solid;">সপারিশকারী</span>
+                            <span style="border-top: 2px solid;">সুপারিশকারী</span>
                         </div>
                         <div class="">
                             <span style="border-top: 2px solid">অনুমোদনকারী</span>

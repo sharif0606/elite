@@ -12,9 +12,11 @@ use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Http\Traits\ImageHandleTraits;
 
 class ReleaseEmployeeController extends Controller
 {
+    use ImageHandleTraits;
     /**
      * Display a listing of the resource.
      *
@@ -33,15 +35,20 @@ class ReleaseEmployeeController extends Controller
      */
     public function create()
     {
-        $employee = Employee::select('id','admission_id_no','bn_applicants_name')->get();
+        $employee = Employee::select('id','admission_id_no','bn_applicants_name')->where('status',1)->get();
         return view('release.create',compact('employee'));
     }
     public function startRelease(Request $request){
-        $emp = Employee::select('id','admission_id_no','bn_applicants_name','joining_date','bn_jobpost_id','bn_parm_village_name')->where('id',$request->employee_id)->first();
-        $data= Stock::where('employee_id',$request->employee_id)->where('status',1)->get();
+        $checkRelease = ReleaseEmployee::where('employee_id',$request->employee_id)->first();
+        if(!$checkRelease){
+            $emp = Employee::select('id','admission_id_no','bn_applicants_name','joining_date','bn_jobpost_id','bn_parm_village_name')->where('id',$request->employee_id)->where('status',1)->first();
+            $data= Stock::where('employee_id',$request->employee_id)->where('status',1)->get();
 
-        //dd($data->toSql()); // This will show the raw SQL query
-        return view('release.releaseForm',compact('emp','data'));
+            //dd($data->toSql()); // This will show the raw SQL query
+            return view('release.releaseForm',compact('emp','data'));
+        }else{
+            return redirect()->back()->withInput()->with(Toastr::error('This Employee Already has been released!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
     }
 
     /**
@@ -52,12 +59,19 @@ class ReleaseEmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
             $data = new ReleaseEmployee;
             $data->employee_id = $request->employee_id;
             $data->resign_date = $request->resign_date;
             $data->others_note = $request->others_note;
             $data->issue_submiter_mobile = $request->issue_submiter_mobile;
+            $data->appoint_customer_name = $request->appoint_customer_name;
+            if($request->has('issue_submiter_sign'))
+                $data->issue_submiter_sign=$this->uploadImage($request->issue_submiter_sign,'uploads/release/submiter/');
+            if($request->has('issue_receiver_sign'))
+                $data->issue_receiver_sign=$this->uploadImage($request->issue_receiver_sign,'uploads/release/receiver/');
+
             $data->cus_authority_comment = $request->cus_authority_comment;
             $data->zone_commander_comment = $request->zone_commander_comment;
             $data->amount_deducted = $request->amount_deducted;
@@ -88,6 +102,8 @@ class ReleaseEmployeeController extends Controller
             $data->final_total = $request->final_total;
             $data->wash_cost = $request->wash_cost;
             $data->wash_cost_amount = $request->wash_cost_amount;
+            $data->others_issue = $request->others_issue;
+            $data->others_issue_amount = $request->others_issue_amount;
             if ($data->save()){
                 if($request->issue_item_id){
                     foreach($request->issue_item_id as $key => $value){
@@ -103,13 +119,29 @@ class ReleaseEmployeeController extends Controller
                             $red->save();
                         }
                     }
+                    foreach($request->issue_item_id as $key => $value){
+                        if($request->receive_qty[$key] > 0){
+                            $stock=new Stock;
+                            $stock->product_id=$request->issue_item_id[$key];
+                            $stock->release_employee_id=$data->id;
+                            $stock->employee_id=$request->employee_id;
+                            $stock->entry_date= now();
+                            $stock->product_qty=$request->receive_qty[$key];
+                            $stock->type=2;
+                            $stock->status=0;
+                            $stock->save();
+                        }
+                    }
                 }
+                DB::commit();
+
                 \LogActivity::addToLog('Add Release',$request->getContent(),'ReleaseEmployee,ReleaseEmployeeDetail');
                 return redirect()->route('relEmployee.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -150,12 +182,32 @@ class ReleaseEmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         try {
             $data = ReleaseEmployee::findOrFail(encryptor('decrypt',$id));
             $data->employee_id = $request->employee_id;
             $data->resign_date = $request->resign_date;
             $data->others_note = $request->others_note;
             $data->issue_submiter_mobile = $request->issue_submiter_mobile;
+            $data->appoint_customer_name = $request->appoint_customer_name;
+            if($request->has('issue_submiter_sign')){
+                if($data->issue_submiter_sign){
+                    if($this->deleteImage($data->issue_submiter_sign,'uploads/release/submiter/')){
+                        $data->issue_submiter_sign=$this->uploadImage($request->issue_submiter_sign,'uploads/release/submiter/');
+                    }
+                }else{
+                    $data->issue_submiter_sign=$this->uploadImage($request->issue_submiter_sign,'uploads/release/submiter/');
+                }
+            }
+            if($request->has('issue_receiver_sign')){
+                if($data->issue_receiver_sign){
+                    if($this->deleteImage($data->issue_receiver_sign,'uploads/release/receiver/')){
+                        $data->issue_receiver_sign=$this->uploadImage($request->issue_receiver_sign,'uploads/release/receiver/');
+                    }
+                }else{
+                    $data->issue_receiver_sign=$this->uploadImage($request->issue_receiver_sign,'uploads/release/receiver/');
+                }
+            }
             $data->cus_authority_comment = $request->cus_authority_comment;
             $data->zone_commander_comment = $request->zone_commander_comment;
             $data->amount_deducted = $request->amount_deducted;
@@ -186,9 +238,12 @@ class ReleaseEmployeeController extends Controller
             $data->final_total = $request->final_total;
             $data->wash_cost = $request->wash_cost;
             $data->wash_cost_amount = $request->wash_cost_amount;
+            $data->others_issue = $request->others_issue;
+            $data->others_issue_amount = $request->others_issue_amount;
             if ($data->save()){
                 if($request->issue_item_id){
                     ReleaseEmployeeDetail::where('release_employee_id',$data->id)->delete();
+                    Stock::where('release_employee_id',$data->id)->delete();
                     foreach($request->issue_item_id as $key => $value){
                         if($value){
                             $red = new ReleaseEmployeeDetail;
@@ -202,13 +257,28 @@ class ReleaseEmployeeController extends Controller
                             $red->save();
                         }
                     }
+                    foreach($request->issue_item_id as $key => $value){
+                        if($request->receive_qty[$key] > 0){
+                            $stock=new Stock;
+                            $stock->product_id=$request->issue_item_id[$key];
+                            $stock->release_employee_id=$data->id;
+                            $stock->employee_id=$request->employee_id;
+                            $stock->entry_date= now();
+                            $stock->product_qty=$request->receive_qty[$key];
+                            $stock->type=2;
+                            $stock->status=0;
+                            $stock->save();
+                        }
+                    }
                 }
+                DB::commit();
                 \LogActivity::addToLog('Add Release',$request->getContent(),'ReleaseEmployee,ReleaseEmployeeDetail');
                 return redirect()->route('relEmployee.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -220,8 +290,13 @@ class ReleaseEmployeeController extends Controller
      * @param  \App\Models\Release\ReleaseEmployee  $releaseEmployee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ReleaseEmployee $releaseEmployee)
+    public function destroy($id)
     {
-        //
+        $data= ReleaseEmployee::findOrFail(encryptor('decrypt',$id));
+        ReleaseEmployeeDetail::where('release_employee_id',$data->id)->delete();
+        Stock::where('release_employee_id',$data->id)->delete();
+        $data->delete();
+        Toastr::error('Opps!! You Delete Permanently!!');
+        return redirect()->back();
     }
 }

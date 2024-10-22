@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('employee_id')->nullable();
             $table->integer('product_stock_id')->nullable();
+            $table->integer('release_employee_id')->nullable();
             $table->integer('product_issue_id')->nullable();
             $table->integer('product_condem_id')->nullable();
             $table->integer('product_id');
