@@ -74,11 +74,11 @@
                             </tr>
                             <tr class="text-center">
                                 <td></td>
-                                <td class="text-start"><textarea class="form-control" name="others_issue"  rows="2">@if($emRel->others_issue != '') {{$emRel->others_issue}} @else() অন্যান্য @endif</textarea></td>
+                                <td class="text-start"><textarea class="form-control" name="others_issue"  rows="2">অন্যান্য</textarea></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="others_issue_amount" value="{{$emRel->others_issue_amount}}"></td>
+                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="others_issue_amount" value=""></td>
                                 <td></td>
                             </tr>
                             <tr>
