@@ -115,7 +115,7 @@
                 </tbody>
             </table>
             <div class="pt-2">
-                {{--  {{$empasin->links()}}  --}}
+                 {{$empasin->withQueryString()->links()}} 
             </div>
         </div>
     </div>

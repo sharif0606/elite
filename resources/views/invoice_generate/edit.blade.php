@@ -302,25 +302,31 @@
                             ed_date='';
                         }
 
-                        if(value.hours=="1"){
-                            totalHoures=(8*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
-                            // updated new
-                            rate = (value.rate > 0) ? value.rate : '0';
-                            person = (value.qty > 0) ? value.qty : '0';
-                            totalAmount = parseFloat(rate)*parseFloat(person);
-                            // updated new
-                            type_houre=8;
-                        }else{
-                            totalHoures=(12*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
-                            // updated new
-                            rate = (value.rate > 0) ? value.rate : '0';
-                            person = (value.qty > 0) ? value.qty : '0';
-                            totalAmount = parseFloat(rate)*parseFloat(person);
-                            // updated new
-                            type_houre=12;
-                        }
+                        // if(value.hours=="1"){
+                        //     totalHoures=(8*(value.qty)*(workingDays+1));
+                        //     ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
+                        //     // updated new
+                        //     rate = (value.rate > 0) ? value.rate : '0';
+                        //     person = (value.qty > 0) ? value.qty : '0';
+                        //     totalAmount = parseFloat(rate)*parseFloat(person);
+                        //     // updated new
+                        //     type_houre=8;
+                        // }else{
+                        //     totalHoures=(12*(value.qty)*(workingDays+1));
+                        //     ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
+                        //     // updated new
+                        //     rate = (value.rate > 0) ? value.rate : '0';
+                        //     person = (value.qty > 0) ? value.qty : '0';
+                        //     totalAmount = parseFloat(rate)*parseFloat(person);
+                        //     // updated new
+                        //     type_houre=12;
+                        // }
+                        
+                        rate = (value.rate > 0) ? value.rate : '0';
+                        person = (value.qty > 0) ? value.qty : '0';
+                        totalAmount = parseFloat(rate)*parseFloat(person);
+                        // updated new
+                        type_houre=value.hours;
 
                         selectElement.append(
                             `<tr style="text-align: center;">
@@ -482,7 +488,7 @@
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                     subtotalAmount();
                     addCount();
-            }else if(rate <= 0) {
+            }else if(person <= 0) {
                 let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                     subtotalAmount();

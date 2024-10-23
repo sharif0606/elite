@@ -60,13 +60,11 @@
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
-                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note">
-                                    </textarea>
+                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note"></textarea>
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Header Note</b></label>
-                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note">
-                                    </textarea>
+                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note"></textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
@@ -250,25 +248,30 @@
                             ed_date='';
                         }
 
-                        if(value.hours=="1"){
-                            totalHoures=(8*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
-                            // updated new
-                            rate = (value.rate > 0) ? value.rate : '0';
-                            person = (value.qty > 0) ? value.qty : '0';
-                            totalAmount = parseFloat(rate)*parseFloat(person);
-                            // updated new
-                            type_houre=8;
-                        }else{
-                            totalHoures=(12*(value.qty)*(workingDays+1));
-                            ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
-                            // updated new
-                            rate = (value.rate > 0) ? value.rate : '0';
-                            person = (value.qty > 0) ? value.qty : '0';
-                            totalAmount = parseFloat(rate)*parseFloat(person);
-                            // updated new
-                            type_houre=12;
-                        }
+                        // if(value.hours=="1"){
+                        //     totalHoures=(8*(value.qty)*(workingDays+1));
+                        //     ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
+                        //     // updated new
+                        //     rate = (value.rate > 0) ? value.rate : '0';
+                        //     person = (value.qty > 0) ? value.qty : '0';
+                        //     totalAmount = parseFloat(rate)*parseFloat(person);
+                        //     // updated new
+                        //     type_houre=8;
+                        // }else{
+                        //     totalHoures=(12*(value.qty)*(workingDays+1));
+                        //     ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
+                        //     // updated new
+                        //     rate = (value.rate > 0) ? value.rate : '0';
+                        //     person = (value.qty > 0) ? value.qty : '0';
+                        //     totalAmount = parseFloat(rate)*parseFloat(person);
+                        //     // updated new
+                        //     type_houre=12;
+                        // }
+                        rate = (value.rate > 0) ? value.rate : '0';
+                        person = (value.qty > 0) ? value.qty : '0';
+                        totalAmount = parseFloat(rate)*parseFloat(person);
+                        // updated new
+                        type_houre=value.hours;
 
                         selectElement.append(
                             `<tr style="text-align: center;">
@@ -430,7 +433,7 @@
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                     subtotalAmount();
                     addCount();
-            }else if(rate <= 0) {
+            }else if(person <= 0) {
                 let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                     subtotalAmount();

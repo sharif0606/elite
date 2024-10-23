@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\JobPost;
 use App\Models\Crm\Atm;
+use App\Models\Hour;
 
 class InvoiceGenerateDetails extends Model
 {
@@ -15,5 +16,9 @@ class InvoiceGenerateDetails extends Model
     }
     public function atms(){
         return $this->belongsTo(Atm::class,'atm_id','id');
+    }
+
+    public function hours(){
+        return $this->belongsTo(Hour::class,'type_houre','id');
     }
 }

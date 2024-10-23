@@ -38,7 +38,7 @@ class EmployeeAssignController extends Controller
         if ($request->branch_id){
             $empasin->where('employee_assigns.branch_id', $request->branch_id);
         }
-        $empasin = $empasin->get();
+        $empasin = $empasin->paginate(15);
         
         return view('employee_assign.index',compact('empasin','customer'));
 

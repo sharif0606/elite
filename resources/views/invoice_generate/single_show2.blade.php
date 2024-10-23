@@ -159,7 +159,7 @@
                                 </td>
                                 <td>{{ $de->rate }} <br/>
                                     @if($de->type_houre )
-                                        ({{ (int)$de->type_houre }} hourly shift per month)
+                                        ({{ (int)$de->hours?->hour }} hourly shift per month)
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>

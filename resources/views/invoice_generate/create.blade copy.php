@@ -22,10 +22,10 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this);">
+                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
-                                            <option data-zone="{{$c->zone_id}}" value="{{ $c->id }}">{{ $c->name }}</option>
+                                            <option data-zone="{{$c->zone_id}}" data-ctype="{{$c->customer_type}}" data-ins-vat="{{$c->vat}}" value="{{ $c->id }}">{{ $c->name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Bill Date</b></label>
-                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
+                                    <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date" required>
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
@@ -60,13 +60,11 @@
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
-                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="5" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
-                                    </textarea>
+                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note"></textarea>
                                 </div>
                                 <div class="col-lg-6 mt-2">
                                     <label for=""><b>Header Note</b></label>
-                                    <textarea class="form-control" name="header_note" id="" cols="30" rows="5" placeholder="Please enter Header Note">Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.
-                                    </textarea>
+                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note"></textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
@@ -81,7 +79,7 @@
                                             <th>Rate</th>
                                             <th>Total Person</th>
                                             <th>Working Days</th>
-                                            <th>Duty Days</th>
+                                            <th>Duty</th>
                                             <th>Total Hours</th>
                                             <th>Rate per hours</th>
                                             <th>Total Amount</th>
@@ -144,6 +142,35 @@
 @endsection
 @push("scripts")
 <script>
+    function getNote(e) {
+        let customerId = $(e).val();
+        $('#headerNote').val('');
+        $('#footerNote').val('');
+        
+        $.ajax({
+            url: "{{route('get_customer_header_footer')}}",
+            type: "GET",
+            dataType: "json",
+            data: { customer_id: customerId },
+            success: function(data) {
+                console.log(data);
+                
+                let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                
+                let header = data.header_note !== null ? data.header_note : defaultHeader;
+                let footer = data.footer_note !== null ? data.footer_note : defaultFooter;
+                
+                $('#headerNote').val(header);
+                $('#footerNote').val(footer);
+                //oldCustomer = data.id;
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
     function checkZone(e){
         let customer_zone=$('#customer_id').find(":selected").data('zone');
         let branch_zone=$('#branch_id').find(":selected").data('zone');
@@ -183,7 +210,7 @@
             dataType: "json",
             data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
             success: function(invoice_data) {
-                //console.log(invoice_data);
+                console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');
                     selectElement.empty();
                     $.each(invoice_data, function(index, value) {
@@ -224,10 +251,20 @@
                         if(value.hours=="1"){
                             totalHoures=(8*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
+                            // updated new
+                            rate = (value.rate > 0) ? value.rate : '0';
+                            person = (value.qty > 0) ? value.qty : '0';
+                            totalAmount = parseFloat(rate)*parseFloat(person);
+                            // updated new
                             type_houre=8;
                         }else{
                             totalHoures=(12*(value.qty)*(workingDays+1));
                             ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
+                            // updated new
+                            rate = (value.rate > 0) ? value.rate : '0';
+                            person = (value.qty > 0) ? value.qty : '0';
+                            totalAmount = parseFloat(rate)*parseFloat(person);
+                            // updated new
                             type_houre=12;
                         }
 
@@ -245,7 +282,8 @@
                                     <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css warking_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="warking_day[]" value="${workingDays+1}">
+                                    <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
+                                    <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
@@ -253,14 +291,14 @@
                                     <input class="form-control input_css duty_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="duty_day[]" value="">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="${totalHoures}">
+                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="">
                                     <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
-                                    <input readonly class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="${parseFloat(ratePerHoures).toFixed(2)}">
+                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${parseFloat(totalHoures*ratePerHoures).toFixed(2)}">
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${totalAmount}">
                                 </td>
                             </tr>`
                         );
@@ -273,7 +311,13 @@
         });
         $('.show_click').removeClass('d-none');
         var vat=$('#branch_id').find(":selected").data('vat');
-        $('.vat').val(vat);
+        var insVat=$('#customer_id').find(":selected").data('ins-vat');
+        var customerType=$('#customer_id').find(":selected").data('ctype');
+        if(customerType == 0){
+            $('.vat').val(insVat);
+        }else{
+            $('.vat').val(vat);
+        }
      }
      function subtotalAmount(){
         var subTotal=0;
@@ -338,7 +382,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
         </tr>
         `;
@@ -354,7 +398,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
             <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
         </tr>
         `;
@@ -369,27 +413,32 @@
         function reCalcultateInvoice(e) {
             var rate=$(e).closest('tr').find('.rate_c').val();
             var person=$(e).closest('tr').find('.employee_qty_c').val();
-            var workingDay=$(e).closest('tr').find('.warking_day_c').val();
-            var totalHours=$(e).closest('tr').find('.total_houres_c').val();
-            var ratePerHoures=$(e).closest('tr').find('.rate_per_houres_c').val();
-            var typeHours=$(e).closest('tr').find('.type_houre').val(); //8 or 12
-            var reTotalHoure=(workingDay*typeHours*person);
-            var reratePerHoures=((rate/workingDay)/typeHours);
-            var reRatePerHoures = parseFloat(reratePerHoures).toFixed(2);
-            $(e).closest('tr').find('.total_houres_c').val(reTotalHoure);
-           // $(e).closest('tr').find('.rate_per_houres_c').val(reRatePerHoures);
+            var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
+            var totalHour = $(e).closest('tr').find('.total_houres_c').val();
+            var ratePerHour = $(e).closest('tr').find('.rate_per_houres_c').val();
 
-           var startDate=$('.start_date').val();
-           let workingdayinMonth= new Date(startDate);
-           let smonth=workingdayinMonth.getMonth()+1;
-           let syear=workingdayinMonth.getFullYear();
-              workingdayinMonth= new Date(syear, smonth, 0).getDate();
-               ratePerHoure=parseFloat(rate/(typeHours*workingdayinMonth)).toFixed(2);
-               //$(e).closest('tr').find('.rate_per_houres_c').val(ratePerHoure);
-            let subTotalAmount=parseFloat((rate/workingdayinMonth)*(person*workingDay)).toFixed(2);
-                $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                subtotalAmount();
-                addCount();
+            var startDate=$('.start_date').val();
+            let workingdayinMonth= new Date(startDate);
+            let smonth=workingdayinMonth.getMonth()+1;
+            let syear=workingdayinMonth.getFullYear();
+                workingdayinMonth= new Date(syear, smonth, 0).getDate();
+
+            if(dutyDay > 0 && rate > 0){
+                let subTotalAmount=parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }else if(rate <= 0) {
+                let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }else{
+                let subTotalAmount=parseFloat(rate*person).toFixed(2);
+                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                    subtotalAmount();
+                    addCount();
+            }    
         }
 </script>
 
