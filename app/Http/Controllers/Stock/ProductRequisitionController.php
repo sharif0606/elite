@@ -51,6 +51,14 @@ class ProductRequisitionController extends Controller
         $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
         return view('Stock.productrequisition.create',compact('product','size','employee','product_issue'));
     }
+    public function product_issue_create()
+    {
+        $size=ProductSize::all();
+        $product=Product::all();
+        $product_issue=Product::where('is_issue','1')->get();
+        $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
+        return view('Stock.productrequisition.product_issue_create_after',compact('product','size','employee','product_issue'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -61,6 +69,8 @@ class ProductRequisitionController extends Controller
     public function store(AddProductIssue $request)
     {
         //dd($request->all());
+         // Begin the transaction
+        DB::beginTransaction();
         try{
             $data=new ProductRequisition;
             if($request->employee_id != null){
@@ -86,6 +96,9 @@ class ProductRequisitionController extends Controller
                             $details->product_id=$request->product_id[$key];
                             $details->size_id=$request->size_id[$key];
                             $details->product_qty=$request->product_qty[$key];
+                            $details->deposite_product_qty=$request->deposite_product_qty[$key];
+                            $details->deposite_size_id=$request->deposite_size_id[$key];
+                            $details->deposite_type=$request->deposite_type[$key];
                             $details->type=$request->type[$key];
                             if($details->save()){
                                 $stock=new Stock;
@@ -101,14 +114,33 @@ class ProductRequisitionController extends Controller
                                 $stock->status=1;
                                 $stock->save();
                             }
+
+                            // Check if deposit product quantity exists and is greater than 0
+                            if (!empty($request->deposite_product_qty[$key]) && $request->deposite_product_qty[$key] > 0) {
+                                // Deposit Stock Entry
+                                $stockDeposit = new Stock;
+                                $stockDeposit->employee_id = $data->employee_id;
+                                $stockDeposit->product_requisition_id = $data->id;
+                                $stockDeposit->product_issue_id = $details->id;
+                                $stockDeposit->entry_date = $formattedDate;
+                                $stockDeposit->note = $request->note;
+                                $stockDeposit->product_id = $request->product_id[$key];
+                                $stockDeposit->size_id = $request->deposite_size_id[$key];
+                                $stockDeposit->product_qty = $request->deposite_product_qty[$key]; // Deposit quantity
+                                $stockDeposit->type = $request->deposite_type[$key];
+                                $stockDeposit->status = 0;
+                                $stockDeposit->save();
+                            }
                         }
                     }
                 }
+                DB::commit();
                 \LogActivity::addToLog('Add Issue',$request->getContent(),'ProductRequisition,ProductRequisitionDetails,Stock');
                 return redirect()->route('product_issue.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
             dd($e);
+            DB::rollBack();
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
