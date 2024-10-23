@@ -83,7 +83,7 @@
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{ $e->invoice_id }}</td>
-                        <td>{{ $e->customer?->name }}</td>
+                        <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}})</td>
                         <td>{{ $e->received_amount }}</td>
                         <td>{{ $e->vat }}</td>
                         <td>{{ $e->vat_amount }}</td>
