@@ -84,8 +84,8 @@
                                                     </td>
                                                     <td>
                                                         <select name="deposite_type[]" class="form-control @error('type') is-invalid @enderror" id="type">
-                                                            <option value="1">New</option>
                                                             <option value="2">Used</option>
+                                                            <option value="1">New</option>
                                                         </select>
                                                     </td>
                                                     <td>
@@ -159,7 +159,7 @@
     var row=`
     <tr class="text-center">
         <td>
-            <input required class="form-control text-center" type="text" name="deposite_product_qty[]" value="1" placeholder="Product Qty">
+            <input required class="form-control text-center" type="text" name="deposite_product_qty[]" value="" placeholder="Product Qty">
         </td>
         <td>
             <select name="deposite_type[]" class="form-control @error('type') is-invalid @enderror" id="type">
