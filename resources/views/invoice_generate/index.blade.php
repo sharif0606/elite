@@ -110,7 +110,8 @@
                         $totalItems = $invoice->total();
                     @endphp
                     @forelse($invoice as $key=>$e)
-                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->less?->sum('amount')*$e->vat/100)); @endphp
+                        @php $lessPaid = $e->less?->sum('amount')*$e->vat/100 @endphp
+                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $lessPaid)); @endphp
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
@@ -145,7 +146,7 @@
                                         <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
                                     </button>
                                 @endif
-                                @if ($e->grand_total == $due)
+                                @if ($e->grand_total-$lessPaid == $due)
                                     @if ($e->invoice_type == 1)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
