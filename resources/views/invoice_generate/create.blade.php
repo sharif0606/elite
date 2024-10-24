@@ -45,7 +45,7 @@
                             @csrf
                             <input type="hidden" name="zone_id" id="zone_id">
                             <div class="row p-2">
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <span class="inv-notice text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                         <ul class="inv-info-detail" id="receivedAmountsList">
                                             <li><b>Invoice generated using employee assignment details</b></li>
@@ -55,7 +55,7 @@
                                             <li><b>The 'Working Day' column for Mamiya's invoice does not affect any calculations. The actual working days are stored from the start date, for other invoices</b></li>
                                         </ul>
                                     </span>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
                                     <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">
