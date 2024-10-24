@@ -65,20 +65,20 @@
                             @endforeach
                             <tr class="text-center">
                                 <td></td>
-                                <td class="text-start">ধোলাই খরচ বাবদ <input type="hidden" name="wash_cost" value="ধোলাই খরচ বাবদ"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="wash_cost_amount"></td>
-                                <td></td>
-                            </tr>
-                            <tr class="text-center">
-                                <td></td>
                                 <td class="text-start"><textarea class="form-control" name="others_issue"  rows="2">অন্যান্য</textarea></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="others_issue_amount" value=""></td>
+                                <td></td>
+                            </tr>
+                            <tr class="text-center">
+                                <td></td>
+                                <td class="text-start">ধোলাই খরচ বাবদ <input type="hidden" name="wash_cost" value="ধোলাই খরচ বাবদ"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="number" onkeyup="issueCalc(this);" class="form-control text-end not_receive_qty_amount" name="wash_cost_amount"></td>
                                 <td></td>
                             </tr>
                             <tr>

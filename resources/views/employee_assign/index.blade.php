@@ -72,6 +72,7 @@
                                     <tr>
                                         <th>Job Post</th>
                                         <th>Qty</th>
+                                        <th>Hour</th>
                                         <th>Rate</th>
                                     </tr>
                                 </thead>
@@ -84,6 +85,7 @@
                                             @endif
                                             </td>
                                         <td>{{ $de->qty }}</td>
+                                        <td>{{ $de->hours_emp?->hour }}</td>
                                         <td>{{ $de->rate }}</td>
                                     </tr>
                                     @endforeach

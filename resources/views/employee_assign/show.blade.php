@@ -141,7 +141,7 @@
                             <td>{{ \Carbon\Carbon::parse($de->start_date)->format('d F Y') }}</td>
                             <td>{{ $de->end_date }}</td>
                             <td>{{ $de->rate }}</td>
-                            <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
+                            <td>{{$de->hours_emp?->hour}} Hour's</td>
                             <td>{{ $de->qty*$de->rate }}</td>
                         </tr>
                         @endforeach

@@ -26,13 +26,14 @@
                 
                 <div class="row p-3">
                     <div class="col-3">
-                        <img class="mt-2" height="65px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
+                        <img class="mt-2" height="55px" src="{{ asset('assets/images/logo/logo.png')}}" alt="no img">
                     </div>
-                    <div class="col-8">
+                    <div class="col-6">
                         <div style="text-align: center;">
-                            <h5 style="padding-top: 5px;">ছাড়পত্র</h5>
-                            <h5 style="padding-top: 5px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h5>
-                            <p class="text-center m-0 p-0">বাড়ি নং-২, লেইন নং-২, রোড নং-২  ব্লক-কে  হালিশহর হাউজিং এষ্টেট চট্টগ্রাম-৪২২৪</p>
+                            <h6 style="padding-top: 5px;">ছাড়পত্র</h6>
+                            <h6 style="padding-top: 5px;">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h6>
+                            <p class="text-center m-0 p-0">বাড়ি নং-২, লেইন নং-২, রোড নং-২, ব্লক-কে</p>
+                            <p class="text-center m-0 p-0">হালিশহর হাউজিং এষ্টেট চট্টগ্রাম-৪২২৪</p>
                         </div>
                     </div>
                     <div class="col-12 mt-3">
@@ -53,9 +54,13 @@
                             <th class="tbl_border">সংখ্যা</th>
                             <th class="tbl_border">টাকা</th>
                         </tr>
+                        @php
+                            $sl= 0;
+                            $slLast= 0;
+                        @endphp
                         @foreach ($relDetail as $d)
                             <tr class="text-center tbl_border">
-                                <td class="tbl_border">{{++$loop->index}}</td>
+                                <td class="tbl_border">{{++$sl}}</td>
                                 <td class="text-start tbl_border">{{$d->product?->product_name}}</td>
                                 <td class="tbl_border">{{abs($d->issue_qty)}}</td>
                                 <td class="tbl_border">{{$d->receive_qty}}</td>
@@ -63,23 +68,26 @@
                                 <td class="tbl_border">{{$d->not_receive_qty_amount}}</td>
                                 <td class="tbl_border">{{$d->comment}}</td>
                             </tr>
+                            @php
+                                $slLast = $sl;
+                            @endphp
                         @endforeach
                         <tr class="text-center tbl_border">
+                            <td class="tbl_border">{{$slLast+1}}</td>
+                            <td colspan="4" class="text-start tbl_border">{{$emRel->others_issue}}</td>
+                            {{-- <td class="tbl_border"></td>
                             <td class="tbl_border"></td>
-                            <td class="text-start tbl_border">{{$emRel->wash_cost}}</td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border">{{$emRel->wash_cost_amount}}</td>
+                            <td class="tbl_border"></td> --}}
+                            <td class="tbl_border">{{$emRel->others_issue_amount}}</td>
                             <td class="tbl_border"></td>
                         </tr>
                         <tr class="text-center tbl_border">
+                            <td class="tbl_border">{{$slLast+2}}</td>
+                            <td colspan="4" class="text-start tbl_border">{{$emRel->wash_cost}}</td>
+                            {{-- <td class="tbl_border"></td>
                             <td class="tbl_border"></td>
-                            <td class="text-start tbl_border">{{$emRel->others_issue}}</td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border"></td>
-                            <td class="tbl_border">{{$emRel->others_issue_amount}}</td>
+                            <td class="tbl_border"></td> --}}
+                            <td class="tbl_border">{{$emRel->wash_cost_amount}}</td>
                             <td class="tbl_border"></td>
                         </tr>
                         <tr class="tbl_border">

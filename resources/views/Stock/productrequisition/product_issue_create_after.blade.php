@@ -80,7 +80,7 @@
                                                 @forelse ($product_issue as $pe)
                                                 <tr>
                                                     <td>
-                                                        <input required class="form-control text-center" type="text" name="deposite_product_qty[]" value="1" placeholder="Product Qty">
+                                                        <input class="form-control text-center" type="text" name="deposite_product_qty[]" value="0" placeholder="Product Qty">
                                                     </td>
                                                     <td>
                                                         <select name="deposite_type[]" class="form-control @error('type') is-invalid @enderror" id="type">

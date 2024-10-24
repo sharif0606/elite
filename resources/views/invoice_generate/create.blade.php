@@ -9,6 +9,31 @@
         border: none;
         outline: none;
     }
+    .inv-notice, .due-details {
+        position: relative;
+        display: inline-block;
+    }
+
+    .inv-info-detail {
+        display: none;
+        position: absolute;
+        left: 8px;
+        top: 100%;
+        margin-top: 1px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 8px 22px 8px 22px;
+        /* list-style: none; */
+        z-index: 1;
+        width: max-content;
+        font-size: 1rem;
+        background-color: rgb(39, 185, 243);
+        color: white;
+    }
+    .inv-notice:hover .inv-info-detail {
+        display: block;
+    }
 </style>
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -19,7 +44,18 @@
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="zone_id" id="zone_id">
-                            <div class="row p-2 mt-4">
+                            <div class="row p-2">
+                                <div class="col-12">
+                                    <span class="inv-notice text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                        <ul class="inv-info-detail" id="receivedAmountsList">
+                                            <li><b>Invoice generated using employee assignment details</b></li>
+                                            <li><b>Regular Count: Rate * Total Persons</b></li>
+                                            <li><b>From the start date, calculate the total days of that month (days can be adjusted by the input "divided by" ) & divide the rate when (rate > 0 && duty > 0)</b></li>
+                                            <li><b>If the condition (rate > 0 && duty > 0) is not true and (Total Persons <= 0), then we calculate Total Hours * Rate per hour = Total Amount</b></li>
+                                            <li><b>The 'Working Day' column for Mamiya's invoice does not affect any calculations. The actual working days are stored from the start date, for other invoices</b></li>
+                                        </ul>
+                                    </span>
+                                </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
                                     <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">

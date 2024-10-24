@@ -42,7 +42,12 @@ class ReleaseEmployeeController extends Controller
         $checkRelease = ReleaseEmployee::where('employee_id',$request->employee_id)->first();
         if(!$checkRelease){
             $emp = Employee::select('id','admission_id_no','bn_applicants_name','joining_date','bn_jobpost_id','bn_parm_village_name')->where('id',$request->employee_id)->where('status',1)->first();
-            $data= Stock::where('employee_id',$request->employee_id)->where('status',1)->get();
+            // $data= Stock::where('employee_id',$request->employee_id)->where('status',1)->groupBy('product_id')->get();
+            $data = Stock::selectRaw('product_id, SUM(product_qty) as product_qty')
+                    ->where('employee_id', $request->employee_id)
+                    ->where('status', 1)
+                    ->groupBy('product_id')
+                    ->get();
 
             //dd($data->toSql()); // This will show the raw SQL query
             return view('release.releaseForm',compact('emp','data'));

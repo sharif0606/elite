@@ -57,7 +57,7 @@
                                         <p>বাড়ি নং-২,লেইন নং-২,রোড নং-২,ব্লক-''কে''</p>
                                         <p>হালিশহর হাউজিং এষ্টেট,চট্টগ্রাম-৪২২৪</p>
                                         {{--  <p>E-MAIL: <a href="#" style="border-bottom: solid 1px; border-color:blue;">{{encryptor('decrypt', request()->session()->get('companyEmail'))}}</a> Contact: {{encryptor('decrypt', request()->session()->get('companyContact'))}}</p>  --}}
-                                        <h6><span style="border-bottom: solid 1px;">{{$employee->bn_applicants_name}}</span></h6>
+                                        <h6><span style="border-bottom: solid 1px;">{{$employee->bn_applicants_name}} , {{$employee->admission_id_no}}</span></h6>
                                         {{--  <p>Stock Item Register</p>  --}}
                                     </th>
                                 </tr>
