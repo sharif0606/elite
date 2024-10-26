@@ -150,7 +150,7 @@
                 <tr>
                     <th>S.L</th>
                     <th>Service</th>
-                    <th>Rate</th>
+                    <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
                     <th>Period</th>
                     <th>Person</th>
                     <th>Total Amount (BDT)</th>
@@ -171,7 +171,7 @@
                                 </td>
                                 <td>{{ $de->rate }} <br/>
                                     @if ($de->divide_by == 1)
-                                        (per shift)
+                                        (Per shift)
                                     @else
                                         @if($de->type_houre )
                                             ({{ (int)$de->hours?->hour }} hourly shift per month)

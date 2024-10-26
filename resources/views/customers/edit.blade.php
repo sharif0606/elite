@@ -72,6 +72,12 @@
                             <option value="1" {{$customer->customer_type==1?'selected':''}}>Bank</option>
                         </select>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="inv_vat_note">Invoice Vat Note</label>
+                            <input type="text" value="{{old('inv_vat_note',$customer->inv_vat_note)}}" class="form-control" name="inv_vat_note">
+                        </div>
+                    </div>
                     <div class="col-12 d-none" id="billSection">
                         <div class="row py-2 my-1" style="border: solid 1px red; border-radius: 8px;">
                             <div class="text-center"><h5 class="text-danger">Billing Information</h5></div>

@@ -61,6 +61,7 @@ class CustomerController extends Controller
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
             $data->customer_type = $request->customer_type;
+            $data->inv_vat_note = $request->inv_vat_note;
             $data->contact_person = $request->contact_person;
             $data->billing_person = $request->billing_person;
             $data->agreement_date = $request->agreement_date;
@@ -141,6 +142,7 @@ class CustomerController extends Controller
             $data->file_upload_name = $request->file_upload_name;
             $data->zone_id = $request->zone_id;
             $data->customer_type = $request->customer_type;
+            $data->inv_vat_note = $request->inv_vat_note;
             $data->contact_person = $request->contact_person;
             $data->billing_person = $request->billing_person;
             $data->agreement_date = $request->agreement_date;
