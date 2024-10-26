@@ -73,7 +73,7 @@
                 <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
             </tr>
             <tr>
-                <td width="15%">To: <br>&nbsp;&nbsp;</td>
+                <td width="15%">To: @if($branch?->billing_person != '') <br>&nbsp;&nbsp; @else @endif</td>
                 <td>
                     <p style="padding:0; margin:0;">
                         @if ($invoice_id->customer?->customer_type == 0)
