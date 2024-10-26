@@ -85,6 +85,7 @@ class InvoiceGenerateController extends Controller
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
             $data->header_note = $request->header_note;
+            $data->inv_subject = $request->inv_subject;
             $data->invoice_type = 1;
             // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
@@ -99,6 +100,7 @@ class InvoiceGenerateController extends Controller
                             $details->employee_qty=$request->employee_qty[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
+                            $details->divide_by=$request->divide_by[$key];
                             $details->actual_warking_day=$request->actual_warking_day[$key];
                             $details->duty_day=$request->duty_day[$key];
                             $details->total_houres=$request->total_houres[$key];
@@ -247,6 +249,7 @@ class InvoiceGenerateController extends Controller
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
             $data->header_note = $request->header_note;
+            $data->inv_subject = $request->inv_subject;
             $data->invoice_type = 1;
             // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
@@ -262,6 +265,7 @@ class InvoiceGenerateController extends Controller
                             $details->employee_qty=$request->employee_qty[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
+                            $details->divide_by=$request->divide_by[$key];
                             $details->actual_warking_day=$request->actual_warking_day[$key];
                             $details->duty_day=$request->duty_day[$key];
                             $details->total_houres=$request->total_houres[$key];

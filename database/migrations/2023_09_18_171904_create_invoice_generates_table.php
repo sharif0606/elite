@@ -28,6 +28,7 @@ return new class extends Migration
             $table->decimal('grand_total',10,2)->default(0);
             $table->text('footer_note')->nullable();
             $table->text('header_note')->nullable();
+            $table->string('inv_subject')->nullable();
             $table->string('status')->nullable();
             $table->integer('invoice_type')->nullable()->comment('1=general, 2=wasa, 3=onetrip');
             $table->unsignedBigInteger('company_id')->nullable()->index()->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

@@ -45,7 +45,7 @@
                             @csrf
                             <input type="hidden" name="zone_id" id="zone_id">
                             <div class="row p-2">
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <span class="inv-notice text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                         <ul class="inv-info-detail" id="receivedAmountsList">
                                             <li><b>Invoice generated using employee assignment details</b></li>
@@ -55,7 +55,7 @@
                                             <li><b>The 'Working Day' column for Mamiya's invoice does not affect any calculations. The actual working days are stored from the start date, for other invoices</b></li>
                                         </ul>
                                     </span>
-                                </div> --}}
+                                </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
                                     <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">
@@ -94,13 +94,17 @@
                                     <label for=""><b>Vat(%)</b></label>
                                     <input required class="form-control vat" onkeyup="changeVat(this)" step="0.01" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
-                                <div class="col-lg-6 mt-2">
+                                <div class="col-lg-4 mt-2">
                                     <label for=""><b>Footer Note</b></label>
                                     <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note"></textarea>
                                 </div>
-                                <div class="col-lg-6 mt-2">
+                                <div class="col-lg-4 mt-2">
                                     <label for=""><b>Header Note</b></label>
                                     <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note"></textarea>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>Subject</b></label>
+                                    <textarea class="form-control" name="inv_subject" rows="3"></textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
@@ -115,6 +119,7 @@
                                             <th>Rate</th>
                                             <th>Total Person</th>
                                             <th>Working Days</th>
+                                            <th>Divide By</th>
                                             <th>Duty</th>
                                             <th>Total Hours</th>
                                             <th>Rate per hours</th>
@@ -129,7 +134,7 @@
                                                 {{--  <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>  --}}
                                                 <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
-                                            <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                            <th colspan="8" style="text-align: end;">Sub Tatal</th>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
                                                 {{--  <input class="lessP" type="hidden" name="less_total[]" value="">  --}}
@@ -146,7 +151,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="7">Total Tk</th>
+                                            <th colspan="8">Total Tk</th>
                                             <td>
                                                 <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                 <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
@@ -154,12 +159,12 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="7">Vat (<span class="vat_percent"></span> %)</th>
+                                            <th colspan="8">Vat (<span class="vat_percent"></span> %)</th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="7">Grand Total</th>
+                                            <th colspan="8">Grand Total</th>
                                             <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
                                         </tr>
                                     </tfoot>
@@ -329,6 +334,9 @@
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>
+                                    <input class="form-control input_css divide_by text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="divide_by[]" value="">
+                                </td>
+                                <td>
                                     <input class="form-control input_css duty_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="duty_day[]" value="">
                                 </td>
                                 <td>
@@ -423,7 +431,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+            <td colspan="8"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
         </tr>
         `;
@@ -439,7 +447,7 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td colspan="8"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
             <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
         </tr>
         `;
@@ -457,6 +465,7 @@
             var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
             var totalHour = $(e).closest('tr').find('.total_houres_c').val();
             var ratePerHour = $(e).closest('tr').find('.rate_per_houres_c').val();
+            var divideBy = $(e).closest('tr').find('.divide_by').val();
 
             var startDate=$('.start_date').val();
             let workingdayinMonth= new Date(startDate);
@@ -465,10 +474,17 @@
                 workingdayinMonth= new Date(syear, smonth, 0).getDate();
 
             if(dutyDay > 0 && rate > 0){
-                let subTotalAmount=parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
-                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                    subtotalAmount();
-                    addCount();
+                if(divideBy > 0){
+                    let subTotalAmount=parseFloat((rate/divideBy)*dutyDay).toFixed(2);
+                        $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                        subtotalAmount();
+                        addCount();
+                }else{
+                    let subTotalAmount=parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
+                        $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                        subtotalAmount();
+                        addCount();
+                }
             }else if(person <= 0) {
                 let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);

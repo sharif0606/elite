@@ -49,7 +49,11 @@
         </tr>
     </table>
     <br>
-    <div><u><b>Subject: Bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></u></div>
+    @if ($invoice_id->inv_subject != '')
+        <div><u><b>Subject: {{$invoice_id->inv_subject}}.</b></u></div>
+    @else
+        <div><u><b>Subject: Bill for the month of {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('F Y')}}</b></u></div>
+    @endif
     <br>
     <div>Dear Sir</div>
     <div style="padding-left: 50px;">Bill for the period covering <b>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d F Y') }}</b> to <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d F Y') }}</b> is submitted herewith

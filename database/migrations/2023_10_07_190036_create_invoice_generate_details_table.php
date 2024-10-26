@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('rate',10,2)->default(0)->nullable();
             $table->integer('employee_qty')->default(0)->nullable();
             $table->decimal('warking_day',10,2)->default(0)->nullable();
+            $table->integer('divide_by')->nullable();
             $table->decimal('actual_warking_day',10,2)->default(0)->nullable();
             $table->decimal('duty_day',10,2)->default(0)->nullable();
             $table->decimal('total_houres',14,2)->default(0)->nullable();
