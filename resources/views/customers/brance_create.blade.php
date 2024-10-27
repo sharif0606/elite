@@ -68,10 +68,10 @@
                         <label for=""><b>Vat(%)</b></label>
                         <input required class="form-control vat" type="number" name="vat" value="" placeholder="Vat">
                     </div>
-                    {{--  <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Billing Rate</b></label>
-                        <input class="form-control billing_rate" type="text" name="billing_rate" value="" placeholder="Billing Rate">
-                    </div>  --}}
+                        <input class="form-control" type="text" name="billing_rate" value="" placeholder="Billing Rate">
+                    </div> 
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Take Home Salary</b></label>
                         <input class="form-control take_home" type="text" name="take_home" value="" placeholder="Take Home Salary">

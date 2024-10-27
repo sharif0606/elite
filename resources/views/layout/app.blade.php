@@ -194,7 +194,7 @@
                 success: function (data) {
                     $('#branch_id').append('<option value="0">Select Branch</option>');
                     $.each(data, function(key, value) {
-                        $('#branch_id').append('<option data-zone="'+value.zone_id+'" data-vat="'+value.vat+'" value="' + value.id + '">' + value.brance_name + '</option>');
+                        $('#branch_id').append('<option data-zone="'+value.zone_id+'" data-vat="'+value.vat+'" data-billingRate="'+value.billing_rate+'" value="' + value.id + '">' + value.brance_name + '</option>');
                     });
                 },
                 error: function () {

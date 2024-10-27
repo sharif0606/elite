@@ -59,7 +59,7 @@ class OnetripInvoiceController extends Controller
             $invoice=new InvoiceGenerate;
             $invoice->customer_id = $request->customer_id;
             $invoice->branch_id = $request->branch_id;
-            //$invoice->atm_id = $request->atm_id;
+            $invoice->atm_id = $request->atm_id;
             $invoice->start_date = $request->start_date;
             $invoice->end_date = $request->end_date;
             $invoice->bill_date = $request->bill_date;
@@ -69,6 +69,9 @@ class OnetripInvoiceController extends Controller
             $invoice->vat_taka = $request->vat_taka;
             $invoice->grand_total = $request->grand_total;
             $invoice->footer_note = $request->footer_note;
+            $invoice->header_note = $request->header_note;
+            $invoice->invoice_type = 3;
+            // invoice_type 1= general, 2=wasa, 3=onetrip
             $invoice->status = 0;
             if($invoice->save()){
                 $onetrip=new OnetripInvoice;

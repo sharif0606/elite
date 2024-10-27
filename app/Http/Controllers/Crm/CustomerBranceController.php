@@ -63,6 +63,7 @@ class CustomerBranceController extends Controller
             $data->renew_date = $request->renew_date;
             $data->validity_date = $request->validity_date;
             $data->vat = $request->vat;
+            $data->billing_rate = $request->billing_rate;
             $data->take_home = $request->take_home;
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
@@ -142,6 +143,7 @@ class CustomerBranceController extends Controller
             $data->renew_date = $request->renew_date;
             $data->validity_date = $request->validity_date;
             $data->vat = $request->vat;
+            $data->billing_rate = $request->billing_rate;
             $data->take_home = $request->take_home;
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;

@@ -182,9 +182,17 @@
                                 <td>
                                     {{ $de->employee_qty }}<br>
                                     @if ($de->duty_day > 0 && $de->total_houres > 0)
-                                        ({{ $de->duty_day }} duty)
+                                        @if ($de->duty_day > 1)
+                                            ({{ (int) $de->duty_day }} duties)
+                                        @else
+                                            ({{ (int) $de->duty_day }} duty)
+                                        @endif
                                     @elseif($de->duty_day > 0 && $de->total_houres == '')
-                                        ({{ $de->duty_day }} duty)
+                                        @if ($de->duty_day > 1)
+                                            ({{ (int) $de->duty_day }} duties)
+                                        @else
+                                            ({{ (int) $de->duty_day }} duty)
+                                        @endif
                                     @elseif($de->duty_day == '' && $de->total_houres > 0)
                                         ({{ (int) $de->total_houres }} duty hours)
                                     @else

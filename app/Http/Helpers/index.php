@@ -255,3 +255,67 @@ if (!function_exists('money_format')) {
         return $result;
     }
 }
+
+if (!function_exists('convertToBanglaNumber')) {
+    function convertToBanglaNumber($number) {
+        $englishToBangla = [
+            '0' => '০',
+            '1' => '১',
+            '2' => '২',
+            '3' => '৩',
+            '4' => '৪',
+            '5' => '৫',
+            '6' => '৬',
+            '7' => '৭',
+            '8' => '৮',
+            '9' => '৯'
+        ];
+        return implode('', array_map(function ($digit) use ($englishToBangla) {
+            return $englishToBangla[$digit] ?? $digit;
+        }, str_split((string) $number)));
+    }
+}
+if (!function_exists('convertToBanglaDate')) {
+    function convertToBanglaDate($dateString) {
+        // Define the mapping between English and Bangla digits
+        $englishToBangla = [
+            '0' => '০',
+            '1' => '১',
+            '2' => '২',
+            '3' => '৩',
+            '4' => '৪',
+            '5' => '৫',
+            '6' => '৬',
+            '7' => '৭',
+            '8' => '৮',
+            '9' => '৯'
+        ];
+
+        // Define the mapping between English and Bangla month names
+        $englishToBanglaMonths = [
+            'Jan' => 'জানু',
+            'Feb' => 'ফেব্রু',
+            'Mar' => 'মার্চ',
+            'Apr' => 'এপ্রিল',
+            'May' => 'মে',
+            'Jun' => 'জুন',
+            'Jul' => 'জুলাই',
+            'Aug' => 'আগস্ট',
+            'Sep' => 'সেপ্টেম্বর',
+            'Oct' => 'অক্টোবর',
+            'Nov' => 'নভেম্বর',
+            'Dec' => 'ডিসেম্বর'
+        ];
+
+        // Format the date using PHP's date function (e.g., "26-Oct-2024")
+        $formattedDate = date('d-M-Y', strtotime($dateString));
+
+        // Replace the English month with the corresponding Bangla month
+        $formattedDate = str_replace(array_keys($englishToBanglaMonths), array_values($englishToBanglaMonths), $formattedDate);
+
+        // Convert the digits to Bangla
+        return implode('', array_map(function ($digit) use ($englishToBangla) {
+            return $englishToBangla[$digit] ?? $digit;
+        }, str_split($formattedDate)));
+    }
+}

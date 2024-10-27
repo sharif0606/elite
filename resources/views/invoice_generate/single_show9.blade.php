@@ -173,7 +173,7 @@
                                 {{-- <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td> --}}
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                                 <td>{{ $de->employee_qty }}</td>
-                                <td>{{ $de->duty_day }}</td>
+                                <td>{{ (int) $de->duty_day }}</td>
                                 <td>{{ $de->total_houres }}</td>
                                 <td>{{ $de->rate_per_houres }}</td>
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>

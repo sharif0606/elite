@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="lcNo">{{__('Customer')}}</label>
-                    <select name="customer_id" class="select2 form-select">
+                    <select name="customer_id" class="select2 form-select" onchange="getBranch(this);">
                         <option value="">Select</option>
                         @forelse ($customer as $d)
                             <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
@@ -76,6 +76,14 @@
                             <option value="">No Data Found</option>
                         @endforelse
                     </select>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="lcNo">{{__('Branch')}}</label>
+                    <div class="form-group">
+                        <select name="branch_id" class="select2 form-select" id="branch_id">
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="row mt-4">

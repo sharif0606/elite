@@ -65,7 +65,7 @@
                                 <td class="py-1" style="text-align: left; width: 25%;">১ । আবেদনকারীর নাম :</td>
                                 <td class="py-1 tbborder" colspan="5" style="width: 40%;">{{ $employees->bn_applicants_name }}</td>
                                 <td class="py-1" style="text-align: center; width: 20%;">ভর্তির পর আইডি নং</td>
-                                <td class="py-1 tbborder" colspan="2" style="width: 15%;">{{ $employees->admission_id_no }}</td>
+                                <td class="py-1 tbborder" colspan="2" style="width: 15%;">{{ convertToBanglaNumber($employees->admission_id_no) }}</td>
                             </tr>
                             <tr>
                                 <td class="py-1" style="text-align: left; width: 25%;">২ । পিতার নাম:</td>
@@ -91,9 +91,9 @@
                                     <label for="">জেলা :</label>
                                     <span class="tbborder d-inline-block" style="padding-right:18px; padding-top:15px">{{ $employees->bn_parm_district?->name_bn }}</span>
                                     <label for="">মোবাইল নং(নিজ) :</label>
-                                    <span class="tbborder d-inline-block" style="padding-right:18px; padding-top:15px">{{ $employees->bn_parm_phone_my }}</span>
+                                    <span class="tbborder d-inline-block" style="padding-right:18px; padding-top:15px">{{ convertToBanglaNumber($employees->bn_parm_phone_my) }}</span>
                                     <label for="">বিকল্প :</label>
-                                    <span class="tbborder d-inline-block" style="padding-right:18px; padding-top:15px">{{ $employees->bn_parm_phone_alt }}</span>
+                                    <span class="tbborder d-inline-block" style="padding-right:18px; padding-top:15px">{{ convertToBanglaNumber($employees->bn_parm_phone_alt) }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -129,21 +129,21 @@
                                 <td class="py-1" colspan="8">
                                     <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ $employees->bn_edu_qualification }}</span>
                                     <label for="">জন্ম তারিখ :</label>
-                                    <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ $employees->bn_dob ? \Carbon\Carbon::parse($employees->bn_dob)->format('d-m-Y') : '' }}</span>
+                                    <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ $employees->bn_dob ? convertToBanglaNumber(\Carbon\Carbon::parse($employees->bn_dob)->format('d-m-Y')) : '' }}</span>
                                     <label for="">বয়স :</label>
                                     @php
                                     $birthDate = $employees->bn_dob;
                                     $age = \Carbon\Carbon::parse($birthDate)->age;
                                     @endphp
-                                    <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ $age }}</span>
+                                    <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ convertToBanglaNumber($age) }}</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="py-1" style="text-align: left; ">৭ । জন্ম নিবন্ধন নং :</td>
                                 <td class="py-1" colspan="8">
-                                    <input type="text" class="sinput"  value="{{ $employees->bn_birth_certificate }}">
+                                    <input type="text" class="sinput"  value="{{ convertToBanglaNumber($employees->bn_birth_certificate) }}">
                                     <label for="">জাতীয় পরিচয়পত্র নং :</label>
-                                    <input type="text" class="sinput"  value="{{ $employees->bn_nid_no }}">
+                                    <input type="text" class="sinput"  value="{{ convertToBanglaNumber($employees->bn_nid_no) }}">
                                 </td>
                             </tr>
                             <tr>
@@ -153,16 +153,16 @@
                                     <label for="">ধর্ম :</label>
                                     <input type="text" class="small"  value="{{ $employees->religion?->name_bn }}">
                                     <label for="">উচ্চতা :</label>
-                                    <input type="text" class="verySmall"  value="{{ $employees->bn_height_foot }}">
+                                    <input type="text" class="verySmall"  value="{{ convertToBanglaNumber($employees->bn_height_foot) }}">
                                     <label for="">ফুট :</label>
-                                    <input type="text" class="verySmall"  value="{{ $employees->bn_height_inc }}">
+                                    <input type="text" class="verySmall"  value="{{ convertToBanglaNumber($employees->bn_height_inc) }}">
                                     <label for="">ইঞ্চি :</label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="py-1" style="text-align: left; width: 25%;">৯ । ওজন :</td>
                                 <td class="py-1" colspan="8">
-                                    <input type="text" class="sminput"  value="{{ $employees->bn_weight_kg }}">
+                                    <input type="text" class="sminput"  value="{{ convertToBanglaNumber($employees->bn_weight_kg) }}">
                                     <label for="">কেজি</label>
                                     <label for="">অভিজ্ঞতা :</label>
                                     <input type="text" class="semiTinput"  value="{{ $employees->bn_experience }}">
@@ -209,7 +209,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td colspan="4" style="text-align: left;"><label for="">তারিখ :{{ !is_null($employees->joining_date) ? date('d-M-Y', strtotime($employees->joining_date)) : '' }}</label></td>
+                                <td colspan="4" style="text-align: left;"><label for="">তারিখ :{{ !is_null($employees->joining_date) ? convertToBanglaDate(date('d-M-Y', strtotime($employees->joining_date))) : '' }}</label></td>
                                 <td colspan="5" style="text-align: right; padding-right: 30px;">
                                     @if($employees->signature_img !='')
                                     <img height="50px" width="150px"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt=""><br/>
@@ -283,7 +283,7 @@
                                 <td class="py-1" style="width: 37%;">
                                     <p style="margin: 2px;">গ্রাম: {{ $employees->bn_parm_village_name }}</p>
                                     <p style="margin: 2px;">উপজেলা: {{ $employees->bn_parm_upazilla?->name_bn }}</p>
-                                    <p style="margin: 2px;">মোবাইল নং: {{ $employees->bn_parm_phone_alt }}</p>
+                                    <p style="margin: 2px;">মোবাইল নং: {{ convertToBanglaNumber($employees->bn_parm_phone_alt) }}</p>
                                 </td>
                                 <td class="py-1" style="width: 37%;">
                                     <p style="margin: 2px;">পোঃ {{ $employees->bn_parm_post_ofc }}</p>
@@ -320,7 +320,7 @@
                                 $age = \Carbon\Carbon::parse($birthDate)->age;
                                 @endphp
 
-                                <td class="py-1" colspan="2">{{ $age }}</td>
+                                <td class="py-1" colspan="2">{{ convertToBanglaNumber($age) }}</td>
                             </tr>
                             <tr>
                                 <th class="py-1">৯. জাতীয়তা</th>
@@ -340,7 +340,7 @@
                             <tr>
                                 <th class="py-1">১২. মোবাইল নং</th>
                                 <td class="py-1">:</td>
-                                <td class="py-1" colspan="2">{{ $employees->bn_parm_phone_my }}</td>
+                                <td class="py-1" colspan="2">{{ convertToBanglaNumber($employees->bn_parm_phone_my) }}</td>
                             </tr>
                             <tr>
                                 <td class="py-1" colspan="4" style="width: 100%;">অতএব উপরুক্ত তথ্যাদি আলোকে আমাকে উক্ত পদে নিয়োগ দিলে বাদিত থাকিব।</td>
@@ -493,7 +493,7 @@
                                 <th>:</th>
                                 <td colspan="2"><input type="text" class="tinput" value="{{ $employees->position?->name_bn }}"></td>
                                 <th>আইডি নং</th>
-                                <td><input type="text" class="tinput" value="{{ $employees->admission_id_no }}"></td>
+                                <td><input type="text" class="tinput" value="{{ convertToBanglaNumber($employees->admission_id_no) }}"></td>
                             </tr>
                             <tr>
                                 <th>৩ । পিতার নাম</th>
@@ -523,7 +523,7 @@
                             <tr>
                                 <th>৮। জন্ম তারিখ</th>
                                 <th>:</th>
-                                <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_dob }}"></td>
+                                <td colspan="4"><input type="text" class="tinput" value="{{ convertToBanglaNumber($employees->bn_dob) }}"></td>
                             </tr>
                             <tr>
                                 <th>৯ । শিক্ষাগতা যোগ্যতা</th>
@@ -591,11 +591,11 @@
                             </tr>
                             <tr>
                                 <th >১৬। জাতীয় পরিচয়পত্র নং:</th>
-                                <td><input type="text" class="tinput" value="{{ $employees->bn_nid_no }}"></td>
+                                <td><input type="text" class="tinput" value="{{ convertToBanglaNumber($employees->bn_nid_no) }}"></td>
                             </tr>
                             <tr>
                                 <th >১৭। পাসপোর্ট নং (যদি থাকে):</th>
-                                <td><input type="text" class="tinput" value="{{ $security?->bn_passport_no }}"></td>
+                                <td><input type="text" class="tinput" value="{{ convertToBanglaNumber($security?->bn_passport_no) }}"></td>
                             </tr>
                             <tr>
                                 <th >১৮। পূর্বের কর্মস্থলের নাম কি:</th>
@@ -665,7 +665,7 @@
                             </tr>
                             <tr>
                                 <th colspan="">৩১। মোবাইল ফোন নং (যদি থাকে ):</th>
-                                <td><input type="text" class="tinput" value="{{ $security?->bn_mobile_no }}"></td>
+                                <td><input type="text" class="tinput" value="{{ convertToBanglaNumber($security?->bn_mobile_no) }}"></td>
                             </tr>
                             <tr>
                                 <th colspan="">৩২। সীম কার্ড রেজিস্টেশন করা আছে কি:</th>
@@ -699,7 +699,7 @@
                                     <label for="">ঠিকানা:</label>
                                     <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address1 }}">
                                     <label for="">ফোন নং:</label>
-                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone1 }}">
+                                    <input type="text" class="sbinput" value="{{ convertToBanglaNumber($security?->bn_identifier_phone1) }}">
                                     <label for="">(খ) নাম:</label>
                                     <input type="text" class="sbinput" value="{{ $security?->bn_identifier_name2 }}">
                                     <label for="">পেশা:</label>
@@ -707,7 +707,7 @@
                                     <label for="">ঠিকানা:</label>
                                     <input type="text" class="sbinput" value="{{ $security?->bn_identifier_address2 }}">
                                     <label for="">ফোন নং:</label>
-                                    <input type="text" class="sbinput" value="{{ $security?->bn_identifier_phone2 }}">
+                                    <input type="text" class="sbinput" value="{{ convertToBanglaNumber($security?->bn_identifier_phone2) }}">
                                 </td>
                             </tr>
                             <tr>
@@ -1308,7 +1308,7 @@
                                                 <td style="text-align: left; width: 10% !important;">আমি</td>
                                                 <td colspan="2" style="width: 25% !important;"><input readonly type="text" class="tinput"  value="{{ $employees->bn_applicants_name }}"></td>
                                                 <td style="text-align: center; width: 15% !important;">বয়স</td>
-                                                <td style="text-align: center; width: 15% !important;"><input readonly type="text" class="tinput" value="{{ $age }}"></td>
+                                                <td style="text-align: center; width: 15% !important;"><input readonly type="text" class="tinput" value="{{ convertToBanglaNumber($age) }}"></td>
                                                 <td style="width: 10% !important;">পিতা</td>
                                                 <td colspan="2" style="text-align: center; width: 25% !important;"><input readonly type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
                                             </tr>
@@ -1448,7 +1448,7 @@
                                     <td>পিতার নামঃ</td>
                                     <td><input type="text" class="tinput" value="{{ $employees->bn_fathers_name }}"></td>
                                     <td>বয়স</td>
-                                    <td><input type="text" class="tinput" value="{{ $age }}"></td>
+                                    <td><input type="text" class="tinput" value="{{ convertToBanglaNumber($age) }}"></td>
                                 </tr>
                                 <tr>
                                     <td>০৩।</td>
@@ -1821,7 +1821,7 @@
                                 <th width="25%">নাম:</th>
                                 <th style="border-bottom: 1px dashed;">{{ $employees->bn_applicants_name }}</th>
                                 <th>বয়স:</th>
-                                <th style="border-bottom: 1px dashed;">{{$age}}</th>
+                                <th style="border-bottom: 1px dashed;">{{convertToBanglaNumber($age)}}</th>
                             </tr>
                             <tr class="police-vf-font">
                                 <th>পিতা:</th>
@@ -1851,13 +1851,13 @@
                                 <th>এনআইডি/জন্ম নিবন্ধন নং:</th>
                                 <th style="border-bottom: 1px dashed;">
                                     @if ($employees->bn_nid_no != '')
-                                        {{$employees->bn_nid_no}}
+                                        {{convertToBanglaNumber($employees->bn_nid_no)}}
                                     @else
-                                        {{ $employees->bn_birth_certificate }}
+                                        {{ convertToBanglaNumber($employees->bn_birth_certificate) }}
                                     @endif
                                 </th>
                                 <th>মোবাইল নং:</th>
-                                <th style="border-bottom: 1px dashed;">{{ $employees->bn_parm_phone_my }}</th>
+                                <th style="border-bottom: 1px dashed;">{{ convertToBanglaNumber($employees->bn_parm_phone_my) }}</th>
                             </tr>
                         </table>
                     </div>

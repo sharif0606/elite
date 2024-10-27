@@ -20,6 +20,7 @@ use Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\OnetripInvoiceDetails;
 use App\Models\Crm\WasaInvoiceDetails;
 use Intervention\Image\Facades\Image;
 use Exception;
@@ -45,6 +46,9 @@ class InvoiceGenerateController extends Controller
         if ($request->customer_id){
             $customerId = $request->customer_id;
             $invoice->where('invoice_generates.customer_id', $customerId);
+        }
+        if ($request->branch_id){
+            $invoice->where('invoice_generates.branch_id', $request->branch_id);
         }
         if ($request->bill_date){
             $billDate = $request->bill_date;
@@ -316,6 +320,8 @@ class InvoiceGenerateController extends Controller
                     WasaInvoice::where('invoice_id',$invoice_id)->delete();
                     WasaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
                     InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
+                    OnetripInvoice::where('invoice_id',$invoice_id)->delete();
+                    OnetripInvoiceDetails::where('invoice_id',$invoice_id)->delete();
 
                     DB::commit();
                     \LogActivity::addToLog('Invoice Delete',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');

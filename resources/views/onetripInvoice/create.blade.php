@@ -15,7 +15,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); getNote(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="EmployeeAsignGetAtm()">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="EmployeeAsignGetAtm(); getBillingRate(this);">
                                         <option value="">Select Branch</option>
                                     </select>
                                 </div>
@@ -53,10 +53,13 @@
                                     <label for=""><b>Bill Date</b></label>
                                     <input required class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date">
                                 </div>
-                                <div class="col-lg-12 mt-2">
+                                <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
-                                    <textarea class="form-control" name="footer_note" id="" cols="30" rows="2" placeholder="Please enter Footer Note">The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.
-                                    </textarea>
+                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note"></textarea>
+                                </div>
+                                <div class="col-lg-6 mt-2">
+                                    <label for=""><b>Header Note</b></label>
+                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note"></textarea>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -76,15 +79,15 @@
                                         <tbody id="empassign">
                                             <tr>
                                                 <td>
-                                                    <input class="form-control" type="text" name="service[]" value="" placeholder="Service">
+                                                    <input class="form-control" type="text" name="service[]" value="CIT Service" placeholder="Service">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control" step="0.01" type="number" name="rate[]" value="" placeholder="Rate">
+                                                    <input class="form-control rate" onkeyup="totalCalc(this);" step="0.01" type="number" name="rate[]" value="" placeholder="Rate" readonly>
                                                 </td>
                                                 <td>
                                                     <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
                                                 </td>
-                                                <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
+                                                <td><input class="form-control trip" onkeyup="totalCalc(this);" type="text" name="trip[]" value="" placeholder="Trip"></td>
                                                 <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="" placeholder="Amount"></td>
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -131,6 +134,57 @@
 @endsection
 @push("scripts")
 <script>
+    function getNote(e) {
+        var oldCustomer = 0;
+        let customerId = $(e).val();
+        $('#headerNote').val('');
+        $('#footerNote').val('');
+        
+        if(customerId != oldCustomer){
+            $('.old_tr_remove').closest('tr').remove();
+            $('.rate').closest('tr').find('.rate').val('');
+            $('.rate').closest('tr').find('.trip').val('');
+            $('.rate').closest('tr').find('.amount').val('');
+            subtotalAmount();
+            VatTk();
+        }
+        $.ajax({
+            url: "{{route('get_customer_header_footer')}}",
+            type: "GET",
+            dataType: "json",
+            data: { customer_id: customerId },
+            success: function(data) {
+                console.log(data);
+                
+                let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                
+                let header = data.header_note !== null ? data.header_note : defaultHeader;
+                let footer = data.footer_note !== null ? data.footer_note : defaultFooter;
+                
+                $('#headerNote').val(header);
+                $('#footerNote').val(footer);
+                oldCustomer = data.id;
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function getBillingRate(e){
+        var billRate=$('#branch_id').find(":selected").data('billingrate');
+        $('.rate').val(billRate);
+    }
+
+    function totalCalc(e){
+        var rate = $(e).closest('tr').find('.rate').val()? $(e).closest('tr').find('.rate').val() : 0;
+        var trip = $(e).closest('tr').find('.trip').val()? $(e).closest('tr').find('.trip').val() : 0;
+        var subtotal = rate*trip;
+        $(e).closest('tr').find('.amount').val(parseFloat(subtotal).toFixed(2));
+        subtotalAmount();
+        VatTk();
+    }
     function subtotalAmount(){
         var subTotal=0;
         $('.amount').each(function(){
@@ -148,18 +202,19 @@
         $('.vat_percent').text(vat);
     }
     function addRow(){
+    var billRate=$('#branch_id').find(":selected").data('billingrate');
     var row=`
     <tr>
         <td>
-            <input class="form-control" type="text" name="service[]" value="" placeholder="Service">
+            <input class="form-control" type="text" name="service[]" value="CIT Service" placeholder="Service">
         </td>
         <td>
-            <input class="form-control" step="0.01" type="number" name="rate[]" value="" placeholder="Rate">
+            <input class="form-control old_tr_remove rate" onkeyup="totalCalc(this);" step="0.01" type="number" name="rate[]" value="${billRate}" placeholder="Rate" readonly>
         </td>
         <td>
             <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
         </td>
-        <td><input class="form-control" type="text" name="trip[]" value="1" placeholder="Trip"></td>
+        <td><input class="form-control trip" onkeyup="totalCalc(this);" type="text" name="trip[]" value="" placeholder="Trip"></td>
         <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="" placeholder="Amount"></td>
         <td>
             <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -173,6 +228,7 @@
     function removeRow(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
+            totalCalc();
             subtotalAmount();
         }
     }

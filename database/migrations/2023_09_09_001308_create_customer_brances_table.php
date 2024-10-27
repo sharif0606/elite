@@ -26,7 +26,7 @@ return new class extends Migration
             $table->date('renew_date')->nullable();
             $table->date('validity_date')->nullable();
             $table->decimal('vat',10,2)->default(0);
-            // $table->decimal('rate',10,2)->default(0);
+            $table->decimal('billing_rate',10,2)->default(0)->nullable();
             $table->text('attention')->nullable();
             $table->text('attention_details')->nullable();
             $table->string('take_home')->nullable();
