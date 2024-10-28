@@ -1,7 +1,7 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Default Employee Assign Update'))
-@section('pageSubTitle',trans('Edit'))
+@section('pageTitle',trans('One Trip Invoice'))
+@section('pageSubTitle',trans('Update'))
 
 @section('content')
 <section id="multiple-column-form">
@@ -10,49 +10,69 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('wasaEmployeeAsign.update',[encryptor('encrypt',$empasin->id)])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('oneTripInvoice.update',[encryptor('encrypt',$inv->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id">
-                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="">
+                                        <option value="">Select Customer</option>
+                                        @forelse ($customer as $c)
+                                        <option value="{{ $c->id }}" {{$inv->customer_id == $c->id? 'selected' : ''}}>{{ $c->name }}</option>
+                                        @empty
+                                        @endforelse
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this)">
-                                        <option value="{{ $branch?->id }}">{{ $branch?->brance_name }}</option>
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="EmployeeAsignGetAtm(); getBillingRate(this);">
+                                        <option value="">Select Branch</option>
+                                        @if ($inv->branch_id != '')
+                                            @forelse (\App\Models\Crm\CustomerBrance::where('customer_id',$inv->customer_id)->get() as $b)
+                                                <option value="{{$b->id}}" data-billingrate="{{$b->billing_rate}}" {{$inv->branch_id == $b->id? 'selected' : ''}}>{{$b->brance_name}}</option>
+                                            @empty
+                                            @endforelse
+                                        @endif
                                     </select>
                                 </div>
-                                {{--  <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Atm</b></label>
+                                <div class="col-lg-4 mt-2">
+                                    <label for=""><b>ATM Name</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
-                                        <option value="{{ $atm->id }}">{{ $atm->atm }}</option>
+                                        <option value="0">Select Atm</option>
+                                        @if ($inv->atm_id != '')
+                                            @forelse (\App\Models\Crm\Atm::where('branch_id',$inv->branch_id)->get() as $b)
+                                                <option value="{{$b->id}}" {{$inv->atm_id == $b->id? 'selected' : ''}}>{{$b->atm}}</option>
+                                            @empty
+                                            @endforelse
+                                        @endif
                                     </select>
-                                </div>  --}}
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>Add: Commission(%)</b></label>
-                                    <input required class="form-control add_commission" step="0.01" type="number" name="add_commission" value="{{ $empasin->add_commission }}" placeholder="Add: Commission">
+                                    <label for=""><b>Start Date</b></label>
+                                    <input required class="form-control start_date" type="date" name="start_date" value="{{$inv->start_date}}" placeholder="">
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>VAT on Commission(%)</b></label>
-                                    <input required class="form-control vat_on_commission" step="0.01" type="number" name="vat_on_commission" value="{{ $empasin->vat_on_commission }}" placeholder="VAT on Commission">
+                                    <label for=""><b>End Date</b></label>
+                                    <input required class="form-control end_date" type="date" name="end_date" value="{{$inv->end_date}}" placeholder="">
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>AIT on Commission(%)</b></label>
-                                    <input required class="form-control ait_on_commission" step="0.01" type="number" name="ait_on_commission" value="{{ $empasin->ait_on_commission }}" placeholder="AIT on Commission">
+                                    <label for=""><b>Vat(%)</b></label>
+                                    <input required class="form-control vat" step="0.01" type="number" onkeyup="VatTk()" name="vat" value="{{$inv->vat}}" placeholder="VAT">
                                 </div>
                                 <div class="col-lg-3 mt-2">
-                                    <label for=""><b>VAT on Sub-Total(%)</b></label>
-                                    <input required class="form-control vat_on_subtotal" step="0.01" type="number" name="vat_on_subtotal" value="{{ $empasin->vat_on_subtotal }}" placeholder="VAT on Sub-Total">
+                                    <label for=""><b>Bill Date</b></label>
+                                    <input required class="form-control" type="date" name="bill_date" value="{{$inv->bill_date}}" placeholder="Bill Date">
                                 </div>
-                                <div class="col-lg-3 mt-2">
-                                    <label for=""><b>AIT on Sub-Total(%)</b></label>
-                                    <input required class="form-control ait_on_subtotal" step="0.01" type="number" name="ait_on_subtotal" value="{{ $empasin->ait_on_subtotal }}" placeholder="AIT on Sub-Total">
+                                <div class="col-lg-6 mt-2">
+                                    <label for=""><b>Footer Note</b></label>
+                                    <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note">{{$inv->footer_note}}</textarea>
+                                </div>
+                                <div class="col-lg-6 mt-2">
+                                    <label for=""><b>Header Note</b></label>
+                                    <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note">{{$inv->header_note}}</textarea>
                                 </div>
                             </div>
                             <!-- table bordered -->
@@ -61,67 +81,54 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('ATM')}}</th>
-                                                <th scope="col">{{__('ID No')}}</th>
-                                                <th scope="col">{{__('Rank')}}</th>
-                                                <th scope="col">{{__('Area')}}</th>
-                                                <th scope="col">{{__('Name')}}</th>
-                                                <th scope="col">{{__('Duty')}}</th>
-                                                <th scope="col">{{__('Account No')}}</th>
-                                                <th scope="col">{{__('Salary')}}</th>
+                                                <th scope="col">{{__('Service')}}</th>
+                                                <th scope="col">{{__('Rate')}}</th>
+                                                <th scope="col">{{__('Period')}}</th>
+                                                <th scope="col">{{__('Trip')}}</th>
+                                                <th scope="col">{{__('Amount')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="empasinassing">
-                                            @if ($empasin->details)
-                                            @foreach ($empasin->details as $d)
-                                            <tr>
-                                                <td>
-                                                    <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                                                        <option value="0">Select Atm</option>
-                                                        @forelse ($atm as $a)
-                                                        <option value="{{ $a->id }}" {{ $d->atm_id==$a->id?"selected":""}}>{{ $a->atm }}</option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
-                                                        <option value="">Select</option>
-                                                        @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}" {{ ($d->employee_id == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
-                                                        {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
-                                                        <option value="">Select Post</option>
-                                                        @forelse ($jobpost as $job)
-                                                        <option value="{{ $job->id }}" {{ $d->job_post_id==$job->id?"selected":""}}>{{ $job->name }}</option>
-                                                        @empty
-                                                        @endforelse
-                                                    </select>
-                                                </td>
-                                                <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
-                                                <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
-                                                <td><input required class="form-control" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
-                                                <td><input readonly class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
-                                                <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
-                                                <td>
-                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                                                    <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                                </td>
-                                            </tr>
+                                        <tbody id="empassign">
+                                            @foreach ($invOneTripDetail as $d)
+                                                <tr>
+                                                    <td>
+                                                        <input class="form-control" type="text" name="service[]" value="{{$d->service}}" placeholder="Service">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control rate" onkeyup="totalCalc(this);" step="0.01" type="number" name="rate[]" value="{{$d->rate}}" placeholder="Rate" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="date" name="period[]" value="{{$d->period}}" placeholder="Period">
+                                                    </td>
+                                                    <td><input class="form-control trip" onkeyup="totalCalc(this);" type="text" name="trip[]" value="{{$d->trip}}" placeholder="Trip"></td>
+                                                    <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="{{$d->amount}}" placeholder="Amount"></td>
+                                                    <td>
+                                                         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span> 
+                                                        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                    </td>
+                                                </tr>
                                             @endforeach
-                                            @endif
                                         </tbody>
                                         <tfoot>
                                             <tr style="text-align: center;">
-                                                <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                                <th colspan="4" style="text-align: end;">Sub Tatal</th>
                                                 <td>
-                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="{{ $empasin->sub_total_salary }}">
+                                                    <input readonly type="text" class="form-control sub_total_amount" name="sub_total_amount" value="{{$inv->sub_total_amount}}">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <th colspan="4" style="text-align: end;">Vat@ <span class="vat_percent">{{$inv->vat}}</span>%</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control vat_taka" name="vat_taka" value="{{$inv->vat_taka}}">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="text-align: center;">
+                                                <th colspan="4" style="text-align: end;">Grand Total=</th>
+                                                <td>
+                                                    <input readonly type="text" class="form-control grand_total" name="grand_total" value="{{$inv->grand_total}}">
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -130,7 +137,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end my-2">
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-info">Update</button>
                             </div>
                         </form>
                     </div>
@@ -142,102 +149,120 @@
 @endsection
 @push("scripts")
 <script>
+    document.getElementById('customer_id').addEventListener('change', function (e) {
+        e.preventDefault();
+        this.value = this.dataset.value;
+    });
+    document.getElementById('customer_id').dataset.value = document.getElementById('customer_id').value;
+    
+    function getNote(e) {
+        var oldCustomer = 0;
+        let customerId = $(e).val();
+        $('#headerNote').val('');
+        $('#footerNote').val('');
+        
+        if(customerId != oldCustomer){
+            $('.old_tr_remove').closest('tr').remove();
+            $('.rate').closest('tr').find('.rate').val('');
+            $('.rate').closest('tr').find('.trip').val('');
+            $('.rate').closest('tr').find('.amount').val('');
+            subtotalAmount();
+            VatTk();
+        }
+        $.ajax({
+            url: "{{route('get_customer_header_footer')}}",
+            type: "GET",
+            dataType: "json",
+            data: { customer_id: customerId },
+            success: function(data) {
+                console.log(data);
+                
+                let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                
+                let header = data.header_note !== null ? data.header_note : defaultHeader;
+                let footer = data.footer_note !== null ? data.footer_note : defaultFooter;
+                
+                $('#headerNote').val(header);
+                $('#footerNote').val(footer);
+                oldCustomer = data.id;
+            },
+            error: function(xhr, status, error) {
+                console.log("Error: " + error);
+            }
+        });
+    }
+
+    function getBillingRate(e){
+        var billRate = $('#branch_id').find(":selected").data('billingrate');
+        $('.rate').val(billRate);
+        totalCalc();
+    }
+
+    function totalCalc(e) {
+        $('.rate').each(function() {
+            var $row = $(this).closest('tr');
+            
+            var rate = $row.find('.rate').val() ? parseFloat($row.find('.rate').val()) : 0;
+            var trip = $row.find('.trip').val() ? parseFloat($row.find('.trip').val()) : 0;
+            var subtotal = rate * trip;
+            $row.find('.amount').val(parseFloat(subtotal).toFixed(2));
+        });
+        subtotalAmount();
+        VatTk();
+    }
+
     function subtotalAmount(){
         var subTotal=0;
-        $('.salary_amount').each(function(){
+        $('.amount').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
-        $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
+        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
     }
-    function getEmployees(e){
-        // if (!$('.customer_id').val()) {
-         //    $('.customer_id').focus();
-        //     return false;
-        // }
-         var employee_id=$(e).closest('tr').find('.employee_id').val();
-         console.log(employee_id);
-         var customerId = document.getElementById('customer_id').value;
-         if(employee_id){
-             $.ajax({
-                 url:"{{ route('wasaGetEmployee') }}",
-                 type: "GET",
-                 dataType: "json",
-                 data: { 'id':employee_id },
-                 success: function(data) {
-                     console.log(data);
-                     if(data.length>0){
-                         var id = data[0].id;
-                         var name = data[0].en_applicants_name;
-                         var ac_no = data[0].bn_ac_no;
-                         var contact = data[0].bn_parm_phone_my;
-                         var positionid=data[0].bn_jobpost_id;
-                         var positionName = data[0].position.name;
-                         var positionId = data[0].position.id;
-                         console.log(positionName);
-                         $(e).closest('tr').find('.job_post_id').val(positionId).prop('selected', true);
-                         $(e).closest('tr').find('.employee_name').val(name);
-                         $(e).closest('tr').find('.account_no').val(ac_no);
-                     }
-                 },
-             });
-         } else {
-             $(e).closest('tr').find('.employee_name').val('');
-             $(e).closest('tr').find('.job_post_id').val('');
-             $(e).closest('tr').find('.account_no').val('');
-         }
-     }
-
+    function VatTk(){
+        let vat=$('.vat').val();
+        var subtotal=$('.sub_total_amount').val();
+        var vatTk=parseFloat((subtotal*vat)/100).toFixed(2);
+        var grandTotal=parseFloat(subtotal) + parseFloat(vatTk);
+        $('.vat_taka').val(vatTk);
+        $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
+        $('.vat_percent').text(vat);
+    }
     function addRow(){
-
-        var row=`
-        <tr class="new_rows">
-            <td>
-                <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                    <option value="0">Select Atm</option>
-                </select>
-            </td>
-            <td>
-                <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
-                    <option value="">Select</option>
-                    @forelse ($employee as $em)
-                    <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
-                    {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
-                    @empty
-                    @endforelse
-                </select>
-            </td>
-            <td>
-                <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
-                    <option value="">Select Post</option>
-                    @forelse ($jobpost as $job)
-                    <option value="{{ $job->id }}">{{ $job->name }}</option>
-                    @empty
-                    @endforelse
-                </select>
-            </td>
-            <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
-            <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
-            <td><input required class="form-control" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
-            <td><input readonly class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
-            <td><input class="form-control salary_amount" type="text" name="salary_amount[]" onkeyup="subtotalAmount();" value="" placeholder="Salary Amount"></td>
-            <td>
-                <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-                <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-            </td>
-        </tr>
-        `;
-        $('#empasinassing').append(row);
+    var billRate=$('#branch_id').find(":selected").data('billingrate');
+    var row=`
+    <tr>
+        <td>
+            <input class="form-control" type="text" name="service[]" value="CIT Service" placeholder="Service">
+        </td>
+        <td>
+            <input class="form-control old_tr_remove rate" onkeyup="totalCalc(this);" step="0.01" type="number" name="rate[]" value="${billRate}" placeholder="Rate" readonly>
+        </td>
+        <td>
+            <input class="form-control" type="date" name="period[]" value="" placeholder="Period">
+        </td>
+        <td><input class="form-control trip" onkeyup="totalCalc(this);" type="text" name="trip[]" value="" placeholder="Trip"></td>
+        <td><input class="form-control amount" step="0.01" type="number" onkeyup="subtotalAmount(),VatTk();" name="amount[]" value="" placeholder="Amount"></td>
+        <td>
+            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+            {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+        </td>
+    </tr>
+    `;
+        $('#empassign').append(row);
     }
 
-function RemoveRow(e) {
-    if (confirm("Are you sure you want to remove this row?")) {
-        $(e).closest('tr').remove();
+    function removeRow(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+            totalCalc();
+            subtotalAmount();
+        }
     }
-}
 
 </script>
 <script>
-    function EmployeeAsignGetAtm(e) {
+    function EmployeeAsignGetAtm() {
         let branchId=$('.branch_id').val();
         $.ajax({
             url: "{{ route('get_ajax_atm') }}",
@@ -246,11 +271,11 @@ function RemoveRow(e) {
             data: { branchId: branchId },
             success: function (data) {
                 //console.log(data)
-                //var d = $('.atm_id').empty();
-                //$('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
+                var d = $('.atm_id:last').empty();
+                $('.atm_id').append('<option data-vat="0" value="0">Select ATM</option>');
                 //$('#atm_id').append('<option value="1">All ATM</option>');
                 $.each(data, function(key, value) {
-                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                    $('.atm_id:last').append('<option value="' + value.id + '">' + value.atm + '</option>');
                 });
             },
             error: function () {

@@ -163,6 +163,10 @@
                                         <a href="{{route('wasaEmployeeAsign.editInvoice',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
+                                    @elseif($e->invoice_type == 3)
+                                        <a href="{{route('oneTripInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
                                     @else
                                     @endif
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">

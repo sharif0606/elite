@@ -175,13 +175,18 @@
     function getBillingRate(e){
         var billRate=$('#branch_id').find(":selected").data('billingrate');
         $('.rate').val(billRate);
+        totalCalc();
     }
 
-    function totalCalc(e){
-        var rate = $(e).closest('tr').find('.rate').val()? $(e).closest('tr').find('.rate').val() : 0;
-        var trip = $(e).closest('tr').find('.trip').val()? $(e).closest('tr').find('.trip').val() : 0;
-        var subtotal = rate*trip;
-        $(e).closest('tr').find('.amount').val(parseFloat(subtotal).toFixed(2));
+    function totalCalc(e) {
+        $('.rate').each(function() {
+            var $row = $(this).closest('tr');
+            
+            var rate = $row.find('.rate').val() ? parseFloat($row.find('.rate').val()) : 0;
+            var trip = $row.find('.trip').val() ? parseFloat($row.find('.trip').val()) : 0;
+            var subtotal = rate * trip;
+            $row.find('.amount').val(parseFloat(subtotal).toFixed(2));
+        });
         subtotalAmount();
         VatTk();
     }
