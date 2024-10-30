@@ -154,7 +154,7 @@ var row=`
         <select class="form-select" id="job_post_id" name="job_post_id[]">
             <option value="">Select Post</option>
             @forelse ($jobpost as $job)
-            <option value="{{ $job->id }}" {{ $d->job_post_id==$job->id?"selected":""}}>{{ $job->name }}</option>
+            <option value="{{ $job->id }}">{{ $job->name }}</option>
             @empty
             @endforelse
         </select>
@@ -164,14 +164,14 @@ var row=`
             {{--<option value="1" {{ $d->hours=='1'?"selected":""}}>8 Hour's</option>
             <option value="2" {{ $d->hours=='2'?"selected":""}}>12 Hour's</option>--}}
             @forelse ($hours as $hour)
-            <option value="{{ $hour->id }}" {{ $hour->id == $d->hours ? 'selected' : '' }}>{{ $hour->hour }} Hour's</option>
+            <option value="{{ $hour->id }}">{{ $hour->hour }} Hour's</option>
             @empty
             <option value="">No hours available</option>
             @endforelse
         </select>
     </td>
-    <td><input class="form-control" type="text" name="duty_rate[]" value="{{ $d->duty_rate }}" placeholder="Duty-rate" required></td>
-    <td><input class="form-control" type="text" name="ot_rate[]" value="{{ $d->ot_rate }}" placeholder="Ot-rate" required></td>
+    <td><input class="form-control" type="text" name="duty_rate[]" value="" placeholder="Duty-rate" required></td>
+    <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="Ot-rate" required></td>
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
         {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}

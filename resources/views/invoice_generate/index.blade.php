@@ -326,6 +326,7 @@
                 </select>
                 <button type="submit" class="btn btn-sm btn-primary mx-2">Wasa</button>
                 <a class="btn btn-sm btn-primary" href="{{route('oneTripInvoice.create')}}">One Trip</a>
+                <a class="btn btn-sm btn-primary ms-1" href="{{route('portlinkInvoice.create')}}">Portlink</a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">Close</button>

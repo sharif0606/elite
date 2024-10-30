@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
+use App\Models\Crm\PortlinkAssignDetails;
 use App\Models\Crm\PortlinkInvoice;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class PortlinkInvoiceController extends Controller
@@ -25,7 +27,56 @@ class PortlinkInvoiceController extends Controller
      */
     public function create()
     {
-        //
+        $customer=Customer::all();
+        return view('portlinkInvoice.create',compact('customer'));
+    }
+
+    public function getHeaderFooterNote(Request $request){
+        $data = Customer::select('id','header_note','footer_note')->where('id',$request->customer_id)->first();
+        return response()->json($data, 200);
+    }
+
+    public function getPortInvoiceData(Request $request)
+    {
+        $query = PortlinkAssignDetails::join('portlink_assigns', 'portlink_assigns.id', '=', 'portlink_assign_details.portlink_assign_id')->join('job_posts','portlink_assign_details.job_post_id','=','job_posts.id')
+            ->select('portlink_assigns.*', 'portlink_assign_details.*','job_posts.*');
+
+        if ($request->customer_id) {
+            $query = $query->where('portlink_assigns.customer_id', $request->customer_id);
+        }
+
+        if ($request->start_date && $request->end_date) {
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+
+            $query = $query->where(function($query) use ($startDate, $endDate) {
+                $query->where(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('portlink_assign_details.start_date', '>=', $startDate)
+                    ->whereDate('portlink_assign_details.end_date', '<=', $endDate);
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('portlink_assign_details.start_date', '>=', $startDate)
+                    ->whereNull('portlink_assign_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('portlink_assign_details.start_date', '<=', $startDate)
+                    ->whereNull('portlink_assign_details.end_date');
+                });
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('portlink_assign_details.start_date', '<=', $startDate)
+                    ->whereDate('portlink_assign_details.end_date', '>=', $startDate);
+                });
+
+                $query->orWhere(function($query) use ($startDate, $endDate) {
+                    $query->whereDate('portlink_assign_details.start_date', '<=', $endDate)
+                    ->whereDate('portlink_assign_details.end_date', '>=', $endDate);
+                });
+            });
+        }
+
+        $data = $query->get();
+
+        return response()->json($data, 200);
     }
 
     /**

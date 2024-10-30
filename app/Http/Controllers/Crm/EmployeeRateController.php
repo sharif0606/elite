@@ -95,7 +95,7 @@ class EmployeeRateController extends Controller
             }
 
         } catch (Exception $e) {
-            dd($e);
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -172,7 +172,7 @@ class EmployeeRateController extends Controller
             }
 
         } catch (Exception $e) {
-            dd($e);
+            DB::rollback();
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }

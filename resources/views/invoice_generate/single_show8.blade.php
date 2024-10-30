@@ -140,7 +140,7 @@
             @if ($invoice_id->inv_subject != '')
                 <td colspan="2" style="padding-top: 12px;"><b>{{$invoice_id->inv_subject}}.</b></td>
             @else
-                <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
+                <td colspan="2" style="padding-top: 12px;"><b>CIT Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
             @endif
         </tr>
         <tr>

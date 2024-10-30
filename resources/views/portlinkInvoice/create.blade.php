@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Invoice Generate'))
+@section('pageTitle',trans('Portlink Invoice'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -43,9 +43,8 @@
                     <div class="card-body">
                         <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="zone_id" id="zone_id">
                             <div class="row p-2">
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <span class="inv-notice text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                         <ul class="inv-info-detail" id="receivedAmountsList">
                                             <li><b>Invoice generated using employee assignment details</b></li>
@@ -55,10 +54,10 @@
                                             <li><b>The 'Working Day' column for Mamiya's invoice does not affect any calculations. The actual working days are stored from the start date, for other invoices</b></li>
                                         </ul>
                                     </span>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this); checkZone(this); getNote(this);">
+                                    <select required class="select2 form-select customer_id" id="customer_id" name="customer_id" onchange="getNote(this);">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                             <option data-zone="{{$c->zone_id}}" data-ctype="{{$c->customer_type}}" data-ins-vat="{{$c->vat}}" value="{{ $c->id }}">{{ $c->name }}</option>
@@ -66,45 +65,29 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtm(this);addCount(this);checkZone(this);">
-                                        <option value="">Select Branch</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Atm</b></label>
-                                    <select class="form-select atm_id" id="atm_id" name="atm_id">
-                                        <option value="">Select Atm</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-3 mt-2">
+                                <div class="col-lg-2 mt-2">
                                     <label for=""><b>Start Date</b></label>
                                     <input required class="form-control start_date" type="date" name="start_date" value="" placeholder="Start Date">
                                 </div>
-                                <div class="col-lg-3 mt-2">
+                                <div class="col-lg-2 mt-2">
                                     <label for=""><b>End Date</b></label>
                                     <input required class="form-control end_date" type="date" name="end_date" value="" placeholder="End Date">
                                 </div>
-                                <div class="col-lg-3 mt-2">
+                                <div class="col-lg-2 mt-2">
                                     <label for=""><b>Bill Date</b></label>
                                     <input class="form-control" type="date" name="bill_date" value="" placeholder="Bill Date" required>
                                 </div>
-                                <div class="col-lg-3 mt-2">
+                                <div class="col-lg-2 mt-2">
                                     <label for=""><b>Vat(%)</b></label>
                                     <input required class="form-control vat" onkeyup="changeVat(this)" step="0.01" type="number" name="vat" value="" placeholder="Vat">
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                <div class="col-lg-6 mt-2">
                                     <label for=""><b>Footer Note</b></label>
                                     <textarea class="form-control" name="footer_note" id="footerNote" rows="3" placeholder="Please enter Footer Note"></textarea>
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                <div class="col-lg-6 mt-2">
                                     <label for=""><b>Header Note</b></label>
                                     <textarea class="form-control" name="header_note" id="headerNote" rows="3" placeholder="Please enter Header Note"></textarea>
-                                </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Subject</b></label>
-                                    <textarea class="form-control" name="inv_subject" rows="3"></textarea>
                                 </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
@@ -114,57 +97,63 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr class="text-center">
-                                            <th>S.L</th>
-                                            <th>Service</th>
-                                            <th>Rate</th>
-                                            <th>Total Person</th>
-                                            <th>Working Days</th>
-                                            <th>Divide By</th>
+                                            <th>SL</th>
+                                            <th>Type of Service</th>
+                                            <th>Salary & Others</th>
+                                            <th>Commission</th>
+                                            <th>Rate + Commission</th>
+                                            <th>Person</th>
                                             <th>Duty</th>
-                                            <th>Total Hours</th>
-                                            <th>Rate per hours</th>
-                                            <th>Total Amount</th>
+                                            <th>Total Salary & Others (BDT)</th>
+                                            <th>Total Commission (BDT)</th>
+                                            <th>Total Bill</th>
                                         </tr>
                                     </thead>
                                     <tbody class="show_invoice_data">
                                     </tbody>
                                     <tfoot>
                                         <tr style="text-align: center;">
-                                            <td class="d-flex">
-                                                {{--  <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>  --}}
+                                            <td colspan="2" style="text-align: left;">
                                                 <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                <span onClick='incressSupervisoRowData();' class="text-info mx-2"><i class="bi bi-plus-square-fill"></i></span>
+                                                <span onClick='incressGuardRowData();' class="text-danger"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
-                                            <th colspan="8" style="text-align: end;">Sub Tatal</th>
+                                            <th colspan="4" style="text-align: end;" width="37%">Sub Tatal</th>
+                                            <td width="8%"></td>
+                                            <td><input type="text" class="form-control text-center sub_total_salary" readonly></td>
+                                            <td><input type="text" class="form-control text-center sub_total_commission" readonly></td>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
-                                                {{--  <input class="lessP" type="hidden" name="less_total[]" value="">  --}}
-                                                <input class="addP" type="hidden" name="add_total[]" value="">
                                             </td>
                                         </tr>
-                                        <tr id="repeater_less" style="text-align: center;">
-                                            {{--  <td>
-                                                <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
-                                                <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                            </td>
-                                            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
-                                            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>  --}}
-                                        </tr>
-                                        <tr style="text-align: center;">
+                                        <tr id="repeater_less" style="text-align: center;"></tr>
+                                        <tr id="supervisor" style="text-align: center;"></tr>
+                                        <tr id="guard" style="text-align: center;"></tr>
+                                        <tr style="text-align: end;">
                                             <td></td>
-                                            <th colspan="8">Total Tk</th>
+                                            <th colspan="5">Total Tk</th>
+                                            <td></td>
+                                            <td><input type="text" class="form-control text-center" readonly></td>
+                                            <td><input type="text" class="form-control text-center" readonly></td>
                                             <td>
-                                                <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
+                                                <input type="text" class="form-control text-center total_tk" name="total_tk" value="" readonly>
                                                 <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
                                             </td>
                                         </tr>
-                                        <tr style="text-align: center;">
+                                        <tr style="text-align: end;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent"></span> %)</th>
-                                            <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
+                                            <th colspan="5">Vat (<span class="vat_percent"></span> %)</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input type="text" class="form-control text-center vat_taka" name="vat_taka" value="" readonly></td>
                                         </tr>
-                                        <tr style="text-align: center;">
+                                        <tr style="text-align: end;">
                                             <td></td>
-                                            <th colspan="8">Grand Total</th>
+                                            <th colspan="5">Grand Total</th>
+                                            <td></td>
+                                            <td><input type="text" class="form-control text-center" readonly></td>
+                                            <td><input type="text" class="form-control text-center" readonly></td>
                                             <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
                                         </tr>
                                     </tfoot>
@@ -235,8 +224,6 @@
             return false;
         }
         var customer=$('.customer_id').val();
-        var branch_id=$('.branch_id').val();
-        var atm_id=$('.atm_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
 
@@ -246,10 +233,10 @@
             workingdayinmonth= new Date(syear, smonth, 0).getDate();
         let counter = 0;
         $.ajax({
-            url: "{{route('get_invoice_data')}}",
+            url: "{{route('get_port_invoice_data')}}",
             type: "GET",
             dataType: "json",
-            data: { customer_id:customer,branch_id:branch_id,atm_id:atm_id,start_date:startDate,end_date:endDate },
+            data: { customer_id:customer,start_date:startDate,end_date:endDate },
             success: function(invoice_data) {
                 console.log(invoice_data);
                 let selectElement = $('.show_invoice_data');
@@ -257,7 +244,6 @@
                     $.each(invoice_data, function(index, value) {
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
-                        let ATMdata= value.atm>'0'?value.atm:'';
                         let workingDays;
                         let totalHoures;
                         let ratePerHoures;
@@ -289,27 +275,10 @@
                             ed_date='';
                         }
 
-                        // if(value.hours=="1"){
-                        //     totalHoures=(8*(value.qty)*(workingDays+1));
-                        //     ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
-                        //     // updated new
-                        //     rate = (value.rate > 0) ? value.rate : '0';
-                        //     person = (value.qty > 0) ? value.qty : '0';
-                        //     totalAmount = parseFloat(rate)*parseFloat(person);
-                        //     // updated new
-                        //     type_houre=8;
-                        // }else{
-                        //     totalHoures=(12*(value.qty)*(workingDays+1));
-                        //     ratePerHoures=parseFloat(value.rate/(12*workingdayinmonth));
-                        //     // updated new
-                        //     rate = (value.rate > 0) ? value.rate : '0';
-                        //     person = (value.qty > 0) ? value.qty : '0';
-                        //     totalAmount = parseFloat(rate)*parseFloat(person);
-                        //     // updated new
-                        //     type_houre=12;
-                        // }
                         rate = (value.rate > 0) ? value.rate : '0';
                         person = (value.qty > 0) ? value.qty : '0';
+                        commission = (value.commission > 0) ? value.commission : '0';
+                        ratePlusCommission = parseFloat(rate) + parseFloat(commission);
                         totalAmount = parseFloat(rate)*parseFloat(person);
                         // updated new
                         type_houre=value.hours;
@@ -317,37 +286,37 @@
                         selectElement.append(
                             `<tr style="text-align: center;">
                                 <td>${counter + 1}</td>
-                                <td>${value.name} <br/> ${ATMdata}
+                                <td>${value.name}
                                     <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
-                                    <input class="" type="hidden" name="detail_atm_id[]" value="${value.atm_id}">
                                 </td>
-                                <td>
-                                    <input class="form-control input_css rate_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">
+                                <td>${value.rate}
+                                    <input class="form-control input_css rate_c text-center" type="hidden" name="rate[]" value="${value.rate}" readonly>
                                 </td>
-                                <td>
-                                    <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
+                                <td>${value.commission}
+                                    <input class="form-control input_css commission text-center" type="hidden" name="commission[]" value="${value.commission}" readonly>
                                 </td>
-                                <td>
-                                    <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
-                                    <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
-                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
-                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
+                                <td>${ratePlusCommission}
+                                    <input class="form-control input_css rate_with_commission text-center" type="hidden" name="rate_with_commission[]" value="${ratePlusCommission}" readonly>
                                 </td>
-                                <td>
-                                    <input class="form-control input_css divide_by text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="divide_by[]" value="">
+                                <td>${value.qty}
+                                    <input class="form-control input_css employee_qty_c text-center" type="hidden" name="employee_qty[]" value="${value.qty}" readonly>
                                 </td>
                                 <td>
                                     <input class="form-control input_css duty_day_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="duty_day[]" value="">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css total_houres_c" type="text" name="total_houres[]" value="">
+                                    <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
+                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
+                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
+                                    <input class="form-control input_css divide_by text-center" type="hidden" name="divide_by[]" value="${type_houre}">
                                     <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="">
+                                    <input class="form-control text-center input_css net_salary_amount" type="text" name="net_salary_amount[]" value="" readonly>
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${totalAmount}">
+                                    <input class="form-control text-center input_css net_commission_amount" type="text" name="net_commission_amount[]" value="" readonly>
+                                </td>
+                                <td>
+                                    <input class="form-control text-center input_css total_amounts" type="text" name="total_amounts[]" value="" readonly>
                                 </td>
                             </tr>`
                         );
@@ -368,13 +337,7 @@
             $('.vat').val(vat);
         }
      }
-     function subtotalAmount(){
-        var subTotal=0;
-        $('.total_amounts').each(function(){
-            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
-        });
-        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
-    }
+     
      {{--  function lessCount(e){
         var totalLess=0;
         $('.less_count').each(function(){
@@ -428,76 +391,89 @@
         $('.vat_percent').text(changeVat);
         reCalcultateInvoice();
     }
-     {{--  function decressRowData(){
-        var row=`
-        <tr style="text-align: center;">
-            <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="8"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
-            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
-        </tr>
-        `;
-            $('#repeater_less').after(row);
-        }
-        function removedecressRowData(e) {
-            if (confirm("Are you sure you want to remove this row?")) {
-                $(e).closest('tr').remove();
-                lessCount();
-            }
-        }  --}}
-     function incressRowData(){
+    function incressRowData(){
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="8"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="add amount" name="add_amount[]"></td>
+            <td colspan="5"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="add_hour[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_rate_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_comission_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_amount[]" readonly></td>
         </tr>
         `;
-            $('#repeater_less').after(row);
-        }
-        function removeIncressRowData(e) {
-            if (confirm("Are you sure you want to remove this row?")) {
-                $(e).closest('tr').remove();
-                addCount();
-            }
-        }
-        function reCalcultateInvoice(e) {
-            var rate=$(e).closest('tr').find('.rate_c').val();
-            var person=$(e).closest('tr').find('.employee_qty_c').val();
-            var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
-            var totalHour = $(e).closest('tr').find('.total_houres_c').val();
-            var ratePerHour = $(e).closest('tr').find('.rate_per_houres_c').val();
-            var divideBy = $(e).closest('tr').find('.divide_by').val();
+        $('#repeater_less').after(row);
+    }
 
-            var startDate=$('.start_date').val();
-            let workingdayinMonth= new Date(startDate);
-            let smonth=workingdayinMonth.getMonth()+1;
-            let syear=workingdayinMonth.getFullYear();
-                workingdayinMonth= new Date(syear, smonth, 0).getDate();
-
-            if(dutyDay > 0 && rate > 0){
-                if(divideBy > 0){
-                    let subTotalAmount=parseFloat((rate/divideBy)*dutyDay).toFixed(2);
-                        $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                        subtotalAmount();
-                        addCount();
-                }else{
-                    let subTotalAmount=parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
-                        $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                        subtotalAmount();
-                        addCount();
-                }
-            }else if(person <= 0) {
-                let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
-                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                    subtotalAmount();
-                    addCount();
-            }else{
-                let subTotalAmount=parseFloat(rate*person).toFixed(2);
-                    $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
-                    subtotalAmount();
-                    addCount();
-            }    
+    function incressSupervisoRowData(){
+        var row=`
+        <tr style="text-align: center;">
+            <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
+            <td colspan="5"><input class="form-control text-center" type="text" value="Deduction:" name="supervisor_deduction_description[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="hour_supervisor[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_rate_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_comission_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_amount[]" readonly></td>
+        </tr>
+        `;
+        $('#supervisor').after(row);
+    }
+    function incressGuardRowData(){
+        var row=`
+        <tr style="text-align: center;">
+            <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
+            <td colspan="5"><input class="form-control text-center" type="text" value="Deduction:" name="guard_deduction_description[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="hour_guard[]"></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_rate_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_comission_amount[]" readonly></td>
+            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_amount[]" readonly></td>
+        </tr>
+        `;
+        $('#guard').after(row);
+    }
+    function removeIncressRowData(e) {
+        if (confirm("Are you sure you want to remove this row?")) {
+            $(e).closest('tr').remove();
+            addCount();
         }
+    }
+    function reCalcultateInvoice(e) {
+        var rate=$(e).closest('tr').find('.rate_c').val();
+        var commission=$(e).closest('tr').find('.commission').val();
+        var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
+        var divideBy = $(e).closest('tr').find('.divide_by').val();
+
+        var startDate=$('.start_date').val();
+        let workingdayinMonth= new Date(startDate);
+        let smonth=workingdayinMonth.getMonth()+1;
+        let syear=workingdayinMonth.getFullYear();
+            workingdayinMonth= new Date(syear, smonth, 0).getDate();
+
+        let salary = parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
+        let salaryCommission = parseFloat((commission/workingdayinMonth)*dutyDay).toFixed(2);
+        let subTotalAmount = parseFloat(salary+salaryCommission).toFixed(2);
+
+        $(e).closest('tr').find('.net_salary_amount').val(salary);  
+        $(e).closest('tr').find('.net_commission_amount').val(salaryCommission);  
+        $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+        subtotalAmount();
+    }
+    function subtotalAmount(){
+        var subSalary=0;
+        var subCommission=0;
+        var subTotal=0;
+        $('.net_salary_amount').each(function(){
+            subSalary+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.net_commission_amount').each(function(){
+            subCommission+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_amounts').each(function(){
+            subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.sub_total_salary').val(parseFloat(subSalary).toFixed(2));
+        $('.sub_total_commission').val(parseFloat(subCommission).toFixed(2));
+        $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
+    }
 </script>
-
 @endpush

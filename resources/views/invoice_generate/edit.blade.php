@@ -174,7 +174,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent"></span> %)</th>
+                                            <th colspan="8">Vat (<span class="vat_percent">{{$inv->vat}}</span> %)</th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value="{{$inv->vat_taka}}"></td>
                                         </tr>
                                         <tr style="text-align: center;">
@@ -448,6 +448,7 @@
         $('.vat_taka').val(changeaVatTaka);
         $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
         $('.vat_percent').text(changeVat);
+        reCalcultateInvoice();
     }
      {{--  function decressRowData(){
         var row=`

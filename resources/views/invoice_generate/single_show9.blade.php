@@ -165,16 +165,19 @@
                                     <br/>
                                     {{ $de->atms?->atm }}
                                 </td>
-                                <td>{{ $de->rate }} <br/>
-                                    @if($de->type_houre )
-                                        ({{ (int)$de->hours?->hour }} hourly shift per month)
+                                <td>
+                                    @if ($de->rate > 0)
+                                        {{ $de->rate }} <br/>
+                                        @if($de->type_houre )
+                                            ({{ (int)$de->hours?->hour }} hourly shift per month)
+                                        @endif
                                     @endif
                                 </td>
                                 {{-- <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td> --}}
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
                                 <td>{{ $de->employee_qty }}</td>
                                 <td>{{ (int) $de->duty_day }}</td>
-                                <td>{{ $de->total_houres }}</td>
+                                <td>{{ (int) $de->total_houres }}</td>
                                 <td>{{ $de->rate_per_houres }}</td>
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                             </tr>
@@ -186,17 +189,24 @@
                 @endif
             </tbody>
             <tfoot>
+                @if($invoice_id->vat_taka > 0)
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="7">Vat <span>{{$invoice_id->vat}}</span>%</th>
+                        <th  style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</th>
+                    </tr>
+                @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="7">Total</th>
-                    <th  style="text-align: end;">{{ money_format($totalAmount) }}</th>
+                    <th  style="text-align: end;">{{ money_format($totalAmount+$invoice_id->vat_taka) }}</th>
                 </tr>
             </tfoot>
         </table>
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = $totalAmount;
+                $dueTotal = $totalAmount+$invoice_id->vat_taka;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
