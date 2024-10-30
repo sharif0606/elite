@@ -96,9 +96,11 @@ class ProductRequisitionController extends Controller
                             $details->product_id=$request->product_id[$key];
                             $details->size_id=$request->size_id[$key];
                             $details->product_qty=$request->product_qty[$key];
-                            $details->deposite_product_qty=$request->deposite_product_qty[$key];
-                            $details->deposite_size_id=$request->deposite_size_id[$key];
-                            $details->deposite_type=$request->deposite_type[$key];
+                            if (!empty($request->deposite_product_qty[$key])) {
+                                $details->deposite_product_qty = $request->deposite_product_qty[$key];
+                                $details->deposite_size_id = $request->deposite_size_id[$key];
+                                $details->deposite_type = $request->deposite_type[$key];
+                            }
                             $details->type=$request->type[$key];
                             if($details->save()){
                                 $stock=new Stock;

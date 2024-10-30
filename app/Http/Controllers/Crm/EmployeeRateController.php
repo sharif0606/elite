@@ -63,6 +63,7 @@ class EmployeeRateController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try{
             $data=new EmployeeRate;
             $data->customer_id = $request->customer_id;
@@ -85,6 +86,7 @@ class EmployeeRateController extends Controller
                     }
                 }
             }
+            DB::commit();
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Rate',$request->getContent(),'EmployeeRate,EmployeeRateDetails');
                 return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
@@ -93,6 +95,7 @@ class EmployeeRateController extends Controller
             }
 
         } catch (Exception $e) {
+            dd($e);
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -136,6 +139,7 @@ class EmployeeRateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         try{
             $data=EmployeeRate::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
@@ -159,6 +163,7 @@ class EmployeeRateController extends Controller
                     }
                 }
             }
+            DB::commit();
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Rate Update',$request->getContent(),'EmployeeRate,EmployeeRateDetails');
                 return redirect()->route('employeeRate.index', ['role' =>currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
@@ -167,6 +172,7 @@ class EmployeeRateController extends Controller
             }
 
         } catch (Exception $e) {
+            dd($e);
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }

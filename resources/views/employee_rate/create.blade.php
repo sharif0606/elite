@@ -87,8 +87,8 @@
                                                             @endforelse
                                                     </select>
                                                 </td>
-                                                <td><input class="form-control rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
-                                                <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-rate"></td>
+                                                <td><input class="form-control rate" type="text" name="duty_rate[]" value="" placeholder="rate" required></td>
+                                                <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-rate" required></td>
 
                                                 <td>
                                                     {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
@@ -165,8 +165,8 @@ var row=`
             @endforelse
         </select>
     </td>
-    <td><input class="form-control rate" type="text" name="duty_rate[]" value="" placeholder="Rate"></td>
-    <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-rate"></td>
+    <td><input class="form-control rate" type="text" name="duty_rate[]" value="" placeholder="Rate" required></td>
+    <td><input class="form-control" type="text" name="ot_rate[]" value="" placeholder="OT-rate" required></td>
 
     <td>
         <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
