@@ -333,6 +333,11 @@ class InvoiceGenerateController extends Controller
                     InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
                     OnetripInvoice::where('invoice_id',$invoice_id)->delete();
                     OnetripInvoiceDetails::where('invoice_id',$invoice_id)->delete();
+                    PortlinkInvoice::where('invoice_id',$invoice_id)->delete();
+                    PortlinkInvoiceDetails::where('invoice_id',$invoice_id)->delete();
+                    PortlinkInvoiceLess::where('invoice_id',$invoice_id)->delete();
+                    PortlinkDeductionGuard::where('invoice_id',$invoice_id)->delete();
+                    PortlinkDeductionSupervisor::where('invoice_id',$invoice_id)->delete();
 
                     DB::commit();
                     \LogActivity::addToLog('Invoice Delete',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
