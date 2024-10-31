@@ -163,8 +163,8 @@
                         <td>{{ money_format($d->rate+$d->commission) }}</td>
                         <td>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d/m/Y')}} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d/m/Y')}}</td>
                         <td>{{ $d->employee_qty }}</td>
-                        <td>{{ money_format($d->net_salary_amount) }}</td>
-                        <td>{{ money_format($d->net_commission_amount) }}</td>
+                        <td style="text-align: end;">{{ money_format($d->net_salary_amount) }}</td>
+                        <td style="text-align: end;">{{ money_format($d->net_commission_amount) }}</td>
                         <td style="text-align: end;"><b>{{ money_format($d->total_amounts)}}</b></td>
                     </tr>
                 @endforeach
