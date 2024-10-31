@@ -390,7 +390,8 @@
     function removeIncressRowData(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
-            addCount();
+            subtotalAmount();
+            reCalcultateInvoice();
         }
     }
     function reCalcultateInvoice(e) {
