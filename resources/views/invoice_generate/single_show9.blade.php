@@ -142,7 +142,7 @@
                 <tr>
                     <th>S.L</th>
                     <th>Service</th>
-                    <th>Rate Per Month</th>
+                    <th>Rate</th>
                     <th>Period</th>
                     <th>Persons</th>
                     <th>Total Duty</th>
@@ -175,10 +175,26 @@
                                 </td>
                                 {{-- <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td> --}}
                                 <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d/m/Y') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
-                                <td>{{ $de->employee_qty }}</td>
-                                <td>{{ (int) $de->duty_day }}</td>
-                                <td>{{ (int) $de->total_houres }}</td>
-                                <td>{{ $de->rate_per_houres }}</td>
+                                <td>
+                                    @if ($de->employee_qty > 0)
+                                        {{ $de->employee_qty }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($de->duty_day > 0)
+                                        {{ (int) $de->duty_day }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($de->total_houres > 0)
+                                        {{ (int) $de->total_houres }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($de->rate_per_houres > 0)
+                                        {{ $de->rate_per_houres }}
+                                    @endif
+                                </td>
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                             </tr>
                             @php
@@ -190,6 +206,11 @@
             </tbody>
             <tfoot>
                 @if($invoice_id->vat_taka > 0)
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="7">Sub Total</th>
+                        <th  style="text-align: end;">{{ money_format($totalAmount) }}</th>
+                    </tr>
                     <tr style="text-align: center;">
                         <td></td>
                         <th colspan="7">Vat <span>{{$invoice_id->vat}}</span>%</th>
@@ -251,7 +272,7 @@
     @if($headershow==1)
         <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left;">
     @else
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left; margin-top:2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left; margin-top:3rem;">
     @endif
         <div style="flex: 1; text-align: left; padding-right: 10px;">
             {{-- Align left side of the body --}}

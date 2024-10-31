@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('invoice_id');
             $table->integer('portlink_invoice_id');
             $table->text('deduction_description')->nullable();
+            $table->decimal('deduct_guard_rate',10,2)->default(0)->nullable();
+            $table->decimal('deduct_guard_commission',10,2)->default(0)->nullable();
             $table->decimal('count_hour',10,2)->default(0)->nullable();
             $table->decimal('net_deduction',10,2)->default(0)->nullable();
             $table->decimal('commission_deduction',10,2)->default(0)->nullable();

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->date('bill_date')->nullable();
             $table->integer('vat')->nullable();
+            $table->decimal('net_salary_rate',10,2)->default(0)->nullable();
             $table->decimal('sub_total_amount',10,2)->default(0);
             $table->decimal('total_tk',10,2)->default(0);
             $table->decimal('vat_taka',10,2)->default(0);

@@ -21,6 +21,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Crm\OnetripInvoiceDetails;
+use App\Models\Crm\PortlinkDeductionGuard;
+use App\Models\Crm\PortlinkDeductionSupervisor;
+use App\Models\Crm\PortlinkInvoice;
+use App\Models\Crm\PortlinkInvoiceDetails;
+use App\Models\Crm\PortlinkInvoiceLess;
 use App\Models\Crm\WasaInvoiceDetails;
 use Intervention\Image\Facades\Image;
 use Exception;
@@ -189,11 +194,17 @@ class InvoiceGenerateController extends Controller
         // return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
         return view('invoice_generate.single_show4',compact('invoice_id','branch','headershow'));
     }
-    public function getSingleInvoice5($id)
+    public function getSingleInvoice5(Request $request,$id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.single_show5',compact('invoice_id','branch'));
+        $portlink = PortlinkInvoice::where('invoice_id',$invoice_id->id)->first();
+        $portDetail = PortlinkInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
+        $less = PortlinkInvoiceLess::where('invoice_id',$invoice_id->id)->get();
+        $desup = PortlinkDeductionSupervisor::where('invoice_id',$invoice_id->id)->get();
+        $deguard = PortlinkDeductionGuard::where('invoice_id',$invoice_id->id)->get();
+        return view('invoice_generate.single_show5',compact('invoice_id','branch','headershow','portlink','portDetail','less','desup','deguard'));
     }
     public function getSingleInvoice6($id)
     {

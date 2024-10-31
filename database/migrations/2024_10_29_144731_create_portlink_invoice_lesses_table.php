@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('invoice_id');
             $table->integer('portlink_invoice_id');
             $table->text('less_description')->nullable();
+            $table->decimal('less_rate',10,2)->default(0)->nullable();
+            $table->decimal('less_commission',10,2)->default(0)->nullable();
             $table->decimal('count_hour',10,2)->default(0)->nullable();
             $table->decimal('net_less',10,2)->default(0)->nullable();
             $table->decimal('commission_less',10,2)->default(0)->nullable();

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('portlink_invoices', function (Blueprint $table) {
             $table->id();
+            $table->integer('invoice_id');
             $table->integer('customer_id');
             $table->date('start_date');
             $table->date('end_date')->nullable();

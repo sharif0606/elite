@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('invoiceGenerate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('portlinkInvoice.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2">
                                 {{-- <div class="col-12">
@@ -120,8 +120,8 @@
                                             </td>
                                             <th colspan="4" style="text-align: end;" width="37%">Sub Tatal</th>
                                             <td width="8%"></td>
-                                            <td><input type="text" class="form-control text-center sub_total_salary" readonly></td>
-                                            <td><input type="text" class="form-control text-center sub_total_commission" readonly></td>
+                                            <td><input type="text" class="form-control text-center sub_total_salary" name="sub_salary_total" readonly></td>
+                                            <td><input type="text" class="form-control text-center sub_total_commission" name="sub_commission_total" readonly></td>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
                                             </td>
@@ -133,11 +133,10 @@
                                             <td></td>
                                             <th colspan="5">Total Tk</th>
                                             <td></td>
-                                            <td><input type="text" class="form-control text-center" readonly></td>
-                                            <td><input type="text" class="form-control text-center" readonly></td>
+                                            <td><input type="text" class="form-control text-center net_salary_rate_total" readonly></td>
+                                            <td><input type="text" class="form-control text-center net_commission_rate_total" readonly></td>
                                             <td>
-                                                <input type="text" class="form-control text-center total_tk" name="total_tk" value="" readonly>
-                                                <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
+                                                <input type="text" class="form-control text-center net_salary_total" name="total_tk" value="" readonly>
                                             </td>
                                         </tr>
                                         <tr style="text-align: end;">
@@ -152,8 +151,8 @@
                                             <td></td>
                                             <th colspan="5">Grand Total</th>
                                             <td></td>
-                                            <td><input type="text" class="form-control text-center" readonly></td>
-                                            <td><input type="text" class="form-control text-center" readonly></td>
+                                            <td><input type="text" class="form-control text-center net_salary_rate_total" name="net_salary_rate" readonly></td>
+                                            <td><input type="text" class="form-control text-center net_commission_rate_total" name="net_commission_rate" readonly></td>
                                             <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
                                         </tr>
                                     </tfoot>
@@ -245,8 +244,6 @@
                         //console.log("value.start_date:", value.start_date);
                         //console.log("this start date:", startDate);
                         let workingDays;
-                        let totalHoures;
-                        let ratePerHoures;
                         let st_date;
                         let ed_date;
                         if (value.start_date >= startDate && value.end_date == null) {
@@ -279,9 +276,9 @@
                         person = (value.qty > 0) ? value.qty : '0';
                         commission = (value.commission > 0) ? value.commission : '0';
                         ratePlusCommission = parseFloat(rate) + parseFloat(commission);
-                        totalAmount = parseFloat(rate)*parseFloat(person);
                         // updated new
                         type_houre=value.hours;
+                        hour_value=value.assigned_hour;
 
                         selectElement.append(
                             `<tr style="text-align: center;">
@@ -306,7 +303,7 @@
                                     <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
                                     <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
-                                    <input class="form-control input_css divide_by text-center" type="hidden" name="divide_by[]" value="${type_houre}">
+                                    <input class="form-control input_css divide_by text-center" type="hidden" name="divide_by[]" value="${hour_value}">
                                     <input class="type_houre" type="hidden" name="type_houre[]" value="${type_houre}">
                                 </td>
                                 <td>
@@ -337,69 +334,20 @@
             $('.vat').val(vat);
         }
      }
-     
-     {{--  function lessCount(e){
-        var totalLess=0;
-        $('.less_count').each(function(){
-            totalLess+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
-            //alert(totalLess)
-        });
-        //console.log(totalLess)
-        $('.lessP').val(totalLess);
-        var subTotal=$('.sub_total_amount').val();
-        var totalLes=$('.lessP').val();
-        var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
-        var totalTaka=parseFloat(subTotal-totalLes).toFixed(2);
-        $('.total_tk').val(totalTaka);
-        $('.temporaty_total').val(totalTaka);
-        var vatTaka=parseFloat((totalTaka*vat)/100).toFixed(2);
-        var grandTotal=parseFloat(totalTaka) + parseFloat(vatTaka);
-        $('.vat_taka').val(vatTaka);
-        $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
-    }  --}}
-     function addCount(e){
-        var totalAdd=0;
-        $('.add_count').each(function(){
-            totalAdd+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
-            //alert(totalAdd)
-        });
-        //console.log(totalAdd)
-        $('.addP').val(totalAdd);
-        var addSubTotal=$('.sub_total_amount').val();
-        var totalAdds=$('.addP').val();
-        //var vat=isNaN(parseFloat($('.vat').val()))?0:parseFloat($('.vat').val());
-        //var vat=$('#branch_id').find(":selected").data('vat');
-        var vat=$('.vat').val();
-        //console.log(vat);
-        var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
-        $('.total_tk').val(totalAddTaka);
-        $('.temporaty_total').val(totalAddTaka);
-        var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
-        var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
-        $('.vat_taka').val(aVatTaka);
-        $('.vat_percent').text(vat);
-        //$('.vat').val(vat);
-        $('.grand_total').val(parseFloat(aGrandTotal).toFixed(2));
-    }
-    function changeVat(e){
-        let changeVat=$('.vat').val();
-        var changeaddSubTotal=$('.temporaty_total').val();
-        var changeaVatTaka=parseFloat((changeaddSubTotal*changeVat)/100).toFixed(2);
-        var changeaGrandTotal=parseFloat(changeaddSubTotal) + parseFloat(changeaVatTaka);
-        $('.vat_taka').val(changeaVatTaka);
-        $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
-        $('.vat_percent').text(changeVat);
-        reCalcultateInvoice();
-    }
+    
     function incressRowData(){
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="5"><input class="form-control text-center" type="text" placeholder="Exaple: Add/Less: 01 duty Receptionist on 17-18/07/2023" name="add_description[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="add_hour[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_rate_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_comission_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="add_amount[]" readonly></td>
+            <td colspan="3">
+                <textarea name="less_description[]" class="form-control text-center" rows="2">Less: duty absent of security Supervisor from</textarea>
+            </td>
+            <td><input class="form-control text-center deduct_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="rate" name="less_rate[]"></td>
+            <td><input class="form-control text-center deduct_commission_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="commission" name="less_commission[]"></td>
+            <td><input class="form-control text-center deduct_hour" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="hour" name="add_hour[]"></td>
+            <td><input class="form-control text-center deduct_salary" type="text" name="net_less[]" readonly></td>
+            <td><input class="form-control text-center deduct_commission" type="text" name="commission_less[]" readonly></td>
+            <td><input class="form-control text-center deduct_total" type="text" name="total_less[]" readonly></td>
         </tr>
         `;
         $('#repeater_less').after(row);
@@ -409,11 +357,15 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="5"><input class="form-control text-center" type="text" value="Deduction:" name="supervisor_deduction_description[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="hour_supervisor[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_rate_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_comission_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="supervisor_amount[]" readonly></td>
+            <td colspan="3">
+                <textarea name="supervisor_deduction_description[]" class="form-control text-center" rows="2">Deduction: hours Supervisor duty deducted by post authority due to negligence during duty hours from</textarea>
+            </td>
+            <td><input class="form-control text-center deduct_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="rate" name="deduct_sup_rate[]"></td>
+            <td><input class="form-control text-center deduct_commission_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="commission" name="deduct_sup_commission[]"></td>
+            <td><input class="form-control text-center deduct_hour" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="hour" name="hour_supervisor[]"></td>
+            <td><input class="form-control text-center deduct_salary" type="text" name="supervisor_rate_amount[]" readonly></td>
+            <td><input class="form-control text-center deduct_commission" type="text" name="supervisor_comission_amount[]" readonly></td>
+            <td><input class="form-control text-center deduct_total" type="text" name="supervisor_amount[]" readonly></td>
         </tr>
         `;
         $('#supervisor').after(row);
@@ -422,11 +374,15 @@
         var row=`
         <tr style="text-align: center;">
             <td><span onClick='removeIncressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="5"><input class="form-control text-center" type="text" value="Deduction:" name="guard_deduction_description[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" placeholder="hour" name="hour_guard[]"></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_rate_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_comission_amount[]" readonly></td>
-            <td><input class="form-control text-center add_count" type="text" onkeyup="addCount(this)" name="guard_amount[]" readonly></td>
+            <td colspan="3">
+                <textarea name="guard_deduction_description[]" class="form-control text-center" rows="2">Deduction: hours guard duty deducted by post authority due to negligence during duty hours from</textarea>
+            </td>
+            <td><input class="form-control text-center deduct_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="rate" name="deduct_guard_rate[]"></td>
+            <td><input class="form-control text-center deduct_commission_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="commission" name="deduct_guard_commission[]"></td>
+            <td><input class="form-control text-center deduct_hour" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="hour" name="hour_guard[]"></td>
+            <td><input class="form-control text-center deduct_salary" type="text" name="guard_rate_amount[]" readonly></td>
+            <td><input class="form-control text-center deduct_commission" type="text" name="guard_comission_amount[]" readonly></td>
+            <td><input class="form-control text-center deduct_total" type="text" name="guard_amount[]" readonly></td>
         </tr>
         `;
         $('#guard').after(row);
@@ -438,30 +394,46 @@
         }
     }
     function reCalcultateInvoice(e) {
-        var rate=$(e).closest('tr').find('.rate_c').val();
-        var commission=$(e).closest('tr').find('.commission').val();
-        var dutyDay=$(e).closest('tr').find('.duty_day_c').val();
-        var divideBy = $(e).closest('tr').find('.divide_by').val();
+        var rate = parseFloat($(e).closest('tr').find('.rate_c').val()) || 0;
+        var commission = parseFloat($(e).closest('tr').find('.commission').val()) || 0;
+        var deductRate = parseFloat($(e).closest('tr').find('.deduct_rate').val()) || 0;
+        var deductCommissionRate = parseFloat($(e).closest('tr').find('.deduct_commission_rate').val()) || 0;
+        var dutyDay = parseFloat($(e).closest('tr').find('.duty_day_c').val()) || 0;
+        //var divideBy = parseFloat($(e).closest('tr').find('.divide_by').val()) || 1; // Avoid division by zero by setting default to 1
+        var deductHour = parseFloat($(e).closest('tr').find('.deduct_hour').val()) || 0;
 
-        var startDate=$('.start_date').val();
-        let workingdayinMonth= new Date(startDate);
-        let smonth=workingdayinMonth.getMonth()+1;
-        let syear=workingdayinMonth.getFullYear();
-            workingdayinMonth= new Date(syear, smonth, 0).getDate();
+        var startDate = $('.start_date').val();
+        let workingdayinMonth = new Date(startDate);
+        let smonth = workingdayinMonth.getMonth() + 1;
+        let syear = workingdayinMonth.getFullYear();
+        workingdayinMonth = new Date(syear, smonth, 0).getDate();
 
-        let salary = parseFloat((rate/workingdayinMonth)*dutyDay).toFixed(2);
-        let salaryCommission = parseFloat((commission/workingdayinMonth)*dutyDay).toFixed(2);
-        let subTotalAmount = parseFloat(salary+salaryCommission).toFixed(2);
+        let salary = parseFloat((rate / workingdayinMonth) * dutyDay).toFixed(2);
+        let salaryCommission = parseFloat((commission / workingdayinMonth) * dutyDay).toFixed(2);
+        let subTotalAmount = (parseFloat(salary) + parseFloat(salaryCommission)).toFixed(2);
+
+        // Calculate deduction amounts with safer values
+        let deductSalary = parseFloat(((deductRate / 12) / workingdayinMonth) * deductHour).toFixed(2);
+        let deductCommission = parseFloat(((deductCommissionRate / 12) / workingdayinMonth) * deductHour).toFixed(2);
+        let deductTotal = (parseFloat(deductSalary) + parseFloat(deductCommission)).toFixed(2);
 
         $(e).closest('tr').find('.net_salary_amount').val(salary);  
         $(e).closest('tr').find('.net_commission_amount').val(salaryCommission);  
         $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+
+        $(e).closest('tr').find('.deduct_salary').val(deductSalary);
+        $(e).closest('tr').find('.deduct_commission').val(deductCommission);
+        $(e).closest('tr').find('.deduct_total').val(deductTotal);
+        
         subtotalAmount();
     }
     function subtotalAmount(){
         var subSalary=0;
         var subCommission=0;
         var subTotal=0;
+        var subSalaryDeduct=0;
+        var subCommissionDeduct=0;
+        var subTotalDeduct=0;
         $('.net_salary_amount').each(function(){
             subSalary+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -471,9 +443,39 @@
         $('.total_amounts').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        
+        $('.deduct_salary').each(function(){
+            subSalaryDeduct+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduct_commission').each(function(){
+            subCommissionDeduct+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.deduct_total').each(function(){
+            subTotalDeduct+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+
+        let netSalaryRateTotal = (parseFloat(subSalary) - parseFloat(subSalaryDeduct)).toFixed(2);
+        let netCommissionRateTotal = (parseFloat(subCommission) - parseFloat(subCommissionDeduct)).toFixed(2);
+        let netSalaryTotal = (parseFloat(subTotal) - parseFloat(subTotalDeduct)).toFixed(2);
+
         $('.sub_total_salary').val(parseFloat(subSalary).toFixed(2));
         $('.sub_total_commission').val(parseFloat(subCommission).toFixed(2));
         $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
+
+        $('.net_salary_rate_total').val(parseFloat(netSalaryRateTotal).toFixed(2));
+        $('.net_commission_rate_total').val(parseFloat(netCommissionRateTotal).toFixed(2));
+        $('.net_salary_total').val(parseFloat(netSalaryTotal).toFixed(2));
+        changeVat();
+    }
+
+    function changeVat(e){
+        let changeVat=$('.vat').val();
+        var changeaddSubTotal=$('.net_salary_total').val();
+        var changeaVatTaka=parseFloat((changeaddSubTotal*changeVat)/100).toFixed(2);
+        var changeaGrandTotal=parseFloat(changeaddSubTotal) + parseFloat(changeaVatTaka);
+        $('.vat_taka').val(changeaVatTaka);
+        $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
+        $('.vat_percent').text(changeVat);
     }
 </script>
 @endpush
