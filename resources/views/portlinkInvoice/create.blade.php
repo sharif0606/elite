@@ -344,10 +344,10 @@
             </td>
             <td><input class="form-control text-center deduct_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="rate" name="less_rate[]"></td>
             <td><input class="form-control text-center deduct_commission_rate" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="commission" name="less_commission[]"></td>
-            <td><input class="form-control text-center deduct_hour" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="hour" name="add_hour[]"></td>
-            <td><input class="form-control text-center deduct_salary" type="text" name="net_less[]" readonly></td>
-            <td><input class="form-control text-center deduct_commission" type="text" name="commission_less[]" readonly></td>
-            <td><input class="form-control text-center deduct_total" type="text" name="total_less[]" readonly></td>
+            <td><input class="form-control text-center deduct_hour" onkeyup="reCalcultateInvoice(this)" type="text" placeholder="duty" name="add_hour[]"></td>
+            <td><input class="form-control text-center less_salary" type="text" name="net_less[]" readonly></td>
+            <td><input class="form-control text-center less_commission" type="text" name="commission_less[]" readonly></td>
+            <td><input class="form-control text-center less_total" type="text" name="total_less[]" readonly></td>
         </tr>
         `;
         $('#repeater_less').after(row);
@@ -414,6 +414,10 @@
         let subTotalAmount = (parseFloat(salary) + parseFloat(salaryCommission)).toFixed(2);
 
         // Calculate deduction amounts with safer values
+        let lessSalary = parseFloat((deductRate / workingdayinMonth) * deductHour).toFixed(2);
+        let lessCommission = parseFloat((deductCommissionRate / workingdayinMonth) * deductHour).toFixed(2);
+        let lessTotal = (parseFloat(lessSalary) + parseFloat(lessCommission)).toFixed(2);
+
         let deductSalary = parseFloat(((deductRate / 12) / workingdayinMonth) * deductHour).toFixed(2);
         let deductCommission = parseFloat(((deductCommissionRate / 12) / workingdayinMonth) * deductHour).toFixed(2);
         let deductTotal = (parseFloat(deductSalary) + parseFloat(deductCommission)).toFixed(2);
@@ -425,6 +429,10 @@
         $(e).closest('tr').find('.deduct_salary').val(deductSalary);
         $(e).closest('tr').find('.deduct_commission').val(deductCommission);
         $(e).closest('tr').find('.deduct_total').val(deductTotal);
+
+        $(e).closest('tr').find('.less_salary').val(lessSalary);
+        $(e).closest('tr').find('.less_commission').val(lessCommission);
+        $(e).closest('tr').find('.less_total').val(lessTotal);
         
         subtotalAmount();
     }
@@ -435,6 +443,9 @@
         var subSalaryDeduct=0;
         var subCommissionDeduct=0;
         var subTotalDeduct=0;
+        var subSalaryLess=0;
+        var subCommissionLess=0;
+        var subTotalLess=0;
         $('.net_salary_amount').each(function(){
             subSalary+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -455,9 +466,19 @@
             subTotalDeduct+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
 
-        let netSalaryRateTotal = (parseFloat(subSalary) - parseFloat(subSalaryDeduct)).toFixed(2);
-        let netCommissionRateTotal = (parseFloat(subCommission) - parseFloat(subCommissionDeduct)).toFixed(2);
-        let netSalaryTotal = (parseFloat(subTotal) - parseFloat(subTotalDeduct)).toFixed(2);
+        $('.less_salary').each(function(){
+            subSalaryLess+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.less_commission').each(function(){
+            subCommissionLess+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.less_total').each(function(){
+            subTotalLess+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+
+        let netSalaryRateTotal = (parseFloat(subSalary) - parseFloat(subSalaryDeduct) - parseFloat(subSalaryLess)).toFixed(2);
+        let netCommissionRateTotal = (parseFloat(subCommission) - parseFloat(subCommissionDeduct) - parseFloat(subCommissionLess)).toFixed(2);
+        let netSalaryTotal = (parseFloat(subTotal) - parseFloat(subTotalDeduct) - parseFloat(subTotalLess)).toFixed(2);
 
         $('.sub_total_salary').val(parseFloat(subSalary).toFixed(2));
         $('.sub_total_commission').val(parseFloat(subCommission).toFixed(2));

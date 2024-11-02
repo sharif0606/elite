@@ -182,12 +182,12 @@
                                 </td>
                                 <td>
                                     @if ($de->duty_day > 0)
-                                        {{ (int) $de->duty_day }}
+                                        {{ $de->duty_day }}
                                     @endif
                                 </td>
                                 <td>
                                     @if ($de->total_houres > 0)
-                                        {{ (int) $de->total_houres }}
+                                        {{ $de->total_houres }}
                                     @endif
                                 </td>
                                 <td>

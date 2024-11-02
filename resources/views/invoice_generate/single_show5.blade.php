@@ -146,9 +146,9 @@
                 <th width="8%">Commission (per head)</th>
                 <th width="12">Rate (Salary + Commission)</th>
                 <th width="12%">Period</th>
-                <th width="5%">Person</th>
-                <th width="15%">Total Salary & Others (BDT)</th>
-                <th width="14%">Total Commission (BDT)</th>
+                <th width="9%">Person</th>
+                <th width="13%">Total Salary & Others (BDT)</th>
+                <th width="12%">Total Commission (BDT)</th>
                 <th width="15%">Total Bill (BDT)</th>
             </tr>
         </thead>
@@ -162,7 +162,14 @@
                         <td>{{ money_format($d->commission) }}</td>
                         <td>{{ money_format($d->rate+$d->commission) }}</td>
                         <td>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d/m/Y')}} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d/m/Y')}}</td>
-                        <td>{{ $d->employee_qty }}</td>
+                        <td>
+                            {{ $d->employee_qty }}
+                            @if ($d->duty_day > 1)
+                                ({{(int)$d->duty_day}} duties)
+                            @else
+                                ({{(int)$d->duty_day}} duty)
+                            @endif
+                        </td>
                         <td style="text-align: end;">{{ money_format($d->net_salary_amount) }}</td>
                         <td style="text-align: end;">{{ money_format($d->net_commission_amount) }}</td>
                         <td style="text-align: end;"><b>{{ money_format($d->total_amounts)}}</b></td>
@@ -172,18 +179,18 @@
             <tr>
                 <td></td>
                 <td colspan="6" style="text-align: right;"> <b>Sub Total=</b> </td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->sub_amount) }}</td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->sub_commission_amount) }}</td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->sub_total_amount) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink?->sub_amount) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink?->sub_commission_amount) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink?->sub_total_amount) }}</td>
             </tr>
             @if ($less)
                 @foreach ($less as $l)
                     <tr>
                         <td></td>
                         <td colspan="6" style="text-align: right;"> <b>{{$l->less_description}}</b> </td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($l->net_less) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($l->commission_less) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($l->total_less) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($l?->net_less) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($l?->commission_less) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($l?->total_less) }}</td>
                     </tr>
                 @endforeach
             @endif
@@ -192,9 +199,9 @@
                     <tr>
                         <td></td>
                         <td colspan="6" style="text-align: right;"> <b>{{$dsp->deduction_description}}</b> </td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dsp->net_deduction) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dsp->commission_deduction) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dsp->total_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dsp?->net_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dsp?->commission_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dsp?->total_deduction) }}</td>
                     </tr>
                 @endforeach
             @endif
@@ -203,42 +210,42 @@
                     <tr>
                         <td></td>
                         <td colspan="6" style="text-align: right;"> <b>{{$dg->deduction_description}}</b> </td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dg->net_deduction) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dg->commission_deduction) }}</td>
-                        <td style="text-align: end;font-weight: bold;">{{ money_format($dg->total_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dg?->net_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dg?->commission_deduction) }}</td>
+                        <td style="text-align: end;font-weight: bold;">(-) {{ money_format($dg?->total_deduction) }}</td>
                     </tr>
                 @endforeach
             @endif
             <tr>
                 <td></td>
                 <td colspan="6" style="text-align: right;"> <b>Gross Bill (after deduction)=</b> </td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->net_amount) }}</td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->net_commission) }}</td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($portlink->net_total_tk) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink?->net_amount) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink?->net_commission) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($portlink?->net_total_tk) }}</td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="6" style="text-align: right; font-weight: bold;"> Vat@ {{ $portlink->vat }} %= </td>
+                <td colspan="6" style="text-align: right; font-weight: bold;"> Vat@ {{ $portlink?->vat }} %= </td>
                 <td></td>
                 <td></td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($portlink->vat_taka) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format($portlink?->vat_taka) }}</td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="6" style="text-align: right;"> <b>Grand Total=</b> </td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->sub_amount) }}</td>
-                <td style="text-align: end;font-weight: bold;">{{ money_format($portlink->sub_commission_amount) }}</td>
-                <td style="text-align: right;font-weight: bold;">{{ money_format($portlink->grand_total) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format(round($portlink?->net_amount)) }}</td>
+                <td style="text-align: end;font-weight: bold;">{{ money_format(round($portlink?->net_commission)) }}</td>
+                <td style="text-align: right;font-weight: bold;">{{ money_format(round($portlink?->grand_total)) }}</td>
             </tr>
         </tbody>
     </table>
     <br>
     <div>Total Amount(In Words): <b><i>
         @php
-        $dueTotal = $portlink->grand_total;
+        $dueTotal = $portlink?->grand_total;
 
         if ($dueTotal > 0) {
-            $textValue = getBangladeshCurrency($dueTotal);
+            $textValue = getBangladeshCurrency(round($dueTotal));
             echo "$textValue";
         } else {
             echo "Zero";
