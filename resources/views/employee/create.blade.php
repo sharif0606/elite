@@ -641,7 +641,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_brance_name">ব্রাঞ্চ নাম</label>
-                            <input type="text" id="bn_brance_name" value="{{old('bn_brance_name')}}" class="form-control @error('bn_brance_name') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_brance_name">
+                            <input type="text" id="bn_brance_name" value="{{old('bn_brance_name')}}" class="form-control @error('bn_brance_name') is-invalid @enderror" placeholder="ব্রাঞ্চ নাম" name="bn_brance_name">
                             @if($errors->has('bn_brance_name'))
                                 <span class="text-danger"> {{ $errors->first('bn_brance_name') }}</span>
                             @endif
@@ -650,7 +650,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_ac_no">একাউন্ট নং</label>
-                            <input type="text" id="bn_ac_no" value="{{old('bn_ac_no')}}" class="form-control @error('bn_ac_no') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_ac_no">
+                            <input type="text" id="bn_ac_no" value="{{old('bn_ac_no')}}" class="form-control @error('bn_ac_no') is-invalid @enderror" placeholder="একাউন্ট নম্বর" name="bn_ac_no">
                             @if($errors->has('bn_ac_no'))
                                 <span class="text-danger"> {{ $errors->first('bn_ac_no') }}</span>
                             @endif
@@ -658,8 +658,14 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
+                            <label for="bn_ac_name">একাউন্ট নাম</label>
+                            <input type="text" id="bn_ac_name" value="{{old('bn_ac_name')}}" class="form-control @error('bn_ac_name') is-invalid @enderror" placeholder="একাউন্ট নাম" name="bn_ac_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
                             <label for="bn_routing_number">রাউটিং নাম</label>
-                            <input type="text" id="bn_routing_number" value="{{old('bn_routing_number')}}" class="form-control @error('bn_routing_number') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_routing_number">
+                            <input type="text" id="bn_routing_number" value="{{old('bn_routing_number')}}" class="form-control @error('bn_routing_number') is-invalid @enderror" placeholder="রাউটিং নম্বর" name="bn_routing_number">
                             @if($errors->has('bn_routing_number'))
                                 <span class="text-danger"> {{ $errors->first('bn_routing_number') }}</span>
                             @endif
@@ -669,8 +675,20 @@
                         <div class="form-group">
                             <label for="">Salary type (For Accounts)</label>
                             <select name="salary_prepared_type" class="form-control form-select">
-                                <option value="0">Others</option>
-                                <option value="1">DBBL</option>
+                                <option value="">Select</option>
+                                <option value="0">Office Staff</option>
+                                <option value="1">Out Station</option>
+                                <option value="2">In Station</option>
+                                <option value="3">Peon</option>
+                                <option value="4">Robi Tower</option>
+                                <option value="5">Ever Care</option>
+                                <option value="6">Linde BD</option>
+                                <option value="7">Mas Intimats</option>
+                                <option value="8">Mas Sumantra</option>
+                                <option value="9">Portlink</option>
+                                <option value="10">RSB</option>
+                                <option value="11">Top Way</option>
+                                <option value="12">RSGT</option>
                             </select>
                         </div>
                     </div>

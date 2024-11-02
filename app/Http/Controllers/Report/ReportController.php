@@ -11,6 +11,7 @@ use App\Models\Crm\InvoicePayment;
 use App\Models\Customer;
 use App\Models\Hrm\SalarySheet;
 use App\Models\Hrm\SalarySheetDetail;
+use App\Models\JobPost;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -100,20 +101,61 @@ class ReportController extends Controller
         return view('report.pay-received-detail',compact('data','customer'));
     }
     public function salaryReport(){
-        return view('report.salary-report');
+        $customer=Customer::all();
+        $jobposts=JobPost::all();
+        return view('report.salary-report',compact('customer','jobposts'));
     }
     public function salaryReportDetil(Request $request){
-        $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
+        if($request->type == 0 ){
+            $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->where('status',4)->pluck('id');
+        }else{
+            $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
+        }
         $getYear = $request->year;
         $getMonth = $request->month;
-        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','common_net_salary')
-        ->whereIn('salary_id',$salaryIds)
-        ->get();
-        if($request->type==0){
-            return view('report.salary-details',compact('getYear','getMonth','data'));
-        }else{
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data'));
+        $salaryType = $request->type;
 
+        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','common_net_salary')
+        ->whereIn('salary_id',$salaryIds);
+
+        if ($request->customer_id){
+            $customerId = $request->customer_id;
+            $data->where('customer_id', $customerId);
+        }
+        if ($request->customer_branch_id){
+            $branchId = $request->customer_branch_id;
+            $data->where('branch_id', $branchId);
+        }
+        if ($request->job_post_id){
+            $post = $request->job_post_id;
+            $data->where('designation_id', $post);
+        }
+        $data = $data->get();
+
+        if($request->type==1){
+            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 0){
+            return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 2){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 3){
+            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 4){
+            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 5){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 6){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 7){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 8){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 9){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else if($request->type == 10){
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        }else{
+            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
         }
     }
 }

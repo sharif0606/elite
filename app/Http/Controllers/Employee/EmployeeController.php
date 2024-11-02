@@ -137,6 +137,7 @@ class EmployeeController extends Controller
             $employee->bn_bank_name = $request->bn_bank_name;
             $employee->bn_brance_name = $request->bn_brance_name;
             $employee->bn_ac_no = $request->bn_ac_no;
+            $employee->bn_ac_name = $request->bn_ac_name;
             $employee->bn_routing_number = $request->bn_routing_number;
             $employee->salary_prepared_type = $request->salary_prepared_type;
 
@@ -369,6 +370,7 @@ class EmployeeController extends Controller
             $employee->bn_bank_name = $request->bn_bank_name;
             $employee->bn_brance_name = $request->bn_brance_name;
             $employee->bn_ac_no = $request->bn_ac_no;
+            $employee->bn_ac_name = $request->bn_ac_name;
             $employee->bn_routing_number = $request->bn_routing_number;
             $employee->salary_prepared_type = $request->salary_prepared_type;
 

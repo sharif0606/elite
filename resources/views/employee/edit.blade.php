@@ -656,7 +656,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_brance_name">ব্রাঞ্চ নাম</label>
-                            <input type="text" id="bn_brance_name" value="{{old('bn_brance_name',$employees->bn_brance_name)}}" class="form-control @error('bn_brance_name') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_brance_name">
+                            <input type="text" id="bn_brance_name" value="{{old('bn_brance_name',$employees->bn_brance_name)}}" class="form-control @error('bn_brance_name') is-invalid @enderror" placeholder="ব্রাঞ্চ নাম" name="bn_brance_name">
                             @if($errors->has('bn_brance_name'))
                                 <span class="text-danger"> {{ $errors->first('bn_brance_name') }}</span>
                             @endif
@@ -665,7 +665,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_ac_no">একাউন্ট নং</label>
-                            <input type="text" id="bn_ac_no" value="{{old('bn_ac_no',$employees->bn_ac_no)}}" class="form-control @error('bn_ac_no') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_ac_no">
+                            <input type="text" id="bn_ac_no" value="{{old('bn_ac_no',$employees->bn_ac_no)}}" class="form-control @error('bn_ac_no') is-invalid @enderror" placeholder="একাউন্ট নম্বর" name="bn_ac_no">
                             @if($errors->has('bn_ac_no'))
                                 <span class="text-danger"> {{ $errors->first('bn_ac_no') }}</span>
                             @endif
@@ -673,8 +673,14 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
+                            <label for="bn_ac_name">একাউন্ট নাম</label>
+                            <input type="text" id="bn_ac_name" value="{{old('bn_ac_name',$employees->bn_ac_name)}}" class="form-control @error('bn_ac_name') is-invalid @enderror" placeholder="একাউন্ট নাম" name="bn_ac_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
                             <label for="bn_routing_number">রাউটিং নাম</label>
-                            <input type="text" id="bn_routing_number" value="{{old('bn_routing_number',$employees->bn_routing_number)}}" class="form-control @error('bn_routing_number') is-invalid @enderror" placeholder="ব্যাংক নাম" name="bn_routing_number">
+                            <input type="text" id="bn_routing_number" value="{{old('bn_routing_number',$employees->bn_routing_number)}}" class="form-control @error('bn_routing_number') is-invalid @enderror" placeholder="রাউটিং নম্বর" name="bn_routing_number">
                             @if($errors->has('bn_routing_number'))
                                 <span class="text-danger"> {{ $errors->first('bn_routing_number') }}</span>
                             @endif
@@ -684,8 +690,20 @@
                         <div class="form-group">
                             <label for="">Salary type (For Accounts)</label>
                             <select name="salary_prepared_type" class="form-control form-select">
-                                <option value="0" {{$employees->salary_prepared_type==0? 'selected' : ''}}>Others</option>
-                                <option value="1" {{$employees->salary_prepared_type==1? 'selected' : ''}}>DBBL</option>
+                                <option value="">Select</option>
+                                <option value="0" {{$employees->salary_prepared_type==0? 'selected' : ''}}>Office Staff</option>
+                                <option value="1" {{$employees->salary_prepared_type==1? 'selected' : ''}}>Out Station</option>
+                                <option value="2" {{$employees->salary_prepared_type==2? 'selected' : ''}}>In Station</option>
+                                <option value="3" {{$employees->salary_prepared_type==3? 'selected' : ''}}>Peon</option>
+                                <option value="4" {{$employees->salary_prepared_type==4? 'selected' : ''}}>Robi Tower</option>
+                                <option value="5" {{$employees->salary_prepared_type==5? 'selected' : ''}}>Ever Care</option>
+                                <option value="6" {{$employees->salary_prepared_type==6? 'selected' : ''}}>Linde BD</option>
+                                <option value="7" {{$employees->salary_prepared_type==7? 'selected' : ''}}>Mas Intimats</option>
+                                <option value="8" {{$employees->salary_prepared_type==8? 'selected' : ''}}>Mas Sumantra</option>
+                                <option value="9" {{$employees->salary_prepared_type==9? 'selected' : ''}}>Portlink</option>
+                                <option value="10" {{$employees->salary_prepared_type==10? 'selected' : ''}}>RSB</option>
+                                <option value="11" {{$employees->salary_prepared_type==11? 'selected' : ''}}>Top Way</option>
+                                <option value="12" {{$employees->salary_prepared_type==12? 'selected' : ''}}>RSGT</option>
                             </select>
                         </div>
                     </div>

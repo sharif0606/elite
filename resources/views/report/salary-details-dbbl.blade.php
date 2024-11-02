@@ -24,9 +24,12 @@
                         border-collapse: collapse;
                         }
                     </style>
+                    @php
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimats','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
+                    @endphp
                     <table class="table tbl_border">
                         <thead>
-                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Release Salary Sheet For The Month of {{$getMonth}}-{{$getYear}}</th></tr>
+                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonth}}-{{$getYear}}</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
                                 <th class="tbl_border">ID NO</th>
@@ -40,7 +43,7 @@
                         </thead>
                         <tbody>
                             @forelse ($data as $d)
-                                @if ($d->employee?->salary_prepared_type != 0)
+                                @if ($d->employee?->salary_prepared_type == $salaryType)
                                     <tr class="tbl_border">
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->admission_id_no}}</th>

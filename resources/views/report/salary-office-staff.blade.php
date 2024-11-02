@@ -24,40 +24,31 @@
                         border-collapse: collapse;
                         }
                     </style>
-                    @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimats','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
-                    @endphp
                     <table class="table tbl_border">
                         <thead>
-                            <tr class="text-center tbl_border"><th colspan="11" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonth}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
+                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of Office Staff for the month of {{$getMonth}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
                                 <th class="tbl_border">Bank's Branch With Location</th>
                                 <th class="tbl_border">Rounting No</th>
                                 <th class="tbl_border">Account Holder's Name</th>
                                 <th class="tbl_border">Account Number</th>
-                                <th class="tbl_border">Benefitiery Branches</th>
                                 <th class="tbl_border">Salary Amount</th>
                                 <th class="tbl_border">Total Amount</th>
-                                <th class="tbl_border">Designation & ID No</th>
-                                <th class="tbl_border">Mobile No</th>
                                 <th class="tbl_border">Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($data as $d)
-                                @if ($d->employee?->salary_prepared_type == $salaryType)
+                                @if ($d->employee?->salary_prepared_type != 1)
                                     <tr class="tbl_border">
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
-                                        <th class="tbl_border text-center">{{$d->employee?->bn_bank_name}}, {{$d->employee?->bn_brance_name}} <input type="hidden" value="{{$d->id}}"></th>
+                                        <th class="tbl_border text-center">{{$d->employee?->bn_bank_name}}, {{$d->employee?->bn_brance_name}}<input type="hidden" value="{{$d->id}}"></th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_routing_number}}</th>
                                         <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
-                                        <th class="tbl_border">{{$d->branches?->brance_name}}</th>
                                         <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
-                                        <th class="tbl_border text-center">{{$d->position?->name}} <br> ID No- {{$d->employee?->admission_id_no}} </th>
-                                        <th class="tbl_border text-center">{{$d->employee?->en_parm_phone_my}}</th>
                                         <th class="tbl_border text-center">{{$d->remark}}</th>
                                     </tr>
                                     @php
@@ -69,7 +60,7 @@
                             @endforelse
                             <tr class="tbl_border">
                                 <th class="tbl_border"></th>
-                                <th class="tbl_border text-left" colspan="4">
+                                <th class="tbl_border text-left" colspan="3">
                                     @php
                                         if ($totalAmount > 0) {
                                             $textValue = getBangladeshCurrency($totalAmount);
@@ -79,10 +70,9 @@
                                         }
                                     @endphp
                                 </th>
-                                <th class="tbl_border text-center" colspan="2">Total =</th>
+                                <th class="tbl_border text-center">Total =</th>
+                                <th class="tbl_border"></th>
                                 <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
-                                <th class="tbl_border"></th>
-                                <th class="tbl_border"></th>
                                 <th class="tbl_border"></th>
                             </tr>
                         </tbody>
