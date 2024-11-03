@@ -258,14 +258,14 @@
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="7">Total</th>
-                    <th  style="text-align: end;">{{ money_format($totalAmount+$invoice_id->vat_taka - $totalLess) }}</th>
+                    <th  style="text-align: end;">{{ money_format(($totalAmount+$invoice_id->vat_taka) - $totalLess) }}</th>
                 </tr>
             </tfoot>
         </table>
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = $totalAmount+$invoice_id->vat_taka - $totalLess;
+                $dueTotal = ($totalAmount+$invoice_id->vat_taka) - $totalLess;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
