@@ -11,7 +11,7 @@
                     <select required class="form-control form-select year" name="year" required>
                         <option value="">Select Year</option>
                         @for($i=2023;$i<= date('Y');$i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        <option value="{{ $i }}" {{old('year')== $i? 'selected' : ''}}>{{ $i }}</option>
                         @endfor
                     </select>
                 </div>
@@ -20,7 +20,7 @@
                     <select required class="form-control form-select month selected_month" name="month" required>
                         <option value="">Select Month</option>
                         @for($i=1;$i<= 12;$i++)
-                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                        <option value="{{ $i }}" {{old('month')== $i? 'selected' : ''}}>{{ date('F',strtotime("2022-$i-01")) }}</option>
                         @endfor
                     </select>
                 </div>
@@ -45,7 +45,8 @@
                     <select class="choices form-select multiple-remove job_post_id" multiple="multiple" name="job_post_id[]">
                         <optgroup label="Select Customer">
                             @forelse ($jobposts as $p)
-                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            <option value="{{ $p->id }}" {{ old('job_post_id') == $p->id ? 'selected' : '' }}>{{ $p->name }}</option>
+
                             @empty
                             @endforelse
                         </optgroup>
@@ -55,19 +56,19 @@
                     <label for="billdate">{{__('Salary Format')}}</label>
                     <select name="type" class="form-control form-select" required>
                         <option value="">Select</option>
-                        <option value="0">Office Staff</option>
-                        <option value="1">Out Station</option>
-                        <option value="2">In Station</option>
-                        <option value="3">Peon</option>
-                        <option value="4">Robi Tower</option>
-                        <option value="5">Ever Care</option>
-                        <option value="6">Linde BD</option>
-                        <option value="7">Mas Intimats</option>
-                        <option value="8">Mas Sumantra</option>
-                        <option value="9">Portlink</option>
-                        <option value="10">RSB</option>
-                        <option value="11">Top Way</option>
-                        <option value="12">RSGT</option>
+                        <option value="0" {{old('type')== '0'? 'selected' : ''}}>Office Staff</option>
+                        <option value="1" {{old('type')== '1'? 'selected' : ''}}>Out Station</option>
+                        <option value="2" {{old('type')== '2'? 'selected' : ''}}>In Station</option>
+                        <option value="3" {{old('type')== '3'? 'selected' : ''}}>Peon</option>
+                        <option value="4" {{old('type')== '4'? 'selected' : ''}}>Robi Tower</option>
+                        <option value="5" {{old('type')== '5'? 'selected' : ''}}>Ever Care</option>
+                        <option value="6" {{old('type')== '6'? 'selected' : ''}}>Linde BD</option>
+                        <option value="7" {{old('type')== '7'? 'selected' : ''}}>Mas Intimats</option>
+                        <option value="8" {{old('type')== '8'? 'selected' : ''}}>Mas Sumantra</option>
+                        <option value="9" {{old('type')== '9'? 'selected' : ''}}>Portlink</option>
+                        <option value="10" {{old('type')== '10'? 'selected' : ''}}>RSB</option>
+                        <option value="11" {{old('type')== '11'? 'selected' : ''}}>Top Way</option>
+                        <option value="12" {{old('type')== '12'? 'selected' : ''}}>RSGT</option>
                     </select>
                 </div>
                 <div class="col-lg-3">

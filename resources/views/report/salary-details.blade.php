@@ -51,7 +51,13 @@
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_bank_name}}, {{$d->employee?->bn_brance_name}} <input type="hidden" value="{{$d->id}}"></th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_routing_number}}</th>
-                                        <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
+                                        <th class="tbl_border">
+                                            @if($d->employee?->bn_ac_name != '')
+                                                {{$d->employee?->bn_ac_name}}
+                                            @else
+                                                {{$d->employee?->en_applicants_name}}
+                                            @endif
+                                        </th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
                                         <th class="tbl_border">{{$d->branches?->brance_name}}</th>
                                         <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>

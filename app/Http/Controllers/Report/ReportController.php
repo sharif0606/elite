@@ -9,10 +9,12 @@ use App\Models\Settings\Zone;
 use Illuminate\Http\Request;
 use App\Models\Crm\InvoicePayment;
 use App\Models\Customer;
+use App\Models\Employee\Employee;
 use App\Models\Hrm\SalarySheet;
 use App\Models\Hrm\SalarySheetDetail;
 use App\Models\JobPost;
 use Illuminate\Support\Facades\DB;
+use Brian2694\Toastr\Facades\Toastr;
 
 class ReportController extends Controller
 {
@@ -109,15 +111,19 @@ class ReportController extends Controller
         if($request->type == 0 ){
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->where('status',4)->pluck('id');
         }else{
+            $emp = Employee::where('status',1)->where('salary_prepared_type',$request->type)->pluck('id');
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
         }
         $getYear = $request->year;
         $getMonth = $request->month;
         $salaryType = $request->type;
 
-        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','branch_id','common_net_salary')
-        ->whereIn('salary_id',$salaryIds);
+        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','remark','duty_qty',DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
+        ->whereIn('salary_id',$salaryIds)->groupBy('employee_id');
 
+        if ($request->type != 0){
+            $data->whereIn('employee_id', $emp);
+        }
         if ($request->customer_id){
             $customerId = $request->customer_id;
             $data->where('customer_id', $customerId);
@@ -132,30 +138,18 @@ class ReportController extends Controller
         }
         $data = $data->get();
 
-        if($request->type==1){
-            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 0){
-            return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 2){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 3){
-            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 4){
-            return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 5){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 6){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 7){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 8){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 9){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
-        }else if($request->type == 10){
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+        if(!$data->isEmpty()){
+            if($request->type== 0){
+                return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
+            }else if(in_array($request->type, [1,3,4])){
+                return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
+            }else if(in_array($request->type, [2,5,6,7,8,9,10,11,12])){
+                return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+            }else{
+                return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+            }
         }else{
-            return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
+            return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'No Data Found', ["positionClass" => "toast-top-right"]));
         }
     }
 }

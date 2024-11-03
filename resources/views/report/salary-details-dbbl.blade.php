@@ -43,7 +43,7 @@
                         </thead>
                         <tbody>
                             @forelse ($data as $d)
-                                @if ($d->employee?->salary_prepared_type == $salaryType)
+                                {{-- @if ($d->employee?->salary_prepared_type == $salaryType) --}}
                                     <tr class="tbl_border">
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->admission_id_no}}</th>
@@ -57,7 +57,7 @@
                                     @php
                                         $totalAmount += $d->common_net_salary;
                                     @endphp
-                                @endif
+                                {{-- @endif --}}
                             @empty
                             @endforelse
                             <tr class="tbl_border">
