@@ -193,6 +193,8 @@
         var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
         var Year=$('.year').val();
         var Month=$('.month').val();
+        var currentMonth = $('.selected_month').val();
+        var totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
 
         let counter = 0;
         $.ajax({
@@ -239,7 +241,9 @@
                         let Loan = (value.loan > 0) ? value.loan : '0';
                         // there fuel is allownce. it will add with total salary
                         let fuelBill = (value.fuel_bill > 0) ? value.fuel_bill : '0';
+                        let totalSalryAm = parseFloat(grossSalaryAmount) + parseFloat(postAllowance) + parseFloat(fuelBill);
                         let totalDeduction = parseFloat(Fine) + parseFloat(em) + parseFloat(Loan) + parseFloat(mess) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let totalNetSalAm = totalSalryAm - totalDeduction;
                         selectElement.append(
                             `<tr>
                                 <td class="fixed">${counter + 1}</td>
@@ -269,7 +273,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="${grossSalaryAmount}" placeholder="Duty Amount">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="text" name="duty_qty[]" value="0" placeholder="Duty Rate">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="text" name="duty_qty[]" value="${totalDaysInMonth}">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="text" name="ot_qty[]" value="0" placeholder="Ot Qty">
@@ -311,7 +315,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traning_cost" type="text" name="deduction_traning_cost[]" value="${traningCostPerMonth}" placeholder="Training Cost">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="0" placeholder="Total Payble">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control total_payble" type="text" name="total_payble[]" value="${totalNetSalAm}" placeholder="Total Payble">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control signature_ind" type="text" name="signature_ind[]" value="" placeholder="SIG OF IND.">

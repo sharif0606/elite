@@ -205,17 +205,55 @@
                 @endif
             </tbody>
             <tfoot>
+                @php
+                    $totalLess = 0;
+                @endphp
                 @if($invoice_id->vat_taka > 0)
                     <tr style="text-align: center;">
                         <td></td>
                         <th colspan="7">Sub Total</th>
                         <th  style="text-align: end;">{{ money_format($totalAmount) }}</th>
                     </tr>
+                    @if ($invoice_id->less->isNotEmpty())
+                        @foreach ($invoice_id->less as $le)
+                            <tr style="text-align: center;">
+                                <td></td>
+                                <th colspan="7">{{ $le->description }}</th>
+                                <th  style="text-align: end;">{{ money_format($le->amount) }}</th>
+                            </tr>
+                            @php
+                                $totalLess += $le->amount;
+                            @endphp
+                        @endforeach
+                        <tr style="text-align: center;">
+                            <td></td>
+                            <th colspan="7">Net Total</th>
+                            <th  style="text-align: end;">{{ money_format($totalAmount-$totalLess) }}</th>
+                        </tr>
+                    @endif
                     <tr style="text-align: center;">
                         <td></td>
                         <th colspan="7">Vat <span>{{$invoice_id->vat}}</span>%</th>
                         <th  style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</th>
                     </tr>
+                @else
+                    @if ($invoice_id->less->isNotEmpty())
+                        <tr style="text-align: center;">
+                            <td></td>
+                            <th colspan="7">Sub Total</th>
+                            <th  style="text-align: end;">{{ money_format($totalAmount) }}</th>
+                        </tr>
+                        @foreach ($invoice_id->less as $le)
+                            <tr style="text-align: center;">
+                                <td></td>
+                                <th colspan="7">{{ $le->description }}</th>
+                                <th  style="text-align: end;">{{ money_format($le->amount) }}</th>
+                            </tr>
+                            @php
+                                $totalLess += $le->amount;
+                            @endphp
+                        @endforeach
+                    @endif
                 @endif
                 <tr style="text-align: center;">
                     <td></td>

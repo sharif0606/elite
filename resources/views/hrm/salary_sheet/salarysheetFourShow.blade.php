@@ -43,13 +43,13 @@
                                     <thead>
                                         <tr class="text-center tbl_border" id="">
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('S/N')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 100px !important;">{{__('Date of Joining')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank & Joining date')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 50px; !important">{{__('ID No')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 80px !important;">{{__('Date of Joining')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Basic')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('House rent')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Medical Allowance')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 60px; !important">{{__('Medical Allow.')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Salary')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Pre. Days')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('OT Days')}}</th>
@@ -62,7 +62,7 @@
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Total Payble')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('SIG OF IND.')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Sing of Accounts')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Remarks')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 140px; !important">{{__('Remarks')}}</th>
                                         </tr>
                                         <tr class="tbl_border text-center">
                                             <th class="tbl_border">Excess Mobile</th>
