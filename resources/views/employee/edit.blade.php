@@ -626,7 +626,6 @@
                             @if($errors->has('bn_traning_cost'))
                                 <span class="text-danger"> {{ $errors->first('bn_traning_cost') }}</span>
                             @endif
-                            <input type="hidden" id="bn_traning_cost_byMonth" value="6" class="form-control @error('bn_traning_cost_byMonth') is-invalid @enderror" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
                         </div>
                     </div>
                     <div class="col-md-4 col-12">
@@ -635,15 +634,12 @@
                             <input type="number" id="bn_remaining_cost" value="{{old('bn_remaining_cost',$employees->bn_remaining_cost)}}" class="form-control" placeholder="ট্রেনিং খরচ বাকি" name="bn_remaining_cost">
                          </div>
                     </div>
-                    {{--  <div class="col-md-4 col-12">
+                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_traning_cost_byMonth">ট্রেনিং খরচ মাস</label>
-                            <input type="text" id="bn_traning_cost_byMonth" value="{{old('bn_traning_cost_byMonth',$employees->bn_traning_cost_byMonth)}}" class="form-control @error('bn_traning_cost_byMonth') is-invalid @enderror" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
-                            @if($errors->has('bn_traning_cost_byMonth'))
-                                <span class="text-danger"> {{ $errors->first('bn_traning_cost_byMonth') }}</span>
-                            @endif
+                            <label for="bn_traning_cost_byMonth">ট্রেনিং খরচ কালেকশন মাস</label>
+                            <input type="text" value="{{old('bn_traning_cost_byMonth',$employees->bn_traning_cost_byMonth)}}" class="form-control" placeholder="ট্রেনিং খরচ কালেকশন মাস" name="bn_traning_cost_byMonth">
                         </div>
-                    </div>  --}}
+                    </div> 
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_bank_name">ব্যাংক নাম</label>

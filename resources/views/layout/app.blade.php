@@ -275,42 +275,34 @@
         //     }
         // }
         function printDiv(divName) {
-    // Get the HTML content of the specified div
-    var prtContent = document.getElementById(divName).innerHTML;
+            var prtContent = document.getElementById(divName).innerHTML;
+            var printFrame = document.createElement('iframe');
+            printFrame.style.position = 'absolute';
+            printFrame.style.width = '0px';
+            printFrame.style.height = '0px';
+            printFrame.style.border = 'none';
+            document.body.appendChild(printFrame);
 
-    // Create a hidden iframe for printing
-    var printFrame = document.createElement('iframe');
-    printFrame.style.position = 'absolute';
-    printFrame.style.width = '0px';
-    printFrame.style.height = '0px';
-    printFrame.style.border = 'none';
-    document.body.appendChild(printFrame);
-
-    // Access the iframe's document and write the content with the necessary styles
-    var doc = printFrame.contentWindow.document;
-    doc.open();
-    doc.write(`
-        <html>
-        <head>
-            <title>Print</title>
-            <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
-        </head>
-        <body>
-            <div>${prtContent}</div>
-        </body>
-        </html>
-    `);
-    doc.close();
-
-    // Use a timeout to give the iframe time to load before printing
-    setTimeout(function() {
-        printFrame.contentWindow.focus();
-        printFrame.contentWindow.print();
-
-        // Remove the iframe after printing
-        document.body.removeChild(printFrame);
-    }, 500);  // Adjust the timeout as necessary
-}
+            var doc = printFrame.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                <head>
+                    <title>Print</title>
+                    <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
+                </head>
+                <body>
+                    <div>${prtContent}</div>
+                </body>
+                </html>
+            `);
+            doc.close();
+            setTimeout(function() {
+                printFrame.contentWindow.focus();
+                printFrame.contentWindow.print();
+                document.body.removeChild(printFrame);
+            }, 500);
+        }
 
 
     </script>
