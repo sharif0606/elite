@@ -262,18 +262,57 @@
         });
     </script>
     <script>
+        // function printDiv(divName) {
+        //     var prtContent = document.getElementById(divName);
+        //     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        //     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+        //     WinPrint.document.write(prtContent.innerHTML);
+        //     WinPrint.document.close();
+        //     WinPrint.onload =function(){
+        //         WinPrint.focus();
+        //         WinPrint.print();
+        //         WinPrint.close();
+        //     }
+        // }
         function printDiv(divName) {
-            var prtContent = document.getElementById(divName);
-            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-            WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
-            WinPrint.document.write(prtContent.innerHTML);
-            WinPrint.document.close();
-            WinPrint.onload =function(){
-                WinPrint.focus();
-                WinPrint.print();
-                WinPrint.close();
-            }
-        }
+    // Get the HTML content of the specified div
+    var prtContent = document.getElementById(divName).innerHTML;
+
+    // Create a hidden iframe for printing
+    var printFrame = document.createElement('iframe');
+    printFrame.style.position = 'absolute';
+    printFrame.style.width = '0px';
+    printFrame.style.height = '0px';
+    printFrame.style.border = 'none';
+    document.body.appendChild(printFrame);
+
+    // Access the iframe's document and write the content with the necessary styles
+    var doc = printFrame.contentWindow.document;
+    doc.open();
+    doc.write(`
+        <html>
+        <head>
+            <title>Print</title>
+            <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
+        </head>
+        <body>
+            <div>${prtContent}</div>
+        </body>
+        </html>
+    `);
+    doc.close();
+
+    // Use a timeout to give the iframe time to load before printing
+    setTimeout(function() {
+        printFrame.contentWindow.focus();
+        printFrame.contentWindow.print();
+
+        // Remove the iframe after printing
+        document.body.removeChild(printFrame);
+    }, 500);  // Adjust the timeout as necessary
+}
+
+
     </script>
     <script>
         $(function() {
