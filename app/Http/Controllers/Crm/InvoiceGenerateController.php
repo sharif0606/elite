@@ -88,6 +88,7 @@ class InvoiceGenerateController extends Controller
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat;
+            $data->vat_switch = $request->vat_switch;
             $data->sub_total_amount = $request->sub_total_amount;
             $data->total_tk = $request->total_tk;
             $data->vat_taka = $request->vat_taka;
@@ -258,6 +259,7 @@ class InvoiceGenerateController extends Controller
             $data->end_date = $request->end_date;
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat;
+            $data->vat_switch = $request->vat_switch;
             $data->sub_total_amount = $request->sub_total_amount;
             $data->total_tk = $request->total_tk;
             $data->vat_taka = $request->vat_taka;

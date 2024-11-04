@@ -174,7 +174,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent">{{$inv->vat}}</span> %)</th>
+                                            <th colspan="8">Vat (<span class="vat_percent">{{$inv->vat}}</span> %) || Vat Switch <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="{{$inv->vat_switch}}" @if($inv->vat_switch == 1) checked @endif name="vat_switch"></th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value="{{$inv->vat_taka}}"></td>
                                         </tr>
                                         <tr style="text-align: center;">
@@ -416,8 +416,13 @@
         $('.vat_taka').val(vatTaka);
         $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
     }  --}}
+    function noVat(checkbox) {
+        checkbox.value = checkbox.checked ? '1' : '0';
+        addCount(checkbox);
+    }
      function addCount(e){
         var totalAdd=0;
+        let noVatCheck = $('.vat_switch').val();
         $('.add_count').each(function(){
             totalAdd+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
             //alert(totalAdd)
@@ -430,8 +435,13 @@
         //var vat=$('#branch_id').find(":selected").data('vat');
         var vat=$('.vat').val();
         //console.log(vat);
-        var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
-        $('.total_tk').val(totalAddTaka);
+        if(noVatCheck == 1){
+            var totalAddTaka = addSubTotal;
+        }else{
+            var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
+        }
+        var totalAfterLess = parseFloat(addSubTotal) + parseFloat(totalAdds);
+        $('.total_tk').val(totalAfterLess);
         $('.temporaty_total').val(totalAddTaka);
         var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);

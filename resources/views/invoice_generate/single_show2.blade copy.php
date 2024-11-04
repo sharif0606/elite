@@ -224,24 +224,22 @@
                         @php $totalAddLess += $le->amount; @endphp
                     @endforeach
                 @endif
-                @if ($invoice_id->vat > 0 && $invoice_id->vat_switch == 0 )
-                    <tr style="text-align: center;">
+                {{--  <tr style="text-align: center;" class="d-none">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
-                </tr> 
-                @endif
+                    <td>{{ $invoice_id->total_tk}}</td>
+                </tr>  --}}
                 @if($invoice_id->vat>0)
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
-                        <td style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</td>
+                        <td style="text-align: end;">{{ money_format(($invoice_id->sub_total_amount*$invoice_id->vat)/100) }}</td>
                     </tr>
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Total</th>
-                    <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
+                    <td style="text-align: end;"><b>{{ money_format((($invoice_id->sub_total_amount * $invoice_id->vat) / 100) + $invoice_id->sub_total_amount + $totalAddLess) }}</b></td>
                 </tr>
             </tfoot>
         </table>

@@ -155,11 +155,12 @@
                                             <td>
                                                 <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                 <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
+                                                {{-- this temporaty_total for switch vat and change vat percent --}}
                                             </td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent"></span> %)</th>
+                                            <th colspan="8">Vat (<span class="vat_percent"></span> %) || Vat Switch <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="0" name="vat_switch"></th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
@@ -394,8 +395,15 @@
         $('.vat_taka').val(vatTaka);
         $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
     }  --}}
-     function addCount(e){
+
+    function noVat(checkbox) {
+        checkbox.value = checkbox.checked ? '1' : '0';
+        addCount(checkbox);
+    }
+    function addCount(e){
         var totalAdd=0;
+        let noVatCheck = $('.vat_switch').val();
+        console.log(noVatCheck);
         $('.add_count').each(function(){
             totalAdd+= isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
             //alert(totalAdd)
@@ -408,8 +416,13 @@
         //var vat=$('#branch_id').find(":selected").data('vat');
         var vat=$('.vat').val();
         //console.log(vat);
-        var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
-        $('.total_tk').val(totalAddTaka);
+        if(noVatCheck == 1){
+            var totalAddTaka = addSubTotal;
+        }else{
+            var totalAddTaka=parseFloat(addSubTotal) + parseFloat(totalAdds);
+        }
+        var totalAfterLess = parseFloat(addSubTotal) + parseFloat(totalAdds);
+        $('.total_tk').val(totalAfterLess);
         $('.temporaty_total').val(totalAddTaka);
         var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
