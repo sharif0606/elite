@@ -211,16 +211,14 @@
                                         @empty
                                         @endforelse
                                     </tbody>
-                                    <tfoot>
-                                         <tr class="tbl_border text-center">
-                                            <th colspan="20" class="tbl_border text-center">Total</th>
-                                            <th class="tbl_border">{{$deductionMessTotal}}</th>
-                                            <th class="tbl_border">{{$deductionLoomTotal}}</th>
-                                            <th class="tbl_border">{{$deductionTrainingTotal}}</th>
-                                            <th class="tbl_border">{{$payableTotal}}</th>
-                                            <th class="tbl_border">{{$deductionMessTotal + $deductionLoomTotal + $deductionTrainingTotal + $payableTotal}}</th>
-                                        </tr> 
-                                    </tfoot>
+                                    <tr class="tbl_border text-center">
+                                        <th colspan="20" class="tbl_border text-center">Total</th>
+                                        <th class="tbl_border">{{$deductionMessTotal}}</th>
+                                        <th class="tbl_border">{{$deductionLoomTotal}}</th>
+                                        <th class="tbl_border">{{$deductionTrainingTotal}}</th>
+                                        <th class="tbl_border">{{$payableTotal}}</th>
+                                        <th class="tbl_border">{{$deductionMessTotal + $deductionLoomTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                    </tr> 
                                 </table>
                             </div>
                         </div>
