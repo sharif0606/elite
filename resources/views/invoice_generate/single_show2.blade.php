@@ -248,7 +248,7 @@
         <div>
             <p>Total Amount In Words:<b>
                 @php
-                $dueTotal = (($invoice_id->sub_total_amount*($invoice_id->vat)/100))+$invoice_id->sub_total_amount + $totalAddLess;
+                $dueTotal = $invoice_id->grand_total;
 
                 if ($dueTotal > 0) {
                     $textValue = getBangladeshCurrency($dueTotal);
