@@ -224,7 +224,7 @@
                         @php $totalAddLess += $le->amount; @endphp
                     @endforeach
                 @endif
-                @if ($invoice_id->vat > 0 && $invoice_id->vat_switch == 0 )
+                @if ($invoice_id->vat > 0 && $invoice_id->vat_switch == 1)
                     <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Total</th>
