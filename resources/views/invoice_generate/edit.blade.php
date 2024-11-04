@@ -442,7 +442,7 @@
         }
         var totalAfterLess = parseFloat(addSubTotal) + parseFloat(totalAdds);
         $('.total_tk').val(totalAfterLess);
-        $('.temporaty_total').val(totalAddTaka);
+        $('.temporaty_total').val(totalAfterLess);
         var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
         var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
         $('.vat_taka').val(aVatTaka);
@@ -452,7 +452,12 @@
     }
     function changeVat(e){
         let changeVat=$('.vat').val();
-        var changeaddSubTotal=$('.temporaty_total').val();
+        let noVatCheck = $('.vat_switch').val();
+        if(noVatCheck == 1){
+            var changeaddSubTotal=$('.sub_total_amount').val();
+        }else{
+            var changeaddSubTotal=$('.temporaty_total').val();
+        }
         var changeaVatTaka=parseFloat((changeaddSubTotal*changeVat)/100).toFixed(2);
         var changeaGrandTotal=parseFloat(changeaddSubTotal) + parseFloat(changeaVatTaka);
         $('.vat_taka').val(changeaVatTaka);

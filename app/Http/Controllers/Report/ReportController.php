@@ -116,6 +116,7 @@ class ReportController extends Controller
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
         }
         $salaryStopEmployees = Deduction::where('year',$request->year)->where('month',$request->month)->where('status',20)->pluck('employee_id');
+        // dd($salaryStopEmployees);
         $getYear = $request->year;
         $getMonth = $request->month;
         $salaryType = $request->type;
