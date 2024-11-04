@@ -69,6 +69,8 @@
                         <option value="10" {{old('type')== '10'? 'selected' : ''}}>RSB</option>
                         <option value="11" {{old('type')== '11'? 'selected' : ''}}>Top Way</option>
                         <option value="12" {{old('type')== '12'? 'selected' : ''}}>RSGT</option>
+                        <option value="13" {{old('type')== '13'? 'selected' : ''}}>Office Staff Prime</option>
+                        <option value="14" {{old('type')== '14'? 'selected' : ''}}>Office Staff Others</option>
                     </select>
                 </div>
                 <div class="col-lg-3">

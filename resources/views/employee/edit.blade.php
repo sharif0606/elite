@@ -700,6 +700,8 @@
                                 <option value="10" {{$employees->salary_prepared_type==10? 'selected' : ''}}>RSB</option>
                                 <option value="11" {{$employees->salary_prepared_type==11? 'selected' : ''}}>Top Way</option>
                                 <option value="12" {{$employees->salary_prepared_type==12? 'selected' : ''}}>RSGT</option>
+                                <option value="13" {{$employees->salary_prepared_type==13? 'selected' : ''}}>Office Staff Prime</option>
+                                <option value="14" {{$employees->salary_prepared_type==14? 'selected' : ''}}>Office Staff Others</option>
                             </select>
                         </div>
                     </div>

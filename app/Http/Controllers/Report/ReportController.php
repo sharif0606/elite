@@ -144,6 +144,8 @@ class ReportController extends Controller
         if(!$data->isEmpty()){
             if($request->type== 0){
                 return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
+            }else if(in_array($request->type, [13,14])){
+                return view('report.salary-office-staff-prime',compact('getYear','getMonth','data','salaryType'));
             }else if(in_array($request->type, [1,3,4])){
                 return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
             }else if(in_array($request->type, [2,5,6,7,8,9,10,11,12])){

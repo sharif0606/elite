@@ -685,6 +685,8 @@
                                 <option value="10">RSB</option>
                                 <option value="11">Top Way</option>
                                 <option value="12">RSGT</option>
+                                <option value="13">Office Staff Prime</option>
+                                <option value="14">Office Staff Others</option>
                             </select>
                         </div>
                     </div>
