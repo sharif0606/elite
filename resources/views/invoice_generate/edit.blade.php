@@ -174,7 +174,7 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent">{{$inv->vat}}</span> %) || Vat Switch <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="{{$inv->vat_switch}}" @if($inv->vat_switch == 1) checked @endif name="vat_switch"></th>
+                                            <th colspan="8">Vat (<span class="vat_percent">{{$inv->vat}}</span> %) || Vat on Subtotal <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="{{$inv->vat_switch}}" @if($inv->vat_switch == 1) checked @endif name="vat_switch"></th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value="{{$inv->vat_taka}}"></td>
                                         </tr>
                                         <tr style="text-align: center;">
@@ -444,7 +444,7 @@
         $('.total_tk').val(totalAfterLess);
         $('.temporaty_total').val(totalAfterLess);
         var aVatTaka=parseFloat((totalAddTaka*vat)/100).toFixed(2);
-        var aGrandTotal=parseFloat(totalAddTaka) + parseFloat(aVatTaka);
+        var aGrandTotal=parseFloat(totalAfterLess) + parseFloat(aVatTaka);
         $('.vat_taka').val(aVatTaka);
         $('.vat_percent').text(vat);
         //$('.vat').val(vat);
