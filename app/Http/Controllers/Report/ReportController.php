@@ -13,6 +13,7 @@ use App\Models\Employee\Employee;
 use App\Models\Hrm\SalarySheet;
 use App\Models\Hrm\SalarySheetDetail;
 use App\Models\JobPost;
+use App\Models\payroll\Deduction;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -114,12 +115,13 @@ class ReportController extends Controller
             $emp = Employee::where('status',1)->where('salary_prepared_type',$request->type)->pluck('id');
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
         }
+        $salaryStopEmployees = Deduction::where('year',$request->year)->where('month',$request->month)->where('status',20)->pluck('employee_id');
         $getYear = $request->year;
         $getMonth = $request->month;
         $salaryType = $request->type;
 
         $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','remark','duty_qty',DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
-        ->whereIn('salary_id',$salaryIds)->groupBy('employee_id');
+        ->whereIn('salary_id',$salaryIds)->whereNotIn('employee_id',$salaryStopEmployees)->groupBy('employee_id');
 
         if ($request->type != 0){
             $data->whereIn('employee_id', $emp);

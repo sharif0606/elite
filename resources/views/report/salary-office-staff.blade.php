@@ -10,6 +10,7 @@
                 @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
                     $month = $getMonth;
                     $getMonth = isset($mt[$month])?$mt[$month]:0;
+                    $data = $data->sortBy(fn($d) => $d->employee?->salary_serial);
                     $sl=1;
                     $totalAmount=0;
                 @endphp
