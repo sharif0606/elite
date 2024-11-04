@@ -233,6 +233,8 @@
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         let RemarksArray = [
                             (value.loan_rmk) ? value.loan_rmk : '',
+                            (value.hr_rmk) ? value.hr_rmk : '',
+                            (value.fuel_bill_rmk) ? value.fuel_bill_rmk : '',
                             (value.salary_stop_message) ? value.salary_stop_message : ''
                         ];
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
