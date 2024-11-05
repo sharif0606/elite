@@ -21,7 +21,7 @@
                 @endphp
                 <div class="d-flex justify-content-between">
                     <a class="btn btn-sm btn-danger float-start my-1 pt-2" href="{{route('report.salary_report')}}">Back</a>
-                    <button type="button" class="btn btn-info my-1" onclick="printDivemp('result_show')">Print</button>
+                    <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
                 </div>
                 <div class="table-responsive" id="result_show">
                     <style>
