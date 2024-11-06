@@ -679,7 +679,7 @@
                                 <option value="4">Robi Tower</option>
                                 <option value="5">Ever Care</option>
                                 <option value="6">Linde BD</option>
-                                <option value="7">Mas Intimats</option>
+                                <option value="7">Mas Intimates</option>
                                 <option value="8">Mas Sumantra</option>
                                 <option value="9">Portlink</option>
                                 <option value="10">RSB</option>

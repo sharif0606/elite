@@ -694,7 +694,7 @@
                                 <option value="4" {{$employees->salary_prepared_type==4? 'selected' : ''}}>Robi Tower</option>
                                 <option value="5" {{$employees->salary_prepared_type==5? 'selected' : ''}}>Ever Care</option>
                                 <option value="6" {{$employees->salary_prepared_type==6? 'selected' : ''}}>Linde BD</option>
-                                <option value="7" {{$employees->salary_prepared_type==7? 'selected' : ''}}>Mas Intimats</option>
+                                <option value="7" {{$employees->salary_prepared_type==7? 'selected' : ''}}>Mas Intimates</option>
                                 <option value="8" {{$employees->salary_prepared_type==8? 'selected' : ''}}>Mas Sumantra</option>
                                 <option value="9" {{$employees->salary_prepared_type==9? 'selected' : ''}}>Portlink</option>
                                 <option value="10" {{$employees->salary_prepared_type==10? 'selected' : ''}}>RSB</option>

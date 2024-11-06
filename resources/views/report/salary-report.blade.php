@@ -63,7 +63,7 @@
                         <option value="4" {{old('type')== '4'? 'selected' : ''}}>Robi Tower</option>
                         <option value="5" {{old('type')== '5'? 'selected' : ''}}>Ever Care</option>
                         <option value="6" {{old('type')== '6'? 'selected' : ''}}>Linde BD</option>
-                        <option value="7" {{old('type')== '7'? 'selected' : ''}}>Mas Intimats</option>
+                        <option value="7" {{old('type')== '7'? 'selected' : ''}}>Mas Intimates</option>
                         <option value="8" {{old('type')== '8'? 'selected' : ''}}>Mas Sumantra</option>
                         <option value="9" {{old('type')== '9'? 'selected' : ''}}>Portlink</option>
                         <option value="10" {{old('type')== '10'? 'selected' : ''}}>RSB</option>

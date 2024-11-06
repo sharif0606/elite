@@ -32,7 +32,7 @@
                         }
                     </style>
                     @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimats','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
                     @endphp
                     <table id="salaryTable" class="table tbl_border">
                         <thead>
