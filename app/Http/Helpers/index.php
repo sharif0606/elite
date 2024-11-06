@@ -103,7 +103,9 @@ function invoice(){
 	];
 }
 function getBangladeshCurrency($number) {
-    $decimal = round($number - ($no = floor($number)), 2) * 100;
+    $decimal = ($number - floor($number)) * 100;
+    $decimal = (int) round($decimal); // Convert to integer after rounding
+    $no = floor($number);
     $hundred = null;
     $digits_length = strlen($no);
     $i = 0;
@@ -154,38 +156,59 @@ function getBangladeshCurrency($number) {
     return ($Taka ? $Taka . 'Taka' : '') . $poysa .' '. 'Only.';
 }
 
-// function getBangladeshCurrency( $number)
-// {
+// function getBangladeshCurrency($number) {
 //     $decimal = round($number - ($no = floor($number)), 2) * 100;
 //     $hundred = null;
 //     $digits_length = strlen($no);
 //     $i = 0;
 //     $str = array();
-//     $words = array(0 => '', 1 => 'One', 2 => 'Two',
-//         3 => 'Three', 4 => 'Four', 5 => 'Five', 6 => 'Six',
-//         7 => 'Seven', 8 => 'Eight', 9 => 'Nine',
-//         10 => 'Ten', 11 => 'Eleven', 12 => 'Twelve',
-//         13 => 'Thirteen', 14 => 'Fourteen', 15 => 'Fifteen',
-//         16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
-//         19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty',
-//         40 => 'Forty', 50 => 'Fifty', 60 => 'Sixty',
-//         70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety');
-//     $digits = array('', 'Hundred','Thousand','Lac', 'Crore');
-//     while( $i < $digits_length ) {
+//     $words = array(
+//         0 => '', 1 => 'One', 2 => 'Two', 3 => 'Three', 4 => 'Four', 5 => 'Five',
+//         6 => 'Six', 7 => 'Seven', 8 => 'Eight', 9 => 'Nine', 10 => 'Ten',
+//         11 => 'Eleven', 12 => 'Twelve', 13 => 'Thirteen', 14 => 'Fourteen',
+//         15 => 'Fifteen', 16 => 'Sixteen', 17 => 'Seventeen', 18 => 'Eighteen',
+//         19 => 'Nineteen', 20 => 'Twenty', 30 => 'Thirty', 40 => 'Forty',
+//         50 => 'Fifty', 60 => 'Sixty', 70 => 'Seventy', 80 => 'Eighty', 90 => 'Ninety'
+//     );
+//     $digits = array('', 'Hundred', 'Thousand', 'Lac', 'Crore');
+    
+//     while ($i < $digits_length) {
 //         $divider = ($i == 2) ? 10 : 100;
 //         $number = floor($no % $divider);
 //         $no = floor($no / $divider);
-//         $i += $divider == 10 ? 1 : 2;
+//         $i += ($divider == 10) ? 1 : 2;
 //         if ($number) {
 //             $plural = (($counter = count($str)) && $number > 9) ? '' : null;
-//             $hundred = ($counter == 1 && $str[0]) ? '  ' : null;
-//             $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
-//         } else $str[] = null;
+//             $hundred = ($counter == 1 && $str[0]) ? ' ' : null;
+//             $str[] = ($number < 21) 
+//                 ? $words[$number] . ' ' . $digits[$counter] . $plural . ' ' . $hundred 
+//                 : $words[floor($number / 10) * 10] . ' ' . $words[$number % 10] . ' ' . $digits[$counter] . $plural . ' ' . $hundred;
+//         } else {
+//             $str[] = null;
+//         }
 //     }
+    
 //     $Taka = implode('', array_reverse($str));
-//     $poysa = ($decimal) ? " and " . ($words[$decimal / 10] . " " . $words[$decimal % 10]) . ' Poysa' : '';
-//     return ($Taka ? $Taka . 'Taka ' : '') . $poysa ;
+//     $decimal_part = (int)$decimal;
+//     $poysa = '';
+//     if ($decimal_part) {
+//         $poysa_words = '';
+//         if ($decimal_part < 20) {
+//             $poysa_words = $words[$decimal_part];
+//         } else {
+//             $tens = floor($decimal_part / 10) * 10;
+//             $units = $decimal_part % 10;
+//             $poysa_words = $words[$tens];
+//             if ($units) {
+//                 $poysa_words .= ' ' . $words[$units];
+//             }
+//         }
+//         $poysa = " and " . $poysa_words . ' Paisa';
+//     }
+//     return ($Taka ? $Taka . 'Taka' : '') . $poysa .' '. 'Only.';
 // }
+
+
 
 // if ( ! function_exists( 'money_format' ) ) {
 
