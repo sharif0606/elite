@@ -279,6 +279,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
         Route::resource('invoice-payment',invPayment::class);
+        Route::get('/checking-po-number', [invPayment::class, 'checkPoNumber'])->name('checking_duplicate_po');
         /* employee security */
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');
         Route::post('/prior-introduction-security-guards/{id}', [employee::class,'securityGuardsStore'])->name('security.store');

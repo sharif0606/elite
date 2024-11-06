@@ -9,13 +9,16 @@
             <div class="row">
                 @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
                     $month = $getMonth;
-                    $getMonth = isset($mt[$month])?$mt[$month]:0;
+                    $getMonthName = isset($mt[$month])?$mt[$month]:0;
                     $sl=1;
                     $totalAmount=0;
                 @endphp
                 <div class="d-flex justify-content-between">
                     <a class="btn btn-sm btn-danger float-start my-1 pt-2" href="{{route('report.salary_report')}}">Back</a>
-                    <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
+                    <div>
+                        <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
+                        {{-- <button type="button" class="btn btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button> --}}
+                    </div>
                 </div>
                 <div class="table-responsive" id="result_show">
                     <style>
@@ -27,9 +30,9 @@
                     @php
                         $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimats','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
                     @endphp
-                    <table class="table tbl_border">
+                    <table id="salaryTable" class="table tbl_border">
                         <thead>
-                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonth}}-{{$getYear}}</th></tr>
+                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonthName}}-{{$getYear}}</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
                                 <th class="tbl_border">ID NO</th>
@@ -97,4 +100,38 @@
         </form>
     </div>
 </div>
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
 @endsection
+@push('scripts')
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
+<script>
+    function exportReportToExcel(tableId, filename) {
+        let table = document.getElementById(tableId);
+        let tableToExport = table.cloneNode(true);
+
+        TableToExcel.convert(tableToExport, {
+            name: `${filename}.xlsx`,
+            sheet: {
+                name: 'Salary'
+            }
+        });
+
+        $("#my-content-div").html("");
+        $('.full_page').html("");
+    }
+    
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+        var year = {{ $getYear }};
+        var month = {{ $getMonth }};
+        var type = {{ $salaryType }};
+
+        $.get("{{route('report.salary_report_details')}}?year=" + year + "&month=" + month + "&type=" + type, function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            exportReportToExcel('salaryTable', '{{$name[$salaryType]}}-{{$getMonthName}}-{{$getYear}}');
+        });
+    }
+</script>
+@endpush

@@ -118,8 +118,14 @@
                         $totalItems = $invoice->total();
                     @endphp
                     @forelse($invoice as $key=>$e)
-                        @php $lessPaid = $e->less?->sum('amount')*$e->vat/100 @endphp
-                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $lessPaid)); @endphp
+                        @php 
+                            $lessPaid = $e->less?->sum('amount')*$e->vat/100;
+                            $paymentHasOrNot = $e->payment->sum('received_amount');
+                        @endphp
+                        @php
+                            $due = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $lessPaid), 2);
+                        @endphp
+                    
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
@@ -145,7 +151,7 @@
                                         data-bs-toggle="modal" data-bs-target="#invList"
                                         data-inv-id="{{ $e->id }}"
                                         data-zone-id="{{ $e->zone_id }}"
-                                        data-customer-name="{{ $e->customer?->name }}"
+                                        data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer?->id }}"
                                         data-sub-total-amount="{{ $e->sub_total_amount }}"
                                         data-vat-amount="{{ $e->vat_taka }}"
@@ -154,7 +160,8 @@
                                         <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
                                     </button>
                                 @endif
-                                @if ($e->grand_total-$lessPaid == $due)
+                                {{-- @if ($e->grand_total-$lessPaid == $due) --}}
+                                @if ($paymentHasOrNot == 0)
                                     @if ($e->invoice_type == 1)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
@@ -235,7 +242,7 @@
                             <span class="last-receive text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                 <ul class="last-amount" id="receivedAmountsList"></ul>
                             </span>
-                            <input type="text" id="received_amount" name="received_amount" class="form-control">
+                            <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control">
                         </div>
                         <div class="col-sm-4">
                             <label for="">VAT</label>
@@ -255,9 +262,17 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Fine Deduction</label>
-                            <input type="text"  name="fine_deduction" class="form-control">
+                            <input type="text" id="fine_deduction" onkeyup="billTotal();" name="fine_deduction" class="form-control">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <label for="">Salary paid by client</label>
+                            <input type="text" id="less_paid" onkeyup="billTotal();"  name="less_paid" class="form-control less_paid">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Total Bill</label>
+                            <input type="text" id="bill_total_count"  name="bill_total_count" class="form-control bill_total_count" readonly>
+                        </div>
+                        <div class="col-sm-2">
                             <label for="">Payment Mode</label>
                             <select name="payment_type" class="form-control" onchange="paymethod()">
                                 <option value="1">Cash</option>
@@ -271,8 +286,13 @@
                             <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
+                            <label for="">Deposit Bank</label>
+                            <input type="text" name="bank_name" class="form-control deposit_bank error-msg">
+                            {{-- <span class="error-message" style="color: red; display: none;"></span> --}}
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">PO No</label>
-                            <input type="text" name="po_no" onchange="paymethod()" class="form-control po_num error-msg">
+                            <input type="text" name="po_no" onchange="paymethod()" onblur="checkDuplicatePo(this)" class="form-control po_num error-msg">
                             <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
@@ -350,6 +370,7 @@
             let vat=(100*(vamt/rec));
             $('#'+place).val(vat.toFixed(2))
         }
+        billTotal();
     }
     function aitcalc(v,place){
         if(place=="ait_amount"){
@@ -363,7 +384,19 @@
             let ait=(100*(aamt/rec));
             $('#'+place).val(ait.toFixed(2))
         }
+        billTotal();
     }
+
+    function billTotal(){
+        let received = $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
+        let vatDeduct = $('#vat_amount').val() ? parseFloat($('#vat_amount').val()) : 0;
+        let aitDeduct = $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
+        let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
+        let lessPaid = $('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
+        let total = parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaid);
+        $('#bill_total_count').val(total);
+    }
+
     function paymethod(){
         let pmethod = document.querySelector('select[name="payment_type"]').value;
         let poBank = $('.po_bank').val();
@@ -381,7 +414,7 @@
         }else{
             errorMessage.hide();
             $('.po_bank').val('')
-            $('.po_num').val('')
+            //$('.po_num').val('')
             $('.po_date').val('');
             $('#buttonDisable').removeAttr('disabled',false)
         }
@@ -411,52 +444,80 @@
     });
 
     $(document).ready(function () {
-    $('#invList').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var invId = button.data('inv-id');
-        var cusName = button.data('customer-name');
-        var cusID = button.data('customer-id');
-        var zone = button.data('zone-id');
-        var Amount = button.data('total-amount');
-        var subAmount = button.data('sub-total-amount');
-        var vatAmount = button.data('vat-amount');
-        var receivedAmounts = button.attr('data-received-amounts');
-        // Try to parse the received amounts
-        var amountsArray = [];
-        try {
-            amountsArray = JSON.parse(receivedAmounts);
-        } catch (e) {
-            console.error("Error parsing received amounts: ", e);
-        }
-        
-        // amountsArray = amountsArray.filter(function(amount) {
-        //     return amount !== null && amount !== '';
-        // });
+        $('#invList').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var invId = button.data('inv-id');
+            var cusName = button.data('customer-name');
+            var cusID = button.data('customer-id');
+            var zone = button.data('zone-id');
+            var Amount = button.data('total-amount');
+            var subAmount = button.data('sub-total-amount');
+            var vatAmount = button.data('vat-amount');
+            var receivedAmounts = button.attr('data-received-amounts');
+            // Try to parse the received amounts
+            var amountsArray = [];
+            try {
+                amountsArray = JSON.parse(receivedAmounts);
+            } catch (e) {
+                console.error("Error parsing received amounts: ", e);
+            }
+            
+            // amountsArray = amountsArray.filter(function(amount) {
+            //     return amount !== null && amount !== '';
+            // });
 
-        // Set the values in the modal
-        var modal = $(this);
-        modal.find('#inv_id').val(invId);
-        modal.find('#name').text(cusName);
-        modal.find('#customer_id').val(cusID);
-        modal.find('#zone_id').val(zone);
-        modal.find('#totalAmount').text(Amount);
-        modal.find('#subAmount').text(subAmount);
-        modal.find('#subAmountInput').val(subAmount);
-        modal.find('#vatAmount').text(vatAmount);
+            // Set the values in the modal
+            var modal = $(this);
+            modal.find('#inv_id').val(invId);
+            modal.find('#name').text(cusName);
+            modal.find('#customer_id').val(cusID);
+            modal.find('#zone_id').val(zone);
+            modal.find('#totalAmount').text(Amount);
+            modal.find('#subAmount').text(subAmount);
+            modal.find('#subAmountInput').val(subAmount);
+            modal.find('#vatAmount').text(vatAmount);
 
-        var receivedAmountsList = modal.find('#receivedAmountsList');
-        receivedAmountsList.empty(); // Clear any existing items
-        let month=new Array("","January","February","March","April","May","June","July","August","September","October","November","December");
-        if (Object.keys(amountsArray).length > 0) {
-            receivedAmountsList.append('<li><strong>Last 3 Received Amounts:</strong></li>');
-            Object.entries(amountsArray).forEach(function(k) {
-                receivedAmountsList.append('<li>' + month[k[0]] +'--'+k[1] + '</li>');
-            });
-        } else {
-            receivedAmountsList.append('<li>No recent received amounts available.</li>');
-        }
+            var receivedAmountsList = modal.find('#receivedAmountsList');
+            receivedAmountsList.empty(); // Clear any existing items
+            let month=new Array("","January","February","March","April","May","June","July","August","September","October","November","December");
+            if (Object.keys(amountsArray).length > 0) {
+                receivedAmountsList.append('<li><strong>Last 3 Received Amounts:</strong></li>');
+                Object.entries(amountsArray).forEach(function(k) {
+                    receivedAmountsList.append('<li>' + month[k[0]] +'--'+k[1] + '</li>');
+                });
+            } else {
+                receivedAmountsList.append('<li>No recent received amounts available.</li>');
+            }
+        });
     });
-});
+
+    function checkDuplicatePo(e){
+        var po = $(e).val();
+        $.ajax({
+            url:"{{ route('checking_duplicate_po') }}",
+            type: "GET",
+            dataType: "json",
+            data: { 'po_no':po,},
+            success: function(data) {
+                //console.log(data);
+                if (data.length > 0) {
+                    // Construct the message
+                    var message = "<span style='border-bottom: solid 2px; color: yellow;'>Duplicate Po found:</span><br>";
+                    $.each(data, function(index, po) {
+                    message +=  "Customer: " + po.customer_name + (po.customer_branch ? ', ' + po.customer_branch : '') + "<br>" +
+                                "Receive Amount: " + po.receive + "<br>";
+                    });
+                    toastr.success(message);
+                } else {
+                    toastr.info("No duplicate po found");
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "An error occurred while processing your request.";
+                toastr.error(errorMessage);
+            }
+        });
+    }
 
 $(document).on('select2:open', () => {
     document.querySelector('.select2-search__field').focus();

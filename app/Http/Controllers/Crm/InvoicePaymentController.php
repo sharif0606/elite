@@ -49,6 +49,24 @@ class InvoicePaymentController extends Controller
         return view('invoice_payment.create',compact('customer'));
     }
 
+    public function checkPoNumber(Request $request){
+        try {
+            $customer = $request->customer_id;
+            $invoice = $request->invId;
+            $poNumber = $request->po_no;
+
+            $data = InvoicePayment::join('invoice_generates', 'invoice_generates.id', '=', 'invoice_payments.invoice_id')
+                ->where('invoice_payments.po_no', $poNumber)
+                ->leftJoin('customers','customers.id','=','invoice_payments.customer_id')
+                ->leftJoin('customer_brances','invoice_generates.branch_id','=','customer_brances.id')
+                ->select('invoice_payments.po_no as po_number','invoice_payments.received_amount as receive','customers.name as customer_name','customer_brances.brance_name as customer_branch')
+                ->get();
+            return response()->json($data, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         try{

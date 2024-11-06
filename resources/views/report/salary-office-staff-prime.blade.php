@@ -14,14 +14,17 @@
             <div class="row">
                 @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
                     $month = $getMonth;
-                    $getMonth = isset($mt[$month])?$mt[$month]:0;
+                    $getMonthName = isset($mt[$month])?$mt[$month]:0;
                     $data = $data->sortBy(fn($d) => $d->employee?->salary_serial);
                     $sl=1;
                     $totalAmount=0;
                 @endphp
                 <div class="d-flex justify-content-between">
                     <a class="btn btn-sm btn-danger float-start my-1 pt-2" href="{{route('report.salary_report')}}">Back</a>
-                    <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
+                    <div>
+                        <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
+                        {{-- <button type="button" class="btn btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button> --}}
+                    </div>
                 </div>
                 <div class="table-responsive" id="result_show">
                     <style>
@@ -37,9 +40,9 @@
                     @php
                         $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimats','Mas Sumantra','Portlink','RSB','Top Way','RSGT','Office Staff Prime','Office Staff Others');
                     @endphp
-                    <table class="table tbl_border">
+                    <table id="salaryTable" class="table tbl_border">
                         <thead>
-                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} for the month of {{$getMonth}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
+                            <tr class="text-center tbl_border"><th colspan="8" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} for the month of {{$getMonthName}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
                                 <th class="tbl_border">Bank's Branch With Location</th>
@@ -110,45 +113,38 @@
         </form>
     </div>
 </div>
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
 @endsection
 @push('scripts')
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
 <script>
-    function printDivemp(divName) {
-    var prtContent = document.getElementById(divName).cloneNode(true);
-    
-    // Get all inputs within the div and update their values in the cloned content
-    var inputs = prtContent.getElementsByTagName('input');
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].type === 'text' || inputs[i].type === 'date') {
-            inputs[i].setAttribute('value', inputs[i].value);
-        }
-    }
-    
-    // Get all textareas within the div and update their text in the cloned content
-    var textareas = prtContent.getElementsByTagName('textarea');
-    for (var i = 0; i < textareas.length; i++) {
-        textareas[i].innerHTML = textareas[i].value;
-    }
-    
-    // Get all selects within the div and update their selected options in the cloned content
-    var selects = prtContent.getElementsByTagName('select');
-    for (var i = 0; i < selects.length; i++) {
-        var selectedOption = selects[i].options[selects[i].selectedIndex];
-        selectedOption.setAttribute('selected', 'selected');
-    }
+    function exportReportToExcel(tableId, filename) {
+        let table = document.getElementById(tableId);
+        let tableToExport = table.cloneNode(true);
 
-    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-    WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
-    WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
-    WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; } .police-vf-font{font-size: 13px;} .police-vf-foot-font{font-size: 9px;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; } .no-print { display: none !important;} </style>');
-    WinPrint.document.write(prtContent.innerHTML);
-    WinPrint.document.close();
+        TableToExcel.convert(tableToExport, {
+            name: `${filename}.xlsx`,
+            sheet: {
+                name: 'Salary'
+            }
+        });
 
-    WinPrint.onload = function () {
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
-    };
-}
+        $("#my-content-div").html("");
+        $('.full_page').html("");
+    }
+    
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+        var year = {{ $getYear }};
+        var month = {{ $getMonth }};
+        var type = {{ $salaryType }};
+
+        $.get("{{route('report.salary_report_details')}}?year=" + year + "&month=" + month + "&type=" + type, function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            exportReportToExcel('salaryTable', '{{$name[$salaryType]}}-{{$getMonthName}}-{{$getYear}}');
+        });
+    }
 </script>
 @endpush

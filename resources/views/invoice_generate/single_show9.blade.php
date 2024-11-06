@@ -158,7 +158,7 @@
                 @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                        {{-- @if ($de->rate > 0 || $de->employee_qty > 0) --}}
+                        @if ($de->rate > 0 || $de->employee_qty > 0 || $de->total_houres > 0 || $de->duty_day > 0 || $de->rate_per_houres > 0)
                             <tr style="text-align: center;">
                                 <td >{{ $sl++  }}</td>
                                 <td>{{ $de->jobpost?->name }}
@@ -200,7 +200,7 @@
                             @php
                                 $totalAmount += $de->total_amounts;
                             @endphp
-                        {{-- @endif --}}
+                        @endif
                     @endforeach
                 @endif
             </tbody>
