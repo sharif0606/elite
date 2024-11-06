@@ -262,8 +262,94 @@
         });
     </script>
     <script>
-       
-    
+        // function printDiv(divName) {
+        //     var prtContent = document.getElementById(divName);
+        //     var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        //     WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+        //     WinPrint.document.write(prtContent.innerHTML);
+        //     WinPrint.document.close();
+        //     WinPrint.onload =function(){
+        //         WinPrint.focus();
+        //         WinPrint.print();
+        //         WinPrint.close();
+        //     }
+        // }
+
+        // function printDiv(divName) {
+        //     var prtContent = document.getElementById(divName).innerHTML;
+        //     var printFrame = document.createElement('iframe');
+        //     printFrame.style.position = 'absolute';
+        //     printFrame.style.width = '0px';
+        //     printFrame.style.height = '0px';
+        //     printFrame.style.border = 'none';
+        //     document.body.appendChild(printFrame);
+
+        //     var doc = printFrame.contentWindow.document;
+        //     doc.open();
+        //     doc.write(`
+        //         <html>
+        //         <head>
+        //             <title>Print</title>
+        //             <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
+        //         </head>
+        //         <body>
+        //             <div>${prtContent}</div>
+        //         </body>
+        //         </html>
+        //     `);
+        //     doc.close();
+        //     setTimeout(function() {
+        //         printFrame.contentWindow.focus();
+        //         printFrame.contentWindow.print();
+        //         document.body.removeChild(printFrame);
+        //     }, 500);
+        // }
+        /*function printDiv(divName) {
+            var prtDiv = document.getElementById(divName);*/
+            
+            // Find all input elements within the div
+            /*var inputs = prtDiv.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === 'text' || inputs[i].type === 'date') {
+                    inputs[i].setAttribute('value', inputs[i].value);
+                }
+            }*/
+            
+            // Now get the modified HTML content
+            //var prtContent = prtDiv.innerHTML;
+
+            // Create an iframe for printing
+            /*var printFrame = document.createElement('iframe');
+            printFrame.style.position = 'absolute';
+            printFrame.style.width = '0px';
+            printFrame.style.height = '0px';
+            printFrame.style.border = 'none';
+            document.body.appendChild(printFrame);*/
+
+            // Write content to the iframe's document
+            /*var doc = printFrame.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                <head>
+                    <title>Print</title>
+                    <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
+                </head>
+                <body>
+                    <div>${prtContent}</div>
+                </body>
+                </html>
+            `);
+            doc.close();
+
+            // Print the iframe content
+            setTimeout(function() {
+                printFrame.contentWindow.focus();
+                printFrame.contentWindow.print();
+                document.body.removeChild(printFrame);
+            }, 500);
+        }*/
+
 
 
     </script>
