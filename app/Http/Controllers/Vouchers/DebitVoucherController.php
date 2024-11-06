@@ -197,7 +197,7 @@ class DebitVoucherController extends VoucherController
 			// dd($e);
 			\Toastr::error('Please try again');
 			DB::rollBack();
-			return redirect()->back()->withInput();
+			return redirect()->back()->withInput();    
 		}
     }
 
