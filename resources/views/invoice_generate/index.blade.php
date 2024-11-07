@@ -174,6 +174,10 @@
                                         <a href="{{route('oneTripInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
+                                    @elseif($e->invoice_type == 4)
+                                        {{-- <a href="{{route('portlinkInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a> --}}
                                     @else
                                     @endif
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">
@@ -230,7 +234,7 @@
                                         <td><span class="due-details text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                             <ul class="due-amount">
                                                 <li>Sub Total: <span id="subAmount"></span><input id="subAmountInput" type="hidden"></li>
-                                                <li>Vat: <span id="vatAmount"></span> </li>
+                                                <li>Vat: <span id="vatAmount"></span><input id="vatAmountInput" type="hidden"></li>
                                             </ul>
                                         </span></td>
                                     </tr>
@@ -244,19 +248,19 @@
                             </span>
                             <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <label for="">VAT</label>
                             <input type="text" onkeyup="vatcalc(this.value,'vat_amount')" id="vat" name="vat" class="form-control">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <label for="">VAT Deduction</label>
                             <input type="text" onkeyup="vatcalc(this.value,'vat')" id="vat_amount" name="vat_amount" class="form-control">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <label for="">AIT</label>
                             <input type="text" onkeyup="aitcalc(this.value,'ait_amount')" id="ait"  name="ait" class="form-control">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <label for="">AIT Deduction</label>
                             <input type="text" onkeyup="aitcalc(this.value,'ait')" id="ait_amount"  name="ait_amount" class="form-control">
                         </div>
@@ -266,29 +270,38 @@
                         </div>
                         <div class="col-sm-3">
                             <label for="">Salary paid by client</label>
-                            <input type="text" id="less_paid" onkeyup="billTotal();"  name="less_paid" class="form-control less_paid">
+                            <input type="text" id="paid_by_client" onkeyup="billTotal();"  name="paid_by_client" class="form-control paid_by_client">
+                        </div>
+                        <div class="col-sm-2">
+                            <label for="">Less Paid Honor</label>
+                            <input type="text" id="less_paid_honor" onkeyup="billTotal();" name="less_paid_honor" class="form-control">
                         </div>
                         <div class="col-sm-3">
+                            <label for="">Less Paid</label>
+                            <input type="text" id="less_paid" name="less_paid" class="form-control" readonly>
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">Total Bill</label>
                             <input type="text" id="bill_total_count"  name="bill_total_count" class="form-control bill_total_count" readonly>
                         </div>
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <label for="">Payment Mode</label>
                             <select name="payment_type" class="form-control" onchange="paymethod()">
                                 <option value="1">Cash</option>
                                 <option value="2">Pay Order</option>
                                 <option value="3">Fund Transfer</option>
+                                <option value="4">Online Pay</option>
                             </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="">Bank Name</label>
-                            <input type="text" name="bank_name" onchange="paymethod()" class="form-control po_bank error-msg">
-                            <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Deposit Bank</label>
                             <input type="text" name="bank_name" class="form-control deposit_bank error-msg">
                             {{-- <span class="error-message" style="color: red; display: none;"></span> --}}
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Bank Name</label>
+                            <input type="text" name="bank_name" onchange="paymethod()" class="form-control po_bank error-msg">
+                            <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">PO No</label>
@@ -388,12 +401,17 @@
     }
 
     function billTotal(){
+        let dueAmount = $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+        let vatAmount = $('#vatAmountInput').val() ? parseFloat($('#vatAmountInput').val()) : 0;
         let received = $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
         let vatDeduct = $('#vat_amount').val() ? parseFloat($('#vat_amount').val()) : 0;
         let aitDeduct = $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
         let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
-        let lessPaid = $('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
-        let total = parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaid);
+        let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
+        let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
+        let lessPaid = (parseFloat(dueAmount) + parseFloat(vatAmount)) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
+        let total = parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(lessPaid) + parseFloat(paidByClient);
+        $('#less_paid').val(lessPaid);
         $('#bill_total_count').val(total);
     }
 
@@ -476,6 +494,7 @@
             modal.find('#subAmount').text(subAmount);
             modal.find('#subAmountInput').val(subAmount);
             modal.find('#vatAmount').text(vatAmount);
+            modal.find('#vatAmountInput').val(vatAmount);
 
             var receivedAmountsList = modal.find('#receivedAmountsList');
             receivedAmountsList.empty(); // Clear any existing items

@@ -496,7 +496,8 @@
         var changeaVatTaka=parseFloat((changeaddSubTotal*changeVat)/100).toFixed(2);
         var changeaGrandTotal=parseFloat(changeaddSubTotal) + parseFloat(changeaVatTaka);
         $('.vat_taka').val(changeaVatTaka);
-        $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
+        // $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
+        $('.grand_total').val(Math.round(changeaGrandTotal) + '.00');
         $('.vat_percent').text(changeVat);
     }
 </script>
