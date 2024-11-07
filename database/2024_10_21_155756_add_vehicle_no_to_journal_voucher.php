@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('debit_vouchers', function (Blueprint $table) {
+        Schema::table('journal_vouchers', function (Blueprint $table) {
             $table->unsignedBigInteger('vehicle_no')->nullable()->after('credit_sum');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('debit_vouchers', function (Blueprint $table) {
+        Schema::table('journal_vouchers', function (Blueprint $table) {
             $table->dropColumn(['vehicle_no']);
         });
     }

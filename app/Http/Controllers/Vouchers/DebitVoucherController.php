@@ -148,7 +148,7 @@ class DebitVoucherController extends VoucherController
     {
         $dvoucher=DebitVoucher::findOrFail(encryptor('decrypt',$id));
 		$dvoucherbkdn=DevoucherBkdn::where('debit_voucher_id',encryptor('decrypt',$id))->get();
-		return view('voucher.debitvoucher.show',compact('dvoucher','dvoucherbkdn'));
+		return view('voucher.debitVoucher.show',compact('dvoucher','dvoucherbkdn'));
     }
 
     /**
@@ -161,7 +161,7 @@ class DebitVoucherController extends VoucherController
     {
         $dvoucher=DebitVoucher::findOrFail(encryptor('decrypt',$id));
 		$dvoucherbkdn=DevoucherBkdn::where('debit_voucher_id',encryptor('decrypt',$id))->get();
-		return view('voucher.debitvoucher.edit',compact('dvoucher','dvoucherbkdn'));
+		return view('voucher.debitVoucher.edit',compact('dvoucher','dvoucherbkdn'));
     }
 
     /**
@@ -197,7 +197,7 @@ class DebitVoucherController extends VoucherController
 			// dd($e);
 			\Toastr::error('Please try again');
 			DB::rollBack();
-			return redirect()->back()->withInput();
+			return redirect()->back()->withInput();    
 		}
     }
 

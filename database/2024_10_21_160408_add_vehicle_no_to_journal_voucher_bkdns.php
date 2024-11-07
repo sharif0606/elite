@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('devoucher_bkdns', function (Blueprint $table) {
+        Schema::table('journal_voucher_bkdns', function (Blueprint $table) {
             $table->unsignedBigInteger('vehicle_no')->nullable()->after('credit');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('devoucher_bkdns', function (Blueprint $table) {
+        Schema::table('journal_voucher_bkdns', function (Blueprint $table) {
             $table->dropColumn(['vehicle_no']);
         });
     }
