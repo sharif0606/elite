@@ -49,7 +49,7 @@ class ReportController extends Controller
             $billDate = $request->bill_date;
             $invoice->where('invoice_generates.bill_date', $billDate);
         }
-        $invoice = $invoice->get();
+        $invoice = $invoice->paginate(50);
         return view('report.invoice-due',compact('invoice','customer'));
     }
     public function paymentReceive(Request $request){

@@ -1181,7 +1181,7 @@
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">9</th>
                                     <th class="tbl_border" style="padding: 6px;">Next of Kin(NOK)</th>
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_legacy_name }}, ({{ $employees->en_legacy_relation }})</th>
+                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_legacy_name }} @if($employees->en_legacy_relation != '')({{ $employees->en_legacy_relation }}) @else @endif</th>
                                 </tr>
                                 <tr class="tbl_border" >
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">10</th>
@@ -1277,6 +1277,9 @@
                         </table>
                         <div class="row">
                             <div class="col-12 text-end mt-5" style="margin-top: 50px !important;">
+                                @if($employees->signature_img !='')
+                                    <img height="50px" width="150px" class="me-3"  src="{{asset('uploads/signature_img/'.$employees->signature_img)}}" alt="">
+                                @endif
                                 <p style="margin: 1px;"><b style="border-top: solid 2px;">Signature of the  {{ $employees->position?->name }}</b></p>
                             </div>
                         </div>

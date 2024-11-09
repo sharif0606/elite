@@ -89,8 +89,8 @@ class InvoiceGenerateController extends Controller
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat;
             $data->vat_switch = $request->vat_switch;
-            $data->sub_total_amount = $request->sub_total_amount;
-            $data->total_tk = $request->total_tk;
+            $data->sub_total_amount = $request->sub_total_amount; //this total_tk is required for show as subtotal in payment if vat_switch value is 1
+            $data->total_tk = $request->total_tk; //this total_tk is required for show as subtotal in payment
             $data->vat_taka = $request->vat_taka;
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
@@ -417,6 +417,51 @@ class InvoiceGenerateController extends Controller
 
         return response()->json($data, 200);
     }
+    public function lessPaidInvoiceGenerate($customer, $startDate)
+    {
+        $cusName= Customer::where('id',$customer)->first();
+        $invoices = InvoiceGenerate::where('customer_id', $customer)
+            ->where('start_date', '<=', $startDate)
+            ->get();
+
+        $result = [];
+        foreach ($invoices as $invoice) {
+            $receivedAmount = InvoicePayment::where('invoice_id', $invoice->id)
+            ->select(
+                DB::raw("SUM(received_amount) as received_amount"),
+                DB::raw("SUM(ait_amount) as ait_amount"),
+                DB::raw("SUM(fine_deduction) as fine_deduction"),
+                DB::raw("SUM(paid_by_client) as paid_by_client"),
+                DB::raw("SUM(less_paid_honor) as less_paid_honor"),
+                DB::raw("SUM(vat_amount) as vat_amount")
+            )
+            ->groupBy('invoice_id')
+            ->first();
+
+            // Calculate the total received amount across all relevant fields
+            $receivedAmountValue = (
+                ($receivedAmount->received_amount ?? 0) +
+                ($receivedAmount->ait_amount ?? 0) +
+                ($receivedAmount->fine_deduction ?? 0) +
+                ($receivedAmount->paid_by_client ?? 0) +
+                ($receivedAmount->less_paid_honor ?? 0) +
+                ($receivedAmount->vat_amount ?? 0)
+            );
+        
+           // Calculate the due amount
+            $dueAmount = $invoice->grand_total - $receivedAmountValue;
+
+            // If due amount is greater than zero, add this invoice to the result array
+            if ($dueAmount > 0) {
+                $invoice->due_amount = $dueAmount;
+                $invoice->received_amount = $receivedAmountValue;
+                $result[] = $invoice;
+            }
+        }
+        return view('invoice_generate.less_paid_invoice',compact('result','cusName'));
+    }
+
+
     // public function getInvoiceData(Request $request)
     // {
     //     $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')

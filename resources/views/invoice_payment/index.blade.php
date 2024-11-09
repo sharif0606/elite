@@ -7,9 +7,9 @@
     <div class="card">
         <form method="get" action="">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Customer</label>
-                    <select name="customer_id" class="form-control">
+                    <select name="customer_id" class="select2 form-control">
                         <option value="">Select Customer</option>
                         @forelse ($customer as $c)
                             <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
@@ -18,33 +18,43 @@
                         @endforelse
                     </select>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Pay Mode</label>
-                    <select name="payment_type" class="form-control">
+                    <select name="payment_type" class="form-control form-select">
+                        <option value="">Select</option>
                         <option value="1" {{request()->payment_type==1?'selected':''}}>Cash</option>
                         <option value="2" {{request()->payment_type==2?'selected':''}}>Pay Order</option>
                         <option value="3" {{request()->payment_type==3?'selected':''}}>Fund Transfer</option>
+                        <option value="4" {{request()->payment_type==3?'selected':''}}>Online Pay</option>
                     </select>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">PO No</label>
                     <input type="text" name="po_no" class="form-control" value="{{ request()->po_no }}">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">PO Date</label>
                     <input type="date" name="po_date" class="form-control" value="{{ request()->po_date }}">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Pay Date</label>
                     <input type="date" value="{{ request()->pay_date }}" name="pay_date" class="form-control">
                 </div>
-                <div class="col-sm-3">
+                {{-- <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Receive Date</label>
                     <input type="date" name="rcv_date" class="form-control" value="{{ request()->rcv_date }}">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Deposit Date</label>
                     <input type="date" name="deposit_date" class="form-control" value="{{ request()->deposit_date }}">
+                </div> --}}
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="fdate">{{__('From Bill Date')}}</label>
+                    <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                    <label for="fdate">{{__('To Bill Date')}}</label>
+                    <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                 </div>
                 <div class="col-sm-3 py-3">
                     <button type="submit" class="btn btn-info">Search</button>
@@ -59,43 +69,45 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Inv')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Amount')}}</th>
                         <th scope="col">{{__('Vat')}}</th>
-                        <th scope="col">{{__('Vat Amount')}}</th>
-                        <th scope="col">{{__('Ait')}}</th>
-                        <th scope="col">{{__('Ait Amount')}}</th>
+                        <th scope="col">{{__('Less Paid')}}</th>
                         <th scope="col">{{__('Pay Mode')}}</th>
                         <th scope="col">{{__('Bank Name')}}</th>
                         <th scope="col">{{__('PO No')}}</th>
-                        <th scope="col">{{__('PO Date')}}</th>
+                        {{-- <th scope="col">{{__('PO Date')}}</th> --}}
                         <th scope="col">{{__('Pay Date')}}</th>
-                        <th scope="col">{{__('Receive Date')}}</th>
-                        <th scope="col">{{__('Deposit Date')}}</th>
+                        {{-- <th scope="col">{{__('Receive Date')}}</th>
+                        <th scope="col">{{__('Deposit Date')}}</th> --}}
                         <th scope="col">{{__('Remarks')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $pm=[1=>"Cash","Pay Order","Fund Transfer"]; @endphp
+                    @php $pm=[1=>"Cash","Pay Order","Fund Transfer","Online Pay"]; @endphp
                     @forelse($payments as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{ $e->invoice_id }}</td>
-                        <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}})</td>
+                        <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
                         <td>{{ $e->received_amount }}</td>
-                        <td>{{ $e->vat }}</td>
-                        <td>{{ $e->vat_amount }}</td>
-                        <td>{{ $e->ait }}</td>
-                        <td>{{ $e->ait_amount }}</td>
+                        <td>
+                            @if ($e->vat > 0)
+                                {{(int) $e->vat }}%
+                            @endif
+                        </td>
+                        <td>
+                            @if ($e->less_paid > 0)
+                                {{$e->less_paid }}
+                            @endif
+                        </td>
                         <td>{{ $pm[$e->payment_type] }}</td>
                         <td>{{ $e->bank_name }}</td>
                         <td>{{ $e->po_no }}</td>
-                        <td>{{ $e->po_date }}</td>
+                        {{-- <td>{{ $e->po_date }}</td> --}}
                         <td>{{ $e->pay_date }}</td>
-                        <td>{{ $e->rcv_date }}</td>
-                        <td>{{ $e->deposit_date }}</td>
+                        {{-- <td>{{ $e->rcv_date }}</td>
+                        <td>{{ $e->deposit_date }}</td> --}}
                         <td>{{ $e->remarks }}</td>
                         <td>
                             <a href="{{route('invoice-payment.edit',[encryptor('encrypt',$e->id)])}}">
@@ -105,13 +117,13 @@
                     </tr>
                     @empty
                     <tr>
-                        <th colspan="6" class="text-center">No Data Found</th>
+                        <th colspan="11" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
             <div class="pt-2">
-                 {{$payments->links()}} 
+                 {{$payments->withQueryString()->links()}} 
             </div>
             
         </div>

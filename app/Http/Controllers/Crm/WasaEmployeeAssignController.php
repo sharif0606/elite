@@ -197,7 +197,7 @@ class WasaEmployeeAssignController extends Controller
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat_on_subtotal;
             $data->sub_total_amount = $request->sub_total_salary;
-            //$data->total_tk = $request->total_tk;
+            $data->total_tk = $request->sub_total_salary; //this total_tk is required for show as subtotal in payment
             $data->vat_taka = $request->vat_tk_subtotal;
             $data->grand_total = $request->grand_total_tk;
             $data->header_note = $request->header_note;
@@ -332,7 +332,7 @@ class WasaEmployeeAssignController extends Controller
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat_on_subtotal;
             $data->sub_total_amount = $request->sub_total_salary;
-            //$data->total_tk = $request->total_tk;
+            $data->total_tk = $request->sub_total_salary; //this total_tk is required for show as subtotal in payment
             $data->vat_taka = $request->vat_tk_subtotal;
             $data->grand_total = $request->grand_total_tk;
             $data->header_note = $request->header_note;

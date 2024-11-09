@@ -9,13 +9,14 @@ use App\Models\Crm\InvoicePayment;
 
 use Toastr;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class InvoicePaymentController extends Controller
 {
 
     public function index(Request $request)
     {
-        $payments=InvoicePayment::with('customer');
+        $payments=InvoicePayment::with('customer','invoice');
         if($request->customer_id){
             $payments=$payments->where('customer_id',$request->customer_id);
         }
@@ -31,14 +32,22 @@ class InvoicePaymentController extends Controller
         if($request->pay_date){
             $payments=$payments->where('pay_date',$request->pay_date);
         }
-        if($request->rcv_date){
-            $payments=$payments->where('rcv_date',$request->rcv_date);
-        }
-        if($request->deposit_date){
-            $payments=$payments->where('deposit_date',$request->deposit_date);
+        // if($request->rcv_date){
+        //     $payments=$payments->where('rcv_date',$request->rcv_date);
+        // }
+        // if($request->deposit_date){
+        //     $payments=$payments->where('deposit_date',$request->deposit_date);
+        // }
+        if ($request->fdate && $request->tdate) {
+            $startDate = $request->fdate;
+            $endDate = $request->tdate;
+            $payments->whereHas('invoice', function ($query) use ($startDate, $endDate) {
+                $query->whereDate('bill_date', '>=', $startDate)
+                      ->whereDate('bill_date', '<=', $endDate);
+            });
         }
         
-        $payments=$payments->orderBy('deposit_date','DESC')->paginate(10);
+        $payments=$payments->orderBy('id','DESC')->paginate(15);
         $customer=Customer::all();
         return view('invoice_payment.index',compact('payments','customer'));
     }
@@ -79,6 +88,10 @@ class InvoicePaymentController extends Controller
             $data->ait = $request->ait;
             $data->ait_amount = $request->ait_amount;
             $data->fine_deduction = $request->fine_deduction;
+            $data->paid_by_client = $request->paid_by_client;
+            $data->less_paid_honor = $request->less_paid_honor;
+            $data->less_paid = $request->less_paid;
+            $data->deposit_bank = $request->deposit_bank;
             $data->payment_type = $request->payment_type;
             $data->bank_name = $request->bank_name;
             $data->zone_id = $request->zone_id;
@@ -103,7 +116,19 @@ class InvoicePaymentController extends Controller
     public function edit($id)
     {
         $ivp=InvoicePayment::findOrFail(encryptor('decrypt',$id));
-        return view('invoice_payment.edit',compact('ivp'));
+        $totalPaid = InvoicePayment::select(
+            DB::raw("SUM(received_amount) as received_amount"),
+            DB::raw("SUM(vat_amount) as vat_amount"),
+            DB::raw("SUM(ait_amount) as ait_amount"),
+            DB::raw("SUM(fine_deduction) as fine_deduction"),
+            DB::raw("SUM(paid_by_client) as paid_by_client"),
+            DB::raw("SUM(less_paid_honor) as less_paid_honor"),
+            DB::raw("SUM(received_amount) + SUM(vat_amount) + SUM(ait_amount) + SUM(fine_deduction) + SUM(paid_by_client) + SUM(less_paid_honor) as total_sum")
+        )
+        ->where("invoice_id", $ivp->invoice_id)->first();
+        $paidFromThisId = $ivp->received_amount + $ivp->vat_amount + $ivp->ait_amount + $ivp->fine_deduction + $ivp->paid_by_client + $ivp->less_paid_honor;
+
+        return view('invoice_payment.edit',compact('ivp','paidFromThisId','totalPaid'));
     }
 
     public function update(Request $request, $id)
@@ -116,6 +141,10 @@ class InvoicePaymentController extends Controller
             $data->ait = $request->ait;
             $data->ait_amount = $request->ait_amount;
             $data->fine_deduction = $request->fine_deduction;
+            $data->paid_by_client = $request->paid_by_client;
+            $data->less_paid_honor = $request->less_paid_honor;
+            $data->less_paid = $request->less_paid;
+            $data->deposit_bank = $request->deposit_bank;
             $data->payment_type = $request->payment_type;
             $data->bank_name = $request->bank_name;
             $data->po_no = $request->po_no;

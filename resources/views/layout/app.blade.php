@@ -304,30 +304,32 @@
         //         document.body.removeChild(printFrame);
         //     }, 500);
         // }
-        /*function printDiv(divName) {
-            var prtDiv = document.getElementById(divName);*/
+        
+        function printDiv(divName) {
+            // Get the div element by ID
+            var prtDiv = document.getElementById(divName);
             
             // Find all input elements within the div
-            /*var inputs = prtDiv.getElementsByTagName('input');
+            var inputs = prtDiv.getElementsByTagName('input');
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i].type === 'text' || inputs[i].type === 'date') {
                     inputs[i].setAttribute('value', inputs[i].value);
                 }
-            }*/
+            }
             
             // Now get the modified HTML content
-            //var prtContent = prtDiv.innerHTML;
+            var prtContent = prtDiv.innerHTML;
 
             // Create an iframe for printing
-            /*var printFrame = document.createElement('iframe');
+            var printFrame = document.createElement('iframe');
             printFrame.style.position = 'absolute';
             printFrame.style.width = '0px';
             printFrame.style.height = '0px';
             printFrame.style.border = 'none';
-            document.body.appendChild(printFrame);*/
+            document.body.appendChild(printFrame);
 
             // Write content to the iframe's document
-            /*var doc = printFrame.contentWindow.document;
+            var doc = printFrame.contentWindow.document;
             doc.open();
             doc.write(`
                 <html>
@@ -348,9 +350,7 @@
                 printFrame.contentWindow.print();
                 document.body.removeChild(printFrame);
             }, 500);
-        }*/
-
-
+        }
 
     </script>
     <script>

@@ -62,20 +62,22 @@
                         $totalDue=0;
                     @endphp
                     @forelse($invoice as $e)
-                        @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount'))); @endphp
-                    <tr class="text-center">
-                        <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{ $e->customer?->name }}
-                            @if($e->branch_id)
-                            ({{ $e->branch?->brance_name }})
-                            @endif
-                        </td>
-                        <td>{{ $e->start_date }}</td>
-                        <td>{{ $e->end_date }}</td>
-                        <td>{{ $e->bill_date }}</td>
-                        <td>{{ $e->grand_total }}</td>
-                        <td>{{ $due }}</td>
-                    </tr>
+                    @php $due=($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor'))); @endphp
+                    @if ($due > 0)
+                        <tr class="text-center">
+                            <td scope="row">{{ ++$loop->index }}</td>
+                            <td>{{ $e->customer?->name }}
+                                @if($e->branch_id)
+                                ({{ $e->branch?->brance_name }})
+                                @endif
+                            </td>
+                            <td>{{ $e->start_date }}</td>
+                            <td>{{ $e->end_date }}</td>
+                            <td>{{ $e->bill_date }}</td>
+                            <td>{{ $e->grand_total }}</td>
+                            <td>{{ $due }}</td>
+                        </tr>
+                    @endif
                     @php
                         $totalGrand +=$e->grand_total;
                         $totalDue +=$due;
@@ -86,15 +88,16 @@
                     </tr>
                     @endforelse
                 </tbody>
-                <tfoot>
                     <tr class="text-center">
                         <th colspan="5" class="text-end">Total</th>
                         <th>{{$totalGrand}}</th>
                         <th>{{$totalDue}}</th>
                     </tr>
-                </tfoot>
             </table>
         </div>
+        <div class="pt-2">
+            {!! $invoice->withQueryString()->links()!!}
+       </div>
     </div>
 </div>
 @endsection

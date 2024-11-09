@@ -24,6 +24,10 @@ return new class extends Migration
             $table->decimal('ait',10,2)->default(0)->nullable();
             $table->decimal('ait_amount',10,2)->default(0)->nullable();
             $table->decimal('fine_deduction',10,2)->default(0)->nullable();
+            $table->decimal('paid_by_client',10,2)->default(0)->nullable();
+            $table->decimal('less_paid_honor',10,2)->default(0)->nullable();
+            $table->decimal('less_paid',10,2)->default(0)->nullable();
+            $table->string('deposit_bank')->nullable();
             $table->integer('payment_type')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('po_no')->nullable();

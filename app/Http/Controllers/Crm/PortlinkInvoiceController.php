@@ -108,7 +108,7 @@ class PortlinkInvoiceController extends Controller
             $data->vat = $request->vat;
             $data->net_salary_rate = $request->net_salary_rate;
             $data->sub_total_amount = $request->net_commission_rate;
-            $data->total_tk = $request->total_tk;
+            $data->total_tk = $request->total_tk; //this total_tk is required for show as subtotal in payment
             $data->vat_taka = $request->vat_taka;
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
@@ -286,7 +286,7 @@ class PortlinkInvoiceController extends Controller
             $data->vat = $request->vat;
             $data->net_salary_rate = $request->net_salary_rate;
             $data->sub_total_amount = $request->net_commission_rate;
-            $data->total_tk = $request->total_tk;
+            $data->total_tk = $request->total_tk; //this total_tk is required for show as subtotal in payment
             $data->vat_taka = $request->vat_taka;
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;

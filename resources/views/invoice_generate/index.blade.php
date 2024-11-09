@@ -119,11 +119,15 @@
                     @endphp
                     @forelse($invoice as $key=>$e)
                         @php 
-                            $lessPaid = $e->less?->sum('amount')*$e->vat/100;
+                            if ($e->vat_switch != 1) {
+                                $lessPaid = $e->less?->sum('amount');
+                            } else {
+                                $lessPaid = $e->less?->sum('amount') * $e->vat / 100;
+                            }
                             $paymentHasOrNot = $e->payment->sum('received_amount');
                         @endphp
                         @php
-                            $due = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $lessPaid), 2);
+                            $due = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')), 2);
                         @endphp
                     
                     {{-- @if ($due != 0) --}}
@@ -153,7 +157,11 @@
                                         data-zone-id="{{ $e->zone_id }}"
                                         data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer?->id }}"
-                                        data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                        @if ($e->vat_switch != 1)
+                                            data-sub-total-amount="{{ $e->total_tk }}"
+                                        @else
+                                            data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                        @endif
                                         data-vat-amount="{{ $e->vat_taka }}"
                                         data-total-amount="{{ $due }}"
                                         data-received-amounts='@json($d)'>
@@ -188,6 +196,11 @@
                                         @method('delete')
                                     </form>
                                 @endif
+                                {{-- @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
+                                    <a href="{{route('less_paid_invoice',[$e->customer_id,$e->start_date,'role' =>currentUser()])}}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                @endif --}}
                             </td>
                         </tr>
                     {{-- @endif --}}
@@ -227,14 +240,14 @@
                                         <th>Customer Name:</th>
                                         <td id="name"></td>
                                         <th>
-                                            Due Amount:
-                                            
+                                            Billable Amount:
+                                        </span><input id="totalDue" type="hidden">
                                         </th>
                                         <td id="totalAmount"></td>
                                         <td><span class="due-details text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                             <ul class="due-amount">
                                                 <li>Sub Total: <span id="subAmount"></span><input id="subAmountInput" type="hidden"></li>
-                                                <li>Vat: <span id="vatAmount"></span><input id="vatAmountInput" type="hidden"></li>
+                                                <li>Vat: <span id="vatAmount"></li>
                                             </ul>
                                         </span></td>
                                     </tr>
@@ -268,21 +281,17 @@
                             <label for="">Fine Deduction</label>
                             <input type="text" id="fine_deduction" onkeyup="billTotal();" name="fine_deduction" class="form-control">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="">Salary paid by client</label>
                             <input type="text" id="paid_by_client" onkeyup="billTotal();"  name="paid_by_client" class="form-control paid_by_client">
                         </div>
-                        <div class="col-sm-2">
-                            <label for="">Less Paid Honor</label>
+                        <div class="col-sm-4">
+                            <label for="">Discount</label>
                             <input type="text" id="less_paid_honor" onkeyup="billTotal();" name="less_paid_honor" class="form-control">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="">Less Paid</label>
                             <input type="text" id="less_paid" name="less_paid" class="form-control" readonly>
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="">Total Bill</label>
-                            <input type="text" id="bill_total_count"  name="bill_total_count" class="form-control bill_total_count" readonly>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Payment Mode</label>
@@ -295,7 +304,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Deposit Bank</label>
-                            <input type="text" name="bank_name" class="form-control deposit_bank error-msg">
+                            <input type="text" name="deposit_bank" class="form-control deposit_bank error-msg">
                             {{-- <span class="error-message" style="color: red; display: none;"></span> --}}
                         </div>
                         <div class="col-sm-4">
@@ -401,18 +410,15 @@
     }
 
     function billTotal(){
-        let dueAmount = $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-        let vatAmount = $('#vatAmountInput').val() ? parseFloat($('#vatAmountInput').val()) : 0;
+        let dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
         let received = $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
         let vatDeduct = $('#vat_amount').val() ? parseFloat($('#vat_amount').val()) : 0;
         let aitDeduct = $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
         let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
-        let lessPaid = (parseFloat(dueAmount) + parseFloat(vatAmount)) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
-        let total = parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(lessPaid) + parseFloat(paidByClient);
+        let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         $('#less_paid').val(lessPaid);
-        $('#bill_total_count').val(total);
     }
 
     function paymethod(){
@@ -421,7 +427,7 @@
         let poNo = $('.po_num').val();
         let poDate = $('.po_date').val();
         var errorMessage = $('.error-msg').next('.error-message');
-        if(pmethod == 2){
+        if(pmethod == 2 || pmethod == 4){
             if(poNo == '' || poDate == '' || poBank == ''){
                 errorMessage.text('This field is required').css('color', 'red').show();
                 $('#buttonDisable').attr('disabled',true)
@@ -431,7 +437,7 @@
             }
         }else{
             errorMessage.hide();
-            $('.po_bank').val('')
+            // $('.po_bank').val('')
             //$('.po_num').val('')
             $('.po_date').val('');
             $('#buttonDisable').removeAttr('disabled',false)
@@ -491,10 +497,10 @@
             modal.find('#customer_id').val(cusID);
             modal.find('#zone_id').val(zone);
             modal.find('#totalAmount').text(Amount);
+            modal.find('#totalDue').val(Amount);
             modal.find('#subAmount').text(subAmount);
             modal.find('#subAmountInput').val(subAmount);
             modal.find('#vatAmount').text(vatAmount);
-            modal.find('#vatAmountInput').val(vatAmount);
 
             var receivedAmountsList = modal.find('#receivedAmountsList');
             receivedAmountsList.empty(); // Clear any existing items
@@ -512,30 +518,32 @@
 
     function checkDuplicatePo(e){
         var po = $(e).val();
-        $.ajax({
-            url:"{{ route('checking_duplicate_po') }}",
-            type: "GET",
-            dataType: "json",
-            data: { 'po_no':po,},
-            success: function(data) {
-                //console.log(data);
-                if (data.length > 0) {
-                    // Construct the message
-                    var message = "<span style='border-bottom: solid 2px; color: yellow;'>Duplicate Po found:</span><br>";
-                    $.each(data, function(index, po) {
-                    message +=  "Customer: " + po.customer_name + (po.customer_branch ? ', ' + po.customer_branch : '') + "<br>" +
-                                "Receive Amount: " + po.receive + "<br>";
-                    });
-                    toastr.success(message);
-                } else {
-                    toastr.info("No duplicate po found");
+        if(po != ''){
+            $.ajax({
+                url:"{{ route('checking_duplicate_po') }}",
+                type: "GET",
+                dataType: "json",
+                data: { 'po_no':po,},
+                success: function(data) {
+                    //console.log(data);
+                    if (data.length > 0) {
+                        // Construct the message
+                        var message = "<span style='border-bottom: solid 2px; color: yellow;'>Duplicate Po found:</span><br>";
+                        $.each(data, function(index, po) {
+                        message +=  "Customer: " + po.customer_name + (po.customer_branch ? ', ' + po.customer_branch : '') + "<br>" +
+                                    "Receive Amount: " + po.receive + "<br>";
+                        });
+                        toastr.success(message);
+                    } else {
+                        toastr.info("No duplicate po found");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "An error occurred while processing your request.";
+                    toastr.error(errorMessage);
                 }
-            },
-            error: function(xhr, status, error) {
-                var errorMessage = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : "An error occurred while processing your request.";
-                toastr.error(errorMessage);
-            }
-        });
+            });
+        }
     }
 
 $(document).on('select2:open', () => {
