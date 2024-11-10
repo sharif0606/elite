@@ -38,6 +38,7 @@
                             <option value="1">Cash</option>
                             <option value="2">Pay Order</option>
                             <option value="3">Fund Transfer</option>
+                            <option value="4">Online Pay</option>
                         </select>
                     </div>
                 </div>
@@ -100,8 +101,11 @@
                                 Cash
                             @elseif ($e->payment_type == 2)
                                 Pay Order
-                            @else
+                            @elseif ($e->payment_type == 3)
                                 Fund Transfer
+                            @elseif ($e->payment_type == 4)
+                                Online Pay
+                            @else
                             @endif
                         </td>
                         <td>{{$e->invoice?->branch?->brance_name}}</td>

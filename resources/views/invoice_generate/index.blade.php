@@ -127,7 +127,8 @@
                             $paymentHasOrNot = $e->payment->sum('received_amount');
                         @endphp
                         @php
-                            $due = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')), 2);
+                            $due = $e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor'));
+                            $dueshow = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')), 2);
                         @endphp
                     
                     {{-- @if ($due != 0) --}}
@@ -142,7 +143,7 @@
                             <td>{{ $e->end_date }}</td>
                             <td>{{ $e->bill_date }}</td>
                             <td>{{ $e->grand_total }}</td>
-                            <td>{{ $due }}</td>
+                            <td>{{ $dueshow }}</td>
                             <td>
                                 <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                     <i class="bi bi-eye"></i>
