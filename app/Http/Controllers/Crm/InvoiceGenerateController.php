@@ -449,12 +449,12 @@ class InvoiceGenerateController extends Controller
             );
         
            // Calculate the due amount
-            $dueAmount = $invoice->grand_total - $receivedAmountValue;
+            $dueAmount = round($invoice->grand_total - $receivedAmountValue);
 
             // If due amount is greater than zero, add this invoice to the result array
             if ($dueAmount > 0) {
                 $invoice->due_amount = $dueAmount;
-                $invoice->received_amount = $receivedAmountValue;
+                $invoice->received_amount = round($receivedAmountValue);
                 $result[] = $invoice;
             }
         }

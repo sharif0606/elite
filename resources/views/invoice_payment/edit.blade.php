@@ -197,14 +197,7 @@
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
-       console.log(dueAmount);
-       console.log(received);
-       console.log(vatDeduct);
-       console.log(aitDeduct);
-       console.log(fineDeduct);
-       console.log(lessPaidHonor);
-       console.log(paidByClient);
-        $('#less_paid').val(lessPaid);
+        $('#less_paid').val(lessPaid.toFixed(2));
     }
     function paymethod(){
         let pmethod = document.querySelector('select[name="payment_type"]').value;

@@ -127,8 +127,8 @@
                             $paymentHasOrNot = $e->payment->sum('received_amount');
                         @endphp
                         @php
-                            $due = $e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor'));
-                            $dueshow = number_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')), 2);
+                            $due = round($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
+                            $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                         @endphp
                     
                     {{-- @if ($due != 0) --}}
@@ -142,8 +142,8 @@
                             <td>{{ $e->start_date }}</td>
                             <td>{{ $e->end_date }}</td>
                             <td>{{ $e->bill_date }}</td>
-                            <td>{{ $e->grand_total }}</td>
-                            <td>{{ $dueshow }}</td>
+                            <td>{{ money_format($e->grand_total) }}</td>
+                            <td>{{ $due }}</td>
                             <td>
                                 <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                     <i class="bi bi-eye"></i>
@@ -197,11 +197,11 @@
                                         @method('delete')
                                     </form>
                                 @endif
-                                {{-- @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
+                                @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
                                     <a href="{{route('less_paid_invoice',[$e->customer_id,$e->start_date,'role' =>currentUser()])}}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                @endif --}}
+                                @endif
                             </td>
                         </tr>
                     {{-- @endif --}}
@@ -419,7 +419,7 @@
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
-        $('#less_paid').val(lessPaid);
+        $('#less_paid').val(lessPaid.toFixed(2));
     }
 
     function paymethod(){
