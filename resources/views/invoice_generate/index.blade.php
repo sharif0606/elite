@@ -197,11 +197,11 @@
                                         @method('delete')
                                     </form>
                                 @endif
-                                @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
+                                {{-- @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
                                     <a href="{{route('less_paid_invoice',[$e->customer_id,$e->start_date,'role' =>currentUser()])}}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                @endif
+                                @endif --}}
                             </td>
                         </tr>
                     {{-- @endif --}}
@@ -397,32 +397,18 @@
     }
     function aitcalc(v,place){
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
-        if(paidByClient > 0){
-            if(place=="ait_amount"){
-                let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-                let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
-                let rec= parseFloat(recBefore) - parseFloat(paidByClient);
-                let aamt=(rec*(ait/100));
-                $('#ait_amount').val(aamt.toFixed(2))
-            }else{
-                let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-                let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
-                let rec= parseFloat(recBefore) - parseFloat(paidByClient);
-                let ait=(100*(aamt/rec));
-                $('#ait').val(ait.toFixed(2))
-            }
+        if(place=="ait_amount"){
+            let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+            let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
+            let rec= parseFloat(recBefore) - parseFloat(paidByClient);
+            let aamt=(rec*(ait/100));
+            $('#ait_amount').val(aamt.toFixed(2))
         }else{
-            if(place=="ait_amount"){
-                let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-                let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
-                let aamt=(rec*(ait/100));
-                $('#ait_amount').val(aamt.toFixed(2))
-            }else{
-                let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-                let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
-                let ait=(100*(aamt/rec));
-                $('#ait').val(ait.toFixed(2))
-            }
+            let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+            let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
+            let rec= parseFloat(recBefore) - parseFloat(paidByClient);
+            let ait=(100*(aamt/rec));
+            $('#ait').val(ait.toFixed(2))
         }
         billTotal();
     }
