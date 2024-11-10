@@ -222,7 +222,6 @@
                                 <li class="py-1 submenu-item"><a href="{{route('child_one.index')}}" >{{__('Child One')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('child_two.index')}}" >{{__('Child Two')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('navigate.index')}}">{{__('Navigate View')}}</a></li>
-                                {{--  <li class="py-1 submenu-item"><a href="{{route('headreport')}}" >{{__('Account Head Report')}}</a></li>  --}}
                             </ul>
                         </li>
                         <li class="sidebar-item has-sub">
@@ -243,6 +242,7 @@
                                 <li class="py-1 submenu-item"><a href="{{route('report.inv_due')}}">{{__('Invoice Due')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('report.payment_receive')}}">{{__('Payment Received')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('incomeStatement.list')}}">{{__('Income Statement')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('headreport')}}" >{{__('Account Head Report')}}</a></li> 
                             </ul>
                         </li>
                         <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->

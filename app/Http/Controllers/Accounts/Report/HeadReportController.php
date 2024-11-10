@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class HeadReportController extends Controller{
     public function index(Request $r){
-        $headlists=Generalledger::groupBy(['master_account_id','sub_head_id','child_one_id','child_two_id'])->where(company())->get();
+        $headlists=Generalledger::groupBy(['master_account_id','sub_head_id','child_one_id','child_two_id'])->get();
 
         $startDate=$endDate=date("Y-m-d");
 
@@ -30,15 +30,15 @@ class HeadReportController extends Controller{
             $head_id=$head_id[0];
         }
         if($head_id){
-            $accOldData=Generalledger::where('rec_date', '<',$startDate)->where($table_id_name,$head_id)->orderBy('rec_date')->where(company())->get();
-            $checkpurchase=Generalledger::where($table_id_name,$head_id)->whereNotNull('purchase_voucher_bkdn_id')->where(company())->count();
+            $accOldData=Generalledger::where('rec_date', '<',$startDate)->where($table_id_name,$head_id)->orderBy('rec_date')->get();
+            //$checkpurchase=Generalledger::where($table_id_name,$head_id)->whereNotNull('purchase_voucher_bkdn_id')->count();
             // if($checkpurchase){
             //     /* for supplier */
             //     $suppliercode=PurVoucherBkdns::whereBetween('created_at', [$startDate, $endDate])->where('supplier_id',substr($head_code,4))->pluck('id');
             //     $accData=Generalledger::whereIn('purchase_voucher_bkdn_id',$suppliercode)->orderBy('rec_date')->get();
             // }else{
             //     /* for customer */
-            //     $checksales=Generalledger::where($table_id_name,$head_id)->whereNotNull('sales_voucher_bkdn_id')->where(company())->count();
+            //     $checksales=Generalledger::where($table_id_name,$head_id)->whereNotNull('sales_voucher_bkdn_id')->count();
 
             //     if($checksales){
             //         $customercode=SalVoucherBkdns::whereBetween('created_at', [$startDate, $endDate])->where('customer_id',substr($head_code,4))->pluck('id');
@@ -46,11 +46,11 @@ class HeadReportController extends Controller{
 
             //     }else{
             //         /* for other */
-            //         $accData=Generalledger::whereBetween('rec_date', [$startDate, $endDate])->where($table_id_name,$head_id)->orderBy('rec_date')->where(company())->get();
+            //         $accData=Generalledger::whereBetween('rec_date', [$startDate, $endDate])->where($table_id_name,$head_id)->orderBy('rec_date')->get();
             //     }
             // }
 
-            $accData=Generalledger::whereBetween('rec_date', [$startDate, $endDate])->where($table_id_name,$head_id)->orderBy('rec_date')->where(company())->get();
+            $accData=Generalledger::whereBetween('rec_date', [$startDate, $endDate])->where($table_id_name,$head_id)->orderBy('rec_date')->get();
         }
 
         $head_id=$head_id.$table_id_name;

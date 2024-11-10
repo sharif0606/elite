@@ -27,11 +27,8 @@
 							<table style="width: 100%" id="companyDescript">
 								<tr style="text-align: center;">
 									<th colspan="2">
-										<h4>{{encryptor('decrypt', request()->session()->get('companyName'))}}</h4>
-                                    <p>{{encryptor('decrypt', request()->session()->get('companyAddress'))}}</p>
-                                    <p>IMPORT, EXPORTER, WHOLESALER, RETAILSALER & COMMISSION AGENT</p>
-                                    <p>E-MAIL: <a href="#" style="border-bottom: solid 1px; border-color:blue;">{{encryptor('decrypt', request()->session()->get('companyEmail'))}}</a> Contact: {{encryptor('decrypt', request()->session()->get('companyContact'))}}</p>
-										<h4 style="padding-bottom: 2.5rem;">Head Wise Report</h4>
+										<h4>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড, চট্টগ্রাম</h4>
+										<h4 style="padding-bottom: 2.5rem;">হেড রিপোর্ট</h4>
 									</th>
 								</tr>
 							</table>
