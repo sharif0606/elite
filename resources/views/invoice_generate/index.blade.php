@@ -159,9 +159,9 @@
                                         data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer?->id }}"
                                         @if ($e->vat_switch != 1)
-                                            data-sub-total-amount="{{ $e->total_tk }}"
+                                            data-sub-total-amount="{{ round($e->total_tk) }}"
                                         @else
-                                            data-sub-total-amount="{{ $e->sub_total_amount }}"
+                                            data-sub-total-amount="{{ round($e->sub_total_amount) }}"
                                         @endif
                                         data-vat-amount="{{ $e->vat_taka }}"
                                         data-total-amount="{{ $due }}"
@@ -284,7 +284,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Salary paid by client</label>
-                            <input type="text" id="paid_by_client" onkeyup="billTotal();"  name="paid_by_client" class="form-control paid_by_client">
+                            <input type="text" id="paid_by_client" onkeyup="billTotal(); aitcalc(this.value,'ait_amount');"  name="paid_by_client" class="form-control paid_by_client">
                         </div>
                         <div class="col-sm-4">
                             <label for="">Discount</label>
@@ -396,16 +396,33 @@
         billTotal();
     }
     function aitcalc(v,place){
-        if(place=="ait_amount"){
-            let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-            let ait= v ? parseFloat(v) : 0;
-            let aamt=(rec*(ait/100));
-            $('#'+place).val(aamt.toFixed(2))
+        let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
+        if(paidByClient > 0){
+            if(place=="ait_amount"){
+                let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+                let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
+                let rec= parseFloat(recBefore) - parseFloat(paidByClient);
+                let aamt=(rec*(ait/100));
+                $('#ait_amount').val(aamt.toFixed(2))
+            }else{
+                let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+                let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
+                let rec= parseFloat(recBefore) - parseFloat(paidByClient);
+                let ait=(100*(aamt/rec));
+                $('#ait').val(ait.toFixed(2))
+            }
         }else{
-            let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-            let aamt=v ? parseFloat(v) : 0;
-            let ait=(100*(aamt/rec));
-            $('#'+place).val(ait.toFixed(2))
+            if(place=="ait_amount"){
+                let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+                let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
+                let aamt=(rec*(ait/100));
+                $('#ait_amount').val(aamt.toFixed(2))
+            }else{
+                let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+                let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
+                let ait=(100*(aamt/rec));
+                $('#ait').val(ait.toFixed(2))
+            }
         }
         billTotal();
     }
