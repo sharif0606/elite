@@ -72,7 +72,8 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Less Paid</label>
-                                    <input type="text" id="less_paid" name="less_paid" value="{{ $ivp->less_paid }}" class="form-control" readonly>
+                                    <input type="text" id="less_paid" name="less_paid" value="{{ $ivp->less_paid }}" class="form-control error-less-paid" readonly>
+                                    <span class="error-message-less-paid" style="color: red; display: none;"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Payment Mode</label>
@@ -229,6 +230,7 @@
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         $('#less_paid').val(lessPaid.toFixed(2));
+        less_paid_amount();
     }
     function paymethod(){
         let pmethod = document.querySelector('select[name="payment_type"]').value;
@@ -252,6 +254,19 @@
             $('#buttonDisable').removeAttr('disabled',false)
         }
     }
+
+    function less_paid_amount(){
+        let lessPaid =$('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
+        var errorMessage = $('.error-less-paid').next('.error-message-less-paid');
+        if(lessPaid < 0){
+            errorMessage.text('Positive value or 0 required').css('color', 'red').show();
+            $('#buttonDisable').attr('disabled',true)
+        }else{
+            errorMessage.hide();
+            $('#buttonDisable').removeAttr('disabled',false)
+        }
+    }
+
     function checkDuplicatePo(e){
         var po = $(e).val();
         if(po != ''){

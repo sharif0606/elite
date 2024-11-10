@@ -417,13 +417,19 @@ class InvoiceGenerateController extends Controller
 
         return response()->json($data, 200);
     }
-    public function lessPaidInvoiceGenerate($customer, $startDate)
+    public function lessPaidInvoiceGenerate($customer, $startDate, $id, $branchId = null)
     {
-        $cusName= Customer::where('id',$customer)->first();
-        $invoices = InvoiceGenerate::where('customer_id', $customer)
-            ->where('start_date', '<=', $startDate)
-            ->get();
-
+        $inv= InvoiceGenerate::where('id',$id)->first();
+        $branch=CustomerBrance::where('id',$branchId)->first();
+        if ($branch != '') {
+            $invoices = InvoiceGenerate::where('customer_id', $customer)->where('branch_id',$branchId)
+                ->where('start_date', '<=', $startDate)
+                ->get();
+        }else{
+            $invoices = InvoiceGenerate::where('customer_id', $customer)
+                ->where('start_date', '<=', $startDate)
+                ->get();
+        }
         $result = [];
         foreach ($invoices as $invoice) {
             $receivedAmount = InvoicePayment::where('invoice_id', $invoice->id)
@@ -458,7 +464,7 @@ class InvoiceGenerateController extends Controller
                 $result[] = $invoice;
             }
         }
-        return view('invoice_generate.less_paid_invoice',compact('result','cusName'));
+        return view('invoice_generate.less_paid_invoice',compact('result','inv','branch'));
     }
 
 

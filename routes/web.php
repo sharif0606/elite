@@ -296,7 +296,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/single-invoice-show7/{id}', [invoiceGenerate::class, 'getSingleInvoice7'])->name('invoiceShow7');
         Route::get('/single-invoice-show8/{id}', [invoiceGenerate::class, 'getSingleInvoice8'])->name('invoiceShow8');
         Route::get('/single-invoice-show9/{id}', [invoiceGenerate::class, 'getSingleInvoice9'])->name('invoiceShow9');
-        Route::get('/less-paid-invoice/{customer}/{startDate}', [invoiceGenerate::class, 'lessPaidInvoiceGenerate'])->name('less_paid_invoice');
+        Route::get('/less-paid-invoice/{customer}/{startDate}/{invoice}/{branch?}', [invoiceGenerate::class, 'lessPaidInvoiceGenerate'])->name('less_paid_invoice');
         Route::get('createInvoice', [wasaEmployeeAsign::class,'createInvoice'])->name('wasaEmployeeAsign.createInvoice');
         Route::post('wasastoreInvoice', [wasaEmployeeAsign::class,'storeWasaInvoice'])->name('WasaInviceStore');
         Route::get('edit-Invoice/{id}', [wasaEmployeeAsign::class,'wasaInvoiceEdit'])->name('wasaEmployeeAsign.editInvoice');

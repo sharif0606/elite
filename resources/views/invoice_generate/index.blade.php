@@ -197,11 +197,11 @@
                                         @method('delete')
                                     </form>
                                 @endif
-                                {{-- @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
-                                    <a href="{{route('less_paid_invoice',[$e->customer_id,$e->start_date,'role' =>currentUser()])}}">
+                                @if ($paymentHasOrNot > 0 && $due > 0 && $due != 0)
+                                    <a href="{{ route('less_paid_invoice', [$e->customer_id, $e->start_date, $e->id, $e->branch_id, 'role' => currentUser()]) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                @endif --}}
+                                @endif
                             </td>
                         </tr>
                     {{-- @endif --}}
@@ -292,7 +292,8 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Less Paid</label>
-                            <input type="text" id="less_paid" name="less_paid" class="form-control" readonly>
+                            <input type="text" id="less_paid" name="less_paid" class="form-control error-less-paid" readonly>
+                            <span class="error-message-less-paid" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Payment Mode</label>
@@ -344,6 +345,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="buttonDisable" class="btn btn-sm btn-primary">Save</button>
+                    
                 </div>
             </div>
         </form>
@@ -423,6 +425,7 @@
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         $('#less_paid').val(lessPaid.toFixed(2));
+        less_paid_amount();
     }
 
     function paymethod(){
@@ -444,6 +447,17 @@
             // $('.po_bank').val('')
             //$('.po_num').val('')
             $('.po_date').val('');
+            $('#buttonDisable').removeAttr('disabled',false)
+        }
+    }
+    function less_paid_amount(){
+        let lessPaid =$('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
+        var errorMessage = $('.error-less-paid').next('.error-message-less-paid');
+        if(lessPaid < 0){
+            errorMessage.text('Positive value or 0 required').css('color', 'red').show();
+            $('#buttonDisable').attr('disabled',true)
+        }else{
+            errorMessage.hide();
             $('#buttonDisable').removeAttr('disabled',false)
         }
     }
