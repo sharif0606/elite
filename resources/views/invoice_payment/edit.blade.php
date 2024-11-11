@@ -85,21 +85,26 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
+                                    <label for="">Deposit Bank</label>
+                                    <input type="text" name="deposit_bank" value="{{ $ivp->deposit_bank }}" class="form-control deposit_bank error-msg-deposit">
+                                    <span class="error-message-deposit" style="color: red; display: none;"></span>
+                                </div>
+                                <div class="col-sm-3">
                                     <label for="">Bank Name</label>
                                     <input type="text" name="bank_name" onchange="paymethod()" class="form-control po_bank error-msg" value="{{ $ivp->bank_name }}">
                                     <span class="error-message" style="color: red; display: none;"></span>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label for="">PO No</label>
                                     <input type="text" name="po_no" onchange="paymethod()" onblur="checkDuplicatePo(this)" class="form-control po_num error-msg" value="{{ $ivp->po_no }}">
                                     <span class="error-message" style="color: red; display: none;"></span>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label for="">PO Date</label>
                                     <input type="date" name="po_date" onchange="paymethod()" class="form-control po_date error-msg" value="{{ $ivp->po_date }}">
                                     <span class="error-message" style="color: red; display: none;"></span>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label for="">Pay Date</label>
                                     <input type="date" value="{{ $ivp->pay_date }}" name="pay_date" class="form-control">
                                 </div>
@@ -237,17 +242,30 @@
         let poBank = $('.po_bank').val();
         let poNo = $('.po_num').val();
         let poDate = $('.po_date').val();
+        let depositBank = $('.deposit_bank').val();
         var errorMessage = $('.error-msg').next('.error-message');
-        if(pmethod == 2 || pmethod == 4){
+        var errorMessageDeposit = $('.error-msg-deposit').next('.error-message-deposit');
+        if(pmethod == 2){
             if(poNo == '' || poDate == '' || poBank == ''){
                 errorMessage.text('This field is required').css('color', 'red').show();
+                errorMessageDeposit.hide();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessage.hide();
                 $('#buttonDisable').removeAttr('disabled',false)
             }
+        }else if(pmethod == 4){
+            if(depositBank == ''){
+                errorMessageDeposit.text('This field is required').css('color', 'red').show();
+                errorMessage.hide();
+                $('#buttonDisable').attr('disabled',true)
+            }else{
+                errorMessageDeposit.hide();
+                $('#buttonDisable').removeAttr('disabled',false)
+            }
         }else{
             errorMessage.hide();
+            errorMessageDeposit.hide();
             // $('.po_bank').val('')
             //$('.po_num').val('')
             $('.po_date').val('');

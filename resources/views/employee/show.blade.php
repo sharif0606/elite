@@ -1187,13 +1187,13 @@
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">10</th>
                                     <th class="tbl_border" style="padding: 6px;">Present Address</th>
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_pre_post_ofc }} ,  {{ $employees->en_pre_village_name }} ,  {{ $employees->bn_pre_ward?->name }} ,  {{ $employees->bn_union?->name }} ,  {{ $employees->bn_upazilla?->name }} ,  {{ $employees->bn_district?->name }} </th>
+                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_pre_holding_no }}, {{ $employees->en_pre_post_ofc }},  {{ $employees->en_pre_village_name }} ,  {{ $employees->bn_pre_ward?->name }} ,  {{ $employees->bn_union?->name }} ,  {{ $employees->bn_upazilla?->name }} ,  {{ $employees->bn_district?->name }} </th>
                                 </tr>
                                 <tr class="tbl_border" >
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">11</th>
                                     <th class="tbl_border" style="padding: 6px;">Permanent Address</th>
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_parm_post_ofc }} ,  {{ $employees->en_parm_village_name }} ,  {{ $employees->bn_parm_ward?->name}} ,  {{ $employees->bn_parm_union?->name }} ,  {{ $employees->bn_parm_upazilla?->name }} ,  {{ $employees->bn_parm_district?->name }} </th>
+                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_parm_holding_name }}, {{ $employees->en_parm_post_ofc }} ,  {{ $employees->en_parm_village_name }} ,  {{ $employees->bn_parm_ward?->name}} ,  {{ $employees->bn_parm_union?->name }} ,  {{ $employees->bn_parm_upazilla?->name }} ,  {{ $employees->bn_parm_district?->name }} </th>
                                 </tr>
                                 <tr class="tbl_border" >
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">12</th>

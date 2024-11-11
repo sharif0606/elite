@@ -306,8 +306,8 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Deposit Bank</label>
-                            <input type="text" name="deposit_bank" class="form-control deposit_bank error-msg">
-                            {{-- <span class="error-message" style="color: red; display: none;"></span> --}}
+                            <input type="text" name="deposit_bank" class="form-control deposit_bank error-msg-deposit">
+                            <span class="error-message-deposit" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Bank Name</label>
@@ -433,17 +433,30 @@
         let poBank = $('.po_bank').val();
         let poNo = $('.po_num').val();
         let poDate = $('.po_date').val();
+        let depositBank = $('.deposit_bank').val();
         var errorMessage = $('.error-msg').next('.error-message');
-        if(pmethod == 2 || pmethod == 4){
+        var errorMessageDeposit = $('.error-msg-deposit').next('.error-message-deposit');
+        if(pmethod == 2){
             if(poNo == '' || poDate == '' || poBank == ''){
                 errorMessage.text('This field is required').css('color', 'red').show();
+                errorMessageDeposit.hide();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessage.hide();
                 $('#buttonDisable').removeAttr('disabled',false)
             }
+        }else if(pmethod == 4){
+            if(depositBank == ''){
+                errorMessageDeposit.text('This field is required').css('color', 'red').show();
+                errorMessage.hide();
+                $('#buttonDisable').attr('disabled',true)
+            }else{
+                errorMessageDeposit.hide();
+                $('#buttonDisable').removeAttr('disabled',false)
+            }
         }else{
             errorMessage.hide();
+            errorMessageDeposit.hide();
             // $('.po_bank').val('')
             //$('.po_num').val('')
             $('.po_date').val('');

@@ -177,7 +177,7 @@
                             
                     </table>
                     <div class="">
-                        <p class="p-0 mb-4">As such, you are requested to please pay all our outstanding due amount of <b>Tk {{ money_format($totalDue) }}</b> within <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 72px;"> and oblige thereby.</p>
+                        <p class="p-0 mb-4">As such, you are requested to please pay all our outstanding due amount of <b>Tk {{ money_format($totalDue) }}</b> within <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 80px;"> and oblige thereby.</p>
                         <p>With best regards</p>
                     </div>
                     {{-- <div class="mt-5 fixed-bottom"> --}}
