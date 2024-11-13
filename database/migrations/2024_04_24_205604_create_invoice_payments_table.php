@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->id();
             $table->integer('customer_id')->nullable();
+            $table->integer('branch_id')->nullable();
             $table->integer('zone_id')->nullable();
             $table->integer('invoice_id')->nullable();
             $table->decimal('received_amount',10,2)->default(0)->nullable();
