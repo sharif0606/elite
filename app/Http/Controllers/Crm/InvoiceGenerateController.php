@@ -26,6 +26,8 @@ use App\Models\Crm\PortlinkDeductionSupervisor;
 use App\Models\Crm\PortlinkInvoice;
 use App\Models\Crm\PortlinkInvoiceDetails;
 use App\Models\Crm\PortlinkInvoiceLess;
+use App\Models\Crm\SouthBanglaInvoice;
+use App\Models\Crm\SouthBanglaInvoiceDetails;
 use App\Models\Crm\WasaInvoiceDetails;
 use Intervention\Image\Facades\Image;
 use Exception;
@@ -207,11 +209,14 @@ class InvoiceGenerateController extends Controller
         $deguard = PortlinkDeductionGuard::where('invoice_id',$invoice_id->id)->get();
         return view('invoice_generate.single_show5',compact('invoice_id','branch','headershow','portlink','portDetail','less','desup','deguard'));
     }
-    public function getSingleInvoice6($id)
+    public function getSingleInvoice6(Request $request,$id)
     {
+        $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.single_show6',compact('invoice_id','branch'));
+        $southBangla = SouthBanglaInvoice::where('invoice_id',$invoice_id->id)->first();
+        $southDetail = SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
+        return view('invoice_generate.single_show6',compact('invoice_id','branch','headershow','southBangla','southDetail'));
     }
     public function getSingleInvoice7(Request $request, $id)
     {
@@ -340,6 +345,8 @@ class InvoiceGenerateController extends Controller
                     PortlinkInvoiceLess::where('invoice_id',$invoice_id)->delete();
                     PortlinkDeductionGuard::where('invoice_id',$invoice_id)->delete();
                     PortlinkDeductionSupervisor::where('invoice_id',$invoice_id)->delete();
+                    SouthBanglaInvoice::where('invoice_id',$invoice_id)->delete();
+                    SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
 
                     DB::commit();
                     \LogActivity::addToLog('Invoice Delete',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');

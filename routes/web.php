@@ -22,6 +22,8 @@ use App\Http\Controllers\HourController as hour;
 use App\Http\Controllers\Crm\EmployeeAttendanceController as empatten;
 use App\Http\Controllers\Crm\EmployeeAssignController as empasign;
 use App\Http\Controllers\Crm\PortlinkAssignController as portlinkAssaign;
+use App\Http\Controllers\Crm\SouthBanglaAssignController as southBanglaAssaign;
+use App\Http\Controllers\Crm\SouthBanglaInvoiceController as southBanglaInvoice;
 use App\Http\Controllers\Crm\CustomerDutyController as customerduty;
 use App\Http\Controllers\Crm\InvoiceGenerateController as invoiceGenerate;
 use App\Http\Controllers\Crm\PortlinkInvoiceController as portlinkInvoice;
@@ -140,6 +142,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('empatten',empatten::class);
         Route::resource('employee_assign',empasign::class);
         Route::resource('portlinkAssaign',portlinkAssaign::class);
+        Route::resource('southBanglaAssaign',southBanglaAssaign::class);
+        Route::resource('southBanglaInvoice',southBanglaInvoice::class);
         Route::resource('employeeRate',employeeRate::class);
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
@@ -271,6 +275,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         /*Crm */
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
         Route::get('get-portlink-invoice-data',[portlinkInvoice::class,'getPortInvoiceData'])->name('get_port_invoice_data');
+        Route::get('get-south-bangla-invoice-data',[southBanglaInvoice::class,'getEmployeeRate'])->name('get_south_bangla_invoice_data');
         Route::get('get-customer-header-footer',[invoiceGenerate::class,'getHeaderFooterNote'])->name('get_customer_header_footer');
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');

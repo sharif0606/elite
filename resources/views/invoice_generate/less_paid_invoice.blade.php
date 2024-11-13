@@ -37,10 +37,10 @@
                         @if ($inv->inv_subject != '')
                             <td width="40%" style="text-align: left;"></td>
                         @else
-                            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($inv->end_date)->format('F Y')}}</b></td>
+                            <td width="40%" style="text-align: left;">Bill for the Month of : <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->end_date)->format('F Y')}}" style="width: 100px;"></td>
                         @endif
                         <td width="30%"></td>
-                        <td width="30%" style="text-align: right;">Date : <b>{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}</b></td>
+                        <td width="30%" style="text-align: right;">Date : <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 100px;"></td>
                     </tr>
                 </table>
                 <div style="padding: 0 0px 0 0px; margin-top: 1rem;">
@@ -109,7 +109,8 @@
                         @if ($inv->inv_subject != '')
                             <td colspan="2" style="padding-top: 12px;"><b>{{$inv->inv_subject}}.</b></td>
                         @else
-                            <td colspan="2" style="padding-top: 12px;"><b style="border-bottom: 2px solid;">Regarding payment of outstanding bills for Security Service provided until {{ \Carbon\Carbon::parse($inv->end_date)->format('F Y')}}.</b></td>
+                            <td colspan="2" style="padding-top: 12px;"><b style="border-bottom: 2px solid;"><input type="text" class="input_css" value="Regarding payment of outstanding bills for Security Service provided until" style="width: 600px; background-color:transparent;"></b></td>
+                            {{-- <td colspan="2" style="padding-top: 12px;"><b style="border-bottom: 2px solid;"><input type="text" class="input_css" value="" style="width: 500px;">Regarding payment of outstanding bills for Security Service provided until {{ \Carbon\Carbon::parse($inv->end_date)->format('F Y')}}.</b></td> --}}
                         @endif
                     </tr>
                     <tr>
@@ -119,7 +120,8 @@
                     </tr>
                 </table>
                 <div style="padding-top: 8px; padding-bottom: 8px;">
-                    {{ $inv->header_note }}
+                    <textarea class="input_css" rows="2" style="width: 1000px;">Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.</textarea>
+                    {{-- {{ $inv->header_note }} --}}
                 </div>
                     <style>
                         .input_css{
@@ -176,15 +178,17 @@
                         </tfoot>
                             
                     </table>
-                    <div class="">
-                        <p class="p-0 mb-4">As such, you are requested to please pay all our outstanding due amount of <b>Tk {{ money_format($totalDue) }}</b> within <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 80px;"> and oblige thereby.</p>
+                    <div class="text-left">
+                        <textarea class="input_css" rows="2" style="width: 1000px;">As such, you are requested to please pay all our outstanding due amount of within and oblige thereby.</textarea>
+                        {{-- <p class="p-0 mb-4">As such, you are requested to please pay all our outstanding due amount of <b>Tk {{ money_format($totalDue) }}</b> within <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 80px;"> and oblige thereby.</p> --}}
                         <p>With best regards</p>
                     </div>
                     {{-- <div class="mt-5 fixed-bottom"> --}}
                     <div class="mt-5">
-                        <span><b>Showmic Paul</b></span><br>
+                        <textarea class="input_css" rows="3" style="width: 300px;">Showmic Paul</textarea>
+                        {{-- <span><b>Showmic Paul</b></span><br>
                         <span>Senior Executive (Accounts & IT)</span><br>
-                        <span>Cell: 01844-040717</span>
+                        <span>Cell: 01844-040717</span> --}}
                     </div>
                     {{-- <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left; margin-top:2rem;">
                         @php

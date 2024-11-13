@@ -84,7 +84,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
-                            <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
+                            <select name="bn_jobpost_id" class="select2 form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
                                     @if ($d->name_bn != '')

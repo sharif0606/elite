@@ -120,6 +120,9 @@
                                     <a href="{{route('portlinkAssaign.index', ['role' =>currentUser()])}}">Portlink Assign</a>
                                 </li>
                                 <li class="submenu-item">
+                                    <a href="{{route('southBanglaAssaign.index', ['role' =>currentUser()])}}">South Bangla Assign</a>
+                                </li>
+                                <li class="submenu-item">
                                     <a href="{{route('wasaEmployeeAsign.index', ['role' =>currentUser()])}}">Wasa Employee's Assign</a>
                                 </li>
                                 <li class="submenu-item">

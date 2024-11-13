@@ -81,6 +81,7 @@ class InvoicePaymentController extends Controller
         try{
             $data=new InvoicePayment;
             $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
             $data->invoice_id = $request->invId;
             $data->received_amount = $request->received_amount;
             $data->vat = $request->vat;
@@ -116,6 +117,19 @@ class InvoicePaymentController extends Controller
     public function edit($id)
     {
         $ivp=InvoicePayment::findOrFail(encryptor('decrypt',$id));
+        $lastRec = InvoicePayment::select(
+                DB::raw("sum(received_amount) as `received_amount`"),
+                DB::raw("YEAR(pay_date) year, MONTH(pay_date) month")
+            )
+            ->groupBy("year", "month")
+            ->where("customer_id", $ivp->customer_id)
+            ->when($ivp->branch_id, function ($query, $branchId) {
+                $query->where("branch_id", $branchId);
+            })
+            ->latest()
+            ->take(3)
+            ->pluck("received_amount", "month");
+            
         $totalPaid = InvoicePayment::select(
             DB::raw("SUM(received_amount) as received_amount"),
             DB::raw("SUM(vat_amount) as vat_amount"),
@@ -128,13 +142,15 @@ class InvoicePaymentController extends Controller
         ->where("invoice_id", $ivp->invoice_id)->first();
         $paidFromThisId = $ivp->received_amount + $ivp->vat_amount + $ivp->ait_amount + $ivp->fine_deduction + $ivp->paid_by_client + $ivp->less_paid_honor;
 
-        return view('invoice_payment.edit',compact('ivp','paidFromThisId','totalPaid'));
+        return view('invoice_payment.edit',compact('ivp','lastRec','paidFromThisId','totalPaid'));
     }
 
     public function update(Request $request, $id)
     {
         try{
             $data=InvoicePayment::findOrFail(encryptor('decrypt',$id));
+            $data->customer_id = $request->customer_id;
+            $data->branch_id = $request->branch_id;
             $data->received_amount = $request->received_amount;
             $data->vat = $request->vat;
             $data->vat_amount = $request->vat_amount;

@@ -87,7 +87,7 @@
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
-                            <select name="bn_jobpost_id" class=" form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
+                            <select name="bn_jobpost_id" class="select2 form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
                                 @forelse($jobposts as $d)
                                     @if ($d->name_bn != '')
@@ -611,6 +611,18 @@
                         <div class="form-group">
                             <label for="bn_food_allowance">Food Allownce</label>
                             <input type="number" value="{{old('bn_food_allowance',$employees->bn_food_allowance)}}" class="form-control" name="bn_food_allowance">
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                        <div class="form-group">
+                            <label for="insurance">Insurance</label>
+                            <input type="number" value="{{old('insurance',$employees->insurance)}}" class="form-control" name="insurance">
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-12">
+                        <div class="form-group">
+                            <label for="p_f">PF</label>
+                            <input type="number" value="{{old('p_f',$employees->p_f)}}" class="form-control" name="p_f">
                         </div>
                     </div>
                     <div class="col-md-4 col-12 d-none">

@@ -149,8 +149,22 @@
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 @if ($due > 0)
-                                @php
+                                {{-- @php
                                     $d=App\Models\Crm\InvoicePayment::select(DB::raw("sum(received_amount) as `received_amount`"),DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))->groupby("year","month")->where("customer_id", $e->customer_id)->latest()->take(3)->pluck("received_amount","month");
+                                @endphp --}}
+                                @php
+                                    $d = App\Models\Crm\InvoicePayment::select(
+                                            DB::raw("sum(received_amount) as `received_amount`"),
+                                            DB::raw("YEAR(pay_date) year, MONTH(pay_date) month")
+                                        )
+                                        ->groupBy("year", "month")
+                                        ->where("customer_id", $e->customer_id)
+                                        ->when(isset($e->branch_id), function ($query) use ($e) {
+                                            $query->where("branch_id", $e->branch_id);
+                                        })
+                                        ->latest()
+                                        ->take(3)
+                                        ->pluck("received_amount", "month");
                                 @endphp
                                     <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
                                         data-bs-toggle="modal" data-bs-target="#invList"
@@ -158,6 +172,7 @@
                                         data-zone-id="{{ $e->zone_id }}"
                                         data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer?->id }}"
+                                        data-branch-id="{{ $e->customer?->id }}"
                                         @if ($e->vat_switch != 1)
                                             data-sub-total-amount="{{ round($e->total_tk) }}"
                                         @else
@@ -184,9 +199,13 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     @elseif($e->invoice_type == 4)
-                                        {{-- <a href="{{route('portlinkInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                        <a href="{{route('portlinkInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
-                                        </a> --}}
+                                        </a>
+                                    @elseif($e->invoice_type == 5)
+                                        <a href="{{route('southBanglaInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
                                     @else
                                     @endif
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$e->id}}').submit()">
@@ -232,6 +251,7 @@
                 <div class="modal-body">
                     <input type="hidden" id="inv_id" name="invId">
                     <input type="hidden" id="customer_id" name="customer_id">
+                    <input type="hidden" id="branch_id" name="branch_id">
                     <input type="hidden" id="zone_id" name="zone_id">
                     <div class="row">
                         <div class="col-sm-12">
@@ -250,7 +270,8 @@
                                                 <li>Sub Total: <span id="subAmount"></span><input id="subAmountInput" type="hidden"></li>
                                                 <li>Vat: <span id="vatAmount"></li>
                                             </ul>
-                                        </span></td>
+                                            </span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -362,7 +383,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body d-flex">
-                <select  class="select2 form-select" name="customer_id"  style="width:500px;" required>
+                <select  class="select2 form-select" name="customer_id"  style="width:400px;" required>
                     <option value="">Select Customer</option>
                     @forelse ($customer as $c)
                     <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -372,6 +393,7 @@
                 <button type="submit" class="btn btn-sm btn-primary mx-2">Wasa</button>
                 <a class="btn btn-sm btn-primary" href="{{route('oneTripInvoice.create')}}">One Trip</a>
                 <a class="btn btn-sm btn-primary ms-1" href="{{route('portlinkInvoice.create')}}">Portlink</a>
+                <a class="btn btn-sm btn-primary ms-1" href="{{route('southBanglaInvoice.create')}}">South Bangla</a>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">Close</button>
@@ -504,6 +526,7 @@
             var invId = button.data('inv-id');
             var cusName = button.data('customer-name');
             var cusID = button.data('customer-id');
+            var branchID = button.data('branch-id');
             var zone = button.data('zone-id');
             var Amount = button.data('total-amount');
             var subAmount = button.data('sub-total-amount');
@@ -526,6 +549,7 @@
             modal.find('#inv_id').val(invId);
             modal.find('#name').text(cusName);
             modal.find('#customer_id').val(cusID);
+            modal.find('#branch_id').val(branchID);
             modal.find('#zone_id').val(zone);
             modal.find('#totalAmount').text(Amount);
             modal.find('#totalDue').val(Amount);

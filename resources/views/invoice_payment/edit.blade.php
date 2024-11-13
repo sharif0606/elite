@@ -4,6 +4,53 @@
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
+<style>
+    .last-receive, .due-details {
+        position: relative;
+        display: inline-block;
+    }
+
+    .last-amount {
+        display: none;
+        position: absolute;
+        left: 10px;
+        top: 100%;
+        margin-top: 3px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 10px;
+        list-style: none;
+        z-index: 1;
+        width: max-content;
+    }
+    
+    .modal-body .select2{
+
+    }
+
+    .due-amount {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        margin-top: 3px;
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        padding: 10px;
+        list-style: none;
+        z-index: 1;
+        width: max-content;
+    }
+    .last-receive:hover .last-amount {
+        display: block;
+    }
+    .due-details:hover .due-amount {
+        display: block;
+    }
+
+</style>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -29,17 +76,45 @@
                                     <input id="subAmountInput" type="hidden" value="{{$ivp->invoice?->sub_total_amount}}">
                                 @endif
                                 <input id="totalDue" type="hidden" value="{{($ivp->invoice?->grand_total + $paidFromThisId) - $totalPaid->total_sum}}">
+                                <input type="hidden" id="customer_id" name="customer_id" value="{{$ivp->invoice?->customer_id}}">
+                                <input type="hidden" id="branch_id" name="branch_id" value="{{$ivp->invoice?->branch_id}}">
+                                <input type="hidden" id="zone_id" name="zone_id" value="{{$ivp->invoice?->zone_id}}">
                                 <div class="col-sm-12">
                                     <table class="table table-bordered">
                                         <tbody>
                                             <tr class="bg-light">
                                                 <th>Customer Name: {{ $ivp->customer?->name }} @if ($ivp->invoice?->branch?->brance_name != ''), {{ $ivp->invoice?->branch?->brance_name }} @endif</th>
+                                                <th> 
+                                                    Billable Amount: <span class="text-danger">{{ money_format(($ivp->invoice?->grand_total + $paidFromThisId) - $totalPaid->total_sum)}}</span>
+                                                    <span class="due-details text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                                        <ul class="due-amount">
+                                                            <li>Sub Total: 
+                                                                @if ($ivp->invoice?->vat_switch != 1)
+                                                                    <span>{{$ivp->invoice?->total_tk}}</span>
+                                                                @else
+                                                                    <span>{{$ivp->invoice?->sub_total_amount}}</span>
+                                                                @endif
+                                                            </li>
+                                                            <li>Vat: <span>{{$ivp->invoice?->vat_taka}}</span></li>
+                                                        </ul>
+                                                    </span>
+                                                </th>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Received Amount</label>
+                                    <span class="last-receive text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                        @php
+                                            $months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                        @endphp
+                                        <ul class="last-amount" id="receivedAmountsList">
+                                            @foreach ($lastRec as $monthIndex => $received_amount)
+                                                <li>{{ $months[$monthIndex] }} {{ $received_amount }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </span>
                                     <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control" value="{{ $ivp->received_amount }}">
                                 </div>
                                 <div class="col-sm-3">
@@ -235,6 +310,7 @@
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         $('#less_paid').val(lessPaid.toFixed(2));
+        console.log(dueAmount);
         less_paid_amount();
     }
     function paymethod(){
