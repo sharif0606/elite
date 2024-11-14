@@ -1187,13 +1187,57 @@
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">10</th>
                                     <th class="tbl_border" style="padding: 6px;">Present Address</th>
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_pre_holding_no }}, {{ $employees->en_pre_post_ofc }},  {{ $employees->en_pre_village_name }} ,  {{ $employees->bn_pre_ward?->name }} ,  {{ $employees->bn_union?->name }} ,  {{ $employees->bn_upazilla?->name }} ,  {{ $employees->bn_district?->name }} </th>
+                                    <th class="tbl_border" style="padding: 6px;">
+                                        @if ($employees->en_pre_holding_no != '')
+                                           <b>C/O:</b> {{ $employees->en_pre_holding_no }}, 
+                                        @endif
+                                        @if ($employees->en_pre_village_name != '')
+                                           <b>Vill:</b> {{ $employees->en_pre_village_name }}, 
+                                        @endif
+                                        @if ($employees->bn_pre_ward?->name != '')
+                                           <b>Ward:</b> {{ $employees->bn_pre_ward?->name }}, 
+                                        @endif
+                                        @if ($employees->en_pre_post_ofc != '')
+                                           <b>Post:</b> {{ $employees->en_pre_post_ofc }}, 
+                                        @endif
+                                        @if ($employees->bn_union?->name != '')
+                                           <b>P.S:</b> {{ $employees->bn_union?->name }}, 
+                                        @endif
+                                        @if ($employees->bn_upazilla?->name != '')
+                                           <b>UP:</b> {{ $employees->bn_upazilla?->name }}, 
+                                        @endif
+                                        @if ($employees->bn_district?->name != '')
+                                           <b>Dist:</b> {{ $employees->bn_district?->name }}
+                                        @endif
+                                    </th>
                                 </tr>
                                 <tr class="tbl_border" >
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">11</th>
                                     <th class="tbl_border" style="padding: 6px;">Permanent Address</th>
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                                    <th class="tbl_border" style="padding: 6px;">{{ $employees->en_parm_holding_name }}, {{ $employees->en_parm_post_ofc }} ,  {{ $employees->en_parm_village_name }} ,  {{ $employees->bn_parm_ward?->name}} ,  {{ $employees->bn_parm_union?->name }} ,  {{ $employees->bn_parm_upazilla?->name }} ,  {{ $employees->bn_parm_district?->name }} </th>
+                                    <th class="tbl_border" style="padding: 6px;">
+                                        @if ($employees->en_parm_holding_name != '')
+                                           <b>C/O:</b> {{ $employees->en_parm_holding_name }}, 
+                                        @endif
+                                        @if ($employees->en_parm_village_name != '')
+                                           <b>Vill:</b> {{ $employees->en_parm_village_name }}, 
+                                        @endif
+                                        @if ($employees->bn_parm_ward?->name != '')
+                                           <b>Ward:</b> {{ $employees->bn_parm_ward?->name }}, 
+                                        @endif
+                                        @if ($employees->en_parm_post_ofc != '')
+                                           <b>Post:</b> {{ $employees->en_parm_post_ofc }}, 
+                                        @endif
+                                        @if ($employees->bn_parm_union?->name != '')
+                                           <b>P.S:</b> {{ $employees->bn_parm_union?->name }}, 
+                                        @endif
+                                        @if ($employees->bn_parm_upazilla?->name != '')
+                                           <b>UP:</b> {{ $employees->bn_parm_upazilla?->name }}, 
+                                        @endif
+                                        @if ($employees->bn_parm_district?->name != '')
+                                           <b>Dist:</b> {{ $employees->bn_parm_district?->name }}
+                                        @endif
+                                    </th>
                                 </tr>
                                 <tr class="tbl_border" >
                                     <th class="tbl_border" style="text-align: center; padding: 6px;">12</th>
