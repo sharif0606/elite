@@ -273,7 +273,7 @@
                         // Deduction calculation
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
-                            pf = "200";
+                            pf = (value.p_f > 0) ? value.p_f : '0';
                         }
                         let Insurance = "0";
                         if (new Date() >= sixMonthsLater) {

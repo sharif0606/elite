@@ -43,7 +43,7 @@ class WasaEmployeeAssignController extends Controller
 
     public function wasaGetEmployee(Request $request)
 	{
-		$data = Employee::where('id',$request->id)->select('id','admission_id_no','en_applicants_name','bn_ac_no','bn_jobpost_id')->with('position')->get();
+		$data = Employee::where('id',$request->id)->select('id','admission_id_no','en_applicants_name','second_ac_no','bn_jobpost_id')->with('position')->get();
 		return $data;
 	}
 

@@ -670,6 +670,30 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
+                            <label for="bn_bank_name">ব্যাংক নাম (For Wasa)</label>
+                            <input type="text" value="{{old('second_bank_name')}}" class="form-control" placeholder="ব্যাংক নাম" name="second_bank_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_brance_name">ব্রাঞ্চ নাম (For Wasa)</label>
+                            <input type="text" value="{{old('second_brance_name')}}" class="form-control" placeholder="ব্রাঞ্চ নাম" name="second_brance_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_ac_no">একাউন্ট নং (For Wasa)</label>
+                            <input type="text" value="{{old('second_ac_no')}}" class="form-control" placeholder="একাউন্ট নম্বর" name="second_ac_no">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="bn_ac_name">একাউন্ট নাম (For Wasa)</label>
+                            <input type="text" value="{{old('second_ac_name')}}" class="form-control" placeholder="একাউন্ট নাম" name="second_ac_name">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
                             <label for="">Salary type (For Accounts)</label>
                             <select name="salary_prepared_type" class="form-control form-select">
                                 <option value="">Select</option>

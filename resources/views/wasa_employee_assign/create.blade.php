@@ -160,7 +160,7 @@
                     if(data.length>0){
                         var id = data[0].id;
                         var name = data[0].en_applicants_name;
-                        var ac_no = data[0].bn_ac_no;
+                        var ac_no = data[0].second_ac_no;
                         var contact = data[0].bn_parm_phone_my;
                         var positionid=data[0].bn_jobpost_id;
                         var positionName = data[0].position.name;

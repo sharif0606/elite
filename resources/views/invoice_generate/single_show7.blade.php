@@ -198,7 +198,7 @@
                             @if ($de->account_no != '')
                                 {{ $de->account_no }}
                             @else
-                                {{ $de->employee ? $de->employee->bn_ac_no : '' }}
+                                {{ $de->employee ? $de->employee->second_ac_no : '' }}
                             @endif
                         </td>
                         <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>

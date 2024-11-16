@@ -81,6 +81,10 @@ return new class extends Migration
             $table->text('bn_brance_name')->nullable();
             $table->text('bn_ac_no')->nullable();
             $table->string('bn_ac_name')->nullable();
+            $table->string('second_bank_name',100)->nullable();
+            $table->string('second_brance_name',100)->nullable();
+            $table->string('second_ac_no',100)->nullable();
+            $table->string('second_ac_name',100)->nullable();
             $table->text('bn_routing_number')->nullable();
             $table->integer('salary_prepared_type')->nullable();
             $table->decimal('insurance',14,2)->default(130);

@@ -279,7 +279,7 @@
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid,'branch_id':branchId },
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
                 var dutyHour=data.hours;
@@ -304,7 +304,7 @@
             dataType: "json",
             data: { 'customer_id':customerId,'job_post_id':positionid, 'job_post_hour':dutyHour,'branch_id':branchId },
             success: function(data) {
-                //console.log(data);
+                console.log(data);
                 var dutyRate=data.duty_rate;
                 var otRate=data.ot_rate;
                 //console.log(dutyRate)
