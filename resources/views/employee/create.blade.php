@@ -83,6 +83,12 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
+                            <label for="joining_date">এলিট যোগদানের তারিখ</label>
+                            <input type="date" id="joining_date" value="{{old('joining_date')}}" class="form-control" placeholder="Joining Date" name="joining_date">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
                             <label for="bn_jobpost_id">আবেদিত পদ<span class="text-danger">*</span></label>
                             <select name="bn_jobpost_id" class="select2 form-control @error('bn_jobpost_id') is-invalid @enderror" id="bn_jobpost_id">
                                 <option value="">নির্বাচন করুন</option>
@@ -101,12 +107,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="joining_date">এলিট যোগদানের তারিখ</label>
-                            <input type="date" id="joining_date" value="{{old('joining_date')}}" class="form-control" placeholder="Joining Date" name="joining_date">
-                        </div>
-                    </div>
+                    
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="salary_joining_date">সেলারি তারিখ</label>

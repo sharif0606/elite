@@ -20,6 +20,9 @@ class InvoicePaymentController extends Controller
         if($request->customer_id){
             $payments=$payments->where('customer_id',$request->customer_id);
         }
+        if($request->branch_id){
+            $payments=$payments->where('branch_id',$request->branch_id);
+        }
         if($request->payment_type){
             $payments=$payments->where('payment_type',$request->payment_type);
         }

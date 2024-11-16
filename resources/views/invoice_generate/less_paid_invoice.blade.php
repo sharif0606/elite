@@ -14,11 +14,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text-center">
-                        <button type="button" class="btn btn-info my-1" onclick="printDivemp('result_show')">Print</button>
+                        <button type="button" class="btn btn-info my-1" onclick="printDivemp('result_show')">PDF</button>
+                        <button type="button" class="btn btn-secondary my-1" onclick="printWithoutHeader('result_show')">Print</button>
                     </div>
                 </div>
                 <div class="table-responsive" id="result_show">
-                <table width="100%">
+                <table width="100%" class="no-print">
                     <tr>
                         <th width="45%" style="text-align: left;"><img src="{{ asset('assets/billcopy/logo.png') }}" height="80px" width="auto" alt="logo" srcset=""></th>
 
@@ -31,8 +32,8 @@
                         </td>
                     </tr>
                 </table>
-                <div style="height: 2px; background-color: red; margin-top: 0.5rem; margin-bottom: 0.5rem;"></div>
-                <table width="100%">
+                <div class="no-print" style="height: 2px; background-color: red; margin-top: 0.5rem; margin-bottom: 0.5rem;"></div>
+                <table width="100%" class="head-height">
                     <tr>
                         @if ($inv->inv_subject != '')
                             <td width="40%" style="text-align: left;"></td>
@@ -40,7 +41,8 @@
                             <td width="40%" style="text-align: left;">Bill for the Month of : <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->end_date)->format('F Y')}}" style="width: 100px;"></td>
                         @endif
                         <td width="30%"></td>
-                        <td width="30%" style="text-align: right;">Date : <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 100px;"></td>
+                        <td width="30%" style="text-align: right; position: relative;"><img src="" class="seal_img d-none" id="seal" height="100px" width="auto" style="position: absolute; right: 32px; top: 20px;"> Date : <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 100px;"></td>
+                        
                     </tr>
                 </table>
                 <div style="padding: 0 0px 0 0px; margin-top: 1rem;">
@@ -179,46 +181,31 @@
                             
                     </table>
                     <div class="text-left">
-                        <textarea class="input_css" rows="2" style="width: 1000px;">As such, you are requested to please pay all our outstanding due amount of within and oblige thereby.</textarea>
+                        <textarea class="input_css" rows="2" style="width: 1000px;">As such, you are requested to please pay all our outstanding due amount of Tk {{ money_format($totalDue) }} within and oblige thereby.</textarea>
                         {{-- <p class="p-0 mb-4">As such, you are requested to please pay all our outstanding due amount of <b>Tk {{ money_format($totalDue) }}</b> within <input type="text" class="input_css" value="{{ \Carbon\Carbon::parse($inv->bill_date)->format('d/m/Y') }}" style="width: 80px;"> and oblige thereby.</p> --}}
                         <p>With best regards</p>
                     </div>
                     {{-- <div class="mt-5 fixed-bottom"> --}}
                     <div class="mt-5">
-                        <textarea class="input_css" rows="3" style="width: 300px;">Showmic Paul</textarea>
+                        <img class="signature_img d-none" src="" id="photo_p" height="40px" width="100px"><br>
+                        <textarea class="input_css" rows="3" style="width: 300px;">
+                            {{ str_replace('<br>', "\n",'Showmic Paul <br> Senior Executive (Accounts & IT)') }}
+                            {{-- Showmic Paul <br> Senior Executive (Accounts & IT) --}}
+                        </textarea>
                         {{-- <span><b>Showmic Paul</b></span><br>
                         <span>Senior Executive (Accounts & IT)</span><br>
                         <span>Cell: 01844-040717</span> --}}
                     </div>
-                    {{-- <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; text-align: left; margin-top:2rem;">
-                        @php
-                            $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
-                            $footersetting2= App\Models\Settings\InvoiceSetting::where('id',2)->first();
-                            $footersetting3= App\Models\Settings\InvoiceSetting::where('id',3)->first();
-                            @endphp
-                        <div style="flex: 1; text-align: left; padding-right: 10px;">
-                            {{ $footersetting1?->name }} <br>
-                            {{ $footersetting1?->designation }} <br>
-                            {{ $footersetting1?->phone }}
-                        </div>
-                        
-                        <div style="flex: 1; text-align: center; padding-right: 10px;">
-                            <div style="display: inline-block; text-align: left;">
-                                {{ $footersetting2?->name }} <br>
-                                {{ $footersetting2?->designation }} <br>
-                                {{ $footersetting2?->phone }}
-                            </div>
-                            
-                        </div>
-                        
-                        <div style="flex: 1; text-align: right;">
-                            <div style="display: inline-block; text-align: left;">
-                                {{ $footersetting3?->name }} <br>
-                                {{ $footersetting3?->designation }} <br>
-                                {{ $footersetting3?->phone }}
-                            </div>
-                        </div>
-                    </div> --}}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-3">
+                    <label for="signature"><b>Signature</b></label><br>
+                    <input type="file" class="no-print" id="photo" name="image" class="form-control" onchange="pview(this)"><br>
+                </div>
+                <div class="col-3">
+                    <label for="signature"><b>Seal</b></label><br>
+                    <input type="file" class="no-print" class="form-control" onchange="pviewSeal(this)"><br>
                 </div>
             </div>
         </form>
@@ -227,6 +214,14 @@
 @endsection
 @push('scripts')
     <script>
+        function pview(e){
+            document.getElementById('photo_p').src=window.URL.createObjectURL(e.files[0]);
+            $('.signature_img').removeClass('d-none');
+        }
+        function pviewSeal(e){
+            document.getElementById('seal').src=window.URL.createObjectURL(e.files[0]);
+            $('.seal_img').removeClass('d-none');
+        }
         function printDivemp(divName) {
             var prtContent = document.getElementById(divName).cloneNode(true);
             
@@ -254,7 +249,44 @@
             var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
             WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
             WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
-            WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; color: #000 !important; } h6 {color: #000 !important;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; color: #000 !important; } .no-print { display: none !important;} </style>');
+            WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; color: #000 !important; } h6 {color: #000 !important;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; color: #000 !important; } </style>');
+            WinPrint.document.write(prtContent.innerHTML);
+            WinPrint.document.close();
+
+            WinPrint.onload = function () {
+                WinPrint.focus();
+                WinPrint.print();
+                WinPrint.close();
+            };
+        }
+        function printWithoutHeader(divName) {
+            var prtContent = document.getElementById(divName).cloneNode(true);
+            
+            // Get all inputs within the div and update their values in the cloned content
+            var inputs = prtContent.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].type === 'text' || inputs[i].type === 'date') {
+                    inputs[i].setAttribute('value', inputs[i].value);
+                }
+            }
+            
+            // Get all textareas within the div and update their text in the cloned content
+            var textareas = prtContent.getElementsByTagName('textarea');
+            for (var i = 0; i < textareas.length; i++) {
+                textareas[i].innerHTML = textareas[i].value;
+            }
+            
+            // Get all selects within the div and update their selected options in the cloned content
+            var selects = prtContent.getElementsByTagName('select');
+            for (var i = 0; i < selects.length; i++) {
+                var selectedOption = selects[i].options[selects[i].selectedIndex];
+                selectedOption.setAttribute('selected', 'selected');
+            }
+
+            var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+            WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
+            WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
+            WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; color: #000 !important; } h6 {color: #000 !important;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; color: #000 !important; } .no-print { display: none !important;} .head-height{ margin-top: 200px !important;} </style>');
             WinPrint.document.write(prtContent.innerHTML);
             WinPrint.document.close();
 

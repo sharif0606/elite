@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">Customer</label>
-                    <select name="customer_id" class="select2 form-control">
+                    <select name="customer_id" id="customer_id" class="select2 form-select" onchange="getBranch(this);">
                         <option value="">Select Customer</option>
                         @forelse ($customer as $c)
                             <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
@@ -18,7 +18,15 @@
                         @endforelse
                     </select>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-2 col-md-6 col-sm-12 py-1">
+                    <label for="lcNo">{{__('Branch')}}</label>
+                    <div class="form-group">
+                        <select class="select2 form-select branch_id" id="branch_id" name="branch_id">
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 py-1">
                     <label for="">Pay Mode</label>
                     <select name="payment_type" class="form-control form-select">
                         <option value="">Select</option>
@@ -28,7 +36,7 @@
                         <option value="4" {{request()->payment_type==3?'selected':''}}>Online Pay</option>
                     </select>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-2 col-md-6 col-sm-12 py-1">
                     <label for="">PO No</label>
                     <input type="text" name="po_no" class="form-control" value="{{ request()->po_no }}">
                 </div>
@@ -70,7 +78,7 @@
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
-                        <th scope="col">{{__('Amount')}}</th>
+                        <th scope="col">{{__('Received')}}</th>
                         <th scope="col">{{__('Vat')}}</th>
                         <th scope="col">{{__('Less Paid')}}</th>
                         <th scope="col">{{__('Pay Mode')}}</th>
@@ -134,6 +142,42 @@
 @endsection
 @push('scripts')
 <script>
+    $(document).ready(function () {
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const customerId = getQueryParam('customer_id');
+        const branchId = getQueryParam('branch_id');
+
+        if (customerId) {
+            //$('#customer_id').val(customerId).trigger('change');
+            // Load branches and pre-select if branchId is present
+            getBranchSearch(customerId, branchId);
+        }
+    });
+
+function getBranchSearch(customerId, branchId = null) {
+    $('#branch_id').empty();
+    $.ajax({
+        url: "{{ route('get_ajax_branch') }}",
+        type: "GET",
+        dataType: "json",
+        data: { customerId: customerId },
+        success: function (data) {
+            $('#branch_id').append('<option value="0">Select Branch</option>');
+            $.each(data, function (key, value) {
+                $('#branch_id').append(
+                    `<option value="${value.id}" ${branchId == value.id ? 'selected' : ''}>${value.brance_name}</option>`
+                );
+            });
+        },
+        error: function () {
+            console.error("Error fetching data from the server.");
+        },
+    });
+}
     function vatcalc(v,place){
         if(place=="vat_amount"){
             let rec= $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
@@ -162,5 +206,9 @@
             modal.find('#totalAmount').text(Amount);
         });
     });
+    
+$(document).on('select2:open', () => {
+    document.querySelector('.select2-search__field').focus();
+});
 </script>
 @endpush
