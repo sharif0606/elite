@@ -188,9 +188,8 @@
                     {{-- <div class="mt-5 fixed-bottom"> --}}
                     <div class="mt-5">
                         <img class="signature_img d-none" src="" id="photo_p" height="40px" width="100px"><br>
-                        <textarea class="input_css" rows="3" style="width: 300px;">
-                            {{ str_replace('<br>', "\n",'Showmic Paul <br> Senior Executive (Accounts & IT)') }}
-                            {{-- Showmic Paul <br> Senior Executive (Accounts & IT) --}}
+                        <textarea class="input_css" rows="3" style="width: 300px;">Showmic Paul
+                            {{-- {{ str_replace('<br>', "\n",'Showmic Paul <br> Senior Executive (Accounts & IT)') }} --}}
                         </textarea>
                         {{-- <span><b>Showmic Paul</b></span><br>
                         <span>Senior Executive (Accounts & IT)</span><br>

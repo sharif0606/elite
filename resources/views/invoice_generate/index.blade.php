@@ -185,6 +185,11 @@
                                     </button>
                                 @endif
                                 {{-- @if ($e->grand_total-$lessPaid == $due) --}}
+                                @if ($e->invoice_type == 1 && $e->customer_id == 122)
+                                        <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                @endif
                                 @if ($paymentHasOrNot == 0)
                                     @if ($e->invoice_type == 1)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
