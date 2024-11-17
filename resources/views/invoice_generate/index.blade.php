@@ -109,6 +109,7 @@
                         <th scope="col">{{__('End Date')}}</th>
                         <th scope="col">{{__('Bill Date')}}</th>
                         <th scope="col">{{__('Grand Total')}}</th>
+                        <th scope="col">{{__('Received')}}</th>
                         <th scope="col">{{__('Due')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -129,6 +130,7 @@
                         @php
                             $due = round($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                             $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
+                            $receivedAmount = money_format($e->payment->sum('received_amount'));
                         @endphp
                     
                     {{-- @if ($due != 0) --}}
@@ -143,6 +145,11 @@
                             <td>{{ $e->end_date }}</td>
                             <td>{{ $e->bill_date }}</td>
                             <td>{{ money_format($e->grand_total) }}</td>
+                            <td>
+                                @if ($receivedAmount > 0)
+                                    {{ $receivedAmount }}
+                                @endif
+                            </td>
                             <td>{{ $due }}</td>
                             <td>
                                 <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
@@ -185,11 +192,11 @@
                                     </button>
                                 @endif
                                 {{-- @if ($e->grand_total-$lessPaid == $due) --}}
-                                @if ($e->invoice_type == 1 && $e->customer_id == 122)
+                                {{-- @if ($e->invoice_type == 1 && $e->customer_id == 122)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                @endif
+                                @endif --}}
                                 @if ($paymentHasOrNot == 0)
                                     @if ($e->invoice_type == 1)
                                         <a href="{{route('invoiceGenerate.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
@@ -231,7 +238,7 @@
                     {{-- @endif --}}
                     @empty
                     <tr>
-                        <th colspan="6" class="text-center">No Data Found</th>
+                        <th colspan="9" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>
