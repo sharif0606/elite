@@ -140,9 +140,17 @@ class InvoicePaymentController extends Controller
             DB::raw("SUM(fine_deduction) as fine_deduction"),
             DB::raw("SUM(paid_by_client) as paid_by_client"),
             DB::raw("SUM(less_paid_honor) as less_paid_honor"),
-            DB::raw("SUM(received_amount) + SUM(vat_amount) + SUM(ait_amount) + SUM(fine_deduction) + SUM(paid_by_client) + SUM(less_paid_honor) as total_sum")
-        )
-        ->where("invoice_id", $ivp->invoice_id)->first();
+            DB::raw("
+                SUM(
+                    IFNULL(received_amount, 0) + 
+                    IFNULL(vat_amount, 0) + 
+                    IFNULL(ait_amount, 0) + 
+                    IFNULL(fine_deduction, 0) + 
+                    IFNULL(paid_by_client, 0) + 
+                    IFNULL(less_paid_honor, 0)
+                ) as total_sum
+            ")
+        )->where("invoice_id", $ivp->invoice_id)->first();
         $paidFromThisId = $ivp->received_amount + $ivp->vat_amount + $ivp->ait_amount + $ivp->fine_deduction + $ivp->paid_by_client + $ivp->less_paid_honor;
 
         return view('invoice_payment.edit',compact('ivp','lastRec','paidFromThisId','totalPaid'));
