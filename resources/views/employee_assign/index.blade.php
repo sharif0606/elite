@@ -59,6 +59,7 @@
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td scope="row">
                         {{$e->customer?->name}}
+                        <input type="hidden" value="{{$e->id}}">
                         <br/>
                         @if($e->branch?->brance_name)
 

@@ -78,7 +78,7 @@ class CustomerDutyController extends Controller
                     return $data;
                 }
             }else{
-                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                 return $data;
             }
         } catch (Exception $e) {
@@ -103,7 +103,7 @@ class CustomerDutyController extends Controller
                     return $data;
                 }
             }else{
-                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'ASC')->first();
                 return $data;
             }
         } catch (Exception $e) {
