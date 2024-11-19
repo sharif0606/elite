@@ -65,8 +65,8 @@
                     <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                 </div>
                 <div class="col-sm-3 py-3">
-                    <button type="submit" class="btn btn-info">Search</button>
-                    <a href="{{route('invoice-payment.index')}}" class="btn btn-danger">Clear</a>
+                    <button type="submit" class="btn btn-sm btn-info mt-2">Search</button>
+                    <a href="{{route('invoice-payment.index')}}" class="btn btn-sm btn-danger mt-2">Clear</a>
                 </div>
             </div>
         </form>
@@ -77,17 +77,18 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Customer')}}</th>
-                        <th scope="col">{{__('Received')}}</th>
-                        <th scope="col">{{__('Vat')}}</th>
-                        <th scope="col">{{__('Less Paid')}}</th>
-                        <th scope="col">{{__('Pay Mode')}}</th>
-                        <th scope="col">{{__('Bank Name')}}</th>
+                        <th scope="col" style="width: 180px;">{{__('Customer Name')}}</th>
+                        <th scope="col">{{__('Billing amount')}}</th>
+                        <th scope="col">{{__('Received amount')}}</th>
+                        <th scope="col">{{__('Vat %')}}</th>
+                        <th scope="col">{{__('Ait %')}}</th>
+                        <th scope="col">{{__('Less Paid/Due')}}</th>
+                        <th scope="col" style="width: 90px;">{{__('Pay Mode')}}</th>
+                        <th scope="col" style="width: 100px;">{{__('Bank Name')}}</th>
                         <th scope="col">{{__('PO No')}}</th>
-                        {{-- <th scope="col">{{__('PO Date')}}</th> --}}
-                        <th scope="col">{{__('Pay Date')}}</th>
-                        {{-- <th scope="col">{{__('Receive Date')}}</th>
-                        <th scope="col">{{__('Deposit Date')}}</th> --}}
+                        <th scope="col" style="width: 80px;">{{__('PO Date')}}</th>
+                        <th scope="col" style="width: 100px;">{{__('Deposit Bank')}}</th>
+                        <th scope="col" style="width: 80px;">{{__('Deposit Date')}}</th>
                         <th scope="col">{{__('Remarks')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -98,10 +99,16 @@
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
+                        <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
                         <td>{{ $e->received_amount }}</td>
                         <td>
                             @if ($e->vat > 0)
                                 {{(int) $e->vat }}%
+                            @endif
+                        </td>
+                        <td>
+                            @if ($e->ait > 0)
+                                {{(int) $e->ait }}%
                             @endif
                         </td>
                         <td>
@@ -112,10 +119,9 @@
                         <td>{{ $pm[$e->payment_type] }}</td>
                         <td>{{ $e->bank_name }}</td>
                         <td>{{ $e->po_no }}</td>
-                        {{-- <td>{{ $e->po_date }}</td> --}}
-                        <td>{{ $e->pay_date }}</td>
-                        {{-- <td>{{ $e->rcv_date }}</td>
-                        <td>{{ $e->deposit_date }}</td> --}}
+                        <td>{{ $e->po_date }}</td>
+                        <td>{{ $e->deposit_bank }}</td>
+                        <td>{{ $e->deposit_date }}</td>
                         <td>{{ $e->remarks }}</td>
                         <td>
                             <a href="{{route('invoice-payment.edit',[encryptor('encrypt',$e->id)])}}">
@@ -125,7 +131,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <th colspan="11" class="text-center">No Data Found</th>
+                        <th colspan="15" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>

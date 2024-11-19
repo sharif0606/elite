@@ -71,6 +71,7 @@
                         <option value="12" {{old('type')== '12'? 'selected' : ''}}>RSGT</option>
                         <option value="13" {{old('type')== '13'? 'selected' : ''}}>Office Staff Prime</option>
                         <option value="14" {{old('type')== '14'? 'selected' : ''}}>Office Staff Others</option>
+                        <option value="15" {{old('type')== '15'? 'selected' : ''}}>Stop Salary List</option>
                     </select>
                 </div>
                 <div class="col-lg-3">

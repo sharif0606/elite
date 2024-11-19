@@ -715,6 +715,12 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="remark">Remarks (For accounts)</label>
+                            <input type="text" value="{{old('remarks')}}" class="form-control" name="remarks">
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <p>প্রত্যয়ন পত্রের জন্য:</p>

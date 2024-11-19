@@ -32,7 +32,7 @@
                         }
                     </style>
                     @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink','RSB','Top Way','RSGT','','','Stop Salary');
                     @endphp
                     <table id="salaryTable" class="table tbl_border">
                         <thead>
@@ -53,7 +53,7 @@
                         </thead>
                         <tbody>
                             @forelse ($data as $d)
-                                @if ($d->employee?->salary_prepared_type == $salaryType)
+                                {{-- @if ($d->employee?->salary_prepared_type == $salaryType) --}}
                                     <tr class="tbl_border">
                                         <th class="tbl_border text-center">{{ $sl++}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_bank_name}}, {{$d->employee?->bn_brance_name}} <input type="hidden" value="{{$d->id}}"></th>
@@ -71,13 +71,16 @@
                                         <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-center">{{$d->position?->name}} <br> ID No- {{$d->employee?->admission_id_no}} </th>
                                         <th class="tbl_border text-center">{{$d->employee?->en_parm_phone_my}}</th>
-                                        <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->remark}}"></th>
+                                        @if ($salaryType == 15)
+                                            <th class="tbl_border text-center">{{$d->remark}}</th>
+                                        @else
+                                            <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->employee?->remarks}}"></th>
+                                        @endif
                                     </tr>
                                     @php
                                         $totalAmount += $d->common_net_salary;
                                     @endphp
-                                @else
-                                @endif
+                                {{-- @endif --}}
                             @empty
                             @endforelse
                             <tr class="tbl_border">

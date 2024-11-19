@@ -186,7 +186,7 @@
             <th width="13%">Salary Amount (BDT)</th>
         </tr>
             @if ($wasa?->wasadetails)
-                @foreach ($wasa->wasadetails as $de)
+                @foreach ($wasa->wasadetails->sortBy('area') as $de)
                     <tr>
                         <td style="text-align: center;">{{ ++$loop->index }}</td>
                         <td style="text-align: center;">{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>

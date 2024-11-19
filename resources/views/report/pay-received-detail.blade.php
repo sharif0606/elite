@@ -42,6 +42,17 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label for="">Customer Branch</label>
+                        <select name="branch_id" class="select2 form-select">
+                            <option value="">Select Branch</option>
+                            @foreach ($branch as $b)
+                                <option value="{{$b->id}}" {{request('branch_id')== $b->id? 'selected' : ''}}>{{$b->brance_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
                 <div class="col-lg-2 col-sm-6 ps-0 ">
                     <div class="form-group d-flex" style="margin-top: 1.3rem;">
@@ -55,6 +66,7 @@
         <!-- table bordered -->
         <div class="text-end">
             <button type="button" class="btn btn-sm btn-info" onclick="printDiv('result_show')">Print</button>
+            <button type="button" class="btn btn-sm btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button>
         </div>
         <div class="table-responsive" id="result_show">
             <div class="text-center">
@@ -62,7 +74,7 @@
                 <p class="m-0 p-0">{{$customer->name}}</p>
                 <span>{{$customer->zone?->name}}</span>
             </div>
-            <table class="table table-bordered mb-0">
+            <table id="paymentTable" class="table table-bordered mb-0">
                 @php
                     $vatAmountTotal = 0;
                     $aitAmountTotal = 0;
@@ -142,4 +154,35 @@
         </div>
     </div>
 </div>
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
 @endsection
+@push('scripts')
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
+<script>
+    function exportReportToExcel(tableId, filename) {
+        let table = document.getElementById(tableId);
+        let tableToExport = table.cloneNode(true);
+
+        TableToExcel.convert(tableToExport, {
+            name: `${filename}.xlsx`,
+            sheet: {
+                name: 'Payment'
+            }
+        });
+
+        $("#my-content-div").html("");
+        $('.full_page').html("");
+    }
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+
+        $.get("{{route('report.payment_receive_detail',$customer->id)}}{{ ltrim(Request()->fullUrl(),Request()->url()) }}", function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            // Export all columns
+            exportReportToExcel('paymentTable', 'Payment of-{{$customer->name}}');
+        });
+    }
+</script>
+@endpush

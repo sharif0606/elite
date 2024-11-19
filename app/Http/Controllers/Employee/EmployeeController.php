@@ -144,6 +144,7 @@ class EmployeeController extends Controller
             $employee->second_ac_name = $request->second_ac_name;
             $employee->bn_routing_number = $request->bn_routing_number;
             $employee->salary_prepared_type = $request->salary_prepared_type;
+            $employee->remarks = $request->remarks;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;
@@ -383,6 +384,7 @@ class EmployeeController extends Controller
             $employee->second_ac_name = $request->second_ac_name;
             $employee->bn_routing_number = $request->bn_routing_number;
             $employee->salary_prepared_type = $request->salary_prepared_type;
+            $employee->remarks = $request->remarks;
 
             //   English
             $employee->en_applicants_name = $request->en_applicants_name;

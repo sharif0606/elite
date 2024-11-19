@@ -59,7 +59,7 @@
                                         <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
                                         <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
-                                        <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->remark}}"></th>
+                                        <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->employee?->remarks}}"></th>
                                     </tr>
                                     @php
                                         $totalAmount += $d->common_net_salary;

@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Deposit Bank</label>
-                                    <input type="text" name="deposit_bank" value="{{ $ivp->deposit_bank }}" class="form-control deposit_bank error-msg-deposit">
+                                    <input type="text" name="deposit_bank" onchange="paymethod()" value="{{ $ivp->deposit_bank }}" class="form-control deposit_bank error-msg-deposit">
                                     <span class="error-message-deposit" style="color: red; display: none;"></span>
                                 </div>
                                 <div class="col-sm-3">
@@ -185,11 +185,13 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Receive Date</label>
-                                    <input type="date" name="rcv_date" class="form-control" value="{{ $ivp->rcv_date }}">
+                                    <input type="date" name="rcv_date" onchange="paymethod()" class="form-control receive_date error-msg-rec" value="{{ $ivp->rcv_date }}">
+                                    <span class="error-message-rec" style="color: red; display: none;"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Deposit Date</label>
-                                    <input type="date" name="deposit_date" class="form-control" value="{{ $ivp->deposit_date }}">
+                                    <input type="date" name="deposit_date" onchange="paymethod()" class="form-control deposit_date error-msg-deposit" value="{{ $ivp->deposit_date }}">
+                                    <span class="error-message-deposit" style="color: red; display: none;"></span>
                                 </div>
                                 <div class="col-sm-12">
                                     <label for="">Remarks</label>
@@ -319,33 +321,45 @@
         let poNo = $('.po_num').val();
         let poDate = $('.po_date').val();
         let depositBank = $('.deposit_bank').val();
+        let depositDate = $('.deposit_date').val();
+        let receiveDate = $('.receive_date').val();
         var errorMessage = $('.error-msg').next('.error-message');
         var errorMessageDeposit = $('.error-msg-deposit').next('.error-message-deposit');
+        var recErrorMessage = $('.error-msg-rec').next('.error-message-rec');
         if(pmethod == 2){
             if(poNo == '' || poDate == '' || poBank == ''){
                 errorMessage.text('This field is required').css('color', 'red').show();
                 errorMessageDeposit.hide();
+                recErrorMessage.hide();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessage.hide();
                 $('#buttonDisable').removeAttr('disabled',false)
             }
-        }else if(pmethod == 4){
-            if(depositBank == ''){
+        }else if(pmethod == 4 || pmethod == 3){
+            if(depositBank == '' || depositDate == ''){
                 errorMessageDeposit.text('This field is required').css('color', 'red').show();
                 errorMessage.hide();
+                recErrorMessage.hide();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessageDeposit.hide();
                 $('#buttonDisable').removeAttr('disabled',false)
             }
         }else{
+            if(receiveDate == ''){
+                recErrorMessage.text('This field is required').css('color', 'red').show();
+                $('#buttonDisable').attr('disabled',true)
+            }else{
+                recErrorMessage.hide();
+                $('#buttonDisable').removeAttr('disabled',false)
+            }
             errorMessage.hide();
             errorMessageDeposit.hide();
             // $('.po_bank').val('')
             //$('.po_num').val('')
             $('.po_date').val('');
-            $('#buttonDisable').removeAttr('disabled',false)
+            //$('#buttonDisable').removeAttr('disabled',false)
         }
     }
 

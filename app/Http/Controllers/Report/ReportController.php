@@ -84,6 +84,7 @@ class ReportController extends Controller
     }
     public function paymentReceiveDetails(Request $request, $id){
         $customer=Customer::where('id',$id)->first();
+        $branch = CustomerBrance::where('customer_id',$id)->get();
         $data = InvoicePayment::where('customer_id',$id);
 
         if ($request->fdate) {
@@ -97,11 +98,16 @@ class ReportController extends Controller
             $data->where('invoice_payments.po_no', $request->po_no);
         }
 
+        if ($request->branch_id){
+            $branchId = $request->branch_id;
+            $data->where('invoice_payments.branch_id', $branchId);
+        }
+
         if ($request->payment_type){
             $data->where('invoice_payments.payment_type', $request->payment_type);
         }
         $data = $data->get();
-        return view('report.pay-received-detail',compact('data','customer'));
+        return view('report.pay-received-detail',compact('data','customer','branch'));
     }
     public function salaryReport(){
         $customer=Customer::all();
@@ -112,7 +118,12 @@ class ReportController extends Controller
         if($request->type == 0 ){
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->where('status',4)->pluck('id');
         }else{
-            $emp = Employee::where('status',1)->where('salary_prepared_type',$request->type)->pluck('id');
+            if($request->type != 15){
+                $emp = Employee::where('status',1)->where('salary_prepared_type',$request->type)->pluck('id');
+            }else{
+                // stop salary employee id
+                $emp = Deduction::where('year',$request->year)->where('month',$request->month)->where('status',20)->pluck('employee_id');
+            }
             $salaryIds= SalarySheet::where('year',$request->year)->where('month',$request->month)->pluck('id');
         }
         $salaryStopEmployees = Deduction::where('year',$request->year)->where('month',$request->month)->where('status',20)->pluck('employee_id');
@@ -121,8 +132,14 @@ class ReportController extends Controller
         $getMonth = $request->month;
         $salaryType = $request->type;
 
-        $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','remark','duty_qty',DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
-        ->whereIn('salary_id',$salaryIds)->whereNotIn('employee_id',$salaryStopEmployees)->groupBy('employee_id');
+        // $request->type == 15 stop salary list
+        if($request->type != 15 ){
+            $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','remark','duty_qty',DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
+            ->whereIn('salary_id',$salaryIds)->whereNotIn('employee_id',$salaryStopEmployees)->groupBy('employee_id');
+        }else{
+            $data= SalarySheetDetail::select('id','salary_id','employee_id','designation_id','customer_id','remark','duty_qty',DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
+            ->whereIn('salary_id',$salaryIds)->groupBy('employee_id');
+        }
 
         if ($request->type != 0){
             $data->whereIn('employee_id', $emp);
@@ -146,7 +163,7 @@ class ReportController extends Controller
                 return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
             }else if(in_array($request->type, [13,14])){
                 return view('report.salary-office-staff-prime',compact('getYear','getMonth','data','salaryType'));
-            }else if(in_array($request->type, [1,3,4])){
+            }else if(in_array($request->type, [1,3,4,15])){
                 return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
             }else if(in_array($request->type, [2,5,6,7,8,9,10,11,12])){
                 return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
