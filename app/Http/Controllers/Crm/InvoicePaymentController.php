@@ -126,12 +126,22 @@ class InvoicePaymentController extends Controller
             )
             ->groupBy("year", "month")
             ->where("customer_id", $ivp->customer_id)
+            ->where("branch_id", $ivp->branch_id)
             ->when($ivp->branch_id, function ($query, $branchId) {
                 $query->where("branch_id", $branchId);
             })
             ->latest()
             ->take(3)
             ->pluck("received_amount", "month");
+
+        $lasPo = InvoicePayment::select('po_no',DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))
+        ->where("customer_id", $ivp->customer_id)
+        ->when($ivp->branch_id, function ($query, $branchId) {
+            $query->where("branch_id", $branchId);
+        })
+        ->whereNotNull('po_no')
+        ->latest()
+        ->take(3)->get();
             
         $totalPaid = InvoicePayment::select(
             DB::raw("SUM(received_amount) as received_amount"),
@@ -153,7 +163,7 @@ class InvoicePaymentController extends Controller
         )->where("invoice_id", $ivp->invoice_id)->first();
         $paidFromThisId = $ivp->received_amount + $ivp->vat_amount + $ivp->ait_amount + $ivp->fine_deduction + $ivp->paid_by_client + $ivp->less_paid_honor;
 
-        return view('invoice_payment.edit',compact('ivp','lastRec','paidFromThisId','totalPaid'));
+        return view('invoice_payment.edit',compact('ivp','lastRec','lasPo','paidFromThisId','totalPaid'));
     }
 
     public function update(Request $request, $id)

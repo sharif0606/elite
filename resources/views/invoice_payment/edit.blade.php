@@ -5,12 +5,12 @@
 
 @section('content')
 <style>
-    .last-receive, .due-details {
+    .last-receive, .last-po, .due-details {
         position: relative;
         display: inline-block;
     }
 
-    .last-amount {
+    .last-amount, .last-ponum {
         display: none;
         position: absolute;
         left: 10px;
@@ -44,6 +44,9 @@
         width: max-content;
     }
     .last-receive:hover .last-amount {
+        display: block;
+    }
+    .last-po:hover .last-ponum {
         display: block;
     }
     .due-details:hover .due-amount {
@@ -110,6 +113,7 @@
                                             $months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                                         @endphp
                                         <ul class="last-amount" id="receivedAmountsList">
+                                            <li><b>Last 3 Receive Amounts</b></li>
                                             @foreach ($lastRec as $monthIndex => $received_amount)
                                                 <li>{{ $months[$monthIndex] }} {{ $received_amount }}</li>
                                             @endforeach
@@ -171,6 +175,14 @@
                                 </div>
                                 <div class="col-sm-2">
                                     <label for="">PO No</label>
+                                    <span class="last-po text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                        <ul class="last-ponum" id="receivedPoNumber">
+                                            <li><b>Last 3 Po Number</b></li>
+                                            @foreach ($lasPo as $p)
+                                                <li>{{ $months[$p->month] }} {{ $p->po_no }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </span>
                                     <input type="text" name="po_no" onchange="paymethod()" onblur="checkDuplicatePo(this)" class="form-control po_num error-msg" value="{{ $ivp->po_no }}">
                                     <span class="error-message" style="color: red; display: none;"></span>
                                 </div>

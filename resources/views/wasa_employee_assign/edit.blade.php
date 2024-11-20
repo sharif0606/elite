@@ -70,6 +70,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 {{-- <th scope="col">{{__('ATM')}}</th> --}}
+                                                <th scope="col">{{__('SL')}}</th>
                                                 <th scope="col" width="10%">{{__('ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
                                                 <th scope="col">{{__('Area')}}</th>
@@ -82,9 +83,15 @@
                                             </tr>
                                         </thead>
                                         <tbody id="empasinassing">
+                                            @php
+                                                $sl = 1;
+                                                $oldSl = 0;
+                                                $dutyTotal = 0;
+                                            @endphp
                                             @if ($empasin->details)
                                             @foreach ($empasin->details as $d)
                                             <tr>
+                                                <td>{{$sl++}}</td>
                                                 <td>
                                                     <select class="select2 form-select employee_id"  name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
@@ -106,7 +113,7 @@
                                                 <td><input class="form-control" type="text" name="area[]" value="{{ $d->area }}" placeholder="Area"></td>
                                                 <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name"></td>
                                                 <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ $d->duty_rate }}" placeholder="rate"></td>
-                                                <td><input required onkeyup="salaryCalculate(this)" class="form-control duty" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
+                                                <td><input required onkeyup="salaryCalculate(this); dutyCount();" class="form-control duty" type="text" name="duty[]" value="{{ $d->duty }}" placeholder="Duty"></td>
                                                 <td><input required class="form-control account_no" type="text" name="account_no[]" value="{{ $d->account_no }}" placeholder="Account No"></td>
                                                 <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="{{ $d->salary_amount }}" placeholder="Salary Amount"></td>
                                                 <td>
@@ -114,12 +121,18 @@
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
+                                            @php
+                                                $dutyTotal += $d->duty;
+                                                $oldSl = $sl;
+                                            @endphp
                                             @endforeach
                                             @endif
                                         </tbody>
                                         <tfoot>
                                             <tr style="text-align: center;">
-                                                <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                                <th colspan="6" style="text-align: end;">Tatal Duty</th>
+                                                <th style="text-align: left;" class="total_duty_count">{{$dutyTotal}}</th>
+                                                <th style="text-align: end;">Sub Tatal</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="{{ $empasin->sub_total_salary }}">
                                                 </td>
@@ -177,10 +190,12 @@
      }
 
      let counter = 0;
+     let counterSl = {{$oldSl}};
     function addRow(){
 
         var row=`
         <tr class="new_rows">
+            <td>${counterSl}</td>
             <td>
                 <select class="select2 form-select employee_id" id="employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
                     <option value="">Select</option>
@@ -203,7 +218,7 @@
             <td><input class="form-control" type="text" name="area[]" value="" placeholder="Area"></td>
             <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
             <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
-            <td><input required onkeyup="salaryCalculate(this)" class="form-control duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+            <td><input required onkeyup="salaryCalculate(this); dutyCount();" class="form-control duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
             <td><input required class="form-control account_no" type="text" name="account_no[]" value="" placeholder="Account No"></td>
             <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
             <td>
@@ -214,12 +229,15 @@
         $('#empasinassing').append(row);
         $(`#employee_id${counter}`).select2();
         counter++;
+        counterSl++;
+        dutyCount();
     }
 
     function removeRow(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
             subtotalAmount();
+            dutyCount();
         }
     }
 
@@ -243,7 +261,16 @@ function salaryCalculate(e){
         var salaryTotal= (rate/workingDay)*duty;
         $(e).closest('tr').find('.salary_amount').val(parseFloat(salaryTotal).toFixed(2));
         subtotalAmount();
+        dutyCount();
     }
+    function dutyCount(){
+        var dutyTotal=0;
+        $('.duty').each(function(){
+            dutyTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_duty_count').text(dutyTotal.toFixed(2));
+    }
+
     function subtotalAmount(){
         var subTotal=0;
         $('.salary_amount').each(function(){

@@ -3,12 +3,12 @@
 @section('pageSubTitle','All Invoice')
 @section('content')
 <style>
-    .last-receive, .due-details {
+    .last-receive, .last-po, .due-details {
         position: relative;
         display: inline-block;
     }
 
-    .last-amount {
+    .last-amount, .last-ponum {
         display: none;
         position: absolute;
         left: 10px;
@@ -42,6 +42,9 @@
         width: max-content;
     }
     .last-receive:hover .last-amount {
+        display: block;
+    }
+    .last-po:hover .last-ponum {
         display: block;
     }
     .due-details:hover .due-amount {
@@ -172,6 +175,14 @@
                                         ->latest()
                                         ->take(3)
                                         ->pluck("received_amount", "month");
+                                    $lasPo = App\Models\Crm\InvoicePayment::select('po_no',DB::raw("YEAR(pay_date) year, MONTH(pay_date) month"))
+                                    ->where("customer_id", $e->customer_id)
+                                    ->when(isset($e->branch_id), function ($query) use ($e) {
+                                            $query->where("branch_id", $e->branch_id);
+                                        })
+                                    ->whereNotNull('po_no')
+                                    ->latest()
+                                    ->take(3)->get();
                                 @endphp
                                     <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
                                         data-bs-toggle="modal" data-bs-target="#invList"
@@ -187,6 +198,7 @@
                                         @endif
                                         data-vat-amount="{{ $e->vat_taka }}"
                                         data-total-amount="{{ $due }}"
+                                        data-last-po='@json($lasPo)'
                                         data-received-amounts='@json($d)'>
                                         <span class="text-danger"><i class="bi bi-currency-dollar" style="font-size:1rem; color:rgb(246, 50, 35);"></i></span>
                                     </button>
@@ -349,6 +361,9 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">PO No</label>
+                            <span class="last-po text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
+                                <ul class="last-ponum" id="receivedPoNumber"></ul>
+                            </span>
                             <input type="text" name="po_no" onchange="paymethod()" onblur="checkDuplicatePo(this)" class="form-control po_num error-msg">
                             <span class="error-message" style="color: red; display: none;"></span>
                         </div>
@@ -559,13 +574,18 @@
             var subAmount = button.data('sub-total-amount');
             var vatAmount = button.data('vat-amount');
             var receivedAmounts = button.attr('data-received-amounts');
+            var lastPo = button.attr('data-last-po');
             // Try to parse the received amounts
             var amountsArray = [];
+            var lastPoNo = [];
             try {
                 amountsArray = JSON.parse(receivedAmounts);
+                lastPoNo = JSON.parse(lastPo);
             } catch (e) {
                 console.error("Error parsing received amounts: ", e);
             }
+            console.log(lastPoNo);
+            console.log(amountsArray);
             
             // amountsArray = amountsArray.filter(function(amount) {
             //     return amount !== null && amount !== '';
@@ -585,7 +605,9 @@
             modal.find('#vatAmount').text(vatAmount);
 
             var receivedAmountsList = modal.find('#receivedAmountsList');
+            var lastPoList = modal.find('#receivedPoNumber');
             receivedAmountsList.empty(); // Clear any existing items
+            lastPoList.empty(); // Clear any existing items
             let month=new Array("","January","February","March","April","May","June","July","August","September","October","November","December");
             if (Object.keys(amountsArray).length > 0) {
                 receivedAmountsList.append('<li><strong>Last 3 Received Amounts:</strong></li>');
@@ -594,6 +616,14 @@
                 });
             } else {
                 receivedAmountsList.append('<li>No recent received amounts available.</li>');
+            }
+            if (lastPoNo.length > 0) {
+                lastPoList.append('<li><strong>Last 3 Po Number:</strong></li>');
+                lastPoNo.forEach(function(l) {
+                    lastPoList.append('<li>' + month[l.month] + '--' + l.po_no + '</li>');
+                });
+            } else {
+                lastPoList.append('<li>No recent Po Number available.</li>');
             }
         });
     });

@@ -67,6 +67,7 @@
                                         <thead>
                                             <tr class="text-center">
                                                 {{-- <th scope="col">{{__('ATM')}}</th> --}}
+                                                <th scope="col">{{__('SL')}}</th>
                                                 <th scope="col" width="10%">{{__('ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
                                                 <th scope="col">{{__('Area')}}</th>
@@ -80,11 +81,7 @@
                                         </thead>
                                         <tbody id="empassign">
                                             <tr>
-                                                {{-- <td>
-                                                    <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                                                        <option value="0">Select Atm</option>
-                                                    </select>
-                                                </td> --}}
+                                                <td>1</td>
                                                 <td>
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
@@ -107,7 +104,7 @@
                                                 <td><input class="form-control" type="text" required name="area[]" value="" placeholder="Area"></td>
                                                 <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
                                                 <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
-                                                <td><input required onkeyup="salaryCalculate(this)" class="form-control not-hide duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+                                                <td><input required onkeyup="salaryCalculate(this); dutyCount();" class="form-control not-hide duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
                                                 <td><input class="form-control account_no" required type="text" name="account_no[]" value="" placeholder="Account No"></td>
                                                 <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
                                                 <td>
@@ -118,7 +115,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr style="text-align: center;">
-                                                <th colspan="7" style="text-align: end;">Sub Tatal</th>
+                                                <th colspan="6" style="text-align: end;">Tatal Duty</th>
+                                                <th style="text-align: left;" class="total_duty_count"></th>
+                                                <th style="text-align: end;">Sub Tatal</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
                                                 </td>
@@ -180,9 +179,11 @@
     }
 
     let counter = 0;
+    let counterSl = 2;
     function addRow(){
     var row=`
     <tr class="new_rows">
+        <td>${counterSl}</td>
         <td>
             <select class="select2 form-select employee_id" id="employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
                 <option value="">Select</option>
@@ -205,7 +206,7 @@
         <td><input class="form-control" type="text" required name="area[]" value="" placeholder="Area"></td>
         <td><input readonly class="form-control employee_name" type="text" name="employee_name[]" value="" placeholder="Employee Name"></td>
         <td><input required onkeyup="salaryCalculate(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="rate"></td>
-        <td><input required onkeyup="salaryCalculate(this)" class="form-control duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
+        <td><input required onkeyup="salaryCalculate(this); dutyCount();" class="form-control duty" type="text" name="duty[]" value="<?= date('t') ?>" placeholder="Duty"></td>
         <td><input class="form-control account_no" required type="text" name="account_no[]" value="" placeholder="Account No"></td>
         <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td>
         <td>
@@ -216,12 +217,15 @@
         $('#empassign').append(row);
         $(`#employee_id${counter}`).select2();
         counter++;
+        counterSl++;
+        dutyCount();
     }
 
     function removeRow(e) {
         if (confirm("Are you sure you want to remove this row?")) {
             $(e).closest('tr').remove();
             subtotalAmount();
+            dutyCount();
         }
     }
 
@@ -245,12 +249,21 @@
         var salaryTotal= (rate/workingDay)*duty;
         $(e).closest('tr').find('.salary_amount').val(parseFloat(salaryTotal).toFixed(2));
         subtotalAmount();
+        dutyCount();
+    }
+    function dutyCount(){
+        var dutyTotal=0;
+        $('.duty').each(function(){
+            dutyTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        $('.total_duty_count').text(dutyTotal).toFixed(2);
     }
     function subtotalAmount(){
         var subTotal=0;
         $('.salary_amount').each(function(){
             subTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        
         $('.sub_total_salary').val(parseFloat(subTotal).toFixed(2));
     }
 </script>
