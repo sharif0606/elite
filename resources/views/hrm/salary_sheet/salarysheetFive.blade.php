@@ -296,7 +296,7 @@
                         let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
                         let Dress = (value.dress > 0) ? value.dress : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
-                        let totalDeduction = parseFloat(Fine) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                        let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                         let netSalary = '0';
                         let currentMonth = $('.selected_month').val();
                         let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();

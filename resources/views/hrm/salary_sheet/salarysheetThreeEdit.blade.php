@@ -125,7 +125,7 @@
                                         @endfor
                                     </select>
                                 </div>
-                                <div class="col-lg-3 mt-4 p-0">
+                                <div class="col-lg-3 mt-4 p-0 d-none">
                                     <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                                                         <input type="hidden" name="customer_atm_id[]" value="{{$d->atm_id}}">
                                                     </td>
                                                     <td class="fixed-4"><input style="width:200px;" readonly class="form-control" type="text" value="{{$d->employee?->en_applicants_name}}"></td>
-                                                    <td class="fixed-5"><input style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="{{$d->employee?->salary_joining_date}}" readonly></td>
+                                                    <td class="fixed-5"><input style="width:120px;" class="form-control joining_date" type="text" name="joining_date[]" value="{{$d->employee?->salary_joining_date}}" readonly></td>
                                                     <td>{{$d->customer?->name}}</td>
                                                     <td>{{$d->branches?->brance_name}}</td>
                                                     <td>
