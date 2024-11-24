@@ -7,10 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invoice_id->customer?->name }} for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
 </head>
+<style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+    @media print {
+        @page {
+            margin: 20mm;
+        }
+        .invoice-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            page-break-before: always;
+        }
+        .invoice-body {
+            margin-top: 220px;
+        }
+        body {
+            margin-top: 200px;
+        }
+        .no-print{
+            display: none;
+        }
+    }
+</style>
 
 <body>
+    <div style="text-align: center;">
+        <button class="no-print" onclick="get_print()" style="background-color: transparent; color:green; padding: 5px; border:2px solid green; font-size: 1.3rem;"><i class="bi bi-file-spreadsheet-fill" style="font-size: 1.2rem;"></i>Excel</button>
+    </div>
+    <div id="result_show">
     @if($headershow==1)
+    <div class="invoice-header">
     <div style="text-align: center;"><h2><span style="border-bottom: solid 1px;">INVOICE</span></h2></div>
     <table width="100%">
         <tr>
@@ -38,7 +69,9 @@
             {{--  <td width="30%" style="text-align: center;">Date : {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d F Y') }}</td>  --}}
         </tr>
     </table>
+    </div>
     @else
+    <div class="invoice-header">
     <table width="100%"style="padding: 2in 0px 30px 0px;">
         {{-- <tr style="font-size: 20px; position: relative;">
             <td width="20%" style="text-align: left;"></td>
@@ -55,6 +88,7 @@
             <td width="30%" style="text-align: right;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
     </table>
+    </div>
     @endif
     {{-- <table width="100%" style="margin-top: 2.2in; font-size: 20px;">
         <tr>
@@ -89,6 +123,7 @@
     <div>Reference to the above subject, we herewith submitted the security services bill
         and account number at Prime Bank, Halisahar Branch.</div>
     <br> --}}
+    <div class="invoice-body">
     @if($headershow==1)
         <table width="100%" style="margin-top: 1rem;">
     @else
@@ -174,7 +209,7 @@
                 @endphp
                 {!! $bolded_note !!}
             </div>
-    <table width="100%" border="1" cellspacing="0">
+    <table width="100%" border="1" cellspacing="0" id="invoiceTable">
         <tr>
             <th width="3%">S.L</th>
             <th width="8%">ID No</th>
@@ -262,7 +297,7 @@
         {!! $bolded_note !!}
         .</div>
     <br><br>
-    <i>With thanks and Regards</i>
+    <p><i><b>With thanks and Regards</b></i></p>
     <br><br>
     @php
         $footersetting1= App\Models\Settings\InvoiceSetting::where('id',1)->first();
@@ -334,6 +369,40 @@
             </td>
         </tr>
     </table> --}}
+</div>
+</div>
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    function exportReportToExcel(tableId, filename) {
+        let table = document.getElementById(tableId);
+        let tableToExport = table.cloneNode(true);
+
+        // Export the table as it is without removing any columns
+        TableToExcel.convert(tableToExport, {
+            name: `${filename}.xlsx`,
+            sheet: {
+                name: 'Invoice'
+            }
+        });
+
+        $("#my-content-div").html("");
+        $('.full_page').html("");
+    }
+
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+
+        $.get("{{route('invoiceShow7',[encryptor('encrypt',$invoice_id->id),'header' =>$headershow])}}", function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            // Export all columns
+            exportReportToExcel('invoiceTable', 'Invoice of-{{$invoice_id->customer?->name}}-{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}');
+        });
+    }
+</script>
 </body>
 
 </html>
