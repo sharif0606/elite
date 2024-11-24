@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Employee\Employee;
+use App\Models\JobPost;
 
 class SalarySheetController extends Controller
 {
@@ -976,18 +977,35 @@ class SalarySheetController extends Controller
     //     //return $salary;
     //     return view('hrm.salary_sheet.salarysheetFiveShow',compact('salary'));
     // }
-    public function getsalarySheetFiveShow($id)
+    public function getsalarySheetFiveShow(Request $request, $id)
     {
         $salary = SalarySheet::findOrFail(encryptor('decrypt', $id));
         
         $customerIds = explode(',', $salary->customer_id);
+        $customer = Customer::whereIn('id',$customerIds)->get();
+        $designationIds = SalarySheetDetail::where('salary_id', $salary->id)->pluck('designation_id');
+        $designation = JobPost::whereIn('id',$designationIds)->get();
         // Handle "null" string values in branch_id
         $branchIds = array_filter(explode(',', $salary->branch_id), function($value) {
             return $value !== "null";
         });
         $groupedData = [];
 
-        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id);
+
+        if($request->customer_id){
+            $salaryDetails = $salaryDetails->where('customer_id',$request->customer_id);
+        }
+
+        if($request->branch_id){
+            $salaryDetails = $salaryDetails->where('branch_id',$request->branch_id);
+        }
+
+        if($request->designation_id){
+            $salaryDetails = $salaryDetails->where('designation_id',$request->designation_id);
+        }
+
+        $salaryDetails = $salaryDetails->get();
 
         foreach ($salaryDetails as $detail) {
             if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
@@ -996,6 +1014,8 @@ class SalarySheetController extends Controller
         }
         return view('hrm.salary_sheet.salarysheetFiveShowBranch', [
             'salary' => $salary,
+            'customer' => $customer,
+            'designation' => $designation,
             'groupedData' => $groupedData
         ]);
     }

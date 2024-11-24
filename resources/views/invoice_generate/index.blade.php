@@ -190,7 +190,7 @@
                                         data-zone-id="{{ $e->zone_id }}"
                                         data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer?->id }}"
-                                        data-branch-id="{{ $e->customer?->id }}"
+                                        data-branch-id="{{ $e->branch_id?->id }}"
                                         @if ($e->vat_switch != 1)
                                             data-sub-total-amount="{{ round($e->total_tk) }}"
                                         @else

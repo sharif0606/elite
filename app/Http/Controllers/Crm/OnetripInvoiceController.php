@@ -59,7 +59,9 @@ class OnetripInvoiceController extends Controller
         try{
             $invoice=new InvoiceGenerate;
             $invoice->customer_id = $request->customer_id;
-            $invoice->branch_id = $request->branch_id;
+            if($request->branch_id > 0){
+                $invoice->branch_id = $request->branch_id;
+            }
             $invoice->atm_id = $request->atm_id;
             $invoice->start_date = $request->start_date;
             $invoice->end_date = $request->end_date;
@@ -176,7 +178,9 @@ class OnetripInvoiceController extends Controller
         try{
             $invoice= InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
             $invoice->customer_id = $request->customer_id;
-            $invoice->branch_id = $request->branch_id;
+            if($request->branch_id > 0){
+                $invoice->branch_id = $request->branch_id;
+            }
             $invoice->atm_id = $request->atm_id;
             $invoice->start_date = $request->start_date;
             $invoice->end_date = $request->end_date;

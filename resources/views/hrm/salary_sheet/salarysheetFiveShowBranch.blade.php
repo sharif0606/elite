@@ -4,6 +4,44 @@
 @section('pageSubTitle',trans('Show'))
 
 @section('content')
+<div>
+    <form method="get" action="">
+        <div class="row">
+            <div class="col-sm-3">
+                <label for="">Customer</label>
+                <select name="customer_id" id="customer_id" class="select2 form-select" onchange="getBranch(this);">
+                    <option value="">Select Customer</option>
+                    @forelse ($customer as $c)
+                        <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
+                    @empty
+                        
+                    @endforelse
+                </select>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <label for="lcNo">{{__('Branch')}}</label>
+                    <select class="select2 form-select branch_id" id="branch_id" name="branch_id">
+                        <option value="">Select Branch</option>
+                    </select>
+            </div>
+            <div class="col-sm-3">
+                <label for="">Designation</label>
+                <select name="designation_id" class="select2 form-select">
+                    <option value="">Select Customer</option>
+                    @forelse ($designation as $c)
+                        <option value="{{$c->id}}" {{request()->designation_id==$c->id?'selected':''}}>{{$c->name}}</option>
+                    @empty
+                        
+                    @endforelse
+                </select>
+            </div>
+            <div class="col-sm-3" style="margin-top: 1.4rem;">
+                <button type="submit" class="btn btn-sm btn-info">Search</button>
+                <a href="{{route('salarysheet.salarySheetFiveShow',[encryptor('encrypt',$salary->id)])}}" class="btn btn-sm btn-danger">Clear</a>
+            </div>
+        </div>
+    </form>
+</div>
 <section id="result_show">
 <style>
 

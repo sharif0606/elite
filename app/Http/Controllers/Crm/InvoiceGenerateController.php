@@ -83,7 +83,9 @@ class InvoiceGenerateController extends Controller
         try{
             $data=new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            if($request->branch_id > 0){
+                $data->branch_id = $request->branch_id;
+            }
             $data->atm_id = $request->atm_id;
             $data->zone_id = $request->zone_id;
             $data->start_date = $request->start_date;
@@ -257,7 +259,9 @@ class InvoiceGenerateController extends Controller
         try{
             $data= InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            if($request->branch_id > 0){
+                $data->branch_id = $request->branch_id;
+            }
             $data->atm_id = $request->atm_id;
             $data->zone_id = $request->zone_id;
             $data->start_date = $request->start_date;
