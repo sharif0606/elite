@@ -148,7 +148,7 @@
                                 <th class="tbl_border">Month</th>
                                 <th class="tbl_border">Period</th>
                                 <th class="tbl_border">Billing Amount</th>
-                                <th class="tbl_border">Receive Amount</th>
+                                <th class="tbl_border">Receive Amount (After Deduction)</th>
                                 <th class="tbl_border">Due</th>
                                 <th class="tbl_border" style="width: 230px;">Remarks</th>
                             </tr>
@@ -158,13 +158,13 @@
                                     <td class="tbl_border">{{ \Carbon\Carbon::parse($de->bill_date)->format('M-Y') }}</td>
                                     <td class="tbl_border">{{ \Carbon\Carbon::parse($de->start_date)->format('d/m/Y') }} to {{ \Carbon\Carbon::parse($de->end_date)->format('d/m/Y') }}</td>
                                     <td class="tbl_border" style="text-align: center;">{{ money_format($de->grand_total) }}</td>
-                                    <td class="tbl_border" style="text-align: center;">{{ money_format($de->received_amount) }}</td>
+                                    <td class="tbl_border" style="text-align: center;">{{ money_format($de->actual_received) }}</td>
                                     <td class="tbl_border" style="text-align: center;">{{ money_format($de->due_amount) }}</td>
                                     <td class="tbl_border"><input type="text" class="input_css" value="" style="width: 230px;"></td>
                                 </tr>
                                 @php
                                     $totalBill += $de->grand_total;
-                                    $totalRec += $de->received_amount;
+                                    $totalRec += $de->actual_received;
                                     $totalDue += $de->due_amount;
                                 @endphp
                             @endforeach

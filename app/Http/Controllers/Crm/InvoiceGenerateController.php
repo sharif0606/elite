@@ -472,6 +472,7 @@ class InvoiceGenerateController extends Controller
             if ($dueAmount > 0) {
                 $invoice->due_amount = $dueAmount;
                 $invoice->received_amount = round($receivedAmountValue);
+                $invoice->actual_received = round($receivedAmount->received_amount);
                 $result[] = $invoice;
             }
         }
