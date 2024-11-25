@@ -36,7 +36,7 @@ class EmployeeRateController extends Controller
         if ($request->branch_id){
             $emRate->where('employee_rates.branch_id', $request->branch_id);
         }
-        $emRate = $emRate->get();
+        $emRate = $emRate->paginate(10);
         return view('employee_rate.index',compact('emRate','customer'));
     }
 

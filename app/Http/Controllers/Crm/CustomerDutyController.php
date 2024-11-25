@@ -42,7 +42,7 @@ class CustomerDutyController extends Controller
         if ($request->branch_id){
             $customerduty->where('customer_duties.branch_id', $request->branch_id);
         }
-        $customerduty = $customerduty->get();
+        $customerduty = $customerduty->paginate(10);
         return view('customer_duty.index',compact('customerduty','customer'));
     }
 

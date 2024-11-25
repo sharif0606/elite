@@ -13,7 +13,7 @@
 <style>
     @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
     @media print {
-        @page {
+        /* @page {
             margin: 20mm;
         }
         .invoice-header {
@@ -28,7 +28,7 @@
         }
         body {
             margin-top: 200px;
-        }
+        } */
         .no-print{
             display: none;
         }
