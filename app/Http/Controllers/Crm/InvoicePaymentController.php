@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
+use App\Models\Crm\InvoiceGenerate;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Crm\InvoicePayment;
@@ -82,9 +83,10 @@ class InvoicePaymentController extends Controller
     public function store(Request $request)
     {
         try{
+            $invGen = InvoiceGenerate::select('id','customer_id','branch_id')->where('id',$request->invId)->first();
             $data=new InvoicePayment;
-            $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            $data->customer_id = $invGen->customer_id;
+            $data->branch_id = $invGen->branch_id;
             $data->invoice_id = $request->invId;
             $data->received_amount = $request->received_amount;
             $data->vat = $request->vat;
@@ -170,8 +172,9 @@ class InvoicePaymentController extends Controller
     {
         try{
             $data=InvoicePayment::findOrFail(encryptor('decrypt',$id));
-            $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            $invGen = InvoiceGenerate::select('id','customer_id','branch_id')->where('id',$data->invoice_id)->first();
+            $data->customer_id = $invGen->customer_id;
+            $data->branch_id = $invGen->branch_id;
             $data->received_amount = $request->received_amount;
             $data->vat = $request->vat;
             $data->vat_amount = $request->vat_amount;
