@@ -191,10 +191,10 @@
                 @endif
             </tbody>
                 <tr style="text-align: center;">
-                    <td colspan="4">Total (TK)</td>
-                    <td>{{ money_format($southBangla?->net_payment) }}</td>
-                    <td>{{ money_format($southBangla?->net_service) }}</td>
-                    <td>{{ money_format($southBangla?->total) }}</td>
+                    <td colspan="4"><b>Total (TK)</b></td>
+                    <td><b>{{ money_format($southBangla?->net_payment) }}</b></td>
+                    <td><b>{{ money_format($southBangla?->net_service) }}</b></td>
+                    <td><b>{{ money_format($southBangla?->total) }}</b></td>
                     <td></td>
                 </tr>
                 {{-- @if($invoice_id->vat > 0) --}}
