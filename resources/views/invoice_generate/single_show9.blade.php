@@ -227,7 +227,7 @@
                         @endforeach
                         <tr style="text-align: center;">
                             <td></td>
-                            <th colspan="7">Net Total</th>
+                            <th colspan="7">Total</th>
                             <th  style="text-align: end;">{{ money_format($totalAmount+$totalLess) }}</th>
                         </tr>
                     @endif
@@ -257,7 +257,7 @@
                 @endif
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="7">Total</th>
+                    <th colspan="7">Grand Total</th>
                     <th  style="text-align: end;">{{ money_format($invoice_id->grand_total) }}</th>
                     {{-- <th  style="text-align: end;">{{ money_format($totalAmount+$invoice_id->vat_taka + $totalLess) }}</th> --}}
                 </tr>

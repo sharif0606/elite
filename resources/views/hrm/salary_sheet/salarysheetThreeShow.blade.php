@@ -88,6 +88,9 @@
                                             <th class="tbl_border">Total</th>
                                         </tr>
                                     </thead>
+                                    @php
+                                        $totalPayable = 0;
+                                    @endphp
                                     <tbody class="salarySheet">
                                         @foreach ($groupedData as $customerId => $branches)
                                             @foreach ($branches as $branchId => $details)
@@ -99,7 +102,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @forelse ($details as $d )
+                                                @forelse (collect($details)->sortBy(fn($d) => $d['employee']['salary_joining_date'] ?? null) as $d )
                                                 <tr class="tbl_border text-center">
                                                     <td class="tbl_border">{{ ++$loop->index }}</td>
                                                     <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
@@ -237,11 +240,20 @@
                                                     <td class="tbl_border">{{ $d->sing_of_ind }}</td>
                                                     <td class="tbl_border">{{ $d->remark }}</td>
                                                 </tr>
+                                                @php
+                                                    $totalPayable += $d->total_payable;
+                                                @endphp
                                                 @empty
                                                 @endforelse
                                             @endforeach
                                         @endforeach
                                     </tbody>
+                                    <tr>
+                                        <td class="tbl_border text-center" colspan="30"> Total</td>
+                                        <td class="tbl_border text-center">{{money_format($totalPayable)}}</td>
+                                        <td class="tbl_border text-center"></td>
+                                        <td class="tbl_border text-center"></td>
+                                    </tr>
                                     <tfoot>
                                         {{--  <tr>
                                             <td></td>
@@ -300,7 +312,7 @@
             $("#my-content-div").html(data);
         }).then(function () {
             // Export all columns
-            exportReportToExcel('salaryTable', 'Salary_Three-{{$getMonth}}-{{$salary->year}}');
+            exportReportToExcel('salaryTable', 'Salary Three-{{$getMonth}}-{{$salary->year}}');
         });
     }
 </script>

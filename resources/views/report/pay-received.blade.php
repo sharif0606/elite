@@ -85,12 +85,55 @@
                     </tr>
                     @empty
                     <tr>
-                        <th colspan="4" class="text-center">No Data Found</th>
+                        <th colspan="5" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
+            <div class="pt-2">
+                {{$data->withQueryString()->links()}} 
+           </div>
         </div>
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const customerId = getQueryParam('customer_id');
+        const branchId = getQueryParam('branch_id');
+
+        if (customerId) {
+            //$('#customer_id').val(customerId).trigger('change');
+            // Load branches and pre-select if branchId is present
+            getBranchSearch(customerId, branchId);
+        }
+    });
+
+    function getBranchSearch(customerId, branchId = null) {
+        $('#branch_id').empty();
+        $.ajax({
+            url: "{{ route('get_ajax_branch') }}",
+            type: "GET",
+            dataType: "json",
+            data: { customerId: customerId },
+            success: function (data) {
+                $('#branch_id').append('<option value="0">Select Branch</option>');
+                $.each(data, function (key, value) {
+                    $('#branch_id').append(
+                        `<option value="${value.id}" ${branchId == value.id ? 'selected' : ''}>${value.brance_name}</option>`
+                    );
+                });
+            },
+            error: function () {
+                console.error("Error fetching data from the server.");
+            },
+        });
+    }
+</script>    
+@endpush

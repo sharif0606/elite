@@ -126,7 +126,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-lg-3 mt-4 p-0">
+                                <div class="col-lg-3 mt-4 p-0 d-none">
                                     <button onclick="getSalaryData()" type="button" class="btn btn-primary">Generate Salary</button>
                                 </div>
                             </div>

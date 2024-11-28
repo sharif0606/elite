@@ -79,7 +79,7 @@ class ReportController extends Controller
             $zoneId = $request->zone_id;
             $data->where('customers.zone_id', $zoneId);
         }
-        $data = $data->get();
+        $data = $data->paginate(20);
         return view('report.pay-received',compact('data','customer','zone'));
     }
     public function paymentReceiveDetails(Request $request, $id){

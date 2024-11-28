@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Invoice Generate Update'))
+@section('pageTitle',trans('Invoice Payment Update'))
 @section('pageSubTitle',trans('Create'))
 
 @section('content')
@@ -339,20 +339,20 @@
         var errorMessageDeposit = $('.error-msg-deposit').next('.error-message-deposit');
         var recErrorMessage = $('.error-msg-rec').next('.error-message-rec');
         if(pmethod == 2){
-            if(poNo == '' || poDate == '' || poBank == ''){
-                errorMessage.text('This field is required').css('color', 'red').show();
                 errorMessageDeposit.hide();
                 recErrorMessage.hide();
+            if(poNo == '' || poDate == '' || poBank == ''){
+                errorMessage.text('This field is required').css('color', 'red').show();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessage.hide();
                 $('#buttonDisable').removeAttr('disabled',false)
             }
         }else if(pmethod == 4 || pmethod == 3){
-            if(depositBank == '' || depositDate == ''){
-                errorMessageDeposit.text('This field is required').css('color', 'red').show();
                 errorMessage.hide();
                 recErrorMessage.hide();
+            if(depositBank == '' || depositDate == ''){
+                errorMessageDeposit.text('This field is required').css('color', 'red').show();
                 $('#buttonDisable').attr('disabled',true)
             }else{
                 errorMessageDeposit.hide();

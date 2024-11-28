@@ -72,7 +72,7 @@
     </div>
     @else
     <div class="invoice-header">
-    <table width="100%"style="padding: 2in 0px 30px 0px;">
+    <table width="100%"style="padding: 0px 0px 30px 0px;">
         {{-- <tr style="font-size: 20px; position: relative;">
             <td width="20%" style="text-align: left;"></td>
             <td style="position: absolute; top:-30px;" width="50%"><b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>

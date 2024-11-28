@@ -289,7 +289,7 @@
             $("#my-content-div").html(data);
         }).then(function () {
             // Export all columns
-            exportReportToExcel('salaryTable', 'Salary_Five-{{$getMonth}}-{{$salary->year}}');
+            exportReportToExcel('salaryTable', 'Salary General-{{$getMonth}}-{{$salary->year}}');
         });
     }
 </script>

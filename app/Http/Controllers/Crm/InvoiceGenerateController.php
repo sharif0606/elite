@@ -203,7 +203,7 @@ class InvoiceGenerateController extends Controller
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         $portlink = PortlinkInvoice::where('invoice_id',$invoice_id->id)->first();
         $portDetail = PortlinkInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
         $less = PortlinkInvoiceLess::where('invoice_id',$invoice_id->id)->get();
@@ -215,7 +215,7 @@ class InvoiceGenerateController extends Controller
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         $southBangla = SouthBanglaInvoice::where('invoice_id',$invoice_id->id)->first();
         $southDetail = SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
         return view('invoice_generate.single_show6',compact('invoice_id','branch','headershow','southBangla','southDetail'));
@@ -240,7 +240,7 @@ class InvoiceGenerateController extends Controller
     {
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
+        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         return view('invoice_generate.single_show9',compact('invoice_id','branch','headershow'));
     }
 
@@ -282,6 +282,7 @@ class InvoiceGenerateController extends Controller
             if($data->save()){
                 if($request->job_post_id){
                     InvoiceGenerateDetails::where('invoice_id',$data->id)->delete();
+                    InvoiceGenerateLess::where('invoice_id',$data->id)->delete();
                     foreach($request->job_post_id as $key => $value){
                         if($value){
                             $details = new InvoiceGenerateDetails;
@@ -307,7 +308,6 @@ class InvoiceGenerateController extends Controller
                 }
             }
             if($request->add_amount){
-                InvoiceGenerateLess::where('invoice_id',$data->id)->delete();
                 foreach($request->add_amount as $i=>$add_amount){
                     if($add_amount){
                         $olddue=new InvoiceGenerateLess;
