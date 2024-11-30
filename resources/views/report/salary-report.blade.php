@@ -65,13 +65,15 @@
                         <option value="6" {{old('type')== '6'? 'selected' : ''}}>Linde BD</option>
                         <option value="7" {{old('type')== '7'? 'selected' : ''}}>Mas Intimates</option>
                         <option value="8" {{old('type')== '8'? 'selected' : ''}}>Mas Sumantra</option>
-                        <option value="9" {{old('type')== '9'? 'selected' : ''}}>Portlink</option>
-                        <option value="10" {{old('type')== '10'? 'selected' : ''}}>RSB</option>
-                        <option value="11" {{old('type')== '11'? 'selected' : ''}}>Top Way</option>
-                        <option value="12" {{old('type')== '12'? 'selected' : ''}}>RSGT</option>
-                        <option value="13" {{old('type')== '13'? 'selected' : ''}}>Office Staff Prime</option>
-                        <option value="14" {{old('type')== '14'? 'selected' : ''}}>Office Staff Others</option>
-                        <option value="15" {{old('type')== '15'? 'selected' : ''}}>Stop Salary List</option>
+                        <option value="9" {{old('type')== '9'? 'selected' : ''}}>Portlink Unit 1</option>
+                        <option value="10" {{old('type')== '10'? 'selected' : ''}}>Portlink Unit 2</option>
+                        <option value="11" {{old('type')== '11'? 'selected' : ''}}>RSB</option>
+                        <option value="12" {{old('type')== '12'? 'selected' : ''}}>Top Way</option>
+                        <option value="13" {{old('type')== '13'? 'selected' : ''}}>RSGT PCT</option>
+                        <option value="14" {{old('type')== '14'? 'selected' : ''}}>RSGT SCY</option>
+                        <option value="15" {{old('type')== '15'? 'selected' : ''}}>Office Staff Prime</option>
+                        <option value="16" {{old('type')== '16'? 'selected' : ''}}>Office Staff Others</option>
+                        <option value="17" {{old('type')== '17'? 'selected' : ''}}>Stop Salary List</option>
                     </select>
                 </div>
                 <div class="col-lg-3">

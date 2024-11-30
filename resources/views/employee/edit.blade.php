@@ -733,12 +733,14 @@
                                 <option value="6" {{$employees->salary_prepared_type==6? 'selected' : ''}}>Linde BD</option>
                                 <option value="7" {{$employees->salary_prepared_type==7? 'selected' : ''}}>Mas Intimates</option>
                                 <option value="8" {{$employees->salary_prepared_type==8? 'selected' : ''}}>Mas Sumantra</option>
-                                <option value="9" {{$employees->salary_prepared_type==9? 'selected' : ''}}>Portlink</option>
-                                <option value="10" {{$employees->salary_prepared_type==10? 'selected' : ''}}>RSB</option>
-                                <option value="11" {{$employees->salary_prepared_type==11? 'selected' : ''}}>Top Way</option>
-                                <option value="12" {{$employees->salary_prepared_type==12? 'selected' : ''}}>RSGT</option>
-                                <option value="13" {{$employees->salary_prepared_type==13? 'selected' : ''}}>Office Staff Prime</option>
-                                <option value="14" {{$employees->salary_prepared_type==14? 'selected' : ''}}>Office Staff Others</option>
+                                <option value="9" {{$employees->salary_prepared_type==9? 'selected' : ''}}>Portlink Unit 1</option>
+                                <option value="10" {{$employees->salary_prepared_type==10? 'selected' : ''}}>Portlink Unit 2</option>
+                                <option value="11" {{$employees->salary_prepared_type==11? 'selected' : ''}}>RSB</option>
+                                <option value="12" {{$employees->salary_prepared_type==12? 'selected' : ''}}>Top Way</option>
+                                <option value="13" {{$employees->salary_prepared_type==13? 'selected' : ''}}>RSGT PCT</option>
+                                <option value="14" {{$employees->salary_prepared_type==14? 'selected' : ''}}>RSGT SCY</option>
+                                <option value="15" {{$employees->salary_prepared_type==15? 'selected' : ''}}>Office Staff Prime</option>
+                                <option value="16" {{$employees->salary_prepared_type==16? 'selected' : ''}}>Office Staff Others</option>
                             </select>
                         </div>
                     </div>

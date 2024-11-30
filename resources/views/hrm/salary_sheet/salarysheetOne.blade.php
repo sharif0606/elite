@@ -327,7 +327,8 @@
                         if (grossAmoun > totalDeduction) {
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
                         }
-                        if(old_emp == value.admission_id_no){
+                        // if(old_emp == value.admission_id_no){
+                        if(value.duty_qty == 0){
                             var fineCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
                             var mobileCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" readonly>`
                             var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`

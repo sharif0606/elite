@@ -161,11 +161,11 @@ class ReportController extends Controller
         if(!$data->isEmpty()){
             if($request->type== 0){
                 return view('report.salary-office-staff',compact('getYear','getMonth','data','salaryType'));
-            }else if(in_array($request->type, [13,14])){
+            }else if(in_array($request->type, [15,16])){
                 return view('report.salary-office-staff-prime',compact('getYear','getMonth','data','salaryType'));
-            }else if(in_array($request->type, [1,3,4,15])){
+            }else if(in_array($request->type, [1,3,4,17])){
                 return view('report.salary-details',compact('getYear','getMonth','data','salaryType'));
-            }else if(in_array($request->type, [2,5,6,7,8,9,10,11,12])){
+            }else if(in_array($request->type, [2,5,6,7,8,9,10,11,12,13,14])){
                 return view('report.salary-details-dbbl',compact('getYear','getMonth','data','salaryType'));
             }else{
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

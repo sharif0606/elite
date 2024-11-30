@@ -303,7 +303,8 @@
                         if (grossAmoun > totalDeduction) {
                             netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                         }
-                        if(old_emp == value.admission_id_no){
+                        // if(old_emp == value.admission_id_no){
+                        if(value.duty_qty == 0){
                             var dressCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_dress[]" readonly>`
                             var fineCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_fine[]" readonly>`
                             var backChargeCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_banck_charge[]" readonly>`

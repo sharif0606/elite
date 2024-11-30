@@ -17,7 +17,7 @@
                     <a class="btn btn-sm btn-danger float-start my-1 pt-2" href="{{route('report.salary_report')}}">Back</a>
                     <div>
                         <button type="button" class="btn btn-info my-1" onclick="printDiv('result_show')">Print</button>
-                        {{-- <button type="button" class="btn btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button> --}}
+                        <button type="button" class="btn btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button>
                     </div>
                 </div>
                 <div class="table-responsive" id="result_show">
@@ -28,7 +28,7 @@
                         }
                     </style>
                     @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink','RSB','Top Way','RSGT');
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY');
                     @endphp
                     <table id="salaryTable" class="table tbl_border">
                         <thead>
