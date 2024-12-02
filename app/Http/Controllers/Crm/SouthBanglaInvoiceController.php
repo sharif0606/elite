@@ -47,10 +47,34 @@ class SouthBanglaInvoiceController extends Controller
         $empId = $request->employee_id; //employee_id as admission_id_no
         $emp = Employee::join('job_posts', 'job_posts.id', '=', 'employees.bn_jobpost_id')->select('employees.id','employees.bn_applicants_name','employees.en_applicants_name','employees.bn_jobpost_id','employees.admission_id_no','job_posts.name as post_name')->where('admission_id_no',$empId)->first();
         if($emp){
+            DB::enableQueryLog(); // Enable the query log    
             $empRate = SouthBanglaAssignDetails::select('id','duty_rate','service_rate','job_post_id')->where('customer_id', $customerId)->where('branch_id',$branch)->where('job_post_id', $emp->bn_jobpost_id)->latest()->first();
+            // Log the executed query
+            //dd(DB::getQueryLog());
             return response()->json([
                 'employee' => $emp,
                 'rate' => $empRate,
+            ], 200);
+        } else {
+            return response()->json(['error' => 'Not Found'], 404);
+        }
+    }
+    public function getEmployeeDesignation(Request $request)
+    {
+        $customerId = $request->customer_id; 
+        $branch = $request->branch_id;
+        $empId = $request->employee_id; //employee_id as admission_id_no
+        $emp = Employee::join('job_posts', 'job_posts.id', '=', 'employees.bn_jobpost_id')->select('employees.id','employees.bn_applicants_name','employees.en_applicants_name','employees.bn_jobpost_id','employees.admission_id_no','job_posts.name as post_name')->where('admission_id_no',$empId)->first();
+        if($emp){
+            DB::enableQueryLog(); // Enable the query log    
+            $empDesignation = SouthBanglaAssignDetails::select('south_bangla_assign_details.job_post_id','job_posts.name')
+            ->join('job_posts','job_posts.id','=','south_bangla_assign_details.job_post_id')
+            ->where('south_bangla_assign_details.customer_id', $customerId)->where('south_bangla_assign_details.branch_id',$branch)->get();
+            // Log the executed query
+            //dd(DB::getQueryLog());
+            return response()->json([
+                'employee' => $emp,
+                'designation' => $empDesignation,
             ], 200);
         } else {
             return response()->json(['error' => 'Not Found'], 404);

@@ -169,6 +169,7 @@
                                                         {{ round($d->allownce) }}
                                                         @endif
                                                     </td>
+                                                    <!-- Gross Salary = Net Salary + OT + Post Allownace -->
                                                     <td class="tbl_border">{{ round($d->gross_salary) }}</td>
                                                     <td class="tbl_border">
                                                         @if ($d->deduction_dress != 0)

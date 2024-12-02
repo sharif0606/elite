@@ -206,7 +206,7 @@
             </tbody>
             <tfoot>
                 @php $totalAddLess=0; @endphp
-                @if($invoice_id->vat>0)
+                @if($invoice_id->sub_total_amount)
                     <tr style="text-align: center;">
                         <td></td>
                         <th colspan="4">Sub Total</th>

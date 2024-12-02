@@ -276,6 +276,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('get-invoice-data',[invoiceGenerate::class,'getInvoiceData'])->name('get_invoice_data');
         Route::get('get-portlink-invoice-data',[portlinkInvoice::class,'getPortInvoiceData'])->name('get_port_invoice_data');
         Route::get('get-south-bangla-invoice-data',[southBanglaInvoice::class,'getEmployeeRate'])->name('get_south_bangla_invoice_data');
+        Route::get('get-south-bangla-invoice-designation',[southBanglaInvoice::class,'getEmployeeDesignation'])->name('get_south_bangla_designation');
         Route::get('get-customer-header-footer',[invoiceGenerate::class,'getHeaderFooterNote'])->name('get_customer_header_footer');
         Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');

@@ -371,7 +371,7 @@
                                     ${pAllowance}
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" value="${value.grossAmount}" type="text" name="gross_salary[]" placeholder="Gross Salary">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" value="${(parseFloat(value.grossAmount)+parseFloat(postAllowance)).toFixed(2)}" type="text" name="gross_salary[]" placeholder="Gross Salary">
                                 </td>
                                 <td>${dressCondition}</td>
                                 <td>${fineCondition}</td>

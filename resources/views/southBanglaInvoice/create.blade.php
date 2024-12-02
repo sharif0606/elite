@@ -110,7 +110,7 @@
                                                 <input type="hidden" class="form-control employee_id" name="employee_id[]">
                                             </th>
                                             <td>
-                                                <input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly>
+                                                {{-- <input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly> --}}
                                                 <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]">
                                                 <input type="hidden" class="form-control text-center pay_rate" name="rate[]">
                                                 <input type="hidden" class="form-control text-center service_rate" name="service[]">
@@ -237,7 +237,7 @@
 
         if(employee){
             $.ajax({
-                url: "{{route('get_south_bangla_invoice_data')}}",
+                url: "{{route('get_south_bangla_designation')}}",
                 type: "GET",
                 dataType: "json",
                 data: { customer_id:customer, branch_id:branch, employee_id:employee },
@@ -245,7 +245,9 @@
                     console.log(data);
                     $(e).closest('tr').find('.divide_by').val(workingdayinmonth);
                     if(data.employee){
-                        if(data.rate){
+                        var category = '';
+                        if(data.designation.duty_rate > 0){
+                            category += 
                             if (data.employee.en_applicants_name) {
                                 $(e).closest('tr').find('.employee_data').html(data.employee.en_applicants_name);
                             } else if (data.employee.bn_applicants_name) {
