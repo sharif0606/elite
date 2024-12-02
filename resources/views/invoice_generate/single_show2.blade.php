@@ -237,12 +237,12 @@
                         <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
                         <td style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</td>
                     </tr>
-                @endif
                 <tr style="text-align: center;">
                     <td></td>
                     <th colspan="4">Grand Total</th>
                     <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
                 </tr>
+                @endif
             </tfoot>
         </table>
         <div>
