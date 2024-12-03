@@ -156,7 +156,7 @@ class ReportController extends Controller
             $post = $request->job_post_id;
             $data->where('designation_id', $post);
         }
-        $data = $data->get();
+        $data = $data->orderBy('salary_sheet_details.id','asc')->get();
 
         if(!$data->isEmpty()){
             if($request->type== 0){

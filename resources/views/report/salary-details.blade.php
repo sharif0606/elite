@@ -1,6 +1,8 @@
 @extends('layout.app')
 @section('pageTitle','Salary Report')
 @section('pageSubTitle','report')
+@section('styles')
+@endsection
 @section('content')
 
 <div class="col-12">
@@ -22,6 +24,20 @@
                 </div>
                 <div class="table-responsive" id="result_show">
                     <style>
+                    @media print {
+                        .col-two{
+                            width:180px;
+                        }
+                        .col-four{
+                            width:130px;
+                        }
+                        .col-eight{
+                            width:140px;
+                        }
+                        .col-ten{
+                            width:100px;
+                        }
+                    }
                         .input_css{
                             border: none;
                             outline: none;
@@ -29,6 +45,9 @@
                         .tbl_border{
                         border: 1px solid;
                         border-collapse: collapse;
+                       vertical-align: middle;
+                        font-size:14px;
+                        color:#000 !important;
                         }
                     </style>
                     @php
@@ -39,16 +58,16 @@
                             <tr class="text-center tbl_border"><th colspan="11" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonthName}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
                             <tr class="text-center tbl_border">
                                 <th class="tbl_border">SL</th>
-                                <th class="tbl_border">Bank's Branch With Location</th>
+                                <th class="tbl_border col-two" width="180">Bank's Branch With Location</th>
                                 <th class="tbl_border">Rounting No</th>
-                                <th class="tbl_border">Account Holder's Name</th>
+                                <th class="tbl_border col-four">Account Holder's Name</th>
                                 <th class="tbl_border">Account Number</th>
-                                <th class="tbl_border">Benefitiery Branches</th>
+                                <th class="tbl_border" width="180">Benefitiery Branches</th>
                                 <th class="tbl_border">Salary Amount</th>
                                 <th class="tbl_border">Total Amount</th>
-                                <th class="tbl_border">Designation & ID No</th>
+                                <th class="tbl_border col-eight">Designation & ID No</th>
                                 <th class="tbl_border">Mobile No</th>
-                                <th class="tbl_border">Remarks</th>
+                                <th class="tbl_border col-ten" width="80">Remarks</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -85,7 +104,14 @@
                             @endforelse
                             <tr class="tbl_border">
                                 <th class="tbl_border"></th>
-                                <th class="tbl_border text-left" colspan="4">
+                                <th class="tbl_border text-center" colspan="6">Total =</th>
+                                <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
+                                <th class="tbl_border"></th>
+                                <th class="tbl_border"></th>
+                                <th class="tbl_border"></th>
+                            </tr>
+                            <tr class="tbl_border">
+                                <th class="tbl_border text-left" colspan="11">
                                     @php
                                         if ($totalAmount > 0) {
                                             $textValue = getBangladeshCurrency($totalAmount);
@@ -95,16 +121,11 @@
                                         }
                                     @endphp
                                 </th>
-                                <th class="tbl_border text-center" colspan="2">Total =</th>
-                                <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
-                                <th class="tbl_border"></th>
-                                <th class="tbl_border"></th>
-                                <th class="tbl_border"></th>
                             </tr>
                         </tbody>
                             
                     </table>
-                    <div class="d-flex justify-content-between" style="text-align: center; margin-top:2rem;">
+                    <div class="d-flex justify-content-between" style="text-align: center; margin-top:2rem;color:#000;;">
                         <div style="text-align:left;">
                             <p class="mb-5"><b>Prepared By</b></p>
                             <span><b>Mr. Sreekanta Dey</b></span><br>
