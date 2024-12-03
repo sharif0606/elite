@@ -29,7 +29,7 @@
                             width:180px;
                         }
                         .col-four{
-                            width:130px;
+                            width:150px;
                         }
                         .col-eight{
                             width:140px;
