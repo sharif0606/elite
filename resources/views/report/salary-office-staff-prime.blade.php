@@ -63,8 +63,8 @@
                                         <th class="tbl_border text-center">{{$d->employee?->bn_routing_number}}</th>
                                         <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
                                         <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
-                                        <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
-                                        <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
+                                        <th class="tbl_border text-end">{{--money_format($d->common_net_salary)--}}{{$d->common_net_salary}}</th>
+                                        <th class="tbl_border text-end">{{--money_format($d->common_net_salary)--}}{{$d->common_net_salary}}</th>
                                         <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->employee?->remarks}}"></th>
                                     </tr>
                                     @php
@@ -88,7 +88,7 @@
                                 </th>
                                 <th class="tbl_border text-center">Total =</th>
                                 <th class="tbl_border"></th>
-                                <th class="tbl_border text-end">{{money_format($totalAmount)}}</th>
+                                <th class="tbl_border text-end">{{--money_format($totalAmount)--}}{{$totalAmount}}</th>
                                 <th class="tbl_border"></th>
                             </tr>
                         </tbody>
