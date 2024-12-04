@@ -1984,40 +1984,67 @@ $('.nav-item a').click(function(e) {
 //     }
 // }
 function printDivemp(divName) {
+    // Clone the content of the div
     var prtContent = document.getElementById(divName).cloneNode(true);
-    
-    // Get all inputs within the div and update their values in the cloned content
+
+    // Update input values in the cloned content
     var inputs = prtContent.getElementsByTagName('input');
     for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].type === 'text' || inputs[i].type === 'date') {
             inputs[i].setAttribute('value', inputs[i].value);
         }
     }
-    
-    // Get all textareas within the div and update their text in the cloned content
+
+    // Update textarea values in the cloned content
     var textareas = prtContent.getElementsByTagName('textarea');
     for (var i = 0; i < textareas.length; i++) {
         textareas[i].innerHTML = textareas[i].value;
     }
-    
-    // Get all selects within the div and update their selected options in the cloned content
+
+    // Update select options in the cloned content
     var selects = prtContent.getElementsByTagName('select');
     for (var i = 0; i < selects.length; i++) {
         var selectedOption = selects[i].options[selects[i].selectedIndex];
         selectedOption.setAttribute('selected', 'selected');
     }
 
-    var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-    WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>');
-    WinPrint.document.write('<link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>');
-    WinPrint.document.write('<style> table tr td, table tr th { font-size:13px !important; } .police-vf-font{font-size: 13px;} .police-vf-foot-font{font-size: 9px;} .red-line {height: 2px !important; background-color: red !important; margin-bottom: 0.5rem;} .black-line {height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem;} body { background-color: #ffff !important; } .no-print { display: none !important;} </style>');
-    WinPrint.document.write(prtContent.innerHTML);
+    // Open a new window for printing
+    var WinPrint = window.open('', '_blank', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+    // Write the content into the print window
+    WinPrint.document.open();
+    WinPrint.document.write(`
+        <html>
+        <head>
+            <title>Print</title>
+            <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>
+            <link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>
+            <style>
+                table tr td, table tr th { font-size: 13px !important; }
+                .police-vf-font { font-size: 13px; }
+                .police-vf-foot-font { font-size: 9px; }
+                .red-line { height: 2px !important; background-color: red !important; margin-bottom: 0.5rem; }
+                .black-line { height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem; }
+                body { background-color: #fff !important; }
+                .no-print { display: none !important; }
+            </style>
+        </head>
+        <body>
+            ${prtContent.innerHTML}
+        </body>
+        </html>
+    `);
     WinPrint.document.close();
 
+    // Wait for the content to fully load before printing
     WinPrint.onload = function () {
         WinPrint.focus();
         WinPrint.print();
-        WinPrint.close();
+
+        // Delay closing the window to avoid blinking
+        setTimeout(() => {
+            WinPrint.close();
+        }, 1000); // Keep the window open for 1 second
     };
 }
 function downloadDivAsWord(divName) {
