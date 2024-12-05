@@ -45,10 +45,10 @@ class SouthBanglaInvoiceController extends Controller
         $customerId = $request->customer_id; 
         $branch = $request->branch_id;
         $empId = $request->employee_id; //employee_id as admission_id_no
-        $emp = Employee::join('job_posts', 'job_posts.id', '=', 'employees.bn_jobpost_id')->select('employees.id','employees.bn_applicants_name','employees.en_applicants_name','employees.bn_jobpost_id','employees.admission_id_no','job_posts.name as post_name')->where('admission_id_no',$empId)->first();
+        $emp = Employee::join('job_posts', 'job_posts.id', '=', 'employees.bn_jobpost_id')->select('employees.id','employees.bn_applicants_name','employees.en_applicants_name','employees.bn_jobpost_id','employees.id','job_posts.name as post_name')->where('employees.id',$empId)->first();
         if($emp){
-            DB::enableQueryLog(); // Enable the query log    
-            $empRate = SouthBanglaAssignDetails::select('id','duty_rate','service_rate','job_post_id')->where('customer_id', $customerId)->where('branch_id',$branch)->where('job_post_id', $emp->bn_jobpost_id)->latest()->first();
+            $empRate = SouthBanglaAssignDetails::select('id','duty_rate','service_rate','job_post_id')->where('customer_id', $customerId)->where('job_post_id', $request->job_post)->where('branch_id',$branch)->first();
+            /*->where('job_post_id', $emp->bn_jobpost_id)->latest()*/
             // Log the executed query
             //dd(DB::getQueryLog());
             return response()->json([
@@ -89,7 +89,7 @@ class SouthBanglaInvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         DB::beginTransaction();
         try{
             $data=new InvoiceGenerate;

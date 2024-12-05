@@ -111,7 +111,10 @@
                                             </th>
                                             <td>
                                                 {{-- <input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly> --}}
-                                                <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]">
+                                                {{-- <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]"> --}}
+                                                <select class="form-control text-center job_post" name="job_post_id[]" required onchange="getEmployeeRate(this)">
+                                                </select>
+
                                                 <input type="hidden" class="form-control text-center pay_rate" name="rate[]">
                                                 <input type="hidden" class="form-control text-center service_rate" name="service[]">
                                                 <input type="hidden" class="form-control text-center divide_by" onkeyup="reCalculateInvoice(this)" name="divide_by[]">
@@ -245,22 +248,25 @@
                     console.log(data);
                     $(e).closest('tr').find('.divide_by').val(workingdayinmonth);
                     if(data.employee){
-                        var category = '';
-                        if(data.designation.duty_rate > 0){
-                            category += 
-                            if (data.employee.en_applicants_name) {
+                        //if(data.designation.duty_rate > 0){
+                            let category = '<option value="" selected>Select Designation</option>';
+                            data.designation.forEach(function (item) {
+                                category += `<option value="${item.job_post_id}">${item.name}</option>`;
+                            });
+                            $(e).closest('tr').find('.job_post').html(category); // Insert before pay_rate input
+                            /*if (data.employee.en_applicants_name) {
                                 $(e).closest('tr').find('.employee_data').html(data.employee.en_applicants_name);
                             } else if (data.employee.bn_applicants_name) {
                                 $(e).closest('tr').find('.employee_data').html(data.employee.bn_applicants_name);
                             } else {
                                 $(e).closest('tr').find('.employee_data').html('N/A');
-                            }
+                            }*/
                             $(e).closest('tr').find('.employee_id').val(data.employee.id);
-                            $(e).closest('tr').find('.job_post').val(data.employee.post_name);
+                            /*$(e).closest('tr').find('.job_post').val(data.employee.post_name);
                             $(e).closest('tr').find('.job_post_id').val(data.employee.bn_jobpost_id);
                             $(e).closest('tr').find('.pay_rate').val(data.rate.duty_rate);
-                            $(e).closest('tr').find('.service_rate').val(data.rate.service_rate);
-                        }
+                            $(e).closest('tr').find('.service_rate').val(data.rate.service_rate);*/
+                        //}
                     }
                 },
             });
@@ -277,6 +283,55 @@
             $('.vat').val(vat);
         }
      }
+     function getEmployeeRate(e) {
+        if (!$('.start_date').val()) {
+            $('.start_date').focus();
+            return false;
+        }
+        if (!$('.end_date').val()) {
+            $('.end_date').focus();
+            return false;
+        }
+        let customer = $('.customer_id').val();
+        let branch = $('.branch_id').val();
+        let employee =  $(e).closest('tr').find('.employee_id').val();
+        let job_post = $(e).val(); // Gets the selected value from the dropdown
+        var startDate=$('.start_date').val();
+    
+        let workingdayinmonth= new Date(startDate);
+        let smonth=workingdayinmonth.getMonth()+1;
+        let syear=workingdayinmonth.getFullYear();
+        workingdayinmonth= new Date(syear, smonth, 0).getDate();
+
+        $.ajax({
+            url: "{{route('get_south_bangla_invoice_data')}}",
+            type: "GET",
+            dataType: "json",
+            data: {
+                customer_id: customer,
+                branch_id: branch,
+                employee_id: employee,
+                job_post: job_post
+            },
+            success: function(data) {
+                console.log(data);
+                $(e).closest('tr').find('.divide_by').val(workingdayinmonth);
+                if (data.employee.en_applicants_name) {
+                        $(e).closest('tr').find('.employee_data').html(data.employee.en_applicants_name);
+                    } else if (data.employee.bn_applicants_name) {
+                        $(e).closest('tr').find('.employee_data').html(data.employee.bn_applicants_name);
+                    } else {
+                        $(e).closest('tr').find('.employee_data').html('N/A');
+                    }
+                    $(e).closest('tr').find('.pay_rate').val(data.rate.duty_rate);
+                    $(e).closest('tr').find('.service_rate').val(data.rate.service_rate);
+                    reCalculateInvoice();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error occurred:", error);
+            }
+        });
+    }
 
      function getDivideBy(e){
         var startDate=$(e).val();
@@ -298,8 +353,9 @@
                     <input type="hidden" class="form-control employee_id" name="employee_id[]">
                 </th>
                 <td>
-                    <input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly>
-                    <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]">
+                    <!--<input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly>
+                    <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]">-->
+                    <select class="form-control text-center job_post" required onchange="getEmployeeRate(this)"></select>
                     <input type="hidden" class="form-control text-center pay_rate" name="rate[]">
                     <input type="hidden" class="form-control text-center service_rate" name="service[]">
                     <input type="hidden" class="form-control text-center divide_by" onkeyup="reCalculateInvoice(this)" name="divide_by[]">
