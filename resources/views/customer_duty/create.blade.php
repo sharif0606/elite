@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="showBranch(this.value);getEmployees(this)">
+                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="showBranch(this.value);getEmployees(this);showjobPost(this)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -94,10 +94,10 @@
                                                 </td>
                                                 <td>
                                                     <select class="form-select job_post_id" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
-                                                        <option value="0">Select</option>
+                                                        {{-- <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                             <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </select>
                                                 </td>
                                                 <td>
@@ -245,6 +245,19 @@
                     //console.log(employee_id);
                     if(data.length>0){
                         //console.log(data);
+
+                        /* === Post Call From Employee Assign Table ===*/
+                        $.ajax({
+                            url:"{{ route('empasign.getJobPost') }}",
+                            type: "GET",
+                            dataType: "json",
+                            data: { 'customer_id':customerId },
+                            success: function(data) {
+                                $(e).closest('tr').find('.job_post_id').html(data);
+                            }
+                        })
+                        /* === Post Call From Employee Assign Table ===*/
+
                         var id = data[0].id;
                         var name = data[0].bn_applicants_name;
                         var contact = data[0].bn_parm_phone_my;
@@ -425,11 +438,11 @@ function addRow(){
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
-                <option value="0">Select</option>
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:250px;" onchange="getDutyOtRate(this)">
+                {{--<option value="0">Select</option>
                 @foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
-                @endforeach
+                @endforeach--}}
             </select>
         </td>
         <td>
