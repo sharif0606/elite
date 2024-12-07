@@ -24,8 +24,6 @@
     <!-- Bootstrap Date Range Picker  -->
     <link rel="stylesheet" href="{{asset('assets/bootstrap-daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/main/custome.css') }}">
-    <style>
-    </style>
     @stack('styles')
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
@@ -149,11 +147,11 @@
                 <footer>
                     <div class="footer clearfix mb-0 text-muted">
                         <div class="float-start">
-                            <p>2023 © Eliteforce</p>
+                            <p>{{date('Y')}} © Eliteforce</p>
                         </div>
                         <div class="float-end">
                             <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                                by <a href="https://ahmadsaugi.com">Muktodhara Technology Ltd.</a></p>
+                                by <a href="">Muktodhara Technology Ltd.</a></p>
                         </div>
                     </div>
                 </footer>
