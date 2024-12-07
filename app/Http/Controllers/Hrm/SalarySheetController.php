@@ -1051,56 +1051,60 @@ class SalarySheetController extends Controller
         $salaryGeneratedEmp = SalarySheetDetail::whereIn('salary_id',$salaryIds)->pluck('employee_id');
 
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
-    ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
-    ->join('employees', 'customer_duty_details.employee_id', '=', 'employees.id')
-    ->leftJoin('deductions', function ($join) use ($request) {
-        $join->on('customer_duty_details.employee_id', '=', 'deductions.employee_id')
-            ->where('deductions.month', '=', $request->Month)
-            ->where('deductions.year', '=', $request->Year);
-    })
-    ->leftJoin('long_loans', function ($j) use ($stdate) {
-        $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
-            ->whereDate('long_loans.installment_date', '<=', $stdate)
-            ->whereDate('long_loans.end_date', '>=', $stdate)
-            ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
-    })
-    ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
-    ->leftJoin('customers', 'customer_duties.customer_id', '=', 'customers.id')
-    ->leftJoin('salary_sheet_details', function ($join) use ($year, $month, $request) {
-        $join->on('employees.id', '=', 'salary_sheet_details.employee_id')
-             ->where('salary_sheet_details.year', '=', $year)
-             ->where('salary_sheet_details.month', '=', $month)
-             ->whereIn('salary_sheet_details.customer_id', $request->customer_id);
-    })
-    ->select(
-        'customer_duties.*',
-        'deductions.*',
-        'customer_duty_details.*',
-        'customer_brances.brance_name as customer_branch',
-        'customers.name as customer_name',
-        'long_loans.id as long_loan_id',
-        'long_loans.perinstallment_amount',
-        'job_posts.id as jobpost_id',
-        'job_posts.name as jobpost_name',
-        'employees.id as employee_id',
-        'employees.admission_id_no',
-        'employees.en_applicants_name',
-        'employees.salary_joining_date',
-        'employees.bn_traning_cost',
-        'employees.bn_traning_cost_byMonth',
-        'employees.salary_status',
-        'employees.bn_remaining_cost',
-        'employees.bn_post_allowance',
-        'employees.bn_fuel_bill',
-        'employees.bn_food_allowance',
-        'employees.insurance',
-        'employees.p_f',
-        DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-        DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL, 'Charged', 'Not Charged') AS charge_status")
-    )
-    ->orderBy('admission_id_no', 'ASC')
-    ->orderBy('customer_duty_details.duty_qty', 'DESC');
-
+        ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
+        ->join('employees', 'customer_duty_details.employee_id', '=', 'employees.id')
+        ->leftJoin('deductions', function ($join) use ($request) {
+            $join->on('customer_duty_details.employee_id', '=', 'deductions.employee_id')
+                ->where('deductions.month', '=', $request->Month)
+                ->where('deductions.year', '=', $request->Year);
+        })
+        ->leftJoin('long_loans', function ($j) use ($stdate) {
+            $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
+                ->whereDate('long_loans.installment_date', '<=', $stdate)
+                ->whereDate('long_loans.end_date', '>=', $stdate)
+                ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
+        })
+        ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
+        ->leftJoin('customers', 'customer_duties.customer_id', '=', 'customers.id')
+        ->leftJoin('salary_sheet_details', function ($join) {
+            $join->on('employees.id', '=', 'salary_sheet_details.employee_id');
+        })
+        ->leftJoin('salary_sheets', function ($join) use ($request) {
+            $join->on('salary_sheet_details.salary_id', '=', 'salary_sheets.id')
+                 ->where('salary_sheets.year', '=', $request->Year)
+                 ->where('salary_sheets.month', '=', $request->Month);
+        })
+        ->select(
+            'customer_duties.*',
+            'deductions.*',
+            'customer_duty_details.*',
+            'customer_brances.brance_name as customer_branch',
+            'customers.name as customer_name',
+            'long_loans.id as long_loan_id',
+            'long_loans.perinstallment_amount',
+            'job_posts.id as jobpost_id',
+            'job_posts.name as jobpost_name',
+            'employees.id as employee_id',
+            'employees.admission_id_no',
+            'employees.en_applicants_name',
+            'employees.salary_joining_date',
+            'employees.bn_traning_cost',
+            'employees.bn_traning_cost_byMonth',
+            'employees.salary_status',
+            'employees.bn_remaining_cost',
+            'employees.bn_post_allowance',
+            'employees.bn_fuel_bill',
+            'employees.bn_food_allowance',
+            'employees.insurance',
+            'employees.p_f',
+            DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
+            DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL, 'Charged', 'Not Charged') AS charge_status")
+        )
+        ->where('customer_duty_details.year', '=', $request->Year) // Check year in customer_duty_details
+        ->where('customer_duty_details.month', '=', $request->Month) // Check month in customer_duty_details
+        ->orderBy('admission_id_no', 'ASC')
+        ->orderBy('customer_duty_details.duty_qty', 'DESC');
+    
         $data = $query->get();
 
         return response()->json($data, 200);
