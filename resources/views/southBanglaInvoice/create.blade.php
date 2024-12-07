@@ -355,7 +355,7 @@
                 <td>
                     <!--<input type="text" class="form-control text-center job_post" value="" placeholder="designation" readonly>
                     <input type="hidden" class="form-control text-center job_post_id" name="job_post_id[]">-->
-                    <select class="form-control text-center job_post" required onchange="getEmployeeRate(this)"></select>
+                    <select class="form-control text-center job_post" name="job_post_id[]" required onchange="getEmployeeRate(this)"></select>
                     <input type="hidden" class="form-control text-center pay_rate" name="rate[]">
                     <input type="hidden" class="form-control text-center service_rate" name="service[]">
                     <input type="hidden" class="form-control text-center divide_by" onkeyup="reCalculateInvoice(this)" name="divide_by[]">
