@@ -261,150 +261,152 @@
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
                     var old_emp = '';
-                    $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_remaining_cost;
-                        let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
-                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
-                        //console.log(traningCostPerMonth);
-                        let joiningDate = new Date(value.salary_joining_date);
-                        let sixMonthsLater = new Date(joiningDate);
-                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
-                        // Deduction calculation
-                        let pf = "0";
-                        if (new Date() >= sixMonthsLater && value.charge_status ==0) {
-                            pf = (value.p_f > 0) ? value.p_f : '0';
-                        }else{
-                            pf = 0;
-                        }
-                        let Insurance = "0";
-                        if (new Date() >= sixMonthsLater && value.charge_status ==0) {
-                            Insurance = (value.insurance > 0) ? value.insurance : '0';
-                        }else{
-                            Insurance = 0;
-                        }
-                        let Fine = (value.fine > 0) ? value.fine : '0';
-                        //let Remarks = (value.remarks) ? value.remarks : '';
-                        let RemarksArray = [
-                            (value.loan_rmk) ? value.loan_rmk : '',
-                            (value.salary_stop_message) ? value.salary_stop_message : ''
-                        ];
-                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
-                        let Loan = (value.loan > 0) ? value.loan : '0';
-                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
-                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
-                        let Hr = (value.hr > 0) ? value.hr : '0';
-                        let Cf = (value.c_f > 0) ? value.c_f : '0';
-                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
-                        let Medical = (value.medical > 0) ? value.medical : '0';
-                        let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
-                        let Dress = (value.dress > 0) ? value.dress : '0';
-                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
-                        let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
-                        let netSalary = '0';
-                        let currentMonth = $('.selected_month').val();
-                        let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
-                        if (grossAmoun > totalDeduction) {
-                            netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
-                        }
-                        // if(old_emp == value.admission_id_no){
-                        if(value.duty_qty == 0){
-                            var dressCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_dress[]" readonly>`
-                            var fineCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_fine[]" readonly>`
-                            var backChargeCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_banck_charge[]" readonly>`
-                            var insCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_ins[]" readonly>`
-                            var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_pf[]" value="0" readonly>`
-                            var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>`
-                            var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
-                            var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
-                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
-                            var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="post_allowance[]">`
-                        }else{
-                            var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
-                            var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">`
-                            var backChargeCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">`
-                            var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" value="${Insurance}" name="deduction_ins[]" placeholder="ins">`
-                            var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="${Stmp}" placeholder="stamp">`
-                            var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
-                            var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
-                            var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
-                            var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="${postAllowance}">`
-                        }
-                        selectElement.append(
-                            `<tr>
-                                <td class="fixed">${counter + 1}</td>
-                                <td class="fixed-2">${value.admission_id_no}
-                                    <input onkeyup="reCalcultateSalary(this)" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
-                                </td>
-                                <td class="fixed-3">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">
-                                </td>
-                                <td class="fixed-4">
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
-                                    <input type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
-                                    <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
-                                    <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
-                                    <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
-                                    <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
-                                </td>
-                                <td class="fixed-5">
-                                     <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
-                                </td>
-                                <td width="300px"> ${value.customer_name}</td>
-                                <td width="300px"> ${value.customer_branch}</td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
-                                </td>
-                                <td>${value.duty_qty}
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Qty">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_amount" type="text" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
-                                </td>
-                                <td>${value.ot_qty}
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
-                                </td>
-                                <td>
-                                    ${pAllowance}
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" value="${(parseFloat(value.grossAmount)+parseFloat(postAllowance)).toFixed(2)}" type="text" name="gross_salary[]" placeholder="Gross Salary">
-                                </td>
-                                <td>${dressCondition}</td>
-                                <td>${fineCondition}</td>
-                                <td>${backChargeCondition}</td>
-                                <td>${insCondition}</td>
-                                <td>${pfCondition}</td>
-                                <td>${stmCondition}</td>
-                                <td>${trainingChargCondition}</td>
-                                <td>${loonCondition}</td>
-                                <td>${payableCondtion}</td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
-                                </td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
-                                </td>
-                                <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}"></td>
-                                <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
-                                </td>
-                                {{--  <td>
-                                    <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
-                                </td>  --}}
-                            </tr>`
-                        );
-                        counter++;
-                        total_calculate();
-                        old_emp= value.admission_id_no;
-                    });
+                    if(salary_data){
+                        $.each(salary_data, function(index, value) {
+                            let traningCost=value.bn_remaining_cost;
+                            let traningCostMonth=value.bn_traning_cost_byMonth;
+                            let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                            let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                            //console.log(traningCostPerMonth);
+                            let joiningDate = new Date(value.salary_joining_date);
+                            let sixMonthsLater = new Date(joiningDate);
+                            sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+                            // Deduction calculation
+                            let pf = "0";
+                            if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                                pf = (value.p_f > 0) ? value.p_f : '0';
+                            }else{
+                                pf = 0;
+                            }
+                            let Insurance = "0";
+                            if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                                Insurance = (value.insurance > 0) ? value.insurance : '0';
+                            }else{
+                                Insurance = 0;
+                            }
+                            let Fine = (value.fine > 0) ? value.fine : '0';
+                            //let Remarks = (value.remarks) ? value.remarks : '';
+                            let RemarksArray = [
+                                (value.loan_rmk) ? value.loan_rmk : '',
+                                (value.salary_stop_message) ? value.salary_stop_message : ''
+                            ];
+                            let Remarks = RemarksArray.filter(item => item !== '').join(', ');
+                            let Loan = (value.loan > 0) ? value.loan : '0';
+                            let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                            let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                            let Hr = (value.hr > 0) ? value.hr : '0';
+                            let Cf = (value.c_f > 0) ? value.c_f : '0';
+                            let Stmp = (value.stmp > 0) ? value.stmp : '0';
+                            let Medical = (value.medical > 0) ? value.medical : '0';
+                            let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
+                            let Dress = (value.dress > 0) ? value.dress : '0';
+                            let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                            let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                            let netSalary = '0';
+                            let currentMonth = $('.selected_month').val();
+                            let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+                            if (grossAmoun > totalDeduction) {
+                                netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
+                            }
+                            // if(old_emp == value.admission_id_no){
+                            if(value.duty_qty == 0){
+                                var dressCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_dress[]" readonly>`
+                                var fineCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_fine[]" readonly>`
+                                var backChargeCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_banck_charge[]" readonly>`
+                                var insCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_ins[]" readonly>`
+                                var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_pf[]" value="0" readonly>`
+                                var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stamp[]" value="0" readonly>`
+                                var trainingChargCondition=`<input style="width:100px;" class="form-control" type="text" value="0" name="deduction_training_cost[]" readonly>`
+                                var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
+                                var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${Math.round(grossAmoun)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly readonly>`
+                                var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="post_allowance[]">`
+                            }else{
+                                var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
+                                var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">`
+                                var backChargeCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">`
+                                var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" value="${Insurance}" name="deduction_ins[]" placeholder="ins">`
+                                var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_pf" type="text" name="deduction_pf[]" value="${pf}" placeholder="P.F">`
+                                var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="${Stmp}" placeholder="stamp">`
+                                var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
+                                var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
+                                var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
+                                var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="${postAllowance}">`
+                            }
+                            selectElement.append(
+                                `<tr>
+                                    <td class="fixed">${counter + 1}</td>
+                                    <td class="fixed-2">${value.admission_id_no}
+                                        <input onkeyup="reCalcultateSalary(this)" class="form-control employee_id" type="hidden" name="employee_id[]" value="${value.employee_id}" placeholder="Id">
+                                    </td>
+                                    <td class="fixed-3">
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control join_date" type="text" name="join_date[]" value="${value.salary_joining_date}" placeholder="Duty Rate">
+                                    </td>
+                                    <td class="fixed-4">
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:150px;" class="form-control rank" type="text" value="${value.jobpost_name}" placeholder="Rank">
+                                        <input type="hidden" name="designation_id[]" value="${value.job_post_id}" placeholder="Jobpost Id">
+                                        <input type="hidden" name="customer_id_ind[]" value="${value.customer_id}">
+                                        <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
+                                        <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
+                                        <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
+                                    </td>
+                                    <td class="fixed-5">
+                                        <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">
+                                    </td>
+                                    <td width="300px"> ${value.customer_name}</td>
+                                    <td width="300px"> ${value.customer_branch}</td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_rate" type="text" name="duty_rate[]" value="${value.duty_rate}" placeholder="OT Qty">
+                                    </td>
+                                    <td>${value.duty_qty}
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_qty" type="hidden" name="duty_qty[]" value="${value.duty_qty}" placeholder="Duty Qty">
+                                    </td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control duty_amount" type="text" name="duty_amount[]" value="${value.duty_amount}" placeholder="Duty Amount">
+                                    </td>
+                                    <td>${value.ot_qty}
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_qty" type="hidden" name="ot_qty[]" value="${value.ot_qty}" placeholder="Ot Qty">
+                                    </td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_rate" type="text" name="ot_rate[]" value="${value.ot_rate}" placeholder="Ot Rate">
+                                    </td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_amount" type="text" name="ot_amount[]" value="${value.ot_amount}" placeholder="Ot Amount">
+                                    </td>
+                                    <td>
+                                        ${pAllowance}
+                                    </td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" value="${(parseFloat(value.grossAmount)+parseFloat(postAllowance)).toFixed(2)}" type="text" name="gross_salary[]" placeholder="Gross Salary">
+                                    </td>
+                                    <td>${dressCondition}</td>
+                                    <td>${fineCondition}</td>
+                                    <td>${backChargeCondition}</td>
+                                    <td>${insCondition}</td>
+                                    <td>${pfCondition}</td>
+                                    <td>${stmCondition}</td>
+                                    <td>${trainingChargCondition}</td>
+                                    <td>${loonCondition}</td>
+                                    <td>${payableCondtion}</td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_ind" type="text" name="sing_ind[]" placeholder="SIGN OF IND.">
+                                    </td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control sing_account" type="text" name="sing_account[]" placeholder="Sign of Account">
+                                    </td>
+                                    <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}"></td>
+                                    <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                    </td>
+                                    {{--  <td>
+                                        <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                    </td>  --}}
+                                </tr>`
+                            );
+                            counter++;
+                            total_calculate();
+                            old_emp= value.admission_id_no;
+                        });
+                    }
                     // Add event listeners for focusing and blurring inputs
                     $('.salarySheet').on('focus', 'input', function() {
                         $(this).closest('tr').addClass('selected-row');
