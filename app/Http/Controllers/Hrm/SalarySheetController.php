@@ -1148,9 +1148,20 @@ class SalarySheetController extends Controller
             ->on('ssd.employee_id', '=', 'customer_duty_details.employee_id');
     })
     ->where('customer_duties.start_date', '>=', $request->start_date)
-    ->where('customer_duties.end_date', '<=', $request->end_date)
-    ->where('customer_duties.customer_id', '=', $request->customer_id)
-    ->orderBy('customer_duty_details.duty_qty', 'desc');
+    ->where('customer_duties.end_date', '<=', $request->end_date);
+    if ($request->customer_id){
+        $customerId = $request->customer_id;
+        $query->whereIn('customer_duties.customer_id', $customerId);
+    }
+    if ($request->customer_branch_id){
+        $branchId = $request->customer_branch_id;
+        $query->whereIn('customer_duties.branch_id', $branchId);
+    }
+    if ($request->CustomerIdNot){
+        $CustomerIdNot = $request->CustomerIdNot;
+        $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
+    }
+    $query->orderBy('customer_duty_details.duty_qty', 'desc');
 
 $data = $query->get();
 
