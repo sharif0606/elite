@@ -1095,6 +1095,13 @@ class SalarySheetController extends Controller
             $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
         }
         $data = $query->get();*/
+        $excludedBranches = DB::table('salary_sheets')
+    ->select('branch_id')
+    ->where('year', '=', $request->Year)
+    ->where('month', '=', $request->Month)
+    ->whereNotNull('branch_id') // Exclude null branch_id values
+    ->distinct(); // Avoid duplicates
+
         $query = DB::table('customer_duties')
     ->select(
         'customer_duties.*',
@@ -1148,7 +1155,8 @@ class SalarySheetController extends Controller
             ->on('ssd.employee_id', '=', 'customer_duty_details.employee_id');
     })
     ->where('customer_duties.start_date', '>=', $request->start_date)
-    ->where('customer_duties.end_date', '<=', $request->end_date);
+    ->where('customer_duties.end_date', '<=', $request->end_date)
+    ->whereNotIn('customer_duties.branch_id', $excludedBranches);
     if ($request->customer_id){
         $customerId = $request->customer_id;
         $query->whereIn('customer_duties.customer_id', $customerId);
