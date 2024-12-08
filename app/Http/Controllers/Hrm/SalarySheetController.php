@@ -1125,12 +1125,12 @@ class SalarySheetController extends Controller
     ->join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
     ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
     ->join('employees', 'customer_duty_details.employee_id', '=', 'employees.id')
-    ->leftJoin('deductions', function ($join,$request) {
+    ->leftJoin('deductions', function ($join) use ($request) {
         $join->on('customer_duty_details.employee_id', '=', 'deductions.employee_id')
-            ->where('deductions.month', '=', $request->Year)
-            ->where('deductions.year', '=', $request->Month);
+            ->where('deductions.month', '=', $request->Month)
+            ->where('deductions.year', '=', $request->Year);
     })
-    ->leftJoin('long_loans', function ($join,$request) {
+    ->leftJoin('long_loans', function ($join) use ($request) {
         $join->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
             ->whereDate('long_loans.installment_date', '>=', $request->startDate)
             ->whereDate('long_loans.end_date', '<=', $request->endDate)
@@ -1138,7 +1138,7 @@ class SalarySheetController extends Controller
     })
     ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
     ->leftJoin('customers', 'customer_duty_details.customer_id', '=', 'customers.id')
-    ->leftJoin('salary_sheets as ss', function ($join,$request) {
+    ->leftJoin('salary_sheets as ss', function ($join) use ($request) {
         $join->on('ss.customer_id', '=', 'customer_duty_details.customer_id')
             ->where('ss.year', '=', $request->Year)
             ->where('ss.month', '=', $request->Month);
@@ -1150,9 +1150,10 @@ class SalarySheetController extends Controller
     ->where('customer_duties.start_date', '>=', $request->startDate)
     ->where('customer_duties.end_date', '<=', $request->endDate)
     ->where('customer_duties.customer_id', '=', $request->customerId)
-    //->orderBy('employees.admission_id_no', 'asc')
     ->orderBy('customer_duty_details.duty_qty', 'desc');
-    $data = $query->get();
+
+$data = $query->get();
+
 
 
         return response()->json($data, 200);
