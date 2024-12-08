@@ -1149,7 +1149,7 @@ class SalarySheetController extends Controller
     })
     ->where('customer_duties.start_date', '>=', $request->start_date)
     ->where('customer_duties.end_date', '<=', $request->end_date)
-    ->where('customer_duties.customer_id', '=', $request->customerId)
+    ->where('customer_duties.customer_id', '=', $request->customer_id)
     ->orderBy('customer_duty_details.duty_qty', 'desc');
 
 $data = $query->get();
