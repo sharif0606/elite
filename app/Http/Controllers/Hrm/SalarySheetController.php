@@ -1120,7 +1120,7 @@ class SalarySheetController extends Controller
         'employees.insurance',
         'employees.p_f',
         DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-        DB::raw("IF(ssd.deduction_ins IS NOT NULL OR ssd.deduction_p_f IS NOT NULL, 'Charged', 'Not Charged') as charge_status")
+        DB::raw("IF(ssd.deduction_ins IS NOT NULL OR ssd.deduction_p_f IS NOT NULL, 1, 0) as charge_status")
     )
     ->join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
     ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')

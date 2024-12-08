@@ -274,10 +274,20 @@
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
                             pf = (value.p_f > 0) ? value.p_f : '0';
+                        }else{
+                            if(value.charge_status ==1)
+                            pf = 0;
+                            else
+                            pf = value.p_f
                         }
                         let Insurance = "0";
                         if (new Date() >= sixMonthsLater) {
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }else{
+                            if(value.charge_status ==1)
+                            Insurance = 0;
+                            else
+                            Insurance = value.insurance
                         }
                         let Fine = (value.fine > 0) ? value.fine : '0';
                         //let Remarks = (value.remarks) ? value.remarks : '';
