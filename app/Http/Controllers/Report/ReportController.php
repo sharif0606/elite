@@ -200,9 +200,10 @@ if ($request->duty_qty) {
     } elseif ($request->duty_qty == 20) {
         $customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) < ?', [$request->duty_qty]);
     }
+    $customerduty = $customerduty->get();
 }
 
-$customerduty = $customerduty->get();
+
 
         return view('customer_duty.customer-duty-filter',compact('customerduty'));
     }
