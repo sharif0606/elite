@@ -14,11 +14,6 @@
     <div class="card">
         <form action="">
             <div class="row mb-2">
-                <div class="col-lg-12 d-flex justify-content-end align-items-center">
-                    <a class="text-danger" href="{{route('customerduty.create', ['role' =>currentUser()])}}">
-                        <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
-                    </a>
-                </div>
                 <div class="col-lg-3 col-sm-6">
                     <div class="form-group">
                         <select name="customer_id" class="select2 form-select" onchange="getBranch(this);">
@@ -38,30 +33,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-lg-2">
-                    <select required class="form-control year" name="year">
-                        <option value="">Select Year</option>
-                        @for($i=2023;$i<= date('Y');$i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="col-lg-2">
-                    <select required class="form-control month selected_month" name="month">
-                        <option value="">Select Month</option>
-                        @for($i=1;$i<= 12;$i++)
-                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="col-lg-3">
-                    <select required class="form-control month selected_duty" name="duty_qty">
-                        <option value="">Select Duty Qty</option>
-                        <option value=">60">>60</option>
-                        <option value="<20">>20</option>
-                    </select>
-                </div>
-                <div class="col-lg-12 d-flex justify-content-end align-items-center">
+                <div class="col-lg-2 col-sm-6 ps-0 ">
                     <div class="form-group d-flex">
                         <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
                         <a class="btn btn-sm btn-danger ms-2" href="{{route('customerduty.index')}}" title="Clear">Clear</a>
@@ -69,6 +41,11 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <!-- Empty div to push the link to the right side -->
+                </div>
+                <div class="col-lg-2 col-sm-6 d-flex justify-content-end align-items-center">
+                    <a class="text-danger" href="{{route('customerduty.create', ['role' =>currentUser()])}}">
+                        <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
+                    </a>
                 </div>
             </div>
         </form>
@@ -102,7 +79,7 @@
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Rate</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Qty</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Amount</th>
-                                        <th style=" color: #0f0f0f !important;">Ot Rate</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Rate</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Ot Qty</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Ot Amount</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Total Amount</th>
