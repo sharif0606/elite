@@ -16,4 +16,7 @@ class CustomerDutyDetail extends Model
     public function employee(){
         return $this->belongsTo(Employee::class,'employee_id','id');
     }
+    public function customer_duty(){
+        return $this->belongsTo(CustomerDuty::class);
+    }
 }

@@ -243,6 +243,7 @@
                                 <li class="py-1 submenu-item"><a href="{{route('report.salary_report')}}">{{__('Salary Reports')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('report.inv_payment')}}">{{__('Invoice Payment')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('report.inv_due')}}">{{__('Invoice Due')}}</a></li>
+                                <li class="py-1 submenu-item"><a href="{{route('report.customer_duty_filter')}}">{{__('Customer Duty Filter')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('report.payment_receive')}}">{{__('Payment Received')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('incomeStatement.list')}}">{{__('Income Statement')}}</a></li>
                                 <li class="py-1 submenu-item"><a href="{{route('headreport')}}" >{{__('Account Head Report')}}</a></li> 

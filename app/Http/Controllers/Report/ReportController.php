@@ -14,9 +14,11 @@ use App\Models\Hrm\SalarySheet;
 use App\Models\Hrm\SalarySheetDetail;
 use App\Models\JobPost;
 use App\Models\payroll\Deduction;
+use App\Models\Crm\CustomerDuty;
+use App\Models\Crm\CustomerDutyDetail;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
-
+use Carbon\Carbon;
 class ReportController extends Controller
 {
     public function invoicePayment()
@@ -173,5 +175,35 @@ class ReportController extends Controller
         }else{
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'No Data Found', ["positionClass" => "toast-top-right"]));
         }
+    }
+    public function customer_duty_filter(Request $request){
+        // Get the first date of the month
+        $start_date = Carbon::create($request->year, $request->month, 1)->startOfDay(); // 2024-05-01 00:00:00
+
+        // Get the last date of the month
+        $end_date = Carbon::create($request->year, $request->month, 1)->endOfMonth()->endOfDay(); // 2024-05-31 23:59:59
+
+        $customerduty = CustomerDuty::join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
+    ->join('employees', 'employees.id', '=', 'customer_duty_details.employee_id')
+    ->select(
+        'customer_duty_details.employee_id',
+        'employees.bn_applicants_name', // Correct column name
+        DB::raw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) as total_duty_ot_qty')
+    )
+    ->whereDate('customer_duties.start_date', '>=', $start_date) // Start date condition
+    ->whereDate('customer_duties.end_date', '<=', $end_date)     // End date condition
+    ->groupBy('customer_duty_details.employee_id'); // Group by employee_id and employee name
+
+if ($request->duty_qty) {
+    if ($request->duty_qty == 60) {
+        $customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) > ?', [$request->duty_qty]);
+    } elseif ($request->duty_qty == 20) {
+        $customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) < ?', [$request->duty_qty]);
+    }
+}
+
+$customerduty = $customerduty->get();
+
+        return view('customer_duty.customer-duty-filter',compact('customerduty'));
     }
 }

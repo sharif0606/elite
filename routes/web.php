@@ -251,6 +251,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('payment-receive-detail/{id}',[reports::class,'paymentReceiveDetails'])->name('report.payment_receive_detail');
         Route::get('salary-report',[reports::class,'salaryReport'])->name('report.salary_report');
         Route::get('salary-report-details',[reports::class,'salaryReportDetil'])->name('report.salary_report_details');
+        Route::get('customer-duty-filter',[reports::class,'customer_duty_filter'])->name('report.customer_duty_filter');
 
     });
 
