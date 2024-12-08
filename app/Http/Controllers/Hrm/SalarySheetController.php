@@ -1132,8 +1132,8 @@ class SalarySheetController extends Controller
     })
     ->leftJoin('long_loans', function ($join) use ($request) {
         $join->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
-            ->whereDate('long_loans.installment_date', '>=', $request->startDate)
-            ->whereDate('long_loans.end_date', '<=', $request->endDate)
+            ->whereDate('long_loans.installment_date', '>=', $request->start_date)
+            ->whereDate('long_loans.end_date', '<=', $request->end_date)
             ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
     })
     ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
@@ -1147,8 +1147,8 @@ class SalarySheetController extends Controller
         $join->on('ss.id', '=', 'ssd.salary_id')
             ->on('ssd.employee_id', '=', 'customer_duty_details.employee_id');
     })
-    ->where('customer_duties.start_date', '>=', $request->startDate)
-    ->where('customer_duties.end_date', '<=', $request->endDate)
+    ->where('customer_duties.start_date', '>=', $request->start_date)
+    ->where('customer_duties.end_date', '<=', $request->end_date)
     ->where('customer_duties.customer_id', '=', $request->customerId)
     ->orderBy('customer_duty_details.duty_qty', 'desc');
 
