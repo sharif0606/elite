@@ -191,4 +191,35 @@ class EmployeeRateController extends Controller
         $c->delete();
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
+    public function getEmployeeRate(Request $request)
+    {
+        //dd($request);
+        $employee_rate = EmployeeRate::with('details.jobPost')->where('customer_id', $request->customer_id);
+        if ($request->branch_id){
+            $branchId = $request->branch_id;
+            $employee_rate->where('employee_rates.branch_id', $branchId);
+        }
+        if ($request->atm_id){
+            $atm_id = $request->atm_id;
+            $employee_rate->where('employee_rates.atm_id', $atm_id);
+        }
+        $employee_rate = $employee_rate->get();
+       
+        // Start building the select dropdown HTML
+        $data = '<option value="0">Select</option>';
+        // Loop through employee_assign and its related details
+        foreach ($employee_rate as $rate) {
+           // echo '<pre>';
+           // print_r($rate->toArray())."<hr/>";
+            // Assuming 'details' is a collection, so loop through it
+                foreach ($rate->details as $detail) {
+                // Add each job post option
+                $data .= '<option data-jobpostid="' . $detail->job_post_id . '" value="' . $detail->job_post_id . '">' . $detail->jobPost->name .'</option>';
+                }
+            
+        }
+        // Return the generated HTML as a JSON response
+        return response()->json($data, 200);
+        //dd($employee_assign);
+    }
 }

@@ -214,6 +214,8 @@
 
     function getEmployees(e){
         var customer_id = $('.customer_id');
+        let branch_id = $('.branch_id option:selected').val();
+        let atm_id = $('.atm_id option:selected').val();
         var customer_select_message = $('.customer_select_message');
         if (!customer_id.val()) {
             customer_id.focus();
@@ -248,10 +250,11 @@
 
                         /* === Post Call From Employee Assign Table ===*/
                         $.ajax({
-                            url:"{{ route('empasign.getJobPost') }}",
+                            //url:"{{ route('empasign.getJobPost') }}",
+                            url:"{{ route('emp.getEmployeeRate') }}",
                             type: "GET",
                             dataType: "json",
-                            data: { 'customer_id':customerId },
+                            data: { 'customer_id':customerId,'branch_id':branch_id ,'atm_id':atm_id },
                             success: function(data) {
                                 $(e).closest('tr').find('.job_post_id').html(data);
                             }

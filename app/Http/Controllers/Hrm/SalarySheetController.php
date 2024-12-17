@@ -1095,13 +1095,6 @@ class SalarySheetController extends Controller
             $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
         }
         $data = $query->get();*/
-        $excludedBranches = DB::table('salary_sheets')
-    ->select('branch_id')
-    ->where('year', '=', $request->Year)
-    ->where('month', '=', $request->Month)
-    ->whereNotNull('branch_id') // Exclude null branch_id values
-    ->distinct(); // Avoid duplicates
-
         $query = DB::table('customer_duties')
     ->select(
         'customer_duties.*',
@@ -1156,22 +1149,28 @@ class SalarySheetController extends Controller
     })
     ->where('customer_duties.start_date', '>=', $request->start_date)
     ->where('customer_duties.end_date', '<=', $request->end_date)
-    ->whereNotIn('customer_duties.branch_id', $excludedBranches);
-    if ($request->customer_id){
-        $customerId = $request->customer_id;
-        $query->whereIn('customer_duties.customer_id', $customerId);
-    }
-    if ($request->customer_branch_id){
-        $branchId = $request->customer_branch_id;
-        $query->whereIn('customer_duties.branch_id', $branchId);
-    }
-    if ($request->CustomerIdNot){
-        $CustomerIdNot = $request->CustomerIdNot;
-        $query->whereNotIn('customer_duties.customer_id', $CustomerIdNot);
-    }
-    $query->orderBy('customer_duty_details.duty_qty', 'desc');
+    ->whereNotIn('customer_duties.branch_id', function ($query) use ($request) {
+        $query->select('branch_id')
+            ->from('salary_sheets')
+            ->where('year', '=', $request->Year)
+            ->where('month', '=', $request->Month)
+            ->whereNotNull('branch_id');
+    });
+
+if ($request->customer_id) {
+    $query->whereIn('customer_duties.customer_id', $request->customer_id);
+}
+if ($request->customer_branch_id) {
+    $query->whereIn('customer_duties.branch_id', $request->customer_branch_id);
+}
+if ($request->CustomerIdNot) {
+    $query->whereNotIn('customer_duties.customer_id', $request->CustomerIdNot);
+}
+
+$query->orderBy('customer_duty_details.duty_qty', 'desc');
 
 $data = $query->get();
+
 
 
 
