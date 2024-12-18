@@ -1194,7 +1194,7 @@
     }
 
     function deletedata(e){
-        $.get("{{route(currentUser().'.employeeDocument')}}?id="+e, function(data, status){
+        $.get("{{route('employee.employeeDocument')}}?id="+e, function(data, status){
             alert("Image Deleted!");
             $('.del'+e).remove();
         });

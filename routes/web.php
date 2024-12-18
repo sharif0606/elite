@@ -159,7 +159,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('relEmployee', relEmployee::class);
         Route::get('employee-release', [relEmployee::class,'startRelease'])->name('employee.release');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');
-        Route::get('/employee_documents', [employee::class,'employeeDocument'])->name('superadmin.employeeDocument');
+        Route::get('/employee-documents', [employee::class,'employeeDocument'])->name('employee.employeeDocument');
         Route::get('employee-certificate/{id}', [employee::class,'certificate'])->name('employee.certificate');
         Route::get('additional-file', [employee::class,'additionalFile'])->name('employee.additionalFile');
 
