@@ -93,7 +93,7 @@
                                         @if ($salaryType == 15)
                                             <th class="tbl_border text-center">{{$d->remark}}</th>
                                         @else
-                                            <th class="tbl_border text-center"><input type="text" class="input_css" value="{{$d->employee?->remarks}}"></th>
+                                            <th class="tbl_border text-center">{{$d->employee?->remarks}}<input type="hidden" class="input_css" value="{{$d->employee?->remarks}}"></th>
                                         @endif
                                     </tr>
                                     @php
