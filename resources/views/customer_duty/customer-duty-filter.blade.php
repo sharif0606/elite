@@ -18,7 +18,7 @@
                     <select required class="form-control year" name="year">
                         <option value="">Select Year</option>
                         @for($i=2023;$i<= date('Y');$i++)
-                        <option value="{{ $i }}">{{ $i }}</option>
+                        <option value="{{ $i }}" @if(request()->get('year') == $i) selected @endif>{{ $i }}</option>
                         @endfor
                     </select>
                 </div>
@@ -26,15 +26,15 @@
                     <select required class="form-control month selected_month" name="month">
                         <option value="">Select Month</option>
                         @for($i=1;$i<= 12;$i++)
-                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                        <option value="{{ $i }}" @if(request()->get('month') == $i) selected @endif>{{ date('F',strtotime("2022-$i-01")) }}</option>
                         @endfor
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <select required class="form-control month selected_duty" name="duty_qty">
                         <option value="">Select Duty Qty</option>
-                        <option value="60">>60</option>
-                        <option value="20"><20</option>
+                        <option value="60" @if(request()->get('duty_qty') == 60) selected @endif>60</option>
+                        <option value="20" @if(request()->get('duty_qty') == 20) selected @endif><20</option>
                     </select>
                 </div>
                 <div class="col-lg-3 d-flex justify-content-end align-items-center">
@@ -56,14 +56,24 @@
                     <tr class="text-center">
                         <th class="th_color" scope="col">{{__('#SL')}}</th>
                         <th class="th_color" scope="col">{{__('Employee Id')}}</th>
+                        <th class="th_color" scope="col">{{__('Name')}}</th>
+                        <th class="th_color" scope="col">{{__('Post')}}</th>
+                        <th class="th_color" scope="col">{{__('Customer')}}</th>
                         <th class="th_color" scope="col">{{__('Duty Qty')}}</th>
+                        <th class="th_color" scope="col">{{__('OT Qty')}}</th>
+                        <th class="th_color" scope="col">{{__('Total')}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($customerduty as $e)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{$e->employee_id}}</td>
+                        <td>{{$e->admission_id_no}}</td>
+                        <td>{{$e->bn_applicants_name}}</td>
+                        <td>{{$e->jpname}}</td>
+                        <td>{{$e->customer?->name}}</td>
+                        <td>{{$e->duty_qty}}</td>
+                        <td>{{$e->ot_qty}}</td>
                         <td>{{$e->total_duty_ot_qty}}</td>
                     </tr>
                     @empty

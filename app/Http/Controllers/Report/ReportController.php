@@ -185,9 +185,15 @@ class ReportController extends Controller
 
         $customerduty = CustomerDuty::join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
     ->join('employees', 'employees.id', '=', 'customer_duty_details.employee_id')
+    ->join('job_posts', 'job_posts.id', '=', 'customer_duty_details.job_post_id')
     ->select(
-        'customer_duty_details.employee_id',
+        'employees.admission_id_no',
         'employees.bn_applicants_name', // Correct column name
+        'customer_duty_details.customer_id',
+        'customer_duty_details.job_post_id',
+        'customer_duty_details.duty_qty',
+        'customer_duty_details.ot_qty',
+        'job_posts.name as jpname',
         DB::raw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) as total_duty_ot_qty')
     )
     ->whereDate('customer_duties.start_date', '>=', $start_date) // Start date condition
