@@ -50,7 +50,7 @@ class ProductRequisitionController extends Controller
         $size=ProductSize::all();
         $product=Product::all();
         $customer=Customer::all();
-        $branch=CustomerBrance::select('id','brance_name','customer_id')->get();
+        $branch=CustomerBrance::get();
         $product_issue=Product::where('is_issue','1')->get();
         $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
         return view('Stock.productrequisition.create',compact('product','size','employee','product_issue','customer','branch'));
@@ -79,6 +79,9 @@ class ProductRequisitionController extends Controller
             $data=new ProductRequisition;
             if($request->employee_id != null){
                 $data->employee_id=$request->employee_id;
+            }elseif($request->company_id){
+                $data->company_id=$request->company_id;
+                $data->company_branch_id=$request->company_branch_id;
             }else{
                 $employee= new Employee;
                 $employee->admission_id_no=$request->manual_employee_id;
@@ -109,6 +112,8 @@ class ProductRequisitionController extends Controller
                             if($details->save()){
                                 $stock=new Stock;
                                 $stock->employee_id=$data->employee_id;
+                                $stock->company_id = $request->company_id;
+                                $stock->company_branch_id = $request->company_branch_id;
                                 $stock->product_requisition_id=$data->id;
                                 $stock->product_issue_id=$details->id;
                                 $stock->entry_date=$formattedDate;
