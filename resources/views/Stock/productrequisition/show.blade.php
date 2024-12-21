@@ -106,7 +106,7 @@
                 <div class="col-2"><input readonly type="text" class="tinput"  value="{{ $requisition->employee?->bn_applicants_name }}"></div>
                 @else
                 <div class="col-2" style="width: 9.666667%;">Customer Name</div>
-                <div class="col-3"><input readonly type="text" class="tinput"  value="{{ $requisition->company?->name }}"></div>
+                <div class="col-3"><input readonly type="text" class="tinput"  value="{{ $requisition->company?->name }} | {{$requisition->company_branch?->brance_name}}"></div>
                 @endif
                 <div class="col-1">Issue Date</div>
                 <div class="col-2"><input readonly type="text" class="tinput"  value="{{ \Carbon\Carbon::parse($requisition->issue_date)->format('d/m/Y') }}"></div>
