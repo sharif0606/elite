@@ -12,6 +12,8 @@ use App\Models\Stock\ProductRequisitionDetails;
 use App\Models\Stock\ProductStockin;
 use App\Http\Traits\ImageHandleTraits;
 use App\Models\Stock\Stock;
+use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 use App\Http\Requests\Stock\ProductIssue\AddProductIssue;
 use App\Models\User;
 use Exception;
@@ -47,9 +49,11 @@ class ProductRequisitionController extends Controller
     {
         $size=ProductSize::all();
         $product=Product::all();
+        $customer=Customer::all();
+        $branch=CustomerBrance::select('id','brance_name','customer_id')->get();
         $product_issue=Product::where('is_issue','1')->get();
         $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
-        return view('Stock.productrequisition.create',compact('product','size','employee','product_issue'));
+        return view('Stock.productrequisition.create',compact('product','size','employee','product_issue','customer','branch'));
     }
     public function product_issue_create()
     {

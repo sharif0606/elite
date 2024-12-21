@@ -68,6 +68,7 @@ class CustomerDutyController extends Controller
             $jobpostId = $request->job_post_id;
             $branch = $request->branch_id;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
+            
             $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id',$branch)->pluck('id');
             if($request->branch_id){
                 if(!$empRateIdWithBranch->isEmpty()){
@@ -75,6 +76,7 @@ class CustomerDutyController extends Controller
                         return $data;
                 }else{
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
+                    dd($data);
                     return $data;
                 }
             }else{

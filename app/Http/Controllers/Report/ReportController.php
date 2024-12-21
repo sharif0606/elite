@@ -182,35 +182,53 @@ class ReportController extends Controller
 
         // Get the last date of the month
         $end_date = Carbon::create($request->year, $request->month, 1)->endOfMonth()->endOfDay(); // 2024-05-31 23:59:59
+    
 
-        $customerduty = CustomerDuty::join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
-    ->join('employees', 'employees.id', '=', 'customer_duty_details.employee_id')
-    ->join('job_posts', 'job_posts.id', '=', 'customer_duty_details.job_post_id')
-    ->select(
-        'employees.admission_id_no',
-        'employees.bn_applicants_name', // Correct column name
-        'customer_duty_details.customer_id',
-        'customer_duty_details.job_post_id',
-        'customer_duty_details.duty_qty',
-        'customer_duty_details.ot_qty',
-        'job_posts.name as jpname',
-        DB::raw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) as total_duty_ot_qty')
-    )
-    ->whereDate('customer_duties.start_date', '>=', $start_date) // Start date condition
-    ->whereDate('customer_duties.end_date', '<=', $end_date)     // End date condition
-    ->groupBy('customer_duty_details.employee_id'); // Group by employee_id and employee name
-
-if ($request->duty_qty) {
-    if ($request->duty_qty == 60) {
-        $customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) > ?', [$request->duty_qty]);
-    } elseif ($request->duty_qty == 20) {
-        $customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) < ?', [$request->duty_qty]);
-    }
-    $customerduty = $customerduty->get();
-}
-
-
-
+        $employeeIds = DB::table('customer_duties')
+            ->join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
+            ->select('customer_duty_details.employee_id')
+            ->whereDate('customer_duties.start_date', '>=', $start_date)
+            ->whereDate('customer_duties.end_date', '<=', $end_date)
+            ->where(function ($query) {
+                $query->where('customer_duty_details.duty_qty', '>', 0)
+                      ->orWhere('customer_duty_details.ot_qty', '>', 0);
+            })
+            ->groupBy('customer_duty_details.employee_id');
+            if ($request->duty_qty) {
+                if ($request->duty_qty == 60) {
+                    //$customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) > ?', [$request->duty_qty]);
+                    $employeeIds = $employeeIds->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) > ?', [60]);
+                } elseif ($request->duty_qty == 20) {
+                    //$customerduty = $customerduty->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) < ?', [$request->duty_qty]);
+                    $employeeIds = $employeeIds->havingRaw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) <= ?', [20]);
+                }
+                //$customerduty = $customerduty->get();
+                $employeeIds = $employeeIds->pluck('customer_duty_details.employee_id'); // Pluck employee IDs
+        
+                // Convert the collection to an array if needed
+                $employeeIdsArray = $employeeIds->toArray();
+                //dd($employeeIdsArray);
+            }
+        
+            $customerduty = CustomerDuty::join('customer_duty_details', 'customer_duty_details.customerduty_id', '=', 'customer_duties.id')
+            ->join('employees', 'employees.id', '=', 'customer_duty_details.employee_id')
+            ->join('job_posts', 'job_posts.id', '=', 'customer_duty_details.job_post_id')
+            ->leftJoin('customers', 'customers.id', '=', 'customer_duty_details.customer_id')
+            ->select(
+                'employees.id as employee_id',
+                'employees.bn_applicants_name', // Employee name
+                DB::raw('GROUP_CONCAT(DISTINCT job_posts.name SEPARATOR ", ") as job_posts'), // Concatenate job post names
+                DB::raw('GROUP_CONCAT(DISTINCT customers.name SEPARATOR ", ") as customers'), // Concatenate customer names
+                DB::raw('SUM(customer_duty_details.duty_qty) as total_duty_qty'), // Total Duty Quantity
+                DB::raw('SUM(customer_duty_details.ot_qty) as total_ot_qty'), // Total OT Quantity
+                DB::raw('SUM(customer_duty_details.duty_qty + customer_duty_details.ot_qty) as total_duty_ot_qty') // Total Duty + OT
+            )
+            ->whereDate('customer_duties.start_date', '>=', $start_date) // Start date condition
+            ->whereDate('customer_duties.end_date', '<=', $end_date)     // End date condition
+            ->whereIn('customer_duty_details.employee_id', $employeeIdsArray) // Filter by employee IDs
+            ->groupBy('employees.id', 'employees.bn_applicants_name') // Group by employee only
+            ->get();
+        
         return view('customer_duty.customer-duty-filter',compact('customerduty'));
     }
 }

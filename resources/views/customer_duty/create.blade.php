@@ -24,7 +24,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="showBranch(this.value);getEmployees(this);showjobPost(this)">
+                                    <select class="form-select customer_id select2" id="customer_id" name="customer_id" onchange="showBranch(this.value);getEmployees(this);/*showjobPost(this)*/">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
+                                    <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
                                         <option value="">Select Branch</option>
                                         @forelse ($branch as $b)
                                             <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}">{{ $b->brance_name }}</option>
@@ -106,7 +106,8 @@
                                                         <option value="2">12 hours</option>
                                                     </select> --}}
                                                     <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px" onchange="getDutyOtRateHourWise(this)">
-                                                            @forelse ($hours as $hour)
+                                                        <option value="0">Select</option>        
+                                                        @forelse ($hours as $hour)
                                                                 <option value="{{ $hour->id }}">
                                                                     {{ $hour->hour }} Hour's
                                                                 </option>

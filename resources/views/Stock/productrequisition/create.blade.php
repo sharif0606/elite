@@ -31,6 +31,21 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label for="company_id">Customer</label>
+                                            <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                                                <option value="">Select Customer</option>
+                                                @forelse ($customer as $c)
+                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                            @empty
+                                            @endforelse
+                                            </select>
+                                            @if($errors->has('employee_id'))
+                                                <span class="text-danger"> {{ $errors->first('employee_id') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="note">{{__('Issue Date')}}</label>
                                             <input required class="form-control datepicker" type="text" name="issue_date" id="issue_date" placeholder="dd/mm/yyy">
                                             {{--  <input required class="form-control" type="date" name="issue_date" value="" placeholder="Issue Date" >  --}}

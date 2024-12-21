@@ -67,14 +67,14 @@
                 <tbody>
                     @forelse($customerduty as $e)
                     <tr class="text-center">
-                        <td scope="row">{{ ++$loop->index }}</td>
-                        <td>{{$e->admission_id_no}}</td>
-                        <td>{{$e->bn_applicants_name}}</td>
-                        <td>{{$e->jpname}}</td>
-                        <td>{{$e->customer?->name}}</td>
-                        <td>{{$e->duty_qty}}</td>
-                        <td>{{$e->ot_qty}}</td>
-                        <td>{{$e->total_duty_ot_qty}}</td>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $e->employee_id }}</td>
+                    <td>{{ $e->bn_applicants_name }}</td>
+                    <td>{{ $e->job_posts }}</td>
+                    <td>{{ $e->customers }}</td>
+                    <td>{{ $e->total_duty_qty }}</td>
+                    <td>{{ $e->total_ot_qty }}</td>
+                    <td>{{ $e->total_duty_ot_qty }}</td>
                     </tr>
                     @empty
                     <tr>
