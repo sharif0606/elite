@@ -61,6 +61,9 @@
                         @endforelse
                     </tbody>
                 </table>
+                <div class="pt-2">
+                {{$data->links()}}
+                </div>
             </div>
         </div>
     </div>

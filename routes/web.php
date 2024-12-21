@@ -135,9 +135,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/stock-employee-list',[stock::class,'EmployeeList'])->name('stock.employeeList');
         Route::get('/stock-employee-individual/{id}',[stock::class,'employeeIndividual'])->name('stock.employeeIndividual');
 
-        Route::post('/stockin-product/delete', [product_stockin::class, 'productDelete'])->name('stock_in_product.delete');
-        Route::post('/stockin-issue-product/delete', [requisition::class, 'issueProductDelete'])->name('issue_product.delete');
-        Route::post('/stockin-damage-product/delete', [productdamage::class, 'damageProductDelete'])->name('damage_product.delete');
+        Route::post('/stockin-product/delete', [product_stockin::class, 'productDelete'])->name('product_stockin.stock_in_product.delete');
+        Route::post('/stockin-issue-product/delete', [requisition::class, 'issueProductDelete'])->name('product_issue.delete');
+        Route::post('/stockin-damage-product/delete', [productdamage::class, 'damageProductDelete'])->name('productdamage.damage_product.delete');
 
         /* CRM */
         Route::resource('empatten',empatten::class);

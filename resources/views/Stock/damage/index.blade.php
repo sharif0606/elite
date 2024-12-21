@@ -92,7 +92,7 @@
                 <div class="modal fade" id="profile" tabindex="-1" role="dialog"
                     aria-labelledby="balanceTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
-                        <form id="moreDetailsLink" method="post" action="{{route('damage_product.delete')}}">
+                        <form id="moreDetailsLink" method="post" action="{{route('productdamage.damage_product.delete')}}">
                             @csrf
                             <div class="modal-content">
                                 <div class="modal-header py-1">
