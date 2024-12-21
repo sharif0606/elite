@@ -15,7 +15,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $data=Role::whereNotIn('id',[2,3,4])->paginate(10);
+        $data=Role::whereNotIn('id',[2,4,5])->paginate(10);
         return view('settings.role.index',compact('data'));
     }
 
