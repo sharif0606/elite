@@ -129,7 +129,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('product',product::class);
         Route::resource('product_stockin',product_stockin::class);
         Route::resource('product_issue',requisition::class);
-        Route::get('product-issue-after/create',[requisition::class, 'product_issue_create'])->name('product_issue_create');
+        Route::get('product-issue-after/create',[requisition::class, 'product_issue_create'])->name('product_issue.product_issue_create');
         Route::resource('stock',stock::class);
         Route::resource('productdamage',productdamage::class);
         Route::get('/stock-employee-list',[stock::class,'EmployeeList'])->name('stock.employeeList');
