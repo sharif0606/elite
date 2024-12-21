@@ -3,6 +3,7 @@
 namespace App\Models\Stock;
 
 use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Employee\Employee;
@@ -18,5 +19,8 @@ class ProductRequisition extends Model
     }
     public function company(){
         return $this->belongsTo(Customer::class,'company_id','id');
+    }
+    public function company_branch(){
+        return $this->belongsTo(CustomerBrance::class,'company_branch_id','id');
     }
 }

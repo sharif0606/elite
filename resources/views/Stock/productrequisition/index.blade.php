@@ -62,7 +62,13 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 {{--  <td>{{$d->product?->product_name}}</td>
                                 <td>{{$d->size?->name}}</td>  --}}
-                                <td>{{$d->employee?->bn_applicants_name}}/ ID- {{$d->employee?->admission_id_no}}</td>
+                                <td>
+                                    @if($d->employee?->bn_applicants_name && $d->employee?->admission_id_no)
+                                    {{$d->employee?->bn_applicants_name}}/ ID- {{$d->employee?->admission_id_no}}
+                                    @else
+                                    {{$d->company?->name}}/ Branch- {{$d->company?->company_branch}}
+                                    @endif
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($d->issue_date)->format('d/m/Y') }}</td>
                                 <td>{{$d->note}}</td>
                                 {{--  <td>@if ($d->type==2) Used @else New @endif</td>  --}}
