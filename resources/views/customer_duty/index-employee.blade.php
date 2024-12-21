@@ -54,18 +54,15 @@
                         <select class="form-select employee_id select2" id="employee_id" name="employee_id">
                             <option value="">Select Employee</option>
                             @forelse ($employee as $em)
-                            <option value="{{ $em->id }}" @if(request()->get('employee_id') == $em->id) selected @endif>
-                                {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
-                            </option>
+                            <option value="{{ $em->id }}">{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
                             @empty
                             @endforelse
                         </select>
                         @if($errors->has('employee_id'))
-                        <span class="text-danger">{{ $errors->first('employee_id') }}</span>
+                        <span class="text-danger"> {{ $errors->first('employee_id') }}</span>
                         @endif
                     </div>
                 </div>
-
                 <div class="col-lg-7 col-sm-6 my-2">
                     <div class="form-group d-flex">
                         <button class="btn btn-sm btn-info float-end" type="submit">Search</button>

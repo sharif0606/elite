@@ -14,7 +14,7 @@ use App\Models\JobPost;
 
 use App\Models\Customer;
 
-Use App\Models\Hour;
+use App\Models\Hour;
 
 use Toastr;
 use Carbon\Carbon;
@@ -34,16 +34,49 @@ class CustomerDutyController extends Controller
      */
     public function index(Request $request)
     {
-        $customer = Customer::select('id','name')->get();
-        $customerduty=CustomerDuty::orderBy('id','DESC');
-        if ($request->customer_id){
+        $customer = Customer::select('id', 'name')->get();
+        $customerduty = CustomerDuty::with('details')->orderBy('id', 'DESC');
+        
+        // Get the first date of the month
+        $start_date = Carbon::create($request->year, $request->month, 1)->startOfDay(); // 2024-05-01 00:00:00
+        // Get the last date of the month
+        $end_date = Carbon::create($request->year, $request->month, 1)->endOfMonth()->endOfDay(); // 2024-05-31 23:59:59
+        
+        $employee = Employee::select('id', 'bn_applicants_name', 'admission_id_no')->get();
+        
+        // Filter by customer if customer_id is present
+        if ($request->customer_id) {
             $customerduty->where('customer_duties.customer_id', $request->customer_id);
         }
-        if ($request->branch_id){
+        
+        // Filter by branch if branch_id is present
+        if ($request->branch_id) {
             $customerduty->where('customer_duties.branch_id', $request->branch_id);
         }
+        
+        // Filter by year and month if both are provided
+        if ($request->month && $request->year) {
+            $customerduty->whereDate('customer_duties.start_date', '>=', $start_date);
+            $customerduty->whereDate('customer_duties.end_date', '<=', $end_date);
+        }
+        
+        // Filter by employee if employee_id is provided
+        if ($request->employee_id) {
+            // Filter customer duties where at least one detail has the matching employee_id
+            $customerduty->whereHas('details', function ($query) use ($request) {
+                $query->where('employee_id', $request->employee_id);
+            });
+        }
+        
+        // Now paginate after all conditions are applied
         $customerduty = $customerduty->paginate(10);
-        return view('customer_duty.index',compact('customerduty','customer'));
+        
+        // Return the appropriate view
+      
+            return view('customer_duty.index', compact('customerduty', 'customer', 'employee'));
+        
+        
+        
     }
 
     /**
@@ -53,12 +86,12 @@ class CustomerDutyController extends Controller
      */
     public function create()
     {
-        $jobposts=JobPost::all();
-        $customer=Customer::all();
+        $jobposts = JobPost::all();
+        $customer = Customer::all();
         $branch = CustomerBrance::all();
         $atm = Atm::all();
         $hours = Hour::get();
-        return view('customer_duty.create',compact('customer','jobposts','branch','atm','hours'));
+        return view('customer_duty.create', compact('customer', 'jobposts', 'branch', 'atm', 'hours'));
     }
 
     public function getEmployeeDuty(Request $request)
@@ -68,43 +101,43 @@ class CustomerDutyController extends Controller
             $jobpostId = $request->job_post_id;
             $branch = $request->branch_id;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
-            
-            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id',$branch)->pluck('id');
-            if($request->branch_id){
-                if(!$empRateIdWithBranch->isEmpty()){
+
+            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id', $branch)->pluck('id');
+            if ($request->branch_id) {
+                if (!$empRateIdWithBranch->isEmpty()) {
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
-                        return $data;
-                }else{
+                    return $data;
+                } else {
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
-            }else{
+            } else {
                 $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                 return $data;
             }
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-
     }
-    public function getDutyOtRateHourWise(Request $request){
+    public function getDutyOtRateHourWise(Request $request)
+    {
         try {
             $customerId = $request->customer_id;
             $jobpostId = $request->job_post_id;
             $branch = $request->branch_id;
             $jobpostHour = $request->job_post_hour;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
-            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id',$branch)->pluck('id');
-            if($request->branch_id){
-                if(!$empRateIdWithBranch->isEmpty()){
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'desc')->first();
+            $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id', $branch)->pluck('id');
+            if ($request->branch_id) {
+                if (!$empRateIdWithBranch->isEmpty()) {
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
                     return $data;
-                }else{
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'ASC')->first();
+                } else {
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
-            }else{
-                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours',$jobpostHour)->orderBy('id', 'ASC')->first();
+            } else {
+                $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                 return $data;
             }
         } catch (Exception $e) {
@@ -112,7 +145,8 @@ class CustomerDutyController extends Controller
         }
     }
 
-    public function checkOthersCustomerDuty(Request $request){
+    public function checkOthersCustomerDuty(Request $request)
+    {
         try {
             $employee = $request->employee_id;
             $startDate = $request->start_date;
@@ -131,9 +165,9 @@ class CustomerDutyController extends Controller
                 ->where('customer_duty_details.employee_id', $employee)
                 ->where('customer_duty_details.start_date', '<=', $startDate)
                 ->where('customer_duty_details.end_date', '>=', $endDate)
-                ->leftJoin('customer_duties','customer_duties.id','=','customer_duty_details.customerduty_id')
-                ->leftJoin('customer_brances','customer_duties.branch_id','=','customer_brances.id')
-                ->select('customer_duty_details.duty_qty as general','customer_duty_details.customerduty_id','customer_duty_details.ot_qty as overtime','customer_duty_details.total_amount as  total','customer_duties.id','customer_duties.branch_id','customers.name as customer_name','customer_brances.brance_name as customer_branch') // Select necessary columns
+                ->leftJoin('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
+                ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
+                ->select('customer_duty_details.duty_qty as general', 'customer_duty_details.customerduty_id', 'customer_duty_details.ot_qty as overtime', 'customer_duty_details.total_amount as  total', 'customer_duties.id', 'customer_duties.branch_id', 'customers.name as customer_name', 'customer_brances.brance_name as customer_branch') // Select necessary columns
                 ->get();
             return response()->json($data, 200);
         } catch (Exception $e) {
@@ -152,8 +186,8 @@ class CustomerDutyController extends Controller
     {
         //dd($request->all());
         DB::beginTransaction();
-        try{
-            $data=new CustomerDuty;
+        try {
+            $data = new CustomerDuty;
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
             $data->atm_id = $request->atm_id;
@@ -165,26 +199,26 @@ class CustomerDutyController extends Controller
             $data->total_ot_amount = $request->total_ot_amount;
             $data->finall_amount = $request->finall_amount;
             $data->status = 0;
-            if($data->save()){
-                if($request->employee_id){
-                    foreach($request->employee_id as $key => $value){
-                        if($value){
+            if ($data->save()) {
+                if ($request->employee_id) {
+                    foreach ($request->employee_id as $key => $value) {
+                        if ($value) {
                             $details = new CustomerDutyDetail;
-                            $details->customerduty_id=$data->id;
-                            $details->employee_id=$request->employee_id[$key];
-                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->customerduty_id = $data->id;
+                            $details->employee_id = $request->employee_id[$key];
+                            $details->job_post_id = $request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
-                            $details->hours=$request->job_post_hour[$key];
-                            $details->duty_rate=$request->duty_rate[$key];
-                            $details->ot_rate=$request->ot_rate[$key];
-                            $details->duty_qty=$request->duty_qty[$key];
-                            $details->ot_qty=$request->ot_qty[$key];
-                            $details->duty_amount=$request->duty_amount[$key];
-                            $details->ot_amount=$request->ot_amount[$key];
-                            $details->total_amount=$request->total_amount[$key];
-                            $details->start_date=$request->start_date_details[$key];
-                            $details->end_date=$request->end_date_details[$key];
-                            $details->status=0;
+                            $details->hours = $request->job_post_hour[$key];
+                            $details->duty_rate = $request->duty_rate[$key];
+                            $details->ot_rate = $request->ot_rate[$key];
+                            $details->duty_qty = $request->duty_qty[$key];
+                            $details->ot_qty = $request->ot_qty[$key];
+                            $details->duty_amount = $request->duty_amount[$key];
+                            $details->ot_amount = $request->ot_amount[$key];
+                            $details->total_amount = $request->total_amount[$key];
+                            $details->start_date = $request->start_date_details[$key];
+                            $details->end_date = $request->end_date_details[$key];
+                            $details->status = 0;
                             $details->save();
                         }
                     }
@@ -192,12 +226,11 @@ class CustomerDutyController extends Controller
                 DB::commit();
             }
             if ($data->save()) {
-                \LogActivity::addToLog('Add Duty',$request->getContent(),'CustomerDuty,CustomerDutyDetail');
+                \LogActivity::addToLog('Add Duty', $request->getContent(), 'CustomerDuty,CustomerDutyDetail');
                 return redirect()->route('customerduty.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
-
         } catch (Exception $e) {
             DB::rollback();
             dd($e);
@@ -224,14 +257,14 @@ class CustomerDutyController extends Controller
      */
     public function edit($id)
     {
-        $jobposts=JobPost::all();
-        $customer=Customer::all();
-        $employee=Employee::all();
-        $custduty = CustomerDuty::findOrFail(encryptor('decrypt',$id));
+        $jobposts = JobPost::all();
+        $customer = Customer::all();
+        $employee = Employee::all();
+        $custduty = CustomerDuty::findOrFail(encryptor('decrypt', $id));
         $branch = CustomerBrance::all();
         $atm = Atm::all();
         $hours = Hour::get();
-        return view('customer_duty.edit',compact('jobposts','customer','custduty','employee','branch','atm','hours'));
+        return view('customer_duty.edit', compact('jobposts', 'customer', 'custduty', 'employee', 'branch', 'atm', 'hours'));
     }
 
     /**
@@ -243,8 +276,8 @@ class CustomerDutyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-            $data=CustomerDuty::findOrFail(encryptor('decrypt',$id));
+        try {
+            $data = CustomerDuty::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;
             $data->branch_id = $request->branch_id;
             $data->atm_id = $request->atm_id;
@@ -256,27 +289,27 @@ class CustomerDutyController extends Controller
             $data->total_ot_amount = $request->total_ot_amount;
             $data->finall_amount = $request->finall_amount;
             $data->status = 0;
-            if($data->save()){
-                if($request->employee_id){
-                    $dl=CustomerDutyDetail::where('customerduty_id',$data->id)->delete();
-                    foreach($request->employee_id as $key => $value){
-                        if($value){
+            if ($data->save()) {
+                if ($request->employee_id) {
+                    $dl = CustomerDutyDetail::where('customerduty_id', $data->id)->delete();
+                    foreach ($request->employee_id as $key => $value) {
+                        if ($value) {
                             $details = new CustomerDutyDetail;
-                            $details->customerduty_id=$data->id;
-                            $details->employee_id=$request->employee_id[$key];
-                            $details->job_post_id=$request->job_post_id[$key];
+                            $details->customerduty_id = $data->id;
+                            $details->employee_id = $request->employee_id[$key];
+                            $details->job_post_id = $request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
-                            $details->hours=$request->job_post_hour[$key];
-                            $details->duty_rate=$request->duty_rate[$key];
-                            $details->ot_rate=$request->ot_rate[$key];
-                            $details->duty_qty=$request->duty_qty[$key];
-                            $details->ot_qty=$request->ot_qty[$key];
-                            $details->duty_amount=$request->duty_amount[$key];
-                            $details->ot_amount=$request->ot_amount[$key];
-                            $details->total_amount=$request->total_amount[$key];
-                            $details->start_date=$request->start_date_details[$key];
-                            $details->end_date=$request->end_date_details[$key];
-                            $details->status=0;
+                            $details->hours = $request->job_post_hour[$key];
+                            $details->duty_rate = $request->duty_rate[$key];
+                            $details->ot_rate = $request->ot_rate[$key];
+                            $details->duty_qty = $request->duty_qty[$key];
+                            $details->ot_qty = $request->ot_qty[$key];
+                            $details->duty_amount = $request->duty_amount[$key];
+                            $details->ot_amount = $request->ot_amount[$key];
+                            $details->total_amount = $request->total_amount[$key];
+                            $details->start_date = $request->start_date_details[$key];
+                            $details->end_date = $request->end_date_details[$key];
+                            $details->status = 0;
                             $details->save();
                         }
                     }
@@ -287,7 +320,6 @@ class CustomerDutyController extends Controller
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
-
         } catch (Exception $e) {
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -302,8 +334,8 @@ class CustomerDutyController extends Controller
      */
     public function destroy($id)
     {
-        $c=CustomerDuty::findOrFail(encryptor('decrypt',$id));
-        $dl=CustomerDutyDetail::where('customerduty_id',$c->id)->delete();
+        $c = CustomerDuty::findOrFail(encryptor('decrypt', $id));
+        $dl = CustomerDutyDetail::where('customerduty_id', $c->id)->delete();
         $c->delete();
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
