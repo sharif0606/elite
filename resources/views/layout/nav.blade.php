@@ -199,7 +199,7 @@
                                     <a href="{{route('product_issue.index')}}">Product Issue</a>
                                 </li>
                                 <li class="submenu-item">
-                                    <a href="{{route('product_issue_create')}}">Product Issue after</a>
+                                    <a href="{{route('product_issue.product_issue_create')}}">Product Issue after</a>
                                 </li>
                                 <li class="submenu-item">
                                     <a href="{{route('productdamage.index')}}">Product Condem</a>
