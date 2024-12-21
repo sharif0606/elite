@@ -72,9 +72,11 @@ class CustomerDutyController extends Controller
         $customerduty = $customerduty->paginate(10);
         
         // Return the appropriate view
-      
+        if ($request->employee_id) {
+            return view('customer_duty.index-employee', compact('customerduty', 'customer', 'employee'));
+        } else {
             return view('customer_duty.index', compact('customerduty', 'customer', 'employee'));
-        
+        }
         
         
     }

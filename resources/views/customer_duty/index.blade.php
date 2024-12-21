@@ -121,7 +121,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($e->details as $de)
-                                    @if($de->employee_id == request()->get('employee_id'))
                                     <tr>
                                         <td>{{$de->employee?->admission_id_no }}</td>
                                         <td>{{$de->employee?->bn_applicants_name }}</td>
@@ -134,20 +133,6 @@
                                         <td>{{ $de->ot_amount }}</td>
                                         <td>{{ $de->total_amount }}</td>
                                     </tr>
-                                    @else
-                                    <tr>
-                                        <td>{{$de->employee?->admission_id_no }}</td>
-                                        <td>{{$de->employee?->bn_applicants_name }}</td>
-                                        <td>{{$de->jobpost?->name }}</td>
-                                        <td>{{ $de->duty_rate }}</td>
-                                        <td>{{ $de->duty_qty }}</td>
-                                        <td>{{ $de->duty_amount }}</td>
-                                        <td>{{ $de->ot_rate }}</td>
-                                        <td>{{ $de->ot_qty }}</td>
-                                        <td>{{ $de->ot_amount }}</td>
-                                        <td>{{ $de->total_amount }}</td>
-                                    </tr>
-                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
