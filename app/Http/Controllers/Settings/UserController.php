@@ -18,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data=User::whereNotIn('id',[2,3,4,5,6])->paginate(10);
+        $data=User::whereNotIn('id',[2,3,4,5,6,7])->paginate(10);
+         
         return view('settings.user.index',compact('data'));
     }
 
