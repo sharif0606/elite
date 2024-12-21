@@ -220,6 +220,7 @@ class ReportController extends Controller
                 ->leftJoin('customers', 'customers.id', '=', 'customer_duty_details.customer_id')
                 ->select(
                     'employees.id as employee_id',
+                    'employees.admission_id_no',
                     'employees.bn_applicants_name', // Employee name
                     DB::raw('GROUP_CONCAT(DISTINCT job_posts.name SEPARATOR ", ") as job_posts'), // Concatenate job post names
                     DB::raw('GROUP_CONCAT(DISTINCT customers.name SEPARATOR ", ") as customers'), // Concatenate customer names

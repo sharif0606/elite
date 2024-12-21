@@ -41,7 +41,7 @@ class EmployeeAttendanceController extends Controller
 
     public function getEmployee(Request $request)
 	{
-		$data = Employee::where('admission_id_no',$request->id)->with('position')->get();
+		$data = Employee::where('admission_id_no',$request->id)->with('position')->where('status',)->get();
 		return $data;
 	}
 

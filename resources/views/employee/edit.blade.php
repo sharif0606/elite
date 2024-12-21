@@ -1136,6 +1136,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status" class="form-control">
+                                <option value="1" {{ $employees->status=='1'?"selected":""}}>Active</option>
+                                <option value="2" {{ $employees->status=='2'?"selected":""}}>Inactive</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row d-flex justify-content-end">

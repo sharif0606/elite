@@ -68,7 +68,7 @@
                     @forelse($customerduty as $e)
                     <tr class="text-center">
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $e->employee_id }}</td>
+                    <td>{{ $e->admission_id_no }}</td>
                     <td>{{ $e->bn_applicants_name }}</td>
                     <td>{{ $e->job_posts }}</td>
                     <td>{{ $e->customers }}</td>

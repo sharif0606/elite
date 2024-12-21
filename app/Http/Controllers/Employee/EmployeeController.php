@@ -451,6 +451,8 @@ class EmployeeController extends Controller
             if($request->has('signature_img'))
             $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
 
+            /*== Employee Status Change == */
+            $employee->status = $request->status;
             if ($employee->save()) {
                 if($request->has('document_img')){
                     foreach($request->document_img as $key => $value){
