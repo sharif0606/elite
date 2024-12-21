@@ -66,7 +66,7 @@
                                     @if($d->employee?->bn_applicants_name && $d->employee?->admission_id_no)
                                     {{$d->employee?->bn_applicants_name}}/ ID- {{$d->employee?->admission_id_no}}
                                     @else
-                                    {{$d->company?->name}}/ Branch- {{$d->company?->company_branch}}
+                                    {{$d->company?->name}}/ Branch- {{$d->company_branch?->brance_name}}
                                     @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($d->issue_date)->format('d/m/Y') }}</td>
