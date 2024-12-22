@@ -96,7 +96,6 @@
                                                 {{$s->employee?->bn_applicants_name}}
                                                 {{' ( Id- '.$s->employee?->admission_id_no.' )'}}
                                                 @else
-                                                @else
                                                 {{$s->company?->name}}/ Branch- {{$s->company_branch?->brance_name}}
                                                 @endif
                                             </td>
