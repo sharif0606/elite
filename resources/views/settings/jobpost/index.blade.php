@@ -22,6 +22,7 @@
                             <tr>
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Name')}}</th>
+                                <th scope="col">{{__('Serial')}}</th>
                                 <th scope="col">{{__('Name bn')}}</th>
                                 <th scope="col">{{__('Billable')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
@@ -32,6 +33,7 @@
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$d->name}}</td>
+                                <td>{{$d->serial}}</td>
                                 <td>{{$d->name_bn}}</td>
                                 <td> @if($d->bill_able==0) No @else Yes @endif</td>
                                 <td class="white-space-nowrap">

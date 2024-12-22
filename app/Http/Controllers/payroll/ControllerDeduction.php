@@ -122,6 +122,11 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('fuel_bill', '>', 0)->get();
         return view('pay_roll.deduction.fuelIndex',compact('deductions'));
     }
+    public function postAllowanceIndex()
+    {
+        $deductions=Deduction::where('post_allowance', '>', 0)->get();
+        return view('pay_roll.deduction.postAllowanceIndex',compact('deductions'));
+    }
     public function salaryStopIndex()
     {
         $deductions=Deduction::where('salary_stop_message', '!=', null)->get();
@@ -453,6 +458,20 @@ class ControllerDeduction extends Controller
                     }
                 }
             }
+            if($request->deduction_type=='22'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->post_allowance=$request->amount[$key];
+                        $deduction->post_allowance_rmk=$request->remarks[$key];
+                        $deduction->status=22;
+                        $deduction->save();
+                    }
+                }
+            }
             \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction');
             $deductionRoutes = [
                 1 => 'fineIndex',
@@ -476,6 +495,7 @@ class ControllerDeduction extends Controller
                 19=> 'advIndex',
                 20=> 'salaryStopIndex',
                 21=> 'fuelBillIndex',
+                22=> 'postAllowanceIndex',
                 'default' => 'deduction_asign.index',
             ];
             

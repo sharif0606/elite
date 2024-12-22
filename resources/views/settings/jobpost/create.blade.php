@@ -25,6 +25,15 @@
                                     </div>
                                     <div class="col-lg-4 col-md-6 col-sm-12">
                                         <div class="form-group">
+                                            <label for="jobpostName">{{__('Serial')}}<span class="text-danger">*</span></label>
+                                            <input type="text" id="serial" class="form-control" value="{{ old('serial')}}" name="serial">
+                                            @if($errors->has('serial'))
+                                                <span class="text-danger"> {{ $errors->first('serial') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-6 col-sm-12">
+                                        <div class="form-group">
                                             <label for="bill_able">{{__('Bill Able')}}<span class="text-danger">*</span></label>
                                             <select name="bill_able" class="form-control @error('bill_able') is-invalid @enderror" id="bill_able">
                                                 <option value="0">No</option>

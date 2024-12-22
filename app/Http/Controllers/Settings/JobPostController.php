@@ -93,6 +93,7 @@ class JobPostController extends Controller
         try{
             $c=new JobPost;
             $c->name=$request->jobpostName;
+            $c->serial=$request->serial;
             $c->name_bn=$request->name_bn;
             $c->bill_able=$request->bill_able;
             $c->status=1;
@@ -126,6 +127,7 @@ class JobPostController extends Controller
         try{
             $c=JobPost::findOrFail(encryptor('decrypt',$id));
             $c->name=$request->jobpostName;
+            $c->serial=$request->serial;
             $c->name_bn=$request->name_bn;
             $c->bill_able=$request->bill_able;
             $c->status=1;

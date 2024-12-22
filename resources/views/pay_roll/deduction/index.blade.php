@@ -37,6 +37,7 @@
                 <div class="mt-3">
                     <div class=""><h5>Allownce</h5></div>
                     <a href="{{route('fuelBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fuel Bill</a>
+                    <a href="{{route('postAllowanceIndex')}}" class="btn btn-danger py-1 px-2 m-1">Post Allowance</a>
                 </div>
             </div>
         </div>
