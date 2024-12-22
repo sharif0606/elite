@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock\Product;
 use App\Models\Stock\ProductSize;
 use App\Models\Employee\Employee;
-
+use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 class Stock extends Model
 {
     use HasFactory;
@@ -19,5 +20,11 @@ class Stock extends Model
     }
     public function employee(){
         return $this->belongsTo(Employee::class,'employee_id','id');
+    }
+    public function company(){
+        return $this->belongsTo(Customer::class,'company_id','id');
+    }
+    public function company_branch(){
+        return $this->belongsTo(CustomerBrance::class,'company_branch_id','id');
     }
 }
