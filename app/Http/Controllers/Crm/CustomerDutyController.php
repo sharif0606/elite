@@ -110,7 +110,9 @@ class CustomerDutyController extends Controller
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
                     return $data;
                 } else {
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
+                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
+                    $emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
             } else {
@@ -135,7 +137,9 @@ class CustomerDutyController extends Controller
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
                     return $data;
                 } else {
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
+                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
+                    $emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
             } else {

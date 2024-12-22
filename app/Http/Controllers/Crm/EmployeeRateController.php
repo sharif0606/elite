@@ -197,17 +197,34 @@ class EmployeeRateController extends Controller
         $employee_rate = EmployeeRate::with('details.jobPost')->where('customer_id', $request->customer_id);
         if ($request->branch_id) {
             $branchId = $request->branch_id;
-            $employee_rate->where(function ($query) use ($branchId) {
-                $query->where('employee_rates.branch_id', $branchId)
-                      ->orWhereNull('employee_rates.branch_id');
-            });
+        
+            // Check if data exists with the given branch ID
+            $dataExists = EmployeeRate::where('customer_id', $request->customer_id)
+                ->where('branch_id', $branchId)
+                ->exists();
+        
+            if ($dataExists) {
+                // If data exists, filter by branch ID
+                $employee_rate->where('branch_id', $branchId);
+            } else {
+                // If no data matches, filter by NULL branch ID
+                $employee_rate->whereNull('branch_id');
+            }
         }
         if ($request->atm_id){
             $atm_id = $request->atm_id;
             $employee_rate->where('employee_rates.atm_id', $atm_id);
         }
+        // Show the SQL query without executing it
+        //DB::enableQueryLog(); // Enable query log
+
+        // Execute your query
         $employee_rate = $employee_rate->get();
-     
+        
+        // View the query log
+        //dd(DB::getQueryLog());
+       
+
         // Start building the select dropdown HTML
         $data = '<option value="0">Select</option>';
         // Loop through employee_assign and its related details

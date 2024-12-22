@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
+                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
                                         <option value="">Select Branch</option>
                                         @forelse ($branch as $b)
                                             <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}">{{ $b->brance_name }}</option>
