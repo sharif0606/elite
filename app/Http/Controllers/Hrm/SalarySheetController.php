@@ -1183,7 +1183,7 @@ class SalarySheetController extends Controller
     $query = $query->where('customer_duty_details.customer_id', '=', $request->customer_id); // Filter by customer_id
 if ($request->customer_branch_id){
     $branchId = $request->customer_branch_id;
-    $query = $query->whereIn('customer_duties.branch_id', $branchId);
+    $query = $query->whereIn('customer_duty_details.branch_id', $branchId);
 }
     //->orderBy('admission_id_no', 'ASC')
     //->orderBy('customer_duty_details.duty_qty', 'DESC');
