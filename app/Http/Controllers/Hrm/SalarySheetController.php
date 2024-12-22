@@ -1178,8 +1178,9 @@ class SalarySheetController extends Controller
         });
     }
 $query->where('customer_duty_details.customer_id', '=', $request->customer_id) // Filter by customer_id
-    ->orderBy('admission_id_no', 'ASC')
-    ->orderBy('customer_duty_details.duty_qty', 'DESC');
+    //->orderBy('admission_id_no', 'ASC')
+    //->orderBy('customer_duty_details.duty_qty', 'DESC');
+    ->orderBy('job_posts.serial', 'ASC');
 
     
         $data = $query->get();
