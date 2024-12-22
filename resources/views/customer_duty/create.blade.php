@@ -230,9 +230,9 @@
          //       customer_select_message.html('Please select a customer').show();
         //    }
         //});
-        var pa = '<div style="color:red">Inactive</div>';
-        $(e).closest('tr').find('.employee_data').html('');
-        var message=$(e).closest('tr').find('.employee_data').append(pa);
+        //var pa = '<div style="color:red">Inactive</div>';
+       
+        //var message=$(e).closest('tr').find('.employee_data').append(pa);
 
         var employee_id=$(e).closest('tr').find('.employee_id').val();
         //console.log('E='+employee_id);
@@ -244,11 +244,10 @@
                 dataType: "json",
                 data: { 'id':employee_id },
                 success: function(data) {
-                   // console.log(data);
+                    console.log(data);
                     //console.log(employee_id);
                     if(data.length>0){
                         //console.log(data);
-
                         /* === Post Call From Employee Assign Table ===*/
                         $.ajax({
                             //url:"{{ route('empasign.getJobPost') }}",
@@ -273,6 +272,9 @@
                         $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
                         //$(e).closest('tr').find('.job_post_id').val(positionid);
                         $(e).closest('tr').find('.employee_id_primary').val(id);
+                    }else{
+                        $(e).closest('tr').find('.employee_data').html('');
+                        $(e).closest('tr').find('.employee_data').append(data.msg);
                     }
                     getDutyOtRate(e);
                 },

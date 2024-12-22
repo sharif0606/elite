@@ -41,8 +41,25 @@ class EmployeeAttendanceController extends Controller
 
     public function getEmployee(Request $request)
 	{
-		$data = Employee::where('admission_id_no',$request->id)->with('position')->where('status',1)->get();
-		return $data;
+		$data = Employee::where('admission_id_no',$request->id)->with('position')->first();
+        if($request->id && isset($data)){
+            if($data->status == 1){
+                $data = Employee::where('admission_id_no',$request->id)->with('position')->get();
+                return $data;
+            }
+            else{
+                $d['msg'] ="Inactive";
+                return $d;
+            }
+        }
+        elseif(!$data && $request->id){
+            $d['msg'] ="Not Found";
+            return $d;
+        }else{
+            $d['msg'] ="";
+            return $d;
+        }
+        
 	}
 
     /**

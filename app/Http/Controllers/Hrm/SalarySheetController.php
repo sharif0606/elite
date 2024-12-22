@@ -1151,7 +1151,7 @@ class SalarySheetController extends Controller
             'employees.insurance',
             'employees.p_f',
             DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-            DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL, 'Charged', 'Not Charged') AS charge_status")
+            DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL, 1, 0) AS charge_status")
         )
         ->where(function ($query) use ($request) {
             $query->where(function ($subQuery) use ($request) {
