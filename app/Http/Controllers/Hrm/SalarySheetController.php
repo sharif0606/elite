@@ -1177,10 +1177,17 @@ class SalarySheetController extends Controller
             }
         });
     }
-$query->where('customer_duty_details.customer_id', '=', $request->customer_id) // Filter by customer_id
+
+
+    
+    $query = $query->where('customer_duty_details.customer_id', '=', $request->customer_id); // Filter by customer_id
+if ($request->customer_branch_id){
+    $branchId = $request->customer_branch_id;
+    $query = $query->whereIn('customer_duties.branch_id', $branchId);
+}
     //->orderBy('admission_id_no', 'ASC')
     //->orderBy('customer_duty_details.duty_qty', 'DESC');
-    ->orderBy('job_posts.serial', 'ASC');
+    $query->orderBy('job_posts.serial', 'ASC');
 
     
         $data = $query->get();
