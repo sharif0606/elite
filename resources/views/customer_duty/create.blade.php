@@ -121,10 +121,10 @@
                                                 </td>
                                                 <td><input onkeyup="CalculateAmount(this)" class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
                                                 <td>
-                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="number" name="duty_qty[]" value="0" placeholder="Duty Qty" style="width:60px;">
+                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="text" name="duty_qty[]" value="0" placeholder="Duty Qty" style="width:60px;">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="0" placeholder="OT Qty" style="width:60px;">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty" style="width:60px;">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
@@ -230,7 +230,7 @@
          //       customer_select_message.html('Please select a customer').show();
         //    }
         //});
-        var pa = '<div style="color:red">Invalid Employee ID</div>';
+        var pa = '<div style="color:red">Inactive</div>';
         $(e).closest('tr').find('.employee_data').html('');
         var message=$(e).closest('tr').find('.employee_data').append(pa);
 

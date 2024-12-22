@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $role=Role::get();
+        $role=Role::whereNotIn('id',[2,4,5])->get();
         return view('settings.user.create',compact('role'));
     }
 
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $role=Role::get();
+        $role=Role::whereNotIn('id',[2,4,5])->get();
         $user=User::findOrFail(encryptor('decrypt',$id));
         return view('settings.user.edit',compact('user','role'));
     }

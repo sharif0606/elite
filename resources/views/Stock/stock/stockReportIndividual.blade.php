@@ -91,10 +91,13 @@
                                         @forelse($stock as $s)
                                         <tr class="tbl_expense">
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">
-                                                @if($s->employee?->bn_applicants_name)
+                                                @if($s->employee && $s->employee?->bn_applicants_name)
 
                                                 {{$s->employee?->bn_applicants_name}}
                                                 {{' ( Id- '.$s->employee?->admission_id_no.' )'}}
+                                                @else
+                                                @else
+                                                {{$s->company?->name}}/ Branch- {{$s->company_branch?->brance_name}}
                                                 @endif
                                             </td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">@if($s->type=='2') Used @else New  @endif </td>
