@@ -195,16 +195,19 @@ class EmployeeRateController extends Controller
     {
         //dd($request);
         $employee_rate = EmployeeRate::with('details.jobPost')->where('customer_id', $request->customer_id);
-        if ($request->branch_id){
+        if ($request->branch_id) {
             $branchId = $request->branch_id;
-            $employee_rate->where('employee_rates.branch_id', $branchId);
+            $employee_rate->where(function ($query) use ($branchId) {
+                $query->where('employee_rates.branch_id', $branchId)
+                      ->orWhereNull('employee_rates.branch_id');
+            });
         }
         if ($request->atm_id){
             $atm_id = $request->atm_id;
             $employee_rate->where('employee_rates.atm_id', $atm_id);
         }
         $employee_rate = $employee_rate->get();
-       
+     
         // Start building the select dropdown HTML
         $data = '<option value="0">Select</option>';
         // Loop through employee_assign and its related details
