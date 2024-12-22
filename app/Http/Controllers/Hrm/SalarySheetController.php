@@ -1252,15 +1252,32 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         });
     });
 
-if ($request->has('customer_branch_id')) {
-    $query->where('customer_duties.branch_id', '=', $request->customer_branch_id);
-}
 
+        // Ensure the query properly handles the salary sheet logic for data existence
+        $dataExists = DB::table('salary_sheets')
+        ->where('year', '=', $request->Year)
+        ->where('month', '=', $request->Month)
+        ->where('customer_id', '=', $request->customer_id);
+    if ($dataExists->exists()) {
+        $query->whereNotIn('customer_duties.branch_id', function ($query) use ($request) {
+            $query->select('branch_id')
+                ->from('salary_sheets')
+                ->where('year', '=', $request->Year)
+                ->where('month', '=', $request->Month)
+                ->where('customer_id', '=', $request->customer_id);
+
+            if ($request->customer_branch_id) {
+                $query->where('branch_id', '=', $request->customer_branch_id);
+            }
+        });
+    }
 if ($request->customer_id) {
     $customerId = $request->customer_id;
     $query->whereIn('customer_duties.customer_id', $customerId);
 }
-
+if ($request->has('customer_branch_id')) {
+    $query->where('customer_duties.branch_id', '=', $request->customer_branch_id);
+}
 $query->where('customer_duty_details.customer_id', '=', $request->customer_id)
     ->orderBy('job_posts.serial', 'ASC');
 
