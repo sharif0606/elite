@@ -1251,26 +1251,59 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                     ->whereDate('customer_duties.end_date', '>=', $request->start_date);
         });
     });
+// Get the customer_branch_id values from the query string (optional)
+$customerBranchIds = $request->input('customer_branch_id'); // This will return an array or null
 
+// Start building the query to get branch_ids for the given customer_id, year, and month
+$dataExists = DB::table('salary_sheets')
+    ->where('year', '=', $request->Year)
+    ->where('month', '=', $request->Month)
+    ->where('customer_id', '=', $request->customer_id);
 
-        // Ensure the query properly handles the salary sheet logic for data existence
-        $dataExists = DB::table('salary_sheets')
-        ->where('year', '=', $request->Year)
-        ->where('month', '=', $request->Month)
-        ->where('customer_id', '=', $request->customer_id);
-    if ($dataExists->exists()) {
-        $query->whereNotIn('customer_duties.branch_id', function ($query) use ($request) {
+// If customer_branch_id is provided, use FIND_IN_SET to filter by branch_id
+if ($customerBranchIds) {
+    foreach ($customerBranchIds as $branchId) {
+        // Use FIND_IN_SET to check if the branch_id is in the comma-separated list
+        $dataExists = $dataExists->whereRaw('FIND_IN_SET(?, branch_id) > 0', [$branchId]);
+    }
+}
+
+// Retrieve the matching branch_ids for the given customer_id, year, and month
+$branchIds = $dataExists->pluck('branch_id'); // Get the branch_id values as an array
+
+//dd($branchIds);
+// Extract branch_ids from the result
+$branchIdsArray = collect($branchIds)
+    ->flatMap(function ($item) {
+        return explode(',', $item);
+    })
+    ->unique()
+    ->filter() // Remove empty values
+    ->values() // Re-index array
+    ->toArray();
+//dd($branchIdsArray);
+// Check if data exists for the given parameters
+if ($dataExists->exists()) {
+    // Ensure branchIdsArray is properly processed
+    if (!empty($branchIdsArray)) {
+        $query->whereNotIn('customer_duties.branch_id', function ($query) use ($request, $branchIdsArray) {
             $query->select('branch_id')
                 ->from('salary_sheets')
                 ->where('year', '=', $request->Year)
                 ->where('month', '=', $request->Month)
                 ->where('customer_id', '=', $request->customer_id);
 
-            if ($request->customer_branch_id) {
-                $query->where('branch_id', '=', $request->customer_branch_id);
+            // Add a condition for each branchId using FIND_IN_SET
+            foreach ($branchIdsArray as $branchId) {
+                $query->orWhereRaw('FIND_IN_SET(?, branch_id) > 0', [$branchId]);
             }
         });
     }
+}
+
+
+
+
 if ($request->customer_id) {
     $customerId = $request->customer_id;
     $query->whereIn('customer_duties.customer_id', $customerId);
@@ -1439,9 +1472,14 @@ return response()->json($data, 200);
      */
     public function destroy($id)
     {
-        $c=SalarySheet::findOrFail(encryptor('decrypt',$id));
-        $dl=SalarySheetDetail::where('salary_id',$c->id)->delete();
-        $c->delete();
+        $salarySheet = SalarySheet::findOrFail(encryptor('decrypt', $id));
+
+        // Use Eloquent's relationship to delete related details
+        $salarySheet->details()->delete();
+    
+        // Delete the salary sheet
+        $salarySheet->delete();
+    
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }
