@@ -68,7 +68,7 @@
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]">
                                                         <option value="">Select Employee</option>
                                                         @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}" {{ $d->employee_id==$job->employee_id?"selected":""}}>
+                                                        <option value="{{ $em->id }}" {{ $d->employee_id==$em->id?"selected":""}}>
                                                             {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
                                                         </option>
                                                         @empty
