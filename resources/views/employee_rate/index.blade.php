@@ -86,7 +86,7 @@
                                         @if($de->employee_id)
                                         <td>
                                             {{$de->employee?->bn_applicants_name}}
-                                            {{$de->employee?->admission_id_no}}
+                                            <p class="m-0 p-0"><samll>ID-{{$de->employee?->admission_id_no}}</samll></p>
                                         </td>
                                         @endif
                                         <td>{{$de->jobpost?->name }}</td>

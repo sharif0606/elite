@@ -130,7 +130,8 @@ class EmployeeRateController extends Controller
         $atm = Atm::all();
         $emprate = EmployeeRate::findOrFail(encryptor('decrypt',$id));
         $hours = Hour::get();
-        return view('employee_rate.edit',compact('jobpost','customer','emprate','branch','atm','hours'));
+        $employee = Employee::get();
+        return view('employee_rate.edit',compact('jobpost','customer','emprate','branch','atm','hours','employee'));
     }
 
     /**
