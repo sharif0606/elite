@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Crm;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Employee\Employee;
 use App\Models\Crm\EmployeeRate;
 use App\Models\Crm\EmployeeRateDetails;
 use App\Models\JobPost;
@@ -52,7 +53,8 @@ class EmployeeRateController extends Controller
         $branch = CustomerBrance::all();
         $atm = Atm::all();
         $hours = Hour::get();
-        return view('employee_rate.create',compact('customer','jobpost','branch','atm','hours'));
+        $employee = Employee::get();
+        return view('employee_rate.create',compact('customer','jobpost','branch','atm','hours','employee'));
     }
 
     /**
@@ -76,6 +78,7 @@ class EmployeeRateController extends Controller
                         if($value){
                             $details = new EmployeeRateDetails;
                             $details->employee_rate_id=$data->id;
+                            $details->employee_id=$data->employee_id;
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->hours=$request->hours[$key];
                             $details->duty_rate=$request->duty_rate[$key];
