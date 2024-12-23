@@ -160,6 +160,17 @@
         var row = `
 <tr>
     <td>
+        <select class="form-select employee_id select2" id="employee_id" name="employee_id[]">
+            <option value="">Select Employee</option>
+            @forelse ($employee as $em)
+            <option value="{{ $em->id }}">
+                {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
+            </option>
+            @empty
+            @endforelse
+        </select>
+    </td>
+    <td>
         <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
             <option value="">Select Post</option>
             @forelse ($jobpost as $job)

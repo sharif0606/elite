@@ -73,7 +73,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        @if($e->details?->employee_id)
+                                        @if($e->details)
                                         <th>Employee Id</th>
                                         @endif
                                         <th>Job Post</th>
@@ -85,8 +85,8 @@
                                 <tbody>
                                     @foreach ($e->details as $de)
                                     <tr>
-                                        @if($e->details?->employee_id)
-                                        <td>{{$e->details?->employee_id}}</td>
+                                        @if($e->details)
+                                        <td>{{$e->details}}</td>
                                         @endif
                                         <td>{{$de->jobpost?->name }}</td>
                                         {{-- <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td> --}}
