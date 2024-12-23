@@ -291,7 +291,11 @@
                                 (value.salary_stop_message) ? value.salary_stop_message : ''
                             ];
                             let Remarks = RemarksArray.filter(item => item !== '').join(', ');
-                            let Loan = (value.loan > 0) ? value.loan : '0';
+                            //let Loan = (value.loan > 0) ? value.loan : '0';//comping form employee table old line now used lo
+                            let Loan = 0;
+                            if (value.charge_status ==0) {
+                                Loan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                            }
                             let Cloth = (value.cloth > 0) ? value.cloth : '0';
                             let Jacket = (value.jacket > 0) ? value.jacket : '0';
                             let Hr = (value.hr > 0) ? value.hr : '0';
@@ -310,7 +314,7 @@
                             }
                             // if(old_emp == value.admission_id_no){
                                 if(value.duty_qty > 0 && value.ot_qty == 0){
-                                 var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
+                                var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
                                 var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" value="${Fine}" name="deduction_fine[]" placeholder="Fine">`
                                 var backChargeCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_banck_charge" type="text" value="${BankCharge}" name="deduction_banck_charge[]" placeholder="Bank Charge/Exc">`
                                 var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" value="${Insurance}" name="deduction_ins[]" placeholder="ins">`
@@ -373,6 +377,7 @@
                                         <input type="hidden" name="customer_branch_id[]" value="${value.branch_id}">
                                         <input type="hidden" name="customer_atm_id[]" value="${value.atm_id}">
                                         <input class="deduction_total" type="hidden" name="deduction_total[]" value="${totalDeduction}">
+                                        <input type="hidden" name="long_loan_id[]" value="${value.long_loan_id}">
                                     </td>
                                     <td class="fixed-5">
                                         <input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">

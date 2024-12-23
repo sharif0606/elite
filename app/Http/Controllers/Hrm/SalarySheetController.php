@@ -17,6 +17,7 @@ use App\Http\Traits\ImageHandleTraits;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Employee\Employee;
 use App\Models\JobPost;
+use App\Models\payroll\LongLoan;
 
 class SalarySheetController extends Controller
 {
@@ -718,7 +719,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetFiveStore(Request $request)
     {
-        // dd($request->all()); die();
+        //dd($request->all()); die();
         DB::beginTransaction();
         try {
             $salary = new SalarySheet;
@@ -769,7 +770,25 @@ class SalarySheetController extends Controller
                             $details->deduction_banck_charge=$request->deduction_banck_charge[$key];
                             $details->remark=$request->remark[$key];
                             $details->status=0;
-                            $details->save();
+                            if ($details->save()) {
+                                // Find the LongLoan record by ID
+                                $long_loan = LongLoan::find($request->long_loan_id[$key]);
+                            
+                                // Check if the loan is found
+                                if ($long_loan) {
+                                    // Subtract the deduction_loan from the current loan_balance
+                                    $long_loan->loan_balance -= $request->deduction_loan[$key];
+                            
+                                    // If loan_balance reaches 0, mark the loan as fully paid
+                                    if ($long_loan->loan_balance == 0) {
+                                        $long_loan->status = 1; // Loan fully paid
+                                    }
+                            
+                                    // Save the updated LongLoan record
+                                    $long_loan->save();
+                                }
+                            }
+                            
                             DB::commit();
                         }
                     }
@@ -1207,7 +1226,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         $j->on('customer_duty_details.employee_id', '=', 'long_loans.employee_id')
             ->whereDate('long_loans.installment_date', '<=', $stdate)
             ->whereDate('long_loans.end_date', '>=', $stdate)
-            ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
+            ->where('long_loans.status', 0);
+            //->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
     })
     ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
     ->leftJoin('customers', 'customer_duty_details.customer_id', '=', 'customers.id')
@@ -1227,6 +1247,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'customers.name as customer_name',
         'long_loans.id as long_loan_id',
         'long_loans.perinstallment_amount',
+        'long_loans.loan_amount',
+        'long_loans.loan_balance',
         'job_posts.id as jobpost_id',
         'job_posts.name as jobpost_name',
         'employees.id as employee_id',
@@ -1243,7 +1265,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'employees.insurance',
         'employees.p_f',
         DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-        DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL, 1, 0) AS charge_status")
+        DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL OR salary_sheet_details.deduction_loan IS NOT NULL, 1, 0) AS charge_status")
     )
     ->where(function ($query) use ($request) {
         $query->where(function ($subQuery) use ($request) {

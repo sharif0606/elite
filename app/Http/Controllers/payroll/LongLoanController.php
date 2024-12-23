@@ -50,6 +50,7 @@ class LongLoanController extends Controller
             $data = new LongLoan();
             $data->employee_id = $request->employee_id;
             $data->loan_amount = $request->loan_amount;
+            $data->loan_balance = $request->loan_amount;
             $data->purchase_date = $request->purchase_date;
             $data->installment_date = date('Y-m-d', strtotime($request->start_date));
             $data->number_of_installment = $request->number_of_installment;
