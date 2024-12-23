@@ -84,7 +84,10 @@
                                     @foreach ($e->details as $de)
                                     <tr>
                                         @if($de->employee_id)
-                                        <td>{{$de->employee_id}}</td>
+                                        <td>
+                                            {{$de->employee?->bn_applicants_name}}
+                                            {{$de->employee?->admission_id_no}}
+                                        </td>
                                         @endif
                                         <td>{{$de->jobpost?->name }}</td>
                                         {{-- <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td> --}}

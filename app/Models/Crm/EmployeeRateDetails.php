@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\JobPost;
 use App\Models\Hour;
+use App\Models\Employee\Employee;
 class EmployeeRateDetails extends Model
 {
     use HasFactory;
@@ -14,5 +15,8 @@ class EmployeeRateDetails extends Model
     }
     public function hour(){
         return $this->belongsTo(Hour::class,'hours','id');
+    }
+    public function employee(){
+        return $this->belongsTo(Employee::class,'employee_id','id');
     }
 }
