@@ -82,7 +82,6 @@ class InvoicePaymentController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
         try{
             $invGen = InvoiceGenerate::select('id','customer_id','branch_id')->where('id',$request->invId)->first();
             $data=new InvoicePayment;
