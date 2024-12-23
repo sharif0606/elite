@@ -30,6 +30,7 @@ use App\Models\Crm\SouthBanglaInvoice;
 use App\Models\Crm\SouthBanglaInvoiceDetails;
 use App\Models\Crm\WasaInvoiceDetails;
 use Intervention\Image\Facades\Image;
+use App\Models\Settings\DepositBank;
 use Exception;
 
 class InvoiceGenerateController extends Controller
@@ -62,7 +63,8 @@ class InvoiceGenerateController extends Controller
             $invoice->where('invoice_generates.bill_date', $billDate);
         }
         $invoice = $invoice->paginate(15);
-        return view('invoice_generate.index',compact('invoice','customer'));
+        $deposit_bank = DepositBank::get();
+        return view('invoice_generate.index',compact('invoice','customer','deposit_bank'));
     }
 
     public function create()

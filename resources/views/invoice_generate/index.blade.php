@@ -351,7 +351,15 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Deposit Bank</label>
-                            <input type="text" name="deposit_bank" onchange="paymethod()" class="form-control deposit_bank error-msg-deposit">
+                            <select class="form-control" name="deposit_bank" required>
+                                <option value="" disabled selected>Select</option>
+                                @foreach($deposit_bank as $db)
+                                    <option value="{{ $db->id }}" @if($db->name === 'DBBL') selected @endif>
+                                        {{ $db->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <!-- <input type="text" name="deposit_bank" onchange="paymethod()" class="form-control deposit_bank error-msg-deposit"> -->
                             <span class="error-message-deposit" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">
