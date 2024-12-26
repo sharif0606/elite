@@ -15,7 +15,7 @@
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0 table-striped">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarySheetThree')}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarysheet.salarySheetThree')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
@@ -47,7 +47,7 @@
                             <a href="{{route('salarysheet.salarySheetThreeShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a class="px-1" href="{{route('salarySheetThreeEdit',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
+                            <a class="px-1" href="{{route('salarysheet.salarySheetThreeEdit',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="text-danger" href="javascript:void()" onclick="$('#form{{$s->id}}').submit()">
