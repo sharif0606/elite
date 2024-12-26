@@ -354,7 +354,7 @@
                             <select class="form-control" name="deposit_bank" required>
                                 <option value="" disabled selected>Select</option>
                                 @foreach($deposit_bank as $db)
-                                    <option value="{{ $db->id }}" @if($db->name === 'DBBL') selected @endif>
+                                    <option value="{{ $db->id }}" @if($db->name === 'PBL') selected @endif>
                                         {{ $db->name }}
                                     </option>
                                 @endforeach

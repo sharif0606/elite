@@ -22,11 +22,34 @@ use Carbon\Carbon;
 
 class ReportController extends Controller
 {
-    public function invoicePayment()
+    public function invoicePayment(Request $request)
     {
-        $zones = Zone::with('customer')->orderBy('name', 'ASC')->paginate(10);
-        return view('report.invoice-payment', compact('zones'));
+        // Get filter values from the request or set defaults
+        $selected_fy = $request->input('fyear', \Carbon\Carbon::now()->subMonth(6)->format('Y')); // From Year
+        $selected_fmonth = $request->input('fmonth', \Carbon\Carbon::now()->subMonth(6)->format('m')); // From Month
+        $selected_ty = $request->input('tyear', \Carbon\Carbon::now()->format('Y')); // To Year
+        $selected_tmonth = $request->input('tmonth', \Carbon\Carbon::now()->format('m')); // To Month
+    
+        // Create a period from the selected "From" to "To" year and month
+        $period = \Carbon\CarbonPeriod::create(
+            "$selected_fy-$selected_fmonth-01", 
+            "1 month", 
+            "$selected_ty-$selected_tmonth-31"
+        );
+    
+        // Fetch the zones and their related customers
+        $zones = Zone::with(['customer' => function($query) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
+            $query->whereHas('invPayment', function($paymentQuery) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
+                // Filter the payments between the selected date range
+                $startDate = "$selected_fy-$selected_fmonth-01";
+                $endDate = "$selected_ty-$selected_tmonth-31";
+                $paymentQuery->whereBetween('pay_date', [$startDate, $endDate]);
+            });
+        }])->orderBy('name', 'ASC')->paginate(10);
+    
+        return view('report.invoice-payment', compact('zones', 'period'));
     }
+    
 
     public function invoiceDue(Request $request)
     {

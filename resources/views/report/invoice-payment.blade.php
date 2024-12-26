@@ -2,7 +2,7 @@
 @section('pageTitle','Zone Wise Invoice Due Report')
 @section('pageSubTitle','All Invoice')
 @section('content')
-<!-- Bordered table start -->
+
 <div class="col-12">
     <div class="card">
         <form method="get" action="">
@@ -10,53 +10,37 @@
                 <div class="col-sm-2">
                     <label for="">From Year</label>
                     <select class="form-control" name="fyear">
-                        <?php
-                            $selected_fy = isset($_GET['fyear'])?$_GET['fyear']:\Carbon\Carbon::now()->subMonth(6)->format('Y'); //current year
-                            for ($i = 2023; $i <= \Carbon\Carbon::now()->format('Y'); $i++) {
-                                $selected = $selected_fy == $i ? ' selected' : '';
-                                echo '<option value="'.$i.'"'.$selected.'>'. $i.'</option>';
-                            }
-                        ?>
+                        @foreach(range(2023, \Carbon\Carbon::now()->format('Y')) as $year)
+                            <option value="{{ $year }}" {{ request()->get('fyear', \Carbon\Carbon::now()->subMonth(6)->format('Y')) == $year ? 'selected' : '' }}>{{ $year }}</option>
+                        @endforeach
                     </select> 
                 </div>
                 <div class="col-sm-2">
                     <label for="">From Month</label>
                     <select class="form-control" name="fmonth">
-                        <?php
-                            $selected_fmonth = isset($_GET['fmonth'])?$_GET['fmonth']:\Carbon\Carbon::now()->subMonth(6)->format('m'); //current month
-                            for ($i = 1; $i <= 12; $i++) {
-                                $selected = $selected_fmonth == $i ? ' selected' : '';
-                                echo '<option value="'.$i.'"'.$selected.'>'. date('F', mktime(0,0,0,$i,5)).'</option>';
-                            }
-                        ?>
+                        @foreach(range(1, 12) as $month)
+                            <option value="{{ $month }}" {{ request()->get('fmonth', \Carbon\Carbon::now()->subMonth(6)->format('m')) == $month ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($month)->format('F') }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-sm-2">
                     <label for="">To Year</label>
                     <select class="form-control" name="tyear">
-                        <?php
-                            $selected_ty = isset($_GET['tyear'])?$_GET['tyear']:\Carbon\Carbon::now()->format('Y'); //current year
-                            for ($i = 2024; $i <= \Carbon\Carbon::now()->format('Y'); $i++) {
-                                $selected = $selected_ty == $i ? ' selected' : '';
-                                echo '<option value="'.$i.'"'.$selected.'>'. $i.'</option>';
-                            }
-                        ?>
+                        @foreach(range(2024, \Carbon\Carbon::now()->format('Y')) as $year)
+                            <option value="{{ $year }}" {{ request()->get('tyear', \Carbon\Carbon::now()->format('Y')) == $year ? 'selected' : '' }}>{{ $year }}</option>
+                        @endforeach
                     </select> 
                 </div>
                 <div class="col-sm-2">
                     <label for="">To Month</label>
                     <select class="form-control" name="tmonth">
-                        <?php
-                            $selected_tmonth = isset($_GET['tmonth'])?$_GET['tmonth']:\Carbon\Carbon::now()->format('m'); //current month
-                            for ($i = 1; $i <= 12; $i++) {
-                                $selected = $selected_tmonth == $i ? ' selected' : '';
-                                echo '<option value="'.$i.'"'.$selected.'>'. date('F', mktime(0,0,0,$i,5)).'</option>';
-                            }
-                        ?>
+                        @foreach(range(1, 12) as $month)
+                            <option value="{{ $month }}" {{ request()->get('tmonth', \Carbon\Carbon::now()->format('m')) == $month ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($month)->format('F') }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-lg-2 col-md-6 col-sm-12 py-1">
-                    <label for="lcNo">{{__('Received By')}}</label>
+                    <label for="received_by_city">Received By</label>
                     <select class="form-control" name="received_by_city" required>
                         <option value="">Select</option>
                         <option value="1" @if(request()->get('received_by_city') == 1) selected @endif>Ctg</option>
@@ -69,57 +53,71 @@
                 </div>
             </div>
         </form>
-        <!-- table bordered -->
+
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
+                @foreach($zones as $zone)
                 @php
-                    $period = \Carbon\CarbonPeriod::create("$selected_fy-$selected_fmonth-01", "1 month", "$selected_ty-$selected_tmonth-31");
+                    $customerCount = $zone->customer->count(); // Count customers in the current zone
                 @endphp
-                @forelse($zones as $zone)
-                    <tr>
-                        <th colspan="9">{{$zone->name}}</th>
+                @if( $customerCount > 0)
+                <tr class="text-center">
+                        <th colspan="11">{{ $zone->name }}</th>
                     </tr>
                     <tr class="text-center">
-                        <th scope="col">{{__('#SL')}}</th>
-                        <th scope="col">{{__('Customer')}}</th>
-                        @foreach ($period as $dt)
-                            <th scope="col">{{$dt->format("M-Y")}}</th>
+                        <th>#</th>
+                        <th>Customer</th>
+                        @foreach($period as $dt)
+                            <th>{{ $dt->format("M-Y") }}</th>
                         @endforeach
-                        <th scope="col">{{__('Amount')}}</th>
+                        <th>Amount</th>
+                        <th>Remarks</th>
                     </tr>
-                    @forelse($zone->customer as $i=>$cust)
-                        @php $total=0;@endphp
-                        <tr class="text-center">
-                            <th scope="col">{{++$i}}</th>
-                            <th scope="col">{{$cust->name}}</th>
-                            @foreach ($period as $dt)
-                            @php
-                                $monthly_total = $cust->invPayment->whereBetween('pay_date', [$dt->format("Y-m-d"), $dt->endOfMonth()->format("Y-m-d")])->sum('received_amount');
-                                $total += $monthly_total;
-                            @endphp
-                            <th scope="col">{{ $monthly_total }}</th>
-                            @endforeach
-                            <th scope="col">{{$total}}</th>
-                        </tr>
-                    @empty
 
-                    @endforelse
-                @empty
-                    
-                @endforelse
-                
+                    @php $all_total = 0; @endphp
+                    @foreach($zone->customer as $i => $cust)
+                        @php 
+                            $total = 0;
+                            $hasPayments = false;
+                        @endphp
+                        <tr class="text-center">
+                            <td>{{ ++$i }}</td>
+                            <td>{{ $cust->name }}</td>
+                            @foreach($period as $dt)
+                                @php
+                                    $monthly_total = $cust->invPayment->whereBetween('pay_date', [$dt->format("Y-m-d"), $dt->endOfMonth()->format("Y-m-d")])->sum('received_amount');
+                                    if ($monthly_total > 0) {
+                                        $hasPayments = true;
+                                    }
+                                    $total += $monthly_total;
+                                @endphp
+                                @if ($monthly_total > 0)
+                                    <td>{{ $monthly_total }}</td>
+                                @else
+                                    <td>-</td>
+                                @endif
+                            @endforeach
+                            @if ($hasPayments)
+                                <td>{{ $total }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+                            <td></td>
+                        </tr>
+                        @php $all_total += $total; @endphp
+                    @endforeach
+                    <tr>
+                        <th colspan="9" class="text-end">Total</th>
+                        <th colspan="2">{{ $all_total }}</th>
+                    </tr>
+                    @endif
+                @endforeach
             </table>
             <div class="pt-2">
-                {{$zones->links()}}
+                {{ $zones->links() }}
             </div>
-            <div class="pt-2">
-                {{--  {{$guards->links()}}  --}}
-            </div>
-            
         </div>
     </div>
 </div>
-<!-- Modal -->
 
 @endsection
-
