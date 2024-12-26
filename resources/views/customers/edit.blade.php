@@ -70,6 +70,8 @@
                             <option value="">Select type</option>
                             <option value="0" {{$customer->customer_type==0?'selected':''}}>Institution</option>
                             <option value="1" {{$customer->customer_type==1?'selected':''}}>Bank</option>
+                            <option value="2" {{$customer->customer_type==2?'selected':''}}>Institute With Branch</option>
+                            <option value="3" {{$customer->customer_type==3?'selected':''}}>Event</option>
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -137,8 +139,13 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for=""><b>Received By Ctg</b></label>
-                                    <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg">
+                                    <label for=""><b>Received By</b></label>
+                                    <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg"> -->
+                                     <select class="form-control"  name="received_by_city" required>
+                                        <option value="">Select</option>
+                                        <option value="1" @if($customer->received_by_city == 1) selected @endif>Ctg</option>
+                                        <option value="2" @if($customer->received_by_city == 2) selected @endif>Head Office</option>
+                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">

@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle','Invoice Payment Report')
+@section('pageTitle','Zone Wise Invoice Due Report')
 @section('pageSubTitle','All Invoice')
 @section('content')
 <!-- Bordered table start -->
@@ -7,7 +7,7 @@
     <div class="card">
         <form method="get" action="">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for="">From Year</label>
                     <select class="form-control" name="fyear">
                         <?php
@@ -19,7 +19,7 @@
                         ?>
                     </select> 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for="">From Month</label>
                     <select class="form-control" name="fmonth">
                         <?php
@@ -31,7 +31,7 @@
                         ?>
                     </select>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for="">To Year</label>
                     <select class="form-control" name="tyear">
                         <?php
@@ -43,7 +43,7 @@
                         ?>
                     </select> 
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label for="">To Month</label>
                     <select class="form-control" name="tmonth">
                         <?php
@@ -53,6 +53,14 @@
                                 echo '<option value="'.$i.'"'.$selected.'>'. date('F', mktime(0,0,0,$i,5)).'</option>';
                             }
                         ?>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 py-1">
+                    <label for="lcNo">{{__('Received By')}}</label>
+                    <select class="form-control" name="received_by_city" required>
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('received_by_city') == 1) selected @endif>Ctg</option>
+                        <option value="2" @if(request()->get('received_by_city') == 2) selected @endif>Head Office</option>
                     </select>
                 </div>
                 <div class="col-sm-3 py-3">
@@ -101,6 +109,9 @@
                 @endforelse
                 
             </table>
+            <div class="pt-2">
+                {{$zones->links()}}
+            </div>
             <div class="pt-2">
                 {{--  {{$guards->links()}}  --}}
             </div>

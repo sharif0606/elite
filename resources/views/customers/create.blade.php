@@ -75,6 +75,8 @@
                             <option value="">Select type</option>
                             <option value="0">Institution</option>
                             <option value="1">Bank</option>
+                            <option value="2">Institute With Branch</option>
+                            <option value="3">Event</option>
                         </select>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
@@ -143,7 +145,12 @@
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <label for=""><b>Received By Ctg</b></label>
-                                    <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city')}}" placeholder="Received By Ctg">
+                                    <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city')}}" placeholder="Received By Ctg"> -->
+                                    <select class="form-control"  name="received_by_city" required>
+                                        <option value="">Select</option>
+                                        <option value="1">Ctg</option>
+                                        <option value="2">Head Office</option>
+                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">

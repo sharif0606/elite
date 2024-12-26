@@ -24,7 +24,7 @@ class ReportController extends Controller
 {
     public function invoicePayment()
     {
-        $zones = Zone::with('customer')->orderBy('name', 'ASC')->paginate(2);
+        $zones = Zone::with('customer')->orderBy('name', 'ASC')->paginate(10);
         return view('report.invoice-payment', compact('zones'));
     }
 
