@@ -53,6 +53,7 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
+                                                <th scope="col">{{__('Employee ID')}}</th>
                                                 <th scope="col">{{__('Job Post')}}</th>
                                                 <th scope="col">{{__('Hours')}}</th>
                                                 <th scope="col">{{__('Salary (Person)')}}</th>
@@ -65,6 +66,7 @@
                                             @foreach ($emprate->details as $d)
                                             <tr>
                                                 <td>
+                                                    @if($d->employee_id)
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]">
                                                         <option value="">Select Employee</option>
                                                         @forelse ($employee as $em)
@@ -74,6 +76,9 @@
                                                         @empty
                                                         @endforelse
                                                     </select>
+                                                    @else
+                                                    -
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <select class="form-select" id="job_post_id" name="job_post_id[]">
