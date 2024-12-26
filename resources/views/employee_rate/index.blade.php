@@ -83,12 +83,14 @@
                                 <tbody>
                                     @foreach ($e->details as $de)
                                     <tr>
-                                        @if($de->employee_id)
                                         <td>
+                                        @if($de->employee_id)
                                             {{$de->employee?->bn_applicants_name}}
                                             <p class="m-0 p-0"><samll>ID-{{$de->employee?->admission_id_no}}</samll></p>
-                                        </td>
+                                        @else
+                                        -
                                         @endif
+                                        </td>
                                         <td>{{$de->jobpost?->name }}</td>
                                         {{-- <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td> --}}
                                         <td>{{$de->hour?->hour}} Hour's</td>

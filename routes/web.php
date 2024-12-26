@@ -294,6 +294,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
         Route::resource('invoice-payment',invPayment::class);
+        /*== Invoice Report Client Wise ==*/
+        Route::get('client-wise-invoice-details', [Reports::class, 'client_wise_detail_invoice_report'])->name('invoice-payment.client_wise_detail_invoice_report');
+
         Route::get('/checking-po-number', [invPayment::class, 'checkPoNumber'])->name('checking_duplicate_po');
         /* employee security */
         Route::get('/prior-introduction-security-guards/{id}', [employee::class,'securityGuards'])->name('securityGuards');

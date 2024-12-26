@@ -264,4 +264,46 @@ class ReportController extends Controller
 
         return view('customer_duty.customer-duty-filter', compact('customerduty'));
     }
+
+    /*== Clien Wise I|nvoice Payment Report ==*/
+    public function client_wise_detail_invoice_report(Request $request)
+    {
+        $payments=InvoicePayment::with('customer','invoice');
+        if($request->customer_id){
+            $payments=$payments->where('customer_id',$request->customer_id);
+        }
+        if($request->branch_id){
+            $payments=$payments->where('branch_id',$request->branch_id);
+        }
+        if($request->payment_type){
+            $payments=$payments->where('payment_type',$request->payment_type);
+        }
+        if($request->po_no){
+            $payments=$payments->where('po_no',$request->po_no);
+        }
+        if($request->po_date){
+            $payments=$payments->where('po_date',$request->po_date);
+        }
+        if($request->pay_date){
+            $payments=$payments->where('pay_date',$request->pay_date);
+        }
+        // if($request->rcv_date){
+        //     $payments=$payments->where('rcv_date',$request->rcv_date);
+        // }
+        // if($request->deposit_date){
+        //     $payments=$payments->where('deposit_date',$request->deposit_date);
+        // }
+        if ($request->fdate && $request->tdate) {
+            $startDate = $request->fdate;
+            $endDate = $request->tdate;
+            $payments->whereHas('invoice', function ($query) use ($startDate, $endDate) {
+                $query->whereDate('bill_date', '>=', $startDate)
+                      ->whereDate('bill_date', '<=', $endDate);
+            });
+        }
+        
+        $payments=$payments->orderBy('id','DESC')->paginate(15);
+        $customer=Customer::all();
+        return view('invoice_payment.client-wise-invoice-report-detail',compact('payments','customer'));
+    }
 }
