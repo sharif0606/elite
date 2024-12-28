@@ -273,7 +273,7 @@ class ReportController extends Controller
         $customerId = $request->customer_id; // Get customer_id from the query string
 
         // If customer_id is in the query string, do not apply the received_by_city filter
-        if (!$customerId && $receivedByCity) {
+        if ($customerId && $receivedByCity) {
             // Filter by received_by_city only if customer_id is not in the query string
             $payments = $payments->whereHas('customer', function ($query) use ($receivedByCity) {
                 $query->where('received_by_city', $receivedByCity);

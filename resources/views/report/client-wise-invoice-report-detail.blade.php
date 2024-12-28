@@ -67,7 +67,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <div class="form-group">
                     <label for="">Received By</label>
-                    <select class="form-control" name="received_by_city" required>
+                    <select class="form-control" name="received_by_city">
                         <option value="">Select</option>
                         <option value="1" @if(request()->get('$customer->received_by_city') == 1) selected @endif>Ctg</option>
                         <option value="2" @if(request()->get('$customer->received_by_city') == 2) selected @endif>Head Office</option>
