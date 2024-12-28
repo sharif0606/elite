@@ -12,7 +12,7 @@
             <div class="card">
                 <div>
                     <a class="float-start btn btn-sm bg-danger text-white" href="{{route('deduction_asign.index')}}">Return Index</a>
-                    <a class="float-end text-danger" href="{{route('deductionCreate',['deduction_id' => 11])}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
+                    <a class="float-end text-danger" href="{{route('deduction_asign.deductionCreate',['deduction_id' => 11])}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}

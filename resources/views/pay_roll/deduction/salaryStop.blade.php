@@ -133,7 +133,7 @@
         let month = $('.month').val();
         if(employee_id){
             $.ajax({
-                url:"{{ route('get_old_deduction') }}",
+                url:"{{ route('deduction_asign.get_old_deduction') }}",
                 type: "GET",
                 dataType: "json",
                 data: { 'employee_id':employee_id,'fine':fine,'year':year,'month':month },
