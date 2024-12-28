@@ -29,27 +29,27 @@ class ReportController extends Controller
         $selected_fmonth = $request->input('fmonth', \Carbon\Carbon::now()->subMonth(6)->format('m')); // From Month
         $selected_ty = $request->input('tyear', \Carbon\Carbon::now()->format('Y')); // To Year
         $selected_tmonth = $request->input('tmonth', \Carbon\Carbon::now()->format('m')); // To Month
-    
+
         // Create a period from the selected "From" to "To" year and month
         $period = \Carbon\CarbonPeriod::create(
-            "$selected_fy-$selected_fmonth-01", 
-            "1 month", 
+            "$selected_fy-$selected_fmonth-01",
+            "1 month",
             "$selected_ty-$selected_tmonth-31"
         );
-    
+
         // Fetch the zones and their related customers
-        $zones = Zone::with(['customer' => function($query) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
-            $query->whereHas('invPayment', function($paymentQuery) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
+        $zones = Zone::with(['customer' => function ($query) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
+            $query->whereHas('invPayment', function ($paymentQuery) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
                 // Filter the payments between the selected date range
                 $startDate = "$selected_fy-$selected_fmonth-01";
                 $endDate = "$selected_ty-$selected_tmonth-31";
                 $paymentQuery->whereBetween('pay_date', [$startDate, $endDate]);
             });
         }])->orderBy('name', 'ASC')->paginate(10);
-    
+
         return view('report.invoice-payment', compact('zones', 'period'));
     }
-    
+
 
     public function invoiceDue(Request $request)
     {
@@ -256,10 +256,10 @@ class ReportController extends Controller
                 ->whereIn('customer_duty_details.employee_id', $employeeIdsArray) // Filter by employee IDs
                 ->groupBy('employees.id', 'employees.bn_applicants_name') // Group by employee only
                 ->get();
-        }else{
+        } else {
             $customerduty = [];
         }
-        
+
 
 
         return view('customer_duty.customer-duty-filter', compact('customerduty'));
@@ -268,42 +268,46 @@ class ReportController extends Controller
     /*== Clien Wise I|nvoice Payment Report ==*/
     public function client_wise_detail_invoice_report(Request $request)
     {
-        $payments=InvoicePayment::with('customer','invoice');
-        if($request->customer_id){
-            $payments=$payments->where('customer_id',$request->customer_id);
+        $payments = InvoicePayment::with('customer', 'invoice');
+        $customerId = $request->customer_id;
+
+        if (!$customerId) {
+            return view('report.client-wise-invoice-report-detail', [
+                'payments' => null,
+                'customer' => Customer::all(),
+            ]);
         }
-        if($request->branch_id){
-            $payments=$payments->where('branch_id',$request->branch_id);
+
+        // Filtering payments based on provided query parameters
+        if ($request->branch_id) {
+            $payments = $payments->where('branch_id', $request->branch_id);
         }
-        if($request->payment_type){
-            $payments=$payments->where('payment_type',$request->payment_type);
+        if ($request->payment_type) {
+            $payments = $payments->where('payment_type', $request->payment_type);
         }
-        if($request->po_no){
-            $payments=$payments->where('po_no',$request->po_no);
+        if ($request->po_no) {
+            $payments = $payments->where('po_no', $request->po_no);
         }
-        if($request->po_date){
-            $payments=$payments->where('po_date',$request->po_date);
+        if ($request->po_date) {
+            $payments = $payments->where('po_date', $request->po_date);
         }
-        if($request->pay_date){
-            $payments=$payments->where('pay_date',$request->pay_date);
+        if ($request->pay_date) {
+            $payments = $payments->where('pay_date', $request->pay_date);
         }
-        // if($request->rcv_date){
-        //     $payments=$payments->where('rcv_date',$request->rcv_date);
-        // }
-        // if($request->deposit_date){
-        //     $payments=$payments->where('deposit_date',$request->deposit_date);
-        // }
         if ($request->fdate && $request->tdate) {
             $startDate = $request->fdate;
             $endDate = $request->tdate;
             $payments->whereHas('invoice', function ($query) use ($startDate, $endDate) {
                 $query->whereDate('bill_date', '>=', $startDate)
-                      ->whereDate('bill_date', '<=', $endDate);
+                    ->whereDate('bill_date', '<=', $endDate);
             });
         }
-        
-        $payments=$payments->orderBy('id','DESC')->paginate(15);
-        $customer=Customer::all();
-        return view('invoice_payment.client-wise-invoice-report-detail',compact('payments','customer'));
+
+        $payments = $payments->where('customer_id', $customerId)
+            ->orderByRaw("YEAR(deposit_date) DESC, MONTH(deposit_date) DESC")
+            ->paginate(15);
+
+        $customer = Customer::all();
+        return view('report.client-wise-invoice-report-detail', compact('payments', 'customer'));
     }
 }
