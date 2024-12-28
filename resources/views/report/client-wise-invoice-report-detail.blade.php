@@ -64,6 +64,16 @@
                 <label for="fdate">{{__('To Bill Date')}}</label>
                 <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
             </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="form-group">
+                    <label for="">Received By</label>
+                    <select class="form-control" name="received_by_city" required>
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('$customer->received_by_city') == 1) selected @endif>Ctg</option>
+                        <option value="2" @if(request()->get('$customer->received_by_city') == 2) selected @endif>Head Office</option>
+                    </select>
+                </div>
+            </div>
             <div class="col-sm-3 py-3">
                 <button type="submit" class="btn btn-sm btn-info mt-2">Search</button>
                 <a href="{{route('invoice-payment.client_wise_detail_invoice_report')}}" class="btn btn-sm btn-danger mt-2">Clear</a>

@@ -269,13 +269,20 @@ class ReportController extends Controller
     public function client_wise_detail_invoice_report(Request $request)
     {
         $payments = InvoicePayment::with('customer', 'invoice');
-        $customerId = $request->customer_id;
+        $receivedByCity = $request->received_by_city;
+        $customerId = $request->customer_id; // Get customer_id from the query string
 
-        if (!$customerId) {
-            return view('report.client-wise-invoice-report-detail', [
-                'payments' => null,
-                'customer' => Customer::all(),
-            ]);
+        // If customer_id is in the query string, do not apply the received_by_city filter
+        if (!$customerId && $receivedByCity) {
+            // Filter by received_by_city only if customer_id is not in the query string
+            $payments = $payments->whereHas('customer', function ($query) use ($receivedByCity) {
+                $query->where('received_by_city', $receivedByCity);
+            });
+        }
+
+        // If customer_id is in the query string, filter payments by customer_id
+        if ($customerId) {
+            $payments = $payments->where('customer_id', $customerId);
         }
 
         // Filtering payments based on provided query parameters
