@@ -215,6 +215,15 @@ class CustomerDutyController extends Controller
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
                             $details->hours = $request->job_post_hour[$key];
+
+                            /*== New Column ==*/
+                            $details->absent = $request->absent[$key];
+                            $details->vacant = $request->vacant[$key];
+                            $details->holiday_festival = $request->holiday_festival[$key];
+                            $details->leave_cl = $request->leave_cl[$key];
+                            $details->leave_sl = $request->leave_sl[$key];
+                            $details->leave_el = $request->leave_el[$key];
+
                             $details->duty_rate = $request->duty_rate[$key];
                             $details->ot_rate = $request->ot_rate[$key];
                             $details->duty_qty = $request->duty_qty[$key];

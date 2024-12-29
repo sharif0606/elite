@@ -110,6 +110,7 @@
                                         <th style=" color: rgb(15, 15, 15) !important;">Employee ID</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Employee</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Job Post</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">Info</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Rate</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Qty</th>
                                         <th style=" color: rgb(15, 15, 15) !important;">Duty Amount</th>
@@ -125,6 +126,31 @@
                                         <td>{{$de->employee?->admission_id_no }}</td>
                                         <td>{{$de->employee?->bn_applicants_name }}</td>
                                         <td>{{$de->jobpost?->name }}</td>
+                                        <td>
+                                            @if($de->absent >0 || $de->vacant>0 || $de->holiday_festival>0 || $de->leave_cl>0 || $de->leave_sl>0 || $de->leave_el>0)
+                                            <table class="table table-bordered mb-0 table-striped">
+                                                <tr>
+                                                    <th scope="col" rowspan="2">{{__('A')}}</th>
+                                                    <th scope="col" rowspan="2">{{__('V')}}</th>
+                                                    <th scope="col" rowspan="2">{{__('H/F')}}</th>
+                                                    <th scope="col" colspan="3">{{__('L')}}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th>C</th>
+                                                    <th>S</th>
+                                                    <th>E</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>{{(Int)$de->absent}}</td>
+                                                    <td>{{(Int)$de->vacant}}</td>
+                                                    <td>{{(Int)$de->holiday_festival}}</td>
+                                                    <td>{{(Int)$de->leave_cl}}</td>
+                                                    <td>{{(Int)$de->leave_sl}}</td>
+                                                    <td>{{(Int)$de->leave_el}}</td>
+                                                </tr>
+                                            </table>
+                                            @endif
+                                        </td>
                                         <td>{{ $de->duty_rate }}</td>
                                         <td>{{ $de->duty_qty }}</td>
                                         <td>{{ $de->duty_amount }}</td>

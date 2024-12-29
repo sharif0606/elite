@@ -28,6 +28,8 @@ use File;
 use App\Http\Traits\ImageHandleTraits;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Validator;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
 
 class EmployeeController extends Controller
 {
@@ -39,13 +41,13 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::orderBy('id','ASC');
-        if($request->admission_id_no){
-            $employees = $employees->where('admission_id_no',$request->admission_id_no);
+        $employees = Employee::orderBy('id', 'ASC');
+        if ($request->admission_id_no) {
+            $employees = $employees->where('admission_id_no', $request->admission_id_no);
         }
-        
+
         $employees = $employees->paginate(20);
-        return view('employee.index',compact('employees'));
+        return view('employee.index', compact('employees'));
     }
     /**
      * Show the form for creating a new resource.
@@ -54,14 +56,14 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        $jobposts=JobPost::all();
+        $jobposts = JobPost::all();
         $districts = District::all();
         $upazila = Upazila::all();
         $union = Union::all();
         $ward = Ward::all();
         $bloods = BloodGroup::all();
         $religions = Religion::all();
-        return view('employee.create',compact('districts','upazila','union','ward','bloods','religions','jobposts'));
+        return view('employee.create', compact('districts', 'upazila', 'union', 'ward', 'bloods', 'religions', 'jobposts'));
     }
 
     /**
@@ -201,32 +203,32 @@ class EmployeeController extends Controller
             $employee->en_spouse_name = $request->en_spouse_name;
             $employee->en_song_name = $request->en_song_name;
             $employee->en_daughters_name = $request->en_daughters_name;
-            if($request->has('concerned_person_sign'))
-            $employee->concerned_person_sign=$this->uploadImage($request->concerned_person_sign,'uploads/concerned_person_sign/');
-            if($request->has('bn_doctor_sign'))
-            $employee->bn_doctor_sign=$this->uploadImage($request->bn_doctor_sign,'uploads/bn_doctor_sign/');
+            if ($request->has('concerned_person_sign'))
+                $employee->concerned_person_sign = $this->uploadImage($request->concerned_person_sign, 'uploads/concerned_person_sign/');
+            if ($request->has('bn_doctor_sign'))
+                $employee->bn_doctor_sign = $this->uploadImage($request->bn_doctor_sign, 'uploads/bn_doctor_sign/');
 
-            if($request->has('profile_img'))
-            $employee->profile_img=$this->uploadImage($request->profile_img,'uploads/profile_img/');
-            if($request->has('signature_img'))
-            $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
+            if ($request->has('profile_img'))
+                $employee->profile_img = $this->uploadImage($request->profile_img, 'uploads/profile_img/');
+            if ($request->has('signature_img'))
+                $employee->signature_img = $this->uploadImage($request->signature_img, 'uploads/signature_img/');
 
             if ($employee->save()) {
-                if($request->has('document_img')){
-                    foreach($request->document_img as $key => $value){
-                        if($value){
-                            $document=new EmployeeDocuments;
+                if ($request->has('document_img')) {
+                    foreach ($request->document_img as $key => $value) {
+                        if ($value) {
+                            $document = new EmployeeDocuments;
                             $document->employee_id = $employee->id;
                             $document->document_caption = $request->document_caption[$key];
-                            $document->document_img=$this->uploadImage($request->document_img[$key],'uploads/document_img/');
+                            $document->document_img = $this->uploadImage($request->document_img[$key], 'uploads/document_img/');
                             $document->save();
                         }
                     }
                 }
                 $this->notice::success('Data Saved!');
-                return redirect()->route('employee.index', ['role' =>currentUser()]);
+                return redirect()->route('employee.index', ['role' => currentUser()]);
             } else {
-                $this->notice::error('Please try again!','Fail');
+                $this->notice::error('Please try again!', 'Fail');
                 return redirect()->back()->withInput();
             }
 
@@ -251,7 +253,7 @@ class EmployeeController extends Controller
             // }
         } catch (Exception $e) {
             dd($e);
-            $this->notice::error('Please try again!','Fail');
+            $this->notice::error('Please try again!', 'Fail');
             return redirect()->back()->withInput();
         }
     }
@@ -265,13 +267,47 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
-        $employeeDocuments = EmployeeDocuments::where('employee_id',encryptor('decrypt',$id))->get();
-        $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
-        $jobposts=JobPost::where('id',$employees->bn_jobpost_id)->first();
-        $jobdescription=JobpostDescription::where('jobpost_id',$employees->bn_jobpost_id)->first();
-        return view('employee.show', compact('employees','security','jobposts','jobdescription','employeeDocuments'));
+        $employeeDocuments = EmployeeDocuments::where('employee_id', encryptor('decrypt', $id))->get();
+        $security = SecurityPriorAcquaintance::where('employee_id', encryptor('decrypt', $id))->first();
+        $jobposts = JobPost::where('id', $employees->bn_jobpost_id)->first();
+        $jobdescription = JobpostDescription::where('jobpost_id', $employees->bn_jobpost_id)->first();
+        return view('employee.show', compact('employees', 'security', 'jobposts', 'jobdescription', 'employeeDocuments'));
     }
+    public function exportToWord($id)
+    {
+        // Fetch the employee data
+$employees = Employee::find($id);
+if (!$employees) {
+    return response()->json(['message' => 'Employee not found'], 404);
+}
 
+// Render the Blade view to HTML
+$viewContent = view('employee.bio-data', compact('employees'))->render(); // Replace 'employee.details' with your actual view
+dd($viewContent);
+// Create a new PhpWord object
+$phpWord = new PhpWord();
+$section = $phpWord->addSection();
+
+// Add the HTML content to the Word document (manually handle simple HTML)
+// Note: PhpWord does not natively support full HTML rendering, so we convert the HTML manually
+$section->addText(html_entity_decode(strip_tags($viewContent))); // Adds rendered HTML as plain text for now
+
+// Define the public directory path
+$exportDir = public_path('exports');
+if (!File::exists($exportDir)) {
+    File::makeDirectory($exportDir, 0755, true); // Create directory if not exists
+}
+
+// Define the file path
+$filePath = $exportDir . '/employee_' . $employees->id . '.docx';
+
+// Save the Word document
+$phpWord->save($filePath, 'Word2007');
+
+// Return response to download the Word document
+return response()->download($filePath)->deleteFileAfterSend(true); // Automatically deletes the file after sending it
+
+    }
     public function certificate($id)
     {
         $emp = Employee::findOrFail(encryptor('decrypt', $id));
@@ -290,29 +326,30 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $jobposts=JobPost::all();
+        $jobposts = JobPost::all();
         $districts = District::all();
         $upazila = Upazila::all();
         $union = Union::all();
         $ward = Ward::all();
         $bloods = BloodGroup::all();
         $religions = Religion::all();
-        $employees = Employee::findOrFail(encryptor('decrypt',$id));
-        $employeeDocuments = EmployeeDocuments::where('employee_id',encryptor('decrypt',$id))->get();
-        return view('employee.edit',compact('districts','upazila','union','ward','bloods','religions','employees','jobposts','employeeDocuments'));
+        $employees = Employee::findOrFail(encryptor('decrypt', $id));
+        $employeeDocuments = EmployeeDocuments::where('employee_id', encryptor('decrypt', $id))->get();
+        return view('employee.edit', compact('districts', 'upazila', 'union', 'ward', 'bloods', 'religions', 'employees', 'jobposts', 'employeeDocuments'));
     }
 
-    public function employeeDocument(Request $request){
-        $documents=EmployeeDocuments::findOrFail($request->id);
-        if($this->deleteImage($documents->document_img,'uploads/document_img/'))
-        EmployeeDocuments::find($request->id)->delete();
+    public function employeeDocument(Request $request)
+    {
+        $documents = EmployeeDocuments::findOrFail($request->id);
+        if ($this->deleteImage($documents->document_img, 'uploads/document_img/'))
+            EmployeeDocuments::find($request->id)->delete();
         return back();
     }
 
     public function update(EditEmployeeRequest $request, $id)
     {
         try {
-            $employee = Employee::findOrFail(encryptor('decrypt',$id));
+            $employee = Employee::findOrFail(encryptor('decrypt', $id));
             $employee->bn_applicants_name = $request->bn_applicants_name;
             $employee->bn_fathers_name = $request->bn_fathers_name;
             $employee->bn_mothers_name = $request->bn_mothers_name;
@@ -441,31 +478,31 @@ class EmployeeController extends Controller
             $employee->en_spouse_name = $request->en_spouse_name;
             $employee->en_song_name = $request->en_song_name;
             $employee->en_daughters_name = $request->en_daughters_name;
-            if($request->has('concerned_person_sign'))
-            $employee->concerned_person_sign=$this->uploadImage($request->concerned_person_sign,'uploads/concerned_person_sign/');
-            if($request->has('bn_doctor_sign'))
-            $employee->bn_doctor_sign=$this->uploadImage($request->bn_doctor_sign,'uploads/bn_doctor_sign/');
+            if ($request->has('concerned_person_sign'))
+                $employee->concerned_person_sign = $this->uploadImage($request->concerned_person_sign, 'uploads/concerned_person_sign/');
+            if ($request->has('bn_doctor_sign'))
+                $employee->bn_doctor_sign = $this->uploadImage($request->bn_doctor_sign, 'uploads/bn_doctor_sign/');
 
-            if($request->has('profile_img'))
-            $employee->profile_img=$this->uploadImage($request->profile_img,'uploads/profile_img/');
-            if($request->has('signature_img'))
-            $employee->signature_img=$this->uploadImage($request->signature_img,'uploads/signature_img/');
+            if ($request->has('profile_img'))
+                $employee->profile_img = $this->uploadImage($request->profile_img, 'uploads/profile_img/');
+            if ($request->has('signature_img'))
+                $employee->signature_img = $this->uploadImage($request->signature_img, 'uploads/signature_img/');
 
             /*== Employee Status Change == */
             $employee->status = $request->status;
             if ($employee->save()) {
-                if($request->has('document_img')){
-                    foreach($request->document_img as $key => $value){
-                        if($value){
-                            $document=new EmployeeDocuments;
+                if ($request->has('document_img')) {
+                    foreach ($request->document_img as $key => $value) {
+                        if ($value) {
+                            $document = new EmployeeDocuments;
                             $document->employee_id = $employee->id;
                             $document->document_caption = $request->document_caption[$key];
-                            $document->document_img=$this->uploadImage($request->document_img[$key],'uploads/document_img/');
+                            $document->document_img = $this->uploadImage($request->document_img[$key], 'uploads/document_img/');
                             $document->save();
                         }
                     }
                 }
-                return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('employee.index', ['role' => currentUser()])->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -489,70 +526,70 @@ class EmployeeController extends Controller
     public function securityGuards($id)
     {
         $employees = Employee::findOrFail(encryptor('decrypt', $id));
-        $security=SecurityPriorAcquaintance::where('employee_id',encryptor('decrypt', $id))->first();
+        $security = SecurityPriorAcquaintance::where('employee_id', encryptor('decrypt', $id))->first();
         $districts = District::all();
         $upazila = Upazila::all();
-        return view('employee.security-prior-acquaintance',compact('employees','districts','upazila','security'));
+        return view('employee.security-prior-acquaintance', compact('employees', 'districts', 'upazila', 'security'));
     }
 
-    public function securityGuardsStore(Request $request ,$id)
+    public function securityGuardsStore(Request $request, $id)
     {
-        try{
-            $security=SecurityPriorAcquaintance::where('employee_id',$id)->firstOrNew();
+        try {
+            $security = SecurityPriorAcquaintance::where('employee_id', $id)->firstOrNew();
             // $security=new SecurityPriorAcquaintance;
-            $security->employee_id=$id;
-            $security->bn_in_laws_district_id=$request->bn_in_laws_district_id;
-            $security->bn_in_laws_upazilla_id=$request->bn_in_laws_upazilla_id;
-            $security->bn_in_laws_village_name=$request->bn_in_laws_village_name;
-            $security->bn_in_laws_post_office=$request->bn_in_laws_post_office;
-            $security->bn_husband_profession=$request->bn_husband_profession;
-            $security->bn_father_profession=$request->bn_father_profession;
-            $security->bn_landlord_name=$request->bn_landlord_name;
-            $security->bn_landlord_mobile_no=$request->bn_landlord_mobile_no;
-            $security->bn_living_dur=$request->bn_living_dur;
-            $security->bn_passport_no=$request->bn_passport_no;
-            $security->bn_old_office_name=$request->bn_old_office_name;
-            $security->bn_old_office_address=$request->bn_old_office_address;
-            $security->bn_resign_reason=$request->bn_resign_reason;
-            $security->bn_resign_letter_status=$request->bn_resign_letter_status;
-            $security->bn_service_book_status=$request->bn_service_book_status;
-            $security->bn_service_book_no=$request->bn_service_book_no;
-            $security->bn_old_job_salary=$request->bn_old_job_salary;
-            $security->bn_old_job_last_desig=$request->bn_old_job_last_desig;
-            $security->bn_old_job_experience=$request->bn_old_job_experience;
-            $security->bn_new_job_transportation=$request->bn_new_job_transportation;
-            $security->bn_current_living=$request->bn_current_living;
-            $security->bn_total_member=$request->bn_total_member;
-            $security->bn_mobile_no=$request->bn_mobile_no;
-            $security->bn_solvent_person=$request->bn_solvent_person;
-            $security->bn_sim_card_reg_status=$request->bn_sim_card_reg_status;
-            $security->bn_case_filed_status=$request->bn_case_filed_status;
-            $security->bn_old_job_officer_name=$request->bn_old_job_officer_name;
-            $security->bn_old_job_officer_mobile=$request->bn_old_job_officer_mobile;
-            $security->bn_old_job_officer_post=$request->bn_old_job_officer_post;
-            $security->bn_identifier_name1=$request->bn_identifier_name1;
-            $security->bn_identifier_occupation1=$request->bn_identifier_occupation1;
-            $security->bn_identifier_address1=$request->bn_identifier_address1;
-            $security->bn_identifier_phone1=$request->bn_identifier_phone1;
-            $security->bn_identifier_name2=$request->bn_identifier_name2;
-            $security->bn_identifier_occupation2=$request->bn_identifier_occupation2;
-            $security->bn_identifier_address2=$request->bn_identifier_address2;
-            $security->bn_identifier_phone2=$request->bn_identifier_phone2;
-            if($request->has('informant_sing'))
-            $security->informant_sing=$this->uploadImage($request->informant_sing,'uploads/informant_sing/');
-            if($request->has('data_collector_sing'))
-            $security->data_collector_sing=$this->uploadImage($request->data_collector_sing,'uploads/data_collector_sing/');
-            if($request->has('executive_sing'))
-            $security->executive_sing=$this->uploadImage($request->executive_sing,'uploads/executive_sing/');
-            if($request->has('manager_sing'))
-            $security->manager_sing=$this->uploadImage($request->manager_sing,'uploads/manager_sing/');
-            if($security->save())
-            return redirect()->route('employee.index', ['role' =>currentUser()])->with(Toastr::success('Successfully Done!', 'Success', ["positionClass" => "toast-top-right"]));
+            $security->employee_id = $id;
+            $security->bn_in_laws_district_id = $request->bn_in_laws_district_id;
+            $security->bn_in_laws_upazilla_id = $request->bn_in_laws_upazilla_id;
+            $security->bn_in_laws_village_name = $request->bn_in_laws_village_name;
+            $security->bn_in_laws_post_office = $request->bn_in_laws_post_office;
+            $security->bn_husband_profession = $request->bn_husband_profession;
+            $security->bn_father_profession = $request->bn_father_profession;
+            $security->bn_landlord_name = $request->bn_landlord_name;
+            $security->bn_landlord_mobile_no = $request->bn_landlord_mobile_no;
+            $security->bn_living_dur = $request->bn_living_dur;
+            $security->bn_passport_no = $request->bn_passport_no;
+            $security->bn_old_office_name = $request->bn_old_office_name;
+            $security->bn_old_office_address = $request->bn_old_office_address;
+            $security->bn_resign_reason = $request->bn_resign_reason;
+            $security->bn_resign_letter_status = $request->bn_resign_letter_status;
+            $security->bn_service_book_status = $request->bn_service_book_status;
+            $security->bn_service_book_no = $request->bn_service_book_no;
+            $security->bn_old_job_salary = $request->bn_old_job_salary;
+            $security->bn_old_job_last_desig = $request->bn_old_job_last_desig;
+            $security->bn_old_job_experience = $request->bn_old_job_experience;
+            $security->bn_new_job_transportation = $request->bn_new_job_transportation;
+            $security->bn_current_living = $request->bn_current_living;
+            $security->bn_total_member = $request->bn_total_member;
+            $security->bn_mobile_no = $request->bn_mobile_no;
+            $security->bn_solvent_person = $request->bn_solvent_person;
+            $security->bn_sim_card_reg_status = $request->bn_sim_card_reg_status;
+            $security->bn_case_filed_status = $request->bn_case_filed_status;
+            $security->bn_old_job_officer_name = $request->bn_old_job_officer_name;
+            $security->bn_old_job_officer_mobile = $request->bn_old_job_officer_mobile;
+            $security->bn_old_job_officer_post = $request->bn_old_job_officer_post;
+            $security->bn_identifier_name1 = $request->bn_identifier_name1;
+            $security->bn_identifier_occupation1 = $request->bn_identifier_occupation1;
+            $security->bn_identifier_address1 = $request->bn_identifier_address1;
+            $security->bn_identifier_phone1 = $request->bn_identifier_phone1;
+            $security->bn_identifier_name2 = $request->bn_identifier_name2;
+            $security->bn_identifier_occupation2 = $request->bn_identifier_occupation2;
+            $security->bn_identifier_address2 = $request->bn_identifier_address2;
+            $security->bn_identifier_phone2 = $request->bn_identifier_phone2;
+            if ($request->has('informant_sing'))
+                $security->informant_sing = $this->uploadImage($request->informant_sing, 'uploads/informant_sing/');
+            if ($request->has('data_collector_sing'))
+                $security->data_collector_sing = $this->uploadImage($request->data_collector_sing, 'uploads/data_collector_sing/');
+            if ($request->has('executive_sing'))
+                $security->executive_sing = $this->uploadImage($request->executive_sing, 'uploads/executive_sing/');
+            if ($request->has('manager_sing'))
+                $security->manager_sing = $this->uploadImage($request->manager_sing, 'uploads/manager_sing/');
+            if ($security->save())
+                return redirect()->route('employee.index', ['role' => currentUser()])->with(Toastr::success('Successfully Done!', 'Success', ["positionClass" => "toast-top-right"]));
             else
-                return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','please try again'));
-        }catch(Exception $e){
+                return redirect()->back()->withInput()->with($this->resMessageHtml(false, 'error', 'please try again'));
+        } catch (Exception $e) {
             // dd($e);
-            return redirect()->back()->withInput()->with($this->resMessageHtml(false,'error','Please try again'));
+            return redirect()->back()->withInput()->with($this->resMessageHtml(false, 'error', 'Please try again'));
         }
     }
 }

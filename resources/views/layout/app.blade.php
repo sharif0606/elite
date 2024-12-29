@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/main/custome.css') }}">
     @stack('styles')
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js/dist/html-docx.min.js"></script>
+
+
 </head>
 
 {{--  <body class="theme-dark" style="overflow-y: auto;">  --}}

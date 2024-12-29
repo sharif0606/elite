@@ -157,6 +157,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* HRM */
         Route::resource('employee', employee::class);
+        Route::get('export-to-word/{id}',[employee::class,'exportToWord'])->name('employee.exportToWord');
         Route::resource('relEmployee', relEmployee::class);
         Route::get('employee-release', [relEmployee::class,'startRelease'])->name('employee.release');
         Route::get('employee/{id}', [employee::class,'show'])->name('employee.show');

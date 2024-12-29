@@ -70,19 +70,28 @@
                                     <table class="table table-bordered mb-0 table-striped">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">{{__('Employee ID')}}</th>
-                                                <th scope="col">{{__('Job Post')}}</th>
-                                                <th scope="col">{{__('Hours')}}</th>
-                                                <th scope="col">{{__('Duty Rate')}}</th>
-                                                <th scope="col">{{__('OT-Rate')}}</th>
-                                                <th scope="col">{{__('Duty Qty')}}</th>
-                                                <th scope="col">{{__('OT Qty')}}</th>
-                                                <th scope="col">{{__('Duty Amount')}}</th>
-                                                <th scope="col">{{__('OT Amount')}}</th>
-                                                <th scope="col">{{__('Total')}}</th>
-                                                <th scope="col">{{__('Start Date')}}</th>
-                                                <th scope="col">{{__('End Date')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Employee ID')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Job Post')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Hours')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Absent')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Vacant')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
+                                                <th scope="col" colspan="3">{{__('Leave')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Duty Rate')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT-Rate')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Duty Qty')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Qty')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Total')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Duty Amount')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Amount')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Start Date')}}</th>
+                                                <th scope="col" rowspan="2">{{__('End Date')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                                            </tr>
+                                            <tr>
+                                                <th>CL</th>
+                                                <th>SL</th>
+                                                <th>EL</th>
                                             </tr>
                                         </thead>
                                         <tbody id="customerduty">
@@ -116,6 +125,26 @@
                                                             @endforelse
                                                     </select>
                                                 </td>
+
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+                                                </td>
+                                                
                                                 <td>
                                                     <input onkeyup="CalculateAmount(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
                                                 </td>
@@ -130,10 +159,10 @@
                                                     <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
+                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
+                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
                                                 </td>
                                                 <td>
                                                     <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
@@ -149,7 +178,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th colspan="5" class="text-center"> Total</th>
+                                                <th colspan="11" class="text-end"> Total</th>
                                                 <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty"></th>
                                                 <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot"></th>
                                                 <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></th>
@@ -444,7 +473,7 @@ function addRow(){
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:250px;" onchange="getDutyOtRate(this)">
+            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
                 {{--<option value="0">Select</option>
                 @foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -463,6 +492,24 @@ function addRow(){
             </select>
         </td>
         <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+        </td>
+        <td>
             <input readonly class="form-control duty_rate" type="text" name="duty_rate[]" value="" placeholder="Duty Rate" style="width:120px;">
         </td>
         <td><input readonly class="form-control ot_rate" type="text" name="ot_rate[]" value="" placeholder="Ot Rate" style="width:120px;"></td>
@@ -476,10 +523,10 @@ function addRow(){
             <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
         </td>
         <td>
-            <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
+            <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
         </td>
         <td>
-            <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="0" placeholder="Total Amount" style="width:120px;">
+            <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="0" placeholder="Ot Amount" style="width:120px;">
         </td>
         <td>
             <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="" placeholder="Start Date">
