@@ -107,17 +107,25 @@
                             <table class="table">
                                 <thead>
                                     <tr style="background-color: rgb(166, 166, 207) !important;">
-                                        <th style=" color: rgb(15, 15, 15) !important;">Employee ID</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Employee</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Job Post</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Info</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Rate</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Qty</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Duty Amount</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Rate</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Qty</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Ot Amount</th>
-                                        <th style=" color: rgb(15, 15, 15) !important;">Total Amount</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Employee ID</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Employee</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Job Post</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" colspan="6">Info</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Duty Rate</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Duty Qty</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Duty Amount</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Ot Rate</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Ot Qty</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Ot Amount</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;" rowspan="2">Total Amount</th>
+                                    </tr>
+                                    <tr style="background-color: rgb(166, 166, 207) !important;">
+                                        <th style=" color: rgb(15, 15, 15) !important;">A</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">V</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">H/F</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">CL</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">SL</th>
+                                        <th style=" color: rgb(15, 15, 15) !important;">EL</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -126,31 +134,22 @@
                                         <td>{{$de->employee?->admission_id_no }}</td>
                                         <td>{{$de->employee?->bn_applicants_name }}</td>
                                         <td>{{$de->jobpost?->name }}</td>
-                                        <td>
-                                            @if($de->absent >0 || $de->vacant>0 || $de->holiday_festival>0 || $de->leave_cl>0 || $de->leave_sl>0 || $de->leave_el>0)
-                                            <table class="table table-bordered mb-0 table-striped">
-                                                <tr>
-                                                    <th scope="col" rowspan="2">{{__('A')}}</th>
-                                                    <th scope="col" rowspan="2">{{__('V')}}</th>
-                                                    <th scope="col" rowspan="2">{{__('H/F')}}</th>
-                                                    <th scope="col" colspan="3">{{__('L')}}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>C</th>
-                                                    <th>S</th>
-                                                    <th>E</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>{{(Int)$de->absent}}</td>
-                                                    <td>{{(Int)$de->vacant}}</td>
-                                                    <td>{{(Int)$de->holiday_festival}}</td>
-                                                    <td>{{(Int)$de->leave_cl}}</td>
-                                                    <td>{{(Int)$de->leave_sl}}</td>
-                                                    <td>{{(Int)$de->leave_el}}</td>
-                                                </tr>
-                                            </table>
-                                            @endif
-                                        </td>
+                                        @if($de->absent >0 || $de->vacant>0 || $de->holiday_festival>0 || $de->leave_cl>0 || $de->leave_sl>0 || $de->leave_el>0)
+                                        <td>{{(Int)$de->absent}}</td>
+                                        <td>{{(Int)$de->vacant}}</td>
+                                        <td>{{(Int)$de->holiday_festival}}</td>
+                                        <td>{{(Int)$de->leave_cl}}</td>
+                                        <td>{{(Int)$de->leave_sl}}</td>
+                                        <td>{{(Int)$de->leave_el}}</td>
+                                        @else
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        @endif
+
                                         <td>{{ $de->duty_rate }}</td>
                                         <td>{{ $de->duty_qty }}</td>
                                         <td>{{ $de->duty_amount }}</td>

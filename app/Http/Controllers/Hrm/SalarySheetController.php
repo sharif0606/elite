@@ -1231,8 +1231,9 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
     })
     ->leftJoin('customer_brances', 'customer_duties.branch_id', '=', 'customer_brances.id')
     ->leftJoin('customers', 'customer_duty_details.customer_id', '=', 'customers.id')
-    ->leftJoin('salary_sheet_details', function ($join) {
-        $join->on('employees.id', '=', 'salary_sheet_details.employee_id');
+    ->leftJoin('salary_sheet_details', function ($join) use ($request) {
+        $join->on('employees.id', '=', 'salary_sheet_details.employee_id')
+        ->where('salary_sheet_details.customer_id',$request->customer_id);
     })
     ->leftJoin('salary_sheets', function ($join) use ($request) {
         $join->on('salary_sheet_details.salary_id', '=', 'salary_sheets.id')
@@ -1265,7 +1266,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'employees.insurance',
         'employees.p_f',
         DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-        DB::raw("IF(salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL OR salary_sheet_details.deduction_loan IS NOT NULL, 1, 0) AS charge_status")
+        DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL OR salary_sheet_details.deduction_loan IS NOT NULL) and (`salary_sheets`.`year` = '2024' and `salary_sheets`.`month` = '11') , 1, 0) AS charge_status ")
     )
     ->where(function ($query) use ($request) {
         $query->where(function ($subQuery) use ($request) {

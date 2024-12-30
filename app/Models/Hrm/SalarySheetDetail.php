@@ -25,4 +25,8 @@ class SalarySheetDetail extends Model
     {
         return $this->belongsTo(CustomerBrance::class,'branch_id', 'id');
     }
+    public function salarySheet()
+    {
+    return $this->belongsTo(SalarySheet::class, 'salary_id');
+    }
 }

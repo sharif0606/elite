@@ -284,13 +284,18 @@
                         var month = parseInt($(".month").val());
                         var currentYear = currentDate.getFullYear();
                         var totalDays = new Date(currentYear, month, 0).getDate();
+                        // Deduction calculation
                         let pf = "0";
-                        if (new Date() >= sixMonthsLater) {
-                            pf = (value.duty_rate*7.5)/100;
+                        if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                            pf = (value.p_f > 0) ? value.p_f : '0';
+                        }else{
+                            pf = 0;
                         }
                         let Insurance = "0";
-                        if (new Date() >= sixMonthsLater) {
+                        if (new Date() >= sixMonthsLater && value.charge_status ==0) {
                             Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }else{
+                            Insurance = 0;
                         }
                         //remarks
                         let RemarksArray = [
@@ -323,6 +328,11 @@
                         if (gr > totalDeduction) {
                             netSalary = Math.round(parseFloat(gr) - parseFloat(totalDeduction));
                         }
+                        /* Leave Field From Customer Duty */
+                        let absent = (value.absent > 0) ? value.absent : '0';
+                        let vacant = (value.vacant > 0) ? value.vacant : '0';
+                        let holiday_festival = (value.holiday_festival > 0) ? value.holiday_festival : '0';
+
                         // if(old_emp == value.admission_id_no){
                         if(value.duty_qty == 0){
                             var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.salary_joining_date}">`;
@@ -340,9 +350,9 @@
                         }else{
                             var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
-                            var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="1250">`;
-                            var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="" placeholder="Absent" readonly>`
-                            var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="" placeholder="Vacant" readonly>`
+                            var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="0">`;
+                            var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Math.trunc(absent)}" placeholder="Absent" readonly>`
+                            var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant" readonly>`
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
                             var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
@@ -373,10 +383,10 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="${hR}" placeholder="House rent (50%)">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical" type="text" name="medical[]" value="750" placeholder="Medical">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical" type="text" name="medical[]" value="2375" placeholder="Medical">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="450" placeholder="Trans. Conve.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="0" placeholder="Trans. Conve.">
                                 </td>
                                 <td>${food}</td>
                                 <td>
@@ -389,13 +399,13 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control present_day" type="hidden" name="present_day[]" value="${value.duty_qty}" placeholder="Pre. Days">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="${Math.trunc(absent)}" placeholder="Absent">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="" placeholder="Vacant">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="${Math.trunc(holiday_festival)}" placeholder="Holiday/ festival">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
