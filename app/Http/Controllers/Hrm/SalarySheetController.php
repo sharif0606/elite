@@ -1233,10 +1233,13 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
     ->leftJoin('customers', 'customer_duty_details.customer_id', '=', 'customers.id')
     ->leftJoin('salary_sheet_details', function ($join) use ($request) {
         $join->on('employees.id', '=', 'salary_sheet_details.employee_id')
-        ->where('salary_sheet_details.customer_id',$request->customer_id);
+        ->where('salary_sheet_details.customer_id',$request->customer_id)
+        ->where('salary_sheet_details.year', '=', $request->Year)
+        ->where('salary_sheet_details.month', '=', $request->Month);
     })
     ->leftJoin('salary_sheets', function ($join) use ($request) {
         $join->on('salary_sheet_details.salary_id', '=', 'salary_sheets.id')
+            ->where('salary_sheets.customer_id',$request->customer_id)
             ->where('salary_sheets.year', '=', $request->Year)
             ->where('salary_sheets.month', '=', $request->Month);
     })
