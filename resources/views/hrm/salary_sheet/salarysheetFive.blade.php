@@ -260,6 +260,7 @@
                 console.log(salary_data);
                 let selectElement = $('.salarySheet');
                     selectElement.empty();
+                    let appliedDeductions = {}; // Object to track applied deductions
                     var old_emp = '';
                     if(salary_data){
                         $.each(salary_data, function(index, value) {
@@ -273,7 +274,24 @@
                             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
                             // Deduction calculation
                             let pf = "0";
-                            if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                            // Check if deductions are already applied for this employee
+                            if (!appliedDeductions[value.admission_id_no]) {
+                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
+                                }
+                                if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
+                                }
+
+                                // Mark deductions as applied
+                                appliedDeductions[value.admission_id_no] = true;
+                            } else {
+                                pf = "0"; // No further deductions
+                                Insurance = "0";
+                            }
+
+                            /*if (new Date() >= sixMonthsLater && value.charge_status ==0) {
                                 pf = (value.p_f > 0) ? value.p_f : '0';
                             }else{
                                 pf = 0;
@@ -283,7 +301,7 @@
                                 Insurance = (value.insurance > 0) ? value.insurance : '0';
                             }else{
                                 Insurance = 0;
-                            }
+                            }*/
                             let Fine = (value.fine > 0) ? value.fine : '0';
                             //let Remarks = (value.remarks) ? value.remarks : '';
                             let RemarksArray = [
