@@ -13,7 +13,7 @@
     <div class="card">
         <div class="table-responsive">
             <table class="table table-bordered mb-0 table-striped">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarySheetFour')}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarysheet.salarySheetFour')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>
@@ -39,7 +39,7 @@
                             <a class="px-1" href="{{route('salarysheet.salarySheetFourShow',[encryptor('encrypt',$s->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a class="px-1" href="{{route('editSalaryFour',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
+                            <a class="px-1" href="{{route('salarysheet.editSalaryFour',[encryptor('encrypt',$s->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="text-danger px-1" href="javascript:void()" onclick="$('#form{{$s->id}}').submit()">

@@ -190,9 +190,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('salary-sheet-three-show/{id}', [salarySheet::class,'salarySheetThreeShow'])->name('salarysheet.salarySheetThreeShow');
         // salary 4 office staff
         Route::get('salary-sheet-four-index', [salarySheet::class,'getsalarySheetFourIndex'])->name('salarysheet.salarySheetFourIndex');
-        Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarySheetFour');
+        Route::get('screen-salary-sheet-four', [salarySheet::class,'salarySheetFour'])->name('salarysheet.salarySheetFour');
         Route::post('/salary-four-store', [salarySheet::class,'salarySheetFourStore'])->name('salarysheet.salarySheetFourStore');
-        Route::get('salary-sheet-four-edit/{id}', [salarySheet::class,'editSalaryFour'])->name('editSalaryFour');
+        Route::get('salary-sheet-four-edit/{id}', [salarySheet::class,'editSalaryFour'])->name('salarysheet.editSalaryFour');
         Route::post('/salary-four-update/{id}', [salarySheet::class,'salarySheetFourUpdate'])->name('salarysheet.salarySheetFourUpdate');
         Route::get('salary-sheet-four-show/{id}', [salarySheet::class,'salarySheetFourShow'])->name('salarysheet.salarySheetFourShow');
         // salary 5
