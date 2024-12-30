@@ -442,13 +442,13 @@
                                 <td>${remarkCondition}</td>
                             </tr>`
                         );
+                        // Call reCalculateSalary on all inputs explicitly
+                        $(`.salarySheet tr:last input`).each(function () {
+                            reCalcultateSalary(this);
+                        });
                         counter++;
                         total_calculate();
                         old_emp= value.admission_id_no;
-                        // Trigger recalculation for all appended rows
-                        selectElement.find('input').each(function () {
-                            reCalcultateSalary(this); // Call reCalcultateSalary for each input
-                        });
                     });
                     // Add event listeners for focusing and blurring inputs
                     $('.salarySheet').on('focus', 'input', function() {
