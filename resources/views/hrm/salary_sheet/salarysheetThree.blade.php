@@ -128,7 +128,7 @@
                             <!-- table bordered -->
                             <div class="row p-2 mt-4">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered mb-0">
+                                    <table class="table table-bordered mb-0" >
                                         <thead class="d-none show_click">
                                             <tr class="text-center" id="">
                                                 <th scope="col" rowspan="2" class="fixed">{{__('S/N')}}</th>
@@ -445,6 +445,10 @@
                         counter++;
                         total_calculate();
                         old_emp= value.admission_id_no;
+                        // Trigger recalculation for all appended rows
+                        selectElement.find('input').each(function () {
+                            reCalcultateSalary(this); // Call reCalcultateSalary for each input
+                        });
                     });
                     // Add event listeners for focusing and blurring inputs
                     $('.salarySheet').on('focus', 'input', function() {
