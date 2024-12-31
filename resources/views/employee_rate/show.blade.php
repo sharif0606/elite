@@ -102,18 +102,19 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-1">Cliant Name</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $emprate->customer?->name }}"></div>
+                <div class="col-2">Client Name</div>
+                <div class="col-6"><input type="text" class="tinput"  value="{{ $emprate->customer?->name }}"></div>
             </div>
             <div class="row">
-                <div class="col-1">Address</div>
-                <div class="col-2"><input type="text" class="tinput"  value="{{ $emprate->customer?->address }}"></div>
+                <div class="col-2">Address</div>
+                <div class="col-6"><input type="text" class="tinput"  value="{{ $emprate->customer?->address }}"></div>
             </div>
             <div class="row p-3">
                 <table class="table table-bordered">
                     <thead>
                         <tr class="text-center">
                             <th >SL No</th>
+                            <th >Employee</th>
                             <th>Job Post</th>
                             <th>Houres</th>
                             <th>Salary</th>
@@ -125,6 +126,7 @@
                         @if ($emprate->details)
                         @foreach ($emprate->details as $de)
                         <tr class="text-center">
+                            <td>@if($de->employee){{ $de->employee?->bn_applicants_name .' ('.' Id-'.$de->employee?->admission_id_no.')' }} @else - @endif</td>
                             <td >{{ ++$loop->index  }}</td>
                             <td>{{ $de->jobpost?->name }}</td>
                             <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
