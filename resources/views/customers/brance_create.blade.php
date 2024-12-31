@@ -84,10 +84,10 @@
                         <label for=""><b>AIT</b></label>
                         <input class="form-control ait" type="text" name="ait" value="" placeholder="AIT">
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    <!-- <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Received By Ctg</b></label>
                         <input class="form-control received_by_city" type="text" name="received_by_city" value="" placeholder="Received By Ctg">
-                    </div>
+                    </div> -->
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>Attention</b></label>
                         <input class="form-control attention" type="text" name="attention" value="" placeholder="Attention">

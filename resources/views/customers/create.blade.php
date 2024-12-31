@@ -20,7 +20,7 @@
                             <label for="name">Customer Name<span class="text-danger">*</span></label>
                             <input type="text" id="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror" placeholder="Customer Name" name="name">
                             @if($errors->has('name'))
-                                <span class="text-danger"> {{ $errors->first('name') }}</span>
+                            <span class="text-danger"> {{ $errors->first('name') }}</span>
                             @endif
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             <label for="contact">Phone Number</label>
                             <input type="text" id="contact" value="{{old('contact')}}" class="form-control @error('contact') is-invalid @enderror" placeholder="Contact Number" name="contact">
                             @if($errors->has('contact'))
-                                <span class="text-danger"> {{ $errors->first('contact') }}</span>
+                            <span class="text-danger"> {{ $errors->first('contact') }}</span>
                             @endif
                         </div>
                     </div>
@@ -69,6 +69,16 @@
                             @endforelse
                         </select>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for=""><b>Received By</b></label>
+                            <select class="form-control" name="received_by_city" required>
+                                <option value="">Select</option>
+                                <option value="1">Ctg</option>
+                                <option value="2">Head Office</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <label for=""><b>Customer Type</b></label>
                         <select class="form-select" name="customer_type" onchange="getCustomerType();" required>
@@ -85,9 +95,11 @@
                             <input type="text" value="{{old('inv_vat_note')}}" class="form-control" name="inv_vat_note">
                         </div>
                     </div>
-                    <div class="col-12 d-none" id="billSection">
+                    <div class="col-12 d-none mt-3" id="billSection">
                         <div class="row py-2 my-1" style="border: solid 1px red; border-radius: 8px;">
-                            <div class="text-center"><h5 class="text-danger">Billing Information</h5></div>
+                            <div class="text-center">
+                                <h5 class="text-danger">Billing Information</h5>
+                            </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label for="contact_person">Contact Person Name</label>
@@ -146,11 +158,11 @@
                                 <div class="form-group">
                                     <label for=""><b>Received By Ctg</b></label>
                                     <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city')}}" placeholder="Received By Ctg"> -->
-                                    <select class="form-control"  name="received_by_city" required>
+                                    <select class="form-control" name="received_by_city" required>
                                         <option value="">Select</option>
                                         <option value="1">Ctg</option>
                                         <option value="2">Head Office</option>
-                                     </select>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
@@ -182,13 +194,13 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="header-note">Header Note</label>
-                            <textarea class="form-control" name="header_note"  rows="3">{{old('header_note')}}</textarea>
+                            <textarea class="form-control" name="header_note" rows="3">{{old('header_note')}}</textarea>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="header-note">Footer Note</label>
-                            <textarea class="form-control" name="footer_note"  rows="3">{{old('footer_note')}}</textarea>
+                            <textarea class="form-control" name="footer_note" rows="3">{{old('footer_note')}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -205,26 +217,26 @@
 @push('scripts')
 <script>
     /* call on load page */
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.district').hide();
         $('.upazila').hide();
     })
 
-    function show_upazila(e){
-         $('.district').hide();
-         $('.district'+e).show();
+    function show_upazila(e) {
+        $('.district').hide();
+        $('.district' + e).show();
     }
-    function show_unions(e){
-         $('.upazila').hide();
-         $('.upazila'+e).show();
+
+    function show_unions(e) {
+        $('.upazila').hide();
+        $('.upazila' + e).show();
     }
 
     function getCustomerType() {
         var ctype = document.querySelector('select[name="customer_type"]').value;
-
-        if (ctype === "0") {
+        if (ctype === "0" || ctype === "3") {
             $('#billSection').removeClass('d-none');
-        }else {
+        } else {
             $('#contact_person').val('');
             $('#billing_person').val('');
             $('#agreement_date').val('');

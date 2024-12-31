@@ -64,6 +64,17 @@
                             @endforelse
                         </select>
                     </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for=""><b>Received By</b></label>
+                            <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg"> -->
+                            <select class="form-control" name="received_by_city" required>
+                                <option value="">Select</option>
+                                <option value="1" @if($customer->received_by_city == 1) selected @endif>Ctg</option>
+                                <option value="2" @if($customer->received_by_city == 2) selected @endif>Head Office</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <label for=""><b>Customer Type</b></label>
                         <select class="form-select" name="customer_type" onchange="getCustomerType();" required>
@@ -80,9 +91,11 @@
                             <input type="text" value="{{old('inv_vat_note',$customer->inv_vat_note)}}" class="form-control" name="inv_vat_note">
                         </div>
                     </div>
-                    <div class="col-12 d-none" id="billSection">
+                    <div class="col-12 d-none mt-3" id="billSection">
                         <div class="row py-2 my-1" style="border: solid 1px red; border-radius: 8px;">
-                            <div class="text-center"><h5 class="text-danger">Billing Information</h5></div>
+                            <div class="text-center">
+                                <h5 class="text-danger">Billing Information</h5>
+                            </div>
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <div class="form-group">
                                     <label for="contact_person">Contact Person Name</label>
@@ -139,17 +152,6 @@
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12">
                                 <div class="form-group">
-                                    <label for=""><b>Received By</b></label>
-                                    <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg"> -->
-                                     <select class="form-control"  name="received_by_city" required>
-                                        <option value="">Select</option>
-                                        <option value="1" @if($customer->received_by_city == 1) selected @endif>Ctg</option>
-                                        <option value="2" @if($customer->received_by_city == 2) selected @endif>Head Office</option>
-                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 col-sm-12">
-                                <div class="form-group">
                                     <label for=""><b>Attention</b></label>
                                     <input class="form-control attention" type="text" name="attention" value="{{old('attention',$customer->attention)}}" placeholder="Attention">
                                 </div>
@@ -171,19 +173,19 @@
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="logo">Logo</label>
-                            <input type="file" name="logo" value=""  data-height="110" data-default-file="{{ asset('uploads/logo') }}/{{ $customer->logo }}" class="form-control dropify">
+                            <input type="file" name="logo" value="" data-height="110" data-default-file="{{ asset('uploads/logo') }}/{{ $customer->logo }}" class="form-control dropify">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="header-note">Header Note</label>
-                            <textarea class="form-control" name="header_note"  rows="3">{{old('header_note',$customer->header_note)}}</textarea>
+                            <textarea class="form-control" name="header_note" rows="3">{{old('header_note',$customer->header_note)}}</textarea>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="header-note">Footer Note</label>
-                            <textarea class="form-control" name="footer_note"  rows="3">{{old('footer_note',$customer->footer_note)}}</textarea>
+                            <textarea class="form-control" name="footer_note" rows="3">{{old('footer_note',$customer->footer_note)}}</textarea>
                         </div>
                     </div>
                 </div>
@@ -203,26 +205,26 @@
         getCustomerType();
     };
     /* call on load page */
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('.district').hide();
         $('.upazila').hide();
     })
 
-    function show_upazila(e){
-         $('.district').hide();
-         $('.district'+e).show();
+    function show_upazila(e) {
+        $('.district').hide();
+        $('.district' + e).show();
     }
-    function show_unions(e){
-         $('.upazila').hide();
-         $('.upazila'+e).show();
+
+    function show_unions(e) {
+        $('.upazila').hide();
+        $('.upazila' + e).show();
     }
 
     function getCustomerType() {
         var ctype = document.querySelector('select[name="customer_type"]').value;
-
-        if (ctype === "0") {
+        if (ctype === "0" || ctype === "3") {
             $('#billSection').removeClass('d-none');
-        }else {
+        } else {
             $('#contact_person').val('');
             $('#billing_person').val('');
             $('#agreement_date').val('');
