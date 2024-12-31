@@ -168,7 +168,9 @@ class CustomerController extends Controller
 
             if ($data->save()) {
                 \LogActivity::addToLog('Update Customer',$request->getContent(),'Customer');
-                return redirect()->route('customer.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                // Get the page number dynamically
+                $page = $request->input('page', 1);
+                return redirect()->route('customer.index', ['page' => $page])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }

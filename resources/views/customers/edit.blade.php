@@ -12,6 +12,8 @@
             <form class="form" method="post" action="{{route('customer.update', [encryptor('encrypt',$customer->id),'role' =>currentUser()])}}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+                <!-- Hidden field to carry the page number -->
+                <input type="hidden" name="page" value="{{ request('page', 1) }}">
                 <div class="row">
                     <h5 class="text-center m-0">Customer details</h5>
                 </div>

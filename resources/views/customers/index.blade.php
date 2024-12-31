@@ -12,10 +12,19 @@
                         <select name="customer_id" class="select2 form-select" onchange="getBranch(this);">
                             <option value="">Select Customer</option>
                             @forelse ($customer as $d)
-                                <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
+                            <option value="{{$d->id}}" {{ request('customer_id')==$d->id?"selected":""}}>{{$d->name}}</option>
                             @empty
-                                <option value="">No Data Found</option>
+                            <option value="">No Data Found</option>
                             @endforelse
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <select class="form-control" name="received_by_city" required>
+                            <option value="">Received By</option>
+                            <option value="1">Ctg</option>
+                            <option value="2">Head Office</option>
                         </select>
                     </div>
                 </div>
@@ -43,8 +52,9 @@
                     <tr>
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Name')}}</th>
+                        <th scope="col">{{__('Received By')}}</th>
                         <th scope="col">{{__('Contact')}}</th>
-                        {{--  <th scope="col">{{__('Contact Person')}}</th>  --}}
+                        {{-- <th scope="col">{{__('Contact Person')}}</th> --}}
                         {{-- <th scope="col">{{__('Address')}}</th> --}}
                         <th scope="col">{{__('Zone')}}</th>
                         <th class="white-space-nowrap" width="80px">{{__('ACTION')}}</th>
@@ -55,18 +65,22 @@
                     <tr>
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{$e->name}}</td>
+                        <td>
+                            @if($e->received_by_city == 1) Ctg  @endif
+                            @if($e->received_by_city == 2) Head Office @endif
+                        </td>
                         <td>{{$e->contact}}</td>
-                        {{--  <td>
-                            <strong>Name:</strong> {{$e->contact_person}}<br/>
-                            <strong>Contact:</strong> {{$e->contact_number}}
-                        </td>  --}}
+                        {{-- <td>
+                            <strong>Name:</strong> {{$e->contact_person}}<br />
+                        <strong>Contact:</strong> {{$e->contact_number}}
+                        </td> --}}
                         {{-- <td>{{$e->address}}</td> --}}
                         <td>{{$e->zone?->name}}</td>
                         <td class="d-flex">
-                            <a class="mx-1" href="{{route('customer.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a class="mx-1" href="{{route('customer.show',[encryptor('encrypt',$e->id)])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
-                            <a class="mx-1" href="{{route('customer.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                            <a class="mx-1" href="{{route('customer.edit',[encryptor('encrypt',$e->id),'page' => request('page', 1)])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="mx-1" title="Branch" href="{{route('customerbrance.index')}}?customer_id={{encryptor('encrypt',$e->id)}}">
@@ -82,9 +96,9 @@
                                 @csrf
                                 @method('delete')
                             </form>
-                            {{--  <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
-                                Certificate
-                            </a>  --}}
+                            {{-- <a class="btn btn-sm btn-primary float-end ms-2" href="{{route('securityGuards',encryptor('encrypt',$e->id))}}">
+                            Certificate
+                            </a> --}}
                         </td>
                     </tr>
                     @empty
