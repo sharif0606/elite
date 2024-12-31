@@ -126,8 +126,8 @@
                         @if ($emprate->details)
                         @foreach ($emprate->details as $de)
                         <tr class="text-center">
-                            <td>@if($de->employee){{ $de->employee?->bn_applicants_name .' ('.' Id-'.$de->employee?->admission_id_no.')' }} @else - @endif</td>
                             <td >{{ ++$loop->index  }}</td>
+                            <td>@if($de->employee){{ $de->employee?->bn_applicants_name .' ('.' Id-'.$de->employee?->admission_id_no.')' }} @else - @endif</td>
                             <td>{{ $de->jobpost?->name }}</td>
                             <td>@if($de->hours==1) 8 Hour's @else 12 Hour's @endif</td>
                             <td>{{ $de->duty_rate }}</td>
