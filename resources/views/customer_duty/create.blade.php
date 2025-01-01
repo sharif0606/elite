@@ -245,81 +245,82 @@
        // console.log(startdate);
     }
 
-    function getEmployees(e){
-        var customer_id = $('.customer_id');
-        let branch_id = $('.branch_id option:selected').val();
-        let atm_id = $('.atm_id option:selected').val();
-        var customer_select_message = $('.customer_select_message');
-        if (!customer_id.val()) {
-            customer_id.focus();
-            customer_select_message.html('Please select a customer');
-            return false;
-        }
-        //customer_id.on('change', function() {
-         //   if ($(this).val()) {
-         //       customer_select_message.hide();
-        //    } else {
-         //       customer_select_message.html('Please select a customer').show();
-        //    }
-        //});
-        //var pa = '<div style="color:red">Inactive</div>';
-       
-        //var message=$(e).closest('tr').find('.employee_data').append(pa);
+    function getEmployees(e) {
+    let customer_id = $('.customer_id');
+    let branch_id = $('.branch_id option:selected').val();
+    let atm_id = $('.atm_id option:selected').val();
+    let customer_select_message = $('.customer_select_message');
+    let employee_id = $(e).closest('tr').find('.employee_id').val();
+    let employee_data = $(e).closest('tr').find('.employee_data');
+    let job_post_id = $(e).closest('tr').find('.job_post_id');
+    let employee_id_primary = $(e).closest('tr').find('.employee_id_primary');
 
-        var employee_id=$(e).closest('tr').find('.employee_id').val();
-        //console.log('E='+employee_id);
-        var customerId = document.getElementById('customer_id').value;
-        if(employee_id){
-            $.ajax({
-                url:"{{ route('empatt.getEmployee') }}",
-                type: "GET",
-                dataType: "json",
-                data: { 'id':employee_id },
-                success: function(data) {
-                    console.log(data);
-                    //console.log(employee_id);
-                    if(data.length>0){
-                        //console.log(data);
-                        /* === Post Call From Employee Assign Table ===*/
-                        $.ajax({
-                            //url:"{{ route('empasign.getJobPost') }}",
-                            url:"{{ route('emp.getEmployeeRate') }}",
-                            type: "GET",
-                            dataType: "json",
-                            data: { 'customer_id':customerId,'branch_id':branch_id ,'atm_id':atm_id },
-                            success: function(data) {
-                                $(e).closest('tr').find('.job_post_id').html(data);
-                            }
-                        })
-                        /* === Post Call From Employee Assign Table ===*/
-
-                        var id = data[0].id;
-                        var name = data[0].bn_applicants_name;
-                        var contact = data[0].bn_parm_phone_my;
-                        var position=data[0].position.name;
-                        var positionid=data[0].bn_jobpost_id;
-                        //console.log('Position'.positionid);
-                        $(e).closest('tr').find('.employee_data').html(name);
-                        // Select the corresponding option in the select element
-                        $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
-                        //$(e).closest('tr').find('.job_post_id').val(positionid);
-                        $(e).closest('tr').find('.employee_id_primary').val(id);
-                    }else{
-                        $(e).closest('tr').find('.employee_data').html('');
-                        $(e).closest('tr').find('.employee_data').append(data.msg);
-                    }
-                    getDutyOtRate(e);
-                },
-            });
-        } else {
-            $(e).closest('tr').find('.employee_name').val('');
-            $(e).closest('tr').find('.employee_contact').val('');
-            $(e).closest('tr').find('.employee_data').html('');
-        }
+    // Validate customer selection
+    if (!customer_id.val()) {
+        customer_id.focus();
+        customer_select_message.html('Please select a customer');
+        return false;
     }
+
+    // If employee_id exists
+    if (employee_id) {
+        $.ajax({
+            url: "{{ route('empatt.getEmployee') }}",
+            type: "GET",
+            dataType: "json",
+            data: { id: employee_id },
+            success: function(data) {
+                if (data.length > 0) {
+                    let employee = data[0];
+                    employee_data.html(employee.bn_applicants_name);
+                    job_post_id.find(`option[value="${employee.bn_jobpost_id}"]`).attr('selected', 'selected');
+                    employee_id_primary.val(employee.id);
+
+                    // Fetch job post details, passing employee_id
+                    fetchJobPostDetails(customer_id.val(), branch_id, atm_id, employee.id, e);
+                } else {
+                    employee_data.html('');
+                    employee_data.append(data.msg);
+                }
+
+                getDutyOtRate(e); // Assuming this function is defined elsewhere
+            },
+            error: function() {
+                console.error("Error fetching employee data.");
+            }
+        });
+    } else {
+        // Clear fields if no employee_id
+        employee_data.html('');
+        $(e).closest('tr').find('.employee_name, .employee_contact').val('');
+    }
+}
+
+function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
+    $.ajax({
+        url: "{{ route('emp.getEmployeeRate') }}",
+        type: "GET",
+        dataType: "json",
+        data: {
+            customer_id: customerId,
+            branch_id: branchId,
+            atm_id: atmId,
+            employee_id: employeeId // Include employee_id here
+        },
+        success: function(data) {
+            $(e).closest('tr').find('.job_post_id').html(data);
+        },
+        error: function() {
+            console.error("Error fetching job post details.");
+        }
+    });
+}
+
+
 
     function getDutyOtRate(e){
         let positionid = $(e).closest('tr').find('.job_post_id option:selected').data('jobpostid');
+        let employee_id = $(e).closest('tr').find('.employee_id_primary').val();
         var customerId = $('.customer_id').val();
         var branchId = $('.branch_id').val();
         //console.log('Customer'.customerId);
@@ -328,7 +329,7 @@
             url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
-            data: { 'customer_id':customerId,'job_post_id':positionid,'branch_id':branchId },
+            data: { 'customer_id':customerId,'job_post_id':positionid,'branch_id':branchId,'employee_id':employee_id },
             success: function(data) {
                 console.log(data);
                 var dutyRate=data.duty_rate;

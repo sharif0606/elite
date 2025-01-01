@@ -99,26 +99,45 @@ class CustomerDutyController extends Controller
     public function getEmployeeDuty(Request $request)
     {
         try {
-            $customerId = $request->customer_id;
+            /*$customerId = $request->customer_id;
             $jobpostId = $request->job_post_id;
             $branch = $request->branch_id;
+            $employee_id = $request->employee_id;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
-
+            
             $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id', $branch)->pluck('id');
             if ($request->branch_id) {
                 if (!$empRateIdWithBranch->isEmpty()) {
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
-                    return $data;
-                } else {
+                    if($customerId && $employee_id){*/
+                        //echo $customerId.'<br>';
+                        //echo $employee_id.'<br>';
+                        //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('employee_id', $employee_id)->orderBy('id', 'desc')->first();
+                        //dd($data);
+                        /*if($data){
+                            return $data;
+                        }
+                        else{
+                            DB::enableQueryLog();
+                            $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                            dd(DB::getQueryLog());
+                            return $data;
+                        }
+                    }else{
+                        $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->orderBy('id', 'desc')->first();
+                        return $data;
+                    }
+                }else {*/
                     //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
-                    $emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+                    /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
             } else {
                 $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                 return $data;
-            }
+            }*/
+            $data = EmployeeRateDetails::find($request->job_post_id);
+            return $data;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
@@ -126,26 +145,32 @@ class CustomerDutyController extends Controller
     public function getDutyOtRateHourWise(Request $request)
     {
         try {
-            $customerId = $request->customer_id;
+            /*$customerId = $request->customer_id;
             $jobpostId = $request->job_post_id;
             $branch = $request->branch_id;
             $jobpostHour = $request->job_post_hour;
             $empRateId = EmployeeRate::where('customer_id', $customerId)->pluck('id');
             $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id', $branch)->pluck('id');
             if ($request->branch_id) {
-                if (!$empRateIdWithBranch->isEmpty()) {
-                    $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
-                    return $data;
-                } else {
+                if (!$empRateIdWithBranch->isEmpty()) {*/
+                    //DB::enableQueryLog();
+                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
+                    //dd(DB::getQueryLog());
+                    //return $data;
+                //} else {
                     //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
-                    $emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+                    /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                     return $data;
-                }
-            } else {
+                }*/
+            /*} else {
                 $data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                 return $data;
-            }
+            }*/
+            //$data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
+            //return $data;
+            $data = EmployeeRateDetails::find($request->job_post_id);
+            return $data;
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
