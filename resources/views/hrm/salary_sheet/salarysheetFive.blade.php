@@ -267,7 +267,15 @@
                             let traningCost=value.bn_remaining_cost;
                             let traningCostMonth=value.bn_traning_cost_byMonth;
                             let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                            /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
+                            let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
                             let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                            if(deduction_post_allowance){
+                                postAllowance = deduction_post_allowance
+                            }else{
+                                postAllowance= postAllowance;
+                            }
+                            
                             //console.log(traningCostPerMonth);
                             let joiningDate = new Date(value.salary_joining_date);
                             let sixMonthsLater = new Date(joiningDate);
