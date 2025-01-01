@@ -287,11 +287,10 @@
                                 if (new Date() >= sixMonthsLater && value.charge_status == 0) {
                                     pf = (value.p_f > 0) ? value.p_f : '0';
                                     Insurance = (value.insurance > 0) ? value.insurance : '0';
-                                }
-                                if (new Date() >= sixMonthsLater && value.charge_status ==0) {
-                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
-                                }
-
+                                }else {
+                                    pf = "0"; // No further deductions
+                                    Insurance = "0";
+                                    }
                                 // Mark deductions as applied
                                 appliedDeductions[value.admission_id_no] = true;
                             } else {
