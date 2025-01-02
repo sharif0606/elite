@@ -312,7 +312,7 @@
                             let Dress = (value.dress > 0) ? value.dress : '0';
                             let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                            
-                            let netSalary = '0';
+                            let netSalary = 0;
                             let currentMonth = $('.selected_month').val();
                             let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
                            
@@ -406,10 +406,10 @@
                                 var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stamp" type="text" name="deduction_stamp[]" value="${Stmp}" placeholder="stamp">`
                                 var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                                 var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
-                                var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
+                                var payableCondtion=`<input style="width:100px;" class="form-control total_payable" value="${netSalary+parseFloat(postAllowance).toFixed(2)}" type="text" name="total_payable[]" placeholder="Total Payable Salary" readonly>`
                                 var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="${postAllowance}">`
                             }
-                              
+
                             selectElement.append(
                                 `<tr>
                                     <td class="fixed">${counter + 1}</td>
