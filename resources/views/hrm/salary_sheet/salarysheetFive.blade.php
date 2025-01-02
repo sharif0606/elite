@@ -360,6 +360,7 @@
                             let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                             if (grossAmoun > totalDeduction) {
                                 netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
+                                netSalary += Math.round(parseFloat(postAllowance).toFixed(2));
                             }
                             // if(old_emp == value.admission_id_no){
                                 if(value.duty_qty > 0 && value.ot_qty == 0){
