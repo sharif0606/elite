@@ -1271,7 +1271,16 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'employees.insurance',
         'employees.p_f',
         DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-        DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR salary_sheet_details.deduction_p_f IS NOT NULL OR salary_sheet_details.deduction_loan IS NOT NULL) and (`salary_sheets`.`year` = '2024' and `salary_sheets`.`month` = '11') , 1, 0) AS charge_status ")
+        DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR 
+        salary_sheet_details.deduction_p_f IS NOT NULL 
+        OR salary_sheet_details.allownce IS NOT NULL
+        OR salary_sheet_details.deduction_fine IS NOT NULL
+        OR salary_sheet_details.deduction_dress IS NOT NULL
+        OR salary_sheet_details.deduction_banck_charge IS NOT NULL
+        OR salary_sheet_details.deduction_revenue_stamp IS NOT NULL
+        OR salary_sheet_details.deduction_traningcost IS NOT NULL
+        OR salary_sheet_details.deduction_loan IS NOT NULL) 
+        AND (salary_sheets.year = {$request->Year} AND salary_sheets.month = {$request->Month}), 1, 0) AS charge_status")
     )
     ->where(function ($query) use ($request) {
         $query->where(function ($subQuery) use ($request) {

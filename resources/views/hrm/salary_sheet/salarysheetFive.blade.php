@@ -270,34 +270,16 @@
                             /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
                             let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
                             let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
-                            if(deduction_post_allowance){
-                                postAllowance = deduction_post_allowance
-                            }else{
-                                postAllowance= postAllowance;
-                            }
+                           
                             
                             //console.log(traningCostPerMonth);
                             let joiningDate = new Date(value.salary_joining_date);
                             let sixMonthsLater = new Date(joiningDate);
                             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
                             // Deduction calculation
-                            let pf = "0";
-                            // Check if deductions are already applied for this employee
-                            if (!appliedDeductions[value.admission_id_no]) {
-                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
-                                    pf = (value.p_f > 0) ? value.p_f : '0';
-                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
-                                }else {
-                                    pf = "0"; // No further deductions
-                                    Insurance = "0";
-                                    }
-                                // Mark deductions as applied
-                                appliedDeductions[value.admission_id_no] = true;
-                            } else {
-                                pf = "0"; // No further deductions
-                                Insurance = "0";
-                            }
-
+                            let pf = 0;
+                            let Insurance = 0;
+                            
                             /*if (new Date() >= sixMonthsLater && value.charge_status ==0) {
                                 pf = (value.p_f > 0) ? value.p_f : '0';
                             }else{
@@ -316,11 +298,10 @@
                                 (value.salary_stop_message) ? value.salary_stop_message : ''
                             ];
                             let Remarks = RemarksArray.filter(item => item !== '').join(', ');
-                            //let Loan = (value.loan > 0) ? value.loan : '0';//comping form employee table old line now used lo
-                            let Loan = 0;
-                            if (value.charge_status ==0) {
-                                Loan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
-                            }
+                            let Loan = (value.loan > 0) ? value.loan : '0';//comping form employee table old line now used lo
+                            //if (value.charge_status ==0) {
+                                Loan += (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                            //}
                             let Cloth = (value.cloth > 0) ? value.cloth : '0';
                             let Jacket = (value.jacket > 0) ? value.jacket : '0';
                             let Hr = (value.hr > 0) ? value.hr : '0';
@@ -337,6 +318,48 @@
                             if (grossAmoun > totalDeduction) {
                                 netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
                             }
+
+                            // Check if deductions are already applied for this employee
+                            if (!appliedDeductions[value.admission_id_no]) {
+                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
+                                    
+                                    if(deduction_post_allowance){
+                                        postAllowance = deduction_post_allowance
+                                    }else{
+                                        postAllowance= postAllowance;
+                                    }
+                                    Dress = Dress;
+                                    Fine = Fine;
+                                    BankCharge = BankCharge;
+                                    Stmp = Stmp;
+                                    traningCostPerMonth = traningCostPerMonth;
+                                    Loan = Loan;
+                                }else {
+                                    pf = "0"; // No further deductions
+                                    Insurance = "0";
+                                    postAllowance = 0;
+                                    Dress = 0;
+                                    Fine = 0;
+                                    BankCharge = 0;
+                                    Stmp = 0;
+                                    traningCostPerMonth = 0;
+                                    Loan = 0;
+                                }
+                                // Mark deductions as applied
+                                appliedDeductions[value.admission_id_no] = true;
+                            } else {
+                                pf = 0; // No further deductions
+                                Insurance = 0;
+                                Dress = 0;
+                                Fine = 0;
+                                BankCharge = 0;
+                                Stmp = 0;
+                                traningCostPerMonth = 0;
+                                Loan = 0;
+                            }
+                            
                             // if(old_emp == value.admission_id_no){
                                 if(value.duty_qty > 0 && value.ot_qty == 0){
                                 var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`
