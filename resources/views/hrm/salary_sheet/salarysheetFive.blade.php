@@ -311,13 +311,11 @@
                             let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
                             let Dress = (value.dress > 0) ? value.dress : '0';
                             let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
-                            let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                           
                             let netSalary = '0';
                             let currentMonth = $('.selected_month').val();
                             let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
-                            if (grossAmoun > totalDeduction) {
-                                netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
-                            }
+                           
 
                             // Check if deductions are already applied for this employee
                             if (!appliedDeductions[value.admission_id_no]) {
@@ -337,8 +335,8 @@
                                     traningCostPerMonth = traningCostPerMonth;
                                     Loan = Loan;
                                 }else {
-                                    pf = "0"; // No further deductions
-                                    Insurance = "0";
+                                    pf = 0; // No further deductions
+                                    Insurance = 0;
                                     postAllowance = 0;
                                     Dress = 0;
                                     Fine = 0;
@@ -359,7 +357,10 @@
                                 traningCostPerMonth = 0;
                                 Loan = 0;
                             }
-                            
+                            let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                            if (grossAmoun > totalDeduction) {
+                                netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
+                            }
                             // if(old_emp == value.admission_id_no){
                                 if(value.duty_qty > 0 && value.ot_qty == 0){
                                 var dressCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_dress" type="text" value="${Dress}" name="deduction_dress[]" placeholder="Dress">`

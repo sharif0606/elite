@@ -206,6 +206,8 @@ var row=`
 </tr>
 `;
     $('#emprateassing').append(row);
+    // Reinitialize Select2 for dynamically added elements
+    $('.select2').select2();
 }
 
 function removeRow(e) {
