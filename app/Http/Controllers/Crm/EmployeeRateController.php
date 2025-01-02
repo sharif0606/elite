@@ -215,9 +215,13 @@ class EmployeeRateController extends Controller
                 ->where('employee_rates.branch_id', $request->branch_id)
                 ->where('employee_rates.atm_id', $request->atm_id);
         } elseif (!empty($request->customer_id) && !empty($request->branch_id)) {
+           
             // Match customer and branch, ignoring ATM and employee_id
             $query->where('employee_rates.customer_id', $request->customer_id)
-                ->where('employee_rates.branch_id', $request->branch_id);
+            ->where(function ($subQuery) use ($request) {
+                $subQuery->where('employee_rates.branch_id', $request->branch_id)
+                ->orWhereNull('employee_rate_details.employee_id'); // Include rows with NULL employee_id
+            });
         } elseif (!empty($request->customer_id)) {
             // Match customer only
             $query->where('employee_rates.customer_id', $request->customer_id);
