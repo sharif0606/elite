@@ -314,7 +314,9 @@
                         // let Ab = (value.absent > 0) ? value.absent : '0';
                         // let Va = (value.vacant > 0) ? value.vacant : '0';
                         // let Cf = (value.c_f > 0) ? value.c_f : '0';
-                        // let Medical = (value.medical > 0) ? value.medical : '0';
+                        let Medical = (value.cmedical > 0) ? value.cmedical : '0';
+                        let Trans = (value.ctrans_conve > 0) ? value.ctrans_conve : '0';
+                        let Food = (value.cfood_allowance > 0) ? value.cfood_allowance : '0';
                         // let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Ad = (value.adv > 0) ? value.adv : '0';
@@ -350,7 +352,7 @@
                         }else{
                             var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
-                            var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="0">`;
+                            var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="${Food}">`;
                             var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Math.trunc(absent)}" placeholder="Absent" readonly>`
                             var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant" readonly>`
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
@@ -383,10 +385,10 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control house_rent" type="text" name="house_rent[]" value="${hR}" placeholder="House rent (50%)">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical" type="text" name="medical[]" value="2375" placeholder="Medical">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control medical" type="text" name="medical[]" value="${Medical}" placeholder="Medical">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="0" placeholder="Trans. Conve.">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="${Trans}" placeholder="Trans. Conve.">
                                 </td>
                                 <td>${food}</td>
                                 <td>
