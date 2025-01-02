@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Stock\Stock;
 use App\Models\Stock\Product;
 use App\Models\Employee\Employee;
+use App\Models\Customer;
+use App\Models\Crm\CustomerBrance;
 use Illuminate\Support\Facades\DB;
 
 class StockController extends Controller
@@ -20,50 +22,75 @@ class StockController extends Controller
     {
         $product = Product::with('stock');
         if ($request->product) {
-            $product =$product->where('id',$request->product);
+            $product = $product->where('id', $request->product);
         }
-        $product =$product->get();
-        return view('Stock.stock.list',compact('product'));
+        $product = $product->get();
+        return view('Stock.stock.list', compact('product'));
     }
 
-    public function stockindividual(Request $request,$id)
+    public function stockindividual(Request $request, $id)
     {
         //$company = company()['company_id'];
-        $stock = Stock::where('product_id',(encryptor('decrypt',$id)));
+        $stock = Stock::where('product_id', (encryptor('decrypt', $id)));
         if ($request->fdate) {
             $tdate = $request->tdate ? $request->tdate : $request->fdate;
-            $stock =$stock->whereBetween('entry_date',[$request->fdate, $tdate]);
+            $stock = $stock->whereBetween('entry_date', [$request->fdate, $tdate]);
         }
         $stock = $stock->get();
-        $product = Product::where('id',(encryptor('decrypt',$id)))->first();
+        $product = Product::where('id', (encryptor('decrypt', $id)))->first();
 
-        return view('Stock.stock.stockReportIndividual', compact('stock','product'));
+        return view('Stock.stock.stockReportIndividual', compact('stock', 'product'));
     }
 
     public function EmployeeList(Request $request)
     {
-        $stock=Stock::select('id','employee_id','product_qty','entry_date')->whereNotNull('employee_id');
-        $employee = Employee::select('id','admission_id_no','bn_applicants_name')->get();
-        if($request->employee_id)
-        $stock=$stock->where('employee_id','like','%'.$request->employee_id.'%');
-        $stock=$stock->groupBy('employee_id')->get();
+        $stock = Stock::select('id', 'employee_id', 'product_qty', 'entry_date','company_id','company_branch_id');
 
-        return view('Stock.employeeReport.employee_list',compact('stock','employee'));
+        // Check and apply filters based on request parameters
+        if (!empty($request->employee_id)) {
+            // If employee_id is provided, apply it and ignore other filters
+            $stock = $stock->where('employee_id', $request->employee_id)->groupBy('employee_id');
+        } elseif (!empty($request->company_id)) {
+            // If company_id is provided, apply it and ignore employee_id
+            $stock = $stock->where('company_id', $request->company_id)->groupBy('company_id');
+        } elseif (!empty($request->company_branch_id)) {
+            // If company_branch_id is provided, apply it and ignore employee_id
+            $stock = $stock->where('company_branch_id', $request->company_branch_id)->groupBy('company_branch_id');
+        }else{
+            $stock = $stock->whereNotNull('employee_id');
+        }
+        DB::enableQueryLog(); // Enable query logging
+        // Finalize the stock query
+        $stock = $stock->paginate(50);
+        // Get the executed queries from the log
+        //$queries = DB::getQueryLog();
+        // Optionally, log the queries to a file or display them
+        //\Log::info('Executed Queries: ', $queries);
+        // You can also dd() to display the queries for immediate debugging
+        //dd($queries);
+
+        // Fetch other necessary data
+        $employee = Employee::select('id', 'admission_id_no', 'bn_applicants_name')->get();
+        $customer = Customer::all();
+        $branch = CustomerBrance::get();
+
+        // Return the view with data
+        return view('Stock.employeeReport.employee_list', compact('stock', 'employee', 'customer', 'branch'));
     }
 
-    public function employeeIndividual(Request $request,$id)
+    public function employeeIndividual(Request $request, $id)
     {
-        $productList = Stock::where('employee_id',(encryptor('decrypt',$id)))->orderBy('product_id')->get();
-        $stock = json_decode(json_encode(DB::select("select count(*) as c,product_id,SUM(product_qty) AS total_qty from stocks where employee_id='".encryptor('decrypt',$id)."' group by product_id")),true);
+        $productList = Stock::where('employee_id', (encryptor('decrypt', $id)))->orderBy('product_id')->get();
+        $stock = json_decode(json_encode(DB::select("select count(*) as c,product_id,SUM(product_qty) AS total_qty from stocks where employee_id='" . encryptor('decrypt', $id) . "' group by product_id")), true);
         //print_r($stock);die();
         // if ($request->fdate) {
         //     $tdate = $request->tdate ? $request->tdate : $request->fdate;
         //     $stock =$stock->whereBetween('entry_date',[$request->fdate, $tdate]);
         // }
         // $stock = $stock->groupBy('product_id')->get();
-        $employee = Employee::where('id',(encryptor('decrypt',$id)))->first();
+        $employee = Employee::where('id', (encryptor('decrypt', $id)))->first();
 
-        return view('Stock.employeeReport.employeeReportIndividual', compact('productList','employee','stock'));
+        return view('Stock.employeeReport.employeeReportIndividual', compact('productList', 'employee', 'stock'));
     }
     public function create()
     {
