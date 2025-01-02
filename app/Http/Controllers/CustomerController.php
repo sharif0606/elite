@@ -144,6 +144,9 @@ class CustomerController extends Controller
             $data->zone_id = $request->zone_id;
             $data->received_by_city = $request->received_by_city;
             $data->customer_type = $request->customer_type;
+            $data->medical = $request->medical;
+            $data->food_allownce = $request->food_allownce;
+            $data->trans_conve = $request->trans_conve;
             $data->inv_vat_note = $request->inv_vat_note;
             $data->contact_person = $request->contact_person;
             $data->billing_person = $request->billing_person;
@@ -154,7 +157,6 @@ class CustomerController extends Controller
             $data->take_home = $request->take_home;
             $data->royal_tea = $request->royal_tea;
             $data->ait = $request->ait;
-            $data->received_by_city = $request->received_by_city;
             $data->attention = $request->attention;
             $data->attention_details = $request->attention_details;
             $data->header_note = $request->header_note;

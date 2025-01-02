@@ -87,6 +87,24 @@
                             <option value="3" {{$customer->customer_type==3?'selected':''}}>Event</option>
                         </select>
                     </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="medical">Medical</label>
+                            <input type="text" value="{{old('medical',$customer->medical)}}" class="form-control" name="medical">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="food_allownce">Food Allownce</label>
+                            <input type="text" value="{{old('food_allownce',$customer->food_allownce)}}" class="form-control" name="food_allownce">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="trans_conve">Transport Convence</label>
+                            <input type="text" value="{{old('trans_conve',$customer->trans_conve)}}" class="form-control" name="trans_conve">
+                        </div>
+                    </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="inv_vat_note">Invoice Vat Note</label>

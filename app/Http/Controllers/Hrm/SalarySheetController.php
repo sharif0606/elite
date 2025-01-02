@@ -1270,6 +1270,9 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'employees.bn_food_allowance',
         'employees.insurance',
         'employees.p_f',
+        'customers.medical as cmedical',
+        'customers.food_allownce as cfood_allowance',
+        'customers.trans_conve as ctrans_conve',
         DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
         DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR 
         salary_sheet_details.deduction_p_f IS NOT NULL 
