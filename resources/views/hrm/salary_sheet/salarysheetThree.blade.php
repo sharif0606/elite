@@ -334,6 +334,9 @@
                         let absent = (value.absent > 0) ? value.absent : '0';
                         let vacant = (value.vacant > 0) ? value.vacant : '0';
                         let holiday_festival = (value.holiday_festival > 0) ? value.holiday_festival : '0';
+                        let leave_cl = (value.leave_cl > 0) ? value.leave_cl : '0';
+                        let leave_sl = (value.leave_sl > 0) ? value.leave_sl : '0';
+                        let leave_el = (value.leave_el > 0) ? value.leave_el : '0';
 
                         // if(old_emp == value.admission_id_no){
                         if(value.duty_qty == 0){
@@ -410,13 +413,13 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="${Math.trunc(holiday_festival)}" placeholder="Holiday/ festival">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="${Math.trunc(leave_cl)}" placeholder="Leave CL">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="${Math.trunc(leave_sl)}" placeholder="Leave SL">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="${Math.trunc(leave_el)}" placeholder="Leave EL">
                                 </td>
                                 <td>${absentCondition}</td>
                                 <td>${vacantCondition}</td>
