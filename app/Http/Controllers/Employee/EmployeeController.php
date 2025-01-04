@@ -429,7 +429,7 @@ class EmployeeController extends Controller
         // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
             $signatureCell->addImage(asset('uploads/signature_img/' . $employees->signature_img), [
-                'height' => 40, // Set the height of the image
+                'height' => 50, // Set the height of the image
                 'width' => 150,  // Set the width of the image
                 'align' => 'center', // Center the image
                 'marginTop' => 0,  // Add top margin for spacing
