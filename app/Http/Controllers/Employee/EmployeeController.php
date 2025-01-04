@@ -370,9 +370,9 @@ class EmployeeController extends Controller
         if ($employees->signature_img != '') {
             $signatureCell->addImage(asset('uploads/signature_img/' . $employees->signature_img), [
                 'height' => 50, // Set the height of the image
-                'width' => 150,  // Set the width of the image
+                'width' => 160,  // Set the width of the image
                 'align' => 'center', // Center the image
-                'marginTop' => 1,  // Add top margin for spacing
+                'marginTop' => 0,  // Add top margin for spacing
             ]);
         }
 
@@ -380,7 +380,7 @@ class EmployeeController extends Controller
         $signatureCell->addText(
             "Signature of the " . ($employees->position?->name ?? 'Employee'),
             ['bold' => true],
-            ['align' => 'center', 'marginTop' => 2, 'borderTopSize' => 2, 'borderTopColor' => '000000']
+            ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 2, 'borderTopColor' => '000000']
         );
 
 
