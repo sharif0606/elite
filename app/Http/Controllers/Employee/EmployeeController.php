@@ -361,7 +361,7 @@ class EmployeeController extends Controller
         $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
         $textCellLeft->addTextBreak(1);
 
-        $textCellmiddle = $table3->addCell(2000); // Adjust width for the text wrapping 
+        $textCellmiddle = $table3->addCell(1000); // Adjust width for the text wrapping 
 
         // Add the "Signature" on the right (second cell with top border only)
         $signatureCell = $table3->addCell(2000); // Top border only for "Signature"
@@ -372,7 +372,6 @@ class EmployeeController extends Controller
                 'height' => 50, // Set the height of the image
                 'width' => 150,  // Set the width of the image
                 'align' => 'center', // Center the image
-                'marginTop' => 0,  // Add top margin for spacing
             ]);
         }
 
@@ -380,7 +379,7 @@ class EmployeeController extends Controller
         $signatureCell->addText(
             "Signature of the " . ($employees->position?->name ?? 'Employee'),
             ['bold' => true],
-            ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 0, 'borderTopColor' => '000000']
+            ['align' => 'center', 'borderTopColor' => '000000']
         );
 
 
