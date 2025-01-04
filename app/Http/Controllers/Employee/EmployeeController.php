@@ -379,22 +379,24 @@ class EmployeeController extends Controller
             ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 0, 'borderTopColor' => '000000']
         );
 
-        // Add a text break to separate the second table from the third table
-        //$section->addTextBreak(1); // Add a line break
-
         // Create the fourth table (separate full-width table)
         $table4 = $section->addTable();
 
         // Add a row to the table
         $table4->addRow();
 
-        // Add the text on the left (first cell, spans the full width)
+        // Add the first text (first cell, spans full width)
         $textCellLeft = $table4->addCell(10000); // Full width cell for text (spanning entire width)
         $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
-           // Add the text on the left (first cell, spans the full width)
-           $textCellLeft = $table4->addCell(10000); // Full width cell for text (spanning entire width)
-           $textCellLeft->addText("Certified By", ['size' => 10], ['align' => 'left']);
-  
+
+        // Add a new row and cell for "Certified By"
+        $table4->addRow();
+
+        // Add the "Certified By" text in its own cell
+        $certifiedCell = $table4->addCell(10000); // Full width cell
+        $certifiedCell->addText("Certified By", ['size' => 10], ['align' => 'left']);
+
+
 
 
         // Save the document to a variable and send it for download
