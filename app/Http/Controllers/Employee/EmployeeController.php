@@ -365,7 +365,7 @@ class EmployeeController extends Controller
         // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
             $signatureCell->addImage(asset('uploads/signature_img/' . $employees->signature_img), [
-                'height' => 30, // Set the height of the image
+                'height' => 40, // Set the height of the image
                 'width' => 150,  // Set the width of the image
                 'align' => 'center', // Center the image
                 'marginTop' => 0,  // Add top margin for spacing
@@ -391,6 +391,9 @@ class EmployeeController extends Controller
         // Add the text on the left (first cell, spans the full width)
         $textCellLeft = $table4->addCell(10000); // Full width cell for text (spanning entire width)
         $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
+           // Add the text on the left (first cell, spans the full width)
+           $textCellLeft = $table4->addCell(10000); // Full width cell for text (spanning entire width)
+           $textCellLeft->addText("Certified By", ['size' => 10], ['align' => 'left']);
   
 
 
