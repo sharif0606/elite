@@ -363,37 +363,25 @@ class EmployeeController extends Controller
 
         $textCellmiddle = $table3->addCell(2000); // Adjust width for the text wrapping 
 
-        $signatureCell = $table3->addCell(2000); // Cell for signature
+        // Add the "Signature" on the right (second cell with top border only)
+        $signatureCell = $table3->addCell(2000); // Top border only for "Signature"
 
+        // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
-            // Path to the image
-            $imagePath = asset('uploads/signature_img/' . $employees->signature_img);
-            
-            // Get the dimensions of the image (you can use getimagesize() to fetch image width and height)
-            list($width, $height) = getimagesize(public_path('uploads/signature_img/' . $employees->signature_img));
-            
-            // Calculate aspect ratio
-            $aspectRatio = $width / $height;
-        
-            // Set new width and height based on desired container size
-            $newWidth = 180; // Desired width
-            $newHeight = $newWidth / $aspectRatio; // Calculate the height based on the aspect ratio
-        
-            $signatureCell->addImage($imagePath, [
-                'width' => $newWidth,
-                'height' => $newHeight,
-                'align' => 'center',
-                'marginTop' => 0,
+            $signatureCell->addImage(asset('uploads/signature_img/' . $employees->signature_img), [
+                'height' => 50, // Set the height of the image
+                'width' => 150,  // Set the width of the image
+                'align' => 'center', // Center the image
+                'marginTop' => 0,  // Add top margin for spacing
             ]);
         }
-        
+
         // Add the "Signature of the Position" text below the image
         $signatureCell->addText(
             "Signature of the " . ($employees->position?->name ?? 'Employee'),
             ['bold' => true],
             ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 0, 'borderTopColor' => '000000']
         );
-        
 
 
 
