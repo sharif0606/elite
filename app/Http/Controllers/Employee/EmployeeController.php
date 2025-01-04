@@ -327,6 +327,58 @@ class EmployeeController extends Controller
             ['Designation', $employees->position?->name],
             ['Place of Posting', $employees->en_place_of_posting],
             ['Employee ID No', $employees->admission_id_no],
+            ['Height', $employees->en_height_foot . "Feet" . $employees->en_height_inc . "Inch"],
+            ['Blood Group', $employees->bloodgroup?->name],
+            ['Fathers Name', $employees->en_fathers_name],
+            ['Mothers Name', $employees->en_mothers_name],
+            ['Next of Kin(NOK)', $employees->en_legacy_name],
+            [
+                'Present Address',
+                ($employees->en_pre_holding_no ? 'C/O: ' . $employees->en_pre_holding_no . ', ' : '') .
+                    ($employees->en_pre_village_name ? 'Vill: ' . $employees->en_pre_village_name . ', ' : '') .
+                    ($employees->bn_pre_ward?->name ? 'Ward: ' . $employees->bn_pre_ward?->name . ', ' : '') .
+                    ($employees->en_pre_post_ofc ? 'Post: ' . $employees->en_pre_post_ofc . ', ' : '') .
+                    ($employees->bn_union?->name ? 'P.S: ' . $employees->bn_union?->name . ', ' : '') .
+                    ($employees->bn_upazilla?->name ? 'UP: ' . $employees->bn_upazilla?->name . ', ' : '') .
+                    ($employees->bn_district?->name ? 'Dist: ' . $employees->bn_district?->name : '')
+            ],
+            [
+                'Permanent Address',
+                ($employees->en_perm_holding_no ? 'C/O: ' . $employees->en_perm_holding_no . ', ' : '') .
+                    ($employees->en_perm_village_name ? 'Vill: ' . $employees->en_perm_village_name . ', ' : '') .
+                    ($employees->bn_perm_ward?->name ? 'Ward: ' . $employees->bn_perm_ward?->name . ', ' : '') .
+                    ($employees->en_perm_post_ofc ? 'Post: ' . $employees->en_perm_post_ofc . ', ' : '') .
+                    ($employees->bn_perm_union?->name ? 'P.S: ' . $employees->bn_perm_union?->name . ', ' : '') .
+                    ($employees->bn_perm_upazilla?->name ? 'UP: ' . $employees->bn_perm_upazilla?->name . ', ' : '') .
+                    ($employees->bn_perm_district?->name ? 'Dist: ' . $employees->bn_perm_district?->name : '')
+            ],
+            [
+                'NID/Birth Registration No.',
+                $employees->en_nid_no
+                    ? 'NID: ' . $employees->en_nid_no
+                    : 'B.C.: ' . $employees->en_birth_certificate
+            ],
+            ['Date of Birth', date('d-M-Y', strtotime($employees->bn_dob))],
+            ['Email', $employees->email],
+            ['Phone No', $employees->phone],
+            ['Joining Date', date('d-M-Y', strtotime($employees->joining_date))],
+            ['Salary', '৳' . number_format($employees->salary, 2)],
+            ['Status', $employees->status ? 'Active' : 'Inactive'],
+            ['Emergency Contact', $employees->emergency_contact],
+            ['Department', $employees->department?->name],
+            ['Manager', $employees->manager?->name],
+            ['Nationality', $employees->nationality?->name],
+            ['Language(s) Known', implode(', ', $employees->languages?->pluck('name')->toArray())],
+            [
+                'Emergency Address',
+                ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_emergency_holding_no . ', ' : '') .
+                    ($employees->en_emergency_village_name ? 'Vill: ' . $employees->en_emergency_village_name . ', ' : '') .
+                    ($employees->bn_emergency_ward?->name ? 'Ward: ' . $employees->bn_emergency_ward?->name . ', ' : '') .
+                    ($employees->en_emergency_post_ofc ? 'Post: ' . $employees->en_emergency_post_ofc . ', ' : '') .
+                    ($employees->bn_emergency_union?->name ? 'P.S: ' . $employees->bn_emergency_union?->name . ', ' : '') .
+                    ($employees->bn_emergency_upazilla?->name ? 'UP: ' . $employees->bn_emergency_upazilla?->name . ', ' : '') .
+                    ($employees->bn_emergency_district?->name ? 'Dist: ' . $employees->bn_emergency_district?->name : '')
+            ]
         ];
 
 
@@ -360,7 +412,7 @@ class EmployeeController extends Controller
         $textCellmiddle = $table3->addCell(6000); // Adjust width for the text wrapping
 
         // Add the "Signature" on the right (second cell with top border only)
-        $signatureCell = $table3->addCell(1000); // Top border only for "Signature"
+        $signatureCell = $table3->addCell(2000); // Top border only for "Signature"
 
         // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
