@@ -320,7 +320,10 @@ class EmployeeController extends Controller
         // Create the second table with borders and specific columns for serial number, colon, and text
         $table2 = $section->addTable(['borderSize' => 6, 'borderColor' => '000000', 'cellMargin' => 40]);
 
-
+        if ($employees->en_is_any_case == '1')
+            $language_status = 'Yes';
+        else if ($employees->en_is_any_case == '2')
+            $language_status = 'No';
         // Define employee additional details array
         $employeeAdditionalDetails = [
             ['Name', $employees->en_applicants_name],
@@ -360,15 +363,24 @@ class EmployeeController extends Controller
             ],
             ['Date of Birth', date('d-M-Y', strtotime($employees->bn_dob))],
             ['Email', $employees->email],
-            ['Phone No', $employees->phone],
-            ['Joining Date', date('d-M-Y', strtotime($employees->joining_date))],
-            ['Salary', '৳' . number_format($employees->salary, 2)],
-            ['Status', $employees->status ? 'Active' : 'Inactive'],
-            ['Emergency Contact', $employees->emergency_contact],
-            ['Department', $employees->department?->name],
-            ['Manager', $employees->manager?->name],
+            ['Personal & Alt. Phone No', $employees->phone],
+            ['Educational Qualification', $employees->en_edu_qualification],
+            ['Experience', $employees->en_experience],
+            ['Religion', $employees->religion?->name],
+            ['Marital Status', ($employees->bn_marital_status == '1') ? 'Unmarried' : 'Married'],
+            ['Character Certificate (By Chairman)', '(Certificate attached)'],
             ['Nationality', $employees->nationality?->name],
-            ['Language(s) Known', implode(', ', $employees->languages?->pluck('name')->toArray())],
+            ['Character Certificate (By Chairman)', '(Certificate attached)'],
+            ['Identification Mark(if any)', $employees->en_identification_mark],
+            ['Is any case filed against him in any court of Justice', $language_status],
+            [
+                'Had he ever been convicted by the criminal Court',
+                $employees->en_is_criminal_court == '1' ? 'Yes' : ($employees->en_is_criminal_court == '2' ? 'No' : 'Unknown')
+            ],
+            [
+                'Any Other Information',
+                $employees->en_any_other_info == '1' ? 'Yes' : ($employees->en_any_other_info == '2' ? 'No' : '')
+            ],
             [
                 'Emergency Address',
                 ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_emergency_holding_no . ', ' : '') .
