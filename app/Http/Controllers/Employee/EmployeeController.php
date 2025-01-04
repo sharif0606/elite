@@ -356,14 +356,14 @@ class EmployeeController extends Controller
                     ($employees->bn_perm_district?->name ? 'Dist: ' . $employees->bn_perm_district?->name : '')
             ],
             [
-                'NID/Birth Registration No.',
+                'NID Or Birth Registration No.',
                 $employees->en_nid_no
                     ? 'NID: ' . $employees->en_nid_no
                     : 'B.C.: ' . $employees->en_birth_certificate
             ],
             ['Date of Birth', date('d-M-Y', strtotime($employees->bn_dob))],
             ['Email', $employees->email],
-            ['Personal & Alt. Phone No', $employees->phone],
+            ['Personal and  Alt. Phone No', $employees->phone],
             ['Educational Qualification', $employees->en_edu_qualification],
             ['Experience', $employees->en_experience],
             ['Religion', $employees->religion?->name],
@@ -400,7 +400,7 @@ class EmployeeController extends Controller
             $table2->addRow();
 
             // Add a cell for the serial number, centered
-            $table2->addCell(300)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
+            $table2->addCell(600)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the label (e.g., "Designation"), left-aligned
             $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left', 'valign' => 'center']);
