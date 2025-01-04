@@ -403,13 +403,13 @@ class EmployeeController extends Controller
             $table2->addCell(1000)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the label (e.g., "Designation"), left-aligned
-            $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left', 'valign' => 'center']);
+            $table2->addCell(3000)->addText($detail[0], ['size' => 10], ['align' => 'left', 'valign' => 'center']);
 
             // Add a cell for the colon (:) to separate the label and value, centered
             $table2->addCell(300)->addText(":", ['size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the value (e.g., employee's designation), centered and bold
-            $table2->addCell(7000)->addText($detail[1] ?: 'N/A', ['size' => 10], ['align' => 'left', 'valign' => 'center']);
+            $table2->addCell(6000)->addText($detail[1] ?: 'N/A', ['size' => 10], ['align' => 'left', 'valign' => 'center']);
         }
         // Add a text break to separate the second table from the third table
         $section->addTextBreak(2); // Add a line break
