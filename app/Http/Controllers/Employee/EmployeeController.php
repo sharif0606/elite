@@ -368,7 +368,6 @@ class EmployeeController extends Controller
             ['Experience', $employees->en_experience],
             ['Religion', $employees->religion?->name],
             ['Marital Status', ($employees->bn_marital_status == '1') ? 'Unmarried' : 'Married'],
-            ['Character Certificate (By Chairman)', '(Certificate attached)'],
             ['Nationality', $employees->nationality?->name],
             ['Character Certificate (By Chairman)', '(Certificate attached)'],
             ['Identification Mark(if any)', $employees->en_identification_mark],
@@ -442,7 +441,7 @@ class EmployeeController extends Controller
             ['bold' => true],
             ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 0, 'borderTopColor' => '000000']
         );
-
+        $section->addTextBreak(1); // Add a line break
         // Create the fourth table (separate full-width table)
         $table4 = $section->addTable();
 
