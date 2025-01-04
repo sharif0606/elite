@@ -294,7 +294,7 @@ class EmployeeController extends Controller
         $table1->addRow();
 
         // Add the first image (logo) in the first cell of the first table
-        $table1->addCell(2000)->addImage(public_path('assets/images/logo/logo.png'), array('width' => 100, 'height' => 'auto', 'align' => 'left'));
+        $table1->addCell(3000)->addImage(public_path('assets/images/logo/logo.png'), array('width' => 100, 'height' => 'auto', 'align' => 'left'));
 
         // Add the text in the second cell of the first table
         $textCell = $table1->addCell(5000); // Adjust width for the text wrapping
