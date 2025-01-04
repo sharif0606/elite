@@ -356,15 +356,12 @@ class EmployeeController extends Controller
         // Add a row to the table
         $table3->addRow();
 
-        // Add the text on the left (first cell)
-        $textCellLeft = $table3->addCell(5000); // Left-aligned cell (no border for this one)
-        $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
-        $textCellLeft->addTextBreak(1);
 
-        $textCellmiddle = $table3->addCell(1000); // Adjust width for the text wrapping 
+
+        $textCellmiddle = $table3->addCell(7000); // Adjust width for the text wrapping 
 
         // Add the "Signature" on the right (second cell with top border only)
-        $signatureCell = $table3->addCell(2000); // Top border only for "Signature"
+        $signatureCell = $table3->addCell(1000); // Top border only for "Signature"
 
         // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
@@ -372,6 +369,7 @@ class EmployeeController extends Controller
                 'height' => 50, // Set the height of the image
                 'width' => 150,  // Set the width of the image
                 'align' => 'center', // Center the image
+                'marginTop' => 0,  // Add top margin for spacing
             ]);
         }
 
@@ -379,10 +377,21 @@ class EmployeeController extends Controller
         $signatureCell->addText(
             "Signature of the " . ($employees->position?->name ?? 'Employee'),
             ['bold' => true],
-            ['align' => 'center', 'borderTopColor' => '000000']
+            ['align' => 'center', 'marginTop' => 0, 'borderTopSize' => 0, 'borderTopColor' => '000000']
         );
 
+        // Add a text break to separate the second table from the third table
+        $section->addTextBreak(2); // Add a line break
 
+        // Create the third table (separate from the second one)
+        $table4 = $section->addTable();
+
+        // Add a row to the table
+        $table4->addRow();
+        // Add the text on the left (first cell)
+        $textCellLeft = $table3->addCell(7000); // Left-aligned cell (no border for this one)
+        $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
+        $textCellLeft->addTextBreak(1);
 
         // Save the document to a variable and send it for download
         $writer = IOFactory::createWriter($phpWord, 'Word2007');
