@@ -356,9 +356,9 @@ class EmployeeController extends Controller
         // Add a row to the table
         $table3->addRow();
 
-
-
-        $textCellmiddle = $table3->addCell(7000); // Adjust width for the text wrapping 
+        // Add the text cell (left-aligned)
+        $textCellmiddle = $table3->addCell(7000); // Adjust width for the text wrapping
+        $textCellmiddle->addText("Text content goes here", ['size' => 10], ['align' => 'left']);
 
         // Add the "Signature" on the right (second cell with top border only)
         $signatureCell = $table3->addCell(1000); // Top border only for "Signature"
@@ -383,15 +383,17 @@ class EmployeeController extends Controller
         // Add a text break to separate the second table from the third table
         $section->addTextBreak(2); // Add a line break
 
-        // Create the third table (separate from the second one)
+        // Create the fourth table (separate full-width table)
         $table4 = $section->addTable();
 
         // Add a row to the table
         $table4->addRow();
-        // Add the text on the left (first cell)
-        $textCellLeft = $table3->addCell(7000); // Left-aligned cell (no border for this one)
+
+        // Add the text on the left (first cell, spans the full width)
+        $textCellLeft = $table4->addCell(10000); // Full width cell for text (spanning entire width)
         $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
         $textCellLeft->addTextBreak(1);
+
 
         // Save the document to a variable and send it for download
         $writer = IOFactory::createWriter($phpWord, 'Word2007');
