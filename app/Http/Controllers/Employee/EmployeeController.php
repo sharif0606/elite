@@ -400,7 +400,7 @@ class EmployeeController extends Controller
             $table2->addRow();
 
             // Add a cell for the serial number, centered
-            $table2->addCell(600)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
+            $table2->addCell(1000)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the label (e.g., "Designation"), left-aligned
             $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left', 'valign' => 'center']);
