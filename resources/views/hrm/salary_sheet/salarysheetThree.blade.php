@@ -404,22 +404,22 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control present_day" type="hidden" name="present_day[]" value="${value.duty_qty}" placeholder="Pre. Days">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="${Math.trunc(absent)}" placeholder="Absent">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="${Math.trunc(absent)}" placeholder="Absent" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="${Math.trunc(holiday_festival)}" placeholder="Holiday/ festival">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="${Math.trunc(holiday_festival)}" placeholder="Holiday/ festival" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="${Math.trunc(leave_cl)}" placeholder="Leave CL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="${Math.trunc(leave_cl)}" placeholder="Leave CL" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="${Math.trunc(leave_sl)}" placeholder="Leave SL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="${Math.trunc(leave_sl)}" placeholder="Leave SL" readonly>
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="${Math.trunc(leave_el)}" placeholder="Leave EL">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="${Math.trunc(leave_el)}" placeholder="Leave EL" readonly>
                                 </td>
                                 <td>${absentCondition}</td>
                                 <td>${vacantCondition}</td>

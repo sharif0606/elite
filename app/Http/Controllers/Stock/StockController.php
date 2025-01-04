@@ -44,7 +44,7 @@ class StockController extends Controller
 
     public function EmployeeList(Request $request)
     {
-        $stock = Stock::select('id', 'employee_id', 'product_qty', 'entry_date','company_id','company_branch_id');
+        $stock = Stock::select('id', 'employee_id', 'product_qty', 'entry_date', 'company_id', 'company_branch_id');
 
         // Check and apply filters based on request parameters
         if (!empty($request->employee_id)) {
@@ -56,7 +56,7 @@ class StockController extends Controller
         } elseif (!empty($request->company_branch_id)) {
             // If company_branch_id is provided, apply it and ignore employee_id
             $stock = $stock->where('company_branch_id', $request->company_branch_id)->groupBy('company_branch_id');
-        }else{
+        } else {
             $stock = $stock->whereNotNull('employee_id');
         }
         DB::enableQueryLog(); // Enable query logging
@@ -80,8 +80,38 @@ class StockController extends Controller
 
     public function employeeIndividual(Request $request, $id)
     {
-        $productList = Stock::where('employee_id', (encryptor('decrypt', $id)))->orderBy('product_id')->get();
-        $stock = json_decode(json_encode(DB::select("select count(*) as c,product_id,SUM(product_qty) AS total_qty from stocks where employee_id='" . encryptor('decrypt', $id) . "' group by product_id")), true);
+        // Decrypt the provided ID
+        $decryptedId = encryptor('decrypt', $id);
+
+        // Check if the ID belongs to an employee or customer
+        $isEmployee = Stock::where('employee_id', $decryptedId)->exists();
+
+        if ($isEmployee) {
+            // Query for employee
+            $productList = Stock::where('employee_id', $decryptedId)
+                ->orderBy('product_id')
+                ->get();
+
+            $stock = json_decode(json_encode(DB::select("
+        SELECT COUNT(*) AS c, product_id, SUM(product_qty) AS total_qty 
+        FROM stocks 
+        WHERE employee_id = '$decryptedId' 
+        GROUP BY product_id
+    ")), true);
+        } else {
+            // Query for customer
+            $productList = Stock::where('company_id', $decryptedId)
+                ->orderBy('product_id')
+                ->get();
+
+            $stock = json_decode(json_encode(DB::select("
+        SELECT COUNT(*) AS c, product_id, SUM(product_qty) AS total_qty 
+        FROM stocks 
+        WHERE company_id = '$decryptedId' 
+        GROUP BY product_id
+    ")), true);
+        }
+
         //print_r($stock);die();
         // if ($request->fdate) {
         //     $tdate = $request->tdate ? $request->tdate : $request->fdate;

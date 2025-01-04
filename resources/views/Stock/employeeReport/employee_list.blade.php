@@ -96,9 +96,15 @@
                                     {{--  <td>{{$d->name}}</td>
                                     <td>{{$d->qty}}</td>  --}}
                                     <td class="white-space-nowrap">
+                                        @if($d->employee?->bn_applicants_name)
                                         <a href="{{route('stock.employeeIndividual',encryptor('encrypt',$d->employee_id))}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
+                                        @else
+                                        <a href="{{route('stock.employeeIndividual',encryptor('encrypt',$d->company_id))}}">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @empty

@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 
+
 class EmployeeController extends Controller
 {
     use ImageHandleTraits;
@@ -276,37 +277,114 @@ class EmployeeController extends Controller
     public function exportToWord($id)
     {
         // Fetch the employee data
-$employees = Employee::find($id);
-if (!$employees) {
-    return response()->json(['message' => 'Employee not found'], 404);
-}
+        $employees = Employee::find($id);
+        if (!$employees) {
+            return response()->json(['message' => 'Employee not found'], 404);
+        }
+        // Create a new PHPWord object
+        $phpWord = new PhpWord();
 
-// Render the Blade view to HTML
-$viewContent = view('employee.bio-data', compact('employees'))->render(); // Replace 'employee.details' with your actual view
-dd($viewContent);
-// Create a new PhpWord object
-$phpWord = new PhpWord();
-$section = $phpWord->addSection();
+        // Add a new section
+        $section = $phpWord->addSection();
 
-// Add the HTML content to the Word document (manually handle simple HTML)
-// Note: PhpWord does not natively support full HTML rendering, so we convert the HTML manually
-$section->addText(html_entity_decode(strip_tags($viewContent))); // Adds rendered HTML as plain text for now
+        // Create the first table (logo, text, photo)
+        $table1 = $section->addTable();
 
-// Define the public directory path
-$exportDir = public_path('exports');
-if (!File::exists($exportDir)) {
-    File::makeDirectory($exportDir, 0755, true); // Create directory if not exists
-}
+        // Add a row to the first table
+        $table1->addRow();
 
-// Define the file path
-$filePath = $exportDir . '/employee_' . $employees->id . '.docx';
+        // Add the first image (logo) in the first cell of the first table
+        $table1->addCell(2000)->addImage(public_path('assets/images/logo/logo.png'), array('width' => 100, 'height' => 'auto', 'align' => 'left'));
 
-// Save the Word document
-$phpWord->save($filePath, 'Word2007');
+        // Add the text in the second cell of the first table
+        $textCell = $table1->addCell(5000); // Adjust width for the text wrapping
+        $textCell->addText("ELITE SECURITY SERVICES LIMITED", array('bold' => true, 'size' => 11), array('align' => 'center'));
+        $textCell->addText("BIO-DATA", array('size' => 10), array('bold' => true, 'align' => 'center'));
+        $textCell->addText("Position: " . $employees->position?->name, array('bold' => true, 'size' => 9), array('align' => 'center'));
+        $textCell->addTextBreak(1);
 
-// Return response to download the Word document
-return response()->download($filePath)->deleteFileAfterSend(true); // Automatically deletes the file after sending it
 
+
+        // Add the second image (employee photo or fallback) in the third cell of the first table
+        //$table1->addCell(2000)->addImage(public_path('assets/images/av.png'), array('width' => 70, 'height' => 'auto', 'align' => 'right'));
+
+
+        // Add a photo (ensure the photo exists or provide a fallback if not)
+        if ($employees->profile_img && file_exists(public_path('uploads/profile_img/' . $employees->profile_img))) {
+            $table1->addCell(2000)->addImage(public_path('uploads/profile_img/' . $employees->profile_img), array('width' => 90, 'height' => 110, 'align' => 'right'));
+        } else {
+            // Default fallback image if the employee does not have a profile image
+            $table1->addCell(2000)->addImage(public_path('assets/images/av.png'), array('width' => 80, 'height' => 90, 'align' => 'right'));
+        }
+
+        // Create the second table with borders and specific columns for serial number, colon, and text
+        $table2 = $section->addTable(['borderSize' => 6, 'borderColor' => '000000', 'cellMargin' => 40]);
+
+
+        // Define employee additional details array
+        $employeeAdditionalDetails = [
+            ['Name', $employees->en_applicants_name],
+            ['Designation', $employees->position?->name],
+            ['Place of Posting', $employees->en_place_of_posting],
+            ['Employee ID No', $employees->admission_id_no],
+        ];
+
+
+        // Loop through each additional detail and add it to the second table
+        foreach ($employeeAdditionalDetails as $index => $detail) {
+            // Add a new row for each detail
+            $table2->addRow();
+
+            // Add a cell for the serial number, centered
+            $table2->addCell(300)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center','valign' => 'center']);
+
+            // Add a cell for the label (e.g., "Designation"), left-aligned
+            $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left','valign' => 'center']);
+
+            // Add a cell for the colon (:) to separate the label and value, centered
+            $table2->addCell(300)->addText(":", ['size' => 10], ['align' => 'center','valign' => 'center']);
+
+            // Add a cell for the value (e.g., employee's designation), centered and bold
+            $table2->addCell(7000)->addText($detail[1] ?: 'N/A', ['size' => 10], ['align' => 'left','valign' => 'center']);
+        }
+        // Add a text break to separate the second table from the third table
+        $section->addTextBreak(2); // Add a line break
+
+        // Create the third table (separate from the second one)
+        $table3 = $section->addTable();
+
+        // Add a row to the table
+        $table3->addRow();
+
+        // Add the text on the left (first cell)
+        $textCellLeft = $table3->addCell(5000); // Left-aligned cell (no border for this one)
+        $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
+        $textCellLeft->addTextBreak(1);
+
+        $textCellmiddle = $table3->addCell(2000); // Adjust width for the text wrapping
+
+        // Add the "Signature" on the right (second cell with top border only)
+        $signatureCell = $table3->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000']); // Top border only for "Signature"
+        $signatureCell->addText("Signature", ['size' => 11], ['align' => 'center']);
+
+
+
+        // Save the document to a variable and send it for download
+        $writer = IOFactory::createWriter($phpWord, 'Word2007');
+        ob_start();
+        $writer->save("php://output");
+        $fileContent = ob_get_clean();
+
+        // Set headers to force the file download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Disposition: attachment; filename="employee_biodata.docx"');
+        header('Cache-Control: max-age=0');
+        header('Pragma: public');
+        header('Expires: 0');
+
+        // Output the file content for download
+        echo $fileContent;
+        exit;
     }
     public function certificate($id)
     {

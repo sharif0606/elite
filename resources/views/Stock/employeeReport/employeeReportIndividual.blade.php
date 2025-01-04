@@ -89,6 +89,7 @@
                                             $totalQty = 0;
                                             $proid=0;
                                         @endphp
+                                        {{--$productList--}}
                                         @forelse($productList as $s)
                                         @php
                                             $key = array_search($s->product_id, array_column($stock, 'product_id'));
