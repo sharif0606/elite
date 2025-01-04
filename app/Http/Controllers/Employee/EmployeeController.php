@@ -361,7 +361,10 @@ class EmployeeController extends Controller
         $textCellLeft->addText("I have checked and verified the above mentioned information and found all correct.", ['size' => 10], ['align' => 'left']);
         $textCellLeft->addTextBreak(1);
 
-        $textCellmiddle = $table3->addCell(2500); // Adjust width for the text wrapping 
+        $textCellmiddle = $table3->addCell(2000); // Adjust width for the text wrapping 
+
+        // Add the "Signature" on the right (second cell with top border only)
+        $signatureCell = $table3->addCell(2000); // Top border only for "Signature"
 
         // Check if signature image exists and add it 
         if ($employees->signature_img != '') {
