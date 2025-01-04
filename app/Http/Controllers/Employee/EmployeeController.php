@@ -294,7 +294,7 @@ class EmployeeController extends Controller
         $table1->addRow();
 
         // Add the first image (logo) in the first cell of the first table
-        $table1->addCell(3000)->addImage(public_path('assets/images/logo/logo.png'), array('width' => 100, 'height' => 'auto', 'align' => 'left'));
+        $table1->addCell(2500)->addImage(public_path('assets/images/logo/logo.png'), array('width' => 100, 'height' => 'auto', 'align' => 'left'));
 
         // Add the text in the second cell of the first table
         $textCell = $table1->addCell(5000); // Adjust width for the text wrapping
@@ -336,16 +336,16 @@ class EmployeeController extends Controller
             $table2->addRow();
 
             // Add a cell for the serial number, centered
-            $table2->addCell(300)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center','valign' => 'center']);
+            $table2->addCell(300)->addText(($index + 1), ['bold' => true, 'size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the label (e.g., "Designation"), left-aligned
-            $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left','valign' => 'center']);
+            $table2->addCell(2000)->addText($detail[0], ['size' => 10], ['align' => 'left', 'valign' => 'center']);
 
             // Add a cell for the colon (:) to separate the label and value, centered
-            $table2->addCell(300)->addText(":", ['size' => 10], ['align' => 'center','valign' => 'center']);
+            $table2->addCell(300)->addText(":", ['size' => 10], ['align' => 'center', 'valign' => 'center']);
 
             // Add a cell for the value (e.g., employee's designation), centered and bold
-            $table2->addCell(7000)->addText($detail[1] ?: 'N/A', ['size' => 10], ['align' => 'left','valign' => 'center']);
+            $table2->addCell(7000)->addText($detail[1] ?: 'N/A', ['size' => 10], ['align' => 'left', 'valign' => 'center']);
         }
         // Add a text break to separate the second table from the third table
         $section->addTextBreak(2); // Add a line break
@@ -365,7 +365,24 @@ class EmployeeController extends Controller
 
         // Add the "Signature" on the right (second cell with top border only)
         $signatureCell = $table3->addCell(2000, ['borderTopSize' => 6, 'borderTopColor' => '000000']); // Top border only for "Signature"
-        $signatureCell->addText("Signature", ['size' => 11], ['align' => 'center']);
+        $signatureCell->addText("Signature " . $employees->position?->name, ['size' => 11], ['align' => 'center']);
+
+        // Check if signature image exists and add it
+        if ($employees->signature_img != '') {
+            $signatureCell->addImage(asset('uploads/signature_img/' . $employees->signature_img), [
+                'height' => 50, // Set the height of the image
+                'width' => 150,  // Set the width of the image
+                'align' => 'center', // Center the image
+                'marginTop' => 5,  // Add top margin for spacing
+            ]);
+        }
+
+        // Add the "Signature of the Position" text below the image
+        $signatureCell->addText(
+            "Signature of the " . ($employees->position?->name ?? 'Employee'),
+            ['bold' => true],
+            ['align' => 'center', 'marginTop' => 2, 'borderTopSize' => 2, 'borderTopColor' => '000000']
+        );
 
 
 

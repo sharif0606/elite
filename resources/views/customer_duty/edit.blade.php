@@ -128,7 +128,7 @@
                                                     <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="text" name="duty_qty[]" value="{{ old('duty_qty',$d->duty_qty) }}" placeholder="Duty Qty" style="width:60px;">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="number" name="ot_qty[]" value="{{ old('ot_qty',$d->ot_qty) }}" placeholder="OT Qty" style="width:60px;">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="{{ old('ot_qty',$d->ot_qty) }}" placeholder="OT Qty" style="width:60px;">
                                                 </td>
                                                 <td>
                                                     <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="{{ old('duty_amount',$d->duty_amount) }}" placeholder="Duty Amount" style="width:120px;">
