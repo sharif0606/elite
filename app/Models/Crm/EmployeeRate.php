@@ -11,6 +11,13 @@ use App\Models\Crm\EmployeeRateDetails;
 class EmployeeRate extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'customer_id',
+        'branch_id',
+        'atm_id',
+        'status',
+    ];
+    
     public function customer(){
         return $this->belongsTo(Customer::class,'customer_id','id');
     }

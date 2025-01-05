@@ -10,6 +10,16 @@ use App\Models\Employee\Employee;
 class EmployeeRateDetails extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'employee_rate_id',
+        'employee_id',
+        'job_post_id',
+        'hours',
+        'duty_rate',
+        'ot_rate',
+        'status',
+    ];
+    
     public function jobpost(){
         return $this->belongsTo(JobPost::class,'job_post_id','id');
     }
