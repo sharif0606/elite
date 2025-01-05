@@ -1251,6 +1251,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         'customer_duty_details.*',
         'customer_brances.brance_name as customer_branch',
         'customers.name as customer_name',
+        'long_loans.installment_date',
+        'long_loans.end_date',
         'long_loans.id as long_loan_id',
         'long_loans.perinstallment_amount',
         'long_loans.loan_amount',
@@ -1496,10 +1498,10 @@ return response()->json($data, 200);
         ->leftjoin('long_loans', function ($j) use ($stdate) {
             $j->on('employees.id', '=', 'long_loans.employee_id')
                  ->whereDate('long_loans.installment_date', '<=',$stdate)
-                 ->whereDate('long_loans.end_date', '>=',$stdate)
-                 ->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
+                 ->whereDate('long_loans.end_date', '>=',$stdate);
+                 //->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
         })
-            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.bn_post_allowance','employees.bn_fuel_bill','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial')->orderBy('employees.salary_serial','ASC');
+            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','long_loans.installment_date','long_loans.end_date','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.bn_post_allowance','employees.bn_fuel_bill','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial')->orderBy('employees.salary_serial','ASC');
 
         $data = $query->get();
         return response()->json($data, 200);

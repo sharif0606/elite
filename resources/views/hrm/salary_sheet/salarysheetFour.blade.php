@@ -249,9 +249,9 @@
                         let Remarks = RemarksArray.filter(item => item !== '').join(', ');
                         let em = (value.excess_mobile > 0) ? value.excess_mobile : '0';
                         let mess = (value.mess > 0) ? value.mess : '0';
-                        let Loan = (value.loan > 0) ? value.loan : '0';
+                        let Loan = (value.loan > 0) ? parseInt(value.loan) : 0;
                         /* From HR */
-                        Loan += (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                        Loan += (value.perinstallment_amount > 0) ? parseInt(value.perinstallment_amount) : '0';
                         // there fuel is allownce. it will add with total salary
                         let fuelBill = (value.fuel_bill > 0) ? value.fuel_bill : '0';
                         let totalSalryAm = parseFloat(grossSalaryAmount) + parseFloat(postAllowance) + parseFloat(fuelBill);
