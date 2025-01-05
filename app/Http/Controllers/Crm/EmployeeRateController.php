@@ -157,7 +157,7 @@ class EmployeeRateController extends Controller
                         if ($value) {
                             $details = new EmployeeRateDetails;
                             $details->employee_rate_id = $data->id;
-                            $details->employee_id = $request->employee_id[$key];
+                            $details->employee_id = $request->employee_id[$key]??null;
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->hours = $request->hours[$key];
                             $details->duty_rate = $request->duty_rate[$key];
