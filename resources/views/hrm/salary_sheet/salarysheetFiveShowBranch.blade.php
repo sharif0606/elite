@@ -139,7 +139,7 @@
                                                     </td>
                                                     <td class="tbl_border">
                                                         @if ($d->duty_qty != 0)
-                                                        {{ (int)$d->duty_qty }}
+                                                        {{ $d->duty_qty }}
                                                         @endif
                                                     </td>
                                                     <td class="tbl_border">
@@ -149,7 +149,7 @@
                                                     </td>
                                                     <td class="tbl_border">
                                                         @if ($d->ot_qty != 0)
-                                                        {{ (int)$d->ot_qty }}
+                                                        {{ $d->ot_qty }}
                                                         @endif
                                                     </td>
                                                     <td class="tbl_border">

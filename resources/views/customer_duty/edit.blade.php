@@ -78,6 +78,10 @@
                                                 <th scope="col">{{__('OT-Rate')}}</th>
                                                 <th scope="col">{{__('Duty Qty')}}</th>
                                                 <th scope="col">{{__('OT Qty')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Absent')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Vacant')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
+                                                <th scope="col" colspan="3">{{__('Leave')}}</th>
                                                 <th scope="col">{{__('Duty Amount')}}</th>
                                                 <th scope="col">{{__('OT Amount')}}</th>
                                                 <th scope="col">{{__('Total')}}</th>
@@ -130,6 +134,27 @@
                                                 <td>
                                                     <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="{{ old('ot_qty',$d->ot_qty) }}" placeholder="OT Qty" style="width:60px;">
                                                 </td>
+
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="{{ old('absent',$d->absent) }}" placeholder="Absent">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="{{ old('vacant',$d->vacant) }}" placeholder="Vacant">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="{{ old('holiday_festival',$d->holiday_festival) }}" placeholder="Holiday/ festival">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="{{ old('leave_cl',$d->leave_cl) }}" placeholder="Leave CL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="{{ old('leave_sl',$d->leave_sl) }}" placeholder="Leave SL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="{{ old('leave_el',$d->leave_el) }}" placeholder="Leave EL">
+                                                </td>
+
+
                                                 <td>
                                                     <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="{{ old('duty_amount',$d->duty_amount) }}" placeholder="Duty Amount" style="width:120px;">
                                                 </td>
@@ -458,6 +483,26 @@ function addRow(){
         <td>
             <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="0" placeholder="OT Qty" style="width:60px;">
         </td>
+
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="" placeholder="Vacant">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+        </td>
+        <td>
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+        </td>
+        
         <td>
             <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="0" placeholder="Duty Amount" style="width:120px;">
         </td>

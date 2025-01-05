@@ -10,6 +10,7 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
+                        <p class="text-center text-danger">** Please Posting Employee Salary Post Wise and Employee Wise Seperately Dont Mix Ieither it Will No Work **</p>
                         <form method="post" action="{{route('employeeRate.store', ['role' =>currentUser()])}}" enctype="multipart/form-data">
                             @csrf
                             <div class="row p-2 mt-4">

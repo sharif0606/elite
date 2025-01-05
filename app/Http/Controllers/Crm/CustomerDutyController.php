@@ -36,30 +36,30 @@ class CustomerDutyController extends Controller
     {
         $customer = Customer::select('id', 'name')->get();
         $customerduty = CustomerDuty::with('details')->orderBy('id', 'DESC');
-        
+
         // Get the first date of the month
         $start_date = Carbon::create($request->year, $request->month, 1)->startOfDay(); // 2024-05-01 00:00:00
         // Get the last date of the month
         $end_date = Carbon::create($request->year, $request->month, 1)->endOfMonth()->endOfDay(); // 2024-05-31 23:59:59
-        
+
         $employee = Employee::select('id', 'bn_applicants_name', 'admission_id_no')->get();
-        
+
         // Filter by customer if customer_id is present
         if ($request->customer_id) {
             $customerduty->where('customer_duties.customer_id', $request->customer_id);
         }
-        
+
         // Filter by branch if branch_id is present
         if ($request->branch_id) {
             $customerduty->where('customer_duties.branch_id', $request->branch_id);
         }
-        
+
         // Filter by year and month if both are provided
         if ($request->month && $request->year) {
             $customerduty->whereDate('customer_duties.start_date', '>=', $start_date);
             $customerduty->whereDate('customer_duties.end_date', '<=', $end_date);
         }
-        
+
         // Filter by employee if employee_id is provided
         if ($request->employee_id) {
             // Filter customer duties where at least one detail has the matching employee_id
@@ -67,18 +67,16 @@ class CustomerDutyController extends Controller
                 $query->where('employee_id', $request->employee_id);
             });
         }
-        
+
         // Now paginate after all conditions are applied
         $customerduty = $customerduty->paginate(10);
-        
+
         // Return the appropriate view
         if ($request->employee_id) {
             return view('customer_duty.index-employee', compact('customerduty', 'customer', 'employee'));
         } else {
             return view('customer_duty.index', compact('customerduty', 'customer', 'employee'));
         }
-        
-        
     }
 
     /**
@@ -109,11 +107,11 @@ class CustomerDutyController extends Controller
             if ($request->branch_id) {
                 if (!$empRateIdWithBranch->isEmpty()) {
                     if($customerId && $employee_id){*/
-                        //echo $customerId.'<br>';
-                        //echo $employee_id.'<br>';
-                        //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('employee_id', $employee_id)->orderBy('id', 'desc')->first();
-                        //dd($data);
-                        /*if($data){
+            //echo $customerId.'<br>';
+            //echo $employee_id.'<br>';
+            //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('employee_id', $employee_id)->orderBy('id', 'desc')->first();
+            //dd($data);
+            /*if($data){
                             return $data;
                         }
                         else{
@@ -127,8 +125,8 @@ class CustomerDutyController extends Controller
                         return $data;
                     }
                 }else {*/
-                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
-                    /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+            //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
+            /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->orderBy('id', 'ASC')->first();
                     return $data;
                 }
@@ -153,13 +151,13 @@ class CustomerDutyController extends Controller
             $empRateIdWithBranch = EmployeeRate::where('customer_id', $customerId)->where('branch_id', $branch)->pluck('id');
             if ($request->branch_id) {
                 if (!$empRateIdWithBranch->isEmpty()) {*/
-                    //DB::enableQueryLog();
-                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
-                    //dd(DB::getQueryLog());
-                    //return $data;
-                //} else {
-                    //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
-                    /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
+            //DB::enableQueryLog();
+            //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateIdWithBranch)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'desc')->first();
+            //dd(DB::getQueryLog());
+            //return $data;
+            //} else {
+            //$data = EmployeeRateDetails::whereIn('employee_rate_id', $empRateId)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
+            /*$emp_rate_id = EmployeeRate::where('customer_id', $customerId)->whereNull('branch_id')->pluck('id');
                     $data = EmployeeRateDetails::whereIn('employee_rate_id', $emp_rate_id)->where('job_post_id', $jobpostId)->where('hours', $jobpostHour)->orderBy('id', 'ASC')->first();
                     return $data;
                 }*/
@@ -351,6 +349,15 @@ class CustomerDutyController extends Controller
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->customer_id = $request->customer_id;
                             $details->hours = $request->job_post_hour[$key];
+
+                            /*== New Column ==*/
+                            $details->absent = $request->absent[$key];
+                            $details->vacant = $request->vacant[$key];
+                            $details->holiday_festival = $request->holiday_festival[$key];
+                            $details->leave_cl = $request->leave_cl[$key];
+                            $details->leave_sl = $request->leave_sl[$key];
+                            $details->leave_el = $request->leave_el[$key];
+
                             $details->duty_rate = $request->duty_rate[$key];
                             $details->ot_rate = $request->ot_rate[$key];
                             $details->duty_qty = $request->duty_qty[$key];
