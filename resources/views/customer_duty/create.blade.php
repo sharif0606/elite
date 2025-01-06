@@ -297,6 +297,7 @@
 }
 
 function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
+    alert(atmId)
     $.ajax({
         url: "{{ route('emp.getEmployeeRate') }}",
         type: "GET",
