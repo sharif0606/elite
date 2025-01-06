@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('salary_sheet_details', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('deduction_long_id')->nullable()->after('deduction_long_loan');
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('salary_sheet_details', function (Blueprint $table) {
-            //
+            $table->dropColumn('deduction_long_id');
         });
     }
 };
