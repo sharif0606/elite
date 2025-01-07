@@ -12,6 +12,7 @@
                         <div class="card-body">
                             <form class="form" method="post" enctype="multipart/form-data" action="{{route('long_loan.update', [encryptor('encrypt',$loan->id)])}}">
                                 @csrf
+                                @method('PATCH')
                                 <div class="row">
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Employee</b></label>

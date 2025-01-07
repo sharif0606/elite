@@ -626,6 +626,12 @@
                             <input type="number" value="{{old('p_f',$employees->p_f)}}" class="form-control" name="p_f">
                         </div>
                     </div>
+                    <div class="col-md-2 col-12">
+                        <div class="form-group">
+                            <label for="p_f">Medical</label>
+                            <input type="number" value="{{old('medical',$employees->medical)}}" class="form-control" name="medical">
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12 d-none">
                         <div class="form-group">
                             <label for="bn_fuel_bill">Fuel Bill</label>

@@ -220,20 +220,21 @@
                         // Deduction calculation
                         let pf = "0";
                         if (new Date() >= threeMonthsLater) {
-                            pf = "1000";
+                            //pf = "1000";
+                            pf = (value.p_f > 0) ? value.p_f : 0;
                         }
                         /* Make  bn_post_allowance should be zero in hrm if post allowance apply from deduction */
-                        let Insurance = "100";
-                        let medical = "1500";
+                        //let Insurance = "100";
+                        let medical = (value.medical > 0) ? value.medical : 0;
                         let grossSalaryAmount = (value.gross_salary > 0) ? value.gross_salary : '0';
                         let otSalaryAmount = (value.ot_salary > 0) ? value.ot_salary : '0';
                         let basicSalary = ((value.gross_salary*70)/100).toFixed(2);
                         let houseRent = (grossSalaryAmount - basicSalary - medical).toFixed(2);
-                        // if (new Date() >= threeMonthsLater) {
-                        //     Insurance = (value.insurance > 0) ? value.insurance : '0';
-                        // }
+                        if (new Date() >= threeMonthsLater) {
+                            Insurance = (value.insurance > 0) ? value.insurance : '0';
+                        }
 
-                        if(deduction_post_allowance){
+                        if(deduction_post_allowance > 0){
                             postAllowance = deduction_post_allowance
                         }else{
                             postAllowance= postAllowance;
