@@ -16,7 +16,7 @@
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Customer Name</b></label>
-                                    <select class="form-select customer_id" id="customer_id" name="customer_id" onchange="showBranch(this.value)">
+                                    <select class="form-select customer_id select2" id="customer_id" name="customer_id" onchange="showBranch(this.value)">
                                         <option value="">Select Customer</option>
                                         @forelse ($customer as $c)
                                         <option value="{{ $c->id }}">{{ $c->name }}</option>

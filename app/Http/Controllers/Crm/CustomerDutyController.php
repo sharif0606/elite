@@ -325,6 +325,7 @@ class CustomerDutyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->all());
         try {
             $data = CustomerDuty::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;

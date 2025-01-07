@@ -22,7 +22,7 @@ class LongLoanController extends Controller
      */
     public function index()
     {
-        $longloan=LongLoan::all();
+        $longloan=LongLoan::paginate();
         return view('pay_roll.longloan.index',compact('longloan'));
     }
 
@@ -110,6 +110,8 @@ class LongLoanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $l=LongLoan::findOrFail(encryptor('decrypt',$id));
+        $l->delete();
+        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 }

@@ -5,13 +5,13 @@
 
 @section('content')
 @if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
 @endif
 <section id="multiple-column-form">
     <div class="row match-height">
@@ -39,7 +39,7 @@
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
                                         <option value="">Select Branch</option>
                                         @forelse ($branch as $b)
-                                        <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->branch_id?"selected":"" }}>{{ $b->brance_name }}</option>
+                                            <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->branch_id?"selected":"" }}>{{ $b->brance_name }}</option>
                                         @empty
                                         <option value="">No Data Found</option>
                                         @endforelse
@@ -50,7 +50,7 @@
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
                                         <option value="">Select Atm</option>
                                         @forelse ($atm as $b)
-                                        <option class="atm_hide atm_hide{{$b->branch_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->atm_id?"selected":"" }}>{{ $b->atm }}</option>
+                                            <option class="atm_hide atm_hide{{$b->branch_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->atm_id?"selected":"" }}>{{ $b->atm }}</option>
                                         @empty
                                         <option value="">No Data Found</option>
                                         @endforelse
@@ -104,24 +104,23 @@
                                                     <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
                                                         <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
-                                                        <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
+                                                            <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
                                                         @endforeach
-                                                        
                                                     </select>
                                                 </td>
                                                 <td>
                                                     {{-- <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px;" onchange="getDutyOtRateHourWise(this)">
                                                         <option value="1" {{ 1==$d->hours?"selected":"" }}>8 hours</option>
-                                                    <option value="2" {{ 2==$d->hours?"selected":"" }}>12 hours</option>
+                                                        <option value="2" {{ 2==$d->hours?"selected":"" }}>12 hours</option>
                                                     </select> --}}
                                                     <select class="form-select job_post_hour" name="job_post_hour[]" style="width:100px;" onchange="getDutyOtRateHourWise(this)">
                                                         @forelse ($hours as $hour)
-                                                        <option value="{{ $hour->id }}"
-                                                            {{ $hour->id == $d->hours ? 'selected' : '' }}>
-                                                            {{ $hour->hour }} Hour's
-                                                        </option>
+                                                            <option value="{{ $hour->id }}"
+                                                                {{ $hour->id == $d->hours ? 'selected' : '' }}>
+                                                                {{ $hour->hour }} Hour's
+                                                            </option>
                                                         @empty
-                                                        <option value="">No hours available</option>
+                                                            <option value="">No hours available</option>
                                                         @endforelse
                                                     </select>
                                                 </td>
@@ -207,37 +206,35 @@
 @push("scripts")
 <script>
     /* call on load page */
-    $(document).ready(function() {
-        $('.branch_hide').hide();
-        $('.atm_hide').hide();
-    })
-    let old_customer_id = 0;
-
-    function showBranch(value) {
+    $(document).ready(function(){
+       $('.branch_hide').hide();
+       $('.atm_hide').hide();
+   })
+   let old_customer_id=0;
+   function showBranch(value){
         let customer = value;
         console.log(customer);
-        $('.branch_hide').hide();
-        $('.branch_hide' + customer).show();
-        if (old_customer_id != customer) {
+         $('.branch_hide').hide();
+         $('.branch_hide'+customer).show();
+         if(old_customer_id!=customer){
             $('#branch_id').prop('selectedIndex', 0);
             $('#atm_id').prop('selectedIndex', 0);
-            old_customer_id = customer;
-        }
+             old_customer_id=customer;
+         }
     }
-    let old_branch_id = 0;
-
-    function showAtm(value) {
+   let old_branch_id=0;
+   function showAtm(value){
         let branch = value;
-        $('.atm_hide').hide();
-        $('.atm_hide' + branch).show();
-        if (old_branch_id != branch) {
+         $('.atm_hide').hide();
+         $('.atm_hide'+branch).show();
+         if(old_branch_id!=branch){
             $('#atm_id').prop('selectedIndex', 0);
-            old_branch_id = branch;
-        }
+             old_branch_id=branch;
+         }
     }
 </script>
 <script>
-    function DetailsShow() {
+    function DetailsShow(){
         var startdate = $('.startDate').val();
         var enddate = $('.endDate').val();
         $('.startDateDetail').val(startdate);
@@ -245,110 +242,77 @@
         console.log(startdate);
     }
 
-    window.onload = function() {
-        // Get all input fields with class 'employee_id'
-        var employeeInputs = document.querySelectorAll('.employee_id');
-        
-        // Loop through each input and call getEmployees
-        employeeInputs.forEach(function(inputElement) {
-            getEmployees(inputElement);
-        });
-    };
-
-
-    function getEmployees(e) {
-        let customer_id = $('.customer_id');
-        let branch_id = $('.branch_id option:selected').val();
-        let atm_id = $('.atm_id option:selected').val();
-        let customer_select_message = $('.customer_select_message');
-        let employee_id = $(e).closest('tr').find('.employee_id').val();
-        let employee_data = $(e).closest('tr').find('.employee_data');
-        let job_post_id = $(e).closest('tr').find('.job_post_id');
-        let employee_id_primary = $(e).closest('tr').find('.employee_id_primary');
-
-        // Validate customer selection
+    function getEmployees(e){
+        var customer_id = $('.customer_id');
+        var customer_select_message = $('.customer_select_message');
         if (!customer_id.val()) {
             customer_id.focus();
             customer_select_message.html('Please select a customer');
             return false;
         }
+        //customer_id.on('change', function() {
+         //   if ($(this).val()) {
+         //       customer_select_message.hide();
+        //    } else {
+         //       customer_select_message.html('Please select a customer').show();
+        //    }
+        //});
+        var pa = '<div style="color:red">Invalid Employee ID</div>';
+        $(e).closest('tr').find('.employee_data').html('');
+        var message=$(e).closest('tr').find('.employee_data').append(pa);
 
-        // If employee_id exists
-        if (employee_id) {
+        var employee_id=$(e).closest('tr').find('.employee_id').val();
+        //console.log('E='+employee_id);
+        var customerId = document.getElementById('customer_id').value;
+        if(employee_id){
             $.ajax({
-                url: "{{ route('empatt.getEmployee') }}",
+                url:"{{ route('empatt.getEmployee') }}",
                 type: "GET",
                 dataType: "json",
-                data: {
-                    id: employee_id
-                },
+                data: { 'id':employee_id },
                 success: function(data) {
-                    if (data.length > 0) {
-                        let employee = data[0];
-                        employee_data.html(employee.bn_applicants_name);
-                        job_post_id.find(`option[value="${employee.bn_jobpost_id}"]`).attr('selected', 'selected');
-                        employee_id_primary.val(employee.id);
-
-                        // Fetch job post details, passing employee_id
-                        fetchJobPostDetails(customer_id.val(), branch_id, atm_id, employee.id, e);
-                    } else {
-                        employee_data.html('');
-                        employee_data.append(data.msg);
+                   // console.log(data);
+                    //console.log(employee_id);
+                    if(data.length>0){
+                        //console.log(data);
+                        var id = data[0].id;
+                        var name = data[0].bn_applicants_name;
+                        var contact = data[0].bn_parm_phone_my;
+                        var position=data[0].position.name;
+                        var positionid=data[0].bn_jobpost_id;
+                        //console.log('Position'.positionid);
+                        $(e).closest('tr').find('.employee_data').html(name);
+                        // Select the corresponding option in the select element
+                        $(e).closest('tr').find('.job_post_id option[value="' + positionid + '"]').attr('selected', 'selected');
+                        //$(e).closest('tr').find('.job_post_id').val(positionid);
+                        $(e).closest('tr').find('.employee_id_primary').val(id);
                     }
-
-                    getDutyOtRate(e); // Assuming this function is defined elsewhere
+                    getDutyOtRate(e);
                 },
-                error: function() {
-                    console.error("Error fetching employee data.");
-                }
             });
         } else {
-            // Clear fields if no employee_id
-            employee_data.html('');
-            $(e).closest('tr').find('.employee_name, .employee_contact').val('');
+            $(e).closest('tr').find('.employee_name').val('');
+            $(e).closest('tr').find('.employee_contact').val('');
+            $(e).closest('tr').find('.employee_data').html('');
         }
     }
 
-    function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
-        $.ajax({
-            url: "{{ route('emp.getEmployeeRate') }}",
-            type: "GET",
-            dataType: "json",
-            data: {
-                customer_id: customerId,
-                branch_id: branchId,
-                atm_id: atmId,
-                employee_id: employeeId // Include employee_id here
-            },
-            success: function(data) {
-                $(e).closest('tr').find('.job_post_id').html(data);
-            },
-            error: function() {
-                console.error("Error fetching job post details.");
-            }
-        });
-    }
-
-    function getDutyOtRate(e) {
+    function getDutyOtRate(e){
         let positionid = $(e).closest('tr').find('.job_post_id option:selected').data('jobpostid');
         var customerId = $('.customer_id').val();
         var branchId = $('.branch_id').val();
         //console.log('Customer'.customerId);
         //console.log(customerId);
         $.ajax({
-            url: "{{ route('get_employeedata') }}",
+            url:"{{ route('get_employeedata') }}",
             type: "GET",
             dataType: "json",
-            data: {
-                'customer_id': customerId,
-                'job_post_id': positionid,
-                'branch_id': branchId
-            },
+            data: { 'customer_id':customerId,'job_post_id':positionid,'branch_id':branchId },
             success: function(data) {
                 //console.log(data);
-                var dutyRate = data.duty_rate;
-                var otRate = data.ot_rate;
-                var dutyHour = data.hours;
+                var dutyRate=data.duty_rate;
+                var otRate=data.ot_rate;
+                var dutyHour=data.hours;
                 console.log(dutyHour)
                 $(e).closest('tr').find('.job_post_hour option').prop('selected', false).filter('[value="' + dutyHour + '"]').prop('selected', true);
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
@@ -357,8 +321,7 @@
             },
         });
     }
-
-    function getDutyOtRateHourWise(e) {
+    function getDutyOtRateHourWise(e){
         let positionid = $(e).closest('tr').find('.job_post_id').val();
         var customerId = $('.customer_id').val();
         var branchId = $('.branch_id').val();
@@ -366,19 +329,14 @@
         //console.log('Customer'.customerId);
         console.log(dutyHour);
         $.ajax({
-            url: "{{ route('get_employeedata_hourewise') }}",
+            url:"{{ route('get_employeedata_hourewise') }}",
             type: "GET",
             dataType: "json",
-            data: {
-                'customer_id': customerId,
-                'job_post_id': positionid,
-                'job_post_hour': dutyHour,
-                'branch_id': branchId
-            },
+            data: { 'customer_id':customerId,'job_post_id':positionid, 'job_post_hour':dutyHour,'branch_id':branchId },
             success: function(data) {
                 //console.log(data);
-                var dutyRate = data.duty_rate;
-                var otRate = data.ot_rate;
+                var dutyRate=data.duty_rate;
+                var otRate=data.ot_rate;
                 console.log(dutyRate)
                 $(e).closest('tr').find('.duty_rate').val(dutyRate);
                 $(e).closest('tr').find('.ot_rate').val(otRate);
@@ -386,29 +344,24 @@
             },
         });
     }
-
-    function checkOthersCustomerDuty(e) {
+    function checkOthersCustomerDuty(e){
         var employee = $(e).closest('tr').find('.employee_id_primary').val();
         var startDate = $('.startDate').val();
         var endDate = $('.endDate').val();
         $.ajax({
-            url: "{{ route('get_employee_others_duty') }}",
+            url:"{{ route('get_employee_others_duty') }}",
             type: "GET",
             dataType: "json",
-            data: {
-                'employee_id': employee,
-                'start_date': startDate,
-                'end_date': endDate
-            },
+            data: { 'employee_id':employee,'start_date':startDate, 'end_date':endDate },
             success: function(data) {
                 if (data.length > 0) {
                     // Construct the message
                     var message = "<span style='border-bottom: solid 2px; color: yellow;'>Employee duties found:</span><br>";
                     $.each(data, function(index, duty) {
-                        message += "Customer: " + duty.customer_name + (duty.customer_branch ? ', ' + duty.customer_branch : '') + "<br>" +
-                            "General Duty: " + duty.general + "<br>" +
-                            "OT Duty: " + duty.overtime + "<br>" +
-                            "Total Amount: " + duty.total + "<br>";
+                    message +=  "Customer: " + duty.customer_name + (duty.customer_branch ? ', ' + duty.customer_branch : '') + "<br>" +
+                                "General Duty: " + duty.general + "<br>" +
+                                "OT Duty: " + duty.overtime + "<br>" +
+                                "Total Amount: " + duty.total + "<br>";
                     });
                     toastr.success(message);
                 } else {
@@ -422,15 +375,15 @@
         });
     }
 
-    function CalculateAmount(e) {
+    function CalculateAmount(e){
         var divideByDayTotal = 0;
-        var dutyRateDay = 0;
-        var otRateDay = 0;
+        var dutyRateDay=0;
+        var otRateDay=0;
         var customer_id = $('.customer_id').val();
-        let dutyRate = $(e).closest('tr').find('.duty_rate').val() ? parseFloat($(e).closest('tr').find('.duty_rate').val()) : 0;
-        let otRate = $(e).closest('tr').find('.ot_rate').val() ? parseFloat($(e).closest('tr').find('.ot_rate').val()) : 0;
-        let dutyQty = $(e).closest('tr').find('.duty_qty').val() ? parseFloat($(e).closest('tr').find('.duty_qty').val()) : 0;
-        let otQty = $(e).closest('tr').find('.ot_qty').val() ? parseFloat($(e).closest('tr').find('.ot_qty').val()) : 0;
+        let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
+        let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
+        let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
+        let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
         //let currentDate = new Date();
         //let currentMonth = currentDate.getMonth() + 1;
         //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
@@ -438,44 +391,44 @@
         let currentMonth = new Date(currentDate).getMonth() + 1;
         let totalDaysInMonth = new Date(new Date(currentDate).getFullYear(), currentMonth, 0).getDate();
         // evercare setting
-        if (totalDaysInMonth == 29) {
+        if(totalDaysInMonth == 29){
             var divideByDayTotal = (totalDaysInMonth - 5);
-        } else {
+        }else{
             var divideByDayTotal = (totalDaysInMonth - 4);
         }
         // evercare setting
-        if (customer_id == 21) {
-            var dutyRateDay = dutyRate / divideByDayTotal;
-            var otRateDay = otRate / divideByDayTotal;
-        } else {
-            var dutyRateDay = dutyRate / totalDaysInMonth;
-            var otRateDay = otRate / totalDaysInMonth;
+        if(customer_id == 21){
+            var dutyRateDay=dutyRate/divideByDayTotal;
+            var otRateDay=otRate/divideByDayTotal;
+        }else{
+            var dutyRateDay=dutyRate/totalDaysInMonth;
+            var otRateDay=otRate/totalDaysInMonth;
         }
-        let dutyAmount = parseFloat(dutyRateDay * dutyQty);
-        let otAmount = parseFloat(otRateDay * otQty);
+        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+        let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
         $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
-        $(e).closest('tr').find('.total_amount').val(parseFloat(otAmount + dutyAmount).toFixed(2));
+        $(e).closest('tr').find('.total_amount').val(parseFloat(otAmount+dutyAmount).toFixed(2));
 
-        var totalDuty = 0;
-        var totalOt = 0;
-        var dutyAmountTotal = 0;
-        var otAmountFi = 0;
-        var totalAmountFi = 0;
-        $('.duty_qty').each(function() {
-            totalDuty += parseFloat($(this).val());
+        var totalDuty=0;
+        var totalOt=0;
+        var dutyAmountTotal=0;
+        var otAmountFi=0;
+        var totalAmountFi=0;
+        $('.duty_qty').each(function(){
+            totalDuty+=parseFloat($(this).val());
         });
-        $('.ot_qty').each(function() {
-            totalOt += parseFloat($(this).val());
+        $('.ot_qty').each(function(){
+            totalOt+=parseFloat($(this).val());
         });
-        $('.DutyAmountF').each(function() {
-            dutyAmountTotal += parseFloat($(this).val());
+        $('.DutyAmountF').each(function(){
+            dutyAmountTotal+=parseFloat($(this).val());
         });
-        $('.OtAmountFc').each(function() {
-            otAmountFi += parseFloat($(this).val());
+        $('.OtAmountFc').each(function(){
+            otAmountFi+=parseFloat($(this).val());
         });
-        $('.TotalAmu').each(function() {
-            totalAmountFi += parseFloat($(this).val());
+        $('.TotalAmu').each(function(){
+            totalAmountFi+=parseFloat($(this).val());
         });
         $('.totalDutyP').val(totalDuty);
         $('.totalOtP').val(totalOt);
@@ -485,13 +438,15 @@
 
     }
 
-    function totalAmount() {
+    function totalAmount(){
 
     }
+
+
 </script>
 <script>
-    function addRow() {
-        var row = `
+function addRow(){
+    var row=`
     <tr>
         <td>
             <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id" style="width:150px;">
@@ -569,15 +524,16 @@
         </td>
     </tr>
     `;
-        $('#customerduty').append(row);
-        DetailsShow();
-    }
+    $('#customerduty').append(row);
+    DetailsShow();
+}
 
-    function removeRow(e) {
-        if (confirm("Are you sure you want to remove this row?")) {
-            $(e).closest('tr').remove();
-        }
+function removeRow(e) {
+    if (confirm("Are you sure you want to remove this row?")) {
+        $(e).closest('tr').remove();
     }
+}
+
 </script>
 
 @endpush

@@ -201,44 +201,57 @@ class EmployeeRateController extends Controller
     }
     public function getEmployeeRate(Request $request)
     {
+        // Base query
         $query = DB::table('employee_rates')
-            ->join('employee_rate_details', function ($join) use ($request) {
-                $join->on('employee_rates.id', '=', 'employee_rate_details.employee_rate_id');
-
-                $join->where(function ($subQuery) use ($request) {
-                    if (!empty($request->branch_id)) {
-                        $subQuery->where('employee_rate_details.branch_id', $request->branch_id); // Matches the provided branch_id
-                        //->orWhereNull('employee_rate_details.branch_id'); // Include NULL values if no match is found
-                    } else {
-                        $subQuery->whereNull('employee_rate_details.branch_id'); // No branch_id provided, include only NULL values
-                    }
-                });
-
-
-
-
-                // Handle atm_id match or NULL fallback
-                if (!empty($request->atm_id)) {
-                    $join->where(function ($subQuery) use ($request) {
-                        $subQuery->where('employee_rate_details.atm_id', $request->atm_id)
-                            ->orWhereNull('employee_rate_details.atm_id'); // Include rows with NULL atm_id
-                    });
-                }
-            })
+            ->join('employee_rate_details', 'employee_rates.id', '=', 'employee_rate_details.employee_rate_id')
             ->join('job_posts', 'job_posts.id', '=', 'employee_rate_details.job_post_id')
             ->select('job_posts.name as job_post_name', 'employee_rate_details.*');
 
-        // Filter by employee_id if provided
+        // Check if employee_id exists in the request
         if (!empty($request->employee_id)) {
-            $query->where(function ($subQuery) use ($request) {
-                $subQuery->where('employee_rate_details.employee_id', $request->employee_id)
-                    ->orWhereNull('employee_rate_details.employee_id'); // Include NULL if no match
-            });
+            // Check if employee_id exists in the database
+            $matchingEmployee = DB::table('employee_rate_details')
+                ->where('employee_id', $request->employee_id)
+                ->exists();
+
+            if ($matchingEmployee) {
+                // If employee_id exists, return only matching rows
+                $query->where('employee_rate_details.employee_id', $request->employee_id);
+            } else {
+                // If no employee_id match, exclude NULL employee_id rows (no data related to employee_id)
+                $query->whereNull('employee_rate_details.employee_id');
+            }
+        } else {
+            // If employee_id is not provided in the request, exclude rows where employee_id is NULL
+            $query->whereNotNull('employee_rate_details.employee_id');
         }
 
-        // Filter by customer_id if provided
+        // Add filters based on customer_id, branch_id, and atm_id
         if (!empty($request->customer_id)) {
             $query->where('employee_rates.customer_id', $request->customer_id);
+
+
+            // Check if branch_id exists in the database
+            $matchBranch = DB::table('employee_rate_details')
+                ->where('branch_id', $request->branch_id)
+                ->exists();
+
+            // Check if branch_id exists in the database
+            $matchAtm = DB::table('employee_rate_details')
+                ->where('atm_id', $request->atm_id)
+                ->exists();
+            if ($matchBranch && $matchAtm) {
+                $query->where('employee_rates.branch_id', $request->branch_id)->where('employee_rates.atm_id', $request->atm_id);
+            } elseif ($matchBranch) {
+                $query->where('employee_rates.branch_id', $request->branch_id);
+            } elseif ($matchAtm) {
+                $query->where('employee_rates.atm_id', $request->atm_id);
+            } else {
+                $query->whereNull('employee_rate_details.branch_id')
+                    ->orWhereNull('employee_rate_details.atm_id');
+            }
+
+            
         }
 
         // Execute the query and get the results
@@ -251,10 +264,6 @@ class EmployeeRateController extends Controller
         }
 
         return response()->json($data, 200);
-
-
-
-
 
 
 

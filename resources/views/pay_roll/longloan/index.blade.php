@@ -11,10 +11,10 @@
 
             <div class="card">
                 <div>
-                <a class="btn btn-sm btn-primary float-end" href="{{route('long_loan.create')}}"><i class="bi bi-plus-square"></i></a>
+                    <a class="btn btn-sm btn-primary float-end" href="{{route('long_loan.create')}}"><i class="bi bi-plus-square"></i></a>
                 </div>
                 @if(Session::has('response'))
-                    {!!Session::get('response')['message']!!}
+                {!!Session::get('response')['message']!!}
                 @endif
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -39,10 +39,17 @@
                                 <td>{{$p->purchase_date}}</td>
                                 <td>{{$p->perinstallment_amount}}</td>
                                 <td>{{$p->number_of_installment}}</td>
-                                <td>
+                                <td class="d-flex">
                                     <a href="{{route('long_loan.edit',encryptor('encrypt',$p->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
+                                    <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                    <form id="form{{ $p->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('long_loan.destroy', encryptor('encrypt', $p->id)) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
                                 </td>
                             </tr>
                             @empty
@@ -52,6 +59,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="pt-2">
+                        {{$longloan->links()}}
+                    </div>
                 </div>
             </div>
         </div>
