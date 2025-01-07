@@ -219,7 +219,7 @@
 
                         // Deduction calculation
                         let pf = "0";
-                        if (new Date() >= threeMonthsLater) {
+                        if (new Date() >= threeMonthsLater && value.salary_joining_date != null) {
                             //pf = "1000";
                             pf = (value.p_f > 0) ? value.p_f : 0;
                         }
