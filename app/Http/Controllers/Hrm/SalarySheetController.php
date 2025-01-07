@@ -1501,7 +1501,7 @@ return response()->json($data, 200);
                  ->whereDate('long_loans.end_date', '>=',$stdate);
                  //->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
         })
-            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','long_loans.installment_date','long_loans.end_date','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.bn_post_allowance','employees.bn_fuel_bill','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial','employees.medical')->orderBy('employees.salary_serial','ASC');
+            ->select('deductions.*','long_loans.id as long_loan_id','long_loans.perinstallment_amount','long_loans.installment_date','long_loans.end_date','job_posts.id as jobpost_id','job_posts.name as jobpost_name','employees.id as employee_id','employees.admission_id_no','employees.en_applicants_name','employees.salary_joining_date','employees.bn_traning_cost','employees.bn_traning_cost_byMonth','employees.bn_traning_cost','employees.bn_remaining_cost','employees.insurance','employees.bn_post_allowance','employees.bn_fuel_bill','employees.employee_type','employees.gross_salary','employees.ot_salary','employees.salary_serial','employees.medical','employees.p_f')->orderBy('employees.salary_serial','ASC');
 
         $data = $query->get();
         return response()->json($data, 200);

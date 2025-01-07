@@ -323,7 +323,7 @@
                                     pf = (value.p_f > 0) ? value.p_f : '0';
                                     Insurance = (value.insurance > 0) ? value.insurance : '0';
                                     
-                                    if(deduction_post_allowance){
+                                    if(deduction_post_allowance > 0){
                                         postAllowance = deduction_post_allowance
                                     }else{
                                         postAllowance= postAllowance;
