@@ -432,6 +432,7 @@ class SalarySheetController extends Controller
     }
     public function salarySheetThreeStore(Request $request)
     {
+        //dd($request->all());
         DB::beginTransaction();
         try {
             $salary = new SalarySheet;
@@ -463,6 +464,7 @@ class SalarySheetController extends Controller
                             $details->medical=$request->medical[$key];
                             $details->trans_conve=$request->trans_conve[$key];
                             $details->food_allownce=$request->food_allownce[$key];
+                            $details->allownce=$request->post_allowance[$key];
                             $details->gross_wages=$request->gross_wages[$key];
                             $details->total_workingday=$request->total_workingDay[$key];
                             $details->present_day=$request->present_day[$key];

@@ -141,6 +141,7 @@
                                                 <th scope="col" rowspan="2">{{__('Medical')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Trans. Conve.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Food Allownce')}}</th>
+                                                <th scope="col" rowspan="2">{{__('Post Allowance')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Gross Wages')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Total Working Days')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Pre. Days')}}</th>
@@ -181,6 +182,7 @@
                                                <th><input class="form-control medicalTotal" type="text" disabled></th>
                                                <th><input class="form-control transConveTotal" type="text" disabled></th>
                                                <th><input class="form-control foodAllownceTotal" type="text" disabled></th>
+                                               <th><input class="form-control postAllowanceTotal" type="text" disabled></th>
                                                <th><input class="form-control grossTotal" type="text" disabled></th>
                                                <th><input class="form-control workingTotal" type="text" style="width:60px;" disabled></th>
                                                <th><input class="form-control preDaysTotal" type="text" style="width:60px;" disabled></th>
@@ -343,6 +345,7 @@
                             var customerName =`<span>${value.customer_name}</span><input style="width:100px;" class="form-control" type="hidden" name="joining_date[]" value="${value.salary_joining_date}">`;
                             var en_applicants_name = value.customer_branch;
                             var food=`<input style="width:100px;" class="form-control" type="hidden" name="food_allownce[]" value="0" readonly>`;
+                            var post_allowance=`<input style="width:100px;" class="form-control" type="text" name="post_allowance[]" value="0" readonly>`;
                             var absentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_absent[]" value="0" readonly>`
                             var vacantCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_vacant[]" value="0" readonly>`
                             var hrentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_h_rent[]" value="0" readonly>`
@@ -356,6 +359,7 @@
                             var customerName =`<input onkeyup="reCalcultateSalary(this)"  style="width:100px;" class="form-control joining_date" type="text" name="joining_date[]" value="${value.salary_joining_date}" readonly>`;
                             var en_applicants_name=`<input style="width:200px;" readonly class="form-control" type="text" value="${value.en_applicants_name}" placeholder="Name">`
                             var food=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control food_allownce" type="text" name="food_allownce[]" value="${Food}">`;
+                            var post_allowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control post_allowance" type="text" name="post_allowance[]" value="0">`;
                             var absentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_absent" type="text" name="deduction_absent[]" value="${Math.trunc(absent)}" placeholder="Absent" readonly>`
                             var vacantCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_vacant" type="text" name="deduction_vacant[]" value="${Math.trunc(vacant)}" placeholder="Vacant" readonly>`
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
@@ -394,6 +398,7 @@
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control trans_conve" type="text" name="trans_conve[]" value="${Trans}" placeholder="Trans. Conve.">
                                 </td>
                                 <td>${food}</td>
+                                 <td>${post_allowance}</td>
                                 <td>
                                     <input style="width:100px;" class="form-control gross_wages" type="text" name="gross_wages[]" value="${gr}" placeholder="Gross Wages" readonly>
                                 </td>
@@ -473,7 +478,8 @@
         let medi=$(e).closest('tr').find('.medical').val()?parseFloat($(e).closest('tr').find('.medical').val()):0;
         let trcon=$(e).closest('tr').find('.trans_conve').val()?parseFloat($(e).closest('tr').find('.trans_conve').val()):0;
         let foodallow=$(e).closest('tr').find('.food_allownce').val()?parseFloat($(e).closest('tr').find('.food_allownce').val()):0;
-        let grw = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon) + parseFloat(foodallow);
+        let post_allow=$(e).closest('tr').find('.post_allowance').val()?parseFloat($(e).closest('tr').find('.post_allowance').val()):0;
+        let grw = parseFloat(dutyRate) + parseFloat(hore) + parseFloat(medi) + parseFloat(trcon) + parseFloat(foodallow) + parseFloat(post_allow);
         $(e).closest('tr').find('.house_rent').val(parseFloat(hore).toFixed(2));
         $(e).closest('tr').find('.gross_wages').val(parseFloat(grw).toFixed(2));
 
@@ -515,7 +521,7 @@
     }
     function total_calculate() {
         var payableTotal = 0;
-        var ratOfSalaryTotal = 0; var houseRentTotal = 0; var medicalTotal = 0; var transConveTotal=0; foodAllownceTotal=0; var grossTotal=0; var workingTotal=0; var preDaysTotal = 0; var absentTotal=0; var vacantTotal=0; var hollyFesTotal=0; var leClTotal=0; var leSlTotal=0; var leElTotal=0; var deAbsentTotal=0; var deVacantTotal=0; var deHrentTotal=0; var dePfTotal=0; var deAdvTotal=0; var deStmpTotal=0; var detotalDeduc=0; var netWageTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0;
+        var ratOfSalaryTotal = 0; var houseRentTotal = 0; var medicalTotal = 0; var transConveTotal=0; foodAllownceTotal=0; var postAllowanceTotal = 0;var grossTotal=0; var workingTotal=0; var preDaysTotal = 0; var absentTotal=0; var vacantTotal=0; var hollyFesTotal=0; var leClTotal=0; var leSlTotal=0; var leElTotal=0; var deAbsentTotal=0; var deVacantTotal=0; var deHrentTotal=0; var dePfTotal=0; var deAdvTotal=0; var deStmpTotal=0; var detotalDeduc=0; var netWageTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0;
         $('.duty_rate').each(function() {
             ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -531,6 +537,10 @@
         $('.food_allownce').each(function() {
             foodAllownceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.post_allowance').each(function() {
+            postAllowanceTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
+        
         $('.gross_wages').each(function() {
             grossTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -601,6 +611,7 @@
         $('.medicalTotal').val(parseFloat(medicalTotal).toFixed(2));
         $('.transConveTotal').val(parseFloat(transConveTotal).toFixed(2));
         $('.foodAllownceTotal').val(parseFloat(foodAllownceTotal).toFixed(2));
+        $('.postAllowanceTotal').val(parseFloat(postAllowanceTotal).toFixed(2));
         $('.grossTotal').val(parseFloat(grossTotal).toFixed(2));
         $('.workingTotal').val(parseFloat(workingTotal));
         $('.preDaysTotal').val(parseFloat(preDaysTotal));

@@ -59,6 +59,7 @@
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Medical')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Trans. Conve.')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Food Allownce')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Post Allownce')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Wages')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Total Working Days')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Pre. Days')}}</th>
@@ -134,6 +135,11 @@
                                                     <td class="tbl_border">
                                                         @if($d->food_allownce > 0)
                                                             {{ round($d->food_allownce) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
+                                                        @if($d->allownce > 0)
+                                                            {{ round($d->allownce) }}
                                                         @endif
                                                     </td>
                                                     <td class="tbl_border">
