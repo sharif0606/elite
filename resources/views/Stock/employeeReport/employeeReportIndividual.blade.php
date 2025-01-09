@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('pageTitle',trans('Stock Individual Employee Wise Reports'))
+@section('pageTitle',trans('Stock Individual Employee | Customer Wise Reports'))
 @section('pageSubTitle',trans('Reports'))
 @push("styles")
 <link rel="stylesheet" href="{{ asset('assets/css/main/full-screen.css') }}">
@@ -57,9 +57,12 @@
                                         <p>বাড়ি নং-২,লেইন নং-২,রোড নং-২,ব্লক-''কে''</p>
                                         <p>হালিশহর হাউজিং এষ্টেট,চট্টগ্রাম-৪২২৪</p>
                                         {{--  <p>E-MAIL: <a href="#" style="border-bottom: solid 1px; border-color:blue;">{{encryptor('decrypt', request()->session()->get('companyEmail'))}}</a> Contact: {{encryptor('decrypt', request()->session()->get('companyContact'))}}</p>  --}}
-                                        @if($employee)
+                                        @if($employee && request()->get('type') == 1)
                                         <h6><span style="border-bottom: solid 1px;">{{$employee->bn_applicants_name}} , {{$employee->admission_id_no}}</span></h6>
                                         {{--  <p>Stock Item Register</p>  --}}
+                                        @else
+                                        <h6><span style="border-bottom: solid 1px;">{{$productList->first()->company->name}}</span></h6>
+                                        {{$productList->first()->company_branch->brance_name}}
                                         @endif
                                     </th>
                                 </tr>

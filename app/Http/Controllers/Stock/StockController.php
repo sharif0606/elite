@@ -84,9 +84,12 @@ class StockController extends Controller
         $decryptedId = encryptor('decrypt', $id);
 
         // Check if the ID belongs to an employee or customer
+        if($request->type == 1)
         $isEmployee = Stock::where('employee_id', $decryptedId)->exists();
-
-        if ($isEmployee) {
+        if($request->type == 2){
+            $isEmployee = Stock::where('company_id', $decryptedId)->exists();
+        }
+        if ($isEmployee && $request->type == 1) {
             // Query for employee
             $productList = Stock::where('employee_id', $decryptedId)
                 ->orderBy('product_id')

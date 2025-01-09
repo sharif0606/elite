@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Employee List'))
+@section('pageTitle',trans('Employee | Customer List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -97,11 +97,11 @@
                                     <td>{{$d->qty}}</td>  --}}
                                     <td class="white-space-nowrap">
                                         @if($d->employee?->bn_applicants_name)
-                                        <a href="{{route('stock.employeeIndividual',encryptor('encrypt',$d->employee_id))}}">
+                                        <a href="{{route('stock.employeeIndividual',['id'=>encryptor('encrypt',$d->employee_id),'type' =>2])}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         @else
-                                        <a href="{{route('stock.employeeIndividual',encryptor('encrypt',$d->company_id))}}">
+                                        <a href="{{route('stock.employeeIndividual',['id'=>encryptor('encrypt',$d->company_id),'type' =>2])}}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         @endif
