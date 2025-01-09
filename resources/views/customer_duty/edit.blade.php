@@ -101,7 +101,7 @@
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ old('employee_id',$d->employee?->id) }}">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                                                    <select class="form-select" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)" disabled>
                                                         <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                         <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>

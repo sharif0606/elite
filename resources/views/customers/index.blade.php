@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="form-group">
-                        <select class="form-control" name="received_by_city" required>
+                        <select class="form-control" name="received_by_city">
                             <option value="">Received By</option>
                             <option value="1">Ctg</option>
                             <option value="2">Head Office</option>
