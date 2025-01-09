@@ -278,6 +278,7 @@ class EmployeeController extends Controller
     {
         // Fetch the employee data
         $employees = Employee::find($id);
+        //dd($employees);
         if (!$employees) {
             return response()->json(['message' => 'Employee not found'], 404);
         }
@@ -347,10 +348,10 @@ class EmployeeController extends Controller
             ],
             [
                 'Permanent Address',
-                ($employees->en_perm_holding_no ? 'C/O: ' . $employees->en_perm_holding_no . ', ' : '') .
-                    ($employees->en_perm_village_name ? 'Vill: ' . $employees->en_perm_village_name . ', ' : '') .
+                ($employees->en_parm_holding_name ? 'C/O: ' . $employees->en_parm_holding_name . ', ' : '') .
+                    ($employees->en_parm_village_name ? 'Vill: ' . $employees->en_parm_village_name . ', ' : '') .
                     ($employees->bn_perm_ward?->name ? 'Ward: ' . $employees->bn_perm_ward?->name . ', ' : '') .
-                    ($employees->en_perm_post_ofc ? 'Post: ' . $employees->en_perm_post_ofc . ', ' : '') .
+                    ($employees->en_parm_post_ofc ? 'Post: ' . $employees->en_parm_post_ofc . ', ' : '') .
                     ($employees->bn_perm_union?->name ? 'P.S: ' . $employees->bn_perm_union?->name . ', ' : '') .
                     ($employees->bn_perm_upazilla?->name ? 'UP: ' . $employees->bn_perm_upazilla?->name . ', ' : '') .
                     ($employees->bn_perm_district?->name ? 'Dist: ' . $employees->bn_perm_district?->name : '')
@@ -362,13 +363,13 @@ class EmployeeController extends Controller
                     : 'B.C.: ' . $employees->en_birth_certificate
             ],
             ['Date of Birth', date('d-M-Y', strtotime($employees->bn_dob))],
-            ['Email', $employees->email],
-            ['Personal and  Alt. Phone No', $employees->phone],
+            // ['Email', $employees->email],
+            ['Personal and  Alt. Phone No', $employees->en_parm_phone_my.','.$employees->en_parm_phone_alt],
             ['Educational Qualification', $employees->en_edu_qualification],
             ['Experience', $employees->en_experience],
             ['Religion', $employees->religion?->name],
             ['Marital Status', ($employees->bn_marital_status == '1') ? 'Unmarried' : 'Married'],
-            ['Nationality', $employees->nationality?->name],
+            ['Nationality', $employees->en_nationality],
             ['Character Certificate (By Chairman)', '(Certificate attached)'],
             ['Identification Mark(if any)', $employees->en_identification_mark],
             ['Is any case filed against him in any court of Justice', $language_status],
@@ -382,10 +383,9 @@ class EmployeeController extends Controller
             ],
             [
                 'Emergency Address',
-                ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_emergency_holding_no . ', ' : '') .
-                    ($employees->en_emergency_village_name ? 'Vill: ' . $employees->en_emergency_village_name . ', ' : '') .
-                    ($employees->bn_emergency_ward?->name ? 'Ward: ' . $employees->bn_emergency_ward?->name . ', ' : '') .
-                    ($employees->en_emergency_post_ofc ? 'Post: ' . $employees->en_emergency_post_ofc . ', ' : '') .
+                ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_parm_holding_name . ', '.$employees->en_pre_holding_no : '') .
+                    ($employees->en_emergency_village_name ? 'Vill: ' . $employees->en_parm_village_name . ', ' : '') .
+                    ($employees->en_emergency_post_ofc ? 'Post: ' . $employees->en_parm_post_ofc . ', ' : '') .
                     ($employees->bn_emergency_union?->name ? 'P.S: ' . $employees->bn_emergency_union?->name . ', ' : '') .
                     ($employees->bn_emergency_upazilla?->name ? 'UP: ' . $employees->bn_emergency_upazilla?->name . ', ' : '') .
                     ($employees->bn_emergency_district?->name ? 'Dist: ' . $employees->bn_emergency_district?->name : '')
