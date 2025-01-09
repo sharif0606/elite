@@ -352,9 +352,9 @@ class EmployeeController extends Controller
                     ($employees->en_parm_village_name ? 'Vill: ' . $employees->en_parm_village_name . ', ' : '') .
                     ($employees->bn_perm_ward?->name ? 'Ward: ' . $employees->bn_perm_ward?->name . ', ' : '') .
                     ($employees->en_parm_post_ofc ? 'Post: ' . $employees->en_parm_post_ofc . ', ' : '') .
-                    ($employees->bn_perm_union?->name ? 'P.S: ' . $employees->bn_perm_union?->name . ', ' : '') .
-                    ($employees->bn_perm_upazilla?->name ? 'UP: ' . $employees->bn_perm_upazilla?->name . ', ' : '') .
-                    ($employees->bn_perm_district?->name ? 'Dist: ' . $employees->bn_perm_district?->name : '')
+                    ($employees->bn_parm_union?->name ? 'P.S: ' . $employees->bn_parm_union?->name . ', ' : '') .
+                    ($employees->bn_parm_upazilla?->name ? 'UP: ' . $employees->bn_parm_upazilla?->name . ', ' : '') .
+                    ($employees->bn_parm_district?->name ? 'Dist: ' . $employees->bn_parm_district?->name : '')
             ],
             [
                 'NID Or Birth Registration No.',
