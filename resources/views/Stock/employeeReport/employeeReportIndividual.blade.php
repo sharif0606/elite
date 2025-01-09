@@ -61,8 +61,8 @@
                                         <h6><span style="border-bottom: solid 1px;">{{$employee->bn_applicants_name}} , {{$employee->admission_id_no}}</span></h6>
                                         {{--  <p>Stock Item Register</p>  --}}
                                         @else
-                                        <h6><span style="border-bottom: solid 1px;">{{$productList->first()->company->name}}</span></h6>
-                                        {{$productList->first()->company_branch->brance_name}}
+                                        <h6><span style="border-bottom: solid 1px;">{{$productList->first()->company?->name}}</span></h6>
+                                        {{$productList->first()->company_branch?->brance_name}}
                                         @endif
                                     </th>
                                 </tr>
