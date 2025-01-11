@@ -90,23 +90,24 @@
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>
+                                        {{--$custduty->details--}}
                                         <tbody id="customerduty">
                                             @if ($custduty->details)
                                             @foreach ($custduty->details as $d)
                                             <tr>
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="{{ $d->employee?->admission_id_no }}" placeholder="Employee Id" style="width:150px;">
-                                                    <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }} -{{ $d->employee?->position?->name }}</div>
-                                                    {{-- <input class="job_post_id" type="hidden" name="job_post_id[]" value=""> --}}
+                                                    <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }}</div>{{-- $d->employee?->position?->name --}}
+                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="{{$d->employee_salary_id}}">
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ old('employee_id',$d->employee?->id) }}">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select" value="" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)" disabled>
+                                                    <select class="form-select job_post_id" style="width:150px" onchange="getDutyOtRate(this)" disabled>
                                                         <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                         <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
                                                         @endforeach
-                                                        
+
                                                     </select>
                                                 </td>
                                                 <td>
@@ -210,6 +211,7 @@
     $(document).ready(function() {
         $('.branch_hide').hide();
         $('.atm_hide').hide();
+        });
     })
     let old_customer_id = 0;
 
@@ -245,15 +247,6 @@
         console.log(startdate);
     }
 
-    window.onload = function() {
-        // Get all input fields with class 'employee_id'
-        var employeeInputs = document.querySelectorAll('.employee_id');
-        
-        // Loop through each input and call getEmployees
-        employeeInputs.forEach(function(inputElement) {
-            getEmployees(inputElement);
-        });
-    };
 
 
     function getEmployees(e) {
@@ -322,6 +315,7 @@
             },
             success: function(data) {
                 $(e).closest('tr').find('.job_post_id').html(data);
+                
             },
             error: function() {
                 console.error("Error fetching job post details.");
@@ -502,9 +496,9 @@
         <td>
             <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
                 <option value="0">Select</option>
-                @foreach ($jobposts as $job)
+                {{--@foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
-                @endforeach
+                @endforeach--}}
             </select>
         </td>
         <td>

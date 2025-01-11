@@ -286,7 +286,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         /* ==  Customer Wise Job Post Data == */
         Route::get('/get-job-post', [empasign::class, 'getJobPost'])->name('empasign.getJobPost');
          /* ==  Customer Wise Employee Salary Designation== */
-         Route::get('/get-employee-salary-post', [employeeRate::class, 'getEmployeeRate'])->name('emp.getEmployeeRate');
+         Route::get('/get-employee-salary-post', [employeeRate::class, 'getEmploygetEmployeeeeRate'])->name('emp.getEmployeeRate');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
         Route::get('/get-employee-hourewise-duty-ot-rate', [customerduty::class, 'getDutyOtRateHourWise'])->name('get_employeedata_hourewise');
