@@ -450,6 +450,10 @@
                                 </td>  --}}
                             </tr>`
                         );
+                        // Call reCalculateSalary on all inputs explicitly
+                        $(`.salarySheet tr:last input`).each(function () {
+                            reCalcultateSalary(this);
+                        });
                         counter++;
                         total_calculate();
                         old_emp= value.admission_id_no;
@@ -477,6 +481,7 @@
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
         let fixedOt=$(e).closest('tr').find('.fixed_ot').val()?parseFloat($(e).closest('tr').find('.fixed_ot').val()):0;
         let allownce=$(e).closest('tr').find('.allownce').val()?parseFloat($(e).closest('tr').find('.allownce').val()):0;
+        let leave=$(e).closest('tr').find('.leave').val()?parseFloat($(e).closest('tr').find('.leave').val()):0;
         let arrear=$(e).closest('tr').find('.arrear').val()?parseFloat($(e).closest('tr').find('.arrear').val()):0;
         let currentDate = new Date();
         //let currentMonth = currentDate.getMonth() + 1;
@@ -516,7 +521,7 @@
         let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_revenue_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_revenue_stamp').val()):0;
         let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
-        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(arrear);
+        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(leave) + parseFloat(arrear);
         let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(traningCost) + parseFloat(Cf) + parseFloat(medical) + parseFloat(ins) + parseFloat(pf) + parseFloat(stamp);
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));

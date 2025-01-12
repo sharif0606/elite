@@ -109,7 +109,7 @@
                                                     <td class="tbl_border">
                                                         {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
                                                     </td>
-                                                    <td class="tbl_border">{{ $d->employee?->position?->name }}</td>
+                                                    <td class="tbl_border">{{ $d->position?->name }}</td>
                                                     <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
                                                     <td class="tbl_border">
 
