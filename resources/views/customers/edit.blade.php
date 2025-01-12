@@ -89,6 +89,24 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-sm-12">
                         <div class="form-group">
+                            <label for="insurance">Insurance</label>
+                            <input type="text" value="{{old('insurance',$customer->insurance)}}" class="form-control" name="insurance">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="pf">PF</label>
+                            <input type="text" value="{{old('insurance',$customer->pf)}}" class="form-control" name="pf">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
+                            <label for="stamp">Stamp</label>
+                            <input type="text" value="{{old('stamp',$customer->stamp)}}" class="form-control" name="stamp">
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-12">
+                        <div class="form-group">
                             <label for="medical">Medical</label>
                             <input type="text" value="{{old('medical',$customer->medical)}}" class="form-control" name="medical">
                         </div>
