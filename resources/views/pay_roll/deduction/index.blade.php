@@ -38,6 +38,9 @@
                     <div class=""><h5>Allownce</h5></div>
                     <a href="{{route('deduction_asign.fuelBillIndex')}}" class="btn btn-danger py-1 px-2 m-1">Fuel Bill</a>
                     <a href="{{route('deduction_asign.postAllowanceIndex')}}" class="btn btn-danger py-1 px-2 m-1">Post Allowance</a>
+                    <!-- <a href="{{route('deduction_asign.allowanceIndex')}}" class="btn btn-danger py-1 px-2 m-1">Allowance</a> -->
+                    <a href="{{route('deduction_asign.leaveIndex')}}" class="btn btn-danger py-1 px-2 m-1">Leave</a>
+                    <a href="{{route('deduction_asign.arrearIndex')}}" class="btn btn-danger py-1 px-2 m-1">Arrear</a>
                 </div>
             </div>
         </div>

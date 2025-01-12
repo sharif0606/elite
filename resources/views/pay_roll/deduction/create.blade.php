@@ -64,6 +64,9 @@
                                                 <option value="19" {{$did==19?'selected': ''}}>Adv.</option>
                                                 <option value="21" {{$did==21?'selected': ''}}>Fuel Bill</option>
                                                 <option value="22" {{$did==22?'selected': ''}}>Post Allowance</option>
+                                                <option value="23" {{$did==23?'selected': ''}}>Allowance</option>
+                                                <option value="24" {{$did==24?'selected': ''}}>Leave</option>
+                                                <option value="25" {{$did==25?'selected': ''}}>Arrear</option>
                                             </select>
                                             @if($errors->has('deduction'))
                                                 <span class="text-danger"> {{ $errors->first('deduction') }}</span>

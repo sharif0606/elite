@@ -127,6 +127,21 @@ class ControllerDeduction extends Controller
         $deductions=Deduction::where('post_allowance', '>', 0)->get();
         return view('pay_roll.deduction.postAllowanceIndex',compact('deductions'));
     }
+    public function allowanceIndex()
+    {
+        $deductions=Deduction::where('allowance', '>', 0)->get();
+        return view('pay_roll.deduction.allowanceIndex',compact('deductions'));
+    }
+    public function leaveIndex()
+    {
+        $deductions=Deduction::where('leave', '>', 0)->get();
+        return view('pay_roll.deduction.leaveIndex',compact('deductions'));
+    }
+    public function arrearIndex()
+    {
+        $deductions=Deduction::where('arrear', '>', 0)->get();
+        return view('pay_roll.deduction.arrearIndex',compact('deductions'));
+    }
     public function salaryStopIndex()
     {
         $deductions=Deduction::where('salary_stop_message', '!=', null)->get();
@@ -472,6 +487,46 @@ class ControllerDeduction extends Controller
                     }
                 }
             }
+            if($request->deduction_type=='23'){
+                //dd($request->all());
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->allowance=$request->amount[$key];
+                        $deduction->status=23;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='24'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->leave=$request->amount[$key];
+                        $deduction->status=24;
+                        $deduction->save();
+                    }
+                }
+            }
+            if($request->deduction_type=='25'){
+                foreach($request->employee_id as $key => $value){
+                    if($value){
+                        $deduction = Deduction::where('employee_id',$request->employee_id[$key])->where('year',$request->year)->where('month',$request->month)->firstOrNew();
+                        $deduction->year=$request->year;
+                        $deduction->month=$request->month;
+                        $deduction->employee_id=$request->employee_id[$key];
+                        $deduction->arrear=$request->amount[$key];
+                        $deduction->status=25;
+                        $deduction->save();
+                    }
+                }
+            }
             \LogActivity::addToLog('Add Deduction',$request->getContent(),'Deduction');
             $deductionRoutes = [
                 1 => 'deduction_asign.fineIndex',
@@ -496,6 +551,9 @@ class ControllerDeduction extends Controller
                 20=> 'deduction_asign.salaryStopIndex',
                 21=> 'deduction_asign.fuelBillIndex',
                 22=> 'deduction_asign.postAllowanceIndex',
+                23=> 'deduction_asign.allowanceIndex',
+                24=> 'deduction_asign.leaveIndex',
+                25=> 'deduction_asign.arrearIndex',
                 'default' => 'deduction_asign.index',
             ];
             

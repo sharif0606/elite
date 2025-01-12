@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('pageTitle',trans('Deduction Cf List'))
+@section('pageTitle',trans('Arrear Index List'))
 @section('pageSubTitle',trans('List'))
 
 @section('content')
@@ -12,7 +12,7 @@
             <div class="card">
                 <div>
                     <a class="float-start btn btn-sm bg-danger text-white" href="{{route('deduction_asign.index')}}">Return Index</a>
-                    <a class="float-end text-danger" href="{{route('deduction_asign.deductionCreate',['deduction_id' => 7])}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
+                    <a class="float-end text-danger" href="{{route('deduction_asign.deductionCreate',['deduction_id' => 25])}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
                 </div>
                 @if(Session::has('response'))
                     {!!Session::get('response')['message']!!}
@@ -25,8 +25,7 @@
                                 <th scope="col">{{__('#SL')}}</th>
                                 <th scope="col">{{__('Employee Name')}}</th>
                                 <th scope="col">{{__('Month')}}</th>
-                                <th scope="col">{{__('Cf')}}</th>
-                                <th scope="col">{{__('Remarks')}}</th>
+                                <th scope="col">{{__('Arrear')}}</th>
                                 <th class="white-space-nowrap">{{__('Action') }}</th>
                             </tr>
                         </thead>
@@ -40,8 +39,7 @@
                                 <th scope="row">{{ ++$loop->index }}</th>
                                 <td>{{$p->employee?->bn_applicants_name}}({{$p->employee?->admission_id_no}})</td>
                                 <td>{{$getMonth}}--{{$p->year}}</td>
-                                <td>{{$p->c_f}}</td>
-                                <td>{{$p->c_f_rmk}}</td>
+                                <td>{{$p->arrear}}</td>
                                 <td>
                                     <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
                                         <i class="bi bi-trash"></i>

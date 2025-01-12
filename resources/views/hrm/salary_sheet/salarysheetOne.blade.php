@@ -292,10 +292,13 @@
                         let traningCostMonth=value.bn_traning_cost_byMonth;
                         let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
-                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
                         let joiningDate = new Date(value.salary_joining_date);
                         let sixMonthsLater = new Date(joiningDate);
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+
+                        /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
+                        let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
+                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
 
                         let pf = "0";
                         if (new Date() >= sixMonthsLater) {
@@ -319,6 +322,8 @@
                         let Jacket = (value.jacket > 0) ? value.jacket : '0';
                         let Hr = (value.hr > 0) ? value.hr : '0';
                         let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        let Leave = (value.leave > 0) ? value.leave : '0';
+                        let Arrear = (value.arrear > 0) ? value.arrear : '0';
                         let Stmp = (value.stmp > 0) ? value.stmp : '0';
                         let Medical = (value.medical > 0) ? value.medical : '0';
                         let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
@@ -326,6 +331,11 @@
                         let netSalary = '0';
                         if (grossAmoun > totalDeduction) {
                             netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                        }
+                        if(deduction_post_allowance > 0){
+                            postAllowance = deduction_post_allowance
+                        }else{
+                            postAllowance= postAllowance;
                         }
                         // if(old_emp == value.admission_id_no){
                         if(value.duty_qty == 0){
@@ -408,10 +418,10 @@
                                     ${pAllowance}
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave" type="text" name="leave[]" value="" placeholder="Leave">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control leave" type="text" name="leave[]" value="${Leave}" placeholder="Leave">
                                 </td>
                                 <td>
-                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control arrear" type="text" name="arrear[]" value="" placeholder="Arrear">
+                                    <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control arrear" type="text" name="arrear[]" value="${Arrear}" placeholder="Arrear">
                                 </td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control gross_salary" type="text" name="gross_salary[]" value="${value.grossAmount}" placeholder="Gross Salary">
