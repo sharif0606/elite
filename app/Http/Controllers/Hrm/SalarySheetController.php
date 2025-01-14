@@ -1287,7 +1287,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         OR salary_sheet_details.deduction_revenue_stamp IS NOT NULL
         OR salary_sheet_details.deduction_traningcost IS NOT NULL
         OR salary_sheet_details.deduction_loan IS NOT NULL) 
-        AND (salary_sheets.year = {$request->Year} AND salary_sheets.month = {$request->Month}), 1, 0) AS charge_status")
+        AND (salary_sheets.year = {$request->Year} AND salary_sheets.month = {$request->Month}), 1, 0) AS charge_status"),
+        DB::raw('SUM(salary_sheet_details.deduction_traningcost) as total_deduction_traningcost')
     )
     ->where(function ($query) use ($request) {
         $query->where(function ($subQuery) use ($request) {

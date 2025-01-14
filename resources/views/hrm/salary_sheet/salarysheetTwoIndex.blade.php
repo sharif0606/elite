@@ -15,7 +15,7 @@
         <!-- table bordered -->
         <div class="table-responsive">
             <table class="table table-bordered mb-0 table-striped">
-                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarySheetTwo')}}"><i class="bi bi-plus-square"></i> Add New</a>
+                <a class="btn btn-sm btn-primary float-end my-2" href="{{route('salarysheet.salarySheetTwo')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <thead>
                     <tr class="text-center bg-primary text-white">
                         <th scope="col">{{__('#SL')}}</th>

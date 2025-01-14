@@ -587,7 +587,9 @@ class ControllerDeduction extends Controller
 
     public function destroy($id)
     {
+        //dd(encryptor('decrypt',$id));
         $c=Deduction::findOrFail(encryptor('decrypt',$id));
+        //dd($c);
         $c->delete();
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
