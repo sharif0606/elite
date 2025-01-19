@@ -28,5 +28,8 @@ class EmployeeRate extends Model
     public function details(){
         return $this->hasMany(EmployeeRateDetails::class,'employee_rate_id','id');
     }
+    public function atm(){
+        return $this->belongsTo(Atm::class,'atm_id','id');
+    }
 
 }

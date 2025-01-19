@@ -66,7 +66,8 @@
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td scope="row">
                             <span><b>{{$e->customer?->name}}</b></span><br>
-                            <span>{{$e->customer_branch?->brance_name}}</span></td>
+                            <span>{{$e->customer_branch?->brance_name}}</span><br>
+                            <small>{{$e->atm?->atm}}</small>
                         </td>
                         <td>
                             @if ($e->details)

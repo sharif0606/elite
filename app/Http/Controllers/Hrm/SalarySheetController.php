@@ -1216,7 +1216,15 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         $data = $query->get();
 
         return response()->json($data, 200);*/
-
+        $aggregateSubquery = DB::table('salary_sheet_details')
+        ->select(
+            'employee_id',
+            DB::raw('SUM(deduction_traningcost) as total_deduction_traningcost')
+        )
+        ->where('customer_id', $request->customer_id)
+        ->where('year', $request->Year)
+        ->where('month', $request->Month)
+        ->groupBy('employee_id');
 
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
     ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
@@ -1246,6 +1254,9 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
             ->where('salary_sheets.customer_id',$request->customer_id)
             ->where('salary_sheets.year', '=', $request->Year)
             ->where('salary_sheets.month', '=', $request->Month);
+    })
+    ->leftJoinSub($aggregateSubquery, 'aggregate_data', function ($join) {
+        $join->on('employees.id', '=', 'aggregate_data.employee_id');
     })
     ->select(
         'customer_duties.*',
@@ -1288,7 +1299,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         OR salary_sheet_details.deduction_traningcost IS NOT NULL
         OR salary_sheet_details.deduction_loan IS NOT NULL) 
         AND (salary_sheets.year = {$request->Year} AND salary_sheets.month = {$request->Month}), 1, 0) AS charge_status"),
-        DB::raw('SUM(salary_sheet_details.deduction_traningcost) as total_deduction_traningcost')
+         'aggregate_data.total_deduction_traningcost'
+        //DB::raw('SUM(salary_sheet_details.deduction_traningcost) as total_deduction_traningcost')
     )
     ->where(function ($query) use ($request) {
         $query->where(function ($subQuery) use ($request) {
