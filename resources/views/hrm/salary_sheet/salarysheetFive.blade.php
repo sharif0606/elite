@@ -321,24 +321,27 @@
                             if (!appliedDeductions[value.admission_id_no]) {
                                 if (new Date() >= sixMonthsLater && value.charge_status == 0) {
 
-                                    if(value.p_f > 0)
-                                    pf = (value.p_f > 0) ? value.p_f : '0';
-                                    else if(value.cpf > 0)
+                                   
+                                    if(value.cpf > 0)
                                     pf = (value.cpf > 0) ? value.cpf : '0';
+                                    else if(value.p_f > 0)
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
                                     else
                                     pf = 0;
 
-                                    if(value.insurance > 0)
-                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
-                                    else if(value.cinsurance > 0)
+                                   
+                                    if(value.cinsurance > 0)
                                     Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
+                                    else if(value.insurance > 0)
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
                                     else
                                     Insurance = 0;
 
-                                    if(value.stamp > 0)
-                                    Stmp = (value.stamp > 0) ? value.stamp : '0';
-                                    else if(value.cstamp > 0)
+                                    
+                                    if(value.cstamp > 0)
                                     Stmp = (value.cstamp > 0) ? value.cstamp : '0';
+                                    else if(value.stamp > 0)
+                                    Stmp = (value.stamp > 0) ? value.stamp : '0';
                                     else
                                     Stmp = 0;
 
