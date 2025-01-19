@@ -335,7 +335,12 @@
                                     Stmp = (value.stamp > 0) ? value.stamp : '0';
                                     else
                                     Stmp = 0;
+                                    traningCostPerMonth = traningCostPerMonth;
 
+                                }else{
+                                    Insurance = 0;
+                                    Stmp = 0;
+                                    traningCostPerMonth = 0;
                                 }
                                
                                
@@ -356,17 +361,14 @@
                                     Dress = Dress;
                                     Fine = Fine;
                                     BankCharge = BankCharge;
-                                    traningCostPerMonth = traningCostPerMonth;
+                                   
                                     Loan = Loan;
                                 }else {
                                     pf = 0; // No further deductions
-                                    Insurance = 0;
                                     postAllowance = 0;
                                     Dress = 0;
                                     Fine = 0;
                                     BankCharge = 0;
-                                    Stmp = 0;
-                                    traningCostPerMonth = 0;
                                     Loan = 0;
                                 }
                                 // Mark deductions as applied
