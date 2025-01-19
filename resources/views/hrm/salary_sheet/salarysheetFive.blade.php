@@ -277,7 +277,7 @@
                             let sixMonthsLater = new Date(joiningDate);
                             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
                             // Deduction calculation
-                            let pf = ;
+                            let pf = 0;
                             let Insurance = 0;
                             
                             /*if (new Date() >= sixMonthsLater && value.charge_status ==0) {
