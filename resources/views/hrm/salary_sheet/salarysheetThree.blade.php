@@ -289,7 +289,11 @@
                         // Deduction calculation
                         let pf = "0";
                         if (new Date() >= sixMonthsLater && value.charge_status ==0) {
-                            pf = (value.p_f > 0) ? value.p_f : '0';
+                            if(value.customer_id == 27){
+                                pf = (value.cpf > 0) ? Math.round((value.duty_rate * value.cpf) / 100) : 0;
+                            }else{
+                                pf = (value.p_f > 0) ? value.p_f : '0';
+                            }
                         }else{
                             pf = 0;
                         }
