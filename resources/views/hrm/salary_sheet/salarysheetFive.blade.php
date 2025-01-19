@@ -277,7 +277,7 @@
                             let sixMonthsLater = new Date(joiningDate);
                             sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
                             // Deduction calculation
-                            let pf = 0;
+                            let pf = ;
                             let Insurance = 0;
                             
                             /*if (new Date() >= sixMonthsLater && value.charge_status ==0) {
@@ -291,7 +291,6 @@
                             }else{
                                 Insurance = 0;
                             }*/
-                            //let listed_company_array = [13,71,7,191,142,146];//131,129,215,21,27
                             let Fine = (value.fine > 0) ? value.fine : '0';
                             //let Remarks = (value.remarks) ? value.remarks : '';
                             let RemarksArray = [
@@ -321,17 +320,30 @@
                             // Check if deductions are already applied for this employee
                             if (!appliedDeductions[value.admission_id_no]) {
                                 if (new Date() >= sixMonthsLater && value.charge_status == 0) {
-                                    if(value.job_post_id !=4 && value.customer_id == 13){
-                                        pf = (value.cpf > 0) ? value.cpf : '0';
-                                        Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
-                                    }else if(value.customer_id == 129 || value.customer_id == 215 || value.customer_id == 21){
-                                        pf = (value.cpf > 0) ? value.cpf : '0';
-                                        Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
-                                    }else{
-                                        pf = (value.p_f > 0) ? value.p_f : '0';
-                                        Insurance = (value.insurance > 0) ? value.insurance : '0';
-                                    }
 
+                                    if(value.p_f > 0)
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
+                                    else if(value.cpf > 0)
+                                    pf = (value.cpf > 0) ? value.cpf : '0';
+                                    else
+                                    pf = 0;
+
+                                    if(value.insurance > 0)
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
+                                    else if(value.cinsurance > 0)
+                                    Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
+                                    else
+                                    Insurance = 0;
+
+                                    if(value.stamp > 0)
+                                    Stmp = (value.stamp > 0) ? value.stamp : '0';
+                                    else if(value.cstamp > 0)
+                                    Stmp = (value.cstamp > 0) ? value.cstamp : '0';
+                                    else
+                                    Stmp = 0;
+
+                                  
+                                    
                                     if(deduction_post_allowance > 0){
                                         postAllowance = deduction_post_allowance
                                     }else{
