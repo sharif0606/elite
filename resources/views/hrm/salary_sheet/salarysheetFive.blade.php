@@ -319,17 +319,8 @@
 
                             // Check if deductions are already applied for this employee
                             if (!appliedDeductions[value.admission_id_no]) {
-                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
-
-                                   
-                                    if(value.cpf > 0)
-                                    pf = (value.cpf > 0) ? value.cpf : '0';
-                                    else if(value.p_f > 0)
-                                    pf = (value.p_f > 0) ? value.p_f : '0';
-                                    else
-                                    pf = 0;
-
-                                   
+                                if (value.charge_status == 0) {
+                                    /* This Value Will Deduct From first Of Month New Rule Decement 1/24 */
                                     if(value.cinsurance > 0)
                                     Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
                                     else if(value.insurance > 0)
@@ -345,7 +336,17 @@
                                     else
                                     Stmp = 0;
 
-                                  
+                                }
+                               
+                               
+                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
+                                   
+                                    if(value.cpf > 0)
+                                    pf = (value.cpf > 0) ? value.cpf : '0';
+                                    else if(value.p_f > 0)
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
+                                    else
+                                    pf = 0;
                                     
                                     if(deduction_post_allowance > 0){
                                         postAllowance = deduction_post_allowance
@@ -355,7 +356,6 @@
                                     Dress = Dress;
                                     Fine = Fine;
                                     BankCharge = BankCharge;
-                                    Stmp = Stmp;
                                     traningCostPerMonth = traningCostPerMonth;
                                     Loan = Loan;
                                 }else {
