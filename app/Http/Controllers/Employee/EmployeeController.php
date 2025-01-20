@@ -45,6 +45,8 @@ class EmployeeController extends Controller
         $employees = Employee::orderBy('id', 'ASC');
         if ($request->admission_id_no) {
             $employees = $employees->where('admission_id_no', $request->admission_id_no);
+        }else{
+            $employees = $employees->whereRaw("admission_id_no NOT REGEXP '^[0-9]+$'");
         }
 
         $employees = $employees->paginate(20);

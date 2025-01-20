@@ -321,9 +321,11 @@
                             if (!appliedDeductions[value.admission_id_no]) {
                                 if (value.charge_status == 0) {
                                     /* This Value Will Deduct From first Of Month New Rule Decement 1/24 */
-                                    if(value.cinsurance > 0)
+                                    if(value.cinsurance > 0 && value.insurance == 0)
                                     Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
-                                    else if(value.insurance > 0)
+                                    else if(value.insurance > 0 && value.cinsurance == 0)
+                                    Insurance = (value.insurance > 0) ? value.insurance : '0';
+                                    else if(value.cinsurance > 0 && value.insurance > 0)
                                     Insurance = (value.insurance > 0) ? value.insurance : '0';
                                     else
                                     Insurance = 0;
@@ -346,9 +348,11 @@
                                
                                 if (new Date() >= sixMonthsLater && value.charge_status == 0) {
                                    
-                                    if(value.cpf > 0)
+                                    if(value.cpf > 0 && value.p_f == 0)
                                     pf = (value.cpf > 0) ? value.cpf : '0';
-                                    else if(value.p_f > 0)
+                                    else if(value.p_f > 0 && value.cpf == 0)
+                                    pf = (value.p_f > 0) ? value.p_f : '0';
+                                    else if(value.cpf > 0 && value.p_f > 0)
                                     pf = (value.p_f > 0) ? value.p_f : '0';
                                     else
                                     pf = 0;
