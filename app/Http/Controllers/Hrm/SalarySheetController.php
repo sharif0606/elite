@@ -18,6 +18,7 @@ use App\Models\Crm\CustomerBrance;
 use App\Models\Employee\Employee;
 use App\Models\JobPost;
 use App\Models\payroll\LongLoan;
+use App\Models\Settings\Zone;
 
 class SalarySheetController extends Controller
 {
@@ -1231,7 +1232,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
             ->where('year', $request->Year)
             ->where('month', $request->Month)
             ->groupBy('employee_id');
-            //dd($aggregateSubquery->get());
+        //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
             ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
             ->join('employees', 'customer_duty_details.employee_id', '=', 'employees.id')
@@ -1529,7 +1530,7 @@ return response()->json($data, 200);
                 //->whereRaw('long_loans.loan_balance < long_loans.loan_amount');
             })
             ->select('deductions.*', 'long_loans.id as long_loan_id', 'long_loans.perinstallment_amount', 'long_loans.installment_date', 'long_loans.end_date', 'job_posts.id as jobpost_id', 'job_posts.name as jobpost_name', 'employees.id as employee_id', 'employees.admission_id_no', 'employees.en_applicants_name', 'employees.salary_joining_date', 'employees.bn_traning_cost', 'employees.bn_traning_cost_byMonth', 'employees.bn_traning_cost', 'employees.bn_remaining_cost', 'employees.insurance', 'employees.bn_post_allowance', 'employees.bn_fuel_bill', 'employees.employee_type', 'employees.gross_salary', 'employees.ot_salary', 'employees.salary_serial', 'employees.medical', 'employees.p_f')
-            ->where('employees.status',1)
+            ->where('employees.status', 1)
             ->orderBy('employees.salary_serial', 'ASC');
 
         $data = $query->get();
@@ -1552,5 +1553,29 @@ return response()->json($data, 200);
         $salarySheet->delete();
 
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
+    }
+    public function printZoneWise(Request $request)
+    {
+        // Retrieve request parameters
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $zone = $request->input('zone');
+        $type = $request->input('type');
+
+        // Retrieve zones
+        $zone = Zone::all();
+
+        // Query the SalarySheet table with related zone and status
+        $salary = SalarySheet::where('year', $year)
+            ->where('month', $month)
+            ->where('status', $type) // Assuming 'type' maps to 'status' in salary_sheets
+            ->whereHas('customer', function ($query) {
+                $query->whereNotNull('zone_id');
+            })
+            ->with('details')
+            ->get(); // Retrieves all matching SalarySheet records with valid zone_id
+
+        // Proceed with the existing logic
+        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone'));
     }
 }

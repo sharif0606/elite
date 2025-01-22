@@ -198,6 +198,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         // salary 5
         Route::get('get-salary-branch-ajax',[salarySheet::class,'getSalaryBranch'])->name('get_ajax_salary_branch');
         Route::get('salary-sheet-five-index', [salarySheet::class,'getsalarySheetFiveIndex'])->name('salarysheet.salarySheetFiveIndex');
+        /* Salary sheet Five Index */
+        Route::get('salary-sheet-print-zone-wise', [salarySheet::class,'printZoneWise'])->name('salarysheet.printZoneWise');
+
         Route::get('screen-salary-sheet-five', [salarySheet::class,'salarySheetFive'])->name('salarysheet.salarySheetFive');
         Route::post('/salary-five-store', [salarySheet::class,'salarySheetFiveStore'])->name('salarysheet.salarySheetFiveStore');
         Route::get('screen-salary-sheet-five-edit/{id}', [salarySheet::class,'editSalaryFive'])->name('salarySheetFiveEdit');

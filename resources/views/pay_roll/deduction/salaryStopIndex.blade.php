@@ -13,7 +13,7 @@
                     <a class="float-end text-danger" href="{{route('deduction_asign.salaryStopCreate')}}"><i class="bi bi-plus-square-fill" style="font-size: 1.5rem;"></i></a>
                 </div>
                 @if(Session::has('response'))
-                    {!!Session::get('response')['message']!!}
+                {!!Session::get('response')['message']!!}
                 @endif
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -31,8 +31,8 @@
                         <tbody>
                             @forelse($deductions as $p)
                             @php $mt=array("","January","February","March","April","May","June","July","August","September","October","November","December");
-                                $month = $p->month;
-                                $getMonth = isset($mt[$month])?$mt[$month]:0;
+                            $month = $p->month;
+                            $getMonth = isset($mt[$month])?$mt[$month]:0;
                             @endphp
                             <tr>
                                 <th scope="row">{{ ++$loop->index }}</th>
@@ -41,14 +41,19 @@
                                 <td>{{$getMonth}}--{{$p->year}}</td>
                                 <td>{{$p->salary_stop_message}}</td>
                                 <td>
-                                    <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
-                                        <i class="bi bi-trash"></i>
+                                    <a href="{{route('deduction_asign.edit',encryptor('encrypt',$p->id))}}">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form id="form{{ $p->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('deduction_asign.destroy', encryptor('encrypt', $p->id)) }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                    </form>
                                 </td>
+                                {{--<td>
+                                    <a class="text-danger" href="javascript:void()" onclick="$('#form{{$p->id}}').submit()">
+                                <i class="bi bi-trash"></i>
+                                </a>
+                                <form id="form{{ $p->id }}" onsubmit="return confirm('Are you sure?')" action="{{ route('deduction_asign.destroy', encryptor('encrypt', $p->id)) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+                                </td>--}}
                             </tr>
                             @empty
                             <tr>

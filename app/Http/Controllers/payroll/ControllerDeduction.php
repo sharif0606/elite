@@ -575,7 +575,8 @@ class ControllerDeduction extends Controller
 
     public function edit($id)
     {
-        //
+        $c=Deduction::findOrFail(encryptor('decrypt',$id));
+        return view('pay_roll.deduction.edit',compact('c'));
     }
 
 
