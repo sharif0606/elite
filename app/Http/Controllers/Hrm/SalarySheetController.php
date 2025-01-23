@@ -1584,7 +1584,7 @@ return response()->json($data, 200);
         $employee = Employee::all();
 
         // Query the SalarySheet table with related zone and status
-        $salary = SalarySheet::where('year', $year)
+       /*$salary = SalarySheet::where('year', $year)
             ->where('month', $month)
             ->where('status', $type)
             ->whereHas('customer', function ($query) use ($zone_id) {
@@ -1600,8 +1600,8 @@ return response()->json($data, 200);
             })
             ->whereHas('details') // Ensure salary sheets have details
             ->with(['customer', 'details'])
-            ->get();
-            /*
+            ->get();*/
+            
                     $salary = SalarySheet::where('year', $year)
             ->where('month', $month)
             ->where('status', $type) // Filter by year, month, and status
@@ -1628,7 +1628,7 @@ return response()->json($data, 200);
                 'details.branches' // Eager load branches for each salary sheet detail
             ])
             ->get();
-            */
+            
 
 
 
