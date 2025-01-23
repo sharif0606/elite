@@ -350,12 +350,28 @@
                                     Stmp = (value.stamp > 0) ? value.stamp : '0';
                                     else
                                     Stmp = 0;
-                                    traningCostPerMonth = traningCostPerMonth;
+                                    
+
+                                    if(value.cmedical > 0)
+                                    Medical = (value.cmedical > 0) ? value.cmedical : '0';
+                                    else if(value.medical > 0)
+                                    Medical = (value.medical > 0) ? value.stamp : '0';
+                                    else{
+                                        Medical = 0;
+                                    }
+                                    
+                                    if (traningCostPerMonth >= 0.5) {
+                                        traningCostPerMonth = Math.ceil(traningCostPerMonth);
+                                    } else {
+                                        traningCostPerMonth = Math.floor(traningCostPerMonth);
+                                    }
+                                    
 
                                 }else{
                                     Insurance = 0;
                                     Stmp = 0;
                                     traningCostPerMonth = 0;
+                                    Medical = 0;
                                 }
                                
                                
@@ -383,6 +399,7 @@
                                     postAllowance = 0;
                                     Fine = 0;
                                     Loan = 0;
+                                    Medical = 0;
                                 }
                                 // Mark deductions as applied
                                 appliedDeductions[value.admission_id_no] = true;
@@ -393,6 +410,7 @@
                                 Stmp = 0;
                                 traningCostPerMonth = 0;
                                 Loan = 0;
+                                Medical = 0;
                             }
                             
                         let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
