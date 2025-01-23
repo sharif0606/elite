@@ -1561,21 +1561,30 @@ return response()->json($data, 200);
         $month = $request->input('month');
         $zone = $request->input('zone');
         $type = $request->input('type');
-
-        // Retrieve zones
+        $employeeId = $request->input('employee_id'); // Employee ID from request
+        /*$salary = SalarySheet::whereHas('details.employee', function ($query) use ($employeeId) {
+        $query->where('id', $employeeId); // Filter by employee ID
+    })
+    ->with('details.employee')
+    ->get();
+        dd($salary);*/
+        // Retrieve zones and employee
         $zone = Zone::all();
+        $employee= Employee::all();
 
         // Query the SalarySheet table with related zone and status
         $salary = SalarySheet::where('year', $year)
-            ->where('month', $month)
-            ->where('status', $type) // Assuming 'type' maps to 'status' in salary_sheets
-            ->whereHas('customer', function ($query) {
-                $query->whereNotNull('zone_id');
-            })
-            ->with('details')
-            ->get(); // Retrieves all matching SalarySheet records with valid zone_id
+        ->where('month', $month)
+        ->where('status', $type) // Filter by year, month, and status
+        ->whereHas('customer', function ($query) {
+            $query->whereNotNull('zone_id'); // Ensure customer has a zone_id
+        })
+        ->whereHas('details') // Ensure salary sheets have details
+        ->with(['customer', 'details']) // Load customer and details relationships
+        ->get();
+    
 
         // Proceed with the existing logic
-        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone'));
+        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone','employee'));
     }
 }

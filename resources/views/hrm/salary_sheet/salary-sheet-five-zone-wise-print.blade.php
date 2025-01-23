@@ -7,7 +7,7 @@
 <div>
     <form method="get" action="{{route('salarysheet.printZoneWise')}}">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label for="">Year</label>
                 <select required class="form-control year" name="year">
                     <option value="">Select Year</option>
@@ -16,7 +16,7 @@
                         @endfor
                 </select>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label for="">Month</label>
                 <select required class="form-control month selected_month" name="month">
                     <option value="">Select Month</option>
@@ -25,7 +25,7 @@
                         @endfor
                 </select>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <label for="">Zone</label>
                 <select required class="form-control month selected_month" name="zone">
                     <option value="">Select Zone</option>
@@ -35,24 +35,24 @@
                     @endforelse
                 </select>
             </div>
-            <div class="col-lg-3">
-                <label for="">Zone</label>
+            {{--<div class="col-lg-2">
+                <label for="">Type</label>
                 <select required class="form-control month selected_month" name="type">
                     <option value="">Select Sheet Type</option>
                     <option value="1" {{ request('type') == 1 ? 'selected' : '' }}>Salary Sheet One</option>
-                    <option value="3" {{ request('type') == 3 ? 'selected' : '' }}>Salary Sheet Three</option>
-                    <option value="5" {{ request('type') == 5 ? 'selected' : '' }}>Salary Sheet Five</option>
-                </select>
-            </div>
-            {{--<div class="col-sm-3">
-                <label for="">Customer</label>
-                <select name="customer_id" id="customer_id" class="select2 form-select" onchange="getBranch(this);">
-                    <option value="">Select Customer</option>
-                    @forelse ($customer as $c)
-                    <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
-            @empty
+            <option value="3" {{ request('type') == 3 ? 'selected' : '' }}>Salary Sheet Three</option>
+            <option value="5" {{ request('type') == 5 ? 'selected' : '' }}>Salary Sheet Five</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <label for="">Customer</label>
+            <select name="customer_id" id="customer_id" class="select2 form-select" onchange="getBranch(this);">
+                <option value="">Select Customer</option>
+                @forelse ($customer as $c)
+                <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
+                @empty
 
-            @endforelse
+                @endforelse
             </select>
         </div>
         <div class="col-lg-2 col-md-6 col-sm-12">
@@ -71,6 +71,23 @@
 
                 @endforelse
             </select>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="">Employee</label>
+                <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                    <option value="">Select Employee</option>
+                    @forelse ($employee as $em)
+                    <option value="{{ $em->id }}" @if(request()->get('employee_id') == $em->id) selected @endif>
+                        {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
+                    </option>
+                    @empty
+                    @endforelse
+                </select>
+                @if($errors->has('employee_id'))
+                <span class="text-danger">{{ $errors->first('employee_id') }}</span>
+                @endif
+            </div>
         </div>--}}
         <div class="col-sm-3" style="margin-top: 1.4rem;">
             <button type="submit" class="btn btn-sm btn-info">Search</button>
@@ -113,34 +130,35 @@
                         </div>
 
                         <!-- table bordered -->
+                        <!-- Salary Table -->
                         <div class="row mt-4">
                             <div class="table-responsive">
                                 <table id="salaryTable" class="mb-0" style="width: 1800px !important;">
                                     <thead>
                                         <tr class="text-center tbl_border">
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('SL No')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('ID No')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 100px !important;">{{__('Date of Joining')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rank')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Name')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Rate of Salary')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Pre Days')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Net Salary')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT days')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Rate')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('OT Taka')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Post Allowance')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Gross Salary')}}</th>
-                                            <th class="tbl_border" scope="col" colspan="8">{{__('DEDUCTION')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Total Payable Salary')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Sign of Account')}}</th>
-                                            <th class="tbl_border" scope="col" rowspan="2">{{__('Remark')}}</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">SL No</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">ID No</th>
+                                            <th class="tbl_border" scope="col" rowspan="2" style="width: 100px;">Date of Joining</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Rank</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Name</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Rate of Salary</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Pre Days</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Net Salary</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">OT days</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">OT Rate</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">OT Taka</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Post Allowance</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Gross Salary</th>
+                                            <th class="tbl_border" scope="col" colspan="8">DEDUCTION</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Total Payable Salary</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">SIGN OF IND.</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Sign of Account</th>
+                                            <th class="tbl_border" scope="col" rowspan="2">Remark</th>
                                         </tr>
                                         <tr class="text-center tbl_border">
                                             <th class="tbl_border">Dress</th>
                                             <th class="tbl_border">Fine</th>
-                                            <th class="tbl_border">Bank Charge/ Exc</th>
+                                            <th class="tbl_border">Bank Charge/Exc</th>
                                             <th class="tbl_border">Ins</th>
                                             <th class="tbl_border">P.F</th>
                                             <th class="tbl_border">Stamp</th>
@@ -154,130 +172,50 @@
                                             <td colspan="25" class="text-center">No salary data found.</td>
                                         </tr>
                                         @else
-                                        @php
-                                        $deductionLoanTotal = 0;
-                                        $deductionTrainingTotal = 0;
-                                        $payableTotal = 0;
-                                        @endphp
                                         @foreach($salary as $sheet)
+                                        <!-- Customer Header -->
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
-                                                <h6 class="m-0">{{$sheet->customer->name}}</h6>
+                                                <h6 class="m-0">{{ $sheet->customer->name }}</h6>
                                             </td>
                                         </tr>
-                                        @foreach($sheet->customer->branch as $b)
-                                        @if($sheet->details->where('branch_id', $b->id)->isNotEmpty())
+
+                                        <!-- Loop through Branches -->
+                                        @foreach($sheet->customer->branch as $branch)
+                                        @php $branchIndex = 1; @endphp
+                                        @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty())
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
-                                                <small class="d-block px-0"><b>{{$b->brance_name}}</b></small>
-                                                @foreach($sheet->details->where('branch_id', $b->id) as $d)
-                                        <tr class="text-center tbl_border">
-                                            <td class="tbl_border">{{ ++$loop->parent->index }}</td>
-                                            <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
-                                            <td class="tbl_border">
-                                                {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
+                                                <small><b>{{ $branch->brance_name }}</b></small>
                                             </td>
-                                            <td class="tbl_border">{{ $d->position?->name }}</td>
-                                            <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ round($d->duty_rate) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ $d->duty_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_amount != 0)
-                                                {{ round($d->duty_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                {{ $d->ot_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                {{ round($d->ot_rate) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_amount != 0)
-                                                {{ round($d->ot_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->allownce != 0)
-                                                {{ round($d->allownce) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">{{ round($d->gross_salary) }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_dress != 0)
-                                                {{ round($d->deduction_dress) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_fine != 0)
-                                                {{ round($d->deduction_fine) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_banck_charge != 0)
-                                                {{ round($d->deduction_banck_charge) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_ins != 0)
-                                                {{ round($d->deduction_ins) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_p_f != 0)
-                                                {{ round($d->deduction_p_f) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_revenue_stamp != 0)
-                                                {{ round($d->deduction_revenue_stamp) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_traningcost != 0)
-                                                {{ round($d->deduction_traningcost) }}
-                                                @php $deductionTrainingTotal += $d->deduction_traningcost; @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_loan != 0)
-                                                {{ round($d->deduction_loan) }}
-                                                @php $deductionLoanTotal += $d->deduction_loan; @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->net_salary != 0)
-                                                {{ $d->net_salary }}
-                                                @php $payableTotal += $d->net_salary; @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">{{ $d->sing_of_ind }}</td>
-                                            <td class="tbl_border">{{ $d->sing_account }}</td>
-                                            <td class="tbl_border">{{ $d->remark }}</td>
                                         </tr>
+
+                                        @foreach($sheet->details->where('branch_id', $branch->id) as $index => $detail)
+                                        @include('hrm.salary_sheet.partials.salary_row', ['index' => $branchIndex++, 'detail' => $detail])
                                         @endforeach
-                                        </td>
-                                        </tr>
                                         @endif
                                         @endforeach
+
+                                        <!-- Check for Null Branch -->
+                                        @if($sheet->details->where('branch_id', null)->isNotEmpty())
+                                        {{--<tr class="tbl_border">
+                                            <td class="tbl_border" colspan="25">
+                                                <small><b>Branch: Not Assigned</b></small>
+                                            </td>
+                                        </tr>--}}
+
+                                        @foreach($sheet->details->where('branch_id', null) as $index => $detail)
+                                        @include('hrm.salary_sheet.partials.salary_row', ['index' => ++$loop->parent->index, 'detail' => $detail])
+                                        @endforeach
+                                        @endif
                                         @endforeach
                                         @endif
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
