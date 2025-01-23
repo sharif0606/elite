@@ -102,11 +102,13 @@
             border: 1px solid rgb(46, 46, 46);
             border-collapse: collapse;
         }
-        th{
+
+        th {
             color: #000;
             font-weight: bold;
         }
-        td{
+
+        td {
             color: #000;
             font-weight: 400;
         }
@@ -175,11 +177,17 @@
                                         </tr>
                                     </thead>
                                     <tbody class="salarySheet">
+
                                         @if($salary->isEmpty())
                                         <tr>
                                             <td colspan="25" class="text-center">No salary data found.</td>
                                         </tr>
                                         @else
+                                        @php
+                                        $deductionLoanTotal = 0;
+                                        $deductionTrainingTotal = 0;
+                                        $payableTotal = 0;
+                                        @endphp
                                         @foreach($salary as $sheet)
                                         <!-- Customer Header -->
                                         <tr class="tbl_border">
@@ -199,6 +207,11 @@
                                         </tr>
 
                                         @foreach($sheet->details->where('branch_id', $branch->id) as $index => $detail)
+                                            @php
+                                            $deductionTrainingTotal += $detail->deduction_traningcost;
+                                            $deductionLoanTotal += $detail->deduction_loan;
+                                            $payableTotal += $detail->net_salary;
+                                            @endphp
                                         @include('hrm.salary_sheet.partials.salary_row', ['index' => $branchIndex++, 'detail' => $detail])
                                         @endforeach
                                         @endif
@@ -217,8 +230,19 @@
                                         @endforeach
                                         @endif
                                         @endforeach
+                                        <tr class="tbl_border">
+                                            <th colspan="19" class="text-center tbl_border">Total</th>
+                                            <th class="tbl_border text-center">{{$deductionTrainingTotal}}</th>
+                                            <th class="tbl_border text-center">{{$deductionLoanTotal}}</th>
+                                            <th class="tbl_border text-center">{{$payableTotal}}</th>
+                                            <th class="tbl_border text-center">{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                            <th class="tbl_border"></th>
+                                            <th class="tbl_border"></th>
+                                        </tr>
+                                        {{-- footer --}}
                                         @endif
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

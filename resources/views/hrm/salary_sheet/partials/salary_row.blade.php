@@ -28,3 +28,4 @@
     <td class="tbl_border">{{ $detail->sing_account }}</td>
     <td class="tbl_border">{{ $detail->remark }}</td>
 </tr>
+
