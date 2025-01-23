@@ -131,7 +131,7 @@
                                     <h5 class="pb-0" style="padding-top: 5px;">ELITE SECURITY SERVICES LTD</h5>
                                     <h6 class="text-center m-0 p-0">Houes-02,Road-02,Block-K,Halisahar H/E Chattogram</h6>
                                     @if(isset($month))
-                                    <p class="text-center m-0 p-0">Salary for the Month of {{$getMonth}}-{{$year}}</p>
+                                    <p class="text-center m-0 p-0 fw-bold">Salary for the Month of {{$getMonth}}-{{$year}}</p>
                                     @endif
                                 </div>
                             </div>
