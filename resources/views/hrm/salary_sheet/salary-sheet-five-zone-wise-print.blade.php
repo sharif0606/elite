@@ -173,14 +173,12 @@
                                         </tr>
                                         @else
                                         @foreach($salary as $sheet)
-                                        @if($sheet->customer?->zone_id == request('zone'))
                                         <!-- Customer Header -->
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <h6 class="m-0">{{ $sheet->customer->name }}</h6>
                                             </td>
                                         </tr>
-                                        @endif
 
                                         <!-- Loop through Branches -->
                                         @foreach($sheet->customer->branch as $branch)
