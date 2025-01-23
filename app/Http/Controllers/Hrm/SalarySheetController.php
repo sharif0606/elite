@@ -1587,19 +1587,37 @@ return response()->json($data, 200);
         $salary = SalarySheet::where('year', $year)
             ->where('month', $month)
             ->where('status', $type) // Filter by year, month, and status
-            ->when($zone_id, function ($query, $zone_id) {
-                $query->whereHas('customer.branch', function ($query) use ($zone_id) {
-                    $query->where('zone_id', $zone_id); // Filter by zone_id
+            ->whereHas('customer', function ($query) use ($zone_id) {
+                $query->where(function ($query) use ($zone_id) {
+                    $query->whereNotNull('zone_id') // Customers with a direct zone_id
+                        ->where('zone_id', $zone_id); // Strict match with zone_id
+                })->orWhere(function ($query) use ($zone_id) {
+                    $query->whereNull('zone_id') // If customers.zone_id is NULL
+                        ->whereHas('branch', function ($query) use ($zone_id) {
+                            $query->where('zone_id', $zone_id); // Strict match in branches
+                        });
                 });
             })
-            ->whereHas('details') // Ensure salary sheets have details
-            ->with(['customer', 'details']) // Load customer and details relationships
+            ->whereHas('details', function ($query) use ($zone_id) {
+                // Ensure salary sheet details have the correct branches
+                $query->whereHas('branches', function ($query) use ($zone_id) {
+                    $query->where('zone_id', $zone_id);
+                });
+            })
+            ->with([
+                'customer',
+                'details',
+                'details.branches' // Eager load branches for each salary sheet detail
+            ])
             ->get();
 
 
 
 
+
+
+
         // Proceed with the existing logic
-        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone', 'employee','month', 'year'));
+        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone', 'employee', 'month', 'year'));
     }
 }

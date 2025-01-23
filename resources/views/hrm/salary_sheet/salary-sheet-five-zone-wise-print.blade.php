@@ -183,10 +183,10 @@
                                         <!-- Loop through Branches -->
                                         @foreach($sheet->customer->branch as $branch)
                                         @php $branchIndex = 1; @endphp
-                                        @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty())
+                                        @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty() && $branch->zone_id == request('zone'))
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
-                                                <small><b>{{ $branch->brance_name }}</b></small>
+                                                <small><b>{{ $branch->brance_name }}{--{ $branch->zone_id --}}</b></small>
                                             </td>
                                         </tr>
 

@@ -24,7 +24,7 @@ class CustomerBranceController extends Controller
     {
         //dd($request->all());
         $zone=Zone::all();
-        $cbrance=CustomerBrance::where('customer_id',encryptor('decrypt',$request->customer_id));
+        $cbrance=CustomerBrance::where('customer_id',encryptor('decrypt',$request->customer_id))->orderBy('zone_id','asc');
         $customerName=Customer::where('id',encryptor('decrypt',$request->customer_id))->first();
         $customer_id=$request->customer_id;
         $cbrance=$cbrance->orderBy('id')->get();

@@ -28,6 +28,7 @@
                                 <tr class="text-white">
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Branch Name')}}</th>
+                                    <th scope="col">{{__('Zone')}}</th>
                                     <th scope="col">{{__('VAT(%)')}}</th>
                                     <th scope="col">{{__('Contact Person Name')}}</th>
                                     <th scope="col">{{__('Contact Phone')}}</th>
@@ -40,6 +41,7 @@
                                 <tr class="text-center">
                                     <td scope="row"><b>{{++$index}}</b></td>
                                     <td>{{$data->brance_name}}</td>
+                                    <td>{{$data->zone?->name}}</td>
                                     <td>{{$data->vat}}</td>
                                     <td>{{$data->contact_person}}</td>
                                     <td>{{$data->contact_number}}</td>
