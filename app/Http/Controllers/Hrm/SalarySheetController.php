@@ -1586,6 +1586,24 @@ return response()->json($data, 200);
         // Query the SalarySheet table with related zone and status
         $salary = SalarySheet::where('year', $year)
             ->where('month', $month)
+            ->where('status', $type)
+            ->whereHas('customer', function ($query) use ($zone_id) {
+                $query->where(function ($query) use ($zone_id) {
+                    $query->where('zone_id', $zone_id) // Direct match in customers.zone_id
+                        ->orWhere(function ($query) use ($zone_id) {
+                            $query->whereNull('zone_id') // If customers.zone_id is NULL
+                                ->whereHas('branch', function ($query) use ($zone_id) {
+                                    $query->where('zone_id', $zone_id); // Match in branches
+                                });
+                        });
+                });
+            })
+            ->whereHas('details') // Ensure salary sheets have details
+            ->with(['customer', 'details'])
+            ->get();
+            /*
+                    $salary = SalarySheet::where('year', $year)
+            ->where('month', $month)
             ->where('status', $type) // Filter by year, month, and status
             ->whereHas('customer', function ($query) use ($zone_id) {
                 $query->where(function ($query) use ($zone_id) {
@@ -1610,8 +1628,7 @@ return response()->json($data, 200);
                 'details.branches' // Eager load branches for each salary sheet detail
             ])
             ->get();
-
-
+            */
 
 
 
