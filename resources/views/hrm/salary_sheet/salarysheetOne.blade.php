@@ -6,15 +6,18 @@
 @section('content')
 <style>
     .myDIV {
-      writing-mode: vertical-lr;
-      text-orientation: mixed;
+        writing-mode: vertical-lr;
+        text-orientation: mixed;
     }
+
     .selected-row {
         background-color: rgb(189, 245, 189);
     }
+
     .table {
         width: 100%;
-        overflow-x: auto; /* Ensures the table can be scrolled horizontally */
+        overflow-x: auto;
+        /* Ensures the table can be scrolled horizontally */
     }
 
     .table thead th.fixed,
@@ -29,7 +32,8 @@
     .table thead th.fixed-2,
     .table tbody td.fixed-2 {
         position: sticky;
-        left: 28px; /* Ensure this matches the total width of the preceding column(s) */
+        left: 28px;
+        /* Ensure this matches the total width of the preceding column(s) */
         z-index: 2;
         background-color: white;
         border-left: 1px solid #ddd;
@@ -38,33 +42,40 @@
     .table thead th.fixed-3,
     .table tbody td.fixed-3 {
         position: sticky;
-        left: 71px; /* Cumulative width of previous columns */
+        left: 71px;
+        /* Cumulative width of previous columns */
         z-index: 2;
         background-color: white;
         border-left: 1px solid #ddd;
     }
+
     .table thead th.fixed-4,
     .table tbody td.fixed-4 {
         position: sticky;
-        left: 176px; /* Cumulative width of previous columns */
+        left: 176px;
+        /* Cumulative width of previous columns */
         z-index: 2;
         background-color: white;
         border-left: 1px solid #ddd;
     }
+
     .table thead th.fixed-5,
     .table tbody td.fixed-5 {
         position: sticky;
-        left: 333px; /* Cumulative width of previous columns */
+        left: 333px;
+        /* Cumulative width of previous columns */
         z-index: 2;
         background-color: white;
         border-left: 1px solid #ddd;
     }
+
     .table tbody tr.selected-row td.fixed,
     .table tbody tr.selected-row td.fixed-2,
     .table tbody tr.selected-row td.fixed-3,
     .table tbody tr.selected-row td.fixed-4,
     .table tbody tr.selected-row td.fixed-5 {
-        background-color: rgb(189, 245, 189); /* Match selected-row background color */
+        background-color: rgb(189, 245, 189);
+        /* Match selected-row background color */
     }
 </style>
 <section id="multiple-column-form">
@@ -108,8 +119,8 @@
                                     <select required class="form-control year" name="year">
                                         <option value="">Select Year</option>
                                         @for($i=2023;$i<= date('Y');$i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
                                     </select>
                                 </div>
                                 <div class="col-lg-3 mt-2">
@@ -117,8 +128,8 @@
                                     <select required class="form-control month selected_month" name="month">
                                         <option value="">Select Month</option>
                                         @for($i=1;$i<= 12;$i++)
-                                        <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
-                                        @endfor
+                                            <option value="{{ $i }}">{{ date('F',strtotime("2022-$i-01")) }}</option>
+                                            @endfor
                                     </select>
                                 </div>
 
@@ -155,7 +166,7 @@
                                                 <th scope="col" rowspan="2">{{__('Net Salary')}}</th>
                                                 <th scope="col" rowspan="2">{{__('SIGN OF IND.')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remark')}}</th>
-                                                {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
+                                                {{-- <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th> --}}
                                             </tr>
                                             <tr>
                                                 <th>Fine</th>
@@ -234,7 +245,9 @@
                     url: "{{route('get_ajax_salary_branch')}}",
                     type: "GET",
                     dataType: "json",
-                    data: { customer_ids:selectedCustomers },
+                    data: {
+                        customer_ids: selectedCustomers
+                    },
                     success: function(data) {
                         console.log(data);
                         let optBranch = `<option value="">Select Branch</option>`;
@@ -257,22 +270,28 @@
             }
         });
     });
-    function getSalaryData(e){
-        {{--  if (!$('.start_date').val()) {
-            $('.start_date').focus();
-            return false;
+
+    function getSalaryData(e) {
+        {
+            {
+                --
+                if (!$('.start_date').val()) {
+                    $('.start_date').focus();
+                    return false;
+                }
+                if (!$('.end_date').val()) {
+                    $('.end_date').focus();
+                    return false;
+                }--
+            }
         }
-        if (!$('.end_date').val()) {
-            $('.end_date').focus();
-            return false;
-        }  --}}
-        var startDate=$('.year').val()+'-'+$('.month').val()+'-01';
-        var endDate=$('.year').val()+'-'+$('.month').val()+'-31';
-        var CustomerId=$('.customer_id').val();
-        var CustomerBranchId=$('.customer_branch_id').val();
-        var CustomerIdNot=$('.customer_id_not').val();
-        var Year=$('.year').val();
-        var Month=$('.month').val();
+        var startDate = $('.year').val() + '-' + $('.month').val() + '-01';
+        var endDate = $('.year').val() + '-' + $('.month').val() + '-31';
+        var CustomerId = $('.customer_id').val();
+        var CustomerBranchId = $('.customer_branch_id').val();
+        var CustomerIdNot = $('.customer_id_not').val();
+        var Year = $('.year').val();
+        var Month = $('.month').val();
         //console.log(startDate);
 
         let counter = 0;
@@ -280,101 +299,180 @@
             url: "{{route('get_salary_data')}}",
             type: "GET",
             dataType: "json",
-            data: { start_date:startDate,end_date:endDate,customer_id:CustomerId,customer_branch_id:CustomerBranchId,CustomerIdNot:CustomerIdNot,Year:Year,Month:Month },
+            data: {
+                start_date: startDate,
+                end_date: endDate,
+                customer_id: CustomerId,
+                customer_branch_id: CustomerBranchId,
+                CustomerIdNot: CustomerIdNot,
+                Year: Year,
+                Month: Month
+            },
             success: function(salary_data) {
                 console.log(salary_data);
                 let selectElement = $('.salarySheet');
-                    selectElement.empty();
-                    var old_emp = '';
-                    $.each(salary_data, function(index, value) {
-                        //console.log(value);
-                        let traningCost=value.bn_remaining_cost;
-                        let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
-                        let remaining=value.bn_remaining_cost;
-                        let joiningDate = new Date(value.salary_joining_date);
-                        let sixMonthsLater = new Date(joiningDate);
-                        sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
+                selectElement.empty();
+                let appliedDeductions = {}; // Object to track applied deductions
+                var old_emp = '';
+                $.each(salary_data, function(index, value) {
+                    //console.log(value);
+                    let traningCost = value.bn_remaining_cost;
+                    let traningCostMonth = value.bn_traning_cost_byMonth;
+                    let traningCostPerMonth = parseFloat((value.bn_remaining_cost) / (value.bn_traning_cost_byMonth)).toFixed(2);
+                    let remaining = value.bn_remaining_cost;
+                    let joiningDate = new Date(value.salary_joining_date);
+                    let sixMonthsLater = new Date(joiningDate);
+                    sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
-                        /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
-                        let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
-                        let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                    /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
+                    let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
+                    let postAllowance = (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
 
-                        let pf = "0";
-                        if (new Date() >= sixMonthsLater) {
-                            pf = "200";
+                    let pf = "0";
+                    /*if (new Date() >= sixMonthsLater) {
+                        pf = "200";
+                    }*/
+                    let Insurance = "0";
+                    /*if (new Date() >= sixMonthsLater) {
+                        Insurance = (value.insurance > 0) ? value.insurance : '0';
+                    }*/
+                    let Fine = (value.fine > 0) ? value.fine : '0';
+                    //let Remarks = (value.remarks) ? value.remarks : '';
+                    let RemarksArray = [
+                        (value.loan_rmk) ? value.loan_rmk : '',
+                        (value.salary_stop_message) ? value.salary_stop_message : ''
+                    ];
+                    let Remarks = RemarksArray.filter(item => item !== '').join(', ');
+                    let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
+                    let Loan = (value.loan > 0) ? value.loan : '0';
+                    let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
+                    let Cloth = (value.cloth > 0) ? value.cloth : '0';
+                    let Jacket = (value.jacket > 0) ? value.jacket : '0';
+                    let Hr = (value.hr > 0) ? value.hr : '0';
+                    let Cf = (value.c_f > 0) ? value.c_f : '0';
+                    let Leave = (value.leave > 0) ? value.leave : '0';
+                    let Arrear = (value.arrear > 0) ? value.arrear : '0';
+                    let Stmp = (value.stmp > 0) ? value.stmp : '0';
+                    let Medical = (value.medical > 0) ? value.medical : '0';
+                    let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                    // Check if deductions are already applied for this employee
+                    if (!appliedDeductions[value.admission_id_no]) {
+                        if (value.charge_status == 0) {
+                            /* This Value Will Deduct From first Of Month New Rule Decement 1/24 */
+                            if (value.cinsurance > 0 && value.insurance == 0)
+                                Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
+                            else if (value.insurance > 0 && value.cinsurance == 0)
+                                Insurance = (value.insurance > 0) ? value.insurance : '0';
+                            else if (value.cinsurance > 0 && value.insurance > 0)
+                                Insurance = (value.insurance > 0) ? value.insurance : '0';
+                            else
+                                Insurance = 0;
+
+
+                            if (value.cstamp > 0)
+                                Stmp = (value.cstamp > 0) ? value.cstamp : '0';
+                            else if (value.stamp > 0)
+                                Stmp = (value.stamp > 0) ? value.stamp : '0';
+                            else
+                                Stmp = 0;
+                            traningCostPerMonth = traningCostPerMonth;
+
+                        } else {
+                            Insurance = 0;
+                            Stmp = 0;
+                            traningCostPerMonth = 0;
                         }
-                        let Insurance = "0";
-                        if (new Date() >= sixMonthsLater) {
-                            Insurance = (value.insurance > 0) ? value.insurance : '0';
+
+
+                        if (new Date() >= sixMonthsLater && value.charge_status == 0) {
+
+                            if (value.cpf > 0 && value.p_f == 0)
+                                pf = (value.cpf > 0) ? value.cpf : '0';
+                            else if (value.p_f > 0 && value.cpf == 0)
+                                pf = (value.p_f > 0) ? value.p_f : '0';
+                            else if (value.cpf > 0 && value.p_f > 0)
+                                pf = (value.p_f > 0) ? value.p_f : '0';
+                            else
+                                pf = 0;
+
+                            if (deduction_post_allowance > 0) {
+                                postAllowance = deduction_post_allowance
+                            } else {
+                                postAllowance = postAllowance;
+                            }
+                            Dress = Dress;
+                            Fine = Fine;
+                            BankCharge = BankCharge;
+
+                            Loan = Loan;
+                        } else {
+                            pf = 0; // No further deductions
+                            postAllowance = 0;
+                            Dress = 0;
+                            Fine = 0;
+                            BankCharge = 0;
+                            Loan = 0;
                         }
-                        let Fine = (value.fine > 0) ? value.fine : '0';
-                        //let Remarks = (value.remarks) ? value.remarks : '';
-                        let RemarksArray = [
-                            (value.loan_rmk) ? value.loan_rmk : '',
-                            (value.salary_stop_message) ? value.salary_stop_message : ''
-                        ];
-                        let Remarks = RemarksArray.filter(item => item !== '').join(', ');
-                        let MobileBill = (value.mobilebill > 0) ? value.mobilebill : '0';
-                        let Loan = (value.loan > 0) ? value.loan : '0';
-                        let LongLoan = (value.perinstallment_amount > 0) ? value.perinstallment_amount : '0';
-                        let Cloth = (value.cloth > 0) ? value.cloth : '0';
-                        let Jacket = (value.jacket > 0) ? value.jacket : '0';
-                        let Hr = (value.hr > 0) ? value.hr : '0';
-                        let Cf = (value.c_f > 0) ? value.c_f : '0';
-                        let Leave = (value.leave > 0) ? value.leave : '0';
-                        let Arrear = (value.arrear > 0) ? value.arrear : '0';
-                        let Stmp = (value.stmp > 0) ? value.stmp : '0';
-                        let Medical = (value.medical > 0) ? value.medical : '0';
-                        let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
-                        let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
-                        let netSalary = '0';
-                        if (grossAmoun > totalDeduction) {
-                            netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
-                        }
-                        if(deduction_post_allowance > 0){
-                            postAllowance = deduction_post_allowance
-                        }else{
-                            postAllowance= postAllowance;
-                        }
-                        // if(old_emp == value.admission_id_no){
-                        if(value.duty_qty == 0){
-                            var fineCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
-                            var mobileCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" readonly>`
-                            var loonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
-                            var longLoonCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_long_loan[]" value="0" readonly>`
-                            var clothCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_cloth[]" value="0" readonly>`
-                            var jacketCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_jacket[]" value="0" readonly>`
-                            var hrCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_hr[]" value="0" readonly>`
-                            var trainingCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_traningcost[]" value="0" readonly>`
-                            var cfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_c_f[]" value="0" readonly>`
-                            var medicalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_medical[]" value="0" readonly>`
-                            var insCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_ins[]" value="0" readonly>`
-                            var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
-                            var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_revenue_stamp[]" value="0" readonly>`
-                            var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
-                            var netSalaryCondition=`<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
-                            var pAllowance=`<input style="width:100px;" class="form-control" type="hidden" name="allownce[]" value="">`
-                        }else{
-                            var fineCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">`
-                            var mobileCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${MobileBill}" placeholder="Mobile bill">`
-                            var loonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
-                            var longLoonCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="${LongLoan}" placeholder="Long Loan">`
-                            var clothCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">`
-                            var jacketCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">`
-                            var hrCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">`
-                            var trainingCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="${traningCostPerMonth}" placeholder="Training Cost">`
-                            var cfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">`
-                            var medicalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">`
-                            var insCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">`
-                            var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">`
-                            var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="${Stmp}" placeholder="Revenue Stamp">`
-                            var deTotalCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
-                            var netSalaryCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
-                            var pAllowance=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control allownce" type="text" name="allownce[]" value="${postAllowance}" placeholder="Allownce">`
-                        }
-                        selectElement.append(
-                            `<tr>
+                        // Mark deductions as applied
+                        appliedDeductions[value.admission_id_no] = true;
+                    } else {
+                        pf = 0; // No further deductions
+                        Insurance = 0;
+                        Dress = 0;
+                        Fine = 0;
+                        BankCharge = 0;
+                        Stmp = 0;
+                        traningCostPerMonth = 0;
+                        Loan = 0;
+                    }
+                    let totalDeduction = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(Cf) + parseFloat(Medical) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                    let netSalary = '0';
+                    if (grossAmoun > totalDeduction) {
+                        netSalary = parseFloat(grossAmoun) - parseFloat(totalDeduction);
+                    }
+                    /*if(deduction_post_allowance > 0){
+                        postAllowance = deduction_post_allowance
+                    }else{
+                        postAllowance= postAllowance;
+                    }*/
+                    // if(old_emp == value.admission_id_no){
+                    if (value.duty_qty == 0) {
+                        var fineCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_fine[]" value="0" readonly>`
+                        var mobileCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_mobilebill[]" value="0" readonly>`
+                        var loonCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_loan[]" value="0" readonly>`
+                        var longLoonCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_long_loan[]" value="0" readonly>`
+                        var clothCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_cloth[]" value="0" readonly>`
+                        var jacketCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_jacket[]" value="0" readonly>`
+                        var hrCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_hr[]" value="0" readonly>`
+                        var trainingCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_traningcost[]" value="0" readonly>`
+                        var cfCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_c_f[]" value="0" readonly>`
+                        var medicalCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_medical[]" value="0" readonly>`
+                        var insCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_ins[]" value="0" readonly>`
+                        var pfCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
+                        var stmCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_revenue_stamp[]" value="0" readonly>`
+                        var deTotalCondition = `<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
+                        var netSalaryCondition = `<input style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(grossAmoun)}" readonly>`
+                        var pAllowance = `<input style="width:100px;" class="form-control" type="hidden" name="allownce[]" value="">`
+                    } else {
+                        var fineCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_fine" type="text" name="deduction_fine[]" value="${Fine}" placeholder="Fine">`
+                        var mobileCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_mobilebill" type="text" name="deduction_mobilebill[]" value="${MobileBill}" placeholder="Mobile bill">`
+                        var loonCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_loan" type="text" name="deduction_loan[]" value="${Loan}" placeholder="Loan">`
+                        var longLoonCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_long_loan" type="text" name="deduction_long_loan[]" value="${LongLoan}" placeholder="Long Loan">`
+                        var clothCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_cloth" type="text" name="deduction_cloth[]" value="${Cloth}" placeholder="Cloth">`
+                        var jacketCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_jacket" type="text" name="deduction_jacket[]" value="${Jacket}" placeholder="Jacket">`
+                        var hrCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_hr" type="text" name="deduction_hr[]" value="${Hr}" placeholder="HR">`
+                        var trainingCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_traningcost" type="text" name="deduction_traningcost[]" value="${traningCostPerMonth}" placeholder="Training Cost">`
+                        var cfCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_c_f" type="text" name="deduction_c_f[]" value="${Cf}" placeholder="C/F">`
+                        var medicalCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_medical" type="text" name="deduction_medical[]" value="${Medical}" placeholder="Medical">`
+                        var insCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_ins" type="text" name="deduction_ins[]" value="${Insurance}" placeholder="Ins">`
+                        var pfCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="P/F">`
+                        var stmCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_revenue_stamp" type="text" name="deduction_revenue_stamp[]" value="${Stmp}" placeholder="Revenue Stamp">`
+                        var deTotalCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total">`
+                        var netSalaryCondition = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control net_salary" type="text" name="net_salary[]" value="${Math.round(netSalary)}" placeholder="Net Salary">`
+                        var pAllowance = `<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control allownce" type="text" name="allownce[]" value="${postAllowance}" placeholder="Allownce">`
+                    }
+                    selectElement.append(
+                        `<tr>
                                 <td class="fixed">${counter + 1}</td>
                                 <td>
                                     <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control online_payment" type="text" name="online_payment[]" value="Online" placeholder="Online Payment">
@@ -449,79 +547,79 @@
                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                 </td>  --}}
                             </tr>`
-                        );
-                        // Call reCalculateSalary on all inputs explicitly
-                        $(`.salarySheet tr:last input`).each(function () {
-                            reCalcultateSalary(this);
-                        });
-                        counter++;
-                        total_calculate();
-                        old_emp= value.admission_id_no;
+                    );
+                    // Call reCalculateSalary on all inputs explicitly
+                    $(`.salarySheet tr:last input`).each(function() {
+                        reCalcultateSalary(this);
                     });
-                    // Add event listeners for focusing and blurring inputs
-                    $('.salarySheet').on('focus', 'input', function() {
-                        $(this).closest('tr').addClass('selected-row');
-                    }).on('blur', 'input', function() {
-                        $(this).closest('tr').removeClass('selected-row');
-                    });
+                    counter++;
+                    total_calculate();
+                    old_emp = value.admission_id_no;
+                });
+                // Add event listeners for focusing and blurring inputs
+                $('.salarySheet').on('focus', 'input', function() {
+                    $(this).closest('tr').addClass('selected-row');
+                }).on('blur', 'input', function() {
+                    $(this).closest('tr').removeClass('selected-row');
+                });
             },
         });
         $('.show_click').removeClass('d-none');
-     }
+    }
 
-     function reCalcultateSalary(e) {
+    function reCalcultateSalary(e) {
         var divideByDayTotal = 0;
-        var dutyRateDay=0;
-        var otRateDay=0;
-        var customer_id = $(e).closest('tr').find('.ever_care_customer_id').val()?parseFloat($(e).closest('tr').find('.ever_care_customer_id').val()):0;
+        var dutyRateDay = 0;
+        var otRateDay = 0;
+        var customer_id = $(e).closest('tr').find('.ever_care_customer_id').val() ? parseFloat($(e).closest('tr').find('.ever_care_customer_id').val()) : 0;
 
-        let dutyRate=$(e).closest('tr').find('.duty_rate').val()?parseFloat($(e).closest('tr').find('.duty_rate').val()):0;
-        let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
-        let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
-        let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
-        let fixedOt=$(e).closest('tr').find('.fixed_ot').val()?parseFloat($(e).closest('tr').find('.fixed_ot').val()):0;
-        let allownce=$(e).closest('tr').find('.allownce').val()?parseFloat($(e).closest('tr').find('.allownce').val()):0;
-        let leave=$(e).closest('tr').find('.leave').val()?parseFloat($(e).closest('tr').find('.leave').val()):0;
-        let arrear=$(e).closest('tr').find('.arrear').val()?parseFloat($(e).closest('tr').find('.arrear').val()):0;
+        let dutyRate = $(e).closest('tr').find('.duty_rate').val() ? parseFloat($(e).closest('tr').find('.duty_rate').val()) : 0;
+        let otRate = $(e).closest('tr').find('.ot_rate').val() ? parseFloat($(e).closest('tr').find('.ot_rate').val()) : 0;
+        let dutyQty = $(e).closest('tr').find('.duty_qty').val() ? parseFloat($(e).closest('tr').find('.duty_qty').val()) : 0;
+        let otQty = $(e).closest('tr').find('.ot_qty').val() ? parseFloat($(e).closest('tr').find('.ot_qty').val()) : 0;
+        let fixedOt = $(e).closest('tr').find('.fixed_ot').val() ? parseFloat($(e).closest('tr').find('.fixed_ot').val()) : 0;
+        let allownce = $(e).closest('tr').find('.allownce').val() ? parseFloat($(e).closest('tr').find('.allownce').val()) : 0;
+        let leave = $(e).closest('tr').find('.leave').val() ? parseFloat($(e).closest('tr').find('.leave').val()) : 0;
+        let arrear = $(e).closest('tr').find('.arrear').val() ? parseFloat($(e).closest('tr').find('.arrear').val()) : 0;
         let currentDate = new Date();
         //let currentMonth = currentDate.getMonth() + 1;
         //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
         let currentMonth = $('.selected_month').val();
         let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
         // evercare setting
-        if(totalDaysInMonth == 29){
+        if (totalDaysInMonth == 29) {
             var divideByDayTotal = (totalDaysInMonth - 5);
-        }else{
+        } else {
             var divideByDayTotal = (totalDaysInMonth - 4);
         }
         // evercare setting
-        if(customer_id == 21){
-            var dutyRateDay=dutyRate/divideByDayTotal;
-            var otRateDay=otRate/divideByDayTotal;
-        }else{
-            var dutyRateDay=dutyRate/totalDaysInMonth;
-            var otRateDay=otRate/totalDaysInMonth;
+        if (customer_id == 21) {
+            var dutyRateDay = dutyRate / divideByDayTotal;
+            var otRateDay = otRate / divideByDayTotal;
+        } else {
+            var dutyRateDay = dutyRate / totalDaysInMonth;
+            var otRateDay = otRate / totalDaysInMonth;
         }
-        let dutyAmount=parseFloat(dutyRateDay*dutyQty);
-        let otAmount=parseFloat(otRateDay*otQty);
+        let dutyAmount = parseFloat(dutyRateDay * dutyQty);
+        let otAmount = parseFloat(otRateDay * otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
         $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));
 
-        let Fine=$(e).closest('tr').find('.deduction_fine').val()?parseFloat($(e).closest('tr').find('.deduction_fine').val()):0;
-        let MobileBill=$(e).closest('tr').find('.deduction_mobilebill').val()?parseFloat($(e).closest('tr').find('.deduction_mobilebill').val()):0;
-        let Loan=$(e).closest('tr').find('.deduction_loan').val()?parseFloat($(e).closest('tr').find('.deduction_loan').val()):0;
-        let LongLoan=$(e).closest('tr').find('.deduction_long_loan').val()?parseFloat($(e).closest('tr').find('.deduction_long_loan').val()):0;
-        let Cloth=$(e).closest('tr').find('.deduction_cloth').val()?parseFloat($(e).closest('tr').find('.deduction_cloth').val()):0;
-        let Jacket=$(e).closest('tr').find('.deduction_jacket').val()?parseFloat($(e).closest('tr').find('.deduction_jacket').val()):0;
-        let Hr=$(e).closest('tr').find('.deduction_hr').val()?parseFloat($(e).closest('tr').find('.deduction_hr').val()):0;
-        let traningCost=$(e).closest('tr').find('.deduction_traningcost').val()?parseFloat($(e).closest('tr').find('.deduction_traningcost').val()):0;
-        let Cf=$(e).closest('tr').find('.deduction_c_f').val()?parseFloat($(e).closest('tr').find('.deduction_c_f').val()):0;
-        let medical=$(e).closest('tr').find('.deduction_medical').val()?parseFloat($(e).closest('tr').find('.deduction_medical').val()):0;
-        let ins=$(e).closest('tr').find('.deduction_ins').val()?parseFloat($(e).closest('tr').find('.deduction_ins').val()):0;
-        let pf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
-        let stamp=$(e).closest('tr').find('.deduction_revenue_stamp').val()?parseFloat($(e).closest('tr').find('.deduction_revenue_stamp').val()):0;
-        let detotal=$(e).closest('tr').find('.deduction_total').val()?parseFloat($(e).closest('tr').find('.deduction_total').val()):0;
-        let tg= parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(leave) + parseFloat(arrear);
+        let Fine = $(e).closest('tr').find('.deduction_fine').val() ? parseFloat($(e).closest('tr').find('.deduction_fine').val()) : 0;
+        let MobileBill = $(e).closest('tr').find('.deduction_mobilebill').val() ? parseFloat($(e).closest('tr').find('.deduction_mobilebill').val()) : 0;
+        let Loan = $(e).closest('tr').find('.deduction_loan').val() ? parseFloat($(e).closest('tr').find('.deduction_loan').val()) : 0;
+        let LongLoan = $(e).closest('tr').find('.deduction_long_loan').val() ? parseFloat($(e).closest('tr').find('.deduction_long_loan').val()) : 0;
+        let Cloth = $(e).closest('tr').find('.deduction_cloth').val() ? parseFloat($(e).closest('tr').find('.deduction_cloth').val()) : 0;
+        let Jacket = $(e).closest('tr').find('.deduction_jacket').val() ? parseFloat($(e).closest('tr').find('.deduction_jacket').val()) : 0;
+        let Hr = $(e).closest('tr').find('.deduction_hr').val() ? parseFloat($(e).closest('tr').find('.deduction_hr').val()) : 0;
+        let traningCost = $(e).closest('tr').find('.deduction_traningcost').val() ? parseFloat($(e).closest('tr').find('.deduction_traningcost').val()) : 0;
+        let Cf = $(e).closest('tr').find('.deduction_c_f').val() ? parseFloat($(e).closest('tr').find('.deduction_c_f').val()) : 0;
+        let medical = $(e).closest('tr').find('.deduction_medical').val() ? parseFloat($(e).closest('tr').find('.deduction_medical').val()) : 0;
+        let ins = $(e).closest('tr').find('.deduction_ins').val() ? parseFloat($(e).closest('tr').find('.deduction_ins').val()) : 0;
+        let pf = $(e).closest('tr').find('.deduction_p_f').val() ? parseFloat($(e).closest('tr').find('.deduction_p_f').val()) : 0;
+        let stamp = $(e).closest('tr').find('.deduction_revenue_stamp').val() ? parseFloat($(e).closest('tr').find('.deduction_revenue_stamp').val()) : 0;
+        let detotal = $(e).closest('tr').find('.deduction_total').val() ? parseFloat($(e).closest('tr').find('.deduction_total').val()) : 0;
+        let tg = parseFloat(dutyAmount) + parseFloat(otAmount) + parseFloat(fixedOt) + parseFloat(allownce) + parseFloat(leave) + parseFloat(arrear);
         let td = parseFloat(Fine) + parseFloat(MobileBill) + parseFloat(Loan) + parseFloat(LongLoan) + parseFloat(Cloth) + parseFloat(Jacket) + parseFloat(Hr) + parseFloat(traningCost) + parseFloat(Cf) + parseFloat(medical) + parseFloat(ins) + parseFloat(pf) + parseFloat(stamp);
         let net = parseFloat(tg) - parseFloat(td);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(td).toFixed(2));
@@ -530,86 +628,111 @@
         total_calculate();
 
     }
+
     function total_calculate() {
         var totalSlry = 0;
-        var dq = 0; var da = 0; var otq = 0; var otr = 0; var ota = 0; var fx = 0; var al = 0; var le = 0; var arr = 0; var grs = 0; var fi = 0; var mb = 0; var dl = 0; var dll = 0; var dc = 0; var dj = 0; var dh = 0; var dtr = 0; var dcf = 0; var dem = 0; var din = 0; var dpf = 0; var dst = 0; var dto = 0; var nts = 0;
+        var dq = 0;
+        var da = 0;
+        var otq = 0;
+        var otr = 0;
+        var ota = 0;
+        var fx = 0;
+        var al = 0;
+        var le = 0;
+        var arr = 0;
+        var grs = 0;
+        var fi = 0;
+        var mb = 0;
+        var dl = 0;
+        var dll = 0;
+        var dc = 0;
+        var dj = 0;
+        var dh = 0;
+        var dtr = 0;
+        var dcf = 0;
+        var dem = 0;
+        var din = 0;
+        var dpf = 0;
+        var dst = 0;
+        var dto = 0;
+        var nts = 0;
         $('.duty_rate').each(function() {
-            totalSlry+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            totalSlry += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.duty_qty').each(function() {
-            dq+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dq += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.duty_amount').each(function() {
-            da+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            da += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.ot_qty').each(function() {
-            otq+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            otq += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.ot_rate').each(function() {
-            otr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            otr += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.ot_amount').each(function() {
-            ota+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            ota += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.fixed_ot').each(function() {
-            fx+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            fx += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.allownce').each(function() {
-            al+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            al += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.leave').each(function() {
-            le+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            le += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.arrear').each(function() {
-            arr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            arr += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.gross_salary').each(function() {
-            grs+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            grs += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_fine').each(function() {
-            fi+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            fi += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_mobilebill').each(function() {
-            mb+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            mb += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_loan').each(function() {
-            dl+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dl += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_long_loan').each(function() {
-            dll+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dll += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_cloth').each(function() {
-            dc+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dc += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_jacket').each(function() {
-            dj+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dj += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_hr').each(function() {
-            dh+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dh += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_traningcost').each(function() {
-            dtr+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dtr += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_c_f').each(function() {
-            dcf+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dcf += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_medical').each(function() {
-            dem+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dem += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_ins').each(function() {
-            din+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            din += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_p_f').each(function() {
-            dpf+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dpf += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_revenue_stamp').each(function() {
-            dst+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dst += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.deduction_total').each(function() {
-            dto+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            dto += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.net_salary').each(function() {
-            nts+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+            nts += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.total_slry').val(parseFloat(totalSlry).toFixed(2));
         $('.nts').val(parseFloat(nts).toFixed(2));
@@ -637,7 +760,7 @@
         $('.dem').val(parseFloat(dem).toFixed(2));
         $('.dst').val(parseFloat(dst).toFixed(2));
         $('.dpf').val(parseFloat(dpf).toFixed(2));
-       // console.log(totalSlry);
+        // console.log(totalSlry);
 
     }
 </script>
