@@ -1570,21 +1570,36 @@ return response()->json($data, 200);
         dd($salary);*/
         // Retrieve zones and employee
         $zone = Zone::all();
-        $employee= Employee::all();
+        $employee = Employee::all();
+
+        // Retrieve request parameters
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $type = 5/*$request->input('type')*/;
+        $employeeId = $request->input('employee_id'); // Employee ID from request
+        $zone_id = $request->input('zone'); // Zone from request
+
+        // Retrieve zones and employee
+        $zone = Zone::all();
+        $employee = Employee::all();
 
         // Query the SalarySheet table with related zone and status
         $salary = SalarySheet::where('year', $year)
-        ->where('month', $month)
-        ->where('status', $type) // Filter by year, month, and status
-        ->whereHas('customer', function ($query) {
-            $query->whereNotNull('zone_id'); // Ensure customer has a zone_id
-        })
-        ->whereHas('details') // Ensure salary sheets have details
-        ->with(['customer', 'details']) // Load customer and details relationships
-        ->get();
-    
+            ->where('month', $month)
+            ->where('status', $type) // Filter by year, month, and status
+            ->when($zone_id, function ($query, $zone_id) {
+                $query->whereHas('customer.branch', function ($query) use ($zone_id) {
+                    $query->where('zone_id', $zone_id); // Filter by zone_id
+                });
+            })
+            ->whereHas('details') // Ensure salary sheets have details
+            ->with(['customer', 'details']) // Load customer and details relationships
+            ->get();
+
+
+
 
         // Proceed with the existing logic
-        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone','employee'));
+        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone', 'employee','month', 'year'));
     }
 }
