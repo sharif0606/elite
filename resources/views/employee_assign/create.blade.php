@@ -15,7 +15,7 @@
                                 <div class="row p-2 mt-4">
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Customer Name</b></label>
-                                        <select class="form-select customer_id" id="customer_id" name="customer_id"
+                                        <select class="form-select customer_id select2" id="customer_id" name="customer_id"
                                             onchange="getBranch(this)">
                                             <option value="">Select Customer</option>
                                             @forelse ($customer as $c)

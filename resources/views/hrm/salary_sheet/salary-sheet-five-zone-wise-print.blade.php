@@ -102,6 +102,14 @@
             border: 1px solid rgb(46, 46, 46);
             border-collapse: collapse;
         }
+        th{
+            color: #000;
+            font-weight: bold;
+        }
+        td{
+            color: #000;
+            font-weight: 400;
+        }
     </style>
     <div class="row match-height">
         <div class="col-12">
