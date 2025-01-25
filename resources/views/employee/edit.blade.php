@@ -747,6 +747,9 @@
                                 <option value="14" {{$employees->salary_prepared_type==14? 'selected' : ''}}>RSGT SCY</option>
                                 <option value="15" {{$employees->salary_prepared_type==15? 'selected' : ''}}>Office Staff Prime</option>
                                 <option value="16" {{$employees->salary_prepared_type==16? 'selected' : ''}}>Office Staff Others</option>
+                                <option value="18" {{$employees->salary_prepared_type==18? 'selected' : ''}}>City Bank & IFIC</option>
+                                <option value="19" {{$employees->salary_prepared_type==19? 'selected' : ''}}>Midas Safety Unit-1 & 3</option>
+                                <option value="20" {{$employees->salary_prepared_type==20? 'selected' : ''}}>Midas Safety Unit-2</option>
                             </select>
                         </div>
                     </div>

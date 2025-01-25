@@ -11,8 +11,8 @@
                     <select required class="form-control form-select year" name="year" required>
                         <option value="">Select Year</option>
                         @for($i=2023;$i<= date('Y');$i++)
-                        <option value="{{ $i }}" {{old('year')== $i? 'selected' : ''}}>{{ $i }}</option>
-                        @endfor
+                            <option value="{{ $i }}" {{old('year')== $i? 'selected' : ''}}>{{ $i }}</option>
+                            @endfor
                     </select>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12 py-1">
@@ -20,8 +20,8 @@
                     <select required class="form-control form-select month selected_month" name="month" required>
                         <option value="">Select Month</option>
                         @for($i=1;$i<= 12;$i++)
-                        <option value="{{ $i }}" {{old('month')== $i? 'selected' : ''}}>{{ date('F',strtotime("2022-$i-01")) }}</option>
-                        @endfor
+                            <option value="{{ $i }}" {{old('month')== $i? 'selected' : ''}}>{{ date('F',strtotime("2022-$i-01")) }}</option>
+                            @endfor
                     </select>
                 </div>
                 <div class="form-group col-lg-6 mt-2 d-none">
@@ -74,6 +74,9 @@
                         <option value="15" {{old('type')== '15'? 'selected' : ''}}>Office Staff Prime</option>
                         <option value="16" {{old('type')== '16'? 'selected' : ''}}>Office Staff Others</option>
                         <option value="17" {{old('type')== '17'? 'selected' : ''}}>Stop Salary List</option>
+                        <option value="18" {{old('type')== '18'? 'selected' : ''}}>City Bank & IFIC</option>
+                        <option value="19" {{old('type')== '19'? 'selected' : ''}}>Midas Safety Unit-1 & 3</option>
+                        <option value="20" {{old('type')== '20'? 'selected' : ''}}>Midas Safety Unit-2</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
@@ -95,7 +98,9 @@
                     url: "{{route('get_ajax_salary_branch')}}",
                     type: "GET",
                     dataType: "json",
-                    data: { customer_ids:selectedCustomers },
+                    data: {
+                        customer_ids: selectedCustomers
+                    },
                     success: function(data) {
                         console.log(data);
                         let optBranch = `<option value="">Select Branch</option>`;
