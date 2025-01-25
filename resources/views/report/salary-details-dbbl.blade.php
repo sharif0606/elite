@@ -22,9 +22,9 @@ $options = [
 15 => "Office Staff Prime",
 16 => "Office Staff Others",
 17 => "Stop Salary List",
-18 => "City Bank & IFIC"
-19 => "Midas Safety Unit-1 & 3"
-20 => "Midas Safety Unit-2"
+18 => "City Bank & IFIC",
+19 => "Midas Safety Unit-1 & 3",
+20 => "Midas Safety Unit-2",
 ];
 @endphp
 <div class="col-12">
