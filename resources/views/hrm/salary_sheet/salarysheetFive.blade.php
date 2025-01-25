@@ -335,9 +335,13 @@
                                     Stmp = (value.cstamp > 0) ? value.cstamp : '0';
                                     else if(value.stamp > 0)
                                     Stmp = (value.stamp > 0) ? value.stamp : '0';
-                                    else
-                                    Stmp = 0;
+                                    else{
+                                        Stmp = 0;
+                                    }
+                                    
                                     traningCostPerMonth = traningCostPerMonth;
+                                    Fine = Fine;
+                                    Loan = Loan;
 
                                 }else{
                                     Insurance = 0;
@@ -363,17 +367,16 @@
                                         postAllowance= postAllowance;
                                     }
                                     Dress = Dress;
-                                    Fine = Fine;
                                     BankCharge = BankCharge;
                                    
-                                    Loan = Loan;
+                                    
                                 }else {
                                     pf = 0; // No further deductions
                                     postAllowance = 0;
                                     Dress = 0;
-                                    Fine = 0;
+                                    //Fine = 0;
                                     BankCharge = 0;
-                                    Loan = 0;
+                                    //Loan = 0;
                                 }
                                 // Mark deductions as applied
                                 appliedDeductions[value.admission_id_no] = true;

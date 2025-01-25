@@ -282,6 +282,17 @@
         $("#my-content-div").html("");
         $('.full_page').html("");
     }
+    
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+
+        $.get("{{route('salarysheet.printZoneWise') }}", function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            // Export all columns
+            exportReportToExcel('salaryTable', 'Salary General-{{$getMonth?}}-{{$salary->year}}');
+        });
+    }
 </script>
 <script>
     total_calculate();
