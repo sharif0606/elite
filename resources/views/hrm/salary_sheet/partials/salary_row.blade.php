@@ -1,4 +1,5 @@
 <!-- resources/views/partials/salary_row.blade.php -->
+ 
 <tr class="text-center tbl_border">
     <td class="tbl_border">{{-- $index --}}</td>
     <td class="tbl_border">{{ $detail->employee?->admission_id_no }}</td>

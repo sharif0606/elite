@@ -60,7 +60,7 @@
             <select class="select2 form-select branch_id" id="branch_id" name="branch_id">
                 <option value="">Select Branch</option>
             </select>
-        </div>
+        </div>--}}
         <div class="col-sm-3">
             <label for="">Designation</label>
             <select name="designation_id" class="select2 form-select">
@@ -72,7 +72,7 @@
                 @endforelse
             </select>
         </div>
-        <div class="col-lg-4">
+        {{--<div class="col-lg-4">
             <div class="form-group">
                 <label for="">Employee</label>
                 <select class="form-select employee_id select2" id="employee_id" name="employee_id">
@@ -200,6 +200,7 @@
                                         @foreach($sheet->customer->branch as $branch)
                                         @php $branchIndex = 1; @endphp
                                         @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty() && $branch->zone_id == request('zone'))
+                                        
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <small><b>{{ $branch->brance_name }}{{-- $branch->zone_id --}}</b></small>
@@ -290,7 +291,7 @@
             $("#my-content-div").html(data);
         }).then(function () {
             // Export all columns
-            exportReportToExcel('salaryTable', 'Salary General-{{$getMonth?}}-{{$salary->year}}');
+            exportReportToExcel('salaryTable', 'Salary General-{{$month}}-{{$year}}');
         });
     }
 </script>
