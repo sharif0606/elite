@@ -37,18 +37,22 @@ class ReportController extends Controller
             "$selected_ty-$selected_tmonth-31"
         );
 
-        // Fetch the zones and their related customers
-        $zones = Zone::with(['customer' => function ($query) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
-            $query->whereHas('invPayment', function ($paymentQuery) use ($selected_fy, $selected_fmonth, $selected_ty, $selected_tmonth) {
-                // Filter the payments between the selected date range
-                $startDate = "$selected_fy-$selected_fmonth-01";
-                $endDate = "$selected_ty-$selected_tmonth-31";
-                $paymentQuery->whereBetween('pay_date', [$startDate, $endDate]);
+        // Construct the start and end date for the range based on the selected "From" and "To" month
+        $startDate = Carbon::create($selected_fy, $selected_fmonth, 1)->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::create($selected_ty, $selected_tmonth, 1)->endOfMonth()->format('Y-m-d');
+
+        $zones = Zone::with(['customer' => function ($query) use ($startDate, $endDate) {
+            $query->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
+                // Filter invoiceGenerates based on start and end date
+                $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
+                    ->whereBetween('end_date', [$startDate, $endDate])
+                    ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
             });
-        }])->orderBy('name', 'ASC')->paginate(10);
+        }])->orderBy('zones.name', 'ASC')->paginate(10);
 
         return view('report.invoice-payment', compact('zones', 'period'));
     }
+
 
 
     public function invoiceDue(Request $request)

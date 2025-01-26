@@ -714,6 +714,9 @@
                                 <option value="14">RSGT SCY</option>
                                 <option value="15">Office Staff Prime</option>
                                 <option value="16">Office Staff Others</option>
+                                <option value="18">City Bank & IFIC</option>
+                                <option value="19">Midas Safety Unit-1 & 3</option>
+                                <option value="20">Midas Safety Unit-2</option>
                             </select>
                         </div>
                     </div>

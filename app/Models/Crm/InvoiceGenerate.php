@@ -12,19 +12,29 @@ use App\Models\Crm\CustomerBrance;
 class InvoiceGenerate extends Model
 {
     use HasFactory;
-    public function customer(){
-        return $this->belongsTo(Customer::class,'customer_id','id');
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
-    public function payment(){
-        return $this->hasMany(InvoicePayment::class,'invoice_id','id');
+    // InvoiceGenerate Model
+    public function invoiceGenerateDetails()
+    {
+        return $this->hasMany(InvoiceGenerateDetails::class, 'invoice_id', 'id');
     }
-    public function branch(){
-        return $this->belongsTo(CustomerBrance::class,'branch_id','id');
+    public function payment()
+    {
+        return $this->hasMany(InvoicePayment::class, 'invoice_id', 'id');
     }
-    public function details(){
-        return $this->hasMany(InvoiceGenerateDetails::class,'invoice_id','id');
+    public function branch()
+    {
+        return $this->belongsTo(CustomerBrance::class, 'branch_id', 'id');
     }
-    public function less(){
-        return $this->hasMany(InvoiceGenerateLess::class,'invoice_id','id');
+    public function details()
+    {
+        return $this->hasMany(InvoiceGenerateDetails::class, 'invoice_id', 'id');
+    }
+    public function less()
+    {
+        return $this->hasMany(InvoiceGenerateLess::class, 'invoice_id', 'id');
     }
 }
