@@ -246,7 +246,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('navigate',navigate::class);
         Route::get('incomeStatement',[statement::class,'index'])->name('incomeStatement.list');
         Route::get('incomeStatement_details',[statement::class,'details'])->name('incomeStatement.details');
-        Route::get('/headreport', [headreport::class, 'index'])->name('headreport');
+        Route::get('/headreport', [headreport::class, 'index'])->name('report.headreport');
         
         //Voucher
         Route::resource('credit_voucher',credit::class);

@@ -258,7 +258,14 @@
                     <li class="py-1 submenu-item"><a href="{{route('report.customer_duty_filter')}}">{{__('Customer Duty Filter')}}</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('report.payment_receive')}}">{{__('Payment Received')}}</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('incomeStatement.list')}}">{{__('Income Statement')}}</a></li>
-                    <li class="py-1 submenu-item"><a href="{{route('headreport')}}">{{__('Account Head Report')}}</a></li>
+                    <li class="py-1 submenu-item"><a href="{{route('report.headreport')}}">{{__('Account Head Report')}}</a></li>
+                </ul>
+            </li>
+            <li class="sidebar-item has-sub">
+                <a href="#" class='sidebar-link'><i class="bi bi-receipt"></i><span>{{__('Vehicle Report')}}</span>
+                </a>
+                <ul class="submenu">
+                    
                 </ul>
             </li>
             <!-- <li class="sidebar-title">Forms &amp; Tables</li> -->
