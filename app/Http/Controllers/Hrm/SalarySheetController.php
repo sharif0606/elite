@@ -1061,6 +1061,7 @@ class SalarySheetController extends Controller
 
     public function getSalaryData(Request $request)
     {
+        //dd($request);
         $stdate = $request->start_date;
         $date = Carbon::parse($stdate);
 
@@ -1378,9 +1379,12 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
             $customerId = $request->customer_id;
             $query->whereIn('customer_duties.customer_id', $customerId);
         }
-        if ($request->has('customer_branch_id')) {
+        if ($request->has('customer_branch_id') && is_array($request->customer_branch_id)) {
+            $query->whereIn('customer_duties.branch_id', $request->customer_branch_id);
+        } elseif ($request->has('customer_branch_id')) {
             $query->where('customer_duties.branch_id', '=', $request->customer_branch_id);
         }
+        
         $query->where('customer_duty_details.customer_id', '=', $request->customer_id)
             ->orderBy('job_posts.serial', 'ASC');
 
