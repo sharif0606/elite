@@ -37,6 +37,7 @@ use App\Http\Controllers\Settings\UserProfileController as userprofile;
 
 /* HRM */
 use App\Http\Controllers\Employee\EmployeeController as employee;
+use App\Http\Controllers\Employee\BiometricController as Biometric;
 use App\Http\Controllers\Release\ReleaseEmployeeController as relEmployee;
 use App\Http\Controllers\Hrm\SalarySheetController as salarySheet;
 use App\Http\Controllers\payroll\ControllerDeduction as deductionAsign;
@@ -157,6 +158,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* HRM */
         Route::resource('employee', employee::class);
+        /* Biometrics */
+        Route::resource('employee-biometrics', Biometric::class);
+
         Route::get('export-to-word/{id}',[employee::class,'exportToWord'])->name('employee.exportToWord');
         Route::resource('relEmployee', relEmployee::class);
         Route::get('employee-release', [relEmployee::class,'startRelease'])->name('employee.release');

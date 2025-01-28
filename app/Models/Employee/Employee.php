@@ -42,10 +42,23 @@ class Employee extends Model
     public function bloodgroup(){
         return $this->belongsTo(BloodGroup::class,'bn_blood_id','id');
     }
+    /**
+     * The religion that the belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function religion(){
         return $this->belongsTo(Religion::class,'bn_religion','id');
     }
+    /**
+     * The position that the employee belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function position(){
         return $this->belongsTo(JobPost::class,'bn_jobpost_id','id');
+    }
+    public function biometrics(){
+        return $this->hasMany(Biometric::class, 'employee_id', 'id');
     }
 }

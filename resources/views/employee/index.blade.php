@@ -29,7 +29,7 @@
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Bangla')}}</th>
                         <th scope="col">{{__('English')}}</th>
-                        <th class="white-space-nowrap" width=20%>{{__('ACTION')}}</th>
+                        <th class="white-space-nowrap" width=25%>{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
                             <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center d-flex justify-content-center align-items-center">
                             <a class="px-1" href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
                                 <i class="bi bi-eye"></i>
                             </a>
@@ -61,6 +61,7 @@
                             <a class="btn btn-sm btn-success px-2" target="_blank" href="{{route('employee.certificate',encryptor('encrypt',$e->id))}}">
                                 Certificate
                             </a>
+                            <a class="btn btn-sm btn-info px-2" target="_blank" href="{{route('employee-biometrics.create',['id' =>encryptor('encrypt',$e->id)])}}">Biometric</a>
                         </td>
                     </tr>
                     @empty
