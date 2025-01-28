@@ -200,7 +200,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::post('/salary-four-update/{id}', [salarySheet::class,'salarySheetFourUpdate'])->name('salarysheet.salarySheetFourUpdate');
         Route::get('salary-sheet-four-show/{id}', [salarySheet::class,'salarySheetFourShow'])->name('salarysheet.salarySheetFourShow');
         // salary 5
-        Route::get('get-salary-branch-ajax',[salarySheet::class,'getSalaryBranch'])->name('get_ajax_salary_branch');
+        Route::get('get-salary-branch-ajax',[salarySheet::class,'getSalaryBranch'])->name('salarysheet.get_ajax_salary_branch');
         Route::get('salary-sheet-five-index', [salarySheet::class,'getsalarySheetFiveIndex'])->name('salarysheet.salarySheetFiveIndex');
         /* Salary sheet Five Index */
         Route::get('salary-sheet-print-zone-wise', [salarySheet::class,'printZoneWise'])->name('salarysheet.printZoneWise');

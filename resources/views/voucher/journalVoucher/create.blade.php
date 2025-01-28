@@ -50,7 +50,7 @@
                                                             <input type="text" class="form-control" name="purpose" value="{{old('purpose')}}">
                                                         </div>
                                                     </div>
-                                                    @if(currentUser()=='accountant')
+                                                    @if(currentUser()=='Accounts')
                                                     <div class="col-12 col-sm-6 mb-2">
                                                         <div class="form-group">
                                                             <label>Account Vourcher No</label>

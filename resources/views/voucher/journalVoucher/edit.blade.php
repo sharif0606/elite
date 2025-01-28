@@ -45,7 +45,7 @@
                                         <input type="text" id="purpose" class="form-control" value="{{old('purpose',$journalVoucher->purpose)}}" name="purpose">
                                     </div>
                                 </div>
-                                @if(currentUser()=='accountant')
+                                @if(currentUser()=='Accounts')
                                 <div class="col-12 col-sm-6 mb-2">
                                     <div class="form-group">
                                         <label>Account Vourcher No</label>

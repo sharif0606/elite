@@ -1052,67 +1052,74 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; width: 20%;"></td>
-                                    <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ</td>
-                                    <td style="text-align: end; width: 40%;">
+                                    <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ
                                         @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 5)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 5)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 5)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
                                     </td>
-                                    <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ</td>
-                                    <td style="width: 20%;">
+                                    <td style="text-align: end; width: 40%;">
+                                    </td>
+                                    <td style="width: 10%; padding-bottom: 40px;">১.কনিষ্ঠ
                                         @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 5)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 5)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 5)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
+                                    </td>
+                                    <td style="width: 20%;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; width: 20%;"></td>
-                                    <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা</td>
-                                    <td style="text-align: end; width: 40%;">
+                                    <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা
                                         @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 4)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 4)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 4)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
                                     </td>
-                                    <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা</td>
-                                    <td style="width: 20%;">
+                                    <td style="text-align: end; width: 40%;">
+                                    </td>
+                                    <td style="width: 10%; padding-bottom: 40px;">২.অনামিকা
                                         @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 4)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 4)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 4)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
+                                    </td>
+                                    <td style="width: 20%;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; width: 20%;"></td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা</td>
-                                    <td style="text-align: end; width: 40%;">
+                                    <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা
                                         @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 3)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 3)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 3)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
                                     </td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা</td>
-                                    <td style="width: 20%;">
-                                        @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 3)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 3)->img) }}" alt="Fingerprint Image" width="60">
-                                        @endif
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: left; width: 20%;"></td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী</td>
                                     <td style="text-align: end; width: 40%;">
-                                        @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 2)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 2)->img) }}" alt="Fingerprint Image" width="60">
+                                    </td>
+                                    <td style="width: 10%; padding-bottom: 40px;">৩.মধ্যমা
+                                        @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 3)->isNotEmpty())
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 3)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
                                     </td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী</td>
                                     <td style="width: 20%;">
-                                        @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 2)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 2)->img) }}" alt="Fingerprint Image" width="60">
-                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; width: 20%;"></td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা 
+                                    <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী
+                                        @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 2)->isNotEmpty())
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 2)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
+                                        @endif
+                                    </td>
+                                    <td style="text-align: end; width: 40%;">
+                                    </td>
+                                    <td style="width: 10%; padding-bottom: 40px;">৪.তর্জনী
+                                        @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 2)->isNotEmpty())
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 2)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
+                                        @endif
+                                    </td>
+                                    <td style="width: 20%;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left; width: 20%;"></td>
+                                    <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা
                                         @if($employees->biometrics->where('hand_type', 1)->where('finger_type', 1)->isNotEmpty())
                                         <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 1)->firstWhere('finger_type', 1)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
@@ -1120,11 +1127,12 @@
                                     <td style="text-align: end; width: 40%;">
 
                                     </td>
-                                    <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা</td>
-                                    <td style="width: 20%;">
+                                    <td style="width: 10%; padding-bottom: 40px;">৫.বৃদ্ধা
                                         @if($employees->biometrics->where('hand_type', 2)->where('finger_type', 1)->isNotEmpty())
-                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 1)->img) }}" alt="Fingerprint Image" width="60">
+                                        <img src="{{ asset('uploads/fingerprints/' . $employees->biometrics->firstWhere('hand_type', 2)->firstWhere('finger_type', 1)->img) }}" alt="Fingerprint Image" width="60" class="mt-2 d-block">
                                         @endif
+                                    </td>
+                                    <td style="width: 20%;">
                                     </td>
                                 </tr>
                                 <tr>
