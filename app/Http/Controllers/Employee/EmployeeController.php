@@ -269,7 +269,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employees = Employee::findOrFail(encryptor('decrypt', $id));
+        $employees = Employee::with('biometrics')->findOrFail(encryptor('decrypt', $id));
         $employeeDocuments = EmployeeDocuments::where('employee_id', encryptor('decrypt', $id))->get();
         $security = SecurityPriorAcquaintance::where('employee_id', encryptor('decrypt', $id))->first();
         $jobposts = JobPost::where('id', $employees->bn_jobpost_id)->first();
