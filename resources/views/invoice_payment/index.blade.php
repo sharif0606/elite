@@ -100,7 +100,7 @@
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
-                        <td>{{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}</td>
+                        <td>{{ $e->end_date}}</td>
                         <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
                         <td>{{ $e->received_amount }}</td>
                         <td>
