@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('journal_vouchers', function (Blueprint $table) {
-            $table->string('vehicle_no')->nullable()->after('credit_sum');
+            $table->string('vou_no')->nullable()->after('credit_sum')->comment('Voucher Number');
+            $table->string('vehicle_no')->nullable()->after('vou_no')->comment('Vehicle Number');
         });
     }
 
@@ -26,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('journal_vouchers', function (Blueprint $table) {
-            $table->dropColumn(['vehicle_no']);
+            $table->dropColumn(['vou_no', 'vehicle_no']);
         });
     }
 };

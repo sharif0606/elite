@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('journal_vouchers', function (Blueprint $table) {
-            $table->string('vehicle_no')->nullable()->after('credit_sum');
+        Schema::table('general_ledgers', function (Blueprint $table) {
+            $table->string('vou_no')->after('vehicle_no')->nullable()->comment('Voucher Number From Accounts Dept.');
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('journal_vouchers', function (Blueprint $table) {
-            $table->dropColumn(['vehicle_no']);
+        Schema::table('general_ledgers', function (Blueprint $table) {
+            $table->dropColumn('vou_no');
         });
     }
 };

@@ -51,6 +51,8 @@ class JournalVoucherController extends VoucherController
                 $jv->pay_name=$request->pay_name;
                 $jv->purpose=$request->purpose;
                 $jv->credit_sum=$request->debit_sum;
+                $jv->vou_no=$request->vou_no;
+                $jv->vehicle_no=$request->vehicle_no;
                 $jv->debit_sum=$request->debit_sum;
                 $jv->cheque_no=$request->cheque_no;
                 $jv->bank=$request->bank;
@@ -89,6 +91,8 @@ class JournalVoucherController extends VoucherController
                                 $gl->rec_date=$request->current_date;
                                 $gl->jv_id=$voucher_no;
                                 $gl->journal_voucher_bkdn_id=$jvb->id;
+                                $gl->vou_no=$jv->vou_no;
+                                $gl->vehicle_no=$jv->vehicle_no;
                                 $gl->created_by=currentUserId();
                                 $gl->dr=!empty($request->debit[$i])?$request->debit[$i]:0;
                                 $gl->cr=!empty($request->credit[$i])?$request->credit[$i]:0;
@@ -130,6 +134,7 @@ class JournalVoucherController extends VoucherController
     public function edit($id)
     {
         $journalVoucher=JournalVoucher::findOrFail(encryptor('decrypt',$id));
+        //dd($journalVoucher);
 		$jvbkdn=JournalVoucherBkdn::where('journal_voucher_id',encryptor('decrypt',$id))->get();
 		return view('voucher.journalVoucher.edit',compact('journalVoucher','jvbkdn'));
     }
@@ -151,6 +156,8 @@ class JournalVoucherController extends VoucherController
             $journalVoucher->cheque_no = $request->cheque_no;
             $journalVoucher->cheque_dt = $request->cheque_dt;
             $journalVoucher->bank = $request->bank;
+            $journalVoucher->vou_no=$request->vou_no;
+            $journalVoucher->vehicle_no=$request->vehicle_no;
             if($request->has('slip')){
                 $imageName= rand(111,999).time().'.'.$request->slip->extension();
                 $request->slip->move(public_path('uploads/slip'), $imageName);

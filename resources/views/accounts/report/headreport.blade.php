@@ -128,8 +128,8 @@
 									@if($acc->cr>0)@php $balance-=$acc->cr; @endphp @endif
 									<tr>
 										<td>{{date("d M, Y",strtotime($acc->rec_date))}}</td>
-										<td></td>
-										<td></td>
+										<td>{{$acc->vehicle_no}}</td>
+										<td>{{$acc->vou_no}}</td>
 										<td>
 											@if($acc->dr >0)
 											{{number_format((float)$acc->dr, 2, '.', '')}} @php $deb+=$acc->dr; @endphp
