@@ -219,7 +219,7 @@
                                         @endforeach
 
                                         <!-- Check for Null Branch -->
-                                        @if($sheet->details->where('branch_id', null)->isNotEmpty())
+                                        @if($sheet->details->whereIn('branch_id', [null, 0])->isNotEmpty())
                                         {{--<tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <small><b>Branch: Not Assigned</b></small>
