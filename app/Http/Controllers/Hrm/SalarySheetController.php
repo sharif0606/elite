@@ -1635,6 +1635,8 @@ $salary = SalarySheet::where('year', $year)
     if ($designation_id) {
         $query->where('designation_id', $designation_id);
     }
+    // Include salary sheet details with null branch_id
+    $query->orWhereNull('branch_id');
 })
 ->with([
     // Eager load customer and their related branches
