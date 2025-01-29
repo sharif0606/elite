@@ -1616,9 +1616,9 @@ return response()->json($data, 200);
         })->orWhere(function ($query) use ($zone_id) {
             $query->whereNull('zone_id')
                 ->where(function ($query) use ($zone_id) {
-                    $query->whereDoesntHave('branch') // Customers with no branches
-                          ->orWhereHas('branch', function ($query) use ($zone_id) {
-                              $query->where('zone_id', $zone_id);
+                    $query->whereDoesntHave('customer_branches') // ✅ No branch assigned
+                          ->orWhereHas('customer_branches.branch', function ($query) use ($zone_id) { 
+                              $query->where('zone_id', $zone_id); // Filter by branch zone_id
                           });
                 });
         });
@@ -1627,7 +1627,7 @@ return response()->json($data, 200);
         $query->where(function ($query) use ($zone_id) {
             $query->whereHas('branches', function ($query) use ($zone_id) {
                 $query->where('zone_id', $zone_id);
-            })->orWhereNull('branch_id'); // Use salary_sheets.branch_id if exists
+            })->orWhereNull('branch_id'); // Include when no branch is assigned in salary_sheets
         });
 
         if ($designation_id) {
@@ -1642,15 +1642,16 @@ return response()->json($data, 200);
             }
         },
         'details.branches' => function ($query) {
-            $query->whereNotNull('branch_id'); // Prioritize assigned branches
+            $query->whereNotNull('branch_id'); // Make sure we get the branches that are assigned
         },
-        'customer.branch' => function ($query) use ($zone_id) { // Reference relationship correctly
-            $query->whereHas('branch', function ($query) use ($zone_id) { // Join with customer_branches
-                $query->whereNotNull('branch_id'); // Assuming `branch_id` is in `customer_branches`
+        'customer.customer_branches' => function ($query) use ($zone_id) { // Reference the customer's branches
+            $query->whereHas('branch', function ($query) use ($zone_id) {
+                $query->where('zone_id', $zone_id); // Filter by zone
             });
         }
     ])
     ->get();
+
 
 
 
