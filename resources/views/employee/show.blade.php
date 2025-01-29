@@ -1030,6 +1030,8 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div style="page-break-inside: avoid;">
                         <div style="text-align: center;">
                             <h5 style="margin-top:10px !important;"><span style="border-bottom: solid 1px; margin-top:1px !important">এলিট সিকিউরিটি সার্ভিসেস লিমিটেড এর প্রশিক্ষণ ফি প্রদান সংক্রান্ত স্বেচ্ছায় হলফনামাঃ</span></h5>
                         </div>
@@ -1044,7 +1046,7 @@
                             </div>
                             <tbody>
                                 <tr>
-                                    <td style="text-align: left; width: 20%;"></td1
+                                    <td style="text-align: left; width: 20%;"></td>
                                     <td style="width: 10%;">বাম</td>
                                     <td style="text-align: end; width: 40%;"></td>
                                     <td style="width: 10%;">ডান</td>
