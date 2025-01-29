@@ -1645,7 +1645,7 @@ return response()->json($data, 200);
             $query->whereNotNull('branch_id'); // Prioritize assigned branches
         },
         'customer.branch' => function ($query) use ($zone_id) { // Reference relationship correctly
-            $query->whereHas('customer_branches', function ($query) use ($zone_id) { // Join with customer_branches
+            $query->whereHas('branch', function ($query) use ($zone_id) { // Join with customer_branches
                 $query->whereNotNull('branch_id'); // Assuming `branch_id` is in `customer_branches`
             });
         }
