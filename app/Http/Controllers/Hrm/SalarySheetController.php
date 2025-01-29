@@ -1384,7 +1384,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         } elseif ($request->has('customer_branch_id')) {
             $query->where('customer_duties.branch_id', '=', $request->customer_branch_id);
         }
-        
+
         $query->where('customer_duty_details.customer_id', '=', $request->customer_id)
             ->orderBy('job_posts.serial', 'ASC');
 
@@ -1615,10 +1615,10 @@ return response()->json($data, 200);
                         ->where('zone_id', $zone_id);
                 })->orWhere(function ($query) use ($zone_id) {
                     $query->whereNull('zone_id')
-                    ->whereDoesntHave('branch') // Include customers with no branch
-                    ->orWhereHas('branch', function ($query) use ($zone_id) {
-                        $query->where('zone_id', $zone_id);
-                    });
+                        ->whereDoesntHave('branch') // Include customers with no branch
+                        ->orWhereHas('branch', function ($query) use ($zone_id) {
+                            $query->where('zone_id', $zone_id);
+                        });
                 });
             })
             ->whereHas('details', function ($query) use ($zone_id, $designation_id) {
@@ -1639,6 +1639,7 @@ return response()->json($data, 200);
                 'details.branches'
             ])
             ->get();
+
 
         $designation = JobPost::get();
 
