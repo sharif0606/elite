@@ -1611,56 +1611,59 @@ return response()->json($data, 200);
             //dd($designationIds);
             
             $salary = SalarySheet::where('year', $year)
-                ->where('month', $month)
-                ->where('status', $type)
-                ->whereHas('customer', function ($query) use ($zone_id) {
-                    $query->where(function ($query) use ($zone_id) {
-                        // Case where the customer has a zone assigned directly
-                        $query->whereNotNull('zone_id')
-                            ->where('zone_id', $zone_id);
-                    })->orWhere(function ($query) use ($zone_id) {
-                        // Case where the customer does not have a zone assigned, but belongs to a branch with a matching zone_id
-                        $query->whereNull('zone_id')
-                            ->whereHas('branch', function ($query) use ($zone_id) {
-                                $query->where('zone_id', $zone_id);
-                            });
-                    })->orWhere(function ($query) {
-                        // Case where the customer has no branches
-                        $query->whereDoesntHave('branch');
-                    });
-                })
-                ->whereHas('details', function ($query) use ($zone_id, $designationIds) {
-                    // Filter salary details based on zone_id
-                    $query->whereHas('branches', function ($query) use ($zone_id) {
-                        $query->where('zone_id', $zone_id);
-                    });
-            
-                    // Filter by multiple designation IDs if they exist
-                    if ($designationIds && count($designationIds) > 0) {
-                        // Ensure the query checks for multiple designations for salary details
-                        $query->whereIn('designation_id', $designationIds); 
-                    }
-            
-                    // Include salary sheet details with null branch_id or branch_id = 0
-                    $query->orWhereNull('branch_id')
-                        ->orWhere('branch_id', 0); // Also include branch_id = 0
-                })
-                ->with([
-                    // Eager load customer and their related branches
-                    'customer',
-                    'details' => function ($query) use ($designationIds) {
-                        // If designationIds are provided, filter details by them
-                        if ($designationIds && count($designationIds) > 0) {
-                            $query->whereIn('designation_id', $designationIds); // Filter by multiple designation IDs
-                        }
-            
-                        // Include salary sheet details with null branch_id or branch_id = 0
-                        $query->orWhereNull('branch_id')
-                            ->orWhere('branch_id', 0); // Also include branch_id = 0
-                    },
-                    'details.branches'
-                ])
-                ->get();
+    ->where('month', $month)
+    ->where('status', $type)
+    ->whereHas('customer', function ($query) use ($zone_id) {
+        $query->where(function ($query) use ($zone_id) {
+            // Case where the customer has a zone assigned directly
+            $query->whereNotNull('zone_id')
+                ->where('zone_id', $zone_id);
+        })->orWhere(function ($query) use ($zone_id) {
+            // Case where the customer does not have a zone assigned, but belongs to a branch with a matching zone_id
+            $query->whereNull('zone_id')
+                ->whereHas('branch', function ($query) use ($zone_id) {
+                    $query->where('zone_id', $zone_id);
+                });
+        })->orWhere(function ($query) {
+            // Case where the customer has no branches
+            $query->whereDoesntHave('branch');
+        });
+    })
+    ->whereHas('details', function ($query) use ($zone_id, $designationIds) {
+        // Filter salary details based on zone_id
+        $query->whereHas('branches', function ($query) use ($zone_id) {
+            $query->where('zone_id', $zone_id);
+        });
+
+        // If there are multiple designation_ids selected, filter by them
+        if ($designationIds && count($designationIds) > 0) {
+            $query->whereIn('designation_id', $designationIds);
+        }
+
+        // Include salary sheet details where branch_id = 0 or NULL
+        $query->where(function ($query) {
+            $query->orWhereNull('branch_id')
+                ->orWhere('branch_id', 0);
+        });
+    })
+    ->with([
+        'customer',
+        'details' => function ($query) use ($designationIds) {
+            // If multiple designation_ids are selected, filter by them
+            if ($designationIds && count($designationIds) > 0) {
+                $query->whereIn('designation_id', $designationIds);
+            }
+
+            // Include salary sheet details where branch_id = 0 or NULL
+            $query->where(function ($query) {
+                $query->orWhereNull('branch_id')
+                    ->orWhere('branch_id', 0);
+            });
+        },
+        'details.branches'
+    ])
+    ->get();
+
             
 
 
