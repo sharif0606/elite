@@ -1608,7 +1608,7 @@ return response()->json($data, 200);
             $designationIds = request()->get('designation_id'); // This will be an array if multiple options are selected
 
             // Check the received array for debugging
-            dd($designationIds);
+            //dd($designationIds);
             
             $salary = SalarySheet::where('year', $year)
                 ->where('month', $month)
