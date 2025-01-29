@@ -63,15 +63,19 @@
         </div>--}}
         <div class="col-sm-3">
             <label for="">Designation</label>
-            <select name="designation_id" class="select2 form-select">
+            <select name="designation_id[]" class="select2 form-select" multiple="multiple">
                 <option value="">Select</option>
                 @forelse ($designation as $c)
-                <option value="{{$c->id}}" {{request()->designation_id==$c->id?'selected':''}}>{{$c->name}}</option>
+                <option value="{{$c->id}}"
+                    {{ in_array($c->id, request()->get('designation_id', [])) ? 'selected' : '' }}>
+                    {{$c->name}}
+                </option>
                 @empty
-
                 @endforelse
             </select>
         </div>
+
+
         {{--<div class="col-lg-4">
             <div class="form-group">
                 <label for="">Employee</label>
@@ -79,20 +83,20 @@
                     <option value="">Select Employee</option>
                     @forelse ($employee as $em)
                     <option value="{{ $em->id }}" @if(request()->get('employee_id') == $em->id) selected @endif>
-                        {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
-                    </option>
-                    @empty
-                    @endforelse
-                </select>
-                @if($errors->has('employee_id'))
-                <span class="text-danger">{{ $errors->first('employee_id') }}</span>
-                @endif
-            </div>
-        </div>--}}
-        <div class="col-sm-3" style="margin-top: 1.4rem;">
-            <button type="submit" class="btn btn-sm btn-info">Search</button>
-            <a href="{{route('salarysheet.printZoneWise')}}" class="btn btn-sm btn-danger">Clear</a>
-        </div>
+        {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
+        </option>
+        @empty
+        @endforelse
+        </select>
+        @if($errors->has('employee_id'))
+        <span class="text-danger">{{ $errors->first('employee_id') }}</span>
+        @endif
+</div>
+</div>--}}
+<div class="col-sm-3" style="margin-top: 1.4rem;">
+    <button type="submit" class="btn btn-sm btn-info">Search</button>
+    <a href="{{route('salarysheet.printZoneWise')}}" class="btn btn-sm btn-danger">Clear</a>
+</div>
 </div>
 </form>
 </div>
@@ -189,18 +193,19 @@
                                         $payableTotal = 0;
                                         @endphp
                                         @foreach($salary as $sheet)
+                                        @if($sheet->details->where('branch_id', request('branch'))->where('zone_id', request('zone'))->count() > 0)
                                         <!-- Customer Header -->
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <h6 class="m-0">{{ $sheet->customer->name }}</h6>
                                             </td>
                                         </tr>
-
+                                        @endif
                                         <!-- Loop through Branches -->
                                         @foreach($sheet->customer->branch as $branch)
                                         @php $branchIndex = 1; @endphp
                                         @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty() && $branch->zone_id == request('zone'))
-                                        
+
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <small><b>{{ $branch->brance_name }}{{-- $branch->zone_id --}}</b></small>
@@ -208,11 +213,11 @@
                                         </tr>
 
                                         @foreach($sheet->details->where('branch_id', $branch->id) as $index => $detail)
-                                            @php
-                                            $deductionTrainingTotal += $detail->deduction_traningcost;
-                                            $deductionLoanTotal += $detail->deduction_loan;
-                                            $payableTotal += $detail->net_salary;
-                                            @endphp
+                                        @php
+                                        $deductionTrainingTotal += $detail->deduction_traningcost;
+                                        $deductionLoanTotal += $detail->deduction_loan;
+                                        $payableTotal += $detail->net_salary;
+                                        @endphp
                                         @include('hrm.salary_sheet.partials.salary_row', ['index' => $branchIndex++, 'detail' => $detail])
                                         @endforeach
                                         @endif
@@ -283,13 +288,13 @@
         $("#my-content-div").html("");
         $('.full_page').html("");
     }
-    
+
     function get_print() {
         $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
 
-        $.get("{{route('salarysheet.printZoneWise') }}", function (data) {
+        $.get("{{route('salarysheet.printZoneWise') }}", function(data) {
             $("#my-content-div").html(data);
-        }).then(function () {
+        }).then(function() {
             // Export all columns
             exportReportToExcel('salaryTable', 'Salary General-{{$month}}-{{$year}}');
         });

@@ -1633,7 +1633,7 @@ return response()->json($data, 200);
 
         // Optionally filter by designation_id
         if ($designation_id) {
-            $query->where('designation_id', $designation_id);
+            $query->whereIn('designation_id', $designation_id);
         }
 
         // Include salary sheet details with null branch_id
@@ -1650,12 +1650,12 @@ return response()->json($data, 200);
         'details' => function ($query) use ($designation_id) {
             // If designation_id is provided, filter details by it
             if ($designation_id) {
-                $query->where('designation_id', $designation_id);
+                $query->whereIn('designation_id', $designation_id);
             }
 
             // Include salary sheet details with null branch_id
-            $query->orWhereNull('branch_id')
-                  ->orWhere('branch_id', 0); // Add condition for `branch_id = 0`
+            /*$query->orWhereNull('branch_id')
+                  ->orWhere('branch_id', 0);*/ // Add condition for `branch_id = 0`
         },
         'details.branches'
     ])
