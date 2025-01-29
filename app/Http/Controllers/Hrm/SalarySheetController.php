@@ -1643,9 +1643,13 @@ return response()->json($data, 200);
         },
         'details.branches' => function ($query) {
             $query->whereNotNull('branch_id'); // ✅ Prioritize assigned branches
+        },
+        'customer.branch' => function ($query) use ($zone_id) { // ✅ Explicitly referencing customer_branches
+            $query->where('zone_id', $zone_id); // Assuming `branch_id` is part of the `customer_branches` table
         }
     ])
     ->get();
+
 
     
 
