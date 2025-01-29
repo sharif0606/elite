@@ -1616,7 +1616,7 @@ return response()->json($data, 200);
         })->orWhere(function ($query) use ($zone_id) {
             $query->whereNull('zone_id')
                 ->where(function ($query) use ($zone_id) {
-                    $query->whereDoesntHave('branch') // ✅ Include customers with no branches
+                    $query->whereDoesntHave('branch') // Customers with no branches
                           ->orWhereHas('branch', function ($query) use ($zone_id) {
                               $query->where('zone_id', $zone_id);
                           });
@@ -1627,7 +1627,7 @@ return response()->json($data, 200);
         $query->where(function ($query) use ($zone_id) {
             $query->whereHas('branches', function ($query) use ($zone_id) {
                 $query->where('zone_id', $zone_id);
-            })->orWhereNull('branch_id'); // ✅ Use salary_sheets.branch_id if exists
+            })->orWhereNull('branch_id'); // Use salary_sheets.branch_id if exists
         });
 
         if ($designation_id) {
@@ -1642,13 +1642,16 @@ return response()->json($data, 200);
             }
         },
         'details.branches' => function ($query) {
-            $query->whereNotNull('branch_id'); // ✅ Prioritize assigned branches
+            $query->whereNotNull('branch_id'); // Prioritize assigned branches
         },
-        'customer.branch' => function ($query) use ($zone_id) { // ✅ Explicitly referencing customer_branches
-            $query->where('zone_id', $zone_id); // Assuming `branch_id` is part of the `customer_branches` table
+        'customer.branch' => function ($query) use ($zone_id) { // Reference relationship correctly
+            $query->whereHas('customer_branches', function ($query) use ($zone_id) { // Join with customer_branches
+                $query->whereNotNull('branch_id'); // Assuming `branch_id` is in `customer_branches`
+            });
         }
     ])
     ->get();
+
 
 
     
