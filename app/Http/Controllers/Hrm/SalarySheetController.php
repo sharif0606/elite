@@ -1606,7 +1606,7 @@ return response()->json($data, 200);
             ->with(['customer', 'details'])
             ->get();*/
         $designationIds = request()->get('designation_id'); // This will be an array if multiple options are selected.
-       dd($designationIds);
+       
         // Fetch salary sheets with the specified filters
         $salary = SalarySheet::where('year', $year)
             ->where('month', $month)

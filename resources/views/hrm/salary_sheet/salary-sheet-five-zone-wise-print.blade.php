@@ -63,7 +63,7 @@
         </div>--}}
         <div class="col-sm-3">
             <label for="">Designation</label>
-            <select name="designation_id" class="select2 form-select" multiple="multiple">
+            <select name="designation_id[]" class="select2 form-select" multiple="multiple">
                 <option value="">Select</option>
                 @forelse ($designation as $c)
                 <option value="{{$c->id}}" {{request()->designation_id==$c->id?'selected':''}}>{{$c->name}}</option>
