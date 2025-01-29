@@ -1633,10 +1633,7 @@ return response()->json($data, 200);
                     $query->where('zone_id', $zone_id);
                 });
 
-                // Optionally filter by designation_id
-                if ($designationIds) {
-                    $query->whereIn('designation_id', $designationIds);
-                }
+               
 
                 // Include salary sheet details with null branch_id
                 $query->orWhereNull('branch_id')
@@ -1645,14 +1642,18 @@ return response()->json($data, 200);
                         // Add condition to match `salary_sheet_details.branch_id = customer_brances.id`
                         $query->whereColumn('branch_id', 'customer_brances.id');
                     });
+                     // Optionally filter by designation_id
+                if ($designationIds) {
+                    $query->whereIn('designation_id', $designationIds);
+                }
             })
             ->with([
                 // Eager load customer and their related branches
                 'customer',
-                'details' => function ($query) use ($designation_id) {
+                'details' => function ($query) use ($designationIds) {
                     // If designation_id is provided, filter details by it
-                    if ($designation_id) {
-                        $query->where('designation_id', $designation_id);
+                    if ($designationIds) {
+                        $query->whereIn('designation_id', $designationIds);
                     }
 
                     // Include salary sheet details with null branch_id
