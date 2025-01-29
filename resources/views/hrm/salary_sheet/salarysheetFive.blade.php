@@ -347,6 +347,7 @@
                                     Insurance = 0;
                                     Stmp = 0;
                                     traningCostPerMonth = 0;
+                                    Loan = 0;
                                 }
                                
                                
