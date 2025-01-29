@@ -46,7 +46,7 @@
         </div>
         <div class="col-sm-3">
             <label for="">Customer</label>
-            <select name="customer_id[]" id="customer_id" class="select2 multiselect form-select" onchange="getBranch(this);">
+            <select name="customer_id" id="customer_id" class="select2 form-select" onchange="getBranch(this);">
                 <option value="">Select Customer</option>
                 @forelse ($customer as $c)
                 <option value="{{$c->id}}" {{request()->customer_id==$c->id?'selected':''}}>{{$c->name}}</option>
@@ -57,13 +57,13 @@
         </div>
         <div class="col-lg-2 col-md-6 col-sm-12">
             <label for="lcNo">{{__('Branch')}}</label>
-            <select class="select2 form-select branch_id" id="branch_id" name="branch_id">
+            <select class="select2 form-select branch_id multiselect" id="branch_id" name="branch_id">
                 <option value="">Select Branch</option>
             </select>
         </div>--}}
         <div class="col-sm-3">
             <label for="">Designation</label>
-            <select name="designation_id" class="select2 form-select">
+            <select name="designation_id" class="select2 form-select" multiple="multiple">
                 <option value="">Select</option>
                 @forelse ($designation as $c)
                 <option value="{{$c->id}}" {{request()->designation_id==$c->id?'selected':''}}>{{$c->name}}</option>
