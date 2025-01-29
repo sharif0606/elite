@@ -1625,7 +1625,7 @@ $salary = SalarySheet::where('year', $year)
 })
 ->whereHas('details', function ($query) use ($zone_id, $designation_id) {
     // Filter salary details based on zone_id and designation_id
-    $query->whereHas('branch', function ($query) use ($zone_id) {
+    $query->whereHas('branches', function ($query) use ($zone_id) {
         $query->where('zone_id', $zone_id);
     });
 
