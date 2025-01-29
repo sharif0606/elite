@@ -1560,6 +1560,7 @@ return response()->json($data, 200);
     }
     public function printZoneWise(Request $request)
     {
+        dd($request->all());
         // Retrieve request parameters
         $year = $request->input('year');
         $month = $request->input('month');
