@@ -1618,7 +1618,7 @@ $salary = SalarySheet::where('year', $year)
     })->orWhere(function ($query) use ($zone_id) {
         // Case where the customer does not have a zone assigned, but belongs to a branch with a matching zone_id
         $query->whereNull('zone_id')
-              ->whereHas('branches', function ($query) use ($zone_id) {
+              ->whereHas('branch', function ($query) use ($zone_id) {
                   $query->where('zone_id', $zone_id);
               });
     });
