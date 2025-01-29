@@ -226,7 +226,7 @@
                                             </td>
                                         </tr>--}}
 
-                                        @foreach($sheet->details->where('branch_id', null) as $index => $detail)
+                                        @foreach($sheet->details->whereIn('branch_id', [null, 0]) as $index => $detail)
                                         @include('hrm.salary_sheet.partials.salary_row', ['index' => ++$loop->parent->index, 'detail' => $detail])
                                         @endforeach
                                         @endif
