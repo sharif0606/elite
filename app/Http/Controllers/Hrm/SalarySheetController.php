@@ -1606,7 +1606,6 @@ return response()->json($data, 200);
             ->get();*/
 
         // Fetch salary sheets with the specified filters
-        // Fetch salary sheets with the specified filters
 $salary = SalarySheet::where('year', $year)
 ->where('month', $month)
 ->where('status', $type)
@@ -1621,6 +1620,9 @@ $salary = SalarySheet::where('year', $year)
               ->whereHas('branch', function ($query) use ($zone_id) {
                   $query->where('zone_id', $zone_id);
               });
+    })->orWhere(function ($query) {
+        // Case where the customer has no branches
+        $query->whereDoesntHave('branch');
     });
 })
 ->whereHas('details', function ($query) use ($zone_id, $designation_id) {
@@ -1646,6 +1648,7 @@ $salary = SalarySheet::where('year', $year)
     'details.branches'
 ])
 ->get();
+
 
 
 
