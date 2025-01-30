@@ -1690,94 +1690,58 @@ return response()->json($data, 200);
     public function employeeWiseSalary(Request $request)
     {
         // Retrieve request parameters
-$year = $request->input('year');
-$month = $request->input('month');
-$type = 5; // $request->input('type') can be uncommented if needed
-$employeeId = $request->input('employee_id');
-$zone_id = $request->input('zone');
-$designation_id = $request->input('designation_id');
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $type = 5; // $request->input('type') can be uncommented if needed
+        $employeeId = $request->input('employee_id');
+        $zone_id = $request->input('zone');
+        $designation_id = $request->input('designation_id');
 
-// Retrieve zones and employee
-$zone = Zone::all();
-$employee = Employee::all();
+        // Retrieve zones and employee
+        $zone = Zone::all();
+        $employee = Employee::all();
 
-// Fetch salary sheets with the specified filters
-// Retrieve request parameters
-$year = $request->input('year');
-$month = $request->input('month');
-$type = 5; // $request->input('type') can be uncommented if needed
-$employeeId = $request->input('employee_id'); // Employee ID from request
-$zone_id = $request->input('zone');
-$designation_id = $request->input('designation_id');
+        // Fetch salary sheets with the specified filters
+        // Retrieve request parameters
+        $year = $request->input('year');
+        $month = $request->input('month');
+        $type = 5; // $request->input('type') can be uncommented if needed
+        $employeeId = $request->input('employee_id'); // Employee ID from request
+        $zone_id = $request->input('zone');
+        $designation_id = $request->input('designation_id');
 
-// Retrieve zones and employee
-$zone = Zone::all();
-$employee = Employee::all();
+        // Retrieve zones and employee
+        $zone = Zone::all();
+        $employee = Employee::all();
+        // Retrieve salary sheets with the specified filters
+        $salary = SalarySheet::whereHas('details.employee', function ($query) use ($employeeId) {
+            // Filter by employee ID inside the 'details' relationship
+            $query->where('id', $employeeId);
+        })
+            ->whereHas('details', function ($query) use ($designation_id) {
+                // Optionally filter by designation_id inside the 'details' relationship
+                if ($designation_id) {
+                    $query->whereIn('designation_id', $designation_id);
+                }
 
-// Fetch salary sheets with the specified filters
-$salary = SalarySheet::where('year', $year)
-    ->where('month', $month)
-    ->where('status', $type)
-    ->whereHas('customer', function ($query) use ($zone_id) {
-        $query->where(function ($query) use ($zone_id) {
-            // Case where the customer has a zone assigned directly
-            $query->whereNotNull('zone_id')
-                  ->where('zone_id', $zone_id);
-        })->orWhere(function ($query) use ($zone_id) {
-            // Case where the customer does not have a zone assigned, but belongs to a branch with a matching zone_id
-            $query->whereNull('zone_id')
-                  ->whereHas('branch', function ($query) use ($zone_id) {
-                      $query->where('zone_id', $zone_id);
-                  });
-        })->orWhere(function ($query) {
-            // Case where the customer has no branches
-            $query->whereDoesntHave('branch');
-        });
-    })
-    ->whereHas('details', function ($query) use ($zone_id, $designation_id, $employeeId) {
-        // Filter salary details based on zone_id, designation_id, and employee_id
-        $query->whereHas('branches', function ($query) use ($zone_id) {
-            $query->where('zone_id', $zone_id);
-        });
+                // Ensure the `details` relationship has the `branches` relationship
+                $query->whereHas('branches');
+            })
+            ->with([
+                'details.employee', // Eager load employee details
+                'details.branches'  // Eager load branches related to the salary details
+            ])
+            ->where('year', $year) // Filter by year
+            ->where('month', $month) // Filter by month
+            ->get();
 
-        // Optionally filter by designation_id
-        if ($designation_id) {
-            $query->whereIn('designation_id', $designation_id);
-        }
-
-        // Filter salary details by employee_id
-        if ($employeeId) {
-            $query->where('employee_id', $employeeId); // Assuming salaryDetails has an employee_id field
-        }
-
-        // Include salary sheet details with null branch_id or branch_id = 0
-        $query->orWhereNull('branch_id')
-              ->orWhere('branch_id', 0);
-    })
-    ->with([
-        // Eager load customer and their related branches
-        'customer',
-        'details' => function ($query) use ($designation_id, $employeeId) {
-            // If designation_id is provided, filter details by it
-            if ($designation_id) {
-                $query->whereIn('designation_id', $designation_id);
-            }
-
-            // If employee_id is provided, filter details by it
-            if ($employeeId) {
-                $query->where('employee_id', $employeeId); // Assuming salaryDetails has an employee_id field
-            }
-        },
-        'details.branches' // Eager load branches associated with the details
-    ])
-    ->get();
-
-// Retrieve job posts (designations)
-$designation = JobPost::get();
-
-// Proceed with the existing logic to return the view
-return view('hrm.salary_sheet.salary-sheet-employee-wise', compact('salary', 'zone', 'employee', 'month', 'year', 'designation'));
+        //dd($salary);
 
 
+        // Retrieve job posts (designations)
+        $designation = JobPost::get();
+
+        // Proceed with the existing logic to return the view
+        return view('hrm.salary_sheet.salary-sheet-employee-wise', compact('salary', 'zone', 'employee', 'month', 'year', 'designation'));
     }
 }

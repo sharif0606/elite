@@ -41,7 +41,7 @@
                                 <td>{{$getMonth}}--{{$p->year}}</td>
                                 <td>{{$p->salary_stop_message}}</td>
                                 <td>
-                                    <a href="{{route('deduction_asign.edit',encryptor('encrypt',$p->id))}}">
+                                    <a href="{{ route('deduction_asign.edit', ['deduction_asign' => encryptor('encrypt', $p->id), 'employee_id' => $p->employee_id, 'year' => $p->year, 'month' => $p->month]) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </td>

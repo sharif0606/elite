@@ -221,7 +221,7 @@
                                         <!-- Loop through Branches -->
                                         @foreach($sheet->customer->branch as $branch)
                                         @php $branchIndex = 1; @endphp
-                                        @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty() && $branch->zone_id == request('zone'))
+                                        @if($sheet->details->where('branch_id', $branch->id)->isNotEmpty())
 
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
@@ -231,11 +231,15 @@
 
                                         @foreach($sheet->details->where('branch_id', $branch->id) as $index => $detail)
                                         @php
-                                        $deductionTrainingTotal += $detail->deduction_traningcost;
-                                        $deductionLoanTotal += $detail->deduction_loan;
-                                        $payableTotal += $detail->net_salary;
+                                        if($detail->employee_id == request('employee_id')){
+                                            $deductionTrainingTotal += $detail->deduction_traningcost;
+                                            $deductionLoanTotal += $detail->deduction_loan;
+                                            $payableTotal += $detail->net_salary;
+                                        }
                                         @endphp
+                                        @if($detail->employee_id == request('employee_id'))
                                         @include('hrm.salary_sheet.partials.salary_row', ['index' => $branchIndex++, 'detail' => $detail])
+                                        @endif
                                         @endforeach
                                         @endif
                                         @endforeach
@@ -249,7 +253,9 @@
                                         </tr>--}}
 
                                         @foreach($sheet->details->whereIn('branch_id', [null, 0]) as $index => $detail)
+                                        @if($detail->employee_id == request('employee_id'))
                                         @include('hrm.salary_sheet.partials.salary_row', ['index' => ++$loop->parent->index, 'detail' => $detail])
+                                        @endif
                                         @endforeach
                                         @endif
                                         @endforeach

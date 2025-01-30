@@ -365,6 +365,9 @@
                                     } else {
                                         traningCostPerMonth = Math.floor(traningCostPerMonth);
                                     }
+                                    Fine = Fine;
+                                   
+                                    Loan = Loan;
                                     
 
                                 }else{
@@ -391,15 +394,10 @@
                                     }else{
                                         postAllowance= postAllowance;
                                     }
-                                    Fine = Fine;
-                                   
-                                    Loan = Loan;
+                                    
                                 }else {
                                     pf = 0; // No further deductions
                                     postAllowance = 0;
-                                    Fine = 0;
-                                    Loan = 0;
-                                    Medical = 0;
                                 }
                                 // Mark deductions as applied
                                 appliedDeductions[value.admission_id_no] = true;
