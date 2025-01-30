@@ -193,7 +193,7 @@
                                         $payableTotal = 0;
                                         @endphp
                                         @foreach($salary as $sheet)
-                                        @if($sheet->details->where('branch_id', request('branch'))->where('zone_id', request('zone'))->count() > 0)
+                                        @if($sheet->details->count() > 0)
                                         <!-- Customer Header -->
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
