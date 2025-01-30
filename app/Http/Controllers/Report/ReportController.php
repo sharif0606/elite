@@ -321,4 +321,6 @@ class ReportController extends Controller
         $customer = Customer::all();
         return view('report.client-wise-invoice-report-detail', compact('payments', 'customer'));
     }
+
+    
 }

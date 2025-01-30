@@ -912,8 +912,10 @@ class SalarySheetController extends Controller
         $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
 
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && 
-            (empty($branchIds) || in_array($detail->branch_id, $branchIds) || $detail->branch_id == 0)) {
+            if (
+                in_array($detail->customer_id, $customerIds) &&
+                (empty($branchIds) || in_array($detail->branch_id, $branchIds) || $detail->branch_id == 0)
+            ) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
@@ -1609,6 +1611,111 @@ return response()->json($data, 200);
 
         // Fetch salary sheets with the specified filters
         $salary = SalarySheet::where('year', $year)
+            ->where('month', $month)
+            ->where('status', $type)
+            ->whereHas('customer', function ($query) use ($zone_id) {
+                $query->where(function ($query) use ($zone_id) {
+                    // Case where the customer has a zone assigned directly
+                    $query->whereNotNull('zone_id')
+                        ->where('zone_id', $zone_id);
+                })->orWhere(function ($query) use ($zone_id) {
+                    // Case where the customer does not have a zone assigned, but belongs to a branch with a matching zone_id
+                    $query->whereNull('zone_id')
+                        ->whereHas('branch', function ($query) use ($zone_id) {
+                            $query->where('zone_id', $zone_id);
+                        });
+                })->orWhere(function ($query) {
+                    // Case where the customer has no branches
+                    $query->whereDoesntHave('branch');
+                });
+            })
+            ->whereHas('details', function ($query) use ($zone_id, $designation_id) {
+                // Filter salary details based on zone_id and designation_id
+                $query->whereHas('branches', function ($query) use ($zone_id) {
+                    $query->where('zone_id', $zone_id);
+                });
+
+                // Optionally filter by designation_id
+                if ($designation_id) {
+                    $query->whereIn('designation_id', $designation_id);
+                }
+
+                // Include salary sheet details with null branch_id
+                $query->orWhereNull('branch_id')
+                    ->orWhere('branch_id', 0) // Add this condition for `branch_id = 0`
+                    ->orWhereHas('branches', function ($query) {
+                        // Add condition to match `salary_sheet_details.branch_id = customer_brances.id`
+                        $query->whereColumn('branch_id', 'customer_brances.id');
+                    });
+            })
+            ->with([
+                // Eager load customer and their related branches
+                'customer',
+                'details' => function ($query) use ($designation_id) {
+                    // If designation_id is provided, filter details by it
+                    if ($designation_id) {
+                        $query->whereIn('designation_id', $designation_id);
+                    }
+
+                    // Include salary sheet details with null branch_id
+                    /*$query->orWhereNull('branch_id')
+                  ->orWhere('branch_id', 0);*/ // Add condition for `branch_id = 0`
+                },
+                'details.branches'
+            ])
+            ->get();
+
+
+
+
+
+
+
+
+
+
+
+        $designation = JobPost::get();
+
+
+
+
+
+
+
+        // Proceed with the existing logic
+        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone', 'employee', 'month', 'year', 'designation'));
+    }
+
+    public function employeeWiseSalary(Request $request)
+    {
+        // Retrieve request parameters
+$year = $request->input('year');
+$month = $request->input('month');
+$type = 5; // $request->input('type') can be uncommented if needed
+$employeeId = $request->input('employee_id');
+$zone_id = $request->input('zone');
+$designation_id = $request->input('designation_id');
+
+// Retrieve zones and employee
+$zone = Zone::all();
+$employee = Employee::all();
+
+// Fetch salary sheets with the specified filters
+// Retrieve request parameters
+$year = $request->input('year');
+$month = $request->input('month');
+$type = 5; // $request->input('type') can be uncommented if needed
+$employeeId = $request->input('employee_id'); // Employee ID from request
+$zone_id = $request->input('zone');
+$designation_id = $request->input('designation_id');
+
+// Retrieve zones and employee
+$zone = Zone::all();
+$employee = Employee::all();
+
+// Fetch salary sheets with the specified filters
+$salary = SalarySheet::where('year', $year)
     ->where('month', $month)
     ->where('status', $type)
     ->whereHas('customer', function ($query) use ($zone_id) {
@@ -1627,8 +1734,8 @@ return response()->json($data, 200);
             $query->whereDoesntHave('branch');
         });
     })
-    ->whereHas('details', function ($query) use ($zone_id, $designation_id) {
-        // Filter salary details based on zone_id and designation_id
+    ->whereHas('details', function ($query) use ($zone_id, $designation_id, $employeeId) {
+        // Filter salary details based on zone_id, designation_id, and employee_id
         $query->whereHas('branches', function ($query) use ($zone_id) {
             $query->where('zone_id', $zone_id);
         });
@@ -1638,50 +1745,39 @@ return response()->json($data, 200);
             $query->whereIn('designation_id', $designation_id);
         }
 
-        // Include salary sheet details with null branch_id
+        // Filter salary details by employee_id
+        if ($employeeId) {
+            $query->where('employee_id', $employeeId); // Assuming salaryDetails has an employee_id field
+        }
+
+        // Include salary sheet details with null branch_id or branch_id = 0
         $query->orWhereNull('branch_id')
-              ->orWhere('branch_id', 0) // Add this condition for `branch_id = 0`
-              ->orWhereHas('branches', function ($query) {
-                  // Add condition to match `salary_sheet_details.branch_id = customer_brances.id`
-                  $query->whereColumn('branch_id', 'customer_brances.id');
-              });
+              ->orWhere('branch_id', 0);
     })
     ->with([
         // Eager load customer and their related branches
         'customer',
-        'details' => function ($query) use ($designation_id) {
+        'details' => function ($query) use ($designation_id, $employeeId) {
             // If designation_id is provided, filter details by it
             if ($designation_id) {
                 $query->whereIn('designation_id', $designation_id);
             }
 
-            // Include salary sheet details with null branch_id
-            /*$query->orWhereNull('branch_id')
-                  ->orWhere('branch_id', 0);*/ // Add condition for `branch_id = 0`
+            // If employee_id is provided, filter details by it
+            if ($employeeId) {
+                $query->where('employee_id', $employeeId); // Assuming salaryDetails has an employee_id field
+            }
         },
-        'details.branches'
+        'details.branches' // Eager load branches associated with the details
     ])
     ->get();
 
-    
+// Retrieve job posts (designations)
+$designation = JobPost::get();
+
+// Proceed with the existing logic to return the view
+return view('hrm.salary_sheet.salary-sheet-employee-wise', compact('salary', 'zone', 'employee', 'month', 'year', 'designation'));
 
 
-
-
-
-
-    
-
-
-        $designation = JobPost::get();
-
-
-
-
-
-
-
-        // Proceed with the existing logic
-        return view('hrm.salary_sheet.salary-sheet-five-zone-wise-print', compact('salary', 'zone', 'employee', 'month', 'year', 'designation'));
     }
 }
