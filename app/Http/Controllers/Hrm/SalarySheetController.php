@@ -912,10 +912,12 @@ class SalarySheetController extends Controller
         $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
 
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+            if (in_array($detail->customer_id, $customerIds) && 
+            (empty($branchIds) || in_array($detail->branch_id, $branchIds) || $detail->branch_id == 0)) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
+        //dd($salary);
         return view('hrm.salary_sheet.salarysheetOneShow', compact('salary', 'groupedData'));
     }
     public function getsalarySheetTwoShow($id)
