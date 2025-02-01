@@ -1263,6 +1263,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                     OR deduction_loan IS NOT NULL) > 0, 1, 0
             ) AS charge_status")
         )
+        ->where('year', '>', 0)
+        ->where('month', '>', 0)
         ->groupBy('employee_id');
         //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
