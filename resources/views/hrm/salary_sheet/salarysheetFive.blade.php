@@ -339,7 +339,7 @@
                                         Stmp = 0;
                                     }
                                     //value.bn_remaining_cost > total_deduction_traningcost
-                                    if(value.bn_remaining_cost >  total_deduction_traningcost ){
+                                    if(value.bn_remaining_cost >  value.total_deduction_traningcost ){
                                         traningCostPerMonth = traningCostPerMonth;
                                     } 
                                     
