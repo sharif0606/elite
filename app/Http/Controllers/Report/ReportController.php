@@ -371,7 +371,7 @@ class ReportController extends Controller
         foreach ($training_data->groupBy('employee_id') as $employee_id => $reports) {
             $employee = $reports->first()->employee ?? null;
 
-            if ($employee && $employee->bn_traning_cost > 0) {  // Ensure training cost is greater than 0
+            if ($employee && $employee->bn_traning_cost > 0 && $reports->year > 0 && $reports->month > 0) {  // Ensure training cost is greater than 0
                 $total_deduction = $reports->sum('total_deduction');
                 $remaining_cost = $employee->bn_remaining_cost ?? 0;
                 $due_amount = $remaining_cost - $total_deduction;
