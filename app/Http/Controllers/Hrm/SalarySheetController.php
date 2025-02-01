@@ -1265,6 +1265,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         )
         ->where('year', '>', 0)
         ->where('month', '>', 0)
+        ->where('year', $request->Year)
+        ->where('month', $request->Month)
         ->groupBy('employee_id');
         //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
