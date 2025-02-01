@@ -1221,10 +1221,10 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
 
 
         // Aggregate subquery to check if charges exist
-        $aggregateSubquery = DB::table('salary_sheet_details')
+        /*$aggregateSubquery = DB::table('salary_sheet_details')
             ->select(
                 'employee_id',
-                DB::raw('SUM(deduction_traningcost) as total_deduction_traningcost'),
+                DB::raw('SUM(CASE WHEN NOT (year = '.$request->Year.' AND month = '.$request->Month.') THEN deduction_traningcost ELSE 0 END) as total_deduction_traningcost_except_requested'),
                 DB::raw("IF(
         SUM(deduction_ins IS NOT NULL OR deduction_p_f IS NOT NULL 
             OR allownce IS NOT NULL OR deduction_fine IS NOT NULL
@@ -1236,7 +1236,34 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
             //->where('customer_id', $request->customer_id)
             ->where('year', $request->Year)
             ->where('month', $request->Month)
-            ->groupBy('employee_id');
+            ->groupBy('employee_id');*/
+        
+        $aggregateSubquery = DB::table('salary_sheet_details')
+        ->select(
+            'employee_id',
+            // Exclude deduction_traningcost for requested year and month
+            DB::raw('SUM(CASE WHEN NOT (year = '.$request->Year.' AND month = '.$request->Month.') THEN deduction_traningcost ELSE 0 END) as total_deduction_traningcost_except_requested'),
+            
+            // Keep other fields only for the requested year and month
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_ins ELSE 0 END) as total_deduction_ins'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_p_f ELSE 0 END) as total_deduction_p_f'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN allownce ELSE 0 END) as total_allowance'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_fine ELSE 0 END) as total_deduction_fine'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_dress ELSE 0 END) as total_deduction_dress'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_banck_charge ELSE 0 END) as total_deduction_banck_charge'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_revenue_stamp ELSE 0 END) as total_deduction_revenue_stamp'),
+            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_loan ELSE 0 END) as total_deduction_loan'),
+    
+            // Charge status logic
+            DB::raw("IF(
+                SUM(deduction_ins IS NOT NULL OR deduction_p_f IS NOT NULL 
+                    OR allownce IS NOT NULL OR deduction_fine IS NOT NULL
+                    OR deduction_dress IS NOT NULL OR deduction_banck_charge IS NOT NULL
+                    OR deduction_revenue_stamp IS NOT NULL OR deduction_traningcost IS NOT NULL
+                    OR deduction_loan IS NOT NULL) > 0, 1, 0
+            ) AS charge_status")
+        )
+        ->groupBy('employee_id');
         //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
             ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
@@ -1301,11 +1328,12 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                 'employees.bn_food_allowance',
                 'employees.insurance',
                 'employees.p_f',
+                'employees.p_f',
                 'customers.medical as cmedical',
                 'customers.food_allownce as cfood_allowance',
                 'customers.trans_conve as ctrans_conve',
                 DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
-                'aggregate_data.total_deduction_traningcost',
+                //'aggregate_data.total_deduction_traningcost',
                 /*DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR 
                 salary_sheet_details.deduction_p_f IS NOT NULL 
                 OR salary_sheet_details.allownce IS NOT NULL
@@ -1318,6 +1346,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                 AND (salary_sheets.year = {$request->Year} AND salary_sheets.month = {$request->Month}), 1, 0) AS charge_status"),
                         'aggregate_data.total_deduction_traningcost'*/
                 //DB::raw('SUM(salary_sheet_details.deduction_traningcost) as total_deduction_traningcost')
+                DB::raw("IFNULL(aggregate_data.total_deduction_traningcost_except_requested, 0) AS total_deduction_traningcost"),
                 DB::raw("IFNULL(aggregate_data.charge_status, 0) AS charge_status") // Use charge_status from aggregate data
             )
             ->where(function ($query) use ($request) {
@@ -1726,6 +1755,9 @@ return response()->json($data, 200);
 
                 // Ensure the `details` relationship has the `branches` relationship
                 $query->whereHas('branches');
+                 // Include salary sheet details with null branch_id
+                 $query->orWhereNull('branch_id')
+                 ->orWhere('branch_id', 0); 
             })
             ->with([
                 'details.employee', // Eager load employee details

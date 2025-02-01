@@ -362,7 +362,7 @@
                                     else
                                     pf = 0;
                                     
-                                    if(deduction_post_allowance > 0){
+                                    if(deduction_post_allowance > 0 && bn_remaining_cost > total_deduction_traningcost){
                                         postAllowance = deduction_post_allowance
                                     }else{
                                         postAllowance= postAllowance;

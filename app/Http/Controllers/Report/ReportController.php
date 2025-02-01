@@ -322,5 +322,74 @@ class ReportController extends Controller
         return view('report.client-wise-invoice-report-detail', compact('payments', 'customer'));
     }
 
-    
+    public function employee_wise_training(Request $request)
+    {
+        // Fetch employees who have a valid training cost
+        $employees = Employee::select('id', 'bn_applicants_name', 'admission_id_no')
+            ->whereNotNull('bn_traning_cost')  // Exclude employees without training cost
+            ->where('bn_traning_cost', '>', 0) // Exclude employees with zero training cost
+            ->get();
+
+        // Fetch months from SalarySheetDetail
+        $months = SalarySheetDetail::selectRaw("DISTINCT CONCAT(year, '-', LPAD(month, 2, '0'), '-01') as month_date")
+            ->whereRaw("year > 0 AND month > 0 AND month <= 12")  // Ensure valid year and month
+            ->orderBy('month_date')
+            ->pluck('month_date')
+            ->toArray();
+
+        // Initialize the training cost report array
+        $training_cost_report = [];
+
+        // Filtering based on request parameters
+        if ($request->employee_id) {
+            // If employee is selected, filter by employee
+            $training_data = SalarySheetDetail::where('employee_id', $request->employee_id);
+        } else {
+            // If no specific employee is selected, include all employees
+            $training_data = SalarySheetDetail::query();
+        }
+
+        // Add year filter if provided
+        if ($request->year) {
+            $training_data->where('year', $request->year);
+        }
+
+        // Add month filter if provided
+        if ($request->month) {
+            $training_data->where('month', $request->month);
+        }
+
+        // Group by employee and process data
+        $training_data = $training_data->selectRaw('employee_id, year, month, SUM(deduction_traningcost) as total_deduction')
+            ->groupBy('employee_id', 'year', 'month')
+            ->with('employee:id,bn_applicants_name,admission_id_no,joining_date,bn_traning_cost,bn_remaining_cost')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        // Process each employee's data
+        foreach ($training_data->groupBy('employee_id') as $employee_id => $reports) {
+            $employee = $reports->first()->employee ?? null;
+
+            if ($employee && $employee->bn_traning_cost > 0) {  // Ensure training cost is greater than 0
+                $total_deduction = $reports->sum('total_deduction');
+                $remaining_cost = $employee->bn_remaining_cost ?? 0;
+                $due_amount = $remaining_cost - $total_deduction;
+                $used_months = $reports->unique('month')->count(); // Count unique months
+
+                // Only include employee in the report if the total deduction is greater than 0
+                if ($total_deduction > 0) {
+                    $training_cost_report[$employee_id] = [
+                        'employee' => $employee,
+                        'deductions' => $reports,
+                        'total_deduction' => $total_deduction,
+                        'due_amount' => $due_amount,
+                        'used_months' => $used_months,
+                    ];
+                }
+            }
+        }
+
+        return view('report.employee-wise-training', compact('employees', 'training_cost_report', 'months'));
+    }
 }

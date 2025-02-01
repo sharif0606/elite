@@ -253,6 +253,7 @@
                 <ul class="submenu">
                     <li class="py-1 submenu-item"><a href="{{route('report.salary_report')}}">{{__('Salary Reports')}}</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('salarysheet.employeeWiseSalary')}}">Employee Wise Salary</a></li>
+                    <li class="py-1 submenu-item"><a href="{{route('report.employee_wise_training')}}">Employee Wise Training Cost</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('report.inv_payment')}}">{{__('Zone Wise Invoice Due Report')}}</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('invoice-payment.client_wise_detail_invoice_report')}}">{{__('Invoice Client Wise')}}</a></li>
                     <li class="py-1 submenu-item"><a href="{{route('report.inv_due')}}">{{__('Invoice Due')}}</a></li>

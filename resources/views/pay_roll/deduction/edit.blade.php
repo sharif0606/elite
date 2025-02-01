@@ -251,12 +251,12 @@
                         </div>
 
                         <!-- Status -->
-                        <div class="col-md-3 mb-1">
+                        {{--<div class="col-md-3 mb-1">
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <input type="text" class="form-control" id="status" name="status" value="{{ old('status', $c->status) }}">
                             </div>
-                        </div>
+                        </div>--}}
 
                         <!-- Salary Stop Message -->
                         <div class="col-md-3 mb-1">
