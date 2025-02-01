@@ -338,8 +338,11 @@
                                     else{
                                         Stmp = 0;
                                     }
+                                    //value.bn_remaining_cost > total_deduction_traningcost
+                                    if(value.bn_remaining_cost > 0 && value.bn_traning_cost_byMonth > 0){
+                                        traningCostPerMonth = traningCostPerMonth;
+                                    } 
                                     
-                                    traningCostPerMonth = traningCostPerMonth;
                                     Fine = Fine;
                                     Loan = Loan;
 
@@ -362,7 +365,7 @@
                                     else
                                     pf = 0;
                                     
-                                    if(deduction_post_allowance > 0 && bn_remaining_cost > total_deduction_traningcost){
+                                    if(deduction_post_allowance > 0 ){
                                         postAllowance = deduction_post_allowance
                                     }else{
                                         postAllowance= postAllowance;

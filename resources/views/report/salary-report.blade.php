@@ -95,7 +95,7 @@
 
             if (selectedCustomers.length > 0) {
                 $.ajax({
-                    url: "{{route('get_ajax_salary_branch')}}",
+                    url: "{{route('salarysheet.get_ajax_salary_branch')}}",
                     type: "GET",
                     dataType: "json",
                     data: {
