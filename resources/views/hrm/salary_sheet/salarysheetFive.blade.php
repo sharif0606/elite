@@ -345,12 +345,16 @@
                                     
                                     Fine = Fine;
                                     Loan = Loan;
+                                    Dress = Dress;
+                                    BankCharge = BankCharge;
 
                                 }else{
                                     Insurance = 0;
                                     Stmp = 0;
                                     traningCostPerMonth = 0;
                                     Loan = 0;
+                                    Dress = 0;
+                                    BankCharge = 0;
                                 }
                                
                                
@@ -370,8 +374,7 @@
                                     }else{
                                         postAllowance= postAllowance;
                                     }
-                                    Dress = Dress;
-                                    BankCharge = BankCharge;
+                                    
                                    
                                     
                                 }else {
@@ -379,7 +382,7 @@
                                     postAllowance = 0;
                                     Dress = 0;
                                     //Fine = 0;
-                                    BankCharge = 0;
+                                    //BankCharge = 0;
                                     //Loan = 0;
                                 }
                                 // Mark deductions as applied
