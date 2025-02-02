@@ -1396,7 +1396,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         if ($dataExists->exists()) {
             // Ensure branchIdsArray is properly processed
             if (!empty($branchIdsArray)) {
-                $query->whereNotIn('customer_duties.branch_id', function ($query) use ($request, $branchIdsArray) {
+                /*$query->whereNotIn('customer_duties.branch_id', function ($query) use ($request, $branchIdsArray) {
                     $query->select('branch_id')
                         ->from('salary_sheets')
                         ->where('year', '=', $request->Year)
@@ -1407,7 +1407,8 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                     foreach ($branchIdsArray as $branchId) {
                         $query->orWhereRaw('FIND_IN_SET(?, branch_id) > 0', [$branchId]);
                     }
-                });
+                });*/
+                $query->whereNotIn('customer_duties.branch_id', $branchIdsArray);
             }
         }
 

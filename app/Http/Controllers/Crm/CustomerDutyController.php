@@ -351,12 +351,13 @@ class CustomerDutyController extends Controller
 
                             // Query the employeeratedetails table to get the job_post_hour by the primary key (job_post_id)
                             $employeeRate = EmployeeRateDetails::find($request->job_post_id[$key]);
-
+           
                             // Check if we found a valid entry
                             if ($employeeRate) {
                                 $job_post_id = $employeeRate->job_post_id;
                             } else {
-                                $job_post_id = 0; // Or set to a default value if no rate is found
+                                //$job_post_id = 0; // Or set to a default value if no rate is found
+                                return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
                             }
 
                             $details->job_post_id = $job_post_id;
