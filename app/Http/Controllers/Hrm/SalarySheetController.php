@@ -49,7 +49,7 @@ class SalarySheetController extends Controller
     }
     public function getsalarySheetFiveIndex()
     {
-        $salarysheet = SalarySheet::where('status', 5)->get();
+        $salarysheet = SalarySheet::where('status', 5)->orderBy('id', 'desc')->get();
         return view('hrm.salary_sheet.salarysheetFiveIndex', compact('salarysheet'));
     }
 
