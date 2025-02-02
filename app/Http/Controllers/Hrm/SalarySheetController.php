@@ -1336,6 +1336,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                 'customers.medical as cmedical',
                 'customers.food_allownce as cfood_allowance',
                 'customers.trans_conve as ctrans_conve',
+                'employees.pf_ins_med_food_status',
                 DB::raw('(customer_duty_details.ot_amount + customer_duty_details.duty_amount) as grossAmount'),
                 //'aggregate_data.total_deduction_traningcost',
                 /*DB::raw("IF((salary_sheet_details.deduction_ins IS NOT NULL OR 
@@ -1378,6 +1379,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
 
         // Retrieve the matching branch_ids for the given customer_id, year, and month
         $branchIds = $dataExists->pluck('branch_id'); // Get the branch_id values as an array
+        //dd($branchIds);
 
         //dd($branchIds);
         // Extract branch_ids from the result
@@ -1425,7 +1427,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         $query->where('customer_duty_details.customer_id', '=', $request->customer_id)
             ->orderBy('job_posts.serial', 'ASC');
 
-        $data = $query->get();
+        $data = $query->limit(1)->get();
 
         return response()->json($data, 200);
 

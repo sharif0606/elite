@@ -581,6 +581,7 @@ class EmployeeController extends Controller
             $employee->insurance = $request->insurance;
             $employee->p_f = $request->p_f;
             $employee->medical = $request->medical;
+            $employee->pf_ins_med_food_status = $request->pf_ins_med_food_status;
             $employee->bn_fuel_bill = $request->bn_fuel_bill;
             $employee->bn_traning_cost = $request->bn_traning_cost;
             $employee->bn_remaining_cost = $request->bn_remaining_cost;

@@ -632,6 +632,15 @@
                             <input type="number" value="{{old('medical',$employees->medical)}}" class="form-control" name="medical">
                         </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                        <div class="form-group">
+                            <label for="pf_ins_med_food_status">PF-Ins-Med-Trans Status</label>
+                            <select name="pf_ins_med_food_status" class="form-control">
+                                <option value="1" {{ $employees->pf_ins_med_food_status=='1'?"selected":""}}>Employee Wise</option>
+                                <option value="2" {{ $employees->pf_ins_med_food_status=='2'?"selected":""}}>Company Wise</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12 d-none">
                         <div class="form-group">
                             <label for="bn_fuel_bill">Fuel Bill</label>
