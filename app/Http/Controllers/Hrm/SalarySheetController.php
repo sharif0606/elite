@@ -1427,7 +1427,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         $query->where('customer_duty_details.customer_id', '=', $request->customer_id)
             ->orderBy('job_posts.serial', 'ASC');
 
-        $data = $query->limit(1)->get();
+        $data = $query->get();
 
         return response()->json($data, 200);
 
