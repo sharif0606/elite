@@ -268,8 +268,9 @@
                             let traningCostMonth=value.bn_traning_cost_byMonth;
                             let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                             /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
-                            let deduction_post_allowance = (value.post_allowance > 0) ? value.post_allowance : '0';
-                            let postAllowance= (value.bn_post_allowance > 0) ? value.bn_post_allowance : '0';
+                            let deduction_post_allowance = Number(value.post_allowance) > 0 ? Number(value.post_allowance) : '0';
+                            let postAllowance = Number(value.bn_post_allowance) > 0 ? Number(value.bn_post_allowance) : '0';
+
                            
                             
                             //console.log(traningCostPerMonth);
@@ -310,7 +311,7 @@
                             let Medical = (value.medical > 0) ? value.medical : '0';
                             let BankCharge = (value.bank_charge_exc > 0) ? value.bank_charge_exc : '0';
                             let Dress = (value.dress > 0) ? value.dress : '0';
-                            let grossAmoun = (value.grossAmount > 0) ? value.grossAmount : '0';
+                            let grossAmoun = Number(value.grossAmount > 0) ? Number(value.grossAmount) : '0';
                            
                             let netSalary = 0;
                             let currentMonth = $('.selected_month').val();
@@ -321,9 +322,9 @@
                             if (!appliedDeductions[value.admission_id_no]) {
                                 if (value.charge_status == 0) {
                                     /* This Value Will Deduct From first Of Month New Rule Decement 1/24 */
-                                    if(value.cinsurance > 0 && value.insurance == 0)
+                                    if(value.cinsurance > 0 && value.insurance != 0)
                                     Insurance = (value.cinsurance > 0) ? value.cinsurance : '0';
-                                    else if(value.insurance > 0 && value.cinsurance == 0)
+                                    else if(value.insurance > 0 && value.cinsurance != 0)
                                     Insurance = (value.insurance > 0) ? value.insurance : '0';
                                     else if(value.cinsurance > 0 && value.insurance > 0)
                                     Insurance = (value.insurance > 0) ? value.insurance : '0';
@@ -348,6 +349,13 @@
                                     Dress = Dress;
                                     BankCharge = BankCharge;
 
+                                     
+                                    if(deduction_post_allowance > 0 ){
+                                        postAllowance = deduction_post_allowance
+                                    }else{
+                                        postAllowance= postAllowance;
+                                    }
+
                                 }else{
                                     Insurance = 0;
                                     Stmp = 0;
@@ -355,32 +363,28 @@
                                     Loan = 0;
                                     Dress = 0;
                                     BankCharge = 0;
+                                    postAllowance = 0;
                                 }
                                
                                
                                 if (new Date() >= sixMonthsLater && value.charge_status == 0) {
                                    
-                                    if(value.cpf > 0 && value.p_f == 0)
+                                    if(value.cpf > 0 && value.p_f != 0)
                                     pf = (value.cpf > 0) ? value.cpf : '0';
-                                    else if(value.p_f > 0 && value.cpf == 0)
+                                    else if(value.p_f > 0 && value.cpf != 0)
                                     pf = (value.p_f > 0) ? value.p_f : '0';
                                     else if(value.cpf > 0 && value.p_f > 0)
                                     pf = (value.p_f > 0) ? value.p_f : '0';
                                     else
                                     pf = 0;
-                                    
-                                    if(deduction_post_allowance > 0 ){
-                                        postAllowance = deduction_post_allowance
-                                    }else{
-                                        postAllowance= postAllowance;
-                                    }
+                                   
                                     
                                    
                                     
                                 }else {
                                     pf = 0; // No further deductions
-                                    postAllowance = 0;
-                                    Dress = 0;
+                                    //postAllowance = 0;
+                                    //Dress = 0;
                                     //Fine = 0;
                                     //BankCharge = 0;
                                     //Loan = 0;
@@ -396,11 +400,13 @@
                                 Stmp = 0;
                                 traningCostPerMonth = 0;
                                 Loan = 0;
+                                postAllowance = 0;
                             }
                             let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
+                            grossAmoun += postAllowance;
+                            console.log(grossAmoun);
                             if (grossAmoun > totalDeduction) {
                                 netSalary = Math.round(parseFloat(grossAmoun) - parseFloat(totalDeduction));
-                                netSalary += Math.round(parseFloat(postAllowance).toFixed(2));
                             }
                             // if(old_emp == value.admission_id_no){
                                 if(value.duty_qty > 0 && value.ot_qty == 0){
