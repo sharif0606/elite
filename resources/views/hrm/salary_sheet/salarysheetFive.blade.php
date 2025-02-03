@@ -154,6 +154,7 @@
                                                 <th scope="col" rowspan="2">{{__('Sign of Account')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Remark')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Divide By')}}</th>
+                                                <th scope="col" rowspan="2">{{__('OT Divide')}}</th>
                                                 {{--  <th class="white-space-nowrap" rowspan="2">{{__('ACTION')}}</th>  --}}
                                             </tr>
                                             <tr>
@@ -513,6 +514,9 @@
                                     <td><input style="width:100px;" class="form-control remark" type="text" name="remark[]" value="${Remarks}"></td>
                                     <td>
                                         <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
+                                    </td>
+                                      <td>
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_divided_by" type="text" name="ot_divided_by[]" value="">
                                     </td>
                                     {{--  <td>
                                         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>

@@ -54,7 +54,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr class="text-center">
-                        <th rowspan="2">ID No</th>
+                        <th rowspan="2">ID</th>
                         <th rowspan="2">DOJ</th>
                         <th rowspan="2">Applicant Name</th>
                         <th rowspan="2">Deposit Amount</th>
