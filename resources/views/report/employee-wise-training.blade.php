@@ -90,7 +90,7 @@
                         <td>{{ $deduction['total_deduction'] ?? 0 }}</td>
                         @endforeach
 
-                        <td class="fw-bold">{{ $total_deduction++$employee['bn_traning_cost'] }}</td>
+                        <td class="fw-bold">{{ $total_deduction+$employee['bn_traning_cost'] }}</td>
                         <td class="fw-bold">{{ $remaining_due }}</td>
                         <td class="fw-bold">{{$used_months}}</td>
                     </tr>
