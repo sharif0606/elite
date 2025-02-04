@@ -317,6 +317,7 @@
                             let netSalary = 0;
                             let currentMonth = $('.selected_month').val();
                             let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
+                            let totalOtDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
                            
 
                             // Check if deductions are already applied for this employee
@@ -516,7 +517,7 @@
                                         <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control divided_by" type="text" name="divided_by[]" value="${totalDaysInMonth}">
                                     </td>
                                       <td>
-                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_divided_by" type="text" name="ot_divided_by[]" value="">
+                                        <input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control ot_divided_by" type="text" name="ot_divided_by[]" value="${totalOtDaysInMonth}">
                                     </td>
                                     {{--  <td>
                                         <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
