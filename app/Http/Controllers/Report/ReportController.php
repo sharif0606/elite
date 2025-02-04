@@ -374,7 +374,7 @@ class ReportController extends Controller
             $employee = $reports->first()->employee ?? null;
 
             if ($employee && $employee->bn_traning_cost > 0) {  // Ensure training cost is greater than 0
-                $total_deduction = $reports->sum('total_deduction');
+                $total_deduction = $reports->sum('total_deduction')+$employee->bn_traning_cost;
                 $remaining_cost = $employee->bn_remaining_cost ?? 0;
                 $due_amount = $remaining_cost - $total_deduction;
                 $used_months = $reports->unique('month')->count(); // Count unique months
