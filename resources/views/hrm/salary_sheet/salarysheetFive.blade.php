@@ -551,8 +551,9 @@
         let currentMonth = $('.selected_month').val();
         // let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
         let totalDaysInMonth = $(e).closest('tr').find('.divided_by').val()?parseFloat($(e).closest('tr').find('.divided_by').val()):30;
+        let totalotDaysInMonth = $(e).closest('tr').find('.ot_divided_by').val()?parseFloat($(e).closest('tr').find('.ot_divided_by').val()):30;
         let dutyRateDay=dutyRate/totalDaysInMonth;
-        let otRateDay=otRate/totalDaysInMonth;
+        let otRateDay=otRate/totalotDaysInMonth;
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
         let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
