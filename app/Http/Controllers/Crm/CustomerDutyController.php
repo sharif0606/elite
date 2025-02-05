@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Crm;
 
+use Illuminate\Support\Facades\Validator;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Crm\CustomerDuty;
@@ -213,6 +215,22 @@ class CustomerDutyController extends Controller
      */
     public function store(Request $request)
     {
+        // Validation Rules
+        $rules = [
+            'job_post_id' => 'required|array',
+            'job_post_hour' => 'required|array',
+            'total_duty_amount' => 'required|numeric',
+        ];
+        $messages = [
+            'job_post_id.*.required' => 'Job post ID is required for each employee.',
+            'job_post_hour.*.required' => 'Job post hour is required for each employee.',
+        ];
+        // Validate Request
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         //dd($request->all());
         DB::beginTransaction();
         try {
@@ -243,7 +261,8 @@ class CustomerDutyController extends Controller
                             if ($employeeRate) {
                                 $job_post_id = $employeeRate->job_post_id;
                             } else {
-                                $job_post_id = 0; // Or set to a default value if no rate is found
+                                //$job_post_id = 0; // Or set to a default value if no rate is found
+                                return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
                             }
 
                             $details->job_post_id = $job_post_id;
@@ -283,7 +302,7 @@ class CustomerDutyController extends Controller
             }
         } catch (Exception $e) {
             DB::rollback();
-            dd($e);
+            //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
@@ -327,6 +346,22 @@ class CustomerDutyController extends Controller
     public function update(Request $request, $id)
     {
         //dd($request->all());
+        // Validation Rules
+        $rules = [
+            'job_post_id' => 'required|array',
+            'job_post_hour' => 'required|array',
+            'total_duty_amount' => 'required|numeric',
+        ];
+        $messages = [
+            'job_post_id.*.required' => 'Job post ID is required for each employee.',
+            'job_post_hour.*.required' => 'Job post hour is required for each employee.',
+        ];
+        // Validate Request
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        DB::beginTransaction();
         try {
             $data = CustomerDuty::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;
@@ -351,17 +386,26 @@ class CustomerDutyController extends Controller
 
                             // Query the employeeratedetails table to get the job_post_hour by the primary key (job_post_id)
                             $employeeRate = EmployeeRateDetails::find($request->job_post_id[$key]);
-           
+
                             // Check if we found a valid entry
                             if ($employeeRate) {
-                                $job_post_id = $employeeRate->job_post_id;
+                                //$job_post_id = $employeeRate->job_post_id;
+                                $details->job_post_id = $employeeRate->job_post_id;
+                                $details->employee_salary_id = $employeeRate->id;
                             } else {
-                                //$job_post_id = 0; // Or set to a default value if no rate is found
-                                return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
+                                // Exist Employee Need to Check with Employe Salary Id
+                                $employeeRate = EmployeeRateDetails::find($request->employee_salary_id[$key]);
+                                if ($employeeRate) {
+                                    $details->job_post_id = $employeeRate->job_post_id;
+                                    $details->employee_salary_id = $employeeRate->id;
+                                } else {
+                                    //$job_post_id = 0; // Or set to a default value if no rate is found
+                                    return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
+                                }
                             }
 
-                            $details->job_post_id = $job_post_id;
-                            $details->employee_salary_id = $request->job_post_id[$key];
+
+                           
                             $details->customer_id = $request->customer_id;
                             $details->hours = $request->job_post_hour[$key];
 
@@ -387,6 +431,7 @@ class CustomerDutyController extends Controller
                         }
                     }
                 }
+                DB::commit();
             }
             if ($data->save()) {
                 return redirect()->route('customerduty.index')->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
@@ -394,7 +439,8 @@ class CustomerDutyController extends Controller
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
-            dd($e);
+            DB::rollback();
+            //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }

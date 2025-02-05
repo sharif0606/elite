@@ -230,16 +230,25 @@ class EmployeeRateController extends Controller
         if (!empty($request->customer_id)) {
             $query->where('employee_rates.customer_id', $request->customer_id);
 
+            /*if (!empty($request->branch_id)) {*/
+                // Check if branch_id exists in the database
+                $matchBranch = DB::table('employee_rate_details')
+                    ->where('branch_id', $request->branch_id)
+                    ->exists();
+            /*}else{
+                $matchBranch = false;
+            }*/
 
-            // Check if branch_id exists in the database
-            $matchBranch = DB::table('employee_rate_details')
-                ->where('branch_id', $request->branch_id)
-                ->exists();
-
-            // Check if branch_id exists in the database
-            $matchAtm = DB::table('employee_rate_details')
+            /*if (!empty($request->atm_id)) {*/
+                $matchAtm = DB::table('employee_rate_details')
                 ->where('atm_id', $request->atm_id)
                 ->exists();
+            /*}else{
+                $matchAtm = false;
+            }*/
+
+            // Check if branch_id exists in the database
+           
             if ($matchBranch && $matchAtm) {
                 $query->where('employee_rates.branch_id', $request->branch_id)->where('employee_rates.atm_id', $request->atm_id);
             } elseif ($matchBranch) {
@@ -250,8 +259,6 @@ class EmployeeRateController extends Controller
                 $query->whereNull('employee_rate_details.branch_id')
                     ->orWhereNull('employee_rate_details.atm_id');
             }
-
-            
         }
 
         // Execute the query and get the results

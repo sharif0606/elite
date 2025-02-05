@@ -98,8 +98,10 @@
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="{{ $d->employee?->admission_id_no }}" placeholder="Employee Id" style="width:150px;">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }}</div>{{-- $d->employee?->position?->name --}}
-                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="{{$d->employee_salary_id}}">
-                                                    <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ old('employee_id',$d->employee?->id) }}">
+                                                    
+                                                    <input class="job_post_id" type="hidden" name="job_post_id[]" value="{{$d->job_post_id}}">
+                                                    <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ $d->employee_id }}">
+                                                    <input type="hidden" name="employee_salary_id[]" value="{{ $d->employee_salary_id }}">
                                                 </td>
                                                 <td>
                                                     <select class="form-select job_post_id" style="width:150px" onchange="getDutyOtRate(this)" disabled>
@@ -107,7 +109,6 @@
                                                         @foreach ($jobposts as $job)
                                                         <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
                                                         @endforeach
-
                                                     </select>
                                                 </td>
                                                 <td>
@@ -127,50 +128,50 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ old('duty_rate',$d->duty_rate) }}" placeholder="Duty Rate" style="width:120px;">
+                                                    <input onkeyup="CalculateAmount(this)" class="form-control duty_rate" type="text" name="duty_rate[]" value="{{ $d->duty_rate }}" placeholder="Duty Rate" style="width:120px;">
                                                 </td>
-                                                <td><input onkeyup="CalculateAmount(this)" class="form-control ot_rate" type="text" name="ot_rate[]" value="{{ old('ot_rate',$d->ot_rate) }}" placeholder="Ot Rate" style="width:120px;"></td>
+                                                <td><input onkeyup="CalculateAmount(this)" class="form-control ot_rate" type="text" name="ot_rate[]" value="{{ $d->ot_rate }}" placeholder="Ot Rate" style="width:120px;"></td>
                                                 <td>
-                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="text" name="duty_qty[]" value="{{ old('duty_qty',$d->duty_qty) }}" placeholder="Duty Qty" style="width:60px;">
-                                                </td>
-                                                <td>
-                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="{{ old('ot_qty',$d->ot_qty) }}" placeholder="OT Qty" style="width:60px;">
-                                                </td>
-
-                                                <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="{{ old('absent',$d->absent) }}" placeholder="Absent">
+                                                    <input class="form-control duty_qty" onkeyup="CalculateAmount(this)" onclick="checkOthersCustomerDuty(this)" type="text" name="duty_qty[]" value="{{$d->duty_qty }}" placeholder="Duty Qty" style="width:60px;">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="{{ old('vacant',$d->vacant) }}" placeholder="Vacant">
-                                                </td>
-                                                <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="{{ old('holiday_festival',$d->holiday_festival) }}" placeholder="Holiday/ festival">
-                                                </td>
-                                                <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="{{ old('leave_cl',$d->leave_cl) }}" placeholder="Leave CL">
-                                                </td>
-                                                <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="{{ old('leave_sl',$d->leave_sl) }}" placeholder="Leave SL">
-                                                </td>
-                                                <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="{{ old('leave_el',$d->leave_el) }}" placeholder="Leave EL">
+                                                    <input class="form-control ot_qty" onkeyup="CalculateAmount(this)" type="text" name="ot_qty[]" value="{{$d->ot_qty }}" placeholder="OT Qty" style="width:60px;">
                                                 </td>
 
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="{{ $d->absent }}" placeholder="Absent">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="{{ $d->vacant }}" placeholder="Vacant">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="{{ $d->holiday_festival }}" placeholder="Holiday/ festival">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="{{ $d->leave_cl }}" placeholder="Leave CL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="{{ $d->leave_sl }}" placeholder="Leave SL">
+                                                </td>
+                                                <td>
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="{{ $d->leave_el }}" placeholder="Leave EL">
+                                                </td>
+
 
                                                 <td>
-                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="{{ old('duty_amount',$d->duty_amount) }}" placeholder="Duty Amount" style="width:120px;">
+                                                    <input readonly class="form-control duty_amount DutyAmountF" type="text" name="duty_amount[]" value="{{ $d->duty_amount }}" placeholder="Duty Amount" style="width:120px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="{{ old('ot_amount',$d->ot_amount) }}" placeholder="Ot Amount" style="width:120px;">
+                                                    <input readonly class="form-control ot_amount OtAmountFc" type="text" name="ot_amount[]" value="{{ $d->ot_amount }}" placeholder="Ot Amount" style="width:120px;">
                                                 </td>
                                                 <td>
-                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="{{ old('total_amount',$d->total_amount) }}" placeholder="Total Amount" style="width:120px;">
+                                                    <input readonly class="form-control total_amount TotalAmu" type="text" name="total_amount[]" value="{{ $d->total_amount }}" placeholder="Total Amount" style="width:120px;">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="{{ old('start_date',$d->start_date) }}" placeholder="Start Date">
+                                                    <input class="form-control startDateDetail" type="date" name="start_date_details[]" value="{{$d->start_date }}" placeholder="Start Date">
                                                 </td>
                                                 <td>
-                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="{{ old('end_date',$d->end_date) }}" placeholder="End Date">
+                                                    <input class="form-control endDateDetail" type="date" name="end_date_details[]" value="{{ $d->end_date }}" placeholder="End Date">
                                                 </td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
@@ -491,7 +492,7 @@
             <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="" placeholder="Employee Id" style="width:150px;">
             <div class="employee_data" id="employee_data" style="color:green;font-size:14px;"></div>
             {{--<input class="job_post_id" type="text" name="job_post_id[]" value="">--}}
-            <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
+            <input class="employee_id_primary" type="text" name="employee_id[]" value="">
         </td>
         <td>
             <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
