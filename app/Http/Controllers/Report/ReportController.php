@@ -173,9 +173,9 @@ class ReportController extends Controller
         } else {
             $data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
                 ->whereIn('salary_id', $salaryIds)->groupBy('employee_id');
-                
         }
-        if ($request->type != 0 && isset($emp) && is_array($emp) && !empty($emp)) {
+
+        if ($request->type != 0) {
             $data->whereIn('employee_id', $emp);
         }
         if ($request->customer_id) {
@@ -191,13 +191,13 @@ class ReportController extends Controller
             $data->where('designation_id', $post);
         }
         $data = $data->orderBy('salary_sheet_details.id', 'asc')->get();
-        
+
         if (!$data->isEmpty()) {
             if ($request->type == 0) {
                 return view('report.salary-office-staff', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [15, 16])) {
                 return view('report.salary-office-staff-prime', compact('getYear', 'getMonth', 'data', 'salaryType'));
-            } else if (in_array($request->type, [1, 3, 4, 17,18])) {
+            } else if (in_array($request->type, [1, 3, 4, 17])) {
                 return view('report.salary-details', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])) {
                 return view('report.salary-details-dbbl', compact('getYear', 'getMonth', 'data', 'salaryType'));

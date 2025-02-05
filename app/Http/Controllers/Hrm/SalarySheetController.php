@@ -967,13 +967,20 @@ class SalarySheetController extends Controller
         });
         $groupedData = [];
 
-        $salaryDetails = SalarySheetDetail::where('salary_id', $salary->id)->get();
+        $salaryDetails = SalarySheetDetail::select('salary_sheet_details.*','job_posts.serial')
+            ->join('job_posts', 'salary_sheet_details.designation_id', '=', 'job_posts.id')
+            ->where('salary_sheet_details.salary_id', $salary->id)
+            ->orderBy('job_posts.serial', 'ASC')
+            ->get();
+
 
         foreach ($salaryDetails as $detail) {
             if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
+
+        
 
         return view('hrm.salary_sheet.salarysheetThreeShow', compact('salary', 'groupedData'));
     }
@@ -1237,37 +1244,37 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
             ->where('year', $request->Year)
             ->where('month', $request->Month)
             ->groupBy('employee_id');*/
-        
+
         $aggregateSubquery = DB::table('salary_sheet_details')
-        ->select(
-            'employee_id',
-            // Exclude deduction_traningcost for requested year and month
-            DB::raw('SUM(CASE WHEN NOT (year = '.$request->Year.' AND month = '.$request->Month.') THEN deduction_traningcost ELSE 0 END) as total_deduction_traningcost_except_requested'),
-            
-            // Keep other fields only for the requested year and month
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_ins ELSE 0 END) as total_deduction_ins'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_p_f ELSE 0 END) as total_deduction_p_f'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN allownce ELSE 0 END) as total_allowance'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_fine ELSE 0 END) as total_deduction_fine'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_dress ELSE 0 END) as total_deduction_dress'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_banck_charge ELSE 0 END) as total_deduction_banck_charge'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_revenue_stamp ELSE 0 END) as total_deduction_revenue_stamp'),
-            DB::raw('SUM(CASE WHEN year = '.$request->Year.' AND month = '.$request->Month.' THEN deduction_loan ELSE 0 END) as total_deduction_loan'),
-    
-            // Charge status logic
-            DB::raw("IF(
+            ->select(
+                'employee_id',
+                // Exclude deduction_traningcost for requested year and month
+                DB::raw('SUM(CASE WHEN NOT (year = ' . $request->Year . ' AND month = ' . $request->Month . ') THEN deduction_traningcost ELSE 0 END) as total_deduction_traningcost_except_requested'),
+
+                // Keep other fields only for the requested year and month
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_ins ELSE 0 END) as total_deduction_ins'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_p_f ELSE 0 END) as total_deduction_p_f'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN allownce ELSE 0 END) as total_allowance'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_fine ELSE 0 END) as total_deduction_fine'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_dress ELSE 0 END) as total_deduction_dress'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_banck_charge ELSE 0 END) as total_deduction_banck_charge'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_revenue_stamp ELSE 0 END) as total_deduction_revenue_stamp'),
+                DB::raw('SUM(CASE WHEN year = ' . $request->Year . ' AND month = ' . $request->Month . ' THEN deduction_loan ELSE 0 END) as total_deduction_loan'),
+
+                // Charge status logic
+                DB::raw("IF(
                 SUM(deduction_ins IS NOT NULL OR deduction_p_f IS NOT NULL 
                     OR allownce IS NOT NULL OR deduction_fine IS NOT NULL
                     OR deduction_dress IS NOT NULL OR deduction_banck_charge IS NOT NULL
                     OR deduction_revenue_stamp IS NOT NULL OR deduction_traningcost IS NOT NULL
                     OR deduction_loan IS NOT NULL) > 0, 1, 0
             ) AS charge_status")
-        )
-        ->where('year', '>', 0)
-        ->where('month', '>', 0)
-        ->where('year', $request->Year)
-        ->where('month', $request->Month)
-        ->groupBy('employee_id');
+            )
+            ->where('year', '>', 0)
+            ->where('month', '>', 0)
+            ->where('year', $request->Year)
+            ->where('month', $request->Month)
+            ->groupBy('employee_id');
         //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')
             ->join('job_posts', 'customer_duty_details.job_post_id', '=', 'job_posts.id')
@@ -1762,9 +1769,9 @@ return response()->json($data, 200);
 
                 // Ensure the `details` relationship has the `branches` relationship
                 $query->whereHas('branches');
-                 // Include salary sheet details with null branch_id
-                 $query->orWhereNull('branch_id')
-                 ->orWhere('branch_id', 0); 
+                // Include salary sheet details with null branch_id
+                $query->orWhereNull('branch_id')
+                    ->orWhere('branch_id', 0);
             })
             ->with([
                 'details.employee', // Eager load employee details
