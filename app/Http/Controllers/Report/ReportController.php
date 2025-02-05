@@ -149,12 +149,15 @@ class ReportController extends Controller
     }
     public function salaryReportDetil(Request $request)
     {
+        //dd($request->all());
         if ($request->type == 0) {
             $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->where('status', 4)->pluck('id');
         } else {
             if ($request->type != 15) {
                 $emp = Employee::where('status', 1)->where('salary_prepared_type', $request->type)->pluck('id');
-            } else {
+            } elseif($request->type == 15){
+                $emp = Employee::where('status', 1)->where('salary_prepared_type', $request->type)->pluck('id');
+            }else {
                 // stop salary employee id
                 $emp = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
             }
@@ -197,7 +200,7 @@ class ReportController extends Controller
                 return view('report.salary-office-staff', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [15, 16])) {
                 return view('report.salary-office-staff-prime', compact('getYear', 'getMonth', 'data', 'salaryType'));
-            } else if (in_array($request->type, [1, 3, 4, 17])) {
+            } else if (in_array($request->type, [1, 3, 4, 17,18])) {
                 return view('report.salary-details', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])) {
                 return view('report.salary-details-dbbl', compact('getYear', 'getMonth', 'data', 'salaryType'));

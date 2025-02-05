@@ -51,8 +51,9 @@
                         }
                     </style>
                     @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY','','','Stop Salary');
-                    @endphp
+                        /*$name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY','','','Stop Salary');*/
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY','','','Stop Salary','City Bank & IFIC','Midas Safety Unit-1 & 3','Midas Safety Unit-2');
+                        @endphp
                     <table id="salaryTable" class="table tbl_border">
                         <thead>
                             <tr class="text-center tbl_border"><th colspan="11" class="tbl_border">Amount to be sent through BEFTN as salary of {{$name[$salaryType]}} For The Month of {{$getMonthName}}-{{$getYear}}, Elite Security Services Ltd Chittagong</th></tr>
