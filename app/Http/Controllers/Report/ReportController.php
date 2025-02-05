@@ -175,7 +175,6 @@ class ReportController extends Controller
                 ->whereIn('salary_id', $salaryIds)->groupBy('employee_id');
                 
         }
-        
         if ($request->type != 0 && isset($emp) && is_array($emp) && !empty($emp)) {
             $data->whereIn('employee_id', $emp);
         }
@@ -192,6 +191,7 @@ class ReportController extends Controller
             $data->where('designation_id', $post);
         }
         $data = $data->orderBy('salary_sheet_details.id', 'asc')->get();
+        
         if (!$data->isEmpty()) {
             if ($request->type == 0) {
                 return view('report.salary-office-staff', compact('getYear', 'getMonth', 'data', 'salaryType'));
