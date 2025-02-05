@@ -51,7 +51,7 @@
                         }
                     </style>
                     @php
-                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY','','','Stop Salary');
+                        $name = array('Office Staff','Out Station','In Station','Peon','Robi Tower','Ever Care','Linde BD','Mas Intimates','Mas Sumantra','Portlink Unit 1','Portlink Unit 2','RSB','Top Way','RSGT PCT','RSGT SCY','','','Stop Salary','Midas Safety Unit-1 & 3','Midas Safety Unit-2');
                     @endphp
                     <table id="salaryTable" class="table tbl_border">
                         <thead>
@@ -129,7 +129,7 @@
                         <div style="text-align:left;">
                             <p class="mb-5"><b>Prepared By</b></p>
                             <span><b>Mr. Sreekanta Dey</b></span><br>
-                            <span><b>Deputy Manager (Accounts Finance)</b></span><br>
+                            <span><b>Deputy Manager (Accounts & Finance)</b></span><br>
                             <span><b>Cell: 01844-040716</b></span>
                         </div>
                         <div>

@@ -586,8 +586,8 @@
         let levelSlTotal=$(e).closest('tr').find('.leave_sl').val()?parseFloat($(e).closest('tr').find('.leave_sl').val()):0;
         let levelElTotal=$(e).closest('tr').find('.leave_el').val()?parseFloat($(e).closest('tr').find('.leave_el').val()):0;
         let totalWorkingDay = parseFloat(presentTotal) + parseFloat(absenttTotal) + parseFloat(vacantTotal) + parseFloat(holyTotal) + parseFloat(levelClTotal) + parseFloat(levelSlTotal) + parseFloat(levelElTotal);
-        let absentDeduction = (dutyRate/30)*absenttTotal;
-        let vacantDeduction = (grw/30)*vacantTotal;
+        let absentDeduction = (dutyRate/totalWorkingDay)*absenttTotal;
+        let vacantDeduction = (grw/totalWorkingDay)*vacantTotal;
         $(e).closest('tr').find('.total_workingDay').val(parseFloat(totalWorkingDay));
         $(e).closest('tr').find('.deduction_absent').val(parseFloat(absentDeduction).toFixed(2));
         $(e).closest('tr').find('.deduction_vacant').val(parseFloat(vacantDeduction).toFixed(2));
