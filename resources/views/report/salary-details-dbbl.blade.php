@@ -77,7 +77,12 @@ $options = [
                                 <th class="tbl_border text-center">{{ $sl++}}</th>
                                 <th class="tbl_border text-center">{{$d->employee?->admission_id_no}}</th>
                                 <th class="tbl_border text-center">{{$d->position?->name}}</th>
-                                <th class="tbl_border">{{$d->employee?->en_applicants_name}}</th>
+                                <th class="tbl_border">{{$d->employee?->en_applicants_name}}
+                                    <!--show Account If Use Other Account-->
+                                    {{$d->employee?->en_applicants_name}}
+                                    <!-- Use Own Account -->
+                                    {{$d->employee?->bn_ac_name}}
+                                </th>
                                 <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
                                 <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
                                 <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
@@ -85,6 +90,7 @@ $options = [
                                     @isset($options[$salaryType])
                                     <p>{{ $options[$salaryType] }}</p>                                    
                                     @endisset
+                                    <p>{{$d->position?->remarks}}</p>
                                 </th>
                             </tr>
                             @php
