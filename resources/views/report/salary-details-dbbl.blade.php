@@ -79,12 +79,10 @@ $options = [
                                 <th class="tbl_border text-center">{{$d->position?->name}}</th>
                                 <th class="tbl_border">{{$d->employee?->en_applicants_name}}
                                     <!--show Account If Use Other Account-->
-                                    @if(!$d->employee?->bn_ac_name)
-                                    {{$d->employee?->en_applicants_name}}
-                                    @endif
-                                    <!-- Use Own Account -->
-                                    @if(!$d->employee?->en_applicants_name)
+                                    @if($d->employee?->bn_ac_name && $d->employee?->en_applicants_name)
                                     {{$d->employee?->bn_ac_name}}
+                                    @else
+                                    {{$d->employee?->en_applicants_name}}
                                     @endif
                                 </th>
                                 <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
