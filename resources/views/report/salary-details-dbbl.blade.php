@@ -92,9 +92,8 @@ $options = [
                                 <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
                                 <th class="tbl_border">{{--$d->branches?->brance_name--}}
                                     @isset($options[$salaryType])
-                                    <p>{{ $options[$salaryType] }}</p>                                    
+                                    <p>{{ $options[$salaryType] }} <br><small>{{$d->employee?->remarks}}</small></p>                                    
                                     @endisset
-                                    <p>{{$d->employee?->remarks}}</p>
                                 </th>
                             </tr>
                             @php
