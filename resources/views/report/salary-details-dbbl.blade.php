@@ -81,9 +81,11 @@ $options = [
                                     <!--show Account If Use Other Account-->
                                     @if(!$d->employee?->bn_ac_name)
                                     {{$d->employee?->en_applicants_name}}
+                                    @endif
                                     <!-- Use Own Account -->
                                     @if(!$d->employee?->en_applicants_name)
                                     {{$d->employee?->bn_ac_name}}
+                                    @endif
                                 </th>
                                 <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
                                 <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
