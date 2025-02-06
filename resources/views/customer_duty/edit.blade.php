@@ -91,14 +91,28 @@
                                             </tr>
                                         </thead>
                                         {{--$custduty->details--}}
+                                        @php
+                                        $total_duty_qty = 0;
+                                        $total_ot_qty = 0;
+                                        $total_duty_amount = 0;
+                                        $total_ot_amount = 0;
+                                        $total_amount = 0;
+                                        @endphp
                                         <tbody id="customerduty">
                                             @if ($custduty->details)
                                             @foreach ($custduty->details as $d)
+                                            @php
+                                            $total_duty_qty += $d->duty_qty;
+                                            $total_ot_qty += $d->ot_qty;
+                                            $total_duty_amount += $d->duty_amount;
+                                            $total_ot_amount += $d->ot_amount;
+                                            $total_amount += $d->total_amount;
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     <input class="form-control employee_id" type="text" onkeyup="getEmployees(this)" value="{{ $d->employee?->admission_id_no }}" placeholder="Employee Id" style="width:150px;">
                                                     <div class="employee_data" id="employee_data" style="color:green;font-size:14px;">{{ $d->employee?->bn_applicants_name }}</div>{{-- $d->employee?->position?->name --}}
-                                                    
+
                                                     <input class="job_post_id" type="hidden" name="job_post_id[]" value="{{$d->job_post_id}}">
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ $d->employee_id }}">
                                                     <input type="hidden" name="employee_salary_id[]" value="{{ $d->employee_salary_id }}">
@@ -184,11 +198,17 @@
                                         <tfoot>
                                             <tr>
                                                 <th colspan="5" class="text-center"> Total</th>
-                                                <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty" value="{{ old('total_duty',$custduty->total_duty) }}"></th>
-                                                <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot" value="{{ old('total_ot',$custduty->total_ot) }}"></th>
-                                                <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount" value="{{ old('total_duty_amount',$custduty->total_duty_amount) }}"></th>
-                                                <th><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount" value="{{ old('total_ot_amount',$custduty->total_ot_amount) }}"></th>
-                                                <th><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total" value="{{ old('finall_amount',$custduty->finall_amount) }}"></th>
+                                                {{--value="{{ old('total_duty',$custduty->total_duty) }}"--}}
+                                                <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Total Duty" value="{{$total_duty_qty}}"></th>
+                                                {{--value="{{ old('total_ot',$custduty->total_ot) }}"--}}
+                                                <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Total Ot" value="{{$total_ot_qty}}"></th>
+                                                <th colspan="6"></th>
+                                                {{--value="{{ old('total_duty_amount',$custduty->total_duty_amount) }}"--}}
+                                                <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount" value="{{$total_duty_amount}}"></th>
+                                                {{--value="{{ old('total_ot_amount',$custduty->total_ot_amount) }}"--}}
+                                                <th><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount" value="{{$total_ot_amount}}"></th>
+                                                {{--value="{{ old('finall_amount',$custduty->finall_amount) }}"--}}
+                                                <th><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total" value="{{$total_amount}}"></th>
                                                 <th></th>
                                             </tr>
                                         </tfoot>
@@ -212,8 +232,8 @@
     $(document).ready(function() {
         $('.branch_hide').hide();
         $('.atm_hide').hide();
-        });
-    })
+    });
+
     let old_customer_id = 0;
 
     function showBranch(value) {
@@ -316,7 +336,7 @@
             },
             success: function(data) {
                 $(e).closest('tr').find('.job_post_id').html(data);
-                
+
             },
             error: function() {
                 console.error("Error fetching job post details.");
