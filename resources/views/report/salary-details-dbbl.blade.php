@@ -153,25 +153,13 @@ $options = [
 
     function get_print() {
         $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
-        var year = {
-            {
-                $getYear
-            }
-        };
-        var month = {
-            {
-                $getMonth
-            }
-        };
-        var type = {
-            {
-                $salaryType
-            }
-        };
+        var year = {{ $getYear }};
+        var month = {{ $getMonth }};
+        var type = {{ $salaryType }};
 
-        $.get("{{route('report.salary_report_details')}}?year=" + year + "&month=" + month + "&type=" + type, function(data) {
+        $.get("{{route('report.salary_report_details')}}?year=" + year + "&month=" + month + "&type=" + type, function (data) {
             $("#my-content-div").html(data);
-        }).then(function() {
+        }).then(function () {
             exportReportToExcel('salaryTable', '{{$name[$salaryType]}}-{{$getMonthName}}-{{$getYear}}');
         });
     }
