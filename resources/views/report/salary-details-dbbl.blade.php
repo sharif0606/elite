@@ -77,7 +77,7 @@ $options = [
                                 <th class="tbl_border text-center">{{ $sl++}}</th>
                                 <th class="tbl_border text-center">{{$d->employee?->admission_id_no}}</th>
                                 <th class="tbl_border text-center">{{$d->position?->name}}</th>
-                                <th class="tbl_border">{{$d->employee?->en_applicants_name}}
+                                <th class="tbl_border">
                                     <!--show Account If Use Other Account-->
                                     @if($d->employee->bn_ac_name && $d->employee->en_applicants_name)
                                     {{$d->employee?->bn_ac_name}}
