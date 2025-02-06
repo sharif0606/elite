@@ -94,7 +94,7 @@ $options = [
                                     @isset($options[$salaryType])
                                     <p>{{ $options[$salaryType] }}</p>                                    
                                     @endisset
-                                    <p>{{$d->position?->remarks}}</p>
+                                    <p>{{$d->employee?->remarks}}</p>
                                 </th>
                             </tr>
                             @php
