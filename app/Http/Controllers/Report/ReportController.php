@@ -163,7 +163,7 @@ class ReportController extends Controller
             }
             $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->pluck('id');
         }
-        $salaryStopEmployees = Deduction::where('year', $request->year)->where('month', $request->month)->whereIn('status', [19,20])->pluck('employee_id');
+        $salaryStopEmployees = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
         //dd($salaryStopEmployees);
         $getYear = $request->year;
         $getMonth = $request->month;
@@ -175,7 +175,7 @@ class ReportController extends Controller
                 ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)->groupBy('employee_id');
         } else {
             $data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
-                ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)->groupBy('employee_id');
+                ->whereIn('salary_id', $salaryIds)->groupBy('employee_id');
         }
 
         if ($request->type != 0) {

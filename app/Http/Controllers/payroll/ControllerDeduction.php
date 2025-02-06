@@ -179,7 +179,7 @@ class ControllerDeduction extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         try {
             if ($request->deduction_type == '1') {
                 foreach ($request->employee_id as $key => $value) {
