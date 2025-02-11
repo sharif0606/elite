@@ -145,7 +145,6 @@ class EmployeeRateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($id);
         DB::beginTransaction();
         try {
             $data = EmployeeRate::findOrFail(encryptor('decrypt', $id));
