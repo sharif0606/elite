@@ -57,11 +57,11 @@
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
-                                    <input class="form-control startDate" onblur="DetailsShow()" type="date" name="start_date" value="" placeholder="Start Date">
+                                    <input class="form-control startDate" onblur="DetailsShow()" type="date" name="start_date" placeholder="Start Date" value="{{ request('start_date', old('start_date')) }}">
                                 </div>
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>End Date</b></label>
-                                    <input class="form-control endDate" onblur="DetailsShow()" type="date" name="end_date" value="" placeholder="End Date">
+                                    <input class="form-control endDate" onblur="DetailsShow()" type="date" name="end_date" placeholder="End Date" value="{{ request('end_date', old('end_date')) }}">
                                 </div>
                             </div>
                             <!-- table bordered -->

@@ -52,7 +52,9 @@ class InvoicePaymentController extends Controller
         }
         
         $payments=$payments->orderBy('id','DESC')->paginate(15);
+        
         $customer=Customer::all();
+        
         return view('invoice_payment.index',compact('payments','customer'));
     }
 

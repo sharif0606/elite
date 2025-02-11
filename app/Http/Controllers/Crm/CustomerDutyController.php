@@ -296,7 +296,7 @@ class CustomerDutyController extends Controller
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Add Duty', $request->all(), 'CustomerDuty,CustomerDutyDetail');
-                return redirect()->route('customerduty.create')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                return redirect()->route('customerduty.create', ['start_date' => $request->start_date, 'end_date' => $request->end_date])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
                 //return redirect()->route('customerduty.index')->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
