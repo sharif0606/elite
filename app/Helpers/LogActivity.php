@@ -12,7 +12,13 @@ class LogActivity
 
     public static function addToLog($subject,$log_data,$table_name)
     {
-        parse_str($log_data,$get_log);
+        // If log_data is passed as a string (query string), parse it into an array
+        if (is_string($log_data)) {
+            parse_str($log_data, $get_log);
+        } else {
+            // Otherwise, we assume it's already an array (direct from request)
+            $get_log = $log_data;
+        }
 		$remove = array("_token"=>'',"_method" => '', "uptoken" => '');
 		$get_log = array_diff_key($get_log, $remove);
 

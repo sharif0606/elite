@@ -109,7 +109,7 @@ class InvoicePaymentController extends Controller
             $data->remarks = $request->remarks;
             $data->save();
             \LogActivity::addToLog('InvoicePayment',$request->getContent(),'InvoicePayment');
-            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser(),'customer_id' => $data->customer_id])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser(),'customer_id' => $data->customer_id,'branch_id' => $data->branch_id])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
             //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -195,7 +195,7 @@ class InvoicePaymentController extends Controller
             $data->remarks = $request->remarks;
             $data->save();
             \LogActivity::addToLog('InvoicePayment update',$request->getContent(),'InvoicePayment');
-            return redirect()->route('invoice-payment.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            return redirect()->route('invoice-payment.index', ['role' =>currentUser(),'customer_id' => $data->customer_id,'branch_id' => $data->branch_id])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
             dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));

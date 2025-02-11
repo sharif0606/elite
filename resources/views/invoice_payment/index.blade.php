@@ -122,7 +122,7 @@
                         <td>{{ $e->bank_name }}</td>
                         <td>{{ $e->po_no }}</td>
                         <td>{{ $e->po_date }}</td>
-                        <td>{{ $e->deposit_bank }}</td>
+                        <td>@if($e->deposit_bank==1) DBBL @else PBL @endif</td>
                         <td>{{ $e->deposit_date }}</td>
                         <td>{{ $e->remarks }}</td>
                         <td>

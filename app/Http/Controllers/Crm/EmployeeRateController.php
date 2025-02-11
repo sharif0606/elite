@@ -145,6 +145,7 @@ class EmployeeRateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($id);
         DB::beginTransaction();
         try {
             $data = EmployeeRate::findOrFail(encryptor('decrypt', $id));
@@ -174,7 +175,7 @@ class EmployeeRateController extends Controller
             }
             DB::commit();
             if ($data->save()) {
-                \LogActivity::addToLog('Employee Rate Update', $request->getContent(), 'EmployeeRate,EmployeeRateDetails');
+                \LogActivity::addToLog('Employee Rate Update', $request->all(), 'EmployeeRate,EmployeeRateDetails');
                 return redirect()->route('employeeRate.index', ['role' => currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
