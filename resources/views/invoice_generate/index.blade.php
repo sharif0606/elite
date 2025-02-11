@@ -107,6 +107,7 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
+                        <th scope="col">{{__('Month')}}</th>
                         <th scope="col">{{__('Customer')}}</th>
                         <th scope="col">{{__('Start Date')}}</th>
                         <th scope="col">{{__('End Date')}}</th>
@@ -139,6 +140,7 @@
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
+                            <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                             <td>{{ $e->customer?->name }}
                                 @if($e->branch_id)
                                 ({{ $e->branch?->brance_name }})
