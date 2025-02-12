@@ -33,15 +33,31 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                            <option value="">Select Employee</option>
+                            @forelse ($employee as $em)
+                            <option value="{{ $em->id }}" @if(request()->get('employee_id') == $em->id) selected @endif>
+                                {{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}
+                            </option>
+                            @empty
+                            @endforelse
+                        </select>
+                        @if($errors->has('employee_id'))
+                        <span class="text-danger">{{ $errors->first('employee_id') }}</span>
+                        @endif
+                    </div>
+                </div>
                 <div class="col-lg-2 col-sm-6 ps-0 ">
                     <div class="form-group d-flex">
                         <button class="btn btn-sm btn-info float-end" type="submit">Search</button>
                         <a class="btn btn-sm btn-danger ms-2" href="{{route('employeeRate.index')}}" title="Clear">Clear</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
+                {{--<div class="col-lg-3 col-sm-6">
                     <!-- Empty div to push the link to the right side -->
-                </div>
+                </div>--}}
                 <div class="col-lg-2 col-sm-6 d-flex justify-content-end align-items-center">
                     <a class="text-danger" href="{{route('employeeRate.create', ['role' =>currentUser()])}}">
                         <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>

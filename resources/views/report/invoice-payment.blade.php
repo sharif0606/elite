@@ -117,10 +117,17 @@
                         @foreach($period as $dt)
                         <td>
                             @php
-                            $bill_amount = $cust->invoiceGenerates()
+                            /*$bill_amount = $cust->invoiceGenerates()
                             ->whereMonth('bill_date', $dt->month)
                             ->whereYear('bill_date', $dt->year)
-                            ->first();
+                            ->first();*/
+                            $bill_amount = $cust->invoiceGenerates()
+    ->whereMonth('start_date', $dt->month)
+    ->whereYear('start_date', $dt->year)
+    ->whereMonth('end_date', $dt->month)
+    ->whereYear('end_date', $dt->year)
+    ->first();
+
 
                             $paid_amount = 0;
                             if ($bill_amount) {

@@ -37,8 +37,15 @@ class EmployeeRateController extends Controller
         if ($request->branch_id) {
             $emRate->where('employee_rates.branch_id', $request->branch_id);
         }
+        if ($request->employee_id) {
+            $emRate->whereHas('details', function ($query) use ($request) {
+                $query->where('employee_id', $request->employee_id);
+            });
+        }
+
         $emRate = $emRate->paginate(10);
-        return view('employee_rate.index', compact('emRate', 'customer'));
+        $employee = Employee::all();
+        return view('employee_rate.index', compact('emRate', 'customer','employee'));
     }
 
     /**

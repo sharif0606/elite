@@ -71,7 +71,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Job Post</th>
+                                        <th width="50%">Job Post</th>
                                         <th>Qty</th>
                                         <th>Hour</th>
                                         <th>Rate</th>

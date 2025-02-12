@@ -30,17 +30,18 @@ class ReportController extends Controller
         $selected_ty = $request->input('tyear', \Carbon\Carbon::now()->format('Y')); // To Year
         $selected_tmonth = $request->input('tmonth', \Carbon\Carbon::now()->format('m')); // To Month
 
-        // Create a period from the selected "From" to "To" year and month
-        $period = \Carbon\CarbonPeriod::create(
-            "$selected_fy-$selected_fmonth-01",
-            "1 month",
-            "$selected_ty-$selected_tmonth-31"
-        );
+      
 
         // Construct the start and end date for the range based on the selected "From" and "To" month
         $startDate = Carbon::create($selected_fy, $selected_fmonth, 1)->startOfMonth()->format('Y-m-d');
         $endDate = Carbon::create($selected_ty, $selected_tmonth, 1)->endOfMonth()->format('Y-m-d');
 
+          // Create a period from the selected "From" to "To" year and month
+        $period = \Carbon\CarbonPeriod::create(
+            $startDate,
+            "1 month",
+            $endDate
+        );
         $zones = Zone::with(['customer' => function ($query) use ($startDate, $endDate) {
             $query->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
                 // Filter invoiceGenerates based on start and end date
