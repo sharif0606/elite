@@ -122,11 +122,11 @@
                             ->whereYear('bill_date', $dt->year)
                             ->first();*/
                             $bill_amount = $cust->invoiceGenerates()
-    ->whereMonth('start_date', $dt->month)
-    ->whereYear('start_date', $dt->year)
-    ->whereMonth('end_date', $dt->month)
-    ->whereYear('end_date', $dt->year)
-    ->first();
+                            ->whereMonth('start_date', $dt->month)
+                            ->whereYear('start_date', $dt->year)
+                            ->whereMonth('end_date', $dt->month)
+                            ->whereYear('end_date', $dt->year)
+                            ->first();
 
 
                             $paid_amount = 0;

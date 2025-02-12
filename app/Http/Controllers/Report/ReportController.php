@@ -30,26 +30,35 @@ class ReportController extends Controller
         $selected_ty = $request->input('tyear', \Carbon\Carbon::now()->format('Y')); // To Year
         $selected_tmonth = $request->input('tmonth', \Carbon\Carbon::now()->format('m')); // To Month
 
-      
+
 
         // Construct the start and end date for the range based on the selected "From" and "To" month
         $startDate = Carbon::create($selected_fy, $selected_fmonth, 1)->startOfMonth()->format('Y-m-d');
         $endDate = Carbon::create($selected_ty, $selected_tmonth, 1)->endOfMonth()->format('Y-m-d');
 
-          // Create a period from the selected "From" to "To" year and month
+        // Create a period from the selected "From" to "To" year and month
         $period = \Carbon\CarbonPeriod::create(
             $startDate,
             "1 month",
             $endDate
         );
-        $zones = Zone::with(['customer' => function ($query) use ($startDate, $endDate) {
-            $query->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
-                // Filter invoiceGenerates based on start and end date
-                $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
-                    ->whereBetween('end_date', [$startDate, $endDate])
-                    ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
-            });
-        }])->orderBy('zones.name', 'ASC')->paginate(10);
+        $zones = Zone::with([
+            'customer' => function ($query) use ($startDate, $endDate, $request) {
+                // Only apply the filter for 'received_by_city' if it is provided and not equal to 3
+                if ($request->has('received_by_city') && $request->received_by_city == 1 || $request->received_by_city == 2) {
+                    $query->where('received_by_city', $request->received_by_city);
+                }
+        
+                // Apply filter for invoiceGenerates based on start and end date
+                $query->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
+                    // Filter invoiceGenerates based on start and end date
+                    $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
+                                 ->whereBetween('end_date', [$startDate, $endDate])
+                                 ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
+                });
+            }
+        ])->orderBy('zones.name', 'ASC')->paginate(10);
+        
 
         return view('report.invoice-payment', compact('zones', 'period'));
     }
@@ -156,9 +165,9 @@ class ReportController extends Controller
         } else {
             if ($request->type != 15) {
                 $emp = Employee::where('status', 1)->where('salary_prepared_type', $request->type)->pluck('id');
-            } elseif($request->type == 15){
+            } elseif ($request->type == 15) {
                 $emp = Employee::where('status', 1)->where('salary_prepared_type', $request->type)->pluck('id');
-            }else {
+            } else {
                 // stop salary employee id
                 $emp = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
             }
@@ -201,7 +210,7 @@ class ReportController extends Controller
                 return view('report.salary-office-staff', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [15, 16])) {
                 return view('report.salary-office-staff-prime', compact('getYear', 'getMonth', 'data', 'salaryType'));
-            } else if (in_array($request->type, [1, 3, 4, 17,18])) {
+            } else if (in_array($request->type, [1, 3, 4, 17, 18])) {
                 return view('report.salary-details', compact('getYear', 'getMonth', 'data', 'salaryType'));
             } else if (in_array($request->type, [2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14])) {
                 return view('report.salary-details-dbbl', compact('getYear', 'getMonth', 'data', 'salaryType'));
