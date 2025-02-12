@@ -353,6 +353,7 @@
                                     }
 
                                 }else{
+                                    Fine = 0;
                                     Insurance = 0;
                                     Stmp = 0;
                                     traningCostPerMonth = 0;
@@ -395,6 +396,7 @@
                                 Loan = 0;
                                 postAllowance = 0;
                             }
+                            
                             let totalDeduction = parseFloat(Fine) + parseFloat(Stmp) + parseFloat(Dress) + parseFloat(Loan) + parseFloat(BankCharge) + parseFloat(traningCostPerMonth) + parseFloat(pf) + parseFloat(Insurance);
                             grossAmoun += postAllowance;
                             console.log(postAllowance);

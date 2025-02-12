@@ -42,25 +42,88 @@ class ReportController extends Controller
             "1 month",
             $endDate
         );
-        $zones = Zone::with([
+        /*$zones = Zone::with([
             'customer' => function ($query) use ($startDate, $endDate, $request) {
                 // Only apply the filter for 'received_by_city' if it is provided and not equal to 3
                 if ($request->has('received_by_city') && $request->received_by_city == 1 || $request->received_by_city == 2) {
                     $query->where('received_by_city', $request->received_by_city);
                 }
-        
+                // Eager load the branches for each customer and filter branches by zone_id if provided
+                $query->with(['branch' => function ($branchQuery) use ($request) {
+                    // Filter branches by zone_id if provided in the request
+                    if ($request->has('zone_id')) {
+                        $branchQuery->where('zone_id', $request->zone_id);
+                    }
+                }]);
                 // Apply filter for invoiceGenerates based on start and end date
                 $query->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
                     // Filter invoiceGenerates based on start and end date
                     $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
-                                 ->whereBetween('end_date', [$startDate, $endDate])
-                                 ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
+                        ->whereBetween('end_date', [$startDate, $endDate])
+                        ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
                 });
             }
-        ])->orderBy('zones.name', 'ASC')->paginate(10);
-        
+        ])->orderBy('zones.name', 'ASC')->paginate(10);*/
+        $zones = Customer::query()
+            ->leftJoin('customer_brances as cb', 'customers.id', '=', 'cb.customer_id')
+            ->leftJoin('zones as z', function ($join) {
+                $join->on('z.id', '=', DB::raw('COALESCE(customers.zone_id, cb.zone_id)'));
+            })
+            ->whereNotNull(DB::raw('COALESCE(customers.zone_id, cb.zone_id)'))
+            ->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
+                $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
+                    ->whereBetween('end_date', [$startDate, $endDate])
+                    ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
+            })
+            ->select([
+                DB::raw('COALESCE(customers.zone_id, cb.zone_id) as zone_id'),
+                'z.name',
+                'z.name_bn',
+                'customers.id as customer_id',
+                'customers.received_by_city',
+                'customers.name as customer_name',
+                'cb.id as customer_branch_id',
+                'cb.brance_name',
+            ])
+            ->orderBy('zone_id')
+            ->get()
+            ->groupBy('zone_id'); // Group by zone_id
 
-        return view('report.invoice-payment', compact('zones', 'period'));
+        // Format the data to show each zone with customers under it
+        $formattedZones = $zones->map(function ($zoneGroup) {
+            $zone = $zoneGroup->first(); // Get the first customer for this zone (to get the zone data)
+            return [
+                'zone_name' => $zone->name, // Zone name
+                'zone_name_bn' => $zone->name_bn, // Zone name in Bengali
+                'customers' => $zoneGroup->map(function ($customer) {
+                    return [
+                        'customer_id' => $customer->customer_id,
+                        'customer_name' => $customer->customer_name,
+                        'received_by_city' => $customer->received_by_city,
+                        'customer_branch_id' => $customer->customer_branch_id,
+                        'brance_name' => $customer->brance_name,
+                    ];
+                })
+            ];
+        });
+
+        // Optional: You can paginate or limit the results as needed
+        $paginatedZones = new \Illuminate\Pagination\LengthAwarePaginator(
+            $formattedZones->forPage(request()->get('page', 1), 10), // Handle pagination
+            $formattedZones->count(),
+            10,
+            request()->get('page', 1)
+        );
+
+
+
+
+
+
+
+
+
+        return view('report.invoice-payment', compact('zones', 'period','paginatedZones'));
     }
 
 
