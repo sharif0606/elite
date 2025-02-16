@@ -122,7 +122,7 @@
                                     <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control" value="{{ $ivp->received_amount }}">
                                 </div>
                                 <div class="col-sm-3">
-                                    <label for="">VAT</label>
+                                    <label for="">VAT <strong>%</strong></label>
                                     <input type="text" onkeyup="vatcalc(this.value,'vat_amount')" id="vat" name="vat" value="{{ $ivp->vat }}" class="form-control">
                                 </div>
                                 <div class="col-sm-3">
@@ -130,7 +130,7 @@
                                     <input type="text" onkeyup="vatcalc(this.value,'vat')" id="vat_amount" name="vat_amount" value="{{ $ivp->vat_amount }}" class="form-control">
                                 </div>
                                 <div class="col-sm-3">
-                                    <label for="">AIT</label>
+                                    <label for="">AIT <strong>%</strong></label>
                                     <input type="text" onkeyup="aitcalc(this.value,'ait_amount')" id="ait"  name="ait" value="{{ $ivp->ait }}" class="form-control">
                                 </div>
                                 <div class="col-sm-3">

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models\Crm;
-
+use App\Models\Customer;
 use App\Models\Settings\Zone;
 use App\Models\Crm\Atm;
 use App\Models\Hrm\SalarySheetDetail;
@@ -23,5 +23,13 @@ class CustomerBrance extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class, 'customer_id', 'id');
+    }
+    public function invPayment()
+    {
+        return $this->hasMany(InvoicePayment::class, 'id', 'id');
+    }
+    public function invoiceGenerates()
+    {
+        return $this->hasMany(InvoiceGenerate::class, 'id', 'id');
     }
 }
