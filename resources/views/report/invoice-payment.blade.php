@@ -124,7 +124,7 @@
                         @if($branchTotalDue > 1)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
-                                <td>Branch:{{ $customer->name }}</td>
+                                <td>{{ $customer->name }}</td>
                                 @foreach($period as $dt)
                                     @php
                                     $invoices = DB::select(DB::raw("
