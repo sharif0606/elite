@@ -114,14 +114,14 @@
                             }
                             
                             // Add to total due if greater than threshold (5)
-                            if ($rounded_due> 1) {
+                            if ($rounded_due> 5) {
                                 $branchTotalDue += $rounded_due;
                             }
                             @endphp
                         @endforeach
 
                         <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
-                        @if($branchTotalDue > 3)
+                        @if($branchTotalDue > 5)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $customer->name }}</td>
@@ -163,9 +163,10 @@
                                         } elseif ($invoices[0]->total_due < 0.5) {
                                             $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
                                         }
+                                        echo $rounded_due> 5 ? $rounded_due : '-';
                                         @endphp
                                       
-                                        {{$rounded_due}} 
+                                        
                                         
                                     </td>
                                 @endforeach
@@ -226,14 +227,14 @@
                             }
                             
                             // Add to total due if greater than threshold (5)
-                            if ($rounded_due> 1) {
+                            if ($rounded_due> 5) {
                                 $branchTotalDue += $rounded_due;
                             }
                             @endphp
                         @endforeach
 
                         <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
-                        @if($branchTotalDue > 3)
+                        @if($branchTotalDue > 5)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
                                 <td>Branch:{{ $branch->brance_name }}<br>
@@ -279,9 +280,10 @@
                                         } elseif ($invoices[0]->total_due < 0.5) {
                                             $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
                                         }
+                                        echo $rounded_due> 5 ? $rounded_due : '-';
                                         @endphp
                                       
-                                        {{$rounded_due}} 
+                                        
                                         
                                     </td>
                                 @endforeach
