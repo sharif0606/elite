@@ -151,6 +151,7 @@ class CustomerBranceController extends Controller
             $data->attention_details = $request->attention_details;
             $data->received_by_city = $request->received_by_city;
             $data->zone_id = $request->zone_id;
+            $data->received_by_city = $request->received_by_city;
             // $data->atm = $request->atm;
             $data->status = 1;
             if ($data->save()){

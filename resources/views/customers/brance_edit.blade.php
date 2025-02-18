@@ -109,6 +109,17 @@
                         {{--  <input class="form-control zone" type="text" name="zone" value="{{old('zone',$cdetails->zone)}}" placeholder="Zone">  --}}
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for=""><b>Received By</b></label>
+                            <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg"> -->
+                            <select class="form-control" name="received_by_city" required>
+                                <option value="">Select</option>
+                                <option value="1" @if($cdetails->received_by_city == 1) selected @endif>Ctg</option>
+                                <option value="2" @if($cdetails->received_by_city == 2) selected @endif>Head Office</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for=""><b>ATM</b></label>
                         <div  id="atmadd">
                         @if ($cdetails->atms)
