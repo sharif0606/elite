@@ -106,12 +106,12 @@
                         <td>{{ $e->received_amount }}</td>
                         <td>
                             @if ($e->vat > 0)
-                                {{(int) $e->vat }}%
+                                {{(float) $e->vat }}%
                             @endif
                         </td>
                         <td>
                             @if ($e->ait > 0)
-                                {{(int) $e->ait }}%
+                                {{(float) $e->ait }}%
                             @endif
                         </td>
                         <td>

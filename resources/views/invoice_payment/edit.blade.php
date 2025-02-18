@@ -165,7 +165,11 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label for="">Deposit Bank</label>
-                                    <input type="text" name="deposit_bank" onchange="paymethod()" value="{{ $ivp->deposit_bank }}" class="form-control deposit_bank error-msg-deposit">
+                                    {{--<input type="text" name="deposit_bank" onchange="paymethod()" value="{{ $ivp->deposit_bank }}" class="form-control deposit_bank error-msg-deposit">--}}
+                                    <select class="form-control" name="deposit_bank">
+                                        <option value="1" @if($ivp->deposit_bank == 1) selected @endif>DBBL</option>
+                                        <option value="2" @if($ivp->deposit_bank == 2) selected @endif>PBL</option>
+                                    </select>
                                     <span class="error-message-deposit" style="color: red; display: none;"></span>
                                 </div>
                                 <div class="col-sm-3">

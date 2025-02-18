@@ -55,7 +55,7 @@
         </form>
         <div class="table-responsive">
             <table class="table table-bordered mb-0">
-            @foreach($zones as $zone)
+                @foreach($zones as $zone)
                 <tr class="text-center">
                     <th colspan="{{ 3 + count($period) }}">{{ $zone->name }}</th>
                 </tr>
@@ -68,168 +68,64 @@
                     <th>Amount</th>
                     <th>Remarks</th>
                 </tr>
-                @php $grandTotal = 0; @endphp
                 @if($zone->customers->isNotEmpty())
-                    @foreach($zone->customers as $i => $customer)
-                        @php
-                        $totalDue = 0;
-                        @endphp
-                        @foreach($period as $dt)
-                            @php
-                            $bill_amount = $customer->invoiceGenerates()
-                            ->whereMonth('bill_date', $dt->month)
-                            ->whereYear('bill_date', $dt->year)
-                            ->first();
+    @foreach($zone->customers as $i => $customer)
+    @endforeach
+@endif
 
-                            $paid_amount = 0;
-                            if ($bill_amount) {
-                            $paid_amount = $bill_amount->payment()
-                            ->selectRaw('SUM(IFNULL(received_amount, 0) + IFNULL(ait_amount, 0) + IFNULL(vat_amount, 0) + IFNULL(less_paid_honor, 0) + IFNULL(fine_deduction, 0)) as total_received')
-                            ->value('total_received');
-                            }
-
-                            $due = $bill_amount?->grand_total - $paid_amount;
-                            $rounded_due = round($due, 2);
-
-                            // Apply ceil or floor based on value
-                            if ($rounded_due > 0.5) {
-                            $rounded_due = ceil($rounded_due); // Apply ceil if greater than 0.5
-                            } 
-                            elseif ($rounded_due < 0.5) {
-                                $rounded_due=floor($rounded_due); // Apply floor if less than 0.5
-                            }
-                            // Add to total due if greater than threshold (5)
-                            if ($rounded_due> 5) {
-                            $totalDue += $rounded_due;
-                            }
-                            @endphp
-                        @endforeach
-
-                            @if($totalDue > 5) <!-- Only show customer row if total due is greater than 5 -->
-                            <tr class="text-center">
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $customer->name }}</td>
-                                @foreach($period as $dt)
-                                <td>
-                                    @php
-                                    /*$bill_amount = $customer->invoiceGenerates()
-                                    ->whereMonth('bill_date', $dt->month)
-                                    ->whereYear('bill_date', $dt->year)
-                                    ->first();*/
-                                    $bill_amount = $customer->invoiceGenerates()
-                                    ->whereMonth('start_date', $dt->month)
-                                    ->whereYear('start_date', $dt->year)
-                                    ->whereMonth('end_date', $dt->month)
-                                    ->whereYear('end_date', $dt->year)
-                                    ->first();
-
-
-                                    $paid_amount = 0;
-                                    if ($bill_amount) {
-                                    $paid_amount = $bill_amount->payment()
-                                    ->selectRaw('SUM(IFNULL(received_amount, 0) + IFNULL(ait_amount, 0) + IFNULL(vat_amount, 0) + IFNULL(less_paid_honor, 0) + IFNULL(fine_deduction, 0)) as total_received')
-                                    ->value('total_received');
-                                    }
-
-                                    $due = $bill_amount?->grand_total - $paid_amount;
-                                    $rounded_due = round($due, 2);
-
-                                    if ($rounded_due > 0.5) {
-                                        $rounded_due = ceil($rounded_due);
-                                    } 
-                                    elseif ($rounded_due < 0.5) {
-                                        $rounded_due=floor($rounded_due);
-                                    }
-
-                                    echo $rounded_due> 5 ? $rounded_due : '-';
-                                    @endphp
-                                </td>
-                                @endforeach
-                            </tr>
-                            @endif
-                    @endforeach
-                @else
-                @endif
-                @if($zone->branch->isNotEmpty())
-                    @foreach($zone->branch as $branch)
-                    @foreach($period as $dt)
-                            @php
-                            $bill_amount = DB::table('invoice_generates')
-                                    ->where('branch_id', $branch->id)
-                                    ->whereMonth('bill_date', $dt->month)
-                                    ->whereYear('bill_date', $dt->year)
-                                    ->first();
-                                    //dd($bill_amount);
-
-                                $paid_amount = 0;
-                                    if ($bill_amount) {
-                                        $paid_amount = DB::table('invoice_payments')
-                                        ->selectRaw('SUM(IFNULL(received_amount, 0) + IFNULL(ait_amount, 0) + IFNULL(vat_amount, 0) + IFNULL(less_paid_honor, 0) + IFNULL(fine_deduction, 0)) as total_received')
-                                        ->where('branch_id', $branch->id)  // Filter by branch_id
-                                        ->value('total_received');
-                                    }
-
-                                $due = $bill_amount?->grand_total - $paid_amount;
-                                $rounded_due = round($due, 2);
-
-                                // Apply ceil or floor based on value
-                                if ($rounded_due > 0.5) {
-                                $rounded_due = ceil($rounded_due); // Apply ceil if greater than 0.5
-                                } 
-                                elseif ($rounded_due < 0.5) {
-                                    $rounded_due=floor($rounded_due); // Apply floor if less than 0.5
-                                }
-                                // Add to total due if greater than threshold (5)
-                                if ($rounded_due> 5) {
-                                $totalDue += $rounded_due;
-                                }
-                            @endphp
-                        @endforeach
-                        @if($totalDue > 5)
-                            <tr class="text-center">
-                                <td>{{ ++$i }}</td>
-                                <td>{{ $branch->brance_name }}</td>
-                                <td>
-                                    @foreach($period as $dt)
-                                    @php
-                                    $bill_amount = DB::table('invoice_generates')
-                                    ->where('branch_id', $branch->id)
-                                    ->whereMonth('bill_date', $dt->month)
-                                    ->whereYear('bill_date', $dt->year)
-                                    ->first();
-                                    //dd($bill_amount);
-
-                                $paid_amount = 0;
-                                    if ($bill_amount) {
-                                        $paid_amount = DB::table('invoice_payments')
-                                        ->selectRaw('SUM(IFNULL(received_amount, 0) + IFNULL(ait_amount, 0) + IFNULL(vat_amount, 0) + IFNULL(less_paid_honor, 0) + IFNULL(fine_deduction, 0)) as total_received')
-                                        ->where('branch_id', $branch->id)  // Filter by branch_id
-                                        ->value('total_received');
-                                    }
-
-                                $due = $bill_amount?->grand_total - $paid_amount;
-                                $rounded_due = round($due, 2);
-
-                                // Apply ceil or floor based on value
-                                if ($rounded_due > 0.5) {
-                                $rounded_due = ceil($rounded_due); // Apply ceil if greater than 0.5
-                                } 
-                                elseif ($rounded_due < 0.5) {
-                                    $rounded_due=floor($rounded_due); // Apply floor if less than 0.5
-                                }
-                                // Add to total due if greater than threshold (5)
-                                if ($rounded_due> 5) {
-                                $totalDue += $rounded_due;
-                                }
-                                @endphp
-                                    @endforeach
-                                </td>
-                            </tr>
-                        @endif    
-                    @endforeach
-                @else
-                @endif
-            @endforeach   
+@if($zone->branch->isNotEmpty())
+    @php $i = 0; @endphp <!-- Ensure $i is defined -->
+    @foreach($zone->branch as $branch)
+        <tr class="text-center">
+            <td>{{ ++$i }}</td>
+            <td>{{ $branch->brance_name }}-{{$branch->customer->name}}</td>
+            @foreach($period as $dt)
+                @php
+                $invoices = DB::select(DB::raw("
+                    SELECT 
+                        SUM(invoice_generates.grand_total) AS total_grand_total,
+                        SUM(IFNULL(invoice_payments.received_amount, 0) + 
+                            IFNULL(invoice_payments.ait_amount, 0) + 
+                            IFNULL(invoice_payments.vat_amount, 0) + 
+                            IFNULL(invoice_payments.less_paid_honor, 0) + 
+                            IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
+                        SUM(invoice_generates.grand_total - 
+                            (IFNULL(invoice_payments.received_amount, 0) + 
+                            IFNULL(invoice_payments.ait_amount, 0) + 
+                            IFNULL(invoice_payments.vat_amount, 0) + 
+                            IFNULL(invoice_payments.less_paid_honor, 0) + 
+                            IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
+                    FROM 
+                        invoice_generates
+                    LEFT JOIN 
+                        invoice_payments 
+                        ON invoice_generates.id = invoice_payments.invoice_id
+                    WHERE 
+                        invoice_generates.customer_id = :customer_id 
+                        AND invoice_generates.branch_id = :branch_id
+                        AND MONTH(invoice_generates.bill_date) = :month
+                        AND YEAR(invoice_generates.bill_date) = :year
+                "), [
+                    'customer_id' => $branch->customer_id,
+                    'branch_id' => $branch->id,
+                    'month' => $dt->month,
+                    'year' => $dt->year
+                ]);
+                @endphp
+                <td>
+                    @if(!empty($invoices) && isset($invoices[0]))
+                        Grand Total: {{ $invoices[0]->total_grand_total ?? 0 }}<br>
+                        Paid: {{ $invoices[0]->total_paid ?? 0 }}<br>
+                        Due: {{ $invoices[0]->total_due ?? 0 }}
+                    @else
+                        No Data
+                    @endif
+                </td>
+            @endforeach
+        </tr>
+    @endforeach
+@endif
+@endforeach
             </table>
             <div class="pt-2">
             </div>
