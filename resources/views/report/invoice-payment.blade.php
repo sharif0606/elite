@@ -121,7 +121,7 @@
                         @endforeach
 
                         <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
-                        @if($branchTotalDue > 1)
+                        @if($branchTotalDue > 3)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $customer->name }}</td>
@@ -233,7 +233,7 @@
                         @endforeach
 
                         <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
-                        @if($branchTotalDue > 1)
+                        @if($branchTotalDue > 3)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
                                 <td>Branch:{{ $branch->brance_name }}<br>
