@@ -99,7 +99,7 @@
                     @forelse($payments as $e)
                     @if($e->received_amount > 0)
                     <tr class="text-center">
-                        <td scope="row">{{ ++$loop->index }}{{$e->id}}</td>
+                        <td scope="row">{{ ++$loop->index }}-{{$e->id}}</td>
                         <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                         <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
                         <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
