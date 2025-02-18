@@ -106,8 +106,8 @@
                                 WHERE 
                                     invoice_generates.customer_id = :customer_id 
                                     AND invoice_generates.branch_id = :branch_id
-                                    AND MONTH(invoice_generates.bill_date) = :month
-                                    AND YEAR(invoice_generates.bill_date) = :year
+                                    AND MONTH(invoice_generates.end_date) = :month
+                                    AND YEAR(invoice_generates.end_date) = :year
                             "), [
                                 'customer_id' => $branch->customer_id,
                                 'branch_id' => $branch->id,
@@ -159,8 +159,8 @@
                                         WHERE 
                                             invoice_generates.customer_id = :customer_id 
                                             AND invoice_generates.branch_id = :branch_id
-                                            AND MONTH(invoice_generates.bill_date) = :month
-                                            AND YEAR(invoice_generates.bill_date) = :year
+                                            AND MONTH(invoice_generates.end_date) = :month
+                                            AND YEAR(invoice_generates.end_date) = :year
                                     "), [
                                         'customer_id' => $branch->customer_id,
                                         'branch_id' => $branch->id,
