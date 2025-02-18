@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <label for=""><b>Received By</b></label>
                             <!-- <input class="form-control received_by_city" type="text" name="received_by_city" value="{{old('received_by_city',$customer->received_by_city)}}" placeholder="Received By Ctg"> -->
-                            <select class="form-control" name="received_by_city" required>
+                            <select class="form-control" name="received_by_city">
                                 <option value="">Select</option>
                                 <option value="1" @if($customer->received_by_city == 1) selected @endif>Ctg</option>
                                 <option value="2" @if($customer->received_by_city == 2) selected @endif>Head Office</option>
