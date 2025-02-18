@@ -58,7 +58,7 @@
                 @php $grandTotal = 0; @endphp
                 @foreach($zones as $zone)
                 <tr class="text-center">
-                    <th colspan="{{ 3 + count($period) }}">{{ $zone->name }}</th>
+                    <th colspan="{{ 3 + count($period) }}">{{ $zone->name }}-{{ $zone->name_bn }}</th>
                 </tr>
                 <tr class="text-center">
                     <th>#</th>
@@ -71,6 +71,110 @@
                 </tr>
                 @if($zone->customers->isNotEmpty())
                     @foreach($zone->customers as $i => $customer)
+                    @php
+                        $branchTotalDue = 0; // Initialize the total due for the branch
+                        @endphp
+
+                        <!-- First, calculate the total due for the entire branch across all periods -->
+                        @foreach($period as $dt)
+                            @php
+                            $invoices = DB::select(DB::raw("
+                                SELECT 
+                                    SUM(invoice_generates.grand_total) AS total_grand_total,
+                                    SUM(IFNULL(invoice_payments.received_amount, 0) + 
+                                        IFNULL(invoice_payments.ait_amount, 0) + 
+                                        IFNULL(invoice_payments.vat_amount, 0) + 
+                                        IFNULL(invoice_payments.less_paid_honor, 0) + 
+                                        IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
+                                    SUM(invoice_generates.grand_total - 
+                                        (IFNULL(invoice_payments.received_amount, 0) + 
+                                        IFNULL(invoice_payments.ait_amount, 0) + 
+                                        IFNULL(invoice_payments.vat_amount, 0) + 
+                                        IFNULL(invoice_payments.less_paid_honor, 0) + 
+                                        IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
+                                FROM 
+                                    invoice_generates
+                                LEFT JOIN 
+                                    invoice_payments 
+                                    ON invoice_generates.id = invoice_payments.invoice_id
+                                WHERE 
+                                    invoice_generates.customer_id = :customer_id 
+                                    AND MONTH(invoice_generates.end_date) = :month
+                                    AND YEAR(invoice_generates.end_date) = :year
+                            "), [
+                                'customer_id' => $customer->id,
+                                'month' => $dt->month,
+                                'year' => $dt->year
+                            ]);
+                            
+                            if ($invoices[0]->total_due > 0.5) {
+                                $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
+                            } elseif ($invoices[0]->total_due < 0.5) {
+                                $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                            }
+                            
+                            // Add to total due if greater than threshold (5)
+                            if ($rounded_due> 1) {
+                                $branchTotalDue += $rounded_due;
+                            }
+                            @endphp
+                        @endforeach
+
+                        <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
+                        @if($branchTotalDue > 1)
+                            <tr class="text-center">
+                                <td>{{ ++$i }}</td>
+                                <td>Branch:{{ $customer->name }}</td>
+                                @foreach($period as $dt)
+                                    @php
+                                    $invoices = DB::select(DB::raw("
+                                        SELECT 
+                                            SUM(invoice_generates.grand_total) AS total_grand_total,
+                                            SUM(IFNULL(invoice_payments.received_amount, 0) + 
+                                                IFNULL(invoice_payments.ait_amount, 0) + 
+                                                IFNULL(invoice_payments.vat_amount, 0) + 
+                                                IFNULL(invoice_payments.less_paid_honor, 0) + 
+                                                IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
+                                            SUM(invoice_generates.grand_total - 
+                                                (IFNULL(invoice_payments.received_amount, 0) + 
+                                                IFNULL(invoice_payments.ait_amount, 0) + 
+                                                IFNULL(invoice_payments.vat_amount, 0) + 
+                                                IFNULL(invoice_payments.less_paid_honor, 0) + 
+                                                IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
+                                        FROM 
+                                            invoice_generates
+                                        LEFT JOIN 
+                                            invoice_payments 
+                                            ON invoice_generates.id = invoice_payments.invoice_id
+                                        WHERE 
+                                            invoice_generates.customer_id = :customer_id 
+                                            AND MONTH(invoice_generates.end_date) = :month
+                                            AND YEAR(invoice_generates.end_date) = :year
+                                    "), [
+                                        'customer_id' => $customer->id,
+                                        'month' => $dt->month,
+                                        'year' => $dt->year
+                                    ]);
+                                    @endphp
+                                    <td>{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
+                                        @php
+                                        if ($invoices[0]->total_due > 0.5) {
+                                            $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
+                                        } elseif ($invoices[0]->total_due < 0.5) {
+                                            $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                        }
+                                        @endphp
+                                      
+                                        {{$rounded_due}} 
+                                        
+                                    </td>
+                                @endforeach
+                                <td>{{$branchTotalDue}}</td>
+                                <td></td>
+                            </tr>
+                        @else
+                            @continue <!-- Skip rendering this branch row if total_due <= 1 -->
+                        @endif
                     @endforeach
                 @endif
 
@@ -132,8 +236,8 @@
                         @if($branchTotalDue > 1)
                             <tr class="text-center">
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $branch->brance_name }}<br>
-                                    <small>{{$branch->customer->name}}</small>
+                                <td>Branch:{{ $branch->brance_name }}<br>
+                                    <small>Company:{{$branch->customer->name}}</small>
                                 </td>
                                 @foreach($period as $dt)
                                     @php

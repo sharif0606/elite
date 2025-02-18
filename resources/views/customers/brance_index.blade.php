@@ -29,6 +29,7 @@
                                     <th scope="col">{{__('#SL')}}</th>
                                     <th scope="col">{{__('Branch Name')}}</th>
                                     <th scope="col">{{__('Zone')}}</th>
+                                    <th scope="col">{{__('Received By')}}</th>
                                     <th scope="col">{{__('VAT(%)')}}</th>
                                     <th scope="col">{{__('Contact Person Name')}}</th>
                                     <th scope="col">{{__('Contact Phone')}}</th>
@@ -42,6 +43,10 @@
                                     <td scope="row"><b>{{++$index}}</b></td>
                                     <td>{{$data->brance_name}}</td>
                                     <td>{{$data->zone?->name}}</td>
+                                    <td>
+                                    @if($data->received_by_city == 1) Ctg  @endif
+                                    @if($data->received_by_city == 2) Head Office @endif
+                                    </td>
                                     <td>{{$data->vat}}</td>
                                     <td>{{$data->contact_person}}</td>
                                     <td>{{$data->contact_number}}</td>
