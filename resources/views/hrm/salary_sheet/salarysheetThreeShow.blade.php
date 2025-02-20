@@ -256,7 +256,7 @@
                                         @endforeach
                                     </tbody>
                                     <tr>
-                                        <td class="tbl_border text-center" colspan="30"> Total</td>
+                                        <td class="tbl_border text-center" colspan="31"> Total</td>
                                         <td class="tbl_border text-center">{{money_format($totalPayable)}}</td>
                                         <td class="tbl_border text-center"></td>
                                         <td class="tbl_border text-center"></td>

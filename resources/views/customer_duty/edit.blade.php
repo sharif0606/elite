@@ -115,7 +115,22 @@
 
                                                     <input class="job_post_id" type="hidden" name="job_post_id[]" value="{{$d->job_post_id}}">
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="{{ $d->employee_id }}">
-                                                    <input type="hidden" name="employee_salary_id[]" value="{{ $d->employee_salary_id }}">
+                                                    @php
+                                                    $employeeRate = DB::table('employee_rates')
+                                                    ->join('employee_rate_details', 'employee_rates.id', '=', 'employee_rate_details.employee_rate_id')
+                                                    ->join('job_posts', 'job_posts.id', '=', 'employee_rate_details.job_post_id')
+                                                    ->where('employee_rates.customer_id', $custduty->customer_id)
+                                                    ->where('employee_rate_details.job_post_id', $d->job_post_id)
+                                                    ->select(
+                                                    'employee_rate_details.id',
+                                                    'job_posts.name',
+                                                    'employee_rate_details.job_post_id',
+                                                    'employee_rate_details.duty_rate',
+                                                    'employee_rate_details.ot_rate'
+                                                    )
+                                                    ->first(); // Fetch only ONE row
+                                                    @endphp
+                                                    <input type="hidden" name="employee_salary_id[]" value="{{ $employeeRate->id }}">{{-- $d->employee_salary_id --}}
                                                 </td>
                                                 <td>
                                                     <select class="form-select job_post_id" style="width:150px" onchange="getDutyOtRate(this)" disabled>

@@ -27,7 +27,7 @@
             </div>
             <div class="col-lg-2">
                 <label for="">Zone</label>
-                <select required class="form-control month selected_month" name="zone">
+                <select required class="form-control" name="zone">
                     <option value="">Select Zone</option>
                     @forelse ($zone as $z)
                     <option value="{{ $z->id }}" {{ $z->id == request('zone') ? 'selected' : '' }}>{{ $z->name }}</option>

@@ -395,6 +395,7 @@ class CustomerDutyController extends Controller
                                 $details->employee_salary_id = $employeeRate->id;
                             } else {
                                 // Exist Employee Need to Check with Employe Salary Id
+                                
                                 $employeeRate = EmployeeRateDetails::find($request->employee_salary_id[$key]);
                                 if ($employeeRate) {
                                     $details->job_post_id = $employeeRate->job_post_id;

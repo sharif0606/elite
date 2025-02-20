@@ -108,7 +108,7 @@
                 @foreach($payments as $e)
                 <tr class="text-center">
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{ \Carbon\Carbon::parse($e->deposit_date)->format('M-y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                     <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
                     <td>{{ $e->received_amount }}</td>
                     <td>{{ $e->vat > 0 ? (int) $e->vat . '%' : '' }}</td>
