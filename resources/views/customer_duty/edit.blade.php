@@ -130,7 +130,8 @@
                                                     )
                                                     ->first(); // Fetch only ONE row
                                                     @endphp
-                                                    <input type="hidden" name="employee_salary_id[]" value="{{ $employeeRate->id }}">{{-- $d->employee_salary_id --}}
+                                                    {{-- $employeeRate->id --}}
+                                                    <input type="hidden" name="employee_salary_id[]" value="{{$d->employee_salary_id}}">
                                                 </td>
                                                 <td>
                                                     <select class="form-select job_post_id" style="width:150px" onchange="getDutyOtRate(this)" disabled>
