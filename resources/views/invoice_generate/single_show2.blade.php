@@ -58,7 +58,7 @@
                 <td width="40%" style="text-align: left;">
                     {{--$invoice_id->details--}}
                     @if( $invoice_id->detail?->bonus_amount > 0)
-                    Festival Bonus <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> for the Year of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('Y')}}</b>
+                    Festival Bonus <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> for the Year of <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('Y')}}</b>
                     @else
                     Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b>
                     @endif  
