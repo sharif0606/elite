@@ -144,6 +144,8 @@ class CustomerController extends Controller
             $data->zone_id = $request->zone_id;
             $data->received_by_city = $request->received_by_city;
             $data->customer_type = $request->customer_type;
+            $data->bonus_type = $request->bonus_type;
+            $data->bonus_amount = $request->bonus_amount;
             $data->insurance = $request->insurance;
             $data->pf = $request->pf;
             $data->stamp = $request->stamp;

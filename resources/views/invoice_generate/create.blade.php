@@ -106,6 +106,23 @@
                                     <label for=""><b>Subject</b></label>
                                     <textarea class="form-control" name="inv_subject" rows="3"></textarea>
                                 </div>
+                                <div class="col-lg-2 mt-2">
+                                    <label for=""><b>With Bonus</b></label>
+                                    <select class="form-select bonus" id="bonus">
+                                        <option value="1">Yes</option>
+                                        <option value="2" selected>No</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <label for=""><b>Bonus For</b></label>
+                                    <select class="form-select bonus_for" id="bonus_for">
+                                        <option value="">Select</option>
+                                        <option value="1">EID Ul FITR</option>
+                                        <option value="2">EID Ul AZHA</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-8 mt-2">
+                                </div>
                                 <div class="col-lg-3 mt-4 p-0">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
                                 </div>
@@ -118,6 +135,7 @@
                                             <th>Service</th>
                                             <th>Rate</th>
                                             <th>Total Person</th>
+                                            <th>Bonus</th>
                                             <th>Working Days</th>
                                             <th>Divide By</th>
                                             <th>Duty</th>
@@ -134,7 +152,7 @@
                                                 {{--  <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>  --}}
                                                 <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
-                                            <th colspan="8" style="text-align: end;">Sub Tatal</th>
+                                            <th colspan="9" style="text-align: end;">Sub Tatal</th>
                                             <td>
                                                 <input readonly type="text" class="form-control sub_total_amount text-center" name="sub_total_amount" value="">
                                                 {{--  <input class="lessP" type="hidden" name="less_total[]" value="">  --}}
@@ -146,12 +164,12 @@
                                                 <span onClick='decressRowData();' class="add-row text-danger"><i class="bi bi-dash-circle-fill"></i></span>
                                                 <span onClick='incressRowData();' class="text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                             </td>
-                                            <td colspan="6"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
+                                            <td colspan="7"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
                                             <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="amount" name="less_amount[]"></td>  --}}
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Total Tk</th>
+                                            <th colspan="9">Total Tk</th>
                                             <td>
                                                 <input readonly type="text" class="form-control text-center total_tk" name="total_tk" value="">
                                                 <input class="temporaty_total" type="hidden" name="temporaty_total[]" value="">
@@ -160,12 +178,12 @@
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Vat (<span class="vat_percent"></span> %) || Vat on Subtotal <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="0" name="vat_switch"></th>
+                                            <th colspan="9">Vat (<span class="vat_percent"></span> %) || Vat on Subtotal <input type="checkbox" onchange="noVat(this)" class="form-check-input vat_switch" value="0" name="vat_switch"></th>
                                             <td><input readonly type="text" class="form-control text-center vat_taka" name="vat_taka" value=""></td>
                                         </tr>
                                         <tr style="text-align: center;">
                                             <td></td>
-                                            <th colspan="8">Grand Total</th>
+                                            <th colspan="9">Grand Total</th>
                                             <td><input readonly type="text" class="form-control text-center grand_total" name="grand_total" value=""></td>
                                         </tr>
                                     </tfoot>
@@ -240,6 +258,11 @@
         var atm_id=$('.atm_id').val();
         var startDate=$('.start_date').val();
         var endDate=$('.end_date').val();
+        var bonus = $('.bonus').val();
+        var bonus_for = $('.bonus_for').val();
+        
+        var total_bonus = 0;
+ 
 
         let workingdayinmonth= new Date(startDate);
         let smonth=workingdayinmonth.getMonth()+1;
@@ -290,6 +313,15 @@
                             ed_date='';
                         }
 
+                        /*=========Bonus Calculation========= */
+                        if(bonus == 1){
+                            if(value.bonus_type == 1)
+                            total_bonus = parseFloat(value.qty)*parseFloat(value.bonus_amount)
+                            else
+                            total_bonus = (value.qty*(value.bonus_amount/100));
+                        }else
+
+
                         // if(value.hours=="1"){
                         //     totalHoures=(8*(value.qty)*(workingDays+1));
                         //     ratePerHoures=parseFloat(value.rate/(8*workingdayinmonth));
@@ -329,6 +361,12 @@
                                     <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
                                 </td>
                                 <td>
+                                    <input class="form-control input_css bonus_amount text-center" readonly type="text" value="${total_bonus > 0 ? (value.bonus_amount ?? '') : ''}">
+                                    <input class="form-control input_css bonus_amount text-center" onkeyup="reCalcultateInvoice(this)" type="hidden" name="bonus_amount[]" value="${total_bonus}">
+                                    <input class="bonus_type" type="hidden" name="bonus_type[]" value="${total_bonus>0?bonus:null}">
+                                    <input class="bonus_for" type="hidden" name="bonus_for[]" value="${total_bonus>0?bonus_for:null}">
+                                </td>
+                                <td>
                                     <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
                                     <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
                                     <input class="" type="hidden" name="st_date[]" value="${st_date}">
@@ -348,7 +386,7 @@
                                     <input onkeyup="reCalcultateInvoice(this)" class="form-control input_css rate_per_houres_c" type="text" name="rate_per_houres[]" value="">
                                 </td>
                                 <td>
-                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${totalAmount}">
+                                    <input class="form-control input_css total_amounts text-center" readonly type="text" name="total_amounts[]" value="${total_bonus?total_bonus:totalAmount}">
                                 </td>
                             </tr>`
                         );

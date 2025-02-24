@@ -33,6 +33,10 @@ class InvoiceGenerate extends Model
     {
         return $this->hasMany(InvoiceGenerateDetails::class, 'invoice_id', 'id');
     }
+    public function detail()
+    {
+        return $this->hasOne(InvoiceGenerateDetails::class, 'invoice_id', 'id');
+    }
     public function less()
     {
         return $this->hasMany(InvoiceGenerateLess::class, 'invoice_id', 'id');

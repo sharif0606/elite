@@ -114,6 +114,9 @@ class InvoiceGenerateController extends Controller
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->rate=$request->rate[$key];
                             $details->employee_qty=$request->employee_qty[$key];
+                            $details->bonus_amount=$request->bonus_amount[$key];
+                            $details->bonus_type=$request->bonus_type[$key];
+                            $details->bonus_for=$request->bonus_for[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
                             $details->divide_by=$request->divide_by[$key];
@@ -378,8 +381,11 @@ class InvoiceGenerateController extends Controller
     // }
     public function getInvoiceData(Request $request)
     {
-        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')->leftjoin('atms','employee_assign_details.atm_id','=','atms.id')
-            ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*','atms.*');
+        $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')
+                                        ->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')
+                                        ->leftjoin('atms','employee_assign_details.atm_id','=','atms.id')
+                                        ->leftjoin('customers','employee_assigns.customer_id','=','customers.id')
+                                        ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*','atms.*','customers.bonus_type','customers.bonus_amount');
 
         if ($request->atm_id=='a') {
             $query = $query->where('employee_assign_details.atm_id',"!=","0")->where('employee_assigns.branch_id', $request->branch_id);
@@ -427,7 +433,6 @@ class InvoiceGenerateController extends Controller
         }
 
         $data = $query->get();
-
         return response()->json($data, 200);
     }
     public function lessPaidInvoiceGenerate($customer, $startDate, $id, $branchId = null)

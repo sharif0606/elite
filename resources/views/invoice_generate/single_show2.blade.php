@@ -55,7 +55,14 @@
             @if ($invoice_id->inv_subject != '')
                 <td width="40%" style="text-align: left;"></td>
             @else
-                <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+                <td width="40%" style="text-align: left;">
+                    {{--$invoice_id->details--}}
+                    @if( $invoice_id->detail?->bonus_amount > 0)
+                    Festival Bonus <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> for the Year of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('Y')}}</b>
+                    @else
+                    Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b>
+                    @endif  
+                </td>
             @endif
             <td width="30%"></td>
             <td width="30%" style="text-align: right;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
@@ -153,6 +160,9 @@
                     <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
                     <th>Period</th>
                     <th>Person</th>
+                    @if( $invoice_id->detail?->bonus_amount > 0)
+                    <th>Bonus Rate</th>
+                    @endif
                     <th>Total Amount (BDT)</th>
                 </tr>
             </thead>
@@ -198,6 +208,9 @@
                                     @else
                                     @endif
                                 </td>
+                                @if( $invoice_id->detail?->bonus_amount > 0)
+                                <td>{{$invoice_id->detail?->bonus_amount/$de->employee_qty}}</td>
+                                @endif
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                             </tr>
                         @endif
@@ -209,7 +222,7 @@
                 @if($invoice_id->sub_total_amount)
                     <tr style="text-align: center;">
                         <td></td>
-                        <th colspan="4">Sub Total</th>
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Sub Total</th>
                         <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
                     </tr>
                 @endif
@@ -218,7 +231,7 @@
                     @foreach ($invoice_id->less as $le)
                         <tr style="text-align: center;">
                             <td></td>
-                            <td colspan="4">{{ $le->description }}</td>
+                            <td colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">{{ $le->description }}</td>
                             <td style="text-align: end;"><b>{{ money_format($le->amount) }}</b></td>
                         </tr>
                         @php $totalAddLess += $le->amount; @endphp
@@ -227,19 +240,19 @@
                 @if ($totalAddLess != 0)
                     <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="4">Total</th>
+                    <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
                     <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
                 </tr> 
                 @endif
                 @if($invoice_id->vat>0)
                     <tr style="text-align: center;">
                         <td></td>
-                        <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
+                        <td colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Vat@ {{ $invoice_id->vat }} %</td>
                         <td style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</td>
                     </tr>
                 <tr style="text-align: center;">
                     <td></td>
-                    <th colspan="4">Grand Total</th>
+                    <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Grand Total</th>
                     <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
                 </tr>
                 @endif
