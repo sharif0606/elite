@@ -209,10 +209,11 @@
                                     @endif
                                 </td>
                                 
-                        
+                                @if($de->bonus_amount > 0)
                                 <td>
                                     {{$de->bonus_type == 2 ? $de->bonus_rate.'%':$de->bonus_rate}}
                                 </td>
+                                @endif
                               
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                             </tr>
