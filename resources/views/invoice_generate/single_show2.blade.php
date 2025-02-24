@@ -188,7 +188,13 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}</td>
+                                <td>
+                                @if($de->bonus_amount > 0)
+                                -
+                                @else
+                                {{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}
+                                @endif
+                                </td>
                                 <td>
                                     {{ $de->employee_qty }}<br>
                                     @if ($de->duty_day > 0 && $de->total_houres > 0)
