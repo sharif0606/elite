@@ -208,9 +208,12 @@
                                     @else
                                     @endif
                                 </td>
-                                @if( $invoice_id->detail?->bonus_amount > 0)
-                                <td>{{$invoice_id->detail?->bonus_amount/$de->employee_qty}}</td>
-                                @endif
+                                
+                        
+                                <td>
+                                    {{$de->bonus_type == 2 ? $de->bonus_rate.'%':$de->bonus_rate}}
+                                </td>
+                              
                                 <td style="text-align: end;">{{ money_format($de->total_amounts) }}</td>
                             </tr>
                         @endif

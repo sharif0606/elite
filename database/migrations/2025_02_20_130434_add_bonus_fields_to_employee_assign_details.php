@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('employee_rate_details', function (Blueprint $table) {
-            $table->string('bonus_type')->nullable()->after('ot_rate'); // e.g., 'fixed' or 'percentage'
+        Schema::table('employee_assign_details', function (Blueprint $table) {
+            $table->string('bonus_type')->nullable()->after('rate'); // e.g., 'fixed' or 'percentage'
             $table->decimal('bonus_amount', 10, 2)->nullable()->after('bonus_type'); // Store bonus amount
         });
     }
@@ -26,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('employee_rate_details', function (Blueprint $table) {
+        Schema::table('employee_assign_details', function (Blueprint $table) {
             $table->dropColumn(['bonus_type', 'bonus_amount']);
         });
     }

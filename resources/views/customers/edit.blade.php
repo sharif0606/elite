@@ -129,7 +129,7 @@
                             <input type="text" value="{{old('inv_vat_note',$customer->inv_vat_note)}}" class="form-control" name="inv_vat_note">
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12">
+                    {{--<div class="col-lg-4 col-md-6 col-sm-12">
                         <label for="bonus_type">Bonus Type</label>
                         <select name="bonus_type" class="form-control">
                             <option value="">Select</option>
@@ -140,7 +140,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <label for="bonus_amount">Bonus</label>
                         <input class="form-control" type="text" name="bonus_amount" value="{{ $customer->bonus_amount }}">
-                    </div>
+                    </div>--}}
                     <div class="col-12 d-none mt-3" id="billSection">
                         <div class="row py-2 my-1" style="border: solid 1px red; border-radius: 8px;">
                             <div class="text-center">

@@ -318,8 +318,8 @@
                             if(value.bonus_type == 1)
                             total_bonus = parseFloat(value.qty)*parseFloat(value.bonus_amount)
                             else
-                            total_bonus = (value.qty*(value.bonus_amount/100));
-                        }else
+                            total_bonus = parseInt((value.rate*(value.bonus_amount/100))*value.qty);
+                        }
 
 
                         // if(value.hours=="1"){
@@ -363,7 +363,8 @@
                                 <td>
                                     <input class="form-control input_css bonus_amount text-center" readonly type="text" value="${total_bonus > 0 ? (value.bonus_amount ?? '') : ''}">
                                     <input class="form-control input_css bonus_amount text-center" onkeyup="reCalcultateInvoice(this)" type="hidden" name="bonus_amount[]" value="${total_bonus}">
-                                    <input class="bonus_type" type="hidden" name="bonus_type[]" value="${total_bonus>0?bonus:null}">
+                                    <input class="bonus_type" type="hidden" name="bonus_type[]" value="${total_bonus>0?value.bonus_type:null}">
+                                     <input class="bonus_type" type="hidden" name="bonus_rate[]" value="${total_bonus>0?value.bonus_amount:null}">
                                     <input class="bonus_for" type="hidden" name="bonus_for[]" value="${total_bonus>0?bonus_for:null}">
                                 </td>
                                 <td>

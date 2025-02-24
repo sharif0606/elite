@@ -59,8 +59,6 @@
                                                 <th scope="col">{{__('Hours')}}</th>
                                                 <th scope="col">{{__('Salary (Person)')}}</th>
                                                 <th scope="col">{{__('OT(Person)')}}</th>
-                                                <th scope="col">{{__('Bonus Type')}}</th>
-                                                <th scope="col">{{__('Bonus Amount')}}</th>
                                                 <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                             </tr>
                                         </thead>

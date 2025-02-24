@@ -80,6 +80,8 @@ class EmployeeAssignController extends Controller
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
                             $details->rate = $request->rate[$key];
+                            $details->bonus_type = $request->bonus_type[$key];
+                            $details->bonus_amount = $request->bonus_amount[$key];
                             $details->start_date = $request->start_date[$key];
                             $details->end_date = $request->end_date[$key];
                             $details->hours = $request->hours[$key];
@@ -156,6 +158,8 @@ class EmployeeAssignController extends Controller
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
                             $details->rate = $request->rate[$key];
+                            $details->bonus_type = $request->bonus_type[$key];
+                            $details->bonus_amount = $request->bonus_amount[$key];
                             $details->start_date = $request->start_date[$key];
                             $details->end_date = $request->end_date[$key];
                             $details->hours = $request->hours[$key];

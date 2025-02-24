@@ -56,6 +56,8 @@
                                                     <th scope="col">{{ __('Job Post') }}</th>
                                                     <th scope="col">{{ __('Qty') }}</th>
                                                     <th scope="col">{{ __('Rate') }}</th>
+                                                    <th scope="col">{{__('Bonus Type')}}</th>
+                                                    <th scope="col">{{__('Bonus Amount')}}</th>
                                                     <th scope="col">{{ __('Start Date') }}</th>
                                                     <th scope="col">{{ __('End Date') }}</th>
                                                     <th scope="col">{{ __('Hours') }}</th>
@@ -96,6 +98,16 @@
                                                             <td><input class="form-control rate" type="text"
                                                                     name="rate[]" value="{{ $d->rate }}"
                                                                     placeholder="rate" required></td>
+                                                                    <td>
+                                                                <select name="bonus_type[]" class="form-control">
+                                                                    <option value="">Select</option>
+                                                                    <option value="1" {{ $d->bonus_type=='1'?"selected":""}}>Flat</option>
+                                                                    <option value="2" {{ $d->bonus_type=='2'?"selected":""}}>Ratio</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" type="text" name="bonus_amount[]" value="{{ $d->bonus_amount }}">
+                                                            </td>
                                                             <td><input required class="form-control" type="date"
                                                                     name="start_date[]" value="{{ $d->start_date }}"
                                                                     placeholder="Start Date"></td>
