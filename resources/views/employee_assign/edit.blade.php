@@ -98,7 +98,7 @@
                                                             <td><input class="form-control rate" type="text"
                                                                     name="rate[]" value="{{ $d->rate }}"
                                                                     placeholder="rate" required></td>
-                                                                    <td>
+                                                            <td>
                                                                 <select name="bonus_type[]" class="form-control">
                                                                     <option value="">Select</option>
                                                                     <option value="1" {{ $d->bonus_type=='1'?"selected":""}}>Flat</option>
@@ -182,6 +182,16 @@
     </td>
     <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty" required></td>
     <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate" required></td>
+    <td>
+        <select name="bonus_type[]" class="form-control">
+            <option value="">Select</option>
+            <option value="1">Flat</option>
+            <option value="2">Ratio</option>
+        </select>
+    </td>
+    <td>
+        <input class="form-control" type="text" name="bonus_amount[]">
+    </td>
     <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date" required></td>
     <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
     <td>
