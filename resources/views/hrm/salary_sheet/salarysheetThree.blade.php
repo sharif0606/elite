@@ -167,6 +167,7 @@
                                                 <th>H.rent</th>
                                                 <th data-title="(basic*7.5%) after one year of joining date">PF</th>
                                                 <th>Adv.</th>
+                                                <th>Training Cost</th>
                                                 <th>Stm</th>
                                                 <th>Total</th>
                                             </tr>
@@ -197,6 +198,7 @@
                                                <th><input class="form-control deHrentTotal" type="text" disabled></th>
                                                <th><input class="form-control dePfTotal" type="text" disabled></th>
                                                <th><input class="form-control deAdvTotal" type="text" disabled></th>
+                                               <th><input class="form-control deTrainingTotal" type="text" disabled></th>
                                                <th><input class="form-control deStmpTotal" type="text" disabled></th>
                                                <th><input class="form-control detotalDeduc" type="text" disabled></th>
                                                <th><input class="form-control netWageTotal" type="text" disabled></th>
@@ -274,9 +276,9 @@
                     selectElement.empty();
                     var old_emp = '';
                     $.each(salary_data, function(index, value) {
-                        let traningCost=value.bn_traning_cost;
+                        let traningCost=value.bn_remaining_cost;
                         let traningCostMonth=value.bn_traning_cost_byMonth;
-                        let traningCostPerMonth=parseFloat((value.bn_traning_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                        let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
                         let remaining=value.bn_remaining_cost;
                         let foodAllowance= (value.bn_food_allowance > 0) ? value.bn_food_allowance : '0';
                         let joiningDate = new Date(value.salary_joining_date);
@@ -355,6 +357,7 @@
                             var hrentCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_h_rent[]" value="0" readonly>`
                             var pfCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_p_f[]" value="0" readonly>`
                             var advCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_adv[]" value="0" readonly>`
+                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var stmCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_stm[]" value="0" readonly>`
                             var deTotalCondition=`<input style="width:100px;" class="form-control" type="text" name="deduction_total[]" value="0" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(gr)}" readonly>`
@@ -369,6 +372,7 @@
                             var hrentCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_h_rent" type="text" name="deduction_h_rent[]" value="${Hr}" placeholder="H.rent">`
                             var pfCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_p_f" type="text" name="deduction_p_f[]" value="${pf}" placeholder="PF" readonly>`
                             var advCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_adv" type="text" name="deduction_adv[]" value="${Ad}" placeholder="Adv">`
+                             var trainingChargCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_training_cost" type="text" value="${traningCostPerMonth}" name="deduction_training_cost[]" placeholder="Training Cost">`
                             var stmCondition=`<input onkeyup="reCalcultateSalary(this)" style="width:100px;" class="form-control deduction_stm" type="text" name="deduction_stm[]" value="${Stmp}" placeholder="Stm">`
                             var deTotalCondition=`<input style="width:100px;" class="form-control deduction_total" type="text" name="deduction_total[]" value="${totalDeduction}" placeholder="Total" readonly>`
                             var netSalaryCondition=`<input style="width:100px;" class="form-control net_wages" type="text" name="net_wages[]" value="${Math.round(netSalary)}" placeholder="Net Wages" readonly>`
@@ -435,6 +439,7 @@
                                 <td>${hrentCondition}</td>
                                 <td>${pfCondition}</td>
                                 <td>${advCondition}</td>
+                                <td>${trainingChargCondition}</td>
                                 <td>${stmCondition}</td>
                                 <td>${deTotalCondition}</td>
                                 <td>${netSalaryCondition}</td>
@@ -525,7 +530,7 @@
     }
     function total_calculate() {
         var payableTotal = 0;
-        var ratOfSalaryTotal = 0; var houseRentTotal = 0; var medicalTotal = 0; var transConveTotal=0; foodAllownceTotal=0; var postAllowanceTotal = 0;var grossTotal=0; var workingTotal=0; var preDaysTotal = 0; var absentTotal=0; var vacantTotal=0; var hollyFesTotal=0; var leClTotal=0; var leSlTotal=0; var leElTotal=0; var deAbsentTotal=0; var deVacantTotal=0; var deHrentTotal=0; var dePfTotal=0; var deAdvTotal=0; var deStmpTotal=0; var detotalDeduc=0; var netWageTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0;
+        var ratOfSalaryTotal = 0; var houseRentTotal = 0; var medicalTotal = 0; var transConveTotal=0; foodAllownceTotal=0; var postAllowanceTotal = 0;var grossTotal=0; var workingTotal=0; var preDaysTotal = 0; var absentTotal=0; var vacantTotal=0; var hollyFesTotal=0; var leClTotal=0; var leSlTotal=0; var leElTotal=0; var deAbsentTotal=0; var deVacantTotal=0; var deHrentTotal=0; var dePfTotal=0; var deAdvTotal=0; var deTrainingTotal = 0; var deStmpTotal=0; var detotalDeduc=0; var netWageTotal = 0; var otDayTotal = 0; var otRateTotal = 0; var otAmountTotal = 0;
         $('.duty_rate').each(function() {
             ratOfSalaryTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -587,6 +592,9 @@
         $('.deduction_adv').each(function() {
             deAdvTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
+        $('.deduction_training_cost').each(function() {
+            deTrainingTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
+        });
         $('.deduction_stm').each(function() {
             deStmpTotal+=isNaN(parseFloat($(this).val()))?0:parseFloat($(this).val());
         });
@@ -630,6 +638,7 @@
         $('.deHrentTotal').val(parseFloat(deHrentTotal).toFixed(2));
         $('.dePfTotal').val(parseFloat(dePfTotal).toFixed(2));
         $('.deAdvTotal').val(parseFloat(deAdvTotal).toFixed(2));
+        $('.deTrainingTotal').val(parseFloat(deTrainingTotal).toFixed(2));
         $('.deStmpTotal').val(parseFloat(deStmpTotal).toFixed(2));
         $('.detotalDeduc').val(parseFloat(detotalDeduc).toFixed(2));
         $('.netWageTotal').val(parseFloat(netWageTotal).toFixed(2));
