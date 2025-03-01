@@ -98,7 +98,7 @@ class EmployeeAssignController extends Controller
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
-            dd($e);
+            //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
