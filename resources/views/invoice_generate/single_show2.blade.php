@@ -27,7 +27,12 @@
     {{-- <hr class="hrcs" style="height: 1px; background-color: red;"> --}}
     {{-- <table width="100%"style="padding-left: 55px;">
         <tr>
-            <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+            <td width="40%" style="text-align: left;">
+                @if( $invoice_id->detail?->bonus_amount > 0)
+                @else
+                Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b>
+                @endif
+            </td>
             <td width="30%"></td>
             <td width="30%" style="text-align: center;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
         </tr>
@@ -37,7 +42,13 @@
             @if ($invoice_id->inv_subject != '')
                 <td width="40%" style="text-align: left;"></td>
             @else
-                <td width="40%" style="text-align: left;">Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b></td>
+                <td width="40%" style="text-align: left;">
+                    @if( $invoice_id->detail?->bonus_amount > 0)
+                    Festival Bonus <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> for the Year of <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('Y')}}</b>
+                    @else
+                    Bill for the Month of : <b>{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}</b>
+                    @endif
+                </td>
             @endif
             <td width="30%"></td>
             <td width="30%" style="text-align: right;">Date : <b>{{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</b></td>
@@ -139,7 +150,13 @@
                 @if ($invoice_id->inv_subject != '')
                     <td colspan="2" style="padding-top: 12px;"><b>{{$invoice_id->inv_subject}}.</b></td>
                 @else
-                    <td colspan="2" style="padding-top: 12px;"><b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b></td>
+                    <td colspan="2" style="padding-top: 12px;">
+                        @if( $invoice_id->detail?->bonus_amount > 0)
+                        Festival Bonus  Bill for <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> security personel.</b>
+                        @else
+                        <b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b>
+                        @endif
+                    </td>
                 @endif
             </tr>
             <tr>
