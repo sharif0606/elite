@@ -478,6 +478,7 @@ class SalarySheetController extends Controller
                             $details->deduction_hr = $request->deduction_h_rent[$key];
                             $details->deduction_p_f = $request->deduction_p_f[$key];
                             $details->deduction_adv = $request->deduction_adv[$key];
+                            $details->deduction_traningcost = $request->deduction_training_cost[$key];
                             $details->deduction_revenue_stamp = $request->deduction_stm[$key];
                             $details->deduction_total = $request->deduction_total[$key];
                             $details->net_salary = $request->net_wages[$key];

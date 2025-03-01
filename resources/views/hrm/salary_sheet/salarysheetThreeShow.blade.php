@@ -67,7 +67,7 @@
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Vacant')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
                                             <th class="tbl_border" scope="col" colspan="3">{{__('Leave')}}</th>
-                                            <th class="tbl_border" scope="col" colspan="7">{{__('DEDUCTION')}}</th>
+                                            <th class="tbl_border" scope="col" colspan="8">{{__('DEDUCTION')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('Net Wages')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('OT hour')}}</th>
                                             <th class="tbl_border" scope="col" rowspan="2">{{__('OT rate(Basic*2)')}}</th>
@@ -85,6 +85,7 @@
                                             <th class="tbl_border">H.rent</th>
                                             <th class="tbl_border">PF</th>
                                             <th class="tbl_border">Adv.</th>
+                                            <th class="tbl_border">Training Cost</th>
                                             <th class="tbl_border">Stm</th>
                                             <th class="tbl_border">Total</th>
                                         </tr>
@@ -214,6 +215,11 @@
                                                         @endif
                                                     </td>
                                                     <td class="tbl_border">
+                                                        @if ($d->deduction_traningcost != 0)
+                                                            {{ round($d->deduction_traningcost) }}
+                                                        @endif
+                                                    </td>
+                                                    <td class="tbl_border">
                                                         @if ($d->deduction_revenue_stamp != 0)
                                                             {{ round($d->deduction_revenue_stamp) }}
                                                         @endif
@@ -256,7 +262,7 @@
                                         @endforeach
                                     </tbody>
                                     <tr>
-                                        <td class="tbl_border text-center" colspan="31"> Total</td>
+                                        <td class="tbl_border text-center" colspan="32"> Total</td>
                                         <td class="tbl_border text-center">{{money_format($totalPayable)}}</td>
                                         <td class="tbl_border text-center"></td>
                                         <td class="tbl_border text-center"></td>

@@ -149,7 +149,7 @@
                                                 <th scope="col" rowspan="2">{{__('Vacant')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Holiday/ festival')}}</th>
                                                 <th scope="col" colspan="3">{{__('Leave')}}</th>
-                                                <th scope="col" colspan="7">{{__('DEDUCTION')}}</th>
+                                                <th scope="col" colspan="8">{{__('DEDUCTION')}}</th>
                                                 <th scope="col" rowspan="2">{{__('Net Wages')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT hour')}}</th>
                                                 <th scope="col" rowspan="2">{{__('OT rate (basic*30)/208')}}</th>
@@ -500,7 +500,7 @@
         let levelSlTotal=$(e).closest('tr').find('.leave_sl').val()?parseFloat($(e).closest('tr').find('.leave_sl').val()):0;
         let levelElTotal=$(e).closest('tr').find('.leave_el').val()?parseFloat($(e).closest('tr').find('.leave_el').val()):0;
         let totalWorkingDay = parseFloat(presentTotal) + parseFloat(absenttTotal) + parseFloat(vacantTotal) + parseFloat(holyTotal) + parseFloat(levelClTotal) + parseFloat(levelSlTotal) + parseFloat(levelElTotal);
-        let absentDeduction = (dutyRate/totalWorkingDay)*absenttTotal;
+        let absentDeduction = (dutyRate/30)*absenttTotal;
         let vacantDeduction = (grw/totalWorkingDay)*vacantTotal;
         $(e).closest('tr').find('.total_workingDay').val(parseFloat(totalWorkingDay));
         $(e).closest('tr').find('.deduction_absent').val(parseFloat(absentDeduction).toFixed(2));
@@ -510,9 +510,10 @@
         let deductionVacant=$(e).closest('tr').find('.deduction_vacant').val()?parseFloat($(e).closest('tr').find('.deduction_vacant').val()):0;
         let deductionHr=$(e).closest('tr').find('.deduction_h_rent').val()?parseFloat($(e).closest('tr').find('.deduction_h_rent').val()):0;
         let deductionAdv=$(e).closest('tr').find('.deduction_adv').val()?parseFloat($(e).closest('tr').find('.deduction_adv').val()):0;
+        let deductionTrainingCost=$(e).closest('tr').find('.deduction_training_cost').val()?parseFloat($(e).closest('tr').find('.deduction_training_cost').val()):0;
         let deductionPf=$(e).closest('tr').find('.deduction_p_f').val()?parseFloat($(e).closest('tr').find('.deduction_p_f').val()):0;
         let stamp=$(e).closest('tr').find('.deduction_stm').val()?parseFloat($(e).closest('tr').find('.deduction_stm').val()):0;
-        let totalDeduction = parseFloat(deductionAbsent) + parseFloat(deductionVacant) + parseFloat(deductionHr) + parseFloat(deductionAdv) + parseFloat(deductionPf) + parseFloat(stamp);
+        let totalDeduction = parseFloat(deductionAbsent) + parseFloat(deductionVacant) + parseFloat(deductionHr) + parseFloat(deductionAdv) + parseFloat(deductionTrainingCost) + parseFloat(deductionPf) + parseFloat(stamp);
         let net = parseFloat(grw) - parseFloat(totalDeduction);
         $(e).closest('tr').find('.deduction_total').val(parseFloat(totalDeduction).toFixed(2));
         $(e).closest('tr').find('.net_wages').val(parseFloat(net).toFixed(2));
