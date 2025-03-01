@@ -206,7 +206,7 @@
             echo "Zero";
         }
     @endphp
-        Only.</i></b></div>
+        .</i></b></div>
     <br>
     <div>
         @php
