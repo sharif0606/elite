@@ -214,7 +214,7 @@
             $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $footer_note);
         @endphp
         {!! $bolded_note !!}
-    . </div>
+    </div>
     <br><br>
     {{-- <table width="100%" style="margin-top:1.5rem;">
         <tr>
