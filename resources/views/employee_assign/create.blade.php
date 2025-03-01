@@ -42,6 +42,8 @@
                                                     <th scope="col">{{ __('Job Post') }}</th>
                                                     <th scope="col">{{ __('Qty') }}</th>
                                                     <th scope="col">{{ __('Rate (Person)') }}</th>
+                                                    <th scope="col">{{__('Bonus Type')}}</th>
+                                                    <th scope="col">{{__('Bonus Amount')}}</th>
                                                     <th scope="col">{{ __('Start Date') }}</th>
                                                     <th scope="col">{{ __('End Date') }}</th>
                                                     <th scope="col">{{ __('Hours') }}</th>
@@ -70,6 +72,16 @@
                                                             value="" placeholder="qty" required></td>
                                                     <td><input class="form-control rate" type="text" name="rate[]"
                                                             value="" placeholder="rate" required></td>
+                                                    <td>
+                                                        <select name="bonus_type[]" class="form-control">
+                                                            <option value="">Select</option>
+                                                            <option value="1">Flat</option>
+                                                            <option value="2">Ratio</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" type="text" name="bonus_amount[]">
+                                                    </td>
                                                     <td><input required class="form-control" type="date"
                                                             name="start_date[]" value="" placeholder="Start Date">
                                                     </td>
@@ -136,6 +148,16 @@
         </td>
         <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
         <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
+        <td>
+            <select name="bonus_type[]" class="form-control">
+                <option value="">Select</option>
+                <option value="1">Flat</option>
+                <option value="2">Ratio</option>
+            </select>
+        </td>
+        <td>
+            <input class="form-control" type="text" name="bonus_amount[]">
+        </td>
         <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
         <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
         <td>
