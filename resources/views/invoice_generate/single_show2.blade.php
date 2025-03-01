@@ -152,7 +152,7 @@
                 @else
                     <td colspan="2" style="padding-top: 12px;">
                         @if( $invoice_id->detail?->bonus_amount > 0)
-                        Festival Bonus  Bill for <b>({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}})</b> security personel.</b>
+                        Festival Bonus  Bill for ({{$invoice_id->detail?->bonus_for==1?'EID UL FITR':'EID UL ADHA'}}) of security personnel.
                         @else
                         <b>Security Services Bill for the Month of {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('F Y')}}.</b>
                         @endif
@@ -166,7 +166,11 @@
             </tr>
         </table>
                 <div style="padding-top: 8px; padding-bottom: 8px;">
+                    @if( $invoice_id->detail?->bonus_amount > 0)
+                    Reference to the above subject, We herewith submit the security services festival bonus bill along with Chalan copy.
+                    @else
                     {{ $invoice_id->header_note }}
+                    @endif
                 </div>
 
         <table border="1" width="100%" cellspacing="0">
