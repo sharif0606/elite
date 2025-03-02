@@ -85,8 +85,14 @@
                                                 {{$d->employee?->en_applicants_name}}
                                             @endif
                                         </th>
-                                        <th class="tbl_border text-center"></th>
-                                        <th class="tbl_border">{{$d->branches?->brance_name}}</th>
+                                        <th class="tbl_border text-center">{{$d->employee?->bn_ac_no}}</th>
+                                        <th class="tbl_border">
+                                            @if($d->branches?->brance_name)
+                                            {{$d->branches?->brance_name}}
+                                            @else
+                                            {{$d->customer?->name}}
+                                            @endif
+                                        </th>
                                         <th class="tbl_border text-end">{{money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-end">{{ money_format($d->common_net_salary)}}</th>
                                         <th class="tbl_border text-center">{{$d->position?->name}} <br> ID No- {{$d->employee?->admission_id_no}} </th>
