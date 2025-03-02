@@ -296,6 +296,10 @@ class InvoiceGenerateController extends Controller
                             $details->job_post_id=$request->job_post_id[$key];
                             $details->rate=$request->rate[$key];
                             $details->employee_qty=$request->employee_qty[$key];
+                            $details->bonus_rate=$request->bonus_rate[$key];
+                            $details->bonus_amount=$request->bonus_amount[$key];
+                            $details->bonus_type=$request->bonus_type[$key];
+                            $details->bonus_for=$request->bonus_for[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
                             $details->warking_day=$request->warking_day[$key];
                             $details->divide_by=$request->divide_by[$key];

@@ -83,6 +83,21 @@
                                     <label for=""><b>Subject</b></label>
                                     <textarea class="form-control" name="inv_subject" rows="3">{{$inv->inv_subject}}</textarea>
                                 </div>
+                                <div class="col-lg-2 mt-2">
+                                    <label for=""><b>With Bonus</b></label>
+                                    <select class="form-select bonus" id="bonus">
+                                        <option value="1">Yes</option>
+                                        <option value="2" selected>No</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 mt-2">
+                                    <label for=""><b>Bonus For</b></label>
+                                    <select class="form-select bonus_for" id="bonus_for">
+                                        <option value="">Select</option>
+                                        <option value="1">EID Ul FITR</option>
+                                        <option value="2">EID Ul AZHA</option>
+                                    </select>
+                                </div>
                                 <div class="col-lg-3 mt-4 p-0 d-none">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
                                 </div>
@@ -95,6 +110,7 @@
                                             <th>Service</th>
                                             <th>Rate</th>
                                             <th>Total Person</th>
+                                            <th>Bonus</th>
                                             <th>Working Days</th>
                                             <th>Divide By</th>
                                             <th>Duty</th>
@@ -309,6 +325,13 @@
                             st_date='';
                             ed_date='';
                         }
+                        /*=========Bonus Calculation========= */
+                        if(bonus == 1){
+                            if(value.bonus_type == 1)
+                            total_bonus = parseFloat(value.qty)*parseFloat(value.bonus_amount)
+                            else
+                            total_bonus = parseInt((value.rate*(value.bonus_amount/100))*value.qty);
+                        }
 
                         // if(value.hours=="1"){
                         //     totalHoures=(8*(value.qty)*(workingDays+1));
@@ -348,6 +371,13 @@
                                 </td>
                                 <td>
                                     <input class="form-control input_css employee_qty_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="employee_qty[]" value="${value.qty}">
+                                </td>
+                                  <td>
+                                    <input class="form-control input_css bonus_amount text-center" readonly type="text" value="${total_bonus > 0 ? (value.bonus_amount ?? '') : ''}">
+                                    <input class="form-control input_css bonus_amount text-center" onkeyup="reCalcultateInvoice(this)" type="hidden" name="bonus_amount[]" value="${total_bonus}">
+                                    <input class="bonus_type" type="hidden" name="bonus_type[]" value="${total_bonus>0?value.bonus_type:null}">
+                                     <input class="bonus_type" type="hidden" name="bonus_rate[]" value="${total_bonus>0?value.bonus_amount:null}">
+                                    <input class="bonus_for" type="hidden" name="bonus_for[]" value="${total_bonus>0?bonus_for:null}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
