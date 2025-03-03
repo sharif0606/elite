@@ -140,11 +140,7 @@
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
-                            <td>{{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}
-                                @if($e->detail)
-                                -Bonus
-                                @endif
-                            </td>
+                            <td>{{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}</td>
                             <td>{{ $e->customer?->name }}
                                 @if($e->branch_id)
                                 ({{ $e->branch?->brance_name }})
