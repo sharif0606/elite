@@ -64,7 +64,7 @@
         </tr> --}}
         <tr>
             @if ($invoice_id->inv_subject != '')
-                <td width="40%" style="text-align: left;"></td>
+                <td width="60%" style="text-align: left;"></td>
             @else
                 <td width="40%" style="text-align: left;">
                     {{--$invoice_id->details--}}
