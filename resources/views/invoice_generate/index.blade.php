@@ -141,7 +141,7 @@
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
                             <td>{{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}
-                                @if($e->detail->first()->bonus_amount > 0)
+                                @if($e->detail)
                                 -Bonus
                                 @endif
                             </td>
