@@ -976,7 +976,7 @@ class SalarySheetController extends Controller
 
 
         foreach ($salaryDetails as $detail) {
-            if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+            if (in_array($detail->customer_id, $customerIds) || (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
                 $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
             }
         }
