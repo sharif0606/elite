@@ -254,7 +254,8 @@ class ReportController extends Controller
                 // stop salary employee id
                 $emp = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
             }
-            $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->pluck('id');
+            $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->where('customer_id',$request->customer_id)->pluck('id');
+          
         }
         $salaryStopEmployees = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
         // dd($salaryStopEmployees);
@@ -270,7 +271,7 @@ class ReportController extends Controller
             $data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
                 ->whereIn('salary_id', $salaryIds)->groupBy('employee_id');
         }
-
+        //dd($data->where('employee_id',4295)->get());
         if ($request->type != 0) {
             $data->whereIn('employee_id', $emp);
         }

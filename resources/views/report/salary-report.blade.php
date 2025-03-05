@@ -6,7 +6,7 @@
     <div class="card">
         <form action="{{route('report.salary_report_details')}}">
             <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-2 col-md-2 col-sm-12 py-1">
                     <label for=""><b>Salary Year</b></label>
                     <select required class="form-control form-select year" name="year" required>
                         <option value="">Select Year</option>
@@ -15,7 +15,7 @@
                             @endfor
                     </select>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-2 col-md-2 col-sm-12 py-1">
                     <label for=""><b>Salary Month</b></label>
                     <select required class="form-control form-select month selected_month" name="month" required>
                         <option value="">Select Month</option>
@@ -24,10 +24,12 @@
                             @endfor
                     </select>
                 </div>
-                <div class="form-group col-lg-6 mt-2 d-none">
+                <div class="col-lg-3 col-md-3 col-sm-12 py-1">
                     <label for=""><b>Customer Name</b></label>
-                    <select class="choices form-select multiple-remove customer_id" multiple="multiple" name="customer_id[]" id="customerSelect">
+                    {{--choices multiple-remove multiple="multiple"--}}
+                    <select class="form-select customer_id" name="customer_id[]" id="customerSelect">
                         <optgroup label="Select Customer">
+                            <option value="">Select Customer</option>
                             @forelse ($customer as $c)
                             <option value="{{ $c->id }}">{{ $c->name }}</option>
                             @empty
@@ -52,7 +54,7 @@
                         </optgroup>
                     </select>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="col-lg-2 col-md-3 col-sm-12 py-1">
                     <label for="billdate">{{__('Salary Format')}}</label>
                     <select name="type" class="form-control form-select" required>
                         <option value="">Select</option>
@@ -79,7 +81,7 @@
                         <option value="20" {{old('type')== '20'? 'selected' : ''}}>Midas Safety Unit-2</option>
                     </select>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-2">
                     <button type="submit" class="btn btn-sm btn-success btn-block mt-4">{{__('Show')}}</button>
                 </div>
             </div>
