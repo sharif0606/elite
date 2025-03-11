@@ -283,30 +283,8 @@
 		}
 	}*/
 	function printReport(divName) {
-		$('.acc-head-report').removeClass('d-none');
         // Clone the content of the div
         var prtContent = document.getElementById(divName).cloneNode(true);
-
-        // Update input values in the cloned content
-        var inputs = prtContent.getElementsByTagName('input');
-        for (var i = 0; i < inputs.length; i++) {
-            if (inputs[i].type === 'text' || inputs[i].type === 'date') {
-                inputs[i].setAttribute('value', inputs[i].value);
-            }
-        }
-
-        // Update textarea values in the cloned content
-        var textareas = prtContent.getElementsByTagName('textarea');
-        for (var i = 0; i < textareas.length; i++) {
-            textareas[i].innerHTML = textareas[i].value;
-        }
-
-        // Update select options in the cloned content
-        var selects = prtContent.getElementsByTagName('select');
-        for (var i = 0; i < selects.length; i++) {
-            var selectedOption = selects[i].options[selects[i].selectedIndex];
-            selectedOption.setAttribute('selected', 'selected');
-        }
 
         // Open a new window for printing
         var WinPrint = window.open('', '_blank', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
