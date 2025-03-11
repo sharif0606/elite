@@ -184,8 +184,8 @@
 										<th><?= $deb ?></th>
 										<th><?= $cre ?></th>
 										<th>{{$balance>0?abs($balance)." DR":abs($balance)." CR"}}</th>
-										<th></th>
-									</tr>
+								<th></th>
+								</tr>
 								</tfoot>--}}
 							</table>
 						</div>
@@ -268,6 +268,8 @@
 		var prtContent = document.getElementById(divName);
 
 		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+		WinPrint.document.open();
+		// Write the content into the print window
 		WinPrint.document.write('<link rel="stylesheet" href="{{ asset("assets/css/main/app.css") }}" type="text/css"/>');
 
 		var style = '<style media="print">.no_print{ display:none}body{color:#000 !important;background-color:#FFF; font-size:14px; padding-top:50px}.only_print{ display:block !important;}</style>';
