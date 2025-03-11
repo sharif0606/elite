@@ -53,6 +53,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="pt-2">
+                        {{$debitVoucher->withQueryString()->links()}}
+                    </div>
                 </div>
             </div>
         </div>

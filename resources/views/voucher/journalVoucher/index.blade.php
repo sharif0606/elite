@@ -11,10 +11,10 @@
             <div class="card">
 
                 @if(Session::has('response'))
-                    {!!Session::get('response')['message']!!}
+                {!!Session::get('response')['message']!!}
                 @endif
                 <div>
-                    <a class="float-end" href="{{route('journal_voucher.create')}}"style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
+                    <a class="float-end" href="{{route('journal_voucher.create')}}" style="font-size:1.7rem"><i class="bi bi-plus-square-fill"></i></a>
                 </div>
                 <!-- table bordered -->
                 <div class="table-responsive">
@@ -52,6 +52,9 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="pt-2">
+                        {{$journalVoucher->withQueryString()->links()}}
+                    </div>
                 </div>
             </div>
         </div>
