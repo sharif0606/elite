@@ -331,7 +331,7 @@ class EmployeeController extends Controller
         $employeeAdditionalDetails = [
             ['Name', $employees->en_applicants_name],
             ['Designation', $employees->position?->name],
-            ['Place of Posting', $employees->en_place_of_posting],
+            ['Place of Posting',  htmlspecialchars($employees->en_place_of_posting, ENT_QUOTES, 'UTF-8')],
             ['Employee ID No', $employees->admission_id_no],
             ['Height', $employees->en_height_foot . "Feet" . $employees->en_height_inc . "Inch"],
             ['Blood Group', $employees->bloodgroup?->name],
