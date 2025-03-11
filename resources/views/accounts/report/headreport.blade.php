@@ -168,7 +168,7 @@
 										<td>{{date("d M, Y",strtotime($acc->rec_date))}}</td>
 										<td>{{date("d M, Y",strtotime($acc->created_at))}}</td>
 										<td>{{$acc->jv_id}}</td>
-										<td>{{$acc->purpose}}</td>
+										<td>{{$acc->journal_title}}</td>
 										<td>{{number_format((float)$acc->dr, 2, '.', '')}} @php $deb+=$acc->dr; @endphp</td>
 										<td>{{number_format((float)$acc->cr, 2, '.', '')}} @php $cre+=$acc->cr; @endphp</td>
 										<td>{{$balance>0?abs($balance)." DR":abs($balance)." CR"}}</td>
@@ -268,8 +268,7 @@
 		var prtContent = document.getElementById(divName);
 
 		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-		WinPrint.document.write('<link rel="stylesheet" href="{{ asset('
-			assets / css / main / app.css ') }}" type="text/css"/>');
+		WinPrint.document.write('<link rel="stylesheet" href="{{ asset("assets/css/main/ pp.css")}}" type="text/css"/>');
 
 		var style = '<style media="print">.no_print{ display:none}body{color:#000 !important;background-color:#FFF; font-size:14px; padding-top:50px}.only_print{ display:block !important;}</style>';
 		WinPrint.document.write(style);
