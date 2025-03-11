@@ -23,7 +23,7 @@ class CreditVoucherController extends VoucherController
      */
     public function index()
     {
-        $creditVoucher= CreditVoucher::paginate(10);
+        $creditVoucher= CreditVoucher::latest()->paginate(10);
         return view('voucher.creditVoucher.index',compact('creditVoucher'));
     }
 

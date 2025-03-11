@@ -19,7 +19,7 @@ class JournalVoucherController extends VoucherController
      */
     public function index()
     {
-        $journalVoucher=JournalVoucher::paginate(10);
+        $journalVoucher=JournalVoucher::latest()->paginate(10);
         return view('voucher.journalVoucher.index',compact('journalVoucher'));
     }
 

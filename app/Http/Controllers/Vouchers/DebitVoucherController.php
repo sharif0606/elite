@@ -20,7 +20,7 @@ class DebitVoucherController extends VoucherController
      */
     public function index()
     {
-        $debitVoucher= DebitVoucher::paginate(10);
+        $debitVoucher= DebitVoucher::latest()->paginate(10);
         return view('voucher.debitVoucher.index',compact('debitVoucher'));
     }
 
