@@ -251,59 +251,5 @@
 	}
 </script>
 <script>
-function printReport(divName) {
-    $('.acc-head-report').removeClass('d-none');
-
-    var selectedValue = $('#head_id option:selected').text();
-    var inputDate = $('#inputDate').val();
-
-    var printContentDiv = document.getElementById('print-content');
-    printContentDiv.innerHTML = '<table style="width: 100%;">' +
-        '<tr>' +
-        '<th style="width: 15%;"><label>Head Name:</label></th>' +
-        '<td style="width: 48%;">' + selectedValue + '</td>' +
-        '<th style="width: 10%;"><label>Year:</label></th>' +
-        '<td style="width: 27%;">' + inputDate + '</td>' +
-        '</tr>' +
-        '</table>';
-
-    var prtContent = document.getElementById(divName);
-
-    var WinPrint = window.open('', '_blank', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
-
-    if (!WinPrint) {
-        alert("Please allow popups for this site to print.");
-        return;
-    }
-
-    WinPrint.document.open();
-    WinPrint.document.write(`
-        <html>
-        <head>
-            <title>Print Preview</title>
-            <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>
-            <style>
-                .no_print { display: none; }
-                body { color: #000 !important; background-color: #FFF; font-size: 14px; padding: 20px; }
-                .only_print { display: block !important; }
-            </style>
-        </head>
-        <body>
-            ${printContentDiv.innerHTML}
-            ${prtContent.innerHTML}
-            <script>
-                window.onload = function() {
-                    setTimeout(function() {
-                        window.print();
-                    }, 1000); // Increased delay to ensure content loads
-                };
-            </script>
-        </body>
-        </html>
-    `);
-
-    WinPrint.document.close();
-}
-
 </script>
 @endpush
