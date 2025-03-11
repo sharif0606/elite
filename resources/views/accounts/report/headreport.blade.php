@@ -137,7 +137,7 @@
 											{{number_format((float)$acc->cr, 2, '.', '')}} @php $cre+=$acc->cr; @endphp
 											@endif
 										</td>
-										<td>{{$acc->journal_title}}</td>
+										<td>{{$acc->purpose}}</td>
 									</tr>
 									@endforeach
 									@else
