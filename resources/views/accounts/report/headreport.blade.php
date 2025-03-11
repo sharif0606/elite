@@ -269,6 +269,7 @@
 
 		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 		WinPrint.document.open();
+		
 		// Write the content into the print window
 		WinPrint.document.write('<link rel="stylesheet" href="{{ asset("assets/css/main/app.css") }}" type="text/css"/>');
 
