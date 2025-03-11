@@ -283,6 +283,7 @@
 		}
 	}*/
 	function printReport(divName) {
+		$('.acc-head-report').removeClass('d-none');
         // Clone the content of the div
         var prtContent = document.getElementById(divName).cloneNode(true);
 
