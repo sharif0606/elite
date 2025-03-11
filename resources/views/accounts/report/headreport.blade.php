@@ -282,7 +282,7 @@
 			WinPrint.close();
 		}
 	}*/
-	function printDivemp(divName) {
+	function printReport(divName) {
         // Clone the content of the div
         var prtContent = document.getElementById(divName).cloneNode(true);
 
