@@ -168,7 +168,7 @@
 										<td>{{date("d M, Y",strtotime($acc->rec_date))}}</td>
 										<td>{{date("d M, Y",strtotime($acc->created_at))}}</td>
 										<td>{{$acc->jv_id}}</td>
-										<td>{{$acc->purpose}}</td>
+										<td>{{$acc->journal_title}}</td>
 										<td>{{number_format((float)$acc->dr, 2, '.', '')}} @php $deb+=$acc->dr; @endphp</td>
 										<td>{{number_format((float)$acc->cr, 2, '.', '')}} @php $cre+=$acc->cr; @endphp</td>
 										<td>{{$balance>0?abs($balance)." DR":abs($balance)." CR"}}</td>
@@ -184,8 +184,8 @@
 										<th><?= $deb ?></th>
 										<th><?= $cre ?></th>
 										<th>{{$balance>0?abs($balance)." DR":abs($balance)." CR"}}</th>
-								<th></th>
-								</tr>
+										<th></th>
+									</tr>
 								</tfoot>--}}
 							</table>
 						</div>
@@ -251,5 +251,36 @@
 	}
 </script>
 <script>
+	function printReport(divName) {
+		$('.acc-head-report').removeClass('d-none');
+		var selectedValue = $('#head_id option:selected').text();
+		var inputDate = $('#inputDate').val();
+
+		var printContentDiv = document.getElementById('print-content');
+		printContentDiv.innerHTML = '<table style="width: 100%;">' +
+			'<tr>' +
+			'<th style="width: 15%;"><label>Head Name:</label></th>' +
+			'<td style="width: 48%;">' + selectedValue + '</td>' +
+			'<th style="width: 10%;"><label>Year:</label></th>' +
+			'<td style="width: 27%;">' + inputDate + '</td>' +
+			'</tr>' +
+			'</table>';
+		var prtContent = document.getElementById(divName);
+
+		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+		WinPrint.document.write('<link rel="stylesheet" href="{{ asset("assets/css/main/app.css") }}" type="text/css"/>');
+
+		var style = '<style media="print">.no_print{ display:none}body{color:#000 !important;background-color:#FFF; font-size:14px; padding-top:50px}.only_print{ display:block !important;}</style>';
+		WinPrint.document.write(style);
+
+		//WinPrint.document.write(printContentDiv.innerHTML);
+		WinPrint.document.write(prtContent.innerHTML); // Include the rest of the content
+		WinPrint.document.close();
+		WinPrint.onload = function() {
+			WinPrint.focus();
+			WinPrint.print();
+			WinPrint.close();
+		}
+	}
 </script>
 @endpush
