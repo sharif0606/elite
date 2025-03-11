@@ -251,51 +251,51 @@
 	}
 </script>
 <script>
-	function printReport(divId) {
-		var printContents = document.getElementById(divId).innerHTML;
-		var printWindow = document.createElement('iframe');
+	function printReport(divName) {
+		$('.acc-head-report').removeClass('d-none');
+		var selectedValue = $('#head_id option:selected').text();
+		var inputDate = $('#inputDate').val();
 
-		printWindow.style.position = "absolute";
-		printWindow.style.width = "0px";
-		printWindow.style.height = "0px";
-		printWindow.style.border = "none";
+		var printContentDiv = document.getElementById('print-content');
+		printContentDiv.innerHTML = '<table style="width: 100%;">' +
+			'<tr>' +
+			'<th style="width: 15%;"><label>Head Name:</label></th>' +
+			'<td style="width: 48%;">' + selectedValue + '</td>' +
+			'<th style="width: 10%;"><label>Year:</label></th>' +
+			'<td style="width: 27%;">' + inputDate + '</td>' +
+			'</tr>' +
+			'</table>';
 
-		document.body.appendChild(printWindow);
-		var doc = printWindow.contentWindow.document;
+		var prtContent = document.getElementById(divName);
 
-		doc.open();
-		doc.write(`
+		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+		WinPrint.document.open(); // Ensure document is open before writing
+
+		WinPrint.document.write(`
         <html>
         <head>
             <title>Print</title>
             <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>
-            <link rel="stylesheet" href="{{ asset('assets/css/pages/employee.css') }}" type="text/css"/>
-            <style>
-                table tr td, table tr th { font-size: 13px !important; }
-                .police-vf-font { font-size: 13px; }
-                .police-vf-foot-font { font-size: 9px; }
-                .red-line { height: 2px !important; background-color: red !important; margin-bottom: 0.5rem; }
-                .black-line { height: 1px !important; background-color: #000 !important; margin-bottom: 0.5rem; }
-                body { background-color: #fff !important; }
-                .no-print { display: none !important; }
+            <style media="print">
+                .no_print { display: none; }
+                body { color: #000 !important; background-color: #FFF; font-size: 14px; padding-top: 50px; }
+                .only_print { display: block !important; }
             </style>
         </head>
         <body>
-            ${printContents}
+            ${printContentDiv.innerHTML}  <!-- Table content -->
+            ${prtContent.innerHTML}  <!-- Main content -->
         </body>
         </html>
     `);
-		doc.close();
 
-		// Wait for the iframe to load before printing
-		printWindow.onload = function() {
-			printWindow.contentWindow.focus();
-			printWindow.contentWindow.print();
+		WinPrint.document.close();
 
-			// Remove iframe after printing
-			setTimeout(() => {
-				document.body.removeChild(printWindow);
-			}, 1000);
+		WinPrint.onload = function() {
+			WinPrint.focus();
+			WinPrint.print();
+			WinPrint.close();
 		};
 	}
 </script>
