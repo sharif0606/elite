@@ -270,12 +270,12 @@
 
 		var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
 
-		WinPrint.document.open(); // Ensure document is open before writing
+		WinPrint.document.open();
 
 		WinPrint.document.write(`
         <html>
         <head>
-            <title>Print</title>
+            <title>Print Preview</title>
             <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css"/>
             <style media="print">
                 .no_print { display: none; }
@@ -284,19 +284,22 @@
             </style>
         </head>
         <body>
-            ${printContentDiv.innerHTML}  <!-- Table content -->
-            ${prtContent.innerHTML}  <!-- Main content -->
-        </body>
-        </html>
-    `);
+            ${printContentDiv.innerHTML}
+            ${prtContent.innerHTML}
+            <script>
+                window.onload = function() {
+                    setTimeout(function() {
+                        window.print();
+                    }, 500); // Delay printing to ensure content loads
+                };
+</script>
+</body>
 
-		WinPrint.document.close();
+</html>
+`);
 
-		WinPrint.onload = function() {
-			WinPrint.focus();
-			WinPrint.print();
-			WinPrint.close();
-		};
-	}
+WinPrint.document.close();
+}
+
 </script>
 @endpush
