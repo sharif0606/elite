@@ -87,6 +87,7 @@
                                 <div class="col-lg-2 mt-2">
                                     <label for=""><b>With Bonus</b></label>
                                     <select class="form-select bonus" id="bonus">
+                                        <option value="">Select</option>
                                         <option value="1">Yes</option>
                                         <option value="2">No</option>
                                     </select>
