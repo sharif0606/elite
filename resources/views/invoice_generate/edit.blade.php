@@ -444,29 +444,7 @@
             subTotal += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
         });
         $('.sub_total_amount').val(parseFloat(subTotal).toFixed(2));
-    } {
-        {
-            -- function lessCount(e) {
-                var totalLess = 0;
-                $('.less_count').each(function() {
-                    totalLess += isNaN(parseFloat($(this).val())) ? 0 : parseFloat($(this).val());
-                    //alert(totalLess)
-                });
-                //console.log(totalLess)
-                $('.lessP').val(totalLess);
-                var subTotal = $('.sub_total_amount').val();
-                var totalLes = $('.lessP').val();
-                var vat = isNaN(parseFloat($('.vat').val())) ? 0 : parseFloat($('.vat').val());
-                var totalTaka = parseFloat(subTotal - totalLes).toFixed(2);
-                $('.total_tk').val(totalTaka);
-                $('.temporaty_total').val(totalTaka);
-                var vatTaka = parseFloat((totalTaka * vat) / 100).toFixed(2);
-                var grandTotal = parseFloat(totalTaka) + parseFloat(vatTaka);
-                $('.vat_taka').val(vatTaka);
-                $('.grand_total').val(parseFloat(grandTotal).toFixed(2));
-            }--
-        }
-    }
+    } 
 
     function noVat(checkbox) {
         checkbox.value = checkbox.checked ? '1' : '0';
@@ -518,27 +496,10 @@
         $('.grand_total').val(parseFloat(changeaGrandTotal).toFixed(2));
         $('.vat_percent').text(changeVat);
         reCalcultateInvoice();
-    } {
-        {
-            -- function decressRowData() {
-                var row = `
-        <tr style="text-align: center;">
-            <td><span onClick='removedecressRowData(this);' class="add-row text-danger"><i class="bi bi-trash"></i></span></td>
-            <td colspan="8"><input class="form-control text-center" type="text" placeholder="Exaple: Less: 01 duty absent of Receptionist on 17-18/07/2023" name="less_description[]"></td>
-            <td><input class="form-control text-center less_count" type="text" onkeyup="lessCount(this)" placeholder="less amount" name="less_amount[]"></td>
-        </tr>
-        `;
-                $('#repeater_less').after(row);
-            }
-
-            function removedecressRowData(e) {
-                if (confirm("Are you sure you want to remove this row?")) {
-                    $(e).closest('tr').remove();
-                    lessCount();
-                }
-            }--
-        }
     }
+
+
+    
 
     function incressRowData() {
         var row = `
