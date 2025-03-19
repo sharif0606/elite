@@ -143,10 +143,10 @@
                             <td>
                             @if($e->details()->whereIn('bonus_for',[1,2] )->exists())
                                 @if($e->details->first()->bonus_for == 1)
-                                <p>EID UL FITR- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</p>
+                                <small>EID UL FITR- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</small>
                                 @endif
                                 @if($e->details->first()->bonus_for == 2)
-                                <p>EID UL AZHA- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</p>
+                                <small>EID UL AZHA- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</small>
                                 @endif
                                 @else
                                 {{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}
