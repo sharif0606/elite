@@ -137,7 +137,7 @@
 											{{number_format((float)$acc->cr, 2, '.', '')}} @php $cre+=$acc->cr; @endphp
 											@endif
 										</td>
-										<td>{{$acc->journal_title}}</td>
+										<td>{{$acc->purpose}}</td>
 									</tr>
 									@endforeach
 									@else
@@ -168,7 +168,7 @@
 										<td>{{date("d M, Y",strtotime($acc->rec_date))}}</td>
 										<td>{{date("d M, Y",strtotime($acc->created_at))}}</td>
 										<td>{{$acc->jv_id}}</td>
-										<td>{{$acc->purpose}}</td>
+										<td>{{$acc->journal_title}}</td>
 										<td>{{number_format((float)$acc->dr, 2, '.', '')}} @php $deb+=$acc->dr; @endphp</td>
 										<td>{{number_format((float)$acc->cr, 2, '.', '')}} @php $cre+=$acc->cr; @endphp</td>
 										<td>{{$balance>0?abs($balance)." DR":abs($balance)." CR"}}</td>
