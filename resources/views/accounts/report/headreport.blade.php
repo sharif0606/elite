@@ -106,7 +106,7 @@
 									@php if($opening_bal>0) $deb=$opening_bal; else $cre=$opening_bal; @endphp
 									@if($accData)
 									@if(currentUser()=='Accounts')
-									<tr>
+									{{--<tr>
 										<td>{{date("d M, Y",strtotime($startDate))}}</td>
 										<td>-</td>
 										<td>-</td>
@@ -122,7 +122,7 @@
 												@endif
 										</td>
 										<td>B/F</td>
-									</tr>
+									</tr>--}}
 									@foreach($accData as $acc)
 									@if($acc->dr>0)@php $balance+=$acc->dr; @endphp @endif
 									@if($acc->cr>0)@php $balance-=$acc->cr; @endphp @endif
