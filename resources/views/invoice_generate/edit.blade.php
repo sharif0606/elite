@@ -84,10 +84,10 @@
                                     <textarea class="form-control" name="inv_subject" rows="3">{{$inv->inv_subject}}</textarea>
                                 </div>
                                 {{--$invDetail->first()--}}
+                                @if($inv->details()->whereIn('bonus_for',[1,2] )->exists())
                                 <div class="col-lg-2 mt-2">
                                     <label for=""><b>With Bonus</b></label>
                                     <select class="form-select bonus" id="bonus">
-                                        <option value="">Select</option>
                                         <option value="1">Yes</option>
                                         <option value="2">No</option>
                                     </select>
@@ -100,6 +100,7 @@
                                         <option value="2" @if($invDetail->first()->bonus_for == 25) selected @endif>EID Ul AZHA</option>
                                     </select>
                                 </div>
+                                @endif
                                 <div class="col-lg-3 mt-4 p-0 d-none">
                                     <button onclick="getInvoiceData()" type="button" class="btn btn-primary">Generate Bill</button>
                                 </div>

@@ -140,7 +140,18 @@
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
-                            <td>{{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}</td>
+                            <td>
+                            @if($e->details()->whereIn('bonus_for',[1,2] )->exists())
+                                @if($e->details->first()->bonus_for == 1)
+                                <p>EID UL FITR- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</p>
+                                @endif
+                                @if($e->details->first()->bonus_for == 2)
+                                <p>EID UL AZHA- {{ \Carbon\Carbon::parse($e->end_date)->format('y') }}</p>
+                                @endif
+                                @else
+                                {{ \Carbon\Carbon::parse($e->end_date)->format('M-y') }}
+                                @endif
+                            </td>
                             <td>{{ $e->customer?->name }}
                                 @if($e->branch_id)
                                 ({{ $e->branch?->brance_name }})
