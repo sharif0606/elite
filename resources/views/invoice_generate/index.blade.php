@@ -491,11 +491,12 @@
             },
         });
     }
+    let customer_id = "{{request()->get('customer_id')}}";
     function vatcalc(v,place){
         if(place=="vat_amount"){
             let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             //alert("{{request()->get('customer_id')}}");
-            let customer_id = "{{request()->get('customer_id')}}";
+           
             let vat= v ? parseFloat(v) : 0;
             if(customer_id == 21){
                 let actualAmount = (rec/(1+(vat/100)));
@@ -516,11 +517,17 @@
     function aitcalc(v,place){
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         if(place=="ait_amount"){
-            let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
-            let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
-            let rec= parseFloat(recBefore) - parseFloat(paidByClient);
-            let aamt=(rec*(ait/100));
-            $('#ait_amount').val(aamt.toFixed(2))
+            let recBefore = 0;
+            if(customer_id == 21){
+                 recBefore= $('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
+            }else{
+                 recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+            }
+                let ait= $('#ait').val() ? parseFloat($('#ait').val()) : 0;
+                let rec= parseFloat(recBefore) - parseFloat(paidByClient);
+                let aamt=(rec*(ait/100));
+                $('#ait_amount').val(aamt.toFixed(2))
+            
         }else{
             let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
