@@ -494,9 +494,17 @@
     function vatcalc(v,place){
         if(place=="vat_amount"){
             let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
+            //alert("{{request()->get('customer_id')}}");
+            let customer_id = "{{request()->get('customer_id')}}";
             let vat= v ? parseFloat(v) : 0;
-            let vamt=(rec*(vat/100));
-            $('#'+place).val(vamt.toFixed(2))
+            if(customer_id == 21){
+                let actualAmount = (rec/(1+(vat/100)));
+                let vamt = rec - actualAmount;
+                $('#'+place).val(vamt.toFixed(2))
+            }else{
+                let vamt=(rec*(vat/100));
+                $('#'+place).val(vamt.toFixed(2))
+            }
         }else{
             let rec=$('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let vamt=v ? parseFloat(v) : 0;
@@ -532,6 +540,14 @@
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
+        // Debugging: Log values before calculation
+    console.log("Due Amount:", dueAmount);
+    console.log("Received:", received);
+    console.log("VAT Deduct:", vatDeduct);
+    console.log("AIT Deduct:", aitDeduct);
+    console.log("Fine Deduct:", fineDeduct);
+    console.log("Less Paid Honor:", lessPaidHonor);
+    console.log("Paid By Client:", paidByClient);
         $('#less_paid').val(lessPaid.toFixed(2));
         less_paid_amount();
     }
