@@ -184,6 +184,10 @@
     {!! Toastr::message() !!}
     <script>
         $('.select2').select2();
+        $(document).on('click', '.select2', function () {
+            $(this).select2('open');
+        });
+
         function getBranch(e) {
             $('#branch_id').empty();
             let customerId=$(e).val();

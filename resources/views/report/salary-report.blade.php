@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-lg-2 col-md-2 col-sm-12 py-1">
                     <label for=""><b>Salary Year</b></label>
-                    <select required class="form-control form-select year" name="year" required>
+                    <select required class="form-control form-select year select2" name="year" required>
                         <option value="">Select Year</option>
                         @for($i=2023;$i<= date('Y');$i++)
                             <option value="{{ $i }}" {{old('year')== $i? 'selected' : ''}}>{{ $i }}</option>
@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-12 py-1">
                     <label for=""><b>Salary Month</b></label>
-                    <select required class="form-control form-select month selected_month" name="month" required>
+                    <select required class="form-control form-select month selected_month select2" name="month" required>
                         <option value="">Select Month</option>
                         @for($i=1;$i<= 12;$i++)
                             <option value="{{ $i }}" {{old('month')== $i? 'selected' : ''}}>{{ date('F',strtotime("2022-$i-01")) }}</option>
@@ -27,7 +27,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-12 py-1">
                     <label for=""><b>Customer Name</b></label>
                     {{--choices multiple-remove multiple="multiple"--}}
-                    <select class="form-select customer_id" name="customer_id[]" id="customerSelect">
+                    <select class="form-select customer_id select2" name="customer_id[]" id="customerSelect">
                         <optgroup label="Select Customer">
                             <option value="">Select Customer</option>
                             @forelse ($customer as $c)
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-12 py-1">
                     <label for="billdate">{{__('Salary Format')}}</label>
-                    <select name="type" class="form-control form-select" required>
+                    <select name="type" class="form-control form-select select2" required>
                         <option value="">Select</option>
                         <option value="0" {{old('type')== '0'? 'selected' : ''}}>Office Staff</option>
                         <option value="1" {{old('type')== '1'? 'selected' : ''}}>Out Station</option>

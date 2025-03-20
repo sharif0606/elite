@@ -265,8 +265,12 @@ class ReportController extends Controller
 
         // $request->type == 15 stop salary list
         if ($request->type != 15) {
-            $data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
-                ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)->groupBy('employee_id');
+            /*$data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
+                ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)->groupBy('employee_id');*/
+                $data = SalarySheetDetail::select('salary_sheet_details.*','job_posts.serial')
+                ->join('job_posts', 'salary_sheet_details.designation_id', '=', 'job_posts.id')
+                ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)
+                ->orderBy('job_posts.serial', 'ASC')->groupBy('employee_id');
         } else {
             $data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
                 ->whereIn('salary_id', $salaryIds)->groupBy('employee_id');
@@ -287,8 +291,8 @@ class ReportController extends Controller
             $post = $request->job_post_id;
             $data->where('designation_id', $post);
         }
-        $data = $data->orderBy('salary_sheet_details.branch_id', 'asc')->get();
-
+        //$data = $data->orderBy('salary_sheet_details.branch_id', 'asc')->get();
+        $data = $data->get();
         if (!$data->isEmpty()) {
             if ($request->type == 0) {
                 return view('report.salary-office-staff', compact('getYear', 'getMonth', 'data', 'salaryType'));

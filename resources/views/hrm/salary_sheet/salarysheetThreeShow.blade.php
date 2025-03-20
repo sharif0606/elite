@@ -107,7 +107,7 @@
                                                 {{--@forelse (collect($details)->sortBy(fn($d) => $d['employee']['salary_joining_date'] ?? null) as $d )--}}
                                                 @forelse (collect($details)->sortBy('job_post.serial') as $d)
                                                 <tr class="tbl_border text-center">
-                                                    <td class="tbl_border">{{ ++$loop->index }}</td>
+                                                    <td class="tbl_border">{{ ++$loop->index }} -{{$d->id}}</td>
                                                     <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
                                                     <td class="tbl_border">{{ $d->position?->name }}</td>
                                                     <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
