@@ -136,7 +136,7 @@
                             $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                             $receivedAmount = money_format($e->payment->sum('received_amount'));
                         @endphp
-                    
+                    {{--$e->port_link?->details--}}
                     {{-- @if ($due != 0) --}}
                         <tr class="text-center">
                             <td scope="row">{{ $totalItems - $invoice->firstItem() - $key + 1 }}</td>
@@ -197,6 +197,12 @@
                                     ->latest()
                                     ->take(3)->get();
                                 @endphp
+                                @php  
+                                $less = \App\Models\Crm\PortlinkInvoiceLess::where('invoice_id',$e->id)->sum('commission_less');
+                                $desup = \App\Models\Crm\PortlinkDeductionSupervisor::where('invoice_id',$e->id)->sum('commission_deduction');
+                                $deguard = \App\Models\Crm\PortlinkDeductionGuard::where('invoice_id',$e->id)->sum('commission_deduction');
+                                $total = $less+$desup+$deguard;
+                                @endphp
                                     <button class="btn p-0 m-0" type="button" style="background-color: none; border:none;"
                                         data-bs-toggle="modal" data-bs-target="#invList"
                                         data-inv-id="{{ $e->id }}"
@@ -204,6 +210,9 @@
                                         data-customer-name="{{ $e->customer?->name }}-{{ $e->branch?->brance_name }}"
                                         data-customer-id="{{ $e->customer_id }}"
                                         data-branch-id="{{ $e->branch_id }}"
+                                        data-port-link-commission="{{ $e->port_link?->details->sum('net_commission_amount') }}"
+                                        data-port-link-less="{{ $total }}"
+                                        data-gross-bill ="{{$e->port_link?->net_amount}}"
                                         @if ($e->vat_switch != 1)
                                             data-sub-total-amount="{{ round($e->total_tk) }}"
                                         @else
@@ -274,6 +283,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="invList" tabindex="-1" role="dialog" aria-labelledby="balanceTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <form method="post" id="invUpdate"  action="{{route('invoice-payment.store')}}">
@@ -290,6 +300,9 @@
                     <input type="hidden" id="customer_id" name="customer_id">
                     <input type="hidden" id="branch_id" name="branch_id">
                     <input type="hidden" id="zone_id" name="zone_id">
+                    <input type="hidden" id="port_link_commission">
+                    <input type="hidden" id="port_link_less">
+                    <input type="hidden" id="port_gross_bill">
                     <div class="row">
                         <div class="col-sm-12">
                             <table class="table table-bordered">
@@ -520,6 +533,11 @@
             let recBefore = 0;
             if(customer_id == 21){
                  recBefore= $('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
+            }else if(customer_id == 236){
+                let port_link_total = 0;
+                let port_link_less  = $('#port_link_less').val() ? parseFloat($('#port_link_less').val()) : 0;
+                let port_link_commission  = $('#port_link_commission').val() ? parseFloat($('#port_link_commission').val()) : 0;
+                 recBefore= port_link_commission-port_link_less;
             }else{
                  recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             }
@@ -539,22 +557,30 @@
     }
 
     function billTotal(){
-        let dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
+        let dueAmount = 0;
+        if(customer_id == 236){
+            port_gross_bill = $('#port_gross_bill').val() ? parseFloat($('#port_gross_bill').val()) : 0;
+            port_gross_bill += $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
+            dueAmount = port_gross_bill;
+        }else{
+            dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
+        }
         let received = $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
         let vatDeduct = $('#vat_amount').val() ? parseFloat($('#vat_amount').val()) : 0;
         let aitDeduct = $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
         let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
+        
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         // Debugging: Log values before calculation
-    console.log("Due Amount:", dueAmount);
-    console.log("Received:", received);
-    console.log("VAT Deduct:", vatDeduct);
-    console.log("AIT Deduct:", aitDeduct);
-    console.log("Fine Deduct:", fineDeduct);
-    console.log("Less Paid Honor:", lessPaidHonor);
-    console.log("Paid By Client:", paidByClient);
+        console.log("Due Amount:", dueAmount);
+        console.log("Received:", received);
+        console.log("VAT Deduct:", vatDeduct);
+        console.log("AIT Deduct:", aitDeduct);
+        console.log("Fine Deduct:", fineDeduct);
+        console.log("Less Paid Honor:", lessPaidHonor);
+        console.log("Paid By Client:", paidByClient);
         $('#less_paid').val(lessPaid.toFixed(2));
         less_paid_amount();
     }
@@ -655,6 +681,9 @@
             var vatAmount = button.data('vat-amount');
             var receivedAmounts = button.attr('data-received-amounts');
             var lastPo = button.attr('data-last-po');
+            var port_link_commission = button.data('port-link-commission');
+            var port_link_less = button.data('port-link-less');
+            var port_gross_bill = button.data('gross-bill');
             // Try to parse the received amounts
             var amountsArray = [];
             var lastPoNo = [];
@@ -683,6 +712,10 @@
             modal.find('#subAmount').text(subAmount);
             modal.find('#subAmountInput').val(subAmount);
             modal.find('#vatAmount').text(vatAmount);
+            modal.find('#port_link_commission').val(port_link_commission);
+            modal.find('#port_link_less').val(port_link_less);
+            modal.find('#port_gross_bill').val(port_gross_bill);
+            
 
             var receivedAmountsList = modal.find('#receivedAmountsList');
             var lastPoList = modal.find('#receivedPoNumber');

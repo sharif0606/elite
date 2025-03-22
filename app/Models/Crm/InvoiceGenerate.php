@@ -41,4 +41,7 @@ class InvoiceGenerate extends Model
     {
         return $this->hasMany(InvoiceGenerateLess::class, 'invoice_id', 'id');
     }
+    public function port_link(){
+        return $this->hasOne(PortlinkInvoice::class, 'invoice_id', 'id');
+    }
 }

@@ -38,7 +38,7 @@ class InvoiceGenerateController extends Controller
 
     public function index(Request $request)
     {
-        $invoice=InvoiceGenerate::with('payment','customer','branch')->orderBy('id','DESC');
+        $invoice=InvoiceGenerate::with('payment','customer','branch','port_link')->orderBy('id','DESC');
         $customer=Customer::all();
         if ($request->fdate && $request->tdate){
             $startDate = $request->fdate;
@@ -207,6 +207,7 @@ class InvoiceGenerateController extends Controller
     }
     public function getSingleInvoice5(Request $request,$id)
     {
+       
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
