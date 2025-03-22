@@ -527,6 +527,7 @@
         }
         billTotal();
     }
+    let port_link_com = 0;
     function aitcalc(v,place){
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
         if(place=="ait_amount"){
@@ -537,7 +538,8 @@
                 let port_link_total = 0;
                 let port_link_less  = $('#port_link_less').val() ? parseFloat($('#port_link_less').val()) : 0;
                 let port_link_commission  = $('#port_link_commission').val() ? parseFloat($('#port_link_commission').val()) : 0;
-                 recBefore= port_link_commission-port_link_less;
+                port_link_com = port_link_commission-port_link_less;
+                recBefore= port_link_com;
             }else{
                  recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             }
@@ -559,9 +561,9 @@
     function billTotal(){
         let dueAmount = 0;
         if(customer_id == 236){
-            port_gross_bill = $('#port_gross_bill').val() ? parseFloat($('#port_gross_bill').val()) : 0;
-            port_gross_bill += $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
-            dueAmount = port_gross_bill;
+            dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
+            dueAmount -= port_link_com;
+            dueAmount += $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;;
         }else{
             dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
         }
