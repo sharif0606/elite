@@ -534,7 +534,7 @@
             let recBefore = 0;
             if(customer_id == 21){
                  recBefore= $('#less_paid').val() ? parseFloat($('#less_paid').val()) : 0;
-            }else if(customer_id == 236){
+            }else if(customer_id == 132 || customer_id == 137 || customer_id ==  236 ){
                 let port_link_total = 0;
                 let port_link_less  = $('#port_link_less').val() ? parseFloat($('#port_link_less').val()) : 0;
                 let port_link_commission  = $('#port_link_commission').val() ? parseFloat($('#port_link_commission').val()) : 0;
