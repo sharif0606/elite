@@ -559,14 +559,7 @@
     }
 
     function billTotal(){
-        let dueAmount = 0;
-        if(customer_id == 236){
-            dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
-            dueAmount -= port_link_com;
-            dueAmount += $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;;
-        }else{
-            dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
-        }
+        let dueAmount = $('#totalDue').val() ? parseFloat($('#totalDue').val()) : 0;
         let received = $('#received_amount').val() ? parseFloat($('#received_amount').val()) : 0;
         let vatDeduct = $('#vat_amount').val() ? parseFloat($('#vat_amount').val()) : 0;
         let aitDeduct = $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
