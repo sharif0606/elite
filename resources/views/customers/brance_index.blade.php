@@ -34,6 +34,7 @@
                                     <th scope="col">{{__('Contact Person Name')}}</th>
                                     <th scope="col">{{__('Contact Phone')}}</th>
                                     <th scope="col">{{__('Billing Person Name')}}</th>
+                                   
                                     <th class="white-space-nowrap">{{__('ACTION')}}</th>
                                 </tr>
                             </thead>

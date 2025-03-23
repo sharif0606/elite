@@ -403,7 +403,8 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">PO Date</label>
-                            <input type="date" name="po_date" onchange="paymethod()" class="form-control po_date error-msg">
+                            <!-- onchange="paymethod()"-->
+                            <input type="date" name="po_date" class="form-control po_date error-msg">
                             <span class="error-message" style="color: red; display: none;"></span>
                         </div>
                         <div class="col-sm-4">

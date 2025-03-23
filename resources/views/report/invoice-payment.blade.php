@@ -71,10 +71,11 @@
                 </tr>
                 @if($zone->customers->isNotEmpty())
                     @foreach($zone->customers as $i => $customer)
-                    @php
+                        @php
                         $branchTotalDue = 0; // Initialize the total due for the branch
                         @endphp
 
+                        @if(request()->get('received_by_city') == $customer->received_by_city)
                         <!-- First, calculate the total due for the entire branch across all periods -->
                         @foreach($period as $dt)
                             @php
@@ -119,6 +120,7 @@
                             }
                             @endphp
                         @endforeach
+                        @endif
 
                         <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
                         @if($branchTotalDue > 5)
@@ -176,16 +178,18 @@
                         @else
                             @continue <!-- Skip rendering this branch row if total_due <= 1 -->
                         @endif
+                    
                     @endforeach
                 @endif
 
                 @if($zone->branch->isNotEmpty())
                     @php $i = 0; @endphp <!-- Ensure $i is defined -->
                     @foreach($zone->branch as $branch)
+                        {{--$branch--}}
                         @php
                         $branchTotalDue = 0; // Initialize the total due for the branch
                         @endphp
-
+                        @if(request()->get('received_by_city') == $branch->received_by_city)
                         <!-- First, calculate the total due for the entire branch across all periods -->
                         @foreach($period as $dt)
                             @php
@@ -292,6 +296,7 @@
                             </tr>
                         @else
                             @continue <!-- Skip rendering this branch row if total_due <= 1 -->
+                        @endif
                         @endif
                     @endforeach
                 @endif

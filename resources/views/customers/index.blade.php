@@ -34,9 +34,9 @@
                         <a class="btn btn-sm btn-danger ms-2" href="{{route('customer.index')}}" title="Clear">Clear</a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6">
+                {{--<div class="col-lg-4 col-sm-6">
                     <!-- Empty div to push the link to the right side -->
-                </div>
+                </div>--}}
                 <div class="col-lg-2 col-sm-6 d-flex justify-content-end align-items-center">
                     <a class="text-danger" href="{{route('customer.create', ['role' =>currentUser()])}}">
                         <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
