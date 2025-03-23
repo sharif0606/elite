@@ -316,7 +316,8 @@
 
     </div>
 </div>
-
+<div class="full_page"></div>
+<div id="my-content-div" class="d-none"></div>
 @endsection
 @push('scripts')
 <script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
