@@ -383,7 +383,7 @@
         var tyear = "{{ request()->get('tyear') }}";
         var received_by_city = "{{ request()->get('received_by_city') }}";
 
-        $.get("{{route('report.inv_payment')}}?fyear=" + year + "&fmonth=" + fmonth + "&tyear=" + tyear + "&received_by_city=" + received_by_city, function (data) {
+        $.get("{{route('report.inv_payment')}}?fyear=" + fyear + "&fmonth=" + fmonth + "&tyear=" + tyear + "&received_by_city=" + received_by_city, function (data) {
             $("#my-content-div").html(data);
         }).then(function () {
             exportReportToExcel('Zone_Wise_Invoice_Due_Report', 'Zone_Wise_Invoice_Due_Report');
