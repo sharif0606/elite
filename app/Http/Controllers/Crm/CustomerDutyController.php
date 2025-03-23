@@ -469,6 +469,17 @@ class CustomerDutyController extends Controller
             $newStartDate = Carbon::parse($originalDuty->start_date)->addMonth()->startOfMonth();
             $newEndDate = Carbon::parse($originalDuty->start_date)->addMonth()->endOfMonth();
 
+            // Check if a CustomerDuty with the same start and end dates already exists
+            $existingDuty = CustomerDuty::where('start_date', $newStartDate)
+            ->where('end_date', $newEndDate)
+            ->where('customer_id', $originalDuty->customer_id)
+            ->where('branch_id', $originalDuty->branch_id)
+            ->first();
+
+            if ($existingDuty) {
+                return response()->json(['error' => 'A duty with the same start and end dates already exists.'], 400);
+            }
+
             // Create a new CustomerDuty instance
             $newDuty = $originalDuty->replicate();
             $newDuty->start_date = $newStartDate;
