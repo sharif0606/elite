@@ -104,7 +104,8 @@ class JournalVoucherController extends VoucherController
                 }
                 DB::commit();
                 \Toastr::success('Successfully created');
-				return redirect()->route('journal_voucher.index');
+				//return redirect()->route('journal_voucher.index');
+                return redirect()->back()->withInput();
 			}
 		}catch (Exception $e) {
 			dd($e);
