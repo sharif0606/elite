@@ -375,6 +375,19 @@
         $('.full_page').html("");
     }
     
-    
+    function get_print() {
+        $('.full_page').html('<div style="background:rgba(0,0,0,0.5);width:100vw; height:100vh;position:fixed; top:0; left;0"><div class="loader my-5"></div></div>');
+        var fyear = "{{ $request->get('fyear') }}";
+        var fmonth = "{{ $request->get('fmonth') }}";
+
+        var tyear = "{{ $request->get('tyear') }}";
+        var received_by_city = "{{ $request->get('received_by_city') }}";
+
+        $.get("{{route('report.inv_payment')}}?fyear=" + year + "&fmonth=" + fmonth + "&tyear=" + tyear + "&received_by_city=" + received_by_city, function (data) {
+            $("#my-content-div").html(data);
+        }).then(function () {
+            exportReportToExcel('salaryTable', '{{$name[$salaryType]}}-{{$getMonthName}}-{{$getYear}}');
+        });
+    }
 </script>
 @endpush
