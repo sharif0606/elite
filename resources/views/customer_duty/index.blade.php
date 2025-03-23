@@ -177,6 +177,9 @@
                                 @csrf
                                 @method('delete')
                             </form>
+                            <a class="text-primary" href="javascript:void()" onclick="copyCustomerDuty({{ $e->id }})">
+                                <i class="bi bi-files"></i> <!-- Icon for copy -->
+                            </a>
                         </td>
                     </tr>
                     @empty
@@ -232,6 +235,26 @@
                 console.error("Error fetching data from the server.");
             },
         });
+    }
+
+    /*=== Coty Duty Copy === */
+    function copyCustomerDuty(id) {
+        if (confirm('Are you sure you want to copy this duty for the next month?')) {
+            $.ajax({
+                url: "{{ route('customerduty.copy', '') }}/" + id,
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(response) {
+                    alert(response.success);
+                    location.reload();
+                },
+                error: function(response) {
+                    alert(response.responseJSON.error);
+                }
+            });
+        }
     }
 </script>
 @endpush

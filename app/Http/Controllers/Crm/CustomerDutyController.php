@@ -395,7 +395,7 @@ class CustomerDutyController extends Controller
                                 $details->employee_salary_id = $employeeRate->id;
                             } else {
                                 // Exist Employee Need to Check with Employe Salary Id
-                                
+
                                 $employeeRate = EmployeeRateDetails::find($request->employee_salary_id[$key]);
                                 if ($employeeRate) {
                                     $details->job_post_id = $employeeRate->job_post_id;
@@ -407,7 +407,7 @@ class CustomerDutyController extends Controller
                             }
 
 
-                           
+
                             $details->customer_id = $request->customer_id;
                             $details->hours = $request->job_post_hour[$key];
 
@@ -459,5 +459,34 @@ class CustomerDutyController extends Controller
         $dl = CustomerDutyDetail::where('customerduty_id', $c->id)->delete();
         $c->delete();
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
+    }
+    public function copy($id)
+    {
+        try {
+            $originalDuty = CustomerDuty::with('details')->findOrFail($id);
+
+            // Calculate new start and end dates for the next month
+            $newStartDate = Carbon::parse($originalDuty->start_date)->addMonth()->startOfMonth();
+            $newEndDate = Carbon::parse($originalDuty->end_date)->addMonth()->endOfMonth();
+
+            // Create a new CustomerDuty instance
+            $newDuty = $originalDuty->replicate();
+            $newDuty->start_date = $newStartDate;
+            $newDuty->end_date = $newEndDate;
+            $newDuty->save();
+
+            // Copy details
+            foreach ($originalDuty->details as $detail) {
+                $newDetail = $detail->replicate();
+                $newDetail->customerduty_id = $newDuty->id;
+                $newDetail->start_date = $newStartDate;
+                $newDetail->end_date = $newEndDate;
+                $newDetail->save();
+            }
+
+            return response()->json(['success' => 'Data copied successfully!'], 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Failed to copy data.'], 500);
+        }
     }
 }

@@ -147,6 +147,8 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('southBanglaAssaign',southBanglaAssaign::class);
         Route::resource('southBanglaInvoice',southBanglaInvoice::class);
         Route::resource('employeeRate',employeeRate::class);
+        // Define the custom route for the copy action
+        Route::post('customerduty/copy/{id}', [customerduty::class, 'copy'])->name('customerduty.copy');
         Route::resource('customerduty',customerduty::class);
         Route::resource('invoiceGenerate',invoiceGenerate::class);
         Route::resource('portlinkInvoice',portlinkInvoice::class);
