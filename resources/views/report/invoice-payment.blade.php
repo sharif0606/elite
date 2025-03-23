@@ -5,6 +5,10 @@
 
 <div class="col-12">
     <div class="card">
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-info my-1 ms-2" onclick="printDiv('result_show')">Print</button>
+            <button type="button" class="btn btn-success my-1" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Excel</button>
+        </div>
         <form method="get" action="">
             <div class="row">
                 <div class="col-sm-2">

@@ -467,7 +467,7 @@ class CustomerDutyController extends Controller
 
             // Calculate new start and end dates for the next month
             $newStartDate = Carbon::parse($originalDuty->start_date)->addMonth()->startOfMonth();
-            $newEndDate = Carbon::parse($originalDuty->end_date)->addMonth()->endOfMonth();
+            $newEndDate = Carbon::parse($originalDuty->start_date)->addMonth()->endOfMonth();
 
             // Create a new CustomerDuty instance
             $newDuty = $originalDuty->replicate();
