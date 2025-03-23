@@ -367,7 +367,7 @@
         TableToExcel.convert(tableToExport, {
             name: `${filename}.xlsx`,
             sheet: {
-                name: 'Salary'
+                name: 'Zone_Wise_Invoice_Due_Report'
             }
         });
 
@@ -386,7 +386,7 @@
         $.get("{{route('report.inv_payment')}}?fyear=" + year + "&fmonth=" + fmonth + "&tyear=" + tyear + "&received_by_city=" + received_by_city, function (data) {
             $("#my-content-div").html(data);
         }).then(function () {
-            exportReportToExcel('salaryTable', '{{$name[$salaryType]}}-{{$getMonthName}}-{{$getYear}}');
+            exportReportToExcel('Zone_Wise_Invoice_Due_Report', 'Zone_Wise_Invoice_Due_Report');
         });
     }
 </script>
