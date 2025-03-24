@@ -262,6 +262,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         //report
         Route::get('inv-pay-report',[reports::class,'invoicePayment'])->name('report.inv_payment');
+        Route::get('inv-pay-report-print',[reports::class,'invoicePaymentPrint'])->name('report.inv_payment.print');
         Route::get('inv-due-report',[reports::class,'invoiceDue'])->name('report.inv_due');
         Route::get('payment-receive-report',[reports::class,'paymentReceive'])->name('report.payment_receive');
         Route::get('payment-receive-detail/{id}',[reports::class,'paymentReceiveDetails'])->name('report.payment_receive_detail');

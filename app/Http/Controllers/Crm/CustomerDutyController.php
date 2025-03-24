@@ -488,10 +488,14 @@ class CustomerDutyController extends Controller
 
             // Copy details
             foreach ($originalDuty->details as $detail) {
+                // Calculate the total number of days in the month
+                $totalDaysInMonth = $newStartDate->daysInMonth;
                 $newDetail = $detail->replicate();
                 $newDetail->customerduty_id = $newDuty->id;
                 $newDetail->start_date = $newStartDate;
                 $newDetail->end_date = $newEndDate;
+                // Set the duty_qty to the total number of days in the month
+                $newDetail->duty_qty = $totalDaysInMonth;
                 $newDetail->save();
             }
 
