@@ -140,7 +140,10 @@
                                 
                                 // Add to total due if greater than threshold (5)
                                 if ($rounded_due> 5) {
-                                    $branchTotalDue += $rounded_due;
+                                    if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                        $branchTotalDue += $rounded_due;
+                                        $grandTotal += $branchTotalDue;
+                                    }
                                 }
                                 @endphp
                             @endforeach
@@ -153,6 +156,7 @@
                                     <td class="tbl_border">{{ $customer->name }}</td>
                                     @foreach($period as $dt)
                                         @php
+                                        DB::enableQueryLog(); // Enable query logging
                                         $invoices = DB::select(DB::raw("
                                             SELECT 
                                                 SUM(invoice_generates.grand_total) AS total_grand_total,
@@ -181,19 +185,24 @@
                                             'month' => $dt->month,
                                             'year' => $dt->year
                                         ]);
+                                        // Get the last executed query
+                                        $queryLog = DB::getQueryLog();
+                                        $lastQuery = end($queryLog); // Get the last query
+
+                                        //dd($lastQuery); // Dump the raw query with bindings
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
                                             @php
-                                            if ($invoices[0]->total_due > 0.5) {
-                                                $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                            } elseif ($invoices[0]->total_due < 0.5) {
-                                                $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
-                                            }
-                                            echo $rounded_due> 5 ? $rounded_due : '-';
+                                            if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                                if ($invoices[0]->total_due > 0.5) {
+                                                    $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
+                                                } elseif ($invoices[0]->total_due < 0.5) {
+                                                    $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                                }
+                                                echo $rounded_due> 5 ? $rounded_due : '-';
+                                            }else
+                                            echo '-';
                                             @endphp
-                                        
-                                            
-                                            
                                         </td>
                                     @endforeach
                                     <td class="tbl_border">{{$branchTotalDue}}</td>
@@ -325,14 +334,14 @@
                         @endforeach
                     @endif
                     <tr class="tbl_border">
-                        <th colspan="{{ 3 + count($period) }}" class="text-end tbl_border">Total</th>
+                        <th colspan="{{ 2 + count($period) }}" class="text-end tbl_border">Total</th>
                         <th class="tbl_border" colspan="2">{{ $grandTotal > 0 ? $grandTotal : '-' }}</th> <!-- Display grand total for the zone -->
                     </tr>
                     @endif
                     
                     @if(!request()->has('zone_id') || request()->get('zone_id') == '') 
                     <tr class="text-center tbl_border">
-                        <th class="tbl_border" colspan="{{ 3 + count($period) }}">{{ $zone->name }}-{{ $zone->name_bn }}</th>
+                        <th class="tbl_border" colspan="{{ 2 + count($period) }}">{{ $zone->name }}-{{ $zone->name_bn }}</th>
                     </tr>
                     <tr class="text-center tbl_border">
                         <th class="tbl_border">#</th>
@@ -390,7 +399,10 @@
                                 
                                 // Add to total due if greater than threshold (5)
                                 if ($rounded_due> 5) {
-                                    $branchTotalDue += $rounded_due;
+                                    if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                        $branchTotalDue += $rounded_due;
+                                        $grandTotal += $rounded_due;   
+                                    }
                                 }
                                 @endphp
                             @endforeach
@@ -434,16 +446,17 @@
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
                                             @php
-                                            if ($invoices[0]->total_due > 0.5) {
+                                            if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                                if ($invoices[0]->total_due > 0.5) {
                                                 $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                            } elseif ($invoices[0]->total_due < 0.5) {
-                                                $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
-                                            }
-                                            echo $rounded_due> 5 ? $rounded_due : '-';
+                                                } elseif ($invoices[0]->total_due < 0.5) {
+                                                    $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                                }
+                                                echo $rounded_due> 5 ? $rounded_due : '-';
+                                               
+                                            }else
+                                            echo '-';
                                             @endphp
-                                        
-                                            
-                                            
                                         </td>
                                     @endforeach
                                     <td class="tbl_border">{{$branchTotalDue}}</td>
@@ -506,7 +519,9 @@
                                 
                                 // Add to total due if greater than threshold (5)
                                 if ($rounded_due> 5) {
-                                    $branchTotalDue += $rounded_due;
+                                    if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                        $branchTotalDue += $rounded_due;
+                                    }
                                 }
                                 @endphp
                             @endforeach
@@ -552,17 +567,18 @@
                                         ]);
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
+                                        @if(($invoices[0]->total_due - $invoices[0]->total_paid) > 2)
                                             @php
-                                            if ($invoices[0]->total_due > 0.5) {
-                                                $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                            } elseif ($invoices[0]->total_due < 0.5) {
-                                                $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
-                                            }
-                                            echo $rounded_due> 5 ? $rounded_due : '-';
+                                                if ($invoices[0]->total_due > 0.5) {
+                                                    $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
+                                                } elseif ($invoices[0]->total_due < 0.5) {
+                                                    $rounded_due = floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                                }
+                                                echo $rounded_due > 5 ? $rounded_due : '-';
                                             @endphp
-                                        
-                                            
-                                            
+                                        @else
+                                            {{ '-' }}
+                                        @endif
                                         </td>
                                     @endforeach
                                     <td class="tbl_border">{{$branchTotalDue}}</td>
@@ -575,7 +591,7 @@
                         @endforeach
                     @endif
                     <tr class="tbl_border">
-                        <th colspan="{{ 3 + count($period) }}" class="text-end tbl_border">Total</th>
+                        <th colspan="{{ 2 + count($period) }}" class="text-end tbl_border">Total</th>
                         <th class="tbl_border" colspan="2">{{ $grandTotal > 0 ? $grandTotal : '-' }}</th> <!-- Display grand total for the zone -->
                     </tr>
                     @endif
