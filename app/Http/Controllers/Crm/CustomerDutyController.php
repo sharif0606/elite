@@ -402,6 +402,7 @@ class CustomerDutyController extends Controller
                                     $details->employee_salary_id = $employeeRate->id;
                                 } else {
                                     //$job_post_id = 0; // Or set to a default value if no rate is found
+                                    dd($request->employee_id[$key]);
                                     return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
                                 }
                             }
@@ -442,7 +443,7 @@ class CustomerDutyController extends Controller
             }
         } catch (Exception $e) {
             DB::rollback();
-            //dd($e);
+            dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }

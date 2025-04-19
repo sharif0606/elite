@@ -2,12 +2,13 @@
 @section('pageTitle','Zone Wise Invoice Due Report')
 @section('pageSubTitle','All Invoice')
 @section('content')
-
 <div class="col-12">
     <div class="card">
         <div class="d-flex justify-content-end">
             <button type="button" class="btn btn-sm btn-info my-1 mx-2" onclick="printDiv('result_show')">Print</button>
-            <button type="button" class="btn btn-sm btn-primary my-1 mx-2" onclick="get_print()"><i class="bi bi-filetype-xlsx"></i> Export Excel</button>
+            <button type="button" class="btn btn-sm btn-primary my-1 mx-2" onclick="get_print()">
+                <i class="bi bi-filetype-xlsx"></i> Export Excel
+            </button>
         </div>
         <form method="get" action="">
             <div class="row">
@@ -15,7 +16,9 @@
                     <label for="">From Year</label>
                     <select class="form-control" name="fyear">
                         @foreach(range(2023, \Carbon\Carbon::now()->format('Y')) as $year)
-                        <option value="{{ $year }}" {{ request()->get('fyear', \Carbon\Carbon::now()->subMonth(6)->format('Y')) == $year ? 'selected' : '' }}>{{ $year }}</option>
+                        <option value="{{ $year }}" {{ request()->get('fyear', \Carbon\Carbon::now()->subMonth(6)->format('Y')) == $year ? 'selected' : '' }}>
+                            {{ $year }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -23,7 +26,9 @@
                     <label for="">From Month</label>
                     <select class="form-control" name="fmonth">
                         @foreach(range(1, 12) as $month)
-                        <option value="{{ $month }}" {{ request()->get('fmonth', \Carbon\Carbon::now()->subMonth(6)->format('m')) == $month ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($month)->format('F') }}</option>
+                        <option value="{{ $month }}" {{ request()->get('fmonth', \Carbon\Carbon::now()->subMonth(6)->format('m')) == $month ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::create()->month($month)->format('F') }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -31,7 +36,9 @@
                     <label for="">To Year</label>
                     <select class="form-control" name="tyear">
                         @foreach(range(2024, \Carbon\Carbon::now()->format('Y')) as $year)
-                        <option value="{{ $year }}" {{ request()->get('tyear', \Carbon\Carbon::now()->format('Y')) == $year ? 'selected' : '' }}>{{ $year }}</option>
+                        <option value="{{ $year }}" {{ request()->get('tyear', \Carbon\Carbon::now()->format('Y')) == $year ? 'selected' : '' }}>
+                            {{ $year }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -39,7 +46,9 @@
                     <label for="">To Month</label>
                     <select class="form-control" name="tmonth">
                         @foreach(range(1, 12) as $month)
-                        <option value="{{ $month }}" {{ request()->get('tmonth', \Carbon\Carbon::now()->format('m')) == $month ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($month)->format('F') }}</option>
+                        <option value="{{ $month }}" {{ request()->get('tmonth', \Carbon\Carbon::now()->format('m')) == $month ? 'selected' : '' }}>
+                            {{ \Carbon\Carbon::create()->month($month)->format('F') }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -48,7 +57,9 @@
                     <select class="form-control" id="zone" name="zone_id">
                         <option value="">Select Zone</option>
                         @forelse ($zones as $z)
-                        <option value="{{ $z->id }}" @if(request()->get('zone_id') == $z->id) selected @endif>{{ $z->name }}</option>
+                        <option value="{{ $z->id }}" @if(request()->get('zone_id') == $z->id) selected @endif>
+                            {{ $z->name }}
+                        </option>
                         @empty
                         @endforelse
                     </select>
@@ -94,6 +105,7 @@
                         <th class="tbl_border">Remarks</th>
                     </tr>
                     @if($zone->customers->isNotEmpty())
+                    
                         @foreach($zone->customers as $i => $customer)
                             @php
                             $branchTotalDue = 0; // Initialize the total due for the branch
@@ -340,18 +352,20 @@
                     @endif
                     
                     @if(!request()->has('zone_id') || request()->get('zone_id') == '') 
-                    <tr class="text-center tbl_border">
-                        <th class="tbl_border" colspan="{{ 2 + count($period) }}">{{ $zone->name }}-{{ $zone->name_bn }}</th>
-                    </tr>
-                    <tr class="text-center tbl_border">
-                        <th class="tbl_border">#</th>
-                        <th class="tbl_border">Customer</th>
-                        @foreach($period as $dt)
-                        <th class="tbl_border">{{ $dt->format("M-Y") }}</th> <!-- Month-Year format -->
-                        @endforeach
-                        <th class="tbl_border">Amount</th>
-                        <th class="tbl_border">Remarks</th>
-                    </tr>
+                        @if($zone->customers()->count() > 0)
+                        <tr class="text-center tbl_border">
+                            <th class="tbl_border" colspan="{{ 4 + count($period) }}">{{ $zone->name }}-{{ $zone->name_bn }}</th>
+                        </tr>
+                        <tr class="text-center tbl_border">
+                            <th class="tbl_border">#</th>
+                            <th class="tbl_border">Customer</th>
+                            @foreach($period as $dt)
+                            <th class="tbl_border">{{ $dt->format("M-Y") }}</th> <!-- Month-Year format -->
+                            @endforeach
+                            <th class="tbl_border">Amount</th>
+                            <th class="tbl_border">Remarks</th>
+                        </tr>
+                        @endif
                     @if($zone->customers->isNotEmpty())
                         @foreach($zone->customers as $i => $customer)
                             @php
@@ -390,19 +404,15 @@
                                     'month' => $dt->month,
                                     'year' => $dt->year
                                 ]);
-                                
-                                if ($invoices[0]->total_due > 0.5) {
-                                    $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                } elseif ($invoices[0]->total_due < 0.5) {
-                                    $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
-                                }
+                                $actual_due = $invoices[0]->total_due-$invoices[0]->total_paid;
+
                                 
                                 // Add to total due if greater than threshold (5)
-                                if ($rounded_due> 5) {
-                                    if($invoices[0]->total_due > $invoices[0]->total_paid){
-                                        $branchTotalDue += $rounded_due;
-                                        $grandTotal += $rounded_due;   
-                                    }
+                                if ($actual_due> 5) {
+                                   
+                                        $branchTotalDue += $actual_due;
+                                        $grandTotal += $actual_due;   
+                                   
                                 }
                                 @endphp
                             @endforeach
@@ -446,13 +456,16 @@
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
                                             @php
+                                            
                                             if($invoices[0]->total_due > $invoices[0]->total_paid){
-                                                if ($invoices[0]->total_due > 0.5) {
-                                                $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                                } elseif ($invoices[0]->total_due < 0.5) {
-                                                    $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                                $actual_due = $invoices[0]->total_due-$invoices[0]->total_paid;
+                                                if ($actual_due > 0.5) {
+                                                $rounded_due = ceil($actual_due); // Apply ceil if greater than 0.5
+                                                } elseif ($actual_due < 0.5) {
+                                                    $rounded_due=floor($actual_due); // Apply floor if less than 0.5
                                                 }
-                                                echo $rounded_due> 5 ? $rounded_due : '-';
+                                                // echo  $invoices[0]->total_due."-".$invoices[0]->total_paid;
+                                                echo $actual_due> 5 ? $actual_due : '-';
                                                
                                             }else
                                             echo '-';
@@ -469,7 +482,7 @@
                         @endforeach
                     @endif
 
-                    @if($zone->branch->isNotEmpty())
+                    @if($zone->branch->isNotEmpty() && $zone->branch()->count() > 0)
                         @php $i = 0; @endphp <!-- Ensure $i is defined -->
                         @foreach($zone->branch as $branch)
                             {{--$branch--}}
@@ -510,24 +523,24 @@
                                     'month' => $dt->month,
                                     'year' => $dt->year
                                 ]);
-                                
-                                if ($invoices[0]->total_due > 0.5) {
-                                    $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                } elseif ($invoices[0]->total_due < 0.5) {
-                                    $rounded_due=floor($invoices[0]->total_due); // Apply floor if less than 0.5
+                                $actual_due = $invoices[0]->total_due - $invoices[0]->total_paid;
+                                if ($actual_due > 0.5) {
+                                    $rounded_due = ceil($actual_due); // Apply ceil if greater than 0.5
+                                } elseif ($actual_due < 0.5) {
+                                    $rounded_due=floor($actual_due); // Apply floor if less than 0.5
                                 }
                                 
                                 // Add to total due if greater than threshold (5)
-                                if ($rounded_due> 5) {
-                                    if($invoices[0]->total_due > $invoices[0]->total_paid){
-                                        $branchTotalDue += $rounded_due;
-                                    }
+                                if ($actual_due> 5) {
+                                  
+                                        $branchTotalDue += $actual_due;
+                                        $grandTotal += $actual_due;  
                                 }
                                 @endphp
                             @endforeach
 
                             <!-- Now, check if the accumulated total due for the branch is greater than 1 -->
-                            @if($branchTotalDue > 5)
+                            @if($branchTotalDue > 5 && $zone->branch()->count() > 0)
                                 <tr class="text-center tbl_border">
                                     <td class="tbl_border">{{ ++$i }}</td>
                                     <td class="tbl_border">Branch:{{ $branch->brance_name }}<br>
@@ -567,18 +580,18 @@
                                         ]);
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
-                                        @if(($invoices[0]->total_due - $invoices[0]->total_paid) > 2)
+                                        @php $actual_due = $invoices[0]->total_due - $invoices[0]->total_paid; @endphp
+                                        @if($actual_due > 2)
                                             @php
-                                                if ($invoices[0]->total_due > 0.5) {
-                                                    $rounded_due = ceil($invoices[0]->total_due); // Apply ceil if greater than 0.5
-                                                } elseif ($invoices[0]->total_due < 0.5) {
-                                                    $rounded_due = floor($invoices[0]->total_due); // Apply floor if less than 0.5
-                                                }
-                                                echo $rounded_due > 5 ? $rounded_due : '-';
+
+                                               
+                                                // echo  $invoices[0]->total_due."-".$invoices[0]->total_paid;
+                                                echo $actual_due > 5 ? $actual_due : '-';
                                             @endphp
                                         @else
                                             {{ '-' }}
                                         @endif
+
                                         </td>
                                     @endforeach
                                     <td class="tbl_border">{{$branchTotalDue}}</td>
@@ -589,11 +602,12 @@
                             @endif
                             @endif
                         @endforeach
-                    @endif
-                    <tr class="tbl_border">
+                        <tr class="tbl_border">
                         <th colspan="{{ 2 + count($period) }}" class="text-end tbl_border">Total</th>
                         <th class="tbl_border" colspan="2">{{ $grandTotal > 0 ? $grandTotal : '-' }}</th> <!-- Display grand total for the zone -->
                     </tr>
+                    @endif
+                  
                     @endif
                 @endforeach
             </table>
