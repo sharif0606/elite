@@ -137,22 +137,22 @@
                                                 </td>
 
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="0" placeholder="Absent">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="" placeholder="Vacant">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="0" placeholder="Vacant">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="0" placeholder="Holiday/ festival">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="0" placeholder="Leave CL">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="0" placeholder="Leave SL">
                                                 </td>
                                                 <td>
-                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+                                                    <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="0" placeholder="Leave EL">
                                                 </td>
 
 
@@ -183,7 +183,13 @@
                                                 <th colspan="5" class="text-end"> Total</th>
                                                 <th><input readonly class="form-control totalDutyP" type="text" name="total_duty" placeholder="Duty"></th>
                                                 <th><input readonly class="form-control totalOtP" type="text" name="total_ot" placeholder="Ot"></th>
-                                                <th colspan="6" class="text-end"></th>
+                                                <th><input readonly class="form-control totalAb" type="text" name="total_ab" placeholder="Absent"></th>
+                                                <th><input readonly class="form-control totalV" type="text" name="total_v" placeholder="Vacant"></th>
+                                                <th><input readonly class="form-control totalHf" type="text" name="total_hf" placeholder="Holiday/Festival"></th>
+                                                <th><input readonly class="form-control totalCl" type="text" name="total_cl" placeholder="CL"></th>
+                                                <th><input readonly class="form-control totalSl" type="text" name="total_sl" placeholder="SL"></th>
+                                                <th><input readonly class="form-control totalEl" type="text" name="total_el" placeholder="EL"></th>
+
                                                 <th><input readonly class="form-control totalDutyAmount" type="text" name="total_duty_amount" placeholder="Duty Amount"></th>
                                                 <th><input readonly class="form-control totalOtAmount" type="text" name="total_ot_amount" placeholder="Ot Amount"></th>
                                                 <th><input readonly class="form-control totalAmountPa" type="text" name="finall_amount" placeholder="Total"></th>
@@ -406,6 +412,10 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
         let otRate=$(e).closest('tr').find('.ot_rate').val()?parseFloat($(e).closest('tr').find('.ot_rate').val()):0;
         let dutyQty=$(e).closest('tr').find('.duty_qty').val()?parseFloat($(e).closest('tr').find('.duty_qty').val()):0;
         let otQty=$(e).closest('tr').find('.ot_qty').val()?parseFloat($(e).closest('tr').find('.ot_qty').val()):0;
+        let absent=$(e).closest('tr').find('.absent').val()?parseFloat($(e).closest('tr').find('.absent').val()):0;
+        let vacant=$(e).closest('tr').find('.vacant').val()?parseFloat($(e).closest('tr').find('.vacant').val()):0;
+        let holiday_festival=$(e).closest('tr').find('.holiday_festival').val()?parseFloat($(e).closest('tr').find('.holiday_festival').val()):0;
+        let leave_cl=$(e).closest('tr').find('.leave_cl').val()?parseFloat($(e).closest('tr').find('.leave_cl').val()):0;
         //let currentDate = new Date();
         //let currentMonth = currentDate.getMonth() + 1;
         //let totalDaysInMonth = new Date(currentDate.getFullYear(), currentMonth, 0).getDate();
@@ -434,6 +444,12 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
 
         var totalDuty=0;
         var totalOt=0;
+        var totalAb=0;
+        var totalV=0;
+        var totalHf=0;
+        var totalCl=0;
+        var totalSl=0;
+        var totalEl=0;
         var dutyAmountTotal=0;
         var otAmountFi=0;
         var totalAmountFi=0;
@@ -442,6 +458,24 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
         });
         $('.ot_qty').each(function(){
             totalOt+=parseFloat($(this).val());
+        });
+        $('.absent').each(function(){
+            totalAb+=parseFloat($(this).val());
+        });
+        $('.vacant').each(function(){
+            totalV+=parseFloat($(this).val());
+        });
+        $('.holiday_festival').each(function(){
+            totalHf+=parseFloat($(this).val());
+        });
+        $('.leave_cl').each(function(){
+            totalCl+=parseFloat($(this).val());
+        });
+        $('.leave_sl').each(function(){
+            totalSl+=parseFloat($(this).val());
+        });
+        $('.leave_el').each(function(){
+            totalEl+=parseFloat($(this).val());
         });
         $('.DutyAmountF').each(function(){
             dutyAmountTotal+=parseFloat($(this).val());
@@ -454,6 +488,13 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
         });
         $('.totalDutyP').val(totalDuty);
         $('.totalOtP').val(totalOt);
+        $('.totalAb').val(totalAb);
+        $('.totalV').val(totalV);
+   
+        $('.totalHf').val(totalHf);
+        $('.totalCl').val(totalCl);
+        $('.totalSl').val(totalSl);
+        $('.totalEl').val(totalEl);
         $('.totalDutyAmount').val(dutyAmountTotal);
         $('.totalOtAmount').val(otAmountFi);
         $('.totalAmountPa').val(totalAmountFi);
@@ -508,22 +549,22 @@ function addRow(){
         </td>
 
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="" placeholder="Absent">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control absent" type="text" name="absent[]" value="0" placeholder="Absent">
         </td>
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="" placeholder="Vacant">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control vacant" type="text" name="vacant[]" value="0" placeholder="Vacant">
         </td>
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="" placeholder="Holiday/ festival">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control holiday_festival" type="text" name="holiday_festival[]" value="0" placeholder="Holiday/ festival">
         </td>
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="" placeholder="Leave CL">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_cl" type="text" name="leave_cl[]" value="0" placeholder="Leave CL">
         </td>
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="" placeholder="Leave SL">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_sl" type="text" name="leave_sl[]" value="0" placeholder="Leave SL">
         </td>
         <td>
-            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="" placeholder="Leave EL">
+            <input onkeyup="CalculateAmount(this)" style="width:100px;" class="form-control leave_el" type="text" name="leave_el[]" value="0" placeholder="Leave EL">
         </td>
 
         <td>

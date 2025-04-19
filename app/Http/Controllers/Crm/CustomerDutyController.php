@@ -402,8 +402,17 @@ class CustomerDutyController extends Controller
                                     $details->employee_salary_id = $employeeRate->id;
                                 } else {
                                     //$job_post_id = 0; // Or set to a default value if no rate is found
-                                    dd($request->employee_id[$key]);
-                                    return redirect()->back()->withInput()->with(Toastr::error('Employee rate not found!', 'Fail', ["positionClass" => "toast-top-right"]));
+                                    //dd($request->employee_id[$key]);
+
+                                    // To Get Employee Wise Salary if not found in Employee Rate wise primary key
+                                    $employeeRate = EmployeeRateDetails::where('employee_id',$request->employee_id[$key])->first();
+                                    if ($employeeRate) {
+                                        $details->job_post_id = $employeeRate->job_post_id;
+                                        $details->employee_salary_id = $employeeRate->id;
+                                    }else{
+                                        return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+                                    }
+                                   
                                 }
                             }
 
