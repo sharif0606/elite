@@ -191,4 +191,8 @@ class CustomerBranceController extends Controller
         $cbrance->delete();
         return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
+    public function getBranch(Request $request){
+        $branch=CustomerBrance::where('customer_id',$request->customer_id)->get();
+        return response()->json($branch);
+    }
 }

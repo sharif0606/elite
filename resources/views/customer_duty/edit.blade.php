@@ -37,14 +37,17 @@
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
-                                        <option value="">Select Branch</option>
+                                        <!-- <option value="">Select Branch</option>
                                         @forelse ($branch as $b)
                                         <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}" {{ $b->id==$custduty->branch_id?"selected":"" }}>{{ $b->brance_name }}</option>
                                         @empty
                                         <option value="">No Data Found</option>
-                                        @endforelse
+                                        @endforelse -->
                                     </select>
                                 </div>
+                                <input type="hidden" id="editCustomerId" value="{{ $custduty->customer_id }}">
+                                <input type="hidden" id="selectedBranchId" value="{{ $custduty->branch_id ?? '' }}">
+
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Atm</b></label>
                                     <select class="form-select atm_id" id="atm_id" name="atm_id">
@@ -134,7 +137,7 @@
                                                     <input type="hidden" name="employee_salary_id[]" value="{{$d->employee_salary_id}}">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_id" style="width:150px" onchange="getDutyOtRate(this)" disabled>
+                                                    <select class="form-select job_post_id select2" style="width:150px" onchange="getDutyOtRate(this)" disabled>
                                                         <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                         <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}" {{ $job->id==$d->job_post_id?"selected":"" }}>{{ $job->name }}</option>
@@ -252,8 +255,23 @@
 
     let old_customer_id = 0;
 
-    function showBranch(value) {
-        let customer = value;
+    $(document).ready(function () {
+        let customerId = $('#editCustomerId').val();
+        let selectedBranchId = parseInt($('#selectedBranchId').val());
+
+        if (customerId) {
+            showBranch(customerId, selectedBranchId);
+        }
+    });
+
+
+
+    function showBranch(value,selectedBranchId = null) {
+        if (!value) {
+            $('#branch_id').html('<option value="">Select Branch</option>');
+            return;
+        }
+        /*let customer = value;
         console.log(customer);
         $('.branch_hide').hide();
         $('.branch_hide' + customer).show();
@@ -261,7 +279,28 @@
             $('#branch_id').prop('selectedIndex', 0);
             $('#atm_id').prop('selectedIndex', 0);
             old_customer_id = customer;
-        }
+        }*/
+        $.ajax({
+            url: '{{ route("get.branch") }}', // Or your route URL
+            method: 'GET',
+            data: { customer_id: value },
+            success: function (response) {
+                let $branchSelect = $('#branch_id');
+                $branchSelect.empty(); // Clear current options
+                $branchSelect.append('<option value="">Select Branch</option>');
+                if (response.length > 0) {
+                    response.forEach(function (branch) {
+                        $branchSelect.append(`<option value="${branch.id}" ${branch.id == selectedBranchId ? 'selected' : ''}>${branch.brance_name}</option>`);
+                    });
+                } else {
+                    $branchSelect.append('<option value="">No Data Found</option>');
+                }
+
+            },
+            error: function () {
+                alert('Failed to fetch branches');
+            }
+        });
     }
     let old_branch_id = 0;
 
@@ -531,7 +570,7 @@
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
+            <select class="form-select job_post_id select2" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
                 <option value="0">Select</option>
                 {{--@foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -601,6 +640,7 @@
     </tr>
     `;
         $('#customerduty').append(row);
+        $('#customerduty tr:last .select2').select2();
         DetailsShow();
     }
 

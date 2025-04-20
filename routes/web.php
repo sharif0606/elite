@@ -154,6 +154,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('portlinkInvoice',portlinkInvoice::class);
         Route::resource('customer', customer::class);
         Route::resource('customerbrance', customerbrance::class);
+        Route::get('/get-branch', [customerbrance::class, 'getBranch'])->name('get.branch');
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
         Route::resource('oneTripInvoice', oneTripInvoice::class);

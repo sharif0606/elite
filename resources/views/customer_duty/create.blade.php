@@ -36,12 +36,12 @@
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="showAtm(this.value)">
-                                        <option value="">Select Branch</option>
+                                        <!-- <option value="">Select Branch</option>
                                         @forelse ($branch as $b)
                                             <option class="branch_hide branch_hide{{$b->customer_id}}" value="{{ $b->id }}">{{ $b->brance_name }}</option>
                                         @empty
                                         <option value="">No Data Found</option>
-                                        @endforelse
+                                        @endforelse -->
                                     </select>
                                 </div>
                                 <div class="col-lg-4 mt-2">
@@ -102,7 +102,7 @@
                                                     <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_id" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
+                                                    <select class="form-select job_post_id select2" name="job_post_id[]" style="width:150px" onchange="getDutyOtRate(this)">
                                                         {{-- <option value="0">Select</option>
                                                         @foreach ($jobposts as $job)
                                                             <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -221,7 +221,11 @@
    })
    let old_customer_id=0;
    function showBranch(value){
-        let customer = value;
+        if (!value) {
+            $('#branch_id').html('<option value="">Select Branch</option>');
+            return;
+        }
+        /*let customer = value;
         console.log(customer);
          $('.branch_hide').hide();
          $('.branch_hide'+customer).show();
@@ -229,7 +233,30 @@
             $('#branch_id').prop('selectedIndex', 0);
             $('#atm_id').prop('selectedIndex', 0);
              old_customer_id=customer;
-         }
+         }*/
+
+        $.ajax({
+            url: '{{ route("get.branch") }}', // Or your route URL
+            method: 'GET',
+            data: { customer_id: value },
+            success: function (response) {
+                let $branchSelect = $('#branch_id');
+                $branchSelect.empty(); // Clear current options
+                $branchSelect.append('<option value="">Select Branch</option>');
+
+                if (response.length > 0) {
+                    response.forEach(function (branch) {
+                        $branchSelect.append(`<option value="${branch.id}">${branch.brance_name}</option>`);
+                    });
+                } else {
+                    $branchSelect.append('<option value="">No Data Found</option>');
+                }
+            },
+            error: function () {
+                alert('Failed to fetch branches');
+            }
+        });
+
     }
    let old_branch_id=0;
    function showAtm(value){
@@ -518,7 +545,7 @@ function addRow(){
             <input class="employee_id_primary" type="hidden" name="employee_id[]" value="">
         </td>
         <td>
-            <select class="form-select job_post_id" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
+            <select class="form-select job_post_id select2" value="" name="job_post_id[]" style="width:150px;" onchange="getDutyOtRate(this)">
                 {{--<option value="0">Select</option>
                 @foreach ($jobposts as $job)
                     <option data-jobpostid='{{ $job->id }}' value="{{ $job->id }}">{{ $job->name }}</option>
@@ -590,6 +617,7 @@ function addRow(){
     </tr>
     `;
     $('#customerduty').append(row);
+    $('#customerduty tr:last .select2').select2();
     DetailsShow();
 }
 

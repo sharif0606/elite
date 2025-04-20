@@ -58,7 +58,7 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <select class="form-select job_post_id" id="job_post_id"
+                                                        <select class="form-select job_post_id select2" id="job_post_id"
                                                             name="job_post_id[]" onchange="getRate(this)">
                                                             <option value="">Select Post</option>
                                                             @forelse ($jobpost as $job)
@@ -184,6 +184,7 @@
     </tr>
     `;
             $('#empassign').append(row);
+            $('#empasinassing tr:last .select2').select2();
         }
 
         function removeRow(e) {
