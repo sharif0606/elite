@@ -455,6 +455,8 @@ class SalarySheetController extends Controller
                             $details->salary_id = $salary->id;
                             $details->employee_id = $request->employee_id[$key];
                             $details->designation_id = $request->designation_id[$key];
+                            $details->year = $request->year;
+                            $details->month = $request->month;
                             $details->customer_id = $request->customer_id_ind[$key];
                             $details->branch_id = $request->customer_branch_id[$key];
                             $details->atm_id = $request->customer_atm_id[$key];

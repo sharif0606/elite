@@ -322,6 +322,12 @@
                         // let Ab = (value.absent > 0) ? value.absent : '0';
                         // let Va = (value.vacant > 0) ? value.vacant : '0';
                         // let Cf = (value.c_f > 0) ? value.c_f : '0';
+                        //value.bn_remaining_cost > total_deduction_traningcost
+                        if(value.total_deduction_traningcost > 0){
+                            traningCostPerMonth = traningCostPerMonth;
+                        }else{
+                            traningCostPerMonth = 0;    
+                        } 
                         let Medical = (value.cmedical > 0) ? value.cmedical : '0';
                         let Trans = (value.ctrans_conve > 0) ? value.ctrans_conve : '0';
                         let Food = (value.cfood_allowance > 0) ? value.cfood_allowance : '0';

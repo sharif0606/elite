@@ -268,6 +268,7 @@
                             let traningCost=value.bn_remaining_cost;
                             let traningCostMonth=value.bn_traning_cost_byMonth;
                             let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                            let remaining=value.bn_remaining_cost;
                             /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
                             let deduction_post_allowance = value.post_allowance > 0 ? Number(value.post_allowance) : 0;
                             let postAllowance = value.bn_post_allowance > 0 ? Number(value.bn_post_allowance) : 0;
@@ -336,7 +337,8 @@
                                     Stmp = (value.stamp > 0) ? value.stamp : '0';
                                     
                                     //value.bn_remaining_cost > total_deduction_traningcost
-                                    if(value.bn_remaining_cost >  value.total_deduction_traningcost ){
+                                    // if(value.bn_remaining_cost >  value.total_deduction_traningcost ){ old line
+                                    if(value.total_deduction_traningcost > 0){
                                         traningCostPerMonth = traningCostPerMonth;
                                     } 
                                     
