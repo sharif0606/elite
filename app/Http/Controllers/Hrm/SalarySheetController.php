@@ -1251,6 +1251,9 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
         $aggregateSubquery = DB::table('salary_sheet_details')
             ->select(
                 'employee_id',
+                'deduction_ins',
+                'year',
+                'month',
                 // Exclude deduction_traningcost for requested year and month
                 DB::raw('SUM(CASE WHEN NOT (year = ' . $request->Year . ' AND month = ' . $request->Month . ') THEN deduction_traningcost ELSE 0 END) as total_deduction_traningcost_except_requested'),
 
@@ -1266,17 +1269,32 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
 
                 // Charge status logic
                 DB::raw("IF(
-                SUM(deduction_ins IS NOT NULL OR deduction_p_f IS NOT NULL 
-                    OR allownce IS NOT NULL OR deduction_fine IS NOT NULL
-                    OR deduction_dress IS NOT NULL OR deduction_banck_charge IS NOT NULL
-                    OR deduction_revenue_stamp IS NOT NULL OR deduction_traningcost IS NOT NULL
-                    OR deduction_loan IS NOT NULL) > 0, 1, 0
-            ) AS charge_status")
+                    SUM(CASE 
+                      WHEN year = {$request->Year} AND month = {$request->Month}
+                           AND (
+                                deduction_ins IS NOT NULL AND deduction_ins != 0 OR
+                                deduction_p_f IS NOT NULL AND deduction_p_f != 0 OR
+                                allownce IS NOT NULL AND allownce != 0 OR
+                                deduction_fine IS NOT NULL AND deduction_fine != 0 OR
+                                deduction_dress IS NOT NULL AND deduction_dress != 0 OR
+                                deduction_banck_charge IS NOT NULL AND deduction_banck_charge != 0 OR
+                                deduction_traningcost IS NOT NULL AND deduction_traningcost != 0 OR
+                                deduction_loan IS NOT NULL AND deduction_loan != 0
+                           ) 
+                      THEN 1 
+                      ELSE 0 
+                    END
+                  ) > 0,
+                  1,
+                  0
+                ) AS charge_status")
+                ,
             )
             ->where('year', '>', 0)
             ->where('month', '>', 0)
-            ->where('year', $request->Year)
-            ->where('month', $request->Month)
+            //->where('employee_id',675)
+            /*->where('year', $request->Year)
+            ->where('month', $request->Month)*/
             ->groupBy('employee_id');
         //dd($aggregateSubquery->get());
         $query = CustomerDutyDetail::join('customer_duties', 'customer_duties.id', '=', 'customer_duty_details.customerduty_id')

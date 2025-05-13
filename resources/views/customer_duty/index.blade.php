@@ -101,6 +101,7 @@
                         <td scope="row"><span><b>{{$e->customer?->name}}</b></span><br>
                             <span>{{ date('d-M-Y', strtotime($e->start_date)) }} <b>to</b> {{ date('d-M-Y', strtotime($e->end_date)) }}</span><br>
                             <span>{{$e->customer_branch?->brance_name}}</span>
+                            <span>{{$e->customer_atm?->atm}}</span>
                         </td>
                         <td>
                             @if ($e->details)

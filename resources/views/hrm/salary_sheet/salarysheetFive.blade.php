@@ -337,8 +337,7 @@
                                     Stmp = (value.stamp > 0) ? value.stamp : '0';
                                     
                                     //value.bn_remaining_cost > total_deduction_traningcost
-                                    // if(value.bn_remaining_cost >  value.total_deduction_traningcost ){ old line
-                                    if(value.total_deduction_traningcost > 0){
+                                    if(parseFloat(value.bn_remaining_cost) >  parseFloat(value.total_deduction_traningcost) ){
                                         traningCostPerMonth = traningCostPerMonth;
                                     } 
                                     
