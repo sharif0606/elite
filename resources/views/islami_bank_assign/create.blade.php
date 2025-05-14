@@ -28,7 +28,7 @@
                                     <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtms()">
                                         <option value="">Select Branch</option>
                                          @forelse ($branch as $b)
-                                        <option selected value="{{ $b->id }}">{{ $b->brance_name }}</option>
+                                        <option value="{{ $b->id }}">{{ $b->brance_name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
@@ -97,7 +97,7 @@
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)" required>
                                                         <option value="">Select</option>
                                                         @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                                                        <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}{{ $em->bn_applicants_name }}</option>
                                                         {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
                                                         @empty
                                                         @endforelse

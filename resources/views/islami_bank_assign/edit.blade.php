@@ -134,7 +134,9 @@
                                                 {{-- <td><input class="form-control hours" required type="text" name="hours[]" value="" placeholder="Hours"></td> --}}
                                                 {{-- <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td> --}}
                                                 <td>
-                                                    {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                    @if($loop->index !=0)
+                                                    <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                                    @endif
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
                                                 </td>
                                             </tr>
@@ -143,13 +145,12 @@
                                         </tbody>
                                         <tfoot>
                                             <tr style="text-align: center;">
-                                                <th colspan="3" style="text-align: end;">Tatal Duty</th>
+                                                <th colspan="4" style="text-align: end;">Tatal Duty</th>
                                                 <th style="text-align: left;" class="total_duty_count"></th>
-                                                <th style="text-align: end;">Sub Tatal</th>
-                                                <td>
-                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
-                                                </td>
-                                                <td></td>
+                                                <!-- <th style="text-align: end;">Sub Tatal</th> -->
+                                               <td>
+                                                    <input type="hidden" class="form-control sub_total_salary" name="sub_total_salary" value="">
+                                                    </td>
                                             </tr>
                                         </tfoot>
                                     </table>
