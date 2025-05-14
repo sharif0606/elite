@@ -43,6 +43,15 @@
                                     <a href="{{route('journal_voucher.edit',encryptor('encrypt',$cr->id))}}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
+                                    @if(currentUser() == 'superadmin' )
+                                        <a class="text-danger" href="javascript:void()" onclick="$('#form{{$cr->id}}').submit()">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        <form id="form{{$cr->id}}" onsubmit="return confirm('Are you sure to delete this record?')" action="{{route('journal_voucher.destroy',encryptor('encrypt',$cr->id))}}" method="post">
+                                            @csrf
+                                            @method('delete')
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                             @empty

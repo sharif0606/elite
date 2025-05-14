@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use Exception;
-
+use Toastr;
 class JournalVoucherController extends VoucherController
 {
     /**
@@ -165,7 +165,7 @@ class JournalVoucherController extends VoucherController
                 $journalVoucher->slip=$imageName;
             }
             if($journalVoucher->save()){
-                $gldata=array('purpose'=>$request->purpose,'rec_date'=>$request->current_date);
+                $gldata=array('purpose'=>$request->purpose,'rec_date'=>$request->current_date,'vou_no'=>$request->vou_no,'vehicle_no'=>$request->vehicle_no);
                 GeneralLedger::where('journal_voucher_id',$journalVoucher->id)->update($gldata);
 
 			    \Toastr::success('Successfully Updated');
@@ -186,8 +186,30 @@ class JournalVoucherController extends VoucherController
      * @param  \App\Models\Voucher\JournalVoucher  $journalVoucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JournalVoucher $journalVoucher)
+    public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+			$cvid=encryptor('decrypt',$id);
+			$cv= JournalVoucher::find($cvid);
+			if($cv->delete()){
+				if(JournalVoucherBkdn::where('journal_voucher_id',$cvid)->delete()){
+					if(GeneralLedger::where('journal_voucher_id',$cvid)->delete()){
+						DB::commit();
+						return redirect()->back()->with(Toastr::success('Data Updated!', 'Success', ["positionClass" => "toast-top-right"]));
+					}else{
+						return redirect()->back()->withInput()->with(Toastr::error('Plesae Try Again', 'Success', ["positionClass" => "toast-top-right"]));
+					}
+				}else{
+					return redirect()->back()->withInput()->with(Toastr::error('Plesae Try Again', 'Success', ["positionClass" => "toast-top-right"]));
+				}
+			}else{
+				return redirect()->back()->withInput()->with(Toastr::error('Plesae Try Again', 'Success', ["positionClass" => "toast-top-right"]));
+			}
+		}catch (Exception $e) {
+			// dd($e);
+			DB::rollBack();
+			return redirect()->back()->withInput()->with(Toastr::error('Plesae Try Again', 'Success', ["positionClass" => "toast-top-right"]));
+		}
     }
 }

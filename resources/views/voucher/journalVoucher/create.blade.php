@@ -19,7 +19,7 @@
                                         <div class="widget-content padding">
                                             <div class="form-group">
                                                 <div class="row">
-                                                    <div class="col-12 col-sm-6">
+                                                    <div class="col-12 col-sm-6 d-none">
                                                         <div class="form-group ">
                                                             <label>Voucher No</label>
                                                             <span class="block input-icon input-icon-right">
@@ -51,13 +51,13 @@
                                                         </div>
                                                     </div>
                                                     @if(currentUser()=='Accounts')
-                                                    <div class="col-12 col-sm-6 mb-2">
+                                                    <div class="col-12 col-sm-3 mb-2">
                                                         <div class="form-group">
                                                             <label>Account Vourcher No</label>
                                                             <input type="text" class="form-control" name="vou_no" value="{{old('vou_no')}}">
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-sm-6 mb-2">
+                                                    <div class="col-12 col-sm-3 mb-2">
                                                         <div class="form-group">
                                                             <label>Vehicle No</label>
                                                             <input type="text" class="form-control" name="vehicle_no" value="{{old('vehicle_no')}}">

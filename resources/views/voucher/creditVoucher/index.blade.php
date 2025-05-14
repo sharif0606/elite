@@ -56,7 +56,7 @@
                         </tbody>
                     </table>
                     <div class="pt-2">
-                        {{$debitVoucher->withQueryString()->links()}}
+                        {{$creditVoucher->withQueryString()->links()}}
                     </div>
                 </div>
             </div>

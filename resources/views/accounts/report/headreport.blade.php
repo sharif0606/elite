@@ -28,12 +28,29 @@
 
 					{{-- <div class="text-center"><h4>Head Wise Report Search</h4></div> --}}
 					<div class="card-body" id="result_show">
-						<div class="d-none only_print">
+						<div class="d-none d-print-block">
 							<table style="width: 100%" id="companyDescript">
 								<tr style="text-align: center;">
 									<th colspan="2">
 										<h4>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড, চট্টগ্রাম</h4>
-										<h4 style="padding-bottom: 2.5rem;">হেড রিপোর্ট</h4>
+										<h4>হেড রিপোর্ট</h4>
+										<h5>
+											@if(request()->get('current_date'))
+											@php
+												// 1. Decode the URL-encoded string
+												$decoded = urldecode(request()->get('current_date')); // "01-05-2025 / 31-05-2025"
+												// 2. Split the range into two dates
+												[$startDate, $endDate] = explode(' / ', $decoded);
+												// 3. Convert the first date to Carbon
+												$start = \Carbon\Carbon::createFromFormat('d-m-Y', $startDate);
+
+												// 4. Extract month and year
+												$month = $start->format('F'); // "May"
+												$year = $start->format('Y');  // "2025"
+											@endphp
+											{{$month}}-{{$year}}
+											@endif
+										</h5>
 									</th>
 								</tr>
 							</table>
@@ -70,6 +87,7 @@
 										</div>
 									</div>
 								</div>
+								
 								<div class="col-sm-4 pt-4">
 									<button class="btn btn-primary btn-sm" type="submit"> Get Report </button>
 								</div>
@@ -140,6 +158,10 @@
 										<td>{{$acc->purpose}}</td>
 									</tr>
 									@endforeach
+									<tr>
+										<th colspan="3" style="text-align:right">Total</th>
+										<td>{{$balance}}</td>
+									</tr>
 									@else
 									<tr>
 										<td>{{date("d M, Y",strtotime($startDate))}}</td>

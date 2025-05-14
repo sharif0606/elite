@@ -20,7 +20,7 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="countryName">{{__('Voucher No')}}</label>
-                                        <input type="text" id="voucher_no" class="form-control" value="{{old('voucher_no',$journalVoucher->voucher_no)}}" name="voucher_no" readonly>
+                                        <input type="text" id="voucher_no" class="form-control" value="{{old('voucher_no',$journalVoucher->voucher_no)}}" name="voucher_no" readonly disabled>
                                     </div>
                                 </div>
 
@@ -85,7 +85,7 @@
                                         @if($jvbkdn)
                                         @foreach($jvbkdn as $bk)
                                         <tr>
-                                            <td style='text-align:center;' id='increment_1'>1</td>
+                                            <td style='text-align:center;' id='increment_1'>{{$loop->iteration}}</td>
                                             <td style='text-align:left;'>{{$bk->account_code}}</td>
                                             <td style='text-align:left;'>{{$bk->debit}}</td>
                                             <td style='text-align:left;'>{{$bk->credit}}</td>

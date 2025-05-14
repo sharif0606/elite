@@ -461,9 +461,11 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
             var otRateDay=otRate/divideByDayTotal;
         }else{
             var dutyRateDay=dutyRate/totalDaysInMonth;
-            var otRateDay=otRate/totalDaysInMonth;
+            var otRateDay=otRate/totalDaysInMonth;5000/28
+            alert(totalDaysInMonth);
         }
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
+      
         let otAmount=parseFloat(otRateDay*otQty);
         $(e).closest('tr').find('.duty_amount').val(parseFloat(dutyAmount).toFixed(2));
         $(e).closest('tr').find('.ot_amount').val(parseFloat(otAmount).toFixed(2));

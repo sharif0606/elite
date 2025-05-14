@@ -405,14 +405,13 @@ class CustomerDutyController extends Controller
                                     //dd($request->employee_id[$key]);
 
                                     // To Get Employee Wise Salary if not found in Employee Rate wise primary key
-                                    $employeeRate = EmployeeRateDetails::where('employee_id',$request->employee_id[$key])->first();
+                                    $employeeRate = EmployeeRateDetails::where('employee_id', $request->employee_id[$key])->first();
                                     if ($employeeRate) {
                                         $details->job_post_id = $employeeRate->job_post_id;
                                         $details->employee_salary_id = $employeeRate->id;
-                                    }else{
+                                    } else {
                                         return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
                                     }
-                                   
                                 }
                             }
 
@@ -505,7 +504,12 @@ class CustomerDutyController extends Controller
                 $newDetail->start_date = $newStartDate;
                 $newDetail->end_date = $newEndDate;
                 // Set the duty_qty to the total number of days in the month
-                $newDetail->duty_qty = $totalDaysInMonth;
+                if ($newDetail->duty_qty > 0) {
+                    $newDetail->duty_qty = $totalDaysInMonth;
+                }
+                if ($newDetail->ot_qty > 0) {
+                    $newDetail->ot_qty = $totalDaysInMonth;
+                }
                 $newDetail->save();
             }
 
