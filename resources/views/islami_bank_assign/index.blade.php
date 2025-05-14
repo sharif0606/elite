@@ -49,7 +49,19 @@
                                         $ot_salary = 0;
 
                                         // get salary from employeeRateDetails
-                                        $salaryData = DB::table('employee_rate_details')->where('employee_id', $de->employee_id)->first();
+                                        $salaryData = DB::table('employee_rates')
+                                        ->join('employee_rate_details','employee_rate_details.employee_rate_id','employee_rates.id')
+                                        ->select('employee_rate_details.*','employee_rates.customer_id','employee_rates.branch_id','employee_rates.atm_id')
+                                        ->where('employee_rates.customer_id', 66)->where('employee_rates.branch_id', $e->branch_id)->first();
+
+                                        /*if(request()->get('customer_id') && !request()->get('branch_id')){
+                                            $salaryData = $salaryData->where('employee_rates.customer_id', 66);
+                                        }elseif(request()->get('customer_id') && request()->get('branch_id')){
+                                            $salaryData = $salaryData->where('employee_rates.customer_id', 66)->where('employee_rates.branch_id', request()->get('branch_id'));
+                                        }elseif(request()->get('customer_id') && request()->get('branch_id') && request()->get('atm_id') ){
+                                            $salaryData = $salaryData->where('employee_rates.customer_id', 66)->where('employee_rates.branch_id', request()->get('branch_id'))->where('employee_rates.atm_id', request()->get('atm_id'));
+                                        }
+                                        $salaryData = $salaryData->where('customer_id', $e->customer_id)->where('branch_id', $e->branch_id)->first();*/
                                         // print_r($salaryData);
                                         if($salaryData){
                                             $salary = $salaryData->duty_rate;

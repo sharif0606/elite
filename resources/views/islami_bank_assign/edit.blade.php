@@ -10,8 +10,9 @@
             <div class="card">
                 <div class="card-content">
                     <div class="card-body">
-                        <form method="post" action="{{route('islamiBankEmpAssign.store')}}" enctype="multipart/form-data">
+                        <form method="post" action="{{route('islamiBankEmpAssign.update', encrypt($islamiBankEmpAssign->id))}}" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
                             <div class="row mt-4">
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Customer Name</b></label>
@@ -25,7 +26,7 @@
                                 </div>
                                 <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label>
-                                    <select class="form-select branch_id" id="branch_id" name="branch_id" onchange="getAtms()">
+                                    <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()">
                                         <option value="">Select Branch</option>
                                          @forelse ($branch as $b)
                                         <option selected value="{{ $b->id }}" @selected($islamiBankEmpAssign->branch_id == $b->id)>{{ $b->brance_name }}</option>
@@ -82,7 +83,7 @@
                                             <tr class="text-center">
                                                 {{-- <th scope="col">{{__('ATM')}}</th> --}}
                                                 <th scope="col">{{__('SL')}}</th>
-                                                <th scope="col" width="8%">{{__('ID No')}}</th>
+                                                <th scope="col">{{__('ID No')}}</th>
                                                 <th scope="col">{{__('Rank')}}</th>
                                                 {{-- <th scope="col">{{__('Area')}}</th> --}}
                                                 {{-- <th scope="col">{{__('Name')}}</th> --}}
@@ -103,7 +104,7 @@
                                                     <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
                                                         @forelse ($employee as $em)
-                                                        <option value="{{ $em->id }}"@selected($d->employee_id == $em->id)>{{ $em->admission_id_no }}</option>
+                                                        <option value="{{ $em->id }}"@selected($d->employee_id == $em->id)>{{ $em->en_applicants_name }} ({{ $em->admission_id_no }})</option>
                                                         {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
                                                         @empty
                                                         @endforelse
@@ -112,7 +113,7 @@
                                                      <input readonly class="form-control employee_name" type="hidden" name="employee_name[]" value="{{ $d->employee_name }}" placeholder="Employee Name">
                                                 </td>
                                                 <td>
-                                                    <select class="form-select job_post_id"  name="job_post_id[]" onchange="getEmployeeRate(this)">
+                                                    <select class="form-select job_post_id select2"  name="job_post_id[]" onchange="getEmployeeRate(this)">
                                                         <option value="">Select Post</option>
                                                         @forelse ($jobpost as $job)
                                                         <option value="{{ $job->id }}" {{ $d->job_post_id == $job->id ? 'selected' : '' }}>{{ $job->name }}</option>
@@ -134,22 +135,24 @@
                                                 {{-- <td><input class="form-control hours" required type="text" name="hours[]" value="" placeholder="Hours"></td> --}}
                                                 {{-- <td><input readonly class="form-control salary_amount" type="text" name="salary_amount[]" value="" placeholder="Salary Amount"></td> --}}
                                                 <td>
-                                                    {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
+                                                    @if($loop->index == 0)
                                                     <span onClick='addRow(),EmployeeAsignGetAtm();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
+                                                     @else
+                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
                                             @endif
                                         </tbody>
-                                        <tfoot>
+                                          <tfoot>
                                             <tr style="text-align: center;">
-                                                <th colspan="3" style="text-align: end;">Tatal Duty</th>
+                                                <th colspan="4" style="text-align: end;">Tatal Duty</th>
                                                 <th style="text-align: left;" class="total_duty_count"></th>
-                                                <th style="text-align: end;">Sub Tatal</th>
-                                                <td>
-                                                    <input readonly type="text" class="form-control sub_total_salary" name="sub_total_salary" value="">
-                                                </td>
-                                                <td></td>
+                                                <!-- <th style="text-align: end;">Sub Tatal</th> -->
+                                               <td>
+                                                    <input type="hidden" class="form-control sub_total_salary" name="sub_total_salary" value="">
+                                                    </td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -222,7 +225,7 @@
             <select class="select2 form-select employee_id" id="employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
                 <option value="">Select</option>
                 @forelse ($employee as $em)
-                <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->admission_id_no }}</option>
+                <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}> {{ $em->en_applicants_name }} ({{ $em->admission_id_no }})</option>
                 {{--  <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ ' ('.$em->admission_id_no.')'.$em->en_applicants_name }}</option>  --}}
                 @empty
                 @endforelse
