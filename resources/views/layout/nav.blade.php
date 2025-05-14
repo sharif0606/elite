@@ -126,6 +126,9 @@
                 <a href="{{route('wasaEmployeeAsign.index', ['role' =>currentUser()])}}">Wasa Employee's Assign</a>
             </li>
             <li class="submenu-item">
+                <a href="{{route('islamiBankEmpAssign.index', ['role' =>currentUser()])}}">IBBL Employee's Assign</a>
+            </li>
+            <li class="submenu-item">
                 <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
             </li>
             <li class="submenu-item">

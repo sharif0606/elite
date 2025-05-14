@@ -68,6 +68,8 @@ use App\Http\Controllers\Accounts\ChildTwoController as child_two;
 use App\Http\Controllers\Accounts\NavigationHeadViewController as navigate;
 use App\Http\Controllers\Accounts\Report\IncomeStatementController as statement;
 use App\Http\Controllers\Accounts\Report\HeadReportController as headreport;
+use App\Http\Controllers\Crm\IslamiBankEmpAssignController as islamiBankEmpAssign;
+use App\Http\Controllers\Crm\IslamiBankInvoiceController as islamiBankInvoice;
 /*Vouchers */
 use App\Http\Controllers\Vouchers\VoucherController as vouchers;
 use App\Http\Controllers\Vouchers\CreditVoucherController as credit;
@@ -158,9 +160,12 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::resource('customerRate', customerRate::class);
         Route::resource('wasaEmployeeAsign', wasaEmployeeAsign::class);
         Route::resource('oneTripInvoice', oneTripInvoice::class);
+    Route::resource('islamiBankEmpAssign', islamiBankEmpAssign::class);
+    Route::resource('islamiBankInvoice', islamiBankInvoice::class);
 
-        /* HRM */
-        Route::resource('employee', employee::class);
+
+    /* HRM */
+    Route::resource('employee', employee::class);
         /* Biometrics */
         Route::resource('employee-biometrics', Biometric::class);
 
@@ -255,9 +260,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
         Route::get('incomeStatement',[statement::class,'index'])->name('incomeStatement.list');
         Route::get('incomeStatement_details',[statement::class,'details'])->name('incomeStatement.details');
         Route::get('/headreport', [headreport::class, 'index'])->name('report.headreport');
-        
-        //Voucher
-        Route::resource('credit_voucher',credit::class);
+
+    //Voucher
+    Route::resource('credit_voucher', credit::class);
         Route::resource('debit_voucher',debit::class);
         Route::resource('journal_voucher',journal::class);
 
@@ -304,11 +309,13 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
          /* ==  Customer Wise Employee Salary Designation== */
          Route::get('/get-employee-salary-post', [employeeRate::class, 'getEmployeeRate'])->name('emp.getEmployeeRate');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
+    Route::get('/islami-bank-get-employee', [islamiBankEmpAssign::class, 'islamiBankGetEmployee'])->name('islamiBankGetEmployee');
+    Route::get('/islami-bank-get-rate', [islamiBankEmpAssign::class, 'islamiBankGetRate'])->name('islamiBankGetRate');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
         Route::get('/get-employee-hourewise-duty-ot-rate', [customerduty::class, 'getDutyOtRateHourWise'])->name('get_employeedata_hourewise');
         Route::get('/checking-others-duty', [customerduty::class, 'checkOthersCustomerDuty'])->name('get_employee_others_duty');
-        
-        Route::get('/customer_createscreen', [customerbrance::class,'createScreen'])->name('customer.createScreen');
+
+    Route::get('/customer_createscreen', [customerbrance::class, 'createScreen'])->name('customer.createScreen');
         Route::get('/customer_ratescreen', [customerRate::class,'rateCreateScreen'])->name('customer.rateCreateScreen');
         Route::resource('invoice-payment',invPayment::class);
         /*== Invoice Report Client Wise ==*/
@@ -340,7 +347,4 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
 
         /* accounts */
         Route::get('get_head', [vouchers::class, 'get_head'])->name('get_head');
-    });
-
-
-
+});

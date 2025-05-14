@@ -2,6 +2,7 @@
 
 namespace App\Models\Employee;
 
+use App\Models\Crm\EmployeeRateDetails;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Settings\Location\District;
@@ -60,5 +61,10 @@ class Employee extends Model
     }
     public function biometrics(){
         return $this->hasMany(Biometric::class, 'employee_id', 'id');
+    }
+
+    public function employeeRateDetails()
+    {
+        return $this->hasOne(EmployeeRateDetails::class, 'employee_id', 'id');
     }
 }
