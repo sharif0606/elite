@@ -53,10 +53,10 @@ return [
     |
     */
 
-    'url' => env('APP_URL', "http://localhost"),
+    'url' => env('APP_URL', "https://elite.dev"),
     // 'url' => env('APP_URL', "https://quickpicker.xyz/elite"),
 
-    'asset_url' => env('ASSET_URL', "http://localhost/elite").'/public',
+    'asset_url' => env('ASSET_URL', "https://elite.dev/") . '/public',
     // 'asset_url' => env('ASSET_URL', "https://quickpicker.xyz/elite").'/public',
 
 
