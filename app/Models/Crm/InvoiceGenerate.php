@@ -44,4 +44,8 @@ class InvoiceGenerate extends Model
     public function port_link(){
         return $this->hasOne(PortlinkInvoice::class, 'invoice_id', 'id');
     }
+    public function atm()
+    {
+        return $this->belongsTo(Atm::class);
+    }
 }

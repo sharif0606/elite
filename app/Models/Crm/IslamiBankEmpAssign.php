@@ -29,7 +29,7 @@ class IslamiBankEmpAssign extends Model
 
     public function branch()
     {
-        return $this->belongsTo(CustomerBrance::class);
+        return $this->belongsTo(CustomerBrance::class, 'company_branch_id', 'id');
     }
 
     public function atm()

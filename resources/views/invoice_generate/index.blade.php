@@ -22,7 +22,7 @@
         z-index: 1;
         width: max-content;
     }
-    
+
     .modal-body .select2{
 
     }
@@ -123,7 +123,7 @@
                         $totalItems = $invoice->total();
                     @endphp
                     @forelse($invoice as $key=>$e)
-                        @php 
+                        @php
                             if ($e->vat_switch != 1) {
                                 $lessPaid = $e->less?->sum('amount');
                             } else {
@@ -197,7 +197,7 @@
                                     ->latest()
                                     ->take(3)->get();
                                 @endphp
-                                @php  
+                                @php
                                 $less = \App\Models\Crm\PortlinkInvoiceLess::where('invoice_id',$e->id)->sum('commission_less');
                                 $desup = \App\Models\Crm\PortlinkDeductionSupervisor::where('invoice_id',$e->id)->sum('commission_deduction');
                                 $deguard = \App\Models\Crm\PortlinkDeductionGuard::where('invoice_id',$e->id)->sum('commission_deduction');
@@ -250,6 +250,10 @@
                                         </a>
                                     @elseif($e->invoice_type == 5)
                                         <a href="{{route('southBanglaInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    @elseif($e->invoice_type == 6)
+                                        <a href="{{route('islamiBankInvoice.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                     @else
@@ -426,11 +430,11 @@
                             <textarea name="remarks" class="form-control"></textarea>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="buttonDisable" class="btn btn-sm btn-primary" disabled>Save</button>
-                    
+
                 </div>
             </div>
         </form>
@@ -446,18 +450,35 @@
                 <h1 class="modal-title fs-5" id="wasaInvoiceLabel">Select Wasa or One Trip</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body d-flex">
-                <select  class="select2 form-select" name="customer_id"  style="width:400px;" required>
-                    <option value="">Select Customer</option>
-                    @forelse ($customer as $c)
-                    <option value="{{ $c->id }}">{{ $c->name }}</option>
-                    @empty
-                    @endforelse
-                </select>
-                <button type="submit" class="btn btn-sm btn-primary mx-2">Wasa</button>
-                <a class="btn btn-sm btn-primary" href="{{route('oneTripInvoice.create')}}">One Trip</a>
-                <a class="btn btn-sm btn-primary ms-1" href="{{route('portlinkInvoice.create')}}">Portlink</a>
-                <a class="btn btn-sm btn-primary ms-1" href="{{route('southBanglaInvoice.create')}}">South Bangla</a>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select  class="select2 form-select customer_id " name="customer_id"  required id="customer_id" name="customer_id" onchange="handleCustomerChange(this)">
+                            <option value="">Select Customer</option>
+                            @forelse ($customer as $c)
+                            <option value="{{ $c->id }}">{{ $c->name }}</option>
+                            @empty
+                            @endforelse
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-none">
+                        <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()">
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-none">
+                        <select  class="select2 form-select atm_id" name="atm_id" >
+                            <option value="">Select ATM</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4 gap-2">
+                <button disabled type="submit" class="btn btn-sm btn-primary mx-2 col-md-2 wasaBtn">Wasa</button>
+                <button disabled onclick="ibblInvoiceRouteGeneration(this)" type="button" class="btn btn-sm btn-primary col-md-2 ibblBtn">IBBL</button> &nbsp;
+                <a class="btn btn-sm btn-primary col-md-2" href="{{route('oneTripInvoice.create')}}">One Trip</a>
+                    <a class="btn btn-sm btn-primary col-md-2" href="{{route('portlinkInvoice.create')}}">Portlink</a>
+                    <a class="btn btn-sm btn-primary col-md-2" href="{{route('southBanglaInvoice.create')}}">South Bangla</a>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary my-2" data-bs-dismiss="modal">Close</button>
@@ -505,12 +526,13 @@
             },
         });
     }
+
     let customer_id = "{{request()->get('customer_id')}}";
     function vatcalc(v,place){
         if(place=="vat_amount"){
             let rec= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             //alert("{{request()->get('customer_id')}}");
-           
+
             let vat= v ? parseFloat(v) : 0;
             if(customer_id == 21){
                 let actualAmount = (rec/(1+(vat/100)));
@@ -548,7 +570,7 @@
                 let rec= parseFloat(recBefore) - parseFloat(paidByClient);
                 let aamt=(rec*(ait/100));
                 $('#ait_amount').val(aamt.toFixed(2))
-            
+
         }else{
             let recBefore= $('#subAmountInput').val() ? parseFloat($('#subAmountInput').val()) : 0;
             let aamt= $('#ait_amount').val() ? parseFloat($('#ait_amount').val()) : 0;
@@ -567,7 +589,7 @@
         let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
-        
+
         let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
         // Debugging: Log values before calculation
         console.log("Due Amount:", dueAmount);
@@ -691,7 +713,7 @@
             }
             console.log(lastPoNo);
             console.log(amountsArray);
-            
+
             // amountsArray = amountsArray.filter(function(amount) {
             //     return amount !== null && amount !== '';
             // });
@@ -711,7 +733,7 @@
             modal.find('#port_link_commission').val(port_link_commission);
             modal.find('#port_link_less').val(port_link_less);
             modal.find('#port_gross_bill').val(port_gross_bill);
-            
+
 
             var receivedAmountsList = modal.find('#receivedAmountsList');
             var lastPoList = modal.find('#receivedPoNumber');
@@ -765,6 +787,90 @@
                 }
             });
         }
+    }
+
+   function handleCustomerChange(e) {
+        var customerId = $(e).val();
+        // alert(customerId)
+
+        if (customerId == '66') {
+            console.log('Showing branches and ATMs');
+            $('.branch_id').closest('div').removeClass('d-none');
+            $('.atm_id').closest('div').removeClass('d-none');
+            $('.ibblBtn').removeAttr('disabled');
+            $('.wasaBtn').attr('disabled',true);
+
+            // get branches
+            getBranches(customerId);
+        }
+        else if (customerId == '34') {
+            // wasa invoice create
+            $('.wasaBtn').removeAttr('disabled');
+            $('.ibblBtn').attr('disabled',true);
+        }else{
+            console.log('Hiding branches and ATMs');
+            $('.branch_id')?.closest('div').addClass('d-none');
+            $('.atm_id')?.closest('div').addClass('d-none');
+        }
+    }
+
+
+    function getBranches(customerId){
+        $('.branch_id').empty();
+        $('.branch_id').append('<option value="">Select Branch</option>');
+        $.ajax({
+            url: "{{ route('get_ajax_branch') }}",
+            type: "GET",
+            dataType: "json",
+            data: { customerId: customerId },
+            success: function(data){
+                console.log('branch',data);
+                $.each(data, function(key, value){
+                    $('.branch_id').append('<option value="' + value.id + '">' + value.brance_name + '</option>');
+                });
+            },
+            error: function(xhr, status, error){
+                console.log(error);
+            }
+        });
+    }
+
+    function getAtms(){
+        let branchId = $('.branch_id').val();
+        $.ajax({
+            url: "{{ route('get_ajax_atm') }}",
+            type: "GET",
+            dataType: "json",
+            data: { branchId: branchId },
+            success: function(data){
+                console.log('atm',data);
+                $('.atm_id').empty();
+                $('.atm_id').append('<option value="">Select ATM</option>');
+                $.each(data, function(key, value){
+                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                });
+            },
+            error: function(){
+                console.log('error');
+            }
+        });
+    }
+
+    function ibblInvoiceRouteGeneration(e){
+        var customerId = $('.customer_id').val();
+        var branchId = $('.branch_id').val();
+        var atmId = $('.atm_id').val();
+        if (!customerId) {
+            alert("Please select a customer.");
+            return;
+        }
+        var route = @json(route('get_islami_bank_invoice_create', ['customer_id' => 'CUSTOMER_ID']));
+        var finalUrl = route
+            .replace('CUSTOMER_ID', encodeURIComponent(customerId))
+            + '?branch_id=' + encodeURIComponent(branchId || '')
+            + '&atm_id=' + encodeURIComponent(atmId || '');
+
+        window.location.href = finalUrl;
     }
 
 $(document).on('select2:open', () => {

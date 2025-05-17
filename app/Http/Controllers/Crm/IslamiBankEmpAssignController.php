@@ -74,7 +74,7 @@ class IslamiBankEmpAssignController extends Controller
 
             $data = new IslamiBankEmpAssign;
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            $data->company_branch_id = $request->branch_id;
             $data->atm_id = $request->atm_id;
             $data->add_commission = $request->add_commission;
             $data->vat_on_commission = $request->vat_on_commission;
@@ -180,7 +180,7 @@ class IslamiBankEmpAssignController extends Controller
 
             $data = IslamiBankEmpAssign::findOrFail(decrypt($id));
             $data->customer_id = $request->customer_id;
-            $data->branch_id = $request->branch_id;
+            $data->company_branch_id = $request->branch_id;
             $data->atm_id = $request->atm_id;
             $data->add_commission = $request->add_commission;
             $data->vat_on_commission = $request->vat_on_commission;

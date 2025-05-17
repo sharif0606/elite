@@ -181,6 +181,8 @@ class WasaEmployeeAssignController extends Controller
             return back();
         }
     }
+
+    
     public function storeWasaInvoice(Request $request, $id=null)
     {
         //dd($request->all());

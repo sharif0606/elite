@@ -20,6 +20,8 @@ use Toastr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Traits\ImageHandleTraits;
+use App\Models\Crm\IslamiBankInvoice;
+use App\Models\Crm\IslamiBankInvoiceDetails;
 use App\Models\Crm\OnetripInvoiceDetails;
 use App\Models\Crm\PortlinkDeductionGuard;
 use App\Models\Crm\PortlinkDeductionSupervisor;
@@ -95,8 +97,8 @@ class InvoiceGenerateController extends Controller
             $data->bill_date = $request->bill_date;
             $data->vat = $request->vat;
             $data->vat_switch = $request->vat_switch;
-            $data->sub_total_amount = $request->sub_total_amount; //this total_tk is required for show as subtotal in payment if vat_switch value is 1
-            $data->total_tk = $request->total_tk; //this total_tk is required for show as subtotal in payment
+            $data->sub_total_amount = $request->sub_total_amount;
+            $data->total_tk = $request->total_tk;
             $data->vat_taka = $request->vat_taka;
             $data->grand_total = $request->grand_total;
             $data->footer_note = $request->footer_note;
@@ -156,7 +158,7 @@ class InvoiceGenerateController extends Controller
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
-    
+
     public function show(Request $request,$id)
     {
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
@@ -207,7 +209,7 @@ class InvoiceGenerateController extends Controller
     }
     public function getSingleInvoice5(Request $request,$id)
     {
-       
+
         $headershow=$request->header;
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
@@ -233,8 +235,17 @@ class InvoiceGenerateController extends Controller
         $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
         $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
         $wasa=WasaInvoice::where('invoice_id',$invoice_id->id)->first();
-        return view('invoice_generate.single_show7',compact('invoice_id','branch','wasa','headershow'));
+        $invoiceNo = '';
+        if (!$wasa) {
+            $wasa = IslamiBankInvoice::with("details")->where('invoice_id', $invoice_id->id)->first();
+            $invoiceNo = $wasa->bill_date ? "ESSL/IBBL/" . date('y/m-d', strtotime($wasa->bill_date)) : "ESSL/IBBL/" . date('y/m-d');
+            // dd($invoiceNo);
+        } else {
+            $invoiceNo = $invoice_id->customer?->invoice_number . "/" . \Carbon\Carbon::parse($invoice_id->end_date)->format('y') . "/" . $invoice_id->id;
+        }
+        return view('invoice_generate.single_show7', compact('invoice_id', 'branch', 'wasa', 'headershow', 'invoiceNo'));
     }
+
     public function getSingleInvoice8(Request $request, $id)
     {
         $headershow=$request->header;
@@ -352,6 +363,8 @@ class InvoiceGenerateController extends Controller
                     InvoiceGenerateDetails::where('invoice_id',$invoice_id)->delete();
                     WasaInvoice::where('invoice_id',$invoice_id)->delete();
                     WasaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
+                    IslamiBankInvoice::where('invoice_id', $invoice_id)->delete();
+                    IslamiBankInvoiceDetails::where('invoice_id', $invoice_id)->delete();
                     InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
                     OnetripInvoice::where('invoice_id',$invoice_id)->delete();
                     OnetripInvoiceDetails::where('invoice_id',$invoice_id)->delete();
@@ -364,7 +377,7 @@ class InvoiceGenerateController extends Controller
                     SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
 
                     DB::commit();
-                    \LogActivity::addToLog('Invoice Delete',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+                    \App\Helpers\LogActivity::addToLog('Invoice Delete', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
                     return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Delete!', 'Success', ["positionClass" => "toast-top-right"]));
                 }else
                     return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
@@ -476,8 +489,8 @@ class InvoiceGenerateController extends Controller
                 ($receivedAmount->less_paid_honor ?? 0) +
                 ($receivedAmount->vat_amount ?? 0)
             );
-        
-           // Calculate the due amount
+
+            // Calculate the due amount
             $dueAmount = round($invoice->grand_total - $receivedAmountValue);
 
             // If due amount is greater than zero, add this invoice to the result array

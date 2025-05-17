@@ -26,7 +26,7 @@ return new class extends Migration
             // $table->string('account_no')->nullable();
             // $table->decimal('duty_rate', 10, 2)->default(0)->nullable();
             $table->decimal('duty', 10, 2)->default(0)->nullable();
-            // $table->decimal('salary_amount', 10, 2)->default(0)->nullable();
+            $table->decimal('salary_amount', 10, 2)->default(0)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('shift')->comment('1=A-Shift, 2=B-Shift, 3=C-Shift')->nullable();

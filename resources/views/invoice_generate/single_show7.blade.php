@@ -8,7 +8,7 @@
     <title>{{ $invoice_id->customer?->name }} for {{ \Carbon\Carbon::parse($invoice_id->bill_date)->format('d/m/Y') }}</title>
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/logo.png') }}" type="image/png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
 </head>
 <style>
     @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
@@ -131,7 +131,7 @@
     @endif
         <tr>
             <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
-            <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
+            <td style="padding-bottom: 8px;">{{ $invoiceNo ?? '' }}</td>
         </tr>
         <tr>
             <td width="15%">To: @if($branch?->billing_person != '') <br>&nbsp;&nbsp; @else @endif</td>
@@ -146,7 +146,10 @@
                     @endif
                 </p>
                 <p style="margin:0;">
-                    <b>{{ $invoice_id->customer?->name }}</b>
+                    <b>{{ $invoice_id->customer?->name }}</b> </br>
+                    {{-- {{ $invoice_id->customer?->id }} {{ $invoice_id->company_branch_id }} --}}
+                    <b>{{ $branch?->brance_name }}</b></br>
+                    <b>{{ $invoice_id->atm?->atm }}</b>
                 </p>
             </td>
             @if($invoice_id->customer?->bin)
@@ -177,7 +180,7 @@
             <tr>
                 <td style="padding-top: 8px;" width="15%">Attention:@if($invoice_id->customer?->attention_details != '')<br>&nbsp;&nbsp; @endif</td>
                 <td colspan="2" style="padding-top: 8px;"><b>{{ $invoice_id->customer?->attention }}</b><br>{{ $invoice_id->customer?->attention_details }}</td>
-                
+
             </tr>
             @endif
         @else
@@ -234,6 +237,35 @@
                                 {{ $de->account_no }}
                             @else
                                 {{ $de->employee ? $de->employee->second_ac_no : '' }}
+                            @endif
+                        </td>
+                        <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
+                    </tr>
+                @endforeach
+            @elseif ($wasa?->details)
+                @foreach ($wasa->details as $de)
+                    <tr>
+                        <td style="text-align: center;">{{ ++$loop->index }}</td>
+                        <td style="text-align: center;">{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
+                        <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
+                        <td style="text-align: center;">
+                            {{ $invoice_id->atm?->atm }}
+                            @if ($invoice_id->customer?->customer_type == 0)
+                                {!! nl2br(e(str_replace('^', "\n", $invoice_id->customer?->address))) !!}
+                            @else
+                                @if($branch?->billing_address)
+                                    {!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}
+                                @endif
+                            @endif
+                        </td>
+                        <td style="text-align: center;">{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
+                        <td style="text-align: center;">{{ $de->duty }}</td>
+                        <td style="text-align: center;">
+                            {{-- {{ $de}} --}}
+                            @if ($de->account_no != '')
+                                {{ $de->account_no }}
+                            @else
+                                {{ $de->employee ? $de->employee->bn_ac_no : '' }}
                             @endif
                         </td>
                         <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
@@ -316,7 +348,7 @@
             {{ $footersetting1?->designation }} <br>
             {{ $footersetting1?->phone }}
         </div>
-        
+
         <div style="flex: 1; text-align: center; padding-right: 10px;">
             {{-- Align center of the body --}}
             <div style="display: inline-block; text-align: left;">
@@ -330,7 +362,7 @@
                 {{ $footersetting2?->phone }}
             </div>
         </div>
-        
+
         <div style="flex: 1; text-align: right;">
             {{-- Align right side of the body but content left-aligned --}}
             <div style="display: inline-block; text-align: left;">
