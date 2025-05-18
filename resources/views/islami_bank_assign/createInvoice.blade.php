@@ -100,23 +100,28 @@
                                                     $ot_salary = 0;
 
                                                     // get salary from employeeRateDetails
-                                                    $salaryData = DB::table('employee_rates')
-                                                    ->join('employee_rate_details','employee_rate_details.employee_rate_id','employee_rates.id')
-                                                    ->select('employee_rate_details.*','employee_rates.customer_id','employee_rates.branch_id','employee_rates.atm_id')
-                                                    ->where('employee_rates.customer_id', $IBBLAssign->customer_id)
-                                                    ->where('employee_rates.branch_id', $IBBLAssign->company_branch_id)
-                                                    ->where('employee_rate_details.employee_id', $d->employee_id)
-                                                    ->where('employee_rate_details.atm_id', $IBBLAssign->atm_id)
-                                                    ->first();
+                                                    // $salaryData = DB::table('employee_rates')
+                                                    // ->join('employee_rate_details','employee_rate_details.employee_rate_id','employee_rates.id')
+                                                    // ->select('employee_rate_details.*','employee_rates.customer_id','employee_rates.branch_id','employee_rates.atm_id')
+                                                    // ->where('employee_rates.customer_id', $IBBLAssign->customer_id)
+                                                    // ->where('employee_rates.branch_id', $IBBLAssign->company_branch_id)
+                                                    // ->where('employee_rate_details.employee_id', $d->employee_id)
+                                                    // ->where('employee_rate_details.atm_id', $IBBLAssign->atm_id)
+                                                    // ->first();
 
                                                     // echo $IBBLAssign->company_branch_id;
                                                     // echo "<br>";
                                                     // echo $d->employee_id;
                                                     // echo "<br>";
                                                     // print_r($salaryData);
+
+                                                    $salaryData = DB::table('employee_assign_details')
+                                                    ->join("employee_assigns","employee_assigns.id","employee_assign_details.employee_assign_id")
+                                                    ->where("customer_id", 66)
+                                                    ->first();
                                                     if($salaryData){
-                                                        $salary = $salaryData->duty_rate;
-                                                        $ot_salary = $salaryData->ot_rate;
+                                                        $salary = $salaryData->rate;
+                                                        // $ot_salary = $salaryData->ot_rate;
                                                         $total_salary += $salary;
                                                     }
                                                     // else{
@@ -168,15 +173,15 @@
                                                 $aitOnSubtotal=($total_salary)*($IBBLAssign->ait_on_subtotal/100);
                                                 $grandTotal=($total_salary+$comissionTk+$vatAitTakaCommision+$vatOnSubtotal+$aitOnSubtotal);
                                             @endphp
-                                            <tr style="text-align: center;">
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">Add: Commission {{ $IBBLAssign->add_commission }}%</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control add_commission_tk" name="add_commission_tk" value="{{ number_format($comissionTk, 2, '.', '') }}">
                                                     <input class="" type="hidden" name="add_commission_percentage" value="{{ $IBBLAssign->add_commission }}">
                                                 </td>
-                                            </tr>
-                                            <tr style="text-align: center;">
+                                            </tr> --}}
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $IBBLAssign->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $IBBLAssign->ait_on_commission }}</span> %)AIT = {{ $IBBLAssign->vat_on_commission+$IBBLAssign->ait_on_commission }}% Commision</th>
                                                 <td>
@@ -187,20 +192,20 @@
                                                     <input class="" type="hidden" name="ait_commission_percentage" value="{{ $IBBLAssign->ait_on_commission }}">
                                                     <input class="" type="hidden" name="ait_commission_percentage_tk" value="{{ $AitTkCommission }}">
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $IBBLAssign->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control vat_tk_subtotal" name="vat_tk_subtotal" value="{{ number_format($vatOnSubtotal, 2, '.', '') }}"></td>
                                             </tr>
-                                            <tr style="text-align: center;">
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $IBBLAssign->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control ait_tk_subtotal" name="ait_tk_subtotal" value="{{ number_format($aitOnSubtotal, 2, '.', '') }}">
                                                     <input class="" type="hidden" name="ait_on_subtotal" value="{{ $IBBLAssign->ait_on_subtotal }}">
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">Total</th>
