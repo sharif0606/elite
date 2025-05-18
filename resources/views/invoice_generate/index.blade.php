@@ -452,7 +452,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6 offset-md-3">
                         <select  class="select2 form-select customer_id " name="customer_id"  required id="customer_id" name="customer_id" onchange="handleCustomerChange(this)">
                             <option value="">Select Customer</option>
                             @forelse ($customer as $c)
@@ -461,7 +461,7 @@
                             @endforelse
                         </select>
                     </div>
-                    <div class="col-md-4 d-none">
+                    {{-- <div class="col-md-4 d-none">
                         <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()">
                             <option value="">Select Branch</option>
                         </select>
@@ -470,7 +470,7 @@
                         <select  class="select2 form-select atm_id" name="atm_id" >
                             <option value="">Select ATM</option>
                         </select>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="row mt-4 gap-2">
                 <button disabled type="submit" class="btn btn-sm btn-primary mx-2 col-md-2 wasaBtn">Wasa</button>

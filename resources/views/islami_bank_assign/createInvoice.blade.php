@@ -27,7 +27,22 @@
                                     <input readonly class="form-control customer_id" id="customer_id" type="hidden" name="customer_id" value="{{ $IBBLAssign->customer_id }}">
                                     <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
                                 </div>
-                                <div class="col-lg-4 mt-2">
+                                 <div class="col-md-4">
+                                    <label for="">Branch Name</label> :
+                                    <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()"> required
+                                        <option value="">Select Branch</option>
+                                        @foreach ($branch as $b)
+                                            <option value="{{ $b->id }}">{{ $b->brance_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="">ATM</label> :
+                                    <select  class="select2 form-select atm_id" name="atm_id" required >
+                                        <option value="">Select ATM</option>
+                                    </select>
+                                </div>
+                                {{-- <div class="col-lg-4 mt-2">
                                     <label for="">Branch Name</label> : <strong>{{ $IBBLAssign->branch->brance_name }}</strong>
                                     <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ request()->input('branch_id') }}">
                                     <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
@@ -36,7 +51,7 @@
                                     <label for="">ATM</label> : <strong>{{ $IBBLAssign->atm->atm }} </strong>
                                     <input readonly class="form-control atm_id" id="atm_id" type="hidden" name="atm_id" value="{{ request()->input('atm_id') }}">
                                     <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-4 mt-2">
                                     <label for=""><b>Branch Name</b></label> : {{ $branch?->brance_name }}
                                     <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ $customer->id }}">
@@ -228,7 +243,26 @@
 @endsection
 @push("scripts")
 <script>
-
+function getAtms(){
+        let branchId = $('.branch_id').val();
+        $.ajax({
+            url: "{{ route('get_ajax_atm') }}",
+            type: "GET",
+            dataType: "json",
+            data: { branchId: branchId },
+            success: function(data){
+                console.log('atm',data);
+                $('.atm_id').empty();
+                $('.atm_id').append('<option value="">Select ATM</option>');
+                $.each(data, function(key, value){
+                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                });
+            },
+            error: function(){
+                console.log('error');
+            }
+        });
+    }
 
 </script>
 @endpush

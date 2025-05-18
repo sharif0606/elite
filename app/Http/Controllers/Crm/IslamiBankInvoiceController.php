@@ -53,16 +53,17 @@ class IslamiBankInvoiceController extends Controller
         $atm_id = $request->query('atm_id');
         $IBBLAssign = IslamiBankEmpAssign::with('branch', 'atm')
             ->where('customer_id', $customer_id)
-            ->where('company_branch_id', $branch_id)
-            ->where('atm_id', $atm_id)
+            // ->where('company_branch_id', $branch_id)
+            // ->where('atm_id', $atm_id)
             ->first();
         // dd($IBBLAssign);
         if ($IBBLAssign) {
             $jobpost = JobPost::get();
             $customer = Customer::where('id', $IBBLAssign->customer_id)->first();
+            $branch = CustomerBrance::where('customer_id', $IBBLAssign->customer_id)->get();
             $atm = Atm::where('id', $IBBLAssign->atm_id)->get();
             $employee = Employee::select('id', 'admission_id_no', 'en_applicants_name')->get();
-            return view('islami_bank_assign.createInvoice', compact('jobpost', 'customer', 'IBBLAssign', 'atm', 'employee'));
+            return view('islami_bank_assign.createInvoice', compact('jobpost', 'customer', 'IBBLAssign', 'branch', 'atm', 'employee'));
         } else {
             return back();
         }
