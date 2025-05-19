@@ -273,10 +273,13 @@ function getAtms(){
             data: { customerId: customerId, branchId: branchId, atmId: atmId },
             success: function(data){
                 if(data.status){
+
+                    if(!data.details){
+                        alert("No data Founds");
+                        return;
+                    }
                     $('.main-form').removeClass('d-none');
-
                     $('#IBBLAssignassing').empty();
-
                     if(data.details){
                         $.each(data.details, function(index, d){
                             $('#IBBLAssignassing').append(`

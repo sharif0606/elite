@@ -29,7 +29,7 @@
                                     <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()">
                                         <option value="">Select Branch</option>
                                          @forelse ($branch as $b)
-                                        <option selected value="{{ $b->id }}" @selected($islamiBankEmpAssign->branch_id == $b->id)>{{ $b->brance_name }}</option>
+                                        <option value="{{ $b->id }}" @selected($islamiBankEmpAssign->company_branch_id == $b->id)>{{ $b->brance_name }}</option>
                                         @empty
                                         @endforelse
                                     </select>
