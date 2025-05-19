@@ -193,8 +193,10 @@ class IslamiBankInvoiceController extends Controller
         $inv = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
         $invIslamiBank = IslamiBankInvoice::with('customer', 'branch', 'atm')->where('invoice_id', $inv->id)->first();
         $invIslamiBankDetail = IslamiBankInvoiceDetails::where('islami_bank_invoice_id', $invIslamiBank->id)->get();
+        $branch = CustomerBrance::where('customer_id', $invIslamiBank->customer_id)->get();
+        $atm = Atm::where('branch_id', $invIslamiBank->company_branch_id)->get();
         // dd($invIslamiBank);
-        return view('islami_bank_assign.editInvoice', compact('inv', 'invIslamiBank', 'invIslamiBankDetail'));
+        return view('islami_bank_assign.editInvoice', compact('inv', 'invIslamiBank', 'invIslamiBankDetail', 'branch', 'atm'));
 
         // return view('crm.islami_bank_invoice.edit');
     }

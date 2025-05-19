@@ -46,26 +46,26 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3 mt-2">
+                                {{-- <div class="col-lg-3 mt-2">
                                     <label for=""><b>Add: Commission(%)</b></label>
                                     <input required class="form-control add_commission" step="0.01" type="number" name="add_commission" value="{{ $islamiBankEmpAssign->add_commission }}" placeholder="Add: Commission">
-                                </div>
-                                <div class="col-lg-3 mt-2">
+                                </div> --}}
+                                {{-- <div class="col-lg-3 mt-2">
                                     <label for=""><b>VAT on Commission(%)</b></label>
                                     <input required class="form-control vat_on_commission" step="0.01" type="number" name="vat_on_commission" value="{{ $islamiBankEmpAssign->vat_on_commission }}" placeholder="VAT on Commission">
-                                </div>
-                                <div class="col-lg-3 mt-2">
+                                </div> --}}
+                                {{-- <div class="col-lg-3 mt-2">
                                     <label for=""><b>AIT on Commission(%)</b></label>
                                     <input required class="form-control ait_on_commission" step="0.01" type="number" name="ait_on_commission" value="{{ $islamiBankEmpAssign->ait_on_commission }}" placeholder="AIT on Commission">
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-3 mt-2">
                                     <label for=""><b>VAT on Sub-Total(%)</b></label>
                                     <input required class="form-control vat_on_subtotal" step="0.01" type="number" name="vat_on_subtotal" value="{{ $islamiBankEmpAssign->vat_on_subtotal }}" placeholder="VAT on Sub-Total">
                                 </div>
-                                <div class="col-lg-3 mt-2">
+                                {{-- <div class="col-lg-3 mt-2">
                                     <label for=""><b>AIT on Sub-Total(%)</b></label>
                                     <input required class="form-control ait_on_subtotal" step="0.01" type="number" name="ait_on_subtotal" value="{{ $islamiBankEmpAssign->ait_on_subtotal }}" placeholder="AIT on Sub-Total">
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-3 mt-2">
                                     <label for=""><b>Start Date</b></label>
                                     <input required class="form-control start_date" type="date" name="start_date" value="{{ $islamiBankEmpAssign->start_date }}">

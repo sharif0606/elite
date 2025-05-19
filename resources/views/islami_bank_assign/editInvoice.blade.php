@@ -26,15 +26,23 @@
                                     <input readonly class="form-control customer_id" id="customer_id" type="hidden" name="customer_id" value="{{ $invIslamiBank->customer_id }}">
                                     <input class="" type="hidden" name="vat_on_subtotal" value="{{ $invIslamiBank->vat_on_subtotal }}">
                                 </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for="">Branch Name</label> : <strong>{{ $invIslamiBank->branch->brance_name }}</strong>
-                                    <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ $invIslamiBank->company_branch_id }}">
-                                    <input class="" type="hidden" name="vat_on_subtotal" value="{{ $invIslamiBank->vat_on_subtotal }}">
+                                <div class="col-md-4">
+                                    <label for="">Branch Name</label> :
+                                    <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()"> required
+                                        <option value="">Select Branch</option>
+                                        @foreach ($branch as $b)
+                                            <option value="{{ $b->id }}" {{ $invIslamiBank->company_branch_id == $b->id ? 'selected' : '' }}>{{ $b->brance_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for="">ATM</label> : <strong>{{ $invIslamiBank->atm->atm }} </strong>
-                                    <input readonly class="form-control atm_id" id="atm_id" type="hidden" name="atm_id" value="{{ $invIslamiBank->atm_id }}">
-                                    <input class="" type="hidden" name="vat_on_subtotal" value="{{ $invIslamiBank->vat_on_subtotal }}">
+                                <div class="col-md-4">
+                                    <label for="">ATM</label> :
+                                    <select  class="select2 form-select atm_id" name="atm_id" required >
+                                        <option value="">Select ATM</option>
+                                        @foreach ($atm as $a)
+                                            <option value="{{ $a->id }}" {{ $invIslamiBank->atm_id == $a->id ? 'selected' : '' }}>{{ $a->atm }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="row mt-4">
                                     <div class="offset-lg-4 col-lg-4 mt-2">
@@ -102,13 +110,18 @@
                                                     $ot_salary = 0;
 
                                                     // get salary from employeeRateDetails
-                                                    $salaryData = DB::table('employee_rates')
-                                                    ->join('employee_rate_details','employee_rate_details.employee_rate_id','employee_rates.id')
-                                                    ->select('employee_rate_details.*','employee_rates.customer_id','employee_rates.branch_id','employee_rates.atm_id')
-                                                    ->where('employee_rates.customer_id', $invIslamiBank->customer_id)
-                                                    ->where('employee_rates.branch_id', $invIslamiBank->company_branch_id)
-                                                    ->where('employee_rate_details.employee_id', $d->employee_id)
-                                                    ->where('employee_rate_details.atm_id', $invIslamiBank->atm_id)
+                                                    // $salaryData = DB::table('employee_rates')
+                                                    // ->join('employee_rate_details','employee_rate_details.employee_rate_id','employee_rates.id')
+                                                    // ->select('employee_rate_details.*','employee_rates.customer_id','employee_rates.branch_id','employee_rates.atm_id')
+                                                    // ->where('employee_rates.customer_id', $invIslamiBank->customer_id)
+                                                    // ->where('employee_rates.branch_id', $invIslamiBank->company_branch_id)
+                                                    // ->where('employee_rate_details.employee_id', $d->employee_id)
+                                                    // ->where('employee_rate_details.atm_id', $invIslamiBank->atm_id)
+                                                    // ->first();
+
+                                                     $salaryData = DB::table('employee_assign_details')
+                                                    ->join("employee_assigns","employee_assigns.id","employee_assign_details.employee_assign_id")
+                                                    ->where("customer_id", 66)
                                                     ->first();
 
                                                     // echo $IBBLAssign->company_branch_id;
@@ -116,9 +129,10 @@
                                                     // echo $d->employee_id;
                                                     // echo "<br>";
                                                     // print_r($salaryData);
+
                                                     if($salaryData){
-                                                        $salary = $salaryData->duty_rate;
-                                                        $ot_salary = $salaryData->ot_rate;
+                                                        $salary = $salaryData->rate;
+                                                        // $ot_salary = $salaryData->ot_rate;
                                                         $total_salary += $salary;
                                                     }
                                                     // else{
@@ -170,15 +184,15 @@
                                                 $aitOnSubtotal=($total_salary)*($invIslamiBank->ait_on_subtotal/100);
                                                 $grandTotal=($total_salary+$comissionTk+$vatAitTakaCommision+$vatOnSubtotal+$aitOnSubtotal);
                                             @endphp
-                                            <tr style="text-align: center;">
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">Add: Commission {{ $invIslamiBank->add_commission }}%</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control add_commission_tk" name="add_commission_tk" value="{{ number_format($comissionTk, 2, '.', '') }}">
                                                     <input class="" type="hidden" name="add_commission_percentage" value="{{ $invIslamiBank->add_commission }}">
                                                 </td>
-                                            </tr>
-                                            <tr style="text-align: center;">
+                                            </tr> --}}
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $invIslamiBank->vat_on_commission }}</span> %) VAT + (<span class="vat_percent">{{ $invIslamiBank->ait_on_commission }}</span> %)AIT = {{ $invIslamiBank->vat_on_commission+$invIslamiBank->ait_on_commission }}% Commision</th>
                                                 <td>
@@ -189,20 +203,20 @@
                                                     <input class="" type="hidden" name="ait_commission_percentage" value="{{ $invIslamiBank->ait_on_commission }}">
                                                     <input class="" type="hidden" name="ait_commission_percentage_tk" value="{{ $AitTkCommission }}">
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $invIslamiBank->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
                                                 <td><input readonly type="text" class="form-control vat_tk_subtotal" name="vat_tk_subtotal" value="{{ number_format($vatOnSubtotal, 2, '.', '') }}"></td>
                                             </tr>
-                                            <tr style="text-align: center;">
+                                            {{-- <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $invIslamiBank->ait_on_subtotal }}</span> %) AIT on Sub Total</th>
                                                 <td>
                                                     <input readonly type="text" class="form-control ait_tk_subtotal" name="ait_tk_subtotal" value="{{ number_format($aitOnSubtotal, 2, '.', '') }}">
                                                     <input class="" type="hidden" name="ait_on_subtotal" value="{{ $invIslamiBank->ait_on_subtotal }}">
                                                 </td>
-                                            </tr>
+                                            </tr> --}}
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">Total</th>
@@ -225,5 +239,26 @@
 @endsection
 @push("scripts")
 <script>
+
+    function getAtms(){
+        let branchId = $('.branch_id').val();
+        $.ajax({
+            url: "{{ route('get_ajax_atm') }}",
+            type: "GET",
+            dataType: "json",
+            data: { branchId: branchId },
+            success: function(data){
+                console.log('atm',data);
+                $('.atm_id').empty();
+                $('.atm_id').append('<option value="">Select ATM</option>');
+                $.each(data, function(key, value){
+                    $('.atm_id').append('<option value="' + value.id + '">' + value.atm + '</option>');
+                });
+            },
+            error: function(){
+                console.log('error');
+            }
+        });
+    }
 </script>
 @endpush
