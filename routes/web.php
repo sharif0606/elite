@@ -307,6 +307,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
     // !ISLAMI BANK GENERATE INVOICE
     Route::resource('islamiBankInvoice', islamiBankInvoice::class);
     Route::get('get-islami-bank-invoice-create/{customer_id}', [islamiBankInvoice::class, 'createInvoice'])->name('get_islami_bank_invoice_create');
+    Route::get('get-islami-bank-invoice-employee', [islamiBankInvoice::class, 'getEmployee'])->name('get_islami_bank_invoice_employee');
 
     Route::get('/get-employee', [empatten::class, 'getEmployee'])->name('empatt.getEmployee');
         /* ==  Customer Wise Job Post Data == */
@@ -314,7 +315,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function(){
          /* ==  Customer Wise Employee Salary Designation== */
          Route::get('/get-employee-salary-post', [employeeRate::class, 'getEmployeeRate'])->name('emp.getEmployeeRate');
         Route::get('/wasa-get-employee', [wasaEmployeeAsign::class, 'wasaGetEmployee'])->name('wasaGetEmployee');
-    Route::get('/islami-bank-get-employee', [islamiBankEmpAssign::class, 'islamiBankGetEmployee'])->name('islamiBankGetEmployee');
+    Route::get('/islami-bank-get-employee', [islamiBankInvoice::class, 'islamiBankGetEmployee'])->name('islamiBankGetEmployee');
     Route::get('/islami-bank-get-rate', [islamiBankEmpAssign::class, 'islamiBankGetRate'])->name('islamiBankGetRate');
         Route::get('/get-employee-duty-ot-rate', [customerduty::class, 'getEmployeeDuty'])->name('get_employeedata');
         Route::get('/get-employee-hourewise-duty-ot-rate', [customerduty::class, 'getDutyOtRateHourWise'])->name('get_employeedata_hourewise');

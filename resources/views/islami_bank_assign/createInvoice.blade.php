@@ -23,11 +23,11 @@
                             <input type="hidden" name="zone_id" id="zone_id" value="{{ $IBBLAssign->branch->zone_id ?? $IBBLAssign->customer->zone_id}}">
                             <div class="row p-2 mt-4">
                                 <div class="col-lg-4 mt-2">
-                                    <label for="">Customer Name</label> : <strong>{{ $IBBLAssign->customer->name }}</strong>
+                                    <label for="">Customer Name</label> : <span class="form-control"> <strong>{{ $IBBLAssign->customer->name }}</strong> </span>
                                     <input readonly class="form-control customer_id" id="customer_id" type="hidden" name="customer_id" value="{{ $IBBLAssign->customer_id }}">
                                     <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
                                 </div>
-                                 <div class="col-md-4">
+                                 <div class="col-md-4 mt-2">
                                     <label for="">Branch Name</label> :
                                     <select class="form-select branch_id select2" id="branch_id" name="branch_id" onchange="getAtms()"> required
                                         <option value="">Select Branch</option>
@@ -36,26 +36,22 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mt-2">
                                     <label for="">ATM</label> :
                                     <select  class="select2 form-select atm_id" name="atm_id" required >
                                         <option value="">Select ATM</option>
                                     </select>
                                 </div>
-                                {{-- <div class="col-lg-4 mt-2">
-                                    <label for="">Branch Name</label> : <strong>{{ $IBBLAssign->branch->brance_name }}</strong>
-                                    <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ request()->input('branch_id') }}">
-                                    <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 offset-md-4">
+                                    <button type="button" class="btn btn-primary mt-2 d-flex justify-content-center text-center" onclick="getEmployee()">Get Employee</button>
                                 </div>
-                                <div class="col-lg-4 mt-2">
-                                    <label for="">ATM</label> : <strong>{{ $IBBLAssign->atm->atm }} </strong>
-                                    <input readonly class="form-control atm_id" id="atm_id" type="hidden" name="atm_id" value="{{ request()->input('atm_id') }}">
-                                    <input class="" type="hidden" name="vat_on_subtotal" value="{{ $IBBLAssign->vat_on_subtotal }}">
-                                </div> --}}
-                                {{-- <div class="col-lg-4 mt-2">
-                                    <label for=""><b>Branch Name</b></label> : {{ $branch?->brance_name }}
-                                    <input readonly class="form-control branch_id" id="branch_id" type="hidden" name="branch_id" value="{{ $customer->id }}">
-                                </div> --}}
+                            </div>
+                            {{-- main form --}}
+                            <div class="main-form d-none">
+
+                            <div class="row">
                                 <div class="row mt-4">
                                     <div class="offset-lg-4 col-lg-4 mt-2">
                                         <label for=""><b>Bill Date</b></label>
@@ -233,6 +229,7 @@
                             <div class="d-flex justify-content-end my-2">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -264,5 +261,55 @@ function getAtms(){
         });
     }
 
+    function getEmployee(){
+        let customerId = $('.customer_id').val();
+        let branchId = $('.branch_id').val();
+        let atmId = $('.atm_id').val();
+
+        $.ajax({
+            url: "{{ route('islamiBankGetEmployee') }}",
+            type: "GET",
+            dataType: "json",
+            data: { customerId: customerId, branchId: branchId, atmId: atmId },
+            success: function(data){
+                if(data.status){
+                    $('.main-form').removeClass('d-none');
+
+                    $('#IBBLAssignassing').empty();
+
+                    if(data.details){
+                        $.each(data.details, function(index, d){
+                            $('#IBBLAssignassing').append(`
+                                <tr>
+                                    <td scope="row">${index + 1}</td>
+                                    <td>
+                                        ${d.employee.admission_id_no ?? ''}
+                                        <input type="hidden" name="employee_id[]" value="${d.employee_id}">
+                                    </td>
+                                    <td>
+                                        ${d.job_post.name ?? ''}
+                                        <input type="hidden" name="job_post_id[]" value="${d.job_post.id}">
+                                    </td>
+                                    <td>
+                                        <input readonly class="form-control input_css employee_name" type="text" value="${d.employee.en_applicants_name}" placeholder="Employee Name">
+                                    </td>
+                                    <td>
+                                        <input required class="form-control input_css" type="text" name="duty_rate[]" value="${d.employee.bn_parm_phone_my}">
+                                    </td>
+                                    <td>
+                                        <input required class="form-control input_css" type="text" name="duty[]" value="${d.duty}" placeholder="Duty">
+                                    </td>
+                                    <td>
+                                        <input class="form-control input_css salary_amount" type="text" name="salary_amount[]" value="${data.salary}" placeholder="Salary Amount">
+                                    </td>
+                                </tr>
+                            `);
+                        });
+                    }
+                }
+            }
+
+        });
+    }
 </script>
 @endpush

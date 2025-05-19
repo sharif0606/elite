@@ -333,4 +333,33 @@ class IslamiBankInvoiceController extends Controller
         $invoice->delete();
         return redirect()->back()->with(Toastr::success('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
+
+    public function islamiBankGetEmployee(Request $request)
+    {
+        $branch_id = $request->query('branchId');
+        $atm_id = $request->query('atmId');
+
+        $IBBLAssign = IslamiBankEmpAssign::with('branch', 'atm', 'details.employee', 'details.jobPost')
+            ->where('customer_id', 66)
+            ->where('company_branch_id', $branch_id)
+            ->where('atm_id', $atm_id)
+            ->first();
+
+        $salaryData = DB::table('employee_assign_details')
+            ->join("employee_assigns", "employee_assigns.id", "employee_assign_details.employee_assign_id")
+            ->where("customer_id", 66)
+            ->first();
+
+        return response()->json([
+            'data' => $IBBLAssign,
+            'status' => true,
+            'message' => 'Employee data fetched successfully',
+            // 'branch' => $IBBLAssign?->branch,
+            // 'atm' => $IBBLAssign?->atm,
+            'details' => $IBBLAssign?->details,
+            'salary' => $salaryData->rate,
+            // 'request' => $request->all(),
+            // 'query' => $request->query(),
+        ]);
+    }
 }
