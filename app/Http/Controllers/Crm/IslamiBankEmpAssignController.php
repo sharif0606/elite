@@ -148,7 +148,7 @@ class IslamiBankEmpAssignController extends Controller
             ->orderBy('brance_name', 'asc')
             ->get();
         $employee = Employee::select('id', 'admission_id_no', 'en_applicants_name')->get();
-        $atms = Atm::where('branch_id', $islamiBankEmpAssign->branch_id)->orderBy('atm', 'asc')->get();
+        $atms = Atm::where('branch_id', $islamiBankEmpAssign->company_branch_id)->orderBy('atm', 'asc')->get();
         // dd($islamiBankEmpAssign);
         return view('islami_bank_assign.edit', compact('customer', 'jobpost', 'employee', 'branch', 'islamiBankEmpAssign', 'atms'));
     }
