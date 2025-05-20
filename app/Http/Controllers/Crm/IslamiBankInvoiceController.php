@@ -134,6 +134,7 @@ class IslamiBankInvoiceController extends Controller
                             $invoiceDetail->atm_id = $request->atm_id;
                             $invoiceDetail->employee_id = $request->employee_id[$key];
                             $invoiceDetail->job_post_id = $request->job_post_id[$key];
+                            $invoiceDetail->shift = $request->shift[$key];
                             // $invoiceDetail->area = $request->area[$key];
                             // $invoiceDetail->account_no = $request->account_no[$key];
                             // $invoiceDetail->duty_rate = $request->duty_rate[$key];
@@ -272,6 +273,7 @@ class IslamiBankInvoiceController extends Controller
                         $invoiceDetail = new IslamiBankInvoiceDetails();
                         $invoiceDetail->islami_bank_invoice_id = $invoice->id;
                         $invoiceDetail->invoice_id = $data->id;
+                        $invoiceDetail->shift = $request->shift[$key] ?? 0;
                         $invoiceDetail->atm_id = $request->atm_id;
                         $invoiceDetail->employee_id = $value;
                         $invoiceDetail->job_post_id = $request->job_post_id[$key] ?? null;
@@ -349,6 +351,9 @@ class IslamiBankInvoiceController extends Controller
             ->join("employee_assigns", "employee_assigns.id", "employee_assign_details.employee_assign_id")
             ->where("customer_id", 66)
             ->first();
+        $sub_total_salary = $salaryData->rate * $IBBLAssign?->details->count();
+        $vat_on_subtotal = $sub_total_salary * $IBBLAssign?->vat_on_subtotal / 100;
+        $grand_total = $sub_total_salary + $vat_on_subtotal;
 
         return response()->json([
             'data' => $IBBLAssign,
@@ -358,6 +363,9 @@ class IslamiBankInvoiceController extends Controller
             // 'atm' => $IBBLAssign?->atm,
             'details' => $IBBLAssign?->details,
             'salary' => $salaryData->rate,
+            'sub_total_salary' => $sub_total_salary,
+            'vat_on_subtotal' => $vat_on_subtotal,
+            'grand_total' => $grand_total,
             // 'request' => $request->all(),
             // 'query' => $request->query(),
         ]);

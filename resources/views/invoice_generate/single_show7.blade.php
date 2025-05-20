@@ -212,18 +212,19 @@
                 @endphp
                 {!! $bolded_note !!}
             </div>
-    <table width="100%" border="1" cellspacing="0" id="invoiceTable">
-        <tr>
-            <th width="3%">S.L</th>
-            <th width="8%">ID No</th>
-            <th width="8%">Rank</th>
-            <th width="14%">Area</th>
-            <th width="34%">Name of the Security Person</th>
-            <th width="6%" >Duty </th>
-            <th width="15%" >Account Number</th>
-            <th width="13%">Salary Amount (BDT)</th>
-        </tr>
+
             @if ($wasa?->wasadetails)
+            <table width="100%" border="1" cellspacing="0" id="invoiceTable">
+                <tr>
+                    <th width="3%">S.L</th>
+                    <th width="8%">ID No</th>
+                    <th width="8%">Rank</th>
+                    <th width="14%">Area</th>
+                    <th width="34%">Name of the Security Person</th>
+                    <th width="6%" >Duty </th>
+                    <th width="15%" >Account Number</th>
+                    <th width="13%">Salary Amount (BDT)</th>
+                </tr>
                 @foreach ($wasa->wasadetails->sortBy('area') as $de)
                     <tr>
                         <td style="text-align: center;">{{ ++$loop->index }}</td>
@@ -242,83 +243,146 @@
                         <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
                     </tr>
                 @endforeach
+                    <tr>
+                        <th></th>
+                        <th colspan="6">Sub Total</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->sub_total_salary) }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="6">Add: Commission {{ (int)$wasa?->add_commission }}%</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->add_commission_tk) }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="6">{{ (int)$wasa?->vat_on_commission }}% VAT+ {{ (int)$wasa?->ait_on_commission }}% AIT = {{ (int)$wasa?->vat_ait_on_commission }}% on Commission</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->vat_ait_on_commission_tk) }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="6">VAT {{ (int)$wasa?->vat_on_subtotal }}% on Sub Total</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->vat_on_subtotal_tk) }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="6">AIT {{ (int)$wasa?->ait_on_subtotal }}% on Sub Total</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->ait_on_subtotal_tk) }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th colspan="6">Grand Total</th>
+                        <th style="text-align: right;">{{ money_format($wasa?->grand_total_tk) }}</th>
+                    </tr>
+                    <tr>
+                        <td colspan="8">Total Amount(In Words): <b><i>
+                            @php
+                            $dueTotal = $wasa?->grand_total_tk;
+
+                            if ($dueTotal > 0) {
+                                $textValue = getBangladeshCurrency($dueTotal);
+                                echo "$textValue";
+                            } else {
+                                echo "Zero";
+                            }
+                        @endphp
+                            </i></b></td>
+
+                    </tr>
+
+                </table>
             @elseif ($wasa?->details)
+                <table width="100%" border="1" cellspacing="0" id="invoiceTable">
+                    <tr>
+                        <th >S.L</th>
+                        <th >Location</th>
+                        <th >Rate Per Guard <br> (Per Month)</th>
+                        <th >Period</th>
+                        <th>Persions</th>
+                        <th>Total Amount</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">01</td>
+                        <td style="text-align: center;">
+                            {{ $wasa->details->first()->jobpost ? $wasa->details->first()->jobpost->name : '' }}
+                            at {{
+                                $invoice_id->atm?->atm
+                            }}
+                        </td>
+                        <td style="text-align: center;">
+                            {{ $wasa->details->first()->salary_amount ? $wasa->details->first()->salary_amount : '' }}
+                        </td>
+                        <td style="text-align: center;">
+                            01 (One Month)
+                        </td>
+                        <td style="text-align: center;">
+                            {{ $wasa->details->count() }}
+                        </td>
+                        <td  style="text-align: center;">
+                            {{ $wasa->details->first()->salary_amount * $wasa->details->count() }}
+                        </td>
+                    </tr>
                 @foreach ($wasa->details as $de)
                     <tr>
-                        <td style="text-align: center;">{{ ++$loop->index }}</td>
-                        <td style="text-align: center;">{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
-                        <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
-                        <td style="text-align: center;">
-                            {{ $invoice_id->atm?->atm }}
-                            @if ($invoice_id->customer?->customer_type == 0)
-                                {!! nl2br(e(str_replace('^', "\n", $invoice_id->customer?->address))) !!}
-                            @else
-                                @if($branch?->billing_address)
-                                    {!! nl2br(e(str_replace('^', "\n", $branch?->billing_address))) !!}
-                                @endif
-                            @endif
-                        </td>
+                        <td style="text-align: center;">{{ ++$loop->index+1 }}</td>
                         <td style="text-align: center;">{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
-                        <td style="text-align: center;">{{ $de->duty }}</td>
+                        <td style="text-align: center;">ID No:{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
+                        {{-- <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td> --}}
                         <td style="text-align: center;">
-                            {{-- {{ $de}} --}}
-                            @if ($de->account_no != '')
-                                {{ $de->account_no }}
-                            @else
-                                {{ $de->employee ? $de->employee->bn_ac_no : '' }}
-                            @endif
+                            Cell: ({{ $de->employee ? $de->employee->bn_parm_phone_my : '' }})
                         </td>
-                        <td style="text-align: end;">{{ money_format($de->salary_amount) }}</td>
+                        <td style="text-align: center;">{{ $de->shift==1 ? 'Shift-A' :  ($de->shift== 2 ? 'Shift-B' : 'Shift-C')}}</td>
+                        {{-- <td style="text-align: center;">{{ $de->duty }}</td> --}}
+                        <td style="text-align: end;">-</td>
                     </tr>
                 @endforeach
+            {{-- <tr>
+                <th></th>
+                <th colspan="4">Sub Total</th>
+                <th style="text-align: right;">{{ money_format($wasa?->sub_total_salary) }}</th>
+            </tr> --}}
+            {{-- <tr>
+                <th></th>
+                <th colspan="4">Add: Commission {{ (int)$wasa?->add_commission }}%</th>
+                <th style="text-align: right;">{{ money_format($wasa?->add_commission_tk) }}</th>
+            </tr> --}}
+            {{-- <tr>
+                <th></th>
+                <th colspan="4">{{ (int)$wasa?->vat_on_commission }}% VAT+ {{ (int)$wasa?->ait_on_commission }}% AIT = {{ (int)$wasa?->vat_ait_on_commission }}% on Commission</th>
+                <th style="text-align: right;">{{ money_format($wasa?->vat_ait_on_commission_tk) }}</th>
+            </tr> --}}
+            <tr>
+                <th></th>
+                <th colspan="4">VAT {{ (int)$wasa?->vat_on_subtotal }}%</th>
+                <th style="text-align: right;">{{ money_format($wasa?->vat_on_subtotal_tk) }}</th>
+            </tr>
+            {{-- <tr>
+                <th></th>
+                <th colspan="4">AIT {{ (int)$wasa?->ait_on_subtotal }}% on Sub Total</th>
+                <th style="text-align: right;">{{ money_format($wasa?->ait_on_subtotal_tk) }}</th>
+            </tr> --}}
+            <tr>
+                <th></th>
+                <th colspan="4">Total</th>
+                <th style="text-align: right;">{{ money_format($wasa?->grand_total_tk) }}</th>
+            </tr>
+            <tr>
+                <td colspan="6">Total Amount(In Words): <b><i>
+                    @php
+                    $dueTotal = $wasa?->grand_total_tk;
+
+                    if ($dueTotal > 0) {
+                        $textValue = getBangladeshCurrency($dueTotal);
+                        echo "$textValue";
+                    } else {
+                        echo "Zero";
+                    }
+                @endphp
+                    </i></b></td>
+
+            </tr>
+
+        </table>
             @endif
-        <tr>
-            <th></th>
-            <th colspan="6">Sub Total</th>
-            <th style="text-align: right;">{{ money_format($wasa?->sub_total_salary) }}</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th colspan="6">Add: Commission {{ (int)$wasa?->add_commission }}%</th>
-            <th style="text-align: right;">{{ money_format($wasa?->add_commission_tk) }}</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th colspan="6">{{ (int)$wasa?->vat_on_commission }}% VAT+ {{ (int)$wasa?->ait_on_commission }}% AIT = {{ (int)$wasa?->vat_ait_on_commission }}% on Commission</th>
-            <th style="text-align: right;">{{ money_format($wasa?->vat_ait_on_commission_tk) }}</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th colspan="6">VAT {{ (int)$wasa?->vat_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ money_format($wasa?->vat_on_subtotal_tk) }}</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th colspan="6">AIT {{ (int)$wasa?->ait_on_subtotal }}% on Sub Total</th>
-            <th style="text-align: right;">{{ money_format($wasa?->ait_on_subtotal_tk) }}</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th colspan="6">Grand Total</th>
-            <th style="text-align: right;">{{ money_format($wasa?->grand_total_tk) }}</th>
-        </tr>
-        <tr>
-            <td colspan="8">Total Amount(In Words): <b><i>
-                @php
-                $dueTotal = $wasa?->grand_total_tk;
-
-                if ($dueTotal > 0) {
-                    $textValue = getBangladeshCurrency($dueTotal);
-                    echo "$textValue";
-                } else {
-                    echo "Zero";
-                }
-            @endphp
-                </i></b></td>
-
-        </tr>
-
-    </table>
 
     <br>
     <div>

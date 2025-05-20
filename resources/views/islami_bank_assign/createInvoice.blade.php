@@ -206,8 +206,8 @@
                                             </tr> --}}
                                             <tr style="text-align: center;">
                                                 <td></td>
-                                                <th colspan="5" style="text-align: end;">(<span class="vat_percent">{{ $IBBLAssign->vat_on_subtotal }}</span> %) VAT on Sub Total</th>
-                                                <td><input readonly type="text" class="form-control vat_tk_subtotal" name="vat_tk_subtotal" value="{{ number_format($vatOnSubtotal, 2, '.', '') }}"></td>
+                                                <th colspan="5" style="text-align: end;">(<span class="vat_percent">0</span> %) VAT on Sub Total</th>
+                                                <td><input readonly type="text" class="form-control vat_tk_subtotal" name="vat_tk_subtotal" value="0"></td>
                                             </tr>
                                             {{-- <tr style="text-align: center;">
                                                 <td></td>
@@ -220,7 +220,7 @@
                                             <tr style="text-align: center;">
                                                 <td></td>
                                                 <th colspan="5" style="text-align: end;">Total</th>
-                                                <td><input readonly type="text" class="form-control grand_total_tk" name="grand_total_tk" value="{{ number_format($grandTotal, 2, '.', '') }}"></td>
+                                                <td><input readonly type="text" class="form-control grand_total_tk" name="grand_total_tk" value="0"></td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -301,6 +301,7 @@ function getAtms(){
                                     </td>
                                     <td>
                                         <input required class="form-control input_css" type="text" name="duty[]" value="${d.duty}" placeholder="Duty">
+                                        <input  class="form-control input_css" type="hidden" name="shift[]" value="${d.shift}" placeholder="Shift">
                                     </td>
                                     <td>
                                         <input class="form-control input_css salary_amount" type="text" name="salary_amount[]" value="${data.salary}" placeholder="Salary Amount">
@@ -308,11 +309,30 @@ function getAtms(){
                                 </tr>
                             `);
                         });
+                        var salary = data?.data?.salary;
+                        var sub_total_salary = data?.data?.salary;
+                        alert(data?.data?.vat_on_subtotal);
+                        $('.vat_percent').text(data?.data?.vat_on_subtotal);
+                        $('.vat_tk_subtotal').val(data?.vat_on_subtotal );
+                        $('.grand_total_tk').val(data?.grand_total);
                     }
                 }
             }
 
         });
+    }
+
+    function onChangeSubTotalSalary(){
+        var sub_total_salary = $('.sub_total_salary').val();
+        var vat_on_subtotal = $('.vat_percent').val();
+        var vat_on_subtotal_amount = (sub_total_salary * vat_on_subtotal) / 100;
+        $('.vat_tk_subtotal').val(vat_on_subtotal_amount);
+    }
+
+    function onChangeVatOnSubtotal(){
+        var vat_on_subtotal = $('.vat_percent').val();
+        var vat_on_subtotal_amount = (sub_total_salary * vat_on_subtotal) / 100;
+        $('.vat_tk_subtotal').val(vat_on_subtotal_amount);
     }
 </script>
 @endpush
