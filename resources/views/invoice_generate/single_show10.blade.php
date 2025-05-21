@@ -156,7 +156,6 @@
             <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
             @endif
         </tr>
-        @if($headershow!=2)
         @if ($invoice_id->customer?->customer_type == 0)
         @else
         <tr>
@@ -164,7 +163,6 @@
             <td colspan="2">{{ $branch?->brance_name }}</td>
         </tr>
         @endif
-
         <tr>
             <td width="15%"></td>
             <td colspan="2">
@@ -177,7 +175,6 @@
                 @endif
             </td>
         </tr>
-        @endif
         @if ($invoice_id->customer?->customer_type == 0)
             @if($invoice_id->customer?->attention)
             <tr>
@@ -230,7 +227,7 @@
                 </tr>
                 @foreach ($wasa->wasadetails->sortBy('area') as $de)
                     <tr>
-                        <td style="text-align: center;">{{ str_pad(++$loop->index, 2, '0', STR_PAD_LEFT) }}</td>
+                        <td style="text-align: center;">{{ ++$loop->index }}</td>
                         <td style="text-align: center;">{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
                         <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td>
                         <td style="text-align: center;">{{ $de->area }}</td>
@@ -326,7 +323,7 @@
                     </tr>
                 @foreach ($wasa->details as $de)
                     <tr>
-                        <td style="text-align: center;">{{ str_pad(++$loop->index +1, 2, '0', STR_PAD_LEFT) }}</td>
+                        <td style="text-align: center;">{{ ++$loop->index+1 }}</td>
                         <td style="text-align: center;">{{ $de->employee ? $de->employee->en_applicants_name : '' }}</td>
                         <td style="text-align: center;">ID No:{{ $de->employee ? $de->employee->admission_id_no : '' }}</td>
                         {{-- <td style="text-align: center;">{{ $de->jobpost ? $de->jobpost->name : '' }}</td> --}}
