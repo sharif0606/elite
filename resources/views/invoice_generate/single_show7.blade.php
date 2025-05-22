@@ -148,22 +148,22 @@
                 <p style="margin:0;">
                     <b>{{ $invoice_id->customer?->name }}</b> </br>
                     {{-- {{ $invoice_id->customer?->id }} {{ $invoice_id->company_branch_id }} --}}
-                    {{-- <b>{{ $branch?->brance_name }}</b></br>
-                    <b>{{ $invoice_id->atm?->atm }}</b> --}}
+                    {{-- {{ $branch?->brance_name }}</br>
+                    {{ $invoice_id->atm?->atm }} --}}
                 </p>
             </td>
             @if($invoice_id->customer?->bin)
             <td  width="40%" style="text-align: center; padding-bottom: 5px;"> <span style="padding: 7px; border: 2px solid; border-radius: 5px;">BIN NO : <b>{{ $invoice_id->customer?->bin }}</b></span></td>
             @endif
         </tr>
-        @if($headershow!=2)
+        {{-- @if($headershow!=2) --}}
         @if ($invoice_id->customer?->customer_type == 0)
         @else
         <tr>
             <td width="15%"></td>
             <td colspan="2">{{ $branch?->brance_name }}</td>
         </tr>
-        @endif
+        {{-- @endif --}}
 
         <tr>
             <td width="15%"></td>
@@ -312,7 +312,7 @@
                             }}
                         </td>
                         <td style="text-align: center;">
-                            {{ $wasa->details->first()->salary_amount ? $wasa->details->first()->salary_amount : '' }}
+                            {{ $wasa->details->first()->salary_amount ? money_format($wasa->details->first()->salary_amount) : '' }}
                         </td>
                         <td style="text-align: center;">
                             01 (One Month)
@@ -320,8 +320,8 @@
                         <td style="text-align: center;">
                             {{ $wasa->details->count() }}
                         </td>
-                        <td  style="text-align: center;">
-                            {{ $wasa->details->first()->salary_amount * $wasa->details->count() }}
+                        <td  style="text-align: end;">
+                            {{ money_format($wasa->details->first()->salary_amount * $wasa->details->count()) }}
                         </td>
                     </tr>
                 @foreach ($wasa->details as $de)
@@ -394,7 +394,7 @@
             $bolded_note = preg_replace('/"(.*?)"/', '<b>"$1"</b>', $footer_note);
         @endphp
         {!! $bolded_note !!}
-        .</div>
+        </div>
     <br><br>
     <p><i><b>With thanks and Regards</b></i></p>
     <br><br>

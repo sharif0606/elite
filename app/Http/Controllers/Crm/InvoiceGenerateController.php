@@ -240,7 +240,7 @@ class InvoiceGenerateController extends Controller
         if (!$wasa) {
             $headershow = 2;
             $wasa = IslamiBankInvoice::with("details")->where('invoice_id', $invoice_id->id)->first();
-            $invoiceNo = $wasa->bill_date ? "ESSL/IBBL/" . date('y/m', strtotime($wasa->bill_date)) . "-" . str_pad($invoice_id->id, 3, '0', STR_PAD_LEFT) : "ESSL/IBBL/" . date('y/m') . "-" . str_pad($invoice_id->id, 3, '0', STR_PAD_LEFT);
+            $invoiceNo = $wasa->bill_date ? "ESSL/" . date('y', strtotime($wasa->bill_date)) . "-" . str_pad($invoice_id->id, 3, '0', STR_PAD_LEFT) : "ESSL/" . date('y') . "-" . str_pad($invoice_id->id, 3, '0', STR_PAD_LEFT);
             // dd($invoiceNo);
         } else {
             $invoiceNo = $invoice_id->customer?->invoice_number . "/" . \Carbon\Carbon::parse($invoice_id->end_date)->format('y') . "/" . $invoice_id->id;
