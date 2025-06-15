@@ -46,10 +46,15 @@
                         <table class="table table-bordered mb-0">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col">{{__('#SL')}}</th>
-                                    <th scope="col">{{__('Product')}}</th>
-                                    <th scope="col">{{__('Qty')}}</th>
-                                    <th class="white-space-nowrap">{{__('Action') }}</th>
+                                    <th scope="col" rowspan="2">{{__('#SL')}}</th>
+                                    <th scope="col" rowspan="2">{{__('Product')}}</th>
+                                    <th scope="col" colspan="2">{{__('Qty')}}</th>
+                                    <th scope="col" rowspan="2">{{__('Total')}}</th>
+                                    <th class="white-space-nowrap" rowspan="2">{{__('Action') }}</th>
+                                </tr>
+                                <tr class="text-center">
+                                    <th scope="col">New</th>
+                                    <th scope="col">Used</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,6 +62,22 @@
                                 <tr class="text-center">
                                     <th scope="row">{{ ++$loop->index }}</th>
                                     <td>{{$d->product_name}}</td>
+                                    @php
+                                    $stocks = $d->stock;
+
+                                    // Apply date filter if present
+                                    if (request()->get('fdate')) {
+                                        $from = request()->get('fdate');
+                                        $to = request()->get('tdate') ?? date('Y-m-d');
+
+                                        $stocks = $stocks->whereBetween('entry_date', [$from, $to]);
+                                    }
+
+                                    $newQty = $stocks->where('type', 1)->sum('product_qty');
+                                    $usedQty = $stocks->where('type', 2)->sum('product_qty');
+                                    @endphp
+                                    <td>{{ $newQty }}</td>
+                                    <td>{{ $usedQty  }}</td>
                                     <td>
                                         @if(request()->get('fdate'))
                                             {{$d->stock?->whereBetween('entry_date', [request()->get('fdate'),request()->get('tdate') ?? date('Y-m-d')])->sum('product_qty')}}</td>
