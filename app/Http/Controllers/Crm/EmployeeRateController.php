@@ -267,9 +267,12 @@ class EmployeeRateController extends Controller
                     ->orWhereNull('employee_rate_details.atm_id');
             }
         }
-
+//DB::enableQueryLog();
         // Execute the query and get the results
         $result = $query->get();
+
+        // show all queries executed
+//dd(DB::getQueryLog());
 
         // Build the dropdown HTML
         $data = '<option value="0">Select</option>';

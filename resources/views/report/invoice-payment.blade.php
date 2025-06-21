@@ -378,33 +378,46 @@
                                 @php
                                 $invoices = DB::select(DB::raw("
                                     SELECT 
-                                        SUM(invoice_generates.grand_total) AS total_grand_total,
-                                        SUM(IFNULL(invoice_payments.received_amount, 0) + 
-                                            IFNULL(invoice_payments.ait_amount, 0) + 
-                                            IFNULL(invoice_payments.vat_amount, 0) + 
-                                            IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                            IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
-                                        SUM(invoice_generates.grand_total - 
-                                            (IFNULL(invoice_payments.received_amount, 0) + 
-                                            IFNULL(invoice_payments.ait_amount, 0) + 
-                                            IFNULL(invoice_payments.vat_amount, 0) + 
-                                            IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                            IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
-                                    FROM 
-                                        invoice_generates
-                                    LEFT JOIN 
-                                        invoice_payments 
-                                        ON invoice_generates.id = invoice_payments.invoice_id
-                                    WHERE 
-                                        invoice_generates.customer_id = :customer_id 
-                                        AND MONTH(invoice_generates.end_date) = :month
-                                        AND YEAR(invoice_generates.end_date) = :year
+                                        SUM(g.grand_total) AS total_grand_total,
+                                        SUM(g.total_paid) AS total_paid,
+                                        SUM(g.due_amount) AS total_due
+                                    FROM (
+                                        SELECT 
+                                            ig.grand_total,
+                                            (IFNULL(ip.received_amount, 0) + 
+                                            IFNULL(ip.ait_amount, 0) + 
+                                            IFNULL(ip.vat_amount, 0) + 
+                                            IFNULL(ip.less_paid_honor, 0) + 
+                                            IFNULL(ip.fine_deduction, 0)) AS total_paid,
+                                            ig.grand_total - (
+                                            IFNULL(ip.received_amount, 0) + 
+                                            IFNULL(ip.ait_amount, 0) + 
+                                            IFNULL(ip.vat_amount, 0) + 
+                                            IFNULL(ip.less_paid_honor, 0) + 
+                                            IFNULL(ip.fine_deduction, 0)) AS due_amount
+                                        FROM invoice_generates ig
+                                        LEFT JOIN (
+                                            SELECT 
+                                                invoice_id,
+                                                SUM(received_amount) AS received_amount,
+                                                SUM(ait_amount) AS ait_amount,
+                                                SUM(vat_amount) AS vat_amount,
+                                                SUM(less_paid_honor) AS less_paid_honor,
+                                                SUM(fine_deduction) AS fine_deduction
+                                            FROM invoice_payments
+                                            GROUP BY invoice_id
+                                        ) ip ON ig.id = ip.invoice_id
+                                        WHERE ig.customer_id = :customer_id
+                                        AND MONTH(ig.end_date) = :month
+                                        AND YEAR(ig.end_date) = :year
+                                    ) AS g
                                 "), [
                                     'customer_id' => $customer->id,
                                     'month' => $dt->month,
                                     'year' => $dt->year
                                 ]);
-                                $actual_due = $invoices[0]->total_due-$invoices[0]->total_paid;
+
+                                $actual_due = $invoices[0]->total_due;//-$invoices[0]->total_paid
 
                                 
                                 // Add to total due if greater than threshold (5)
@@ -427,38 +440,51 @@
                                         @php
                                         $invoices = DB::select(DB::raw("
                                             SELECT 
-                                                SUM(invoice_generates.grand_total) AS total_grand_total,
-                                                SUM(IFNULL(invoice_payments.received_amount, 0) + 
-                                                    IFNULL(invoice_payments.ait_amount, 0) + 
-                                                    IFNULL(invoice_payments.vat_amount, 0) + 
-                                                    IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                                    IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
-                                                SUM(invoice_generates.grand_total - 
-                                                    (IFNULL(invoice_payments.received_amount, 0) + 
-                                                    IFNULL(invoice_payments.ait_amount, 0) + 
-                                                    IFNULL(invoice_payments.vat_amount, 0) + 
-                                                    IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                                    IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
-                                            FROM 
-                                                invoice_generates
-                                            LEFT JOIN 
-                                                invoice_payments 
-                                                ON invoice_generates.id = invoice_payments.invoice_id
-                                            WHERE 
-                                                invoice_generates.customer_id = :customer_id 
-                                                AND MONTH(invoice_generates.end_date) = :month
-                                                AND YEAR(invoice_generates.end_date) = :year
+                                                SUM(g.grand_total) AS total_grand_total,
+                                                SUM(g.total_paid) AS total_paid,
+                                                SUM(g.due_amount) AS total_due
+                                            FROM (
+                                                SELECT 
+                                                    ig.grand_total,
+                                                    (IFNULL(ip.received_amount, 0) + 
+                                                    IFNULL(ip.ait_amount, 0) + 
+                                                    IFNULL(ip.vat_amount, 0) + 
+                                                    IFNULL(ip.less_paid_honor, 0) + 
+                                                    IFNULL(ip.fine_deduction, 0)) AS total_paid,
+                                                    ig.grand_total - (
+                                                    IFNULL(ip.received_amount, 0) + 
+                                                    IFNULL(ip.ait_amount, 0) + 
+                                                    IFNULL(ip.vat_amount, 0) + 
+                                                    IFNULL(ip.less_paid_honor, 0) + 
+                                                    IFNULL(ip.fine_deduction, 0)) AS due_amount
+                                                FROM invoice_generates ig
+                                                LEFT JOIN (
+                                                    SELECT 
+                                                        invoice_id,
+                                                        SUM(received_amount) AS received_amount,
+                                                        SUM(ait_amount) AS ait_amount,
+                                                        SUM(vat_amount) AS vat_amount,
+                                                        SUM(less_paid_honor) AS less_paid_honor,
+                                                        SUM(fine_deduction) AS fine_deduction
+                                                    FROM invoice_payments
+                                                    GROUP BY invoice_id
+                                                ) ip ON ig.id = ip.invoice_id
+                                                WHERE ig.customer_id = :customer_id
+                                                AND MONTH(ig.end_date) = :month
+                                                AND YEAR(ig.end_date) = :year
+                                            ) AS g
                                         "), [
                                             'customer_id' => $customer->id,
                                             'month' => $dt->month,
                                             'year' => $dt->year
                                         ]);
+
                                         @endphp
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
                                             @php
                                             
                                             if($invoices[0]->total_due > $invoices[0]->total_paid){
-                                                $actual_due = $invoices[0]->total_due-$invoices[0]->total_paid;
+                                                $actual_due = $invoices[0]->total_due;//-$invoices[0]->total_paid
                                                 if ($actual_due > 0.5) {
                                                 $rounded_due = ceil($actual_due); // Apply ceil if greater than 0.5
                                                 } elseif ($actual_due < 0.5) {
