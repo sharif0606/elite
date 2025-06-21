@@ -80,6 +80,7 @@
                         <th scope="col" style="width: 80px;">{{__('Month')}}</th>
                         <th scope="col" style="width: 180px;">{{__('Customer Name')}}</th>
                         <th scope="col">{{__('Billing amount')}}</th>
+                        <th scope="col">{{__('Bonus')}}</th>
                         <th scope="col">{{__('Received amount')}}</th>
                         <th scope="col">{{__('Vat %')}}</th>
                         <th scope="col">{{__('Ait %')}}</th>
@@ -103,6 +104,15 @@
                         <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                         <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
                         <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
+                        <td>
+                            @if($e->invoice->detail->bonus_for == 1)
+                            Edi UL FITR
+                            @elseif($e->invoice->detail->bonus_for == 2)
+                            Edi UL Azha
+                            @else
+                            -
+                            @endif
+                        </td>
                         <td>{{ $e->received_amount }}</td>
                         <td>
                             @if ($e->vat > 0)
