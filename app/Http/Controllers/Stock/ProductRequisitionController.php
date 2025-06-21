@@ -61,7 +61,8 @@ class ProductRequisitionController extends Controller
         $product=Product::all();
         $product_issue=Product::where('is_issue','1')->get();
         $employee=Employee::select('id','bn_applicants_name','admission_id_no')->get();
-        return view('Stock.productrequisition.product_issue_create_after',compact('product','size','employee','product_issue'));
+        $customer=Customer::all();
+        return view('Stock.productrequisition.product_issue_create_after',compact('product','size','employee','product_issue','customer',));
     }
 
     /**
