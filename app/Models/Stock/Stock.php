@@ -27,4 +27,7 @@ class Stock extends Model
     public function company_branch(){
         return $this->belongsTo(CustomerBrance::class,'company_branch_id','id');
     }
+    public function product_requisition(){
+        return $this->belongsTo(ProductRequisition::class,'product_requisition_id','id');
+    }
 }

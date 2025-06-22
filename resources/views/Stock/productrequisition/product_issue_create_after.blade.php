@@ -39,7 +39,7 @@
                                                 name="company_id">
                                                 <option value="">Select Customer</option>
                                                 @forelse ($customer as $c)
-                                                    <option value="{{ $c->id }}">{{ $c->name }}</option>
+                                                    <option value="{{ $c->id }}">{{ $c->name}} -{{$c->id }}</option>
                                                 @empty
                                                 @endforelse
                                             </select>

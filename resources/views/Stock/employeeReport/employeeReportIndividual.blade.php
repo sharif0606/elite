@@ -114,8 +114,31 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{\Carbon\Carbon::parse($s->entry_date)->format('d/m/Y')}}</td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">@if($s->type=='2') Used @else New  @endif </td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{$s->size?->name}}</td>
-                                            <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
-                                            <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
+                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">
+                                                {{--$s--}}
+                                                @php
+                                               $return = \DB::table('product_requisition_details')
+                                                ->join('product_requisitions','product_requisitions.id','product_requisition_details.product_requisition_id')
+                                                ->where('product_requisition_details.product_requisition_id', $s->product_requisition_id)
+                                                ->where('product_requisition_details.deposite_product_qty', '>', 0)
+                                                ->select('product_requisition_details.deposite_product_qty','product_requisitions.issue_date')
+                                                ->first();
+                                                if($return)
+                                                //dd($return);
+                                                @endphp
+                                                @if ($return)
+                                                    {{ $return->deposite_product_qty }}
+                                                @else
+                                                    0
+                                                @endif
+                                            </td>
+                                            <td class="tbl_expense" style="text-align: center; padding: 5px;">
+                                                @if ($return)
+                                                    {{ $return->issue_date }}
+                                                @else
+                                                    
+                                                @endif
+                                            </td>
 
                                             @elseif($s->status=='0')
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
@@ -145,7 +168,8 @@
                                                 echo "Positive Quantity: $positiveQty, Negative Quantity: $negativeQty";
                                                 @endphp  --}}
                                                 {{--  @php echo $totalQty += $s->product_qty; @endphp  --}}
-                                                {{ abs($stock[$key]['total_qty']) }}
+                                               {{ abs($stock[$key]['total_qty']) - ($deposits[$s->product_id]->total_out_qty ?? 0) }}
+
 
                                             </td>
                                             @endif
