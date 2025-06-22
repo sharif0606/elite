@@ -131,7 +131,10 @@
                             <td >{{ ++$loop->index  }}</td>
                             <td>{{ $de->product?->product_name }}</td>
                             <td>{{ $de->size?->name }}</td>
-                            <td>{{ $de->product_qty }}</td>
+                            <td>
+                                {{ $de->product_qty?$de->product_qty:'' }}
+                                {{ $de->deposite_product_qty?$de->deposite_product_qty:'' }}
+                            </td>
                             <td>@if ($de->type==2) Used @else New @endif</td>
                         </tr>
                         @endforeach
