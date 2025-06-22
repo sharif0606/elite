@@ -165,7 +165,6 @@ class ProductRequisitionController extends Controller
      */
     public function show($id)
     {
-        dd(encryptor('decrypt',$id));
         $requisition = ProductRequisition::findOrFail(encryptor('decrypt',$id));
         return view('Stock.productrequisition.show',compact('requisition'));
     }
