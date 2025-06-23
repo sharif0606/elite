@@ -84,9 +84,9 @@ class StockController extends Controller
         $decryptedId = encryptor('decrypt', $id);
 
         // Check if the ID belongs to an employee or customer
-        if($request->type == 1)
-        $isEmployee = Stock::where('employee_id', $decryptedId)->exists();
-        if($request->type == 2){
+        if ($request->type == 1)
+            $isEmployee = Stock::where('employee_id', $decryptedId)->exists();
+        if ($request->type == 2) {
             $isEmployee = Stock::where('company_id', $decryptedId)->exists();
         }
         if ($isEmployee && $request->type == 1) {
@@ -101,11 +101,12 @@ class StockController extends Controller
         WHERE employee_id = '$decryptedId' 
         GROUP BY product_id
     ")), true);
+            $deposits = [];
         } else {
             // Query for customer
             $productList = Stock::where('stocks.company_id', $decryptedId)
-            ->orderBy('stocks.product_id')
-            ->get();
+                ->orderBy('stocks.product_id')
+                ->get();
 
             $stock = json_decode(json_encode(DB::select("
         SELECT COUNT(*) AS c, product_id, SUM(product_qty) AS total_qty 
@@ -114,16 +115,14 @@ class StockController extends Controller
         GROUP BY product_id
     ")), true);
 
-    $deposits = DB::table('product_requisition_details')
-    ->join('product_requisitions', 'product_requisitions.id', '=', 'product_requisition_details.product_requisition_id')
-    ->where('product_requisitions.company_id', $decryptedId)
-    ->where('product_requisition_details.deposite_product_qty', '>', 0)
-    ->select('product_requisition_details.product_id', DB::raw('SUM(deposite_product_qty) as total_out_qty'))
-    ->groupBy('product_requisition_details.product_id')
-    ->get()
-    ->keyBy('product_id');
-
-
+            $deposits = DB::table('product_requisition_details')
+                ->join('product_requisitions', 'product_requisitions.id', '=', 'product_requisition_details.product_requisition_id')
+                ->where('product_requisitions.company_id', $decryptedId)
+                ->where('product_requisition_details.deposite_product_qty', '>', 0)
+                ->select('product_requisition_details.product_id', DB::raw('SUM(deposite_product_qty) as total_out_qty'))
+                ->groupBy('product_requisition_details.product_id')
+                ->get()
+                ->keyBy('product_id');
         }
 
         //print_r($stock);die();
@@ -134,7 +133,7 @@ class StockController extends Controller
         // $stock = $stock->groupBy('product_id')->get();
         $employee = Employee::where('id', (encryptor('decrypt', $id)))->first();
 
-        return view('Stock.employeeReport.employeeReportIndividual', compact('productList', 'employee', 'stock','deposits'));
+        return view('Stock.employeeReport.employeeReportIndividual', compact('productList', 'employee', 'stock', 'deposits'));
     }
     public function create()
     {
