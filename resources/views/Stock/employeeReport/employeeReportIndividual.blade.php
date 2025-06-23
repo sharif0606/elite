@@ -120,6 +120,7 @@
                                                $return = \DB::table('product_requisition_details')
                                                 ->join('product_requisitions','product_requisitions.id','product_requisition_details.product_requisition_id')
                                                 ->where('product_requisition_details.product_requisition_id', $s->product_requisition_id)
+                                                ->where('product_requisition_details.product_id', $s->product_id)
                                                 ->where('product_requisition_details.deposite_product_qty', '>', 0)
                                                 ->select('product_requisition_details.deposite_product_qty','product_requisitions.issue_date')
                                                 ->first();
