@@ -300,7 +300,11 @@
                         } else if (value.start_date <= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(startDate);
                             workingDays = Math.ceil(workingDays / (1000 * 60 * 60 * 24));
-                            st_date=value.start_date;
+                            if(value.start_date == startDate)
+                                st_date=value.start_date;
+                            else{
+                                st_date=startDate;
+                            }
                             ed_date=value.end_date;
                         } else if (value.start_date >= startDate && value.end_date <= endDate) {
                             workingDays = new Date(value.end_date) - new Date(value.start_date);
@@ -370,8 +374,8 @@
                                 <td>
                                     <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
                                     <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
-                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
-                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
+                                    <input class="" type="text" name="st_date[]" value="${st_date}">
+                                    <input class="" type="text" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css divide_by text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="divide_by[]" value="">

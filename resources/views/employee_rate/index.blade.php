@@ -78,7 +78,6 @@
                 </thead>
                 <tbody>
                     @forelse($emRate as $e)
-                    {{$e}}
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}</td>
                         <td scope="row">
