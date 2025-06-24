@@ -286,11 +286,12 @@
                         sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 12);
                         var currentDate = new Date();
                         var month = parseInt($(".month").val());
+                        var year = parseInt($(".year").val());
                         var currentYear = currentDate.getFullYear();
                         var totalDays = new Date(currentYear, month, 0).getDate();
                         // Deduction calculation
                         let pf = "0";
-                        if (new Date() >= sixMonthsLater && value.charge_status ==0) {
+                        if (new Date(year, month - 1) >= sixMonthsLater && value.charge_status ==0) {
                             if(value.customer_id == 27){
                                 pf = (value.cpf > 0) ? Math.round((value.duty_rate * value.cpf) / 100) : 0;
                             }else{
