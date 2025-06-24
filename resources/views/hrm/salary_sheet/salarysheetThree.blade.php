@@ -324,7 +324,11 @@
                         // let Va = (value.vacant > 0) ? value.vacant : '0';
                         // let Cf = (value.c_f > 0) ? value.c_f : '0';
                         //value.bn_remaining_cost > total_deduction_traningcost
-                        if(parseFloat(value.bn_remaining_cost) >  parseFloat(value.total_deduction_traningcost) ){
+                       
+               
+                    
+                       
+                       if((parseFloat(value.bn_remaining_cost) >  parseFloat(value.total_deduction_traningcost)) && value.charge_status ==0 ){
                             traningCostPerMonth = traningCostPerMonth;
                         }else{
                             traningCostPerMonth = 0;    
