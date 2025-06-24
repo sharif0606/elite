@@ -115,10 +115,29 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">@if($s->type=='2') Used @else New  @endif </td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">{{$s->size?->name}}</td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">
-                                                
+                                                {{--$s--}}
+                                                @php
+                                                $return = \DB::table('product_requisition_details')
+                                                ->join('product_requisitions','product_requisitions.id','product_requisition_details.product_requisition_id')
+                                                ->where('product_requisition_details.product_requisition_id', $s->product_requisition_id)
+                                                ->where('product_requisition_details.product_id', $s->product_id)
+                                                ->where('product_requisition_details.deposite_product_qty', '>', 0)
+                                                ->select('product_requisition_details.deposite_product_qty','product_requisitions.issue_date')
+                                                ->first();
+                                                //dd($return);
+                                                @endphp
+                                                @if ($return && $s->company_id)
+                                                    {{ $return->deposite_product_qty }}
+                                                @else
+                                                    0
+                                                @endif
                                             </td>
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">
-                                             
+                                                @if ($return && $s->company_id)
+                                                    {{ $return->issue_date }}
+                                                @else
+                                                    
+                                                @endif
                                             </td>
 
                                             @elseif($s->status=='0')
