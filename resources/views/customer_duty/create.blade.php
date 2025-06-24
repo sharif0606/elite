@@ -461,8 +461,7 @@ function fetchJobPostDetails(customerId, branchId, atmId, employeeId, e) {
             var otRateDay=otRate/divideByDayTotal;
         }else{
             var dutyRateDay=dutyRate/totalDaysInMonth;
-            var otRateDay=otRate/totalDaysInMonth;5000/28
-            alert(totalDaysInMonth);
+            var otRateDay=otRate/totalDaysInMonth;//5000/28
         }
         let dutyAmount=parseFloat(dutyRateDay*dutyQty);
       
