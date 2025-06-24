@@ -374,8 +374,8 @@
                                 <td>
                                     <input class="form-control input_css text-center" type="text" name="warking_day[]" value="">
                                     <input type="hidden" name="actual_warking_day[]" value="${workingDays+1}">
-                                    <input class="" type="text" name="st_date[]" value="${st_date}">
-                                    <input class="" type="text" name="ed_date[]" value="${ed_date}">
+                                    <input class="" type="hidden" name="st_date[]" value="${st_date}">
+                                    <input class="" type="hidden" name="ed_date[]" value="${ed_date}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css divide_by text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="divide_by[]" value="">
