@@ -101,7 +101,7 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td>
-                                                    <select class="form-select employee_id select2" id="employee_id" name="employee_id[]" onchange="getEmployees(this)">
+                                                    <select class="form-select employee_id select2" name="employee_id[]" onchange="getEmployees(this)">
                                                         <option value="">Select</option>
                                                         @forelse ($employee as $em)
                                                         <option value="{{ $em->id }}"@selected($d->employee_id == $em->id)>{{ $em->en_applicants_name }} ({{ $em->admission_id_no }})</option>
@@ -222,7 +222,7 @@
     <tr class="new_rows">
         <td>${counterSl}</td>
         <td>
-            <select class="select2 form-select employee_id" id="employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
+            <select class="select2 form-select employee_id${counter}" name="employee_id[]" onchange="getEmployees(this)">
                 <option value="">Select</option>
                 @forelse ($employee as $em)
                 <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}> {{ $em->en_applicants_name }} ({{ $em->admission_id_no }})</option>
@@ -263,7 +263,7 @@
     </tr>
     `;
         $('#empassign').append(row);
-        $(`#employee_id${counter}`).select2();
+        $(`.employee_id${counter}`).select2();
         counter++;
         counterSl++;
         dutyCount();
