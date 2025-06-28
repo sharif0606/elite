@@ -519,7 +519,7 @@
                             <!-- First, calculate the total due for the entire branch across all periods -->
                             @foreach($period as $dt)
                                 @php
-                                $invoices = DB::select(DB::raw("
+                                /*$invoices = DB::select(DB::raw("
                                     SELECT 
                                         SUM(invoice_generates.grand_total) AS total_grand_total,
                                         SUM(IFNULL(invoice_payments.received_amount, 0) + 
@@ -548,8 +548,30 @@
                                     'branch_id' => $branch->id,
                                     'month' => $dt->month,
                                     'year' => $dt->year
+                                ]);*/
+                                $invoices = DB::select(DB::raw("
+                                    SELECT 
+                                         invoice_generates.sub_total_amount - SUM(IFNULL(invoice_payments.ait_amount, 0)) AS sub_total_amount,
+    SUM(
+        IFNULL(invoice_payments.received_amount, 0)
+    ) AS total_paid
+                                    FROM 
+                                        invoice_generates
+                                    LEFT JOIN 
+                                        invoice_payments 
+                                        ON invoice_generates.id = invoice_payments.invoice_id
+                                    WHERE 
+                                        invoice_generates.customer_id = :customer_id 
+                                        AND invoice_generates.branch_id = :branch_id
+                                        AND MONTH(invoice_generates.end_date) = :month
+                                        AND YEAR(invoice_generates.end_date) = :year
+                                "), [
+                                    'customer_id' => $branch->customer_id,
+                                    'branch_id' => $branch->id,
+                                    'month' => $dt->month,
+                                    'year' => $dt->year
                                 ]);
-                                $actual_due = $invoices[0]->total_due - $invoices[0]->total_paid;
+                                $actual_due = $invoices[0]->sub_total_amount - $invoices[0]->total_paid;
                                 if ($actual_due > 0.5) {
                                     $rounded_due = ceil($actual_due); // Apply ceil if greater than 0.5
                                 } elseif ($actual_due < 0.5) {
@@ -575,44 +597,50 @@
                                     @foreach($period as $dt)
                                         @php
                                         $invoices = DB::select(DB::raw("
-                                            SELECT 
-                                                SUM(invoice_generates.grand_total) AS total_grand_total,
-                                                SUM(IFNULL(invoice_payments.received_amount, 0) + 
-                                                    IFNULL(invoice_payments.ait_amount, 0) + 
-                                                    IFNULL(invoice_payments.vat_amount, 0) + 
-                                                    IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                                    IFNULL(invoice_payments.fine_deduction, 0)) AS total_paid, 
-                                                SUM(invoice_generates.grand_total - 
-                                                    (IFNULL(invoice_payments.received_amount, 0) + 
-                                                    IFNULL(invoice_payments.ait_amount, 0) + 
-                                                    IFNULL(invoice_payments.vat_amount, 0) + 
-                                                    IFNULL(invoice_payments.less_paid_honor, 0) + 
-                                                    IFNULL(invoice_payments.fine_deduction, 0))) AS total_due
-                                            FROM 
-                                                invoice_generates
-                                            LEFT JOIN 
-                                                invoice_payments 
-                                                ON invoice_generates.id = invoice_payments.invoice_id
-                                            WHERE 
-                                                invoice_generates.customer_id = :customer_id 
-                                                AND invoice_generates.branch_id = :branch_id
-                                                AND MONTH(invoice_generates.end_date) = :month
-                                                AND YEAR(invoice_generates.end_date) = :year
-                                        "), [
-                                            'customer_id' => $branch->customer_id,
-                                            'branch_id' => $branch->id,
-                                            'month' => $dt->month,
-                                            'year' => $dt->year
-                                        ]);
+    SELECT 
+        SUM(ig.sub_total_amount) - SUM(p.ait_amount) AS sub_total_amount,
+        SUM(p.received_amount) AS total_paid
+    FROM 
+        invoice_generates ig
+    LEFT JOIN (
+        SELECT 
+            invoice_id,
+            SUM(IFNULL(received_amount, 0)) AS received_amount,
+            SUM(IFNULL(ait_amount, 0)) AS ait_amount
+        FROM 
+            invoice_payments
+        GROUP BY 
+            invoice_id
+    ) p ON ig.id = p.invoice_id
+    WHERE 
+        ig.customer_id = :customer_id 
+        AND ig.branch_id = :branch_id
+        AND MONTH(ig.end_date) = :month
+        AND YEAR(ig.end_date) = :year
+"), [
+    'customer_id' => $branch->customer_id,
+    'branch_id' => $branch->id,
+    'month' => $dt->month,
+    'year' => $dt->year
+]);
                                         @endphp
-                                        <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
-                                        @php $actual_due = $invoices[0]->total_due - $invoices[0]->total_paid; @endphp
+                                        <td class="tbl_border">{{-- $invoices[0]->sub_total_amount > 0 ? $invoices[0]->total_paid : '-' --}}
+                                        @php $actual_due = $invoices[0]->sub_total_amount - $invoices[0]->total_paid; @endphp
                                         @if($actual_due > 2)
                                             @php
 
                                                
                                                 // echo  $invoices[0]->total_due."-".$invoices[0]->total_paid;
-                                                echo $actual_due > 5 ? $actual_due : '-';
+                                                //echo $actual_due > 5 ? $actual_due : '-';
+
+                                                if ($actual_due > 0.5) {
+                                    echo ceil($actual_due); // Apply ceil if greater than 0.5
+                                } elseif ($actual_due < 0.5) {
+                                    echo floor($actual_due); // Apply floor if less than 0.5
+                                }
+                                else{
+                                    echo 0;
+                                }
                                             @endphp
                                         @else
                                             {{ '-' }}
