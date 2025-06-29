@@ -483,7 +483,7 @@
                                         <td class="tbl_border">{{-- $invoices[0]->total_due > 0 ? $invoices[0]->total_due : '-' --}}
                                             @php
                                             
-                                            if($invoices[0]->total_due > $invoices[0]->total_paid){
+                                            if($invoices[0]->total_due > 0 /*$invoices[0]->total_paid*/){
                                                 $actual_due = $invoices[0]->total_due;//-$invoices[0]->total_paid
                                                 if ($actual_due > 0.5) {
                                                 $rounded_due = ceil($actual_due); // Apply ceil if greater than 0.5
