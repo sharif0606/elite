@@ -74,6 +74,47 @@
                     </select>
                 </div>
             </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="form-group">
+                    <label for="">Vat Deducted</label>
+                    <select class="form-control" name="vat_deducted">
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('$customer->vat_deducted') == 1) selected @endif>Yes</option>
+                        <option value="2" @if(request()->get('$customer->vat_deducted') == 2) selected @endif>No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="form-group">
+                    <label for="">AIT Deducted</label>
+                    <select class="form-control" name="ait_deducted">
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('$customer->ait_deducted') == 1) selected @endif>Yes</option>
+                        <option value="2" @if(request()->get('$customer->ait_deducted') == 2) selected @endif>No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="form-group">
+                    <label for="">Status</label>
+                    <select class="form-control" name="paid_status">
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('$customer->paid_status') == 1) selected @endif>Paid</option>
+                        <option value="2" @if(request()->get('$customer->paid_status') == 2) selected @endif>Unpaid</option>
+                        <option value="3" @if(request()->get('$customer->paid_status') == 3) selected @endif>Due</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <div class="form-group">
+                    <label for="">Payment Type</label>
+                    <select class="form-control" name="payment_type">
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->get('$customer->payment_type') == 1) selected @endif>Cash</option>
+                        <option value="2" @if(request()->get('$customer->payment_type') == 2) selected @endif>Bank</option>
+                    </select>
+                </div>
+            </div>
             <div class="col-sm-3 py-3">
                 <button type="submit" class="btn btn-sm btn-info mt-2">Search</button>
                 <a href="{{route('invoice-payment.client_wise_detail_invoice_report')}}" class="btn btn-sm btn-danger mt-2">Clear</a>
