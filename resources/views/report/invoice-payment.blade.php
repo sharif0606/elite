@@ -575,7 +575,8 @@
                 IFNULL(ait_amount, 0) + 
                 IFNULL(vat_amount, 0) + 
                 IFNULL(less_paid_honor, 0) + 
-                IFNULL(fine_deduction, 0)
+                IFNULL(fine_deduction, 0)+
+                IFNULL(paid_by_client, 0)
             ) AS total_paid
         FROM 
             invoice_payments
@@ -637,7 +638,8 @@
                 IFNULL(ait_amount, 0) + 
                 IFNULL(vat_amount, 0) + 
                 IFNULL(less_paid_honor, 0) + 
-                IFNULL(fine_deduction, 0)
+                IFNULL(fine_deduction, 0)+
+                IFNULL(paid_by_client, 0)
             ) AS total_paid
         FROM 
             invoice_payments
