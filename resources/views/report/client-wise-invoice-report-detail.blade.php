@@ -40,22 +40,22 @@
                     <label for="">PO No</label>
                     <input type="text" name="po_no" class="form-control" value="{{ request()->po_no }}">
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                {{--<div class="col-lg-3 col-md-6 col-sm-12 py-1">
                     <label for="">PO Date</label>
                     <input type="date" name="po_date" class="form-control" value="{{ request()->po_date }}">
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                    <label for="">Pay Date</label>
-                    <input type="date" value="{{ request()->pay_date }}" name="pay_date" class="form-control">
-                </div>
-                {{-- <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                    <label for="">Receive Date</label>
-                    <input type="date" name="rcv_date" class="form-control" value="{{ request()->rcv_date }}">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <label for="">Pay Date</label>
+                <input type="date" value="{{ request()->pay_date }}" name="pay_date" class="form-control">
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
+                <label for="">Receive Date</label>
+                <input type="date" name="rcv_date" class="form-control" value="{{ request()->rcv_date }}">
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="">Deposit Date</label>
                 <input type="date" name="deposit_date" class="form-control" value="{{ request()->deposit_date }}">
-            </div> --}}
+            </div>
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="fdate">{{__('From Bill Date')}}</label>
                 <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
@@ -63,7 +63,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="fdate">{{__('To Bill Date')}}</label>
                 <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
-            </div>
+            </div>--}}
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <div class="form-group">
                     <label for="">Received By</label>
@@ -102,16 +102,6 @@
                         <option value="1" @if(request()->get('$customer->paid_status') == 1) selected @endif>Paid</option>
                         <option value="2" @if(request()->get('$customer->paid_status') == 2) selected @endif>Unpaid</option>
                         <option value="3" @if(request()->get('$customer->paid_status') == 3) selected @endif>Due</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 py-1">
-                <div class="form-group">
-                    <label for="">Payment Type</label>
-                    <select class="form-control" name="payment_type">
-                        <option value="">Select</option>
-                        <option value="1" @if(request()->get('$customer->payment_type') == 1) selected @endif>Cash</option>
-                        <option value="2" @if(request()->get('$customer->payment_type') == 2) selected @endif>Bank</option>
                     </select>
                 </div>
             </div>
