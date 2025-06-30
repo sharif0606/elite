@@ -49,7 +49,8 @@ class SalarySheetController extends Controller
     }
     public function getsalarySheetFiveIndex()
     {
-        $salarysheet = SalarySheet::where('status', 5)->orderBy('id', 'desc')->paginate(50);
+        $salarysheet = SalarySheet::with('details.customer_atm', 'details.branches', 'customer')->where('status', 5)->orderBy('id', 'desc')->paginate(50);
+
         return view('hrm.salary_sheet.salarysheetFiveIndex', compact('salarysheet'));
     }
 

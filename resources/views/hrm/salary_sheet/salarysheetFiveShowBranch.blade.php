@@ -108,7 +108,7 @@
                                     </thead>
                                     @if (!empty($groupedAtmData))
                                     <div class="mt-5">
-                                        <h4 class="text-center">ATM Staff Salary Sheet</h4>
+                                        <h4 class="text-center">Staff Salary Sheet</h4>
                                     </div>
                                     @php
                                     $atmDeductionLoanTotal = 0;
