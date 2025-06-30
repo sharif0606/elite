@@ -50,7 +50,6 @@ class SalarySheetController extends Controller
     public function getsalarySheetFiveIndex()
     {
         $salarysheet = SalarySheet::with('details.customer_atm', 'details.branches', 'customer')->where('status', 5)->orderBy('id', 'desc')->paginate(50);
-
         return view('hrm.salary_sheet.salarysheetFiveIndex', compact('salarysheet'));
     }
 
@@ -1015,7 +1014,6 @@ class SalarySheetController extends Controller
     public function getsalarySheetFiveShow(Request $request, $id)
     {
         $groupedData = [];
-        $groupedAtmData = [];
 
         $salary = SalarySheet::findOrFail(encryptor('decrypt', $id));
 
@@ -1047,12 +1045,15 @@ class SalarySheetController extends Controller
 
         foreach ($salaryDetails as $detail) {
             if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
+                $customerId = $detail->customer_id;
+                $branchId = $detail->branch_id;
+
                 if (!empty($detail->atm_id)) {
-                    // Group ATM data separately
-                    $groupedAtmData[$detail->customer_id][$detail->branch_id][] = $detail;
+                    // Store ATM-related data under 'atm'
+                    $groupedData[$customerId][$branchId]['atm'][] = $detail;
                 } else {
-                    // Non-ATM data
-                    $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+                    // Store Non-ATM data under 'non_atm'
+                    $groupedData[$customerId][$branchId]['non_atm'][] = $detail;
                 }
             }
         }
@@ -1061,7 +1062,6 @@ class SalarySheetController extends Controller
             'customer' => $customer,
             'designation' => $designation,
             'groupedData' => $groupedData,
-            'groupedAtmData' => $groupedAtmData
         ]);
     }
 

@@ -112,263 +112,152 @@
                                         $deductionTrainingTotal = 0;
                                         $payableTotal = 0;
                                         @endphp
-                                        @foreach ($groupedAtmData as $customerId => $branches)
-                                        @foreach ($branches as $branchId => $details)
-                                        <tr class="tbl_border">
-                                            <td class="tbl_border" colspan="25">
-                                                <div class="d-flex">
-                                                    <h6>{{ $details[0]->customer?->name }},</h6>
-                                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
-                                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->customer_atm?->atm }}</b></span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @forelse ($details as $d )
-                                        <tr class="text-center tbl_border">
-                                            <td class="tbl_border">{{ ++$loop->index }}</td>
-                                            <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
-                                            <td class="tbl_border">
-                                                {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
-                                            </td>
-                                            <td class="tbl_border">{{ $d->position?->name }}</td>
-                                            <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ round($d->duty_rate) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ $d->duty_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_amount != 0)
-                                                {{ round($d->duty_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                {{ $d->ot_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                @if ($d->ot_rate != 0)
-                                                {{ round($d->ot_rate) }}
-                                                @endif
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_amount != 0)
-                                                {{ round($d->ot_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->allownce != 0)
-                                                {{ round($d->allownce) }}
-                                                @endif
-                                            </td>
-                                            <!-- Gross Salary = Net Salary + OT + Post Allownace -->
-                                            <td class="tbl_border">{{ round($d->gross_salary) }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_dress != 0)
-                                                {{ round($d->deduction_dress) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_fine != 0)
-                                                {{ round($d->deduction_fine) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_banck_charge != 0)
-                                                {{ round($d->deduction_banck_charge) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_ins != 0)
-                                                {{ round($d->deduction_ins) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_p_f != 0)
-                                                {{ round($d->deduction_p_f) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_revenue_stamp != 0)
-                                                {{ round($d->deduction_revenue_stamp) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_traningcost != 0)
-                                                {{ round($d->deduction_traningcost) }}
-                                                @php
-                                                $deductionTrainingTotal += $d->deduction_traningcost;
-                                                @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_loan != 0)
-                                                {{ round($d->deduction_loan) }}
-                                                @php
-                                                $deductionLoanTotal += $d->deduction_loan;
-                                                @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->net_salary != 0)
-                                                {{ $d->net_salary }}
-                                                @php
-                                                $payableTotal += $d->net_salary;
-                                                @endphp
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">{{ $d->sing_of_ind }}</td>
-                                            <td class="tbl_border">{{ $d->sing_account }}</td>
-                                            <td class="tbl_border">{{ $d->remark }}</td>
-                                        </tr>
-                                        @empty
-                                        @endforelse
-                                        @endforeach
-                                        @endforeach
-                                        <!-- ============================= -->
-                                        <!-- Non-ATM Branch Data Section -->
-                                        <!-- ============================= -->
+
                                         @foreach ($groupedData as $customerId => $branches)
-                                        @foreach ($branches as $branchId => $details)
+                                        @foreach ($branches as $branchId => $types)
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <div class="d-flex">
-                                                    <h6>{{ $details[0]->customer?->name }},</h6>
-                                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $details[0]->branches?->brance_name }}</b></span>
-                                                    <!-- ATM is null here, so skip showing atm name -->
+                                                    @php
+                                                    $firstDetail = $types['non_atm'][0] ?? $types['atm'][0] ?? null;
+                                                    @endphp
+                                                    <h6>{{ $firstDetail?->customer?->name }},</h6>
+                                                    <span>&nbsp;&nbsp;&nbsp;<b>{{ $firstDetail?->branches?->brance_name }}</b></span>
                                                 </div>
                                             </td>
                                         </tr>
-                                        @forelse ($details as $d)
+
+                                        {{-- Non-ATM Section --}}
+                                        @if (!empty($types['non_atm']))
+                                        @foreach ($types['non_atm'] as $d)
                                         <tr class="text-center tbl_border">
-                                            <td class="tbl_border">{{ ++$loop->index }}</td>
+                                            <td class="tbl_border">{{ $loop->iteration }}</td>
                                             <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
                                             <td class="tbl_border">
                                                 {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
                                             </td>
                                             <td class="tbl_border">{{ $d->position?->name }}</td>
                                             <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ round($d->duty_rate) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_qty != 0)
-                                                {{ $d->duty_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->duty_amount != 0)
-                                                {{ round($d->duty_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                {{ $d->ot_qty }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_qty != 0)
-                                                @if ($d->ot_rate != 0)
-                                                {{ round($d->ot_rate) }}
-                                                @endif
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->ot_amount != 0)
-                                                {{ round($d->ot_amount) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->allownce != 0)
-                                                {{ round($d->allownce) }}
-                                                @endif
-                                            </td>
-                                            <!-- Gross Salary = Net Salary + OT + Post Allownace -->
+                                            <td class="tbl_border">{{ $d->duty_qty != 0 ? round($d->duty_rate) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->duty_qty != 0 ? $d->duty_qty : '' }}</td>
+                                            <td class="tbl_border">{{ $d->duty_amount != 0 ? round($d->duty_amount) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_qty != 0 ? $d->ot_qty : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_qty != 0 && $d->ot_rate != 0 ? round($d->ot_rate) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_amount != 0 ? round($d->ot_amount) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->allownce != 0 ? round($d->allownce) : '' }}</td>
                                             <td class="tbl_border">{{ round($d->gross_salary) }}</td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_dress != 0)
-                                                {{ round($d->deduction_dress) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_fine != 0)
-                                                {{ round($d->deduction_fine) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_banck_charge != 0)
-                                                {{ round($d->deduction_banck_charge) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_ins != 0)
-                                                {{ round($d->deduction_ins) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_p_f != 0)
-                                                {{ round($d->deduction_p_f) }}
-                                                @endif
-                                            </td>
-                                            <td class="tbl_border">
-                                                @if ($d->deduction_revenue_stamp != 0)
-                                                {{ round($d->deduction_revenue_stamp) }}
-                                                @endif
-                                            </td>
+                                            <td class="tbl_border">{{ $d->deduction_dress != 0 ? round($d->deduction_dress) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_fine != 0 ? round($d->deduction_fine) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_banck_charge != 0 ? round($d->deduction_banck_charge) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_ins != 0 ? round($d->deduction_ins) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_p_f != 0 ? round($d->deduction_p_f) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_revenue_stamp != 0 ? round($d->deduction_revenue_stamp) : '' }}</td>
                                             <td class="tbl_border">
                                                 @if ($d->deduction_traningcost != 0)
                                                 {{ round($d->deduction_traningcost) }}
-                                                @php
-                                                $deductionTrainingTotal += $d->deduction_traningcost;
-                                                @endphp
+                                                @php $deductionTrainingTotal += $d->deduction_traningcost; @endphp
                                                 @endif
                                             </td>
                                             <td class="tbl_border">
                                                 @if ($d->deduction_loan != 0)
                                                 {{ round($d->deduction_loan) }}
-                                                @php
-                                                $deductionLoanTotal += $d->deduction_loan;
-                                                @endphp
+                                                @php $deductionLoanTotal += $d->deduction_loan; @endphp
                                                 @endif
                                             </td>
                                             <td class="tbl_border">
                                                 @if ($d->net_salary != 0)
                                                 {{ $d->net_salary }}
-                                                @php
-                                                $payableTotal += $d->net_salary;
-                                                @endphp
+                                                @php $payableTotal += $d->net_salary; @endphp
                                                 @endif
                                             </td>
                                             <td class="tbl_border">{{ $d->sing_of_ind }}</td>
                                             <td class="tbl_border">{{ $d->sing_account }}</td>
                                             <td class="tbl_border">{{ $d->remark }}</td>
                                         </tr>
-                                        @empty
-                                        @endforelse
+                                        @endforeach
+                                        @endif
+
+                                        {{-- ATM Section --}}
+                                        @if (!empty($types['atm']))
+                                        {{-- ATM Section Header --}}
+                                        @php
+                                        $atmGroups = collect($types['atm'])->groupBy('atm_id');
+                                        @endphp
+
+                                        @foreach ($atmGroups as $atmId => $details)
+                                        @php
+                                        $firstDetail = $details->first();
+                                        $atmName = $firstDetail->customer_atm?->atm ?? 'Unknown ATM';
+                                        @endphp
+
+                                        <tr>
+                                            <td colspan="25" style="background-color: #c9f7f5; font-weight: bold;">
+                                                ATM – {{ $atmName }}
+                                            </td>
+                                        </tr>
+                                        @foreach ($types['atm'] as $d)
+                                        <tr class="text-center tbl_border">
+                                            <td class="tbl_border">{{ $loop->iteration }}</td>
+                                            <td class="tbl_border">{{ $d->employee?->admission_id_no }}</td>
+                                            <td class="tbl_border">
+                                                {{ $d->employee->salary_joining_date ? \Carbon\Carbon::parse($d->employee->salary_joining_date)->format('d-m-Y') : '' }}
+                                            </td>
+                                            <td class="tbl_border">{{ $d->position?->name }}</td>
+                                            <td class="tbl_border">{{ $d->employee?->en_applicants_name }}</td>
+                                            <td class="tbl_border">{{ $d->duty_qty != 0 ? round($d->duty_rate) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->duty_qty != 0 ? $d->duty_qty : '' }}</td>
+                                            <td class="tbl_border">{{ $d->duty_amount != 0 ? round($d->duty_amount) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_qty != 0 ? $d->ot_qty : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_qty != 0 && $d->ot_rate != 0 ? round($d->ot_rate) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->ot_amount != 0 ? round($d->ot_amount) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->allownce != 0 ? round($d->allownce) : '' }}</td>
+                                            <td class="tbl_border">{{ round($d->gross_salary) }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_dress != 0 ? round($d->deduction_dress) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_fine != 0 ? round($d->deduction_fine) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_banck_charge != 0 ? round($d->deduction_banck_charge) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_ins != 0 ? round($d->deduction_ins) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_p_f != 0 ? round($d->deduction_p_f) : '' }}</td>
+                                            <td class="tbl_border">{{ $d->deduction_revenue_stamp != 0 ? round($d->deduction_revenue_stamp) : '' }}</td>
+                                            <td class="tbl_border">
+                                                @if ($d->deduction_traningcost != 0)
+                                                {{ round($d->deduction_traningcost) }}
+                                                @php $deductionTrainingTotal += $d->deduction_traningcost; @endphp
+                                                @endif
+                                            </td>
+                                            <td class="tbl_border">
+                                                @if ($d->deduction_loan != 0)
+                                                {{ round($d->deduction_loan) }}
+                                                @php $deductionLoanTotal += $d->deduction_loan; @endphp
+                                                @endif
+                                            </td>
+                                            <td class="tbl_border">
+                                                @if ($d->net_salary != 0)
+                                                {{ $d->net_salary }}
+                                                @php $payableTotal += $d->net_salary; @endphp
+                                                @endif
+                                            </td>
+                                            <td class="tbl_border">{{ $d->sing_of_ind }}</td>
+                                            <td class="tbl_border">{{ $d->sing_account }}</td>
+                                            <td class="tbl_border">{{ $d->remark }}</td>
+                                        </tr>
                                         @endforeach
                                         @endforeach
-                                        {{-- footer --}}
+                                        @endif
+                                        @endforeach
+                                        @endforeach
+
+                                        {{-- Footer Row --}}
                                         <tr class="tbl_border">
                                             <th colspan="19" class="text-center tbl_border">Total</th>
-                                            <th class="tbl_border text-center">{{$deductionTrainingTotal}}</th>
-                                            <th class="tbl_border text-center">{{$deductionLoanTotal}}</th>
-                                            <th class="tbl_border text-center">{{$payableTotal}}</th>
-                                            <th class="tbl_border text-center">{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal}}</th>
+                                            <th class="tbl_border text-center">{{ $deductionTrainingTotal }}</th>
+                                            <th class="tbl_border text-center">{{ $deductionLoanTotal }}</th>
+                                            <th class="tbl_border text-center">{{ $payableTotal }}</th>
+                                            <th class="tbl_border text-center">{{ $deductionLoanTotal + $deductionTrainingTotal + $payableTotal }}</th>
                                             <th class="tbl_border"></th>
                                             <th class="tbl_border"></th>
                                         </tr>
-                                        {{-- footer --}}
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>

@@ -43,15 +43,20 @@
                                     ->pluck('branches.brance_name')
                                     ->unique()
                                     ->filter();
+
+
                                     @endphp
 
+
                                     @if ($branches->isNotEmpty())
+                                    <p>Branch:</p>
                                     <ul type="square">
                                         @foreach ($branches as $branch)
                                         <li><small>{{ $branch }}</small></li>
                                         @endforeach
                                     </ul>
                                     @endif
+
                                 </li>
                                 @endforeach
                             </ul>
