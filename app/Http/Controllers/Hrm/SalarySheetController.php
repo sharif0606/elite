@@ -970,7 +970,7 @@ class SalarySheetController extends Controller
         });
         $groupedData = [];
 
-        $salaryDetails = SalarySheetDetail::select('salary_sheet_details.*','job_posts.serial')
+        $salaryDetails = SalarySheetDetail::select('salary_sheet_details.*', 'job_posts.serial')
             ->join('job_posts', 'salary_sheet_details.designation_id', '=', 'job_posts.id')
             ->where('salary_sheet_details.salary_id', $salary->id)
             ->orderBy('job_posts.serial', 'ASC')
@@ -983,7 +983,7 @@ class SalarySheetController extends Controller
             }
         }
 
-        
+
 
         return view('hrm.salary_sheet.salarysheetThreeShow', compact('salary', 'groupedData'));
     }
@@ -1013,6 +1013,9 @@ class SalarySheetController extends Controller
     // }
     public function getsalarySheetFiveShow(Request $request, $id)
     {
+        $groupedData = [];
+        $groupedAtmData = [];
+
         $salary = SalarySheet::findOrFail(encryptor('decrypt', $id));
 
         $customerIds = explode(',', $salary->customer_id);
@@ -1043,14 +1046,21 @@ class SalarySheetController extends Controller
 
         foreach ($salaryDetails as $detail) {
             if (in_array($detail->customer_id, $customerIds) && (empty($branchIds) || in_array($detail->branch_id, $branchIds))) {
-                $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+                if (!empty($detail->atm_id)) {
+                    // Group ATM data separately
+                    $groupedAtmData[$detail->customer_id][$detail->branch_id][] = $detail;
+                } else {
+                    // Non-ATM data
+                    $groupedData[$detail->customer_id][$detail->branch_id][] = $detail;
+                }
             }
         }
         return view('hrm.salary_sheet.salarysheetFiveShowBranch', [
             'salary' => $salary,
             'customer' => $customer,
             'designation' => $designation,
-            'groupedData' => $groupedData
+            'groupedData' => $groupedData,
+            'groupedAtmData' => $groupedAtmData
         ]);
     }
 
@@ -1287,8 +1297,7 @@ $query->where('customer_duty_details.customer_id', '=', $request->customer_id) /
                   ) > 0,
                   1,
                   0
-                ) AS charge_status")
-                ,
+                ) AS charge_status"),
             )
             ->where('year', '>', 0)
             ->where('month', '>', 0)
