@@ -267,7 +267,10 @@
                         $.each(salary_data, function(index, value) {
                             let traningCost=value.bn_remaining_cost;
                             let traningCostMonth=value.bn_traning_cost_byMonth;
-                            let traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                            let traningCostPerMonth = 0 
+                            if(traningCost > 0){
+                                traningCostPerMonth=parseFloat((value.bn_remaining_cost)/(value.bn_traning_cost_byMonth)).toFixed(2);
+                            }
                             let remaining=value.bn_remaining_cost;
                             /* If Month Wise Post Allownace found For Any Employee bn_post_allowance from employee will not apply  */
                             let deduction_post_allowance = value.post_allowance > 0 ? Number(value.post_allowance) : 0;
@@ -319,7 +322,9 @@
                             let currentMonth = $('.selected_month').val();
                             let totalDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
                             let totalOtDaysInMonth = new Date(new Date().getFullYear(), currentMonth, 0).getDate();
-                           
+                        if (value.admission_id_no =='21699') {
+alert(value.bn_traning_cost_byMonth);
+                        }   
 
                             // Check if deductions are already applied for this employee
                             if (!appliedDeductions[value.admission_id_no]) {
@@ -365,7 +370,7 @@
                                 }
                                
                                
-                                if (new Date() >= sixMonthsLater && value.charge_status == 0) {
+                                if (new Date(Year, Month - 1) >= sixMonthsLater && value.charge_status == 0) {
                                    
                                     if(value.cpf > 0 && value.pf_ins_med_food_status == 2)
                                     pf = (value.cpf > 0) ? value.cpf : '0';

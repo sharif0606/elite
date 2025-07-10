@@ -193,8 +193,14 @@
                                         $payableTotal = 0;
                                         @endphp
                                         @foreach($salary as $sheet)
-                                        @if($sheet->details->count() > 0)
-                                        <!-- Customer Header -->
+                                        @if($sheet->details->count() > 0 && $sheet->customer->zone_id == request('zone'))
+                                       <!-- Customer Header -->
+                                        <tr class="tbl_border">
+                                            <td class="tbl_border" colspan="25">
+                                                <h6 class="m-0">{{ $sheet->customer->name }}</h6>
+                                            </td>
+                                        </tr>
+                                        @elseif($sheet->details->count() > 0 && $sheet->details->first()?->branches?->zone_id == request('zone'))
                                         <tr class="tbl_border">
                                             <td class="tbl_border" colspan="25">
                                                 <h6 class="m-0">{{ $sheet->customer->name }}</h6>
