@@ -130,63 +130,64 @@
     {{--  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>  --}}
     <script>
         function addRow() {
-            var row = `
-    <tr class="new_rows">
-        <td>
-            <select class="form-select atm_id" id="atm_id" name="atm_id[]">
-                <option value="0">Select Atm</option>
-            </select>
-        </td>
-        <td>
-            <select class="form-select job_post_id" id="job_post_id" name="job_post_id[]" onchange="getRate(this)">
-                <option value="">Select Post</option>
-                @forelse ($jobpost as $job)
-                <option value="{{ $job->id }}">{{ $job->name }}</option>
-                @empty
-                @endforelse
-            </select>
-        </td>
-        <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
-        <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
-        <td>
-            <select name="bonus_type[]" class="form-control">
-                <option value="">Select</option>
-                <option value="1">Flat</option>
-                <option value="2">Ratio</option>
-            </select>
-        </td>
-        <td>
-            <input class="form-control" type="text" name="bonus_amount[]">
-        </td>
-        <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
-        <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-        <td>
-            {{--<select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
-                <option value="1">8 Hour's</option>
-                <option value="2">12 Hour's</option>
-            </select>--}}
-            <select name="hours[]"
-                                                            class="form-control @error('hours') is-invalid @enderror"
-                                                            id="hours">
-                                                            @forelse ($hours as $hour)
-                                                                <option value="{{ $hour->id }}">
-                                                                    {{ $hour->hour }} Hour's
-                                                                </option>
-                                                            @empty
-                                                                <option value="">No hours available</option>
-                                                            @endforelse
-            </select>
-        </td>
-        <td>
-            <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
-            {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
-        </td>
-    </tr>
-    `;
+            var row = $(`
+                        <tr class="new_rows">
+                            <td>
+                                <select class="form-select atm_id" id="atm_id" name="atm_id[]">
+                                    <option value="0">Select Atm</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select job_post_id" name="job_post_id[]" onchange="getRate(this)">
+                                    <option value="">Select Post</option>
+                                    @forelse ($jobpost as $job)
+                                    <option value="{{ $job->id }}">{{ $job->name }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </td>
+                            <td><input class="form-control" type="text" name="qty[]" value="" placeholder="qty"></td>
+                            <td><input class="form-control rate" type="text" name="rate[]" value="" placeholder="rate"></td>
+                            <td>
+                                <select name="bonus_type[]" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="1">Flat</option>
+                                    <option value="2">Ratio</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" name="bonus_amount[]">
+                            </td>
+                            <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
+                            <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
+                            <td>
+                                {{--<select name="hours[]" class="form-control @error('hours') is-invalid @enderror" id="hours">
+                                    <option value="1">8 Hour's</option>
+                                    <option value="2">12 Hour's</option>
+                                </select>--}}
+                                <select name="hours[]"
+                                                                                class="form-control @error('hours') is-invalid @enderror"
+                                                                                id="hours">
+                                                                                @forelse ($hours as $hour)
+                                                                                    <option value="{{ $hour->id }}">
+                                                                                        {{ $hour->hour }} Hour's
+                                                                                    </option>
+                                                                                @empty
+                                                                                    <option value="">No hours available</option>
+                                                                                @endforelse
+                                </select>
+                            </td>
+                            <td>
+                                <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
+                                {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}
+                            </td>
+                        </tr>
+                    `);
             $('#empassign').append(row);
-            $('#empasinassing tr:last .select2').select2();
+            // Reinitialize select2 only on the newly added job_post_id
+            row.find('.job_post_id').select2();
         }
-
+        $('.job_post_id').select2();
         function removeRow(e) {
             if (confirm("Are you sure you want to remove this row?")) {
                 $(e).closest('tr').remove();
