@@ -165,8 +165,6 @@
                             <td>
                                 @if ($receivedAmount > 0 )
                                     {{ $receivedAmount }}
-                                @else
-                                    {{$less_paid_honor}}
                                 @endif
                             </td>
                             <td>{{ $due }}</td>
