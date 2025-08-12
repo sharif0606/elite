@@ -98,7 +98,7 @@
                 <tbody>
                     @php $pm=[1=>"Cash","Pay Order","Fund Transfer","Online Pay"]; @endphp
                     @forelse($payments as $e)
-                    @if($e->received_amount > 0)
+                    @if($e->received_amount > 0 || $e->less_paid_honor > 0)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}{{--$e->id--}}</td>
                         <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>

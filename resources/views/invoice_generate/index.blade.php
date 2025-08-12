@@ -135,6 +135,7 @@
                             $due = round($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                             $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                             $receivedAmount = money_format($e->payment->sum('received_amount'));
+                            $less_paid_honor = money_format($e->payment->sum('less_paid_honor'));
                         @endphp
                     {{--$e->port_link?->details--}}
                     {{-- @if ($due != 0) --}}
@@ -162,8 +163,10 @@
                             <td>{{ $e->bill_date }}</td>
                             <td>{{ money_format($e->grand_total) }}</td>
                             <td>
-                                @if ($receivedAmount > 0)
+                                @if ($receivedAmount > 0 )
                                     {{ $receivedAmount }}
+                                @else
+                                    {{$less_paid_honor}}
                                 @endif
                             </td>
                             <td>{{ $due }}</td>
