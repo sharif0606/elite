@@ -48,6 +48,10 @@ class EmployeeController extends Controller
         }/*else{
             $employees = $employees->whereRaw("admission_id_no NOT REGEXP '^[0-9]+$'");
         }*/
+        if ($request->en_applicants_name) {
+            $employees = $employees->where('en_applicants_name', 'like', '%' . $request->en_applicants_name . '%');
+        }
+
 
         $employees = $employees->paginate(20);
         return view('employee.index', compact('employees'));
@@ -366,7 +370,7 @@ class EmployeeController extends Controller
             ],
             ['Date of Birth', date('d-M-Y', strtotime($employees->bn_dob))],
             // ['Email', $employees->email],
-            ['Personal and  Alt. Phone No', $employees->en_parm_phone_my.','.$employees->en_parm_phone_alt],
+            ['Personal and  Alt. Phone No', $employees->en_parm_phone_my . ',' . $employees->en_parm_phone_alt],
             ['Educational Qualification', $employees->en_edu_qualification],
             ['Experience', $employees->en_experience],
             ['Religion', $employees->religion?->name],
@@ -385,7 +389,7 @@ class EmployeeController extends Controller
             ],
             [
                 'Emergency Address',
-                ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_parm_holding_name . ', '.$employees->en_pre_holding_no : '') .
+                ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_parm_holding_name . ', ' . $employees->en_pre_holding_no : '') .
                     ($employees->en_emergency_village_name ? 'Vill: ' . $employees->en_parm_village_name . ', ' : '') .
                     ($employees->en_emergency_post_ofc ? 'Post: ' . $employees->en_parm_post_ofc . ', ' : '') .
                     ($employees->bn_emergency_union?->name ? 'P.S: ' . $employees->bn_emergency_union?->name . ', ' : '') .

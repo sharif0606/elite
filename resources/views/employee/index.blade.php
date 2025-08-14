@@ -11,6 +11,10 @@
                     <label for="">ID</label>
                     <input type="text" name="admission_id_no" class="form-control" value="{{ request()->admission_id_no }}">
                 </div>
+                <div class="col-sm-3">
+                    <label for="">Name</label>
+                    <input type="text" name="en_applicants_name" class="form-control" value="{{ request()->en_applicants_name }}">
+                </div>
                 <div class="col-sm-3 py-3">
                     <button type="submit" class="btn btn-info">Search</button>
                     <a href="{{route('employee.index', ['role' =>currentUser()])}}" class="btn btn-danger">Clear</a>
@@ -43,10 +47,12 @@
                             <p><strong>মাতার নাম:</strong> {{$e->bn_mothers_name}}</p>
                         </td>
                         <td>
+                            <p class="text-center m-0">ID:<strong>{{$e->admission_id_no}}</strong></p>
                             <p><strong>Applicant's Name:</strong> {{$e->en_applicants_name}}</p>
                             <p><strong>Father's Name:</strong> {{$e->en_fathers_name}}</p>
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
                             <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
+                           <p><strong>Date Of Joining:</strong> {{ \Carbon\Carbon::parse($e->joining_date)->format('F j, Y') }}</p>
                         </td>
                         <td class="text-center d-flex justify-content-center align-items-center">
                             <a class="px-1" href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
