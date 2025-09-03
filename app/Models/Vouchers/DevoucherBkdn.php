@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DevoucherBkdn extends Model
 {
     use HasFactory;
+    public function gl()
+    {
+        return $this->hasOne(GeneralLedger::class, 'devoucher_bkdn_id', 'id');
+    }
 }

@@ -80,7 +80,7 @@
 
 								<div class="col-sm-4">
 									<div class="form-group">
-										<label for="accDate">Year</label>
+										<label for="accDate">Date</label>
 										<div class="input-group">
 											<input class="form-control date-picker" name="current_date" id="inputDate" type="text" data-date-format="dd-mm-yyyy" required />
 											<span class="input-group-addon"><i class="fa fa-calendar bigger-110"></i></span>

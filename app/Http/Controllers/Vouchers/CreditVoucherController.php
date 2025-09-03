@@ -44,7 +44,105 @@ class CreditVoucherController extends VoucherController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request){
+        try {
+            DB::beginTransaction();
+            $voucher_no = $this->create_voucher_no();
+            if(!empty($voucher_no)){
+                $jv=new CreditVoucher;
+                $jv->voucher_no=$voucher_no;
+                $jv->current_date=$request->current_date;
+                $jv->pay_name=$request->pay_name;
+                $jv->purpose=$request->purpose;
+                $jv->credit_sum=$request->amount;
+                $jv->debit_sum=$request->amount;
+                $jv->cheque_no=$request->cheque_no;
+                $jv->bank=$request->bank;
+                $jv->cheque_dt=$request->cheque_dt;
+                $jv->created_by=currentUserId();
+				if($request->has('slip')){
+					$imageName= rand(111,999).time().'.'.$request->slip->extension();
+					$request->slip->move(public_path('uploads/slip'), $imageName);
+					$jv->slip=$imageName;
+				}
+                if($jv->save()){
+                    $account_codes=['4200-Non Operating Income'];
+                    $table_id=[3];
+                    $credit=$request->credit;
+                    $debit=$request->debit;
+                    
+                    if($credit){
+                        $credit=explode('~',$credit);
+                        $jvb=new CreVoucherBkdn;
+                        $jvb->credit_voucher_id=$jv->id;
+                        $jvb->particulars="Received from";
+                        $jvb->account_code=$credit[2];
+                        $jvb->table_name=$credit[0];
+                        $jvb->table_id=$credit[1];
+                        $jvb->debit=$request->amount;
+                        if($jvb->save()){
+                            $table_name=$credit[0];
+                            if($table_name=="master_accounts"){$field_name="master_account_id";}
+							else if($table_name=="sub_heads"){$field_name="sub_head_id";}
+							else if($table_name=="child_ones"){$field_name="child_one_id";}
+							else if($table_name=="child_twos"){$field_name="child_two_id";}
+							$gl=new GeneralLedger;
+                            $gl->credit_voucher_id=$jv->id;
+                            $gl->journal_title=$jvb->account_code;
+                            $gl->purpose=$request->purpose;
+                            $gl->rec_date=$request->current_date;
+                            $gl->jv_id=$voucher_no;
+                            $gl->crvoucher_bkdn_id=$jvb->id;
+                            $gl->created_by=currentUserId();
+                            $gl->dr=$request->amount;
+                            $gl->{$field_name}=$credit[1];
+                            $gl->save();
+                        }
+                    }
+					if(sizeof($account_codes)>0){
+                        foreach($account_codes as $i=>$acccode){
+                            $jvb=new CreVoucherBkdn;
+                            $jvb->credit_voucher_id=$jv->id;
+                            $jvb->particulars="Received from";
+                            $jvb->account_code=!empty($acccode)?$acccode:"";
+                            $jvb->table_name='sub_heads';
+                            $jvb->table_id=3;
+                            $jvb->credit=$request->amount;
+                            if($jvb->save()){
+                                $table_name='sub_heads';
+                                if($table_name=="master_accounts"){$field_name="master_account_id";}
+    							else if($table_name=="sub_heads"){$field_name="sub_head_id";}
+    							else if($table_name=="child_ones"){$field_name="child_one_id";}
+    							else if($table_name=="child_twos"){$field_name="child_two_id";}
+    							$gl=new GeneralLedger;
+                                $gl->credit_voucher_id=$jv->id;
+                                $gl->journal_title=$jvb->account_code;
+                                $gl->purpose=$request->purpose;
+                                $gl->rec_date=$request->current_date;
+                                $gl->jv_id=$voucher_no;
+                                $gl->crvoucher_bkdn_id=$jvb->id;
+                                $gl->created_by=currentUserId();
+                                $gl->cr=$request->amount;
+                                $gl->{$field_name}=3;
+                                $gl->save();
+                            }
+                        }
+                    }
+                }
+                DB::commit();
+				\Toastr::success('Successfully created');
+				return redirect()->route('credit_voucher.index');
+			}
+		}catch (Exception $e) {
+			 dd($e);
+			\Toastr::error('Please try again');
+			DB::rollBack();
+			return redirect()->back()->withInput();
+		}
+    }
+    
+     /*public function store(Request $request){
         try {
             DB::beginTransaction();
             $voucher_no = $this->create_voucher_no();
@@ -141,6 +239,9 @@ class CreditVoucherController extends VoucherController
 		}
     }
 
+    */
+    
+
     /**
      * Display the specified resource.
      *
@@ -162,9 +263,10 @@ class CreditVoucherController extends VoucherController
      */
     public function edit($id)
     {
+        $paymethod=$this->cashHead();
         $creditVoucher=CreditVoucher::findOrFail(encryptor('decrypt',$id));
 		$crevoucherbkdn=CreVoucherBkdn::where('credit_voucher_id',encryptor('decrypt',$id))->get();
-		return view('voucher.creditVoucher.edit',compact('creditVoucher','crevoucherbkdn'));
+		return view('voucher.creditVoucher.edit',compact('creditVoucher','crevoucherbkdn','paymethod'));
     }
 
     /**
@@ -176,28 +278,60 @@ class CreditVoucherController extends VoucherController
      */
     public function update(Request $request, $id)
     {
+        
 		try {
-			$cv= CreditVoucher::findOrFail(encryptor('decrypt',$id));
-			$cv->current_date = $request->current_date;
-			$cv->pay_name = $request->pay_name;
-			$cv->purpose = $request->purpose;
-			$cv->cheque_no = $request->cheque_no;
-			$cv->cheque_dt = $request->cheque_dt;
-			$cv->bank = $request->bank;
-			if($request->has('slip')){
-				$imageName= rand(111,999).time().'.'.$request->slip->extension();
-				$request->slip->move(public_path('uploads/slip'), $imageName);
-				$cv->slip=$imageName;
-			}
-			if($cv->save()){
-                $gldata=array('purpose'=>$request->purpose,'rec_date'=>$request->current_date);
-                GeneralLedger::where('credit_voucher_id',$cv->id)->update($gldata);
-            
-                \Toastr::success('Successfully Updated');
-                return redirect()->route('credit_voucher.index');
-            }
+            DB::beginTransaction();
+                $jv=CreditVoucher::findOrFail(encryptor('decrypt',$id));
+                $jv->current_date=$request->current_date;
+                $jv->pay_name=$request->pay_name;
+                $jv->purpose=$request->purpose;
+                $jv->credit_sum=$request->amount;
+                $jv->debit_sum=$request->amount;
+                $jv->cheque_no=$request->cheque_no;
+                $jv->bank=$request->bank;
+                $jv->cheque_dt=$request->cheque_dt;
+                $jv->created_by=currentUserId();
+				
+                if($jv->save()){
+                    foreach($jv->bkdn as $jvb){
+                        if($jvb->debit > 0){
+                            $credit=explode('~',$request->credit);
+                            $jvb->particulars="Received from";
+                            $jvb->account_code=$credit[2];
+                            $jvb->table_name=$credit[0];
+                            $jvb->table_id=$credit[1];
+                            $jvb->debit=$request->amount;
+                            if($jvb->save()){
+                                $table_name=$credit[0];
+                                if($table_name=="master_accounts"){$field_name="master_account_id";}
+                                else if($table_name=="sub_heads"){$field_name="sub_head_id";}
+                                else if($table_name=="child_ones"){$field_name="child_one_id";}
+                                else if($table_name=="child_twos"){$field_name="child_two_id";}
+                                $gl=$jvb->gl;
+                                $gl->journal_title=$jvb->account_code;
+                                $gl->purpose=$request->purpose;
+                                $gl->rec_date=$request->current_date;
+                                $gl->dr=$request->amount;
+                                $gl->{$field_name}=$credit[1];
+                                $gl->save();
+                            }
+                        }else{
+                            $jvb->credit=$request->amount;
+                            if($jvb->save()){
+                                $gl=$jvb->gl;
+                                $gl->cr=$request->amount;
+                                $gl->save();
+                            }
+                        }
+                    }
+                }
+                    
+                DB::commit();
+				\Toastr::success('Successfully updated');
+				return redirect()->route('credit_voucher.index');
+			
 		}catch (Exception $e) {
-			// dd($e);
+			 dd($e);
 			\Toastr::error('Please try again');
 			DB::rollBack();
 			return redirect()->back()->withInput();
@@ -210,8 +344,31 @@ class CreditVoucherController extends VoucherController
      * @param  \App\Models\CreditVoucher  $creditVoucher
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CreditVoucher $creditVoucher)
+    public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $jv=CreditVoucher::findOrFail(encryptor('decrypt',$id));
+            if($jv->delete()){
+                if(CreVoucherBkdn::where('credit_voucher_id',$jv->id)->delete()){
+                    if(GeneralLedger::where('credit_voucher_id',$jv->id)->delete()){
+                        DB::commit();
+                        \Toastr::success('Successfully deleted');
+                        return redirect()->route('credit_voucher.index');
+                    }
+                }else{
+                    \Toastr::error('Please try again');
+                    DB::rollBack();
+                    return redirect()->back()->withInput();
+                }
+            }
+            DB::commit();
+            \Toastr::success('Successfully deleted');
+            return redirect()->route('credit_voucher.index');
+        }catch (Exception $e) {
+            \Toastr::error('Please try again');
+            DB::rollBack();
+            return redirect()->back()->withInput();
+        }
     }
 }
