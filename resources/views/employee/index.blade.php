@@ -12,8 +12,16 @@
                     <input type="text" name="admission_id_no" class="form-control" value="{{ request()->admission_id_no }}">
                 </div>
                 <div class="col-sm-3">
+                    <label for="">Bank Account</label>
+                    <select name="acc_status" class="form-control" value="{{ request()->admission_id_no }}">
+                        <option value="">Select</option>
+                        <option value="1" @if(request()->acc_status == 1) selected @endif>Yes</option>
+                        <option value="2" @if(request()->acc_status == 2) selected @endif>No</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
                     <label for="">Name</label>
-                    <input type="text" name="en_applicants_name" class="form-control" value="{{ request()->en_applicants_name }}">
+                    <input type="text" name="en_applicants_name" class="form-control">
                 </div>
                 <div class="col-sm-3 py-3">
                     <button type="submit" class="btn btn-info">Search</button>
@@ -33,6 +41,7 @@
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Bangla')}}</th>
                         <th scope="col">{{__('English')}}</th>
+                        <th scope="col">{{__('Account Informaton')}}</th>
                         <th class="white-space-nowrap" width=25%>{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -47,12 +56,21 @@
                             <p><strong>মাতার নাম:</strong> {{$e->bn_mothers_name}}</p>
                         </td>
                         <td>
-                            <p class="text-center m-0">ID:<strong>{{$e->admission_id_no}}</strong></p>
+                            <p>ID:<strong>{{$e->admission_id_no}}</strong></p>
                             <p><strong>Applicant's Name:</strong> {{$e->en_applicants_name}}</p>
                             <p><strong>Father's Name:</strong> {{$e->en_fathers_name}}</p>
                             <p><strong>Mothers's Name:</strong> {{$e->en_mothers_name}}</p>
                             <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
                            <p><strong>Date Of Joining:</strong> {{ \Carbon\Carbon::parse($e->joining_date)->format('F j, Y') }}</p>
+                        </td>
+                        <td>
+                            @if($e->bn_ac_no)
+                             <p class="m-0 text-center">{{$e->bn_ac_no}}</p>
+                             <p class="m-0 text-center">{{$e->bn_brance_name}}</p>
+                             <p class="m-0 text-center">{{$e->bn_bank_name}}</p>
+                             @else
+                             <p class="m-0 text-center">No Account</p>
+                             @endif
                         </td>
                         <td class="text-center d-flex justify-content-center align-items-center">
                             <a class="px-1" href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
