@@ -340,9 +340,10 @@
                             @endif
                         </div>
                     </div>
+                    
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_pre_holding_no">হোল্ডিং নং</label>
+                            <label for="bn_pre_holding_no">বাসা / হোল্ডিং নং</label>
                             <input type="text" id="bn_pre_holding_no" value="{{old('bn_pre_holding_no',$employees->bn_pre_holding_no)}}" class="form-control @error('bn_pre_holding_no') is-invalid @enderror" placeholder="হোল্ডিং নং" name="bn_pre_holding_no">
                             @if($errors->has('bn_pre_holding_no'))
                                 <span class="text-danger"> {{ $errors->first('bn_pre_holding_no') }}</span>
