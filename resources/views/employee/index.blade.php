@@ -12,12 +12,8 @@
                     <input type="text" name="admission_id_no" class="form-control" value="{{ request()->admission_id_no }}">
                 </div>
                 <div class="col-sm-3">
-                    <label for="">Bank Account</label>
-                    <select name="acc_status" class="form-control" value="{{ request()->admission_id_no }}">
-                        <option value="">Select</option>
-                        <option value="1" @if(request()->acc_status == 1) selected @endif>Yes</option>
-                        <option value="2" @if(request()->acc_status == 2) selected @endif>No</option>
-                    </select>
+                    <label for="">Joining Date</label>
+                    <input type="date"  class="form-control" name="joining_date" value="{{ request()->joining_date }}">
                 </div>
                 <div class="col-sm-3">
                     <label for="">Name</label>
@@ -41,7 +37,6 @@
                         <th scope="col" width="20px">{{__('#SL')}}</th>
                         <th scope="col">{{__('Bangla')}}</th>
                         <th scope="col">{{__('English')}}</th>
-                        <th scope="col">{{__('Account Informaton')}}</th>
                         <th class="white-space-nowrap" width=25%>{{__('ACTION')}}</th>
                     </tr>
                 </thead>
@@ -63,16 +58,8 @@
                             <p><strong>National ID No:</strong> {{$e->en_nid_no}}</p>
                            <p><strong>Date Of Joining:</strong> {{ \Carbon\Carbon::parse($e->joining_date)->format('F j, Y') }}</p>
                         </td>
-                        <td>
-                            @if($e->bn_ac_no)
-                             <p class="m-0 text-center">{{$e->bn_ac_no}}</p>
-                             <p class="m-0 text-center">{{$e->bn_brance_name}}</p>
-                             <p class="m-0 text-center">{{$e->bn_bank_name}}</p>
-                             @else
-                             <p class="m-0 text-center">No Account</p>
-                             @endif
-                        </td>
-                        <td class="text-center d-flex justify-content-center align-items-center">
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center align-items-center">
                             <a class="px-1" href="{{route('employee.show',encryptor('encrypt',$e->id))}}">
                                 <i class="bi bi-eye"></i>
                             </a>
@@ -86,6 +73,8 @@
                                 Certificate
                             </a>
                             <a class="btn btn-sm btn-info px-2" target="_blank" href="{{route('employee-biometrics.create',['id' =>encryptor('encrypt',$e->id)])}}">Biometric</a>
+                            </div>
+                            <p>Bank Account:{{$e->bank_account == 1?'Yes':'No'}}</p>
                         </td>
                     </tr>
                     @empty

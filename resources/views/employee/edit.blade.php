@@ -668,6 +668,16 @@
                             <input type="text" value="{{old('bn_traning_cost_byMonth',$employees->bn_traning_cost_byMonth)}}" class="form-control" placeholder="ট্রেনিং খরচ কালেকশন মাস" name="bn_traning_cost_byMonth">
                         </div>
                     </div> 
+                    <div class="col-md-2 col-12">
+                        <div class="form-group">
+                            <label for="">Bank Account</label>
+                            <select name="bank_account" class="form-control form-select">
+                                <option value="">Select</option>
+                                <option value="1" {{$employees->bank_account==1? 'selected' : ''}}>Yes</option>
+                                <option value="2" {{$employees->bank_account==2? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_bank_name">ব্যাংক নাম</label>

@@ -51,14 +51,9 @@ class EmployeeController extends Controller
         if ($request->en_applicants_name) {
             $employees = $employees->where('en_applicants_name', 'like', '%' . $request->en_applicants_name . '%');
         }
-        if ($request->acc_status !== null && $request->acc_status !== '') {
-            if ($request->acc_status == 1) {
-                // Must have a bank account (not null)
-                $employees = $employees->whereNotNull('bn_ac_no');
-            } elseif ($request->acc_status == 2) {
-                // Must NOT have a bank account (null)
-                $employees = $employees->whereNull('bn_ac_no');
-            }
+        // Filter by Joining Date
+        if ($request->joining_date) {
+            $employees = $employees->where('joining_date', $request->joining_date);
         }
 
         $employees = $employees->paginate(20)->appends($request->all()); // ✅ keep filters in pagination links
@@ -97,6 +92,7 @@ class EmployeeController extends Controller
             $employee->bn_mothers_name = $request->bn_mothers_name;
             $employee->admission_id_no = $request->admission_id_no;
             $employee->joining_date = $request->joining_date;
+            $employee->bank_account = $request->bank_account;
             $employee->salary_joining_date = $request->salary_joining_date;
             $employee->salary_status = $request->salary_status;
             // $employee->admission_id_no = 'AD-'.Carbon::now()->format('m-y').'-'. str_pad((Employee::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);
@@ -540,6 +536,7 @@ class EmployeeController extends Controller
             $employee->bn_mothers_name = $request->bn_mothers_name;
             $employee->admission_id_no = $request->admission_id_no;
             $employee->joining_date = $request->joining_date;
+            $employee->bank_account = $request->bank_account;
             $employee->salary_joining_date = $request->salary_joining_date;
             $employee->salary_status = $request->salary_status;
             // $employee->admission_id_no = 'AD-'.Carbon::now()->format('m-y').'-'. str_pad((Employee::whereYear('created_at', Carbon::now()->year)->count() + 1),4,"0",STR_PAD_LEFT);

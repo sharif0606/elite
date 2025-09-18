@@ -625,7 +625,17 @@
                             <label for="bn_traning_cost_byMonth">ট্রেনিং খরচ কালেকশন মাস</label>
                             <input type="number" id="bn_traning_cost_byMonth" value="6" class="form-control" placeholder="ট্রেনিং খরচ মাস" name="bn_traning_cost_byMonth">
                         </div>
-                    </div> 
+                    </div>
+                    <div class="col-md-2 col-12">
+                        <div class="form-group">
+                            <label for="">Bank Account</label>
+                            <select name="bank_account" class="form-control form-select">
+                                <option value="">Select</option>
+                                <option value="1">Yes</option>
+                                <option value="2">No</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
                             <label for="bn_bank_name">ব্যাংক নাম</label>
