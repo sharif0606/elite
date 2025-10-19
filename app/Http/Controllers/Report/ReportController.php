@@ -508,7 +508,7 @@ class ReportController extends Controller
 
         $payments = $payments
             ->orderByRaw("YEAR(deposit_date) DESC, MONTH(deposit_date) DESC")
-            ->paginate();
+            ->paginate(50);
 
         $customer = Customer::all();
         return view('report.client-wise-invoice-report-detail', compact('payments', 'customer'));
