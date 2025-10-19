@@ -65,30 +65,30 @@ class ReportController extends Controller
             }
         ])->orderBy('zones.name', 'ASC')->paginate(10);*/
         $zones = Customer::query()
-        ->leftJoin('customer_brances as cb', 'customers.id', '=', 'cb.customer_id')
-        ->leftJoin('zones as z', function ($join) {
-            $join->on('z.id', '=', DB::raw('COALESCE(customers.zone_id, cb.zone_id)'));
-        })
-        ->whereNotNull(DB::raw('COALESCE(customers.zone_id, cb.zone_id)'))
-        ->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
-            $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
-                ->whereBetween('end_date', [$startDate, $endDate])
-                ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
-        })
-        ->select([
-            DB::raw('COALESCE(customers.zone_id, cb.zone_id) as zone_id'),
-            'z.name',
-            'z.name_bn',
-            'customers.id as customer_id',
-            'customers.received_by_city',
-            'customers.name as customer_name',
-            'cb.id as customer_branch_id',
-            'cb.brance_name',
-        ])
-        ->orderBy('zone_id')
-        ->get()
-        ->groupBy('zone_id'); // Group by zone_id
-    
+            ->leftJoin('customer_brances as cb', 'customers.id', '=', 'cb.customer_id')
+            ->leftJoin('zones as z', function ($join) {
+                $join->on('z.id', '=', DB::raw('COALESCE(customers.zone_id, cb.zone_id)'));
+            })
+            ->whereNotNull(DB::raw('COALESCE(customers.zone_id, cb.zone_id)'))
+            ->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
+                $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
+                    ->whereBetween('end_date', [$startDate, $endDate])
+                    ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
+            })
+            ->select([
+                DB::raw('COALESCE(customers.zone_id, cb.zone_id) as zone_id'),
+                'z.name',
+                'z.name_bn',
+                'customers.id as customer_id',
+                'customers.received_by_city',
+                'customers.name as customer_name',
+                'cb.id as customer_branch_id',
+                'cb.brance_name',
+            ])
+            ->orderBy('zone_id')
+            ->get()
+            ->groupBy('zone_id'); // Group by zone_id
+
         $formattedZones = $zones->map(function ($zoneGroup) {
             $zone = $zoneGroup->first(); // Get the first customer for this zone (to get the zone data)
             return [
@@ -98,7 +98,7 @@ class ReportController extends Controller
                 'customers' => $zoneGroup->map(function ($customer) use ($zone) {
                     // Check if the zone_id being used is from the customer or the branch
                     $isBranchZone = is_null($customer->zone_id); // If zone_id is NULL, use the branch's zone_id
-        
+
                     // Now separate based on whether it's a customer zone or branch zone
                     if ($isBranchZone) {
                         // If zone_id is NULL, use branch_name
@@ -124,7 +124,7 @@ class ReportController extends Controller
                 })
             ];
         });
-    
+
         // Optional: You can paginate or limit the results as needed
         $paginatedZones = new \Illuminate\Pagination\LengthAwarePaginator(
             $formattedZones->forPage(request()->get('page', 1), 10), // Handle pagination
@@ -133,7 +133,7 @@ class ReportController extends Controller
             request()->get('page', 1)
         );
         $zones = Zone::with(['customers', 'branch.customer'])->get();
-        return view('report.invoice-payment', compact('zones', 'period','paginatedZones'));
+        return view('report.invoice-payment', compact('zones', 'period', 'paginatedZones'));
     }
     public function invoicePaymentPrint(Request $request)
     {
@@ -156,30 +156,30 @@ class ReportController extends Controller
             $endDate
         );
         $zones = Customer::query()
-        ->leftJoin('customer_brances as cb', 'customers.id', '=', 'cb.customer_id')
-        ->leftJoin('zones as z', function ($join) {
-            $join->on('z.id', '=', DB::raw('COALESCE(customers.zone_id, cb.zone_id)'));
-        })
-        ->whereNotNull(DB::raw('COALESCE(customers.zone_id, cb.zone_id)'))
-        ->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
-            $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
-                ->whereBetween('end_date', [$startDate, $endDate])
-                ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
-        })
-        ->select([
-            DB::raw('COALESCE(customers.zone_id, cb.zone_id) as zone_id'),
-            'z.name',
-            'z.name_bn',
-            'customers.id as customer_id',
-            'customers.received_by_city',
-            'customers.name as customer_name',
-            'cb.id as customer_branch_id',
-            'cb.brance_name',
-        ])
-        ->orderBy('zone_id')
-        ->get()
-        ->groupBy('zone_id'); // Group by zone_id
-    
+            ->leftJoin('customer_brances as cb', 'customers.id', '=', 'cb.customer_id')
+            ->leftJoin('zones as z', function ($join) {
+                $join->on('z.id', '=', DB::raw('COALESCE(customers.zone_id, cb.zone_id)'));
+            })
+            ->whereNotNull(DB::raw('COALESCE(customers.zone_id, cb.zone_id)'))
+            ->whereHas('invoiceGenerates', function ($invoiceQuery) use ($startDate, $endDate) {
+                $invoiceQuery->whereBetween('start_date', [$startDate, $endDate])
+                    ->whereBetween('end_date', [$startDate, $endDate])
+                    ->with(['invoiceGenerateDetails', 'invPayment']); // Eager load details and payments
+            })
+            ->select([
+                DB::raw('COALESCE(customers.zone_id, cb.zone_id) as zone_id'),
+                'z.name',
+                'z.name_bn',
+                'customers.id as customer_id',
+                'customers.received_by_city',
+                'customers.name as customer_name',
+                'cb.id as customer_branch_id',
+                'cb.brance_name',
+            ])
+            ->orderBy('zone_id')
+            ->get()
+            ->groupBy('zone_id'); // Group by zone_id
+
         $formattedZones = $zones->map(function ($zoneGroup) {
             $zone = $zoneGroup->first(); // Get the first customer for this zone (to get the zone data)
             return [
@@ -189,7 +189,7 @@ class ReportController extends Controller
                 'customers' => $zoneGroup->map(function ($customer) use ($zone) {
                     // Check if the zone_id being used is from the customer or the branch
                     $isBranchZone = is_null($customer->zone_id); // If zone_id is NULL, use the branch's zone_id
-        
+
                     // Now separate based on whether it's a customer zone or branch zone
                     if ($isBranchZone) {
                         // If zone_id is NULL, use branch_name
@@ -215,7 +215,7 @@ class ReportController extends Controller
                 })
             ];
         });
-    
+
         // Optional: You can paginate or limit the results as needed
         $paginatedZones = new \Illuminate\Pagination\LengthAwarePaginator(
             $formattedZones->forPage(request()->get('page', 1), 10), // Handle pagination
@@ -224,7 +224,7 @@ class ReportController extends Controller
             request()->get('page', 1)
         );
         $zones = Zone::with(['customers', 'branch.customer'])->get();
-        return view('report.invoice-payment-print', compact('zones', 'period','paginatedZones'));
+        return view('report.invoice-payment-print', compact('zones', 'period', 'paginatedZones'));
     }
 
 
@@ -336,8 +336,7 @@ class ReportController extends Controller
                 // stop salary employee id
                 $emp = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
             }
-            $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->where('customer_id',$request->customer_id)->pluck('id');
-          
+            $salaryIds = SalarySheet::where('year', $request->year)->where('month', $request->month)->where('customer_id', $request->customer_id)->pluck('id');
         }
         $salaryStopEmployees = Deduction::where('year', $request->year)->where('month', $request->month)->where('status', 20)->pluck('employee_id');
         // dd($salaryStopEmployees);
@@ -349,7 +348,7 @@ class ReportController extends Controller
         if ($request->type != 15) {
             /*$data = SalarySheetDetail::select('id', 'salary_id', 'employee_id', 'designation_id', 'customer_id', 'remark', 'duty_qty', DB::raw('CASE WHEN duty_qty > 0 THEN branch_id ELSE NULL END as branch_id'), DB::raw('SUM(common_net_salary) as common_net_salary'))
                 ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)->groupBy('employee_id');*/
-                $data = SalarySheetDetail::select('salary_sheet_details.*','job_posts.serial')
+            $data = SalarySheetDetail::select('salary_sheet_details.*', 'job_posts.serial')
                 ->join('job_posts', 'salary_sheet_details.designation_id', '=', 'job_posts.id')
                 ->whereIn('salary_id', $salaryIds)->whereNotIn('employee_id', $salaryStopEmployees)
                 ->orderBy('job_posts.serial', 'ASC')->groupBy('employee_id');
@@ -496,8 +495,14 @@ class ReportController extends Controller
                     ->whereDate('bill_date', '<=', $endDate);
             });
         }
+        if ($request->vat) {
+            $payments = $payments->where('vat','>',0);
+        }
+        if ($request->ait_deducted) {
+            $payments = $payments->where('ait','>',0);
+        }
 
-        $payments = $payments->where('customer_id', $customerId)
+        $payments = $payments
             ->orderByRaw("YEAR(deposit_date) DESC, MONTH(deposit_date) DESC")
             ->paginate(15);
 

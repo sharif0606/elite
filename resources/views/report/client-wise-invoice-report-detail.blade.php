@@ -69,8 +69,8 @@
                     <label for="">Received By</label>
                     <select class="form-control" name="received_by_city">
                         <option value="">Select</option>
-                        <option value="1" @if(request()->get('$customer->received_by_city') == 1) selected @endif>Ctg</option>
-                        <option value="2" @if(request()->get('$customer->received_by_city') == 2) selected @endif>Head Office</option>
+                        <option value="1" @if(request()->get('received_by_city') == 1) selected @endif>Ctg</option>
+                        <option value="2" @if(request()->get('received_by_city') == 2) selected @endif>Head Office</option>
                     </select>
                 </div>
             </div>
@@ -79,8 +79,8 @@
                     <label for="">Vat Deducted</label>
                     <select class="form-control" name="vat_deducted">
                         <option value="">Select</option>
-                        <option value="1" @if(request()->get('$customer->vat_deducted') == 1) selected @endif>Yes</option>
-                        <option value="2" @if(request()->get('$customer->vat_deducted') == 2) selected @endif>No</option>
+                        <option value="1" @if(request()->get('vat_deducted') == 1) selected @endif>Yes</option>
+                        <option value="2" @if(request()->get('vat_deducted') == 2) selected @endif>No</option>
                     </select>
                 </div>
             </div>
@@ -89,8 +89,8 @@
                     <label for="">AIT Deducted</label>
                     <select class="form-control" name="ait_deducted">
                         <option value="">Select</option>
-                        <option value="1" @if(request()->get('$customer->ait_deducted') == 1) selected @endif>Yes</option>
-                        <option value="2" @if(request()->get('$customer->ait_deducted') == 2) selected @endif>No</option>
+                        <option value="1" @if(request()->get('ait_deducted') == 1) selected @endif>Yes</option>
+                        <option value="2" @if(request()->get('ait_deducted') == 2) selected @endif>No</option>
                     </select>
                 </div>
             </div>
@@ -99,9 +99,9 @@
                     <label for="">Status</label>
                     <select class="form-control" name="paid_status">
                         <option value="">Select</option>
-                        <option value="1" @if(request()->get('$customer->paid_status') == 1) selected @endif>Paid</option>
-                        <option value="2" @if(request()->get('$customer->paid_status') == 2) selected @endif>Unpaid</option>
-                        <option value="3" @if(request()->get('$customer->paid_status') == 3) selected @endif>Due</option>
+                        <option value="1" @if(request()->get('paid_status') == 1) selected @endif>Paid</option>
+                        <option value="2" @if(request()->get('paid_status') == 2) selected @endif>Unpaid</option>
+                        <option value="3" @if(request()->get('paid_status') == 3) selected @endif>Due</option>
                     </select>
                 </div>
             </div>
