@@ -496,10 +496,10 @@ class ReportController extends Controller
             });
         }
         if ($request->vat) {
-            $payments = $payments->where('vat','>',0);
+            $payments = $payments->where('vat_amount','>',0);
         }
         if ($request->ait_deducted) {
-            $payments = $payments->where('ait','>',0);
+            $payments = $payments->where('ait_amount','>',0);
         }
 
         $payments = $payments
