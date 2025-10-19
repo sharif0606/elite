@@ -495,10 +495,10 @@ class ReportController extends Controller
                     ->whereDate('bill_date', '<=', $endDate);
             });
         }
-        if ($request->vat_deducted) {
+        if ($request->vat_deducted == 1) {
             $payments = $payments->where('vat_amount','>',0);
         }
-        if ($request->ait_deducted) {
+        if ($request->ait_deducted == 1) {
             $payments = $payments->where('ait_amount','>',0);
         }
 
