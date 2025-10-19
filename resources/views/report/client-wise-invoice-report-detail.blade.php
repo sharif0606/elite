@@ -55,7 +55,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="">Deposit Date</label>
                 <input type="date" name="deposit_date" class="form-control" value="{{ request()->deposit_date }}">
-            </div>
+            </div>--}}
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="fdate">{{__('From Bill Date')}}</label>
                 <input type="date" id="fdate" class="form-control" value="{{ request('fdate')}}" name="fdate">
@@ -63,7 +63,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <label for="fdate">{{__('To Bill Date')}}</label>
                 <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
-            </div>--}}
+            </div>
             <div class="col-lg-3 col-md-6 col-sm-12 py-1">
                 <div class="form-group">
                     <label for="">Received By</label>

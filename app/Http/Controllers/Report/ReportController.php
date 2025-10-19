@@ -491,8 +491,8 @@ class ReportController extends Controller
             $startDate = $request->fdate;
             $endDate = $request->tdate;
             $payments->whereHas('invoice', function ($query) use ($startDate, $endDate) {
-                $query->whereDate('bill_date', '>=', $startDate)
-                    ->whereDate('bill_date', '<=', $endDate);
+                $query->whereDate('end_date', '>=', $startDate)
+                    ->whereDate('end_date', '<=', $endDate);
             });
         }
         if ($request->vat_deducted == 1) {
