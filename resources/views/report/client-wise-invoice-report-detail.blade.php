@@ -118,6 +118,7 @@
             <thead>
                 <tr class="text-center">
                     <th scope="col">{{__('#SL')}}</th>
+                    <th scope="col">{{__('Customer')}}</th>
                     <th scope="col">{{__('Months')}}</th>
                     <th scope="col">{{__('Billing amount')}}</th>
                     <th scope="col">{{__('Received amount')}}</th>
@@ -139,6 +140,12 @@
                 @foreach($payments as $e)
                 <tr class="text-center">
                     <td scope="row">{{ $loop->iteration }}</td>
+                    <td>
+                        {{ $e->customer?->name }}
+                        @if($e->branch?->brance_name)
+                        ({{ $e->branch?->brance_name }})
+                        @endif
+                    </td>
                     <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                     <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
                     <td>{{ $e->received_amount }}</td>
