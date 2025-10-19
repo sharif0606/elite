@@ -497,9 +497,13 @@ class ReportController extends Controller
         }
         if ($request->vat_deducted == 1) {
             $payments = $payments->where('vat_amount','>',0);
+        }else{
+            $payments = $payments->where('vat_amount','=',0);
         }
         if ($request->ait_deducted == 1) {
             $payments = $payments->where('ait_amount','>',0);
+        }else{
+            $payments = $payments->where('ait_amount','=',0);
         }
 
         $payments = $payments
