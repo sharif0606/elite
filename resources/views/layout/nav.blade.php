@@ -134,7 +134,9 @@
             <li class="submenu-item">
                 <a href="{{route('invoice-payment.index', ['role' =>currentUser()])}}">Invoice Payment</a>
             </li>
-
+            <li class="submenu-item">
+                <a href="{{route('advance.index', ['role' =>currentUser()])}}">Advance</a>
+            </li>
             </ul>
             </li>
             <li class="sidebar-item  has-sub">

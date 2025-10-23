@@ -79,6 +79,8 @@ use App\Http\Controllers\Vouchers\JournalVoucherController as journal;
 /* report */
 use App\Http\Controllers\Report\ReportController as reports;
 
+/* Advance */
+use App\Http\Controllers\AdvanceController as advance;
 /*
 
 |--------------------------------------------------------------------------
@@ -276,6 +278,9 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function () {
     Route::get('salary-report-details', [reports::class, 'salaryReportDetil'])->name('report.salary_report_details');
     Route::get('customer-duty-filter', [reports::class, 'customer_duty_filter'])->name('report.customer_duty_filter');
     Route::get('employee-wise-training', [reports::class, 'employee_wise_training'])->name('report.employee_wise_training');
+
+    //Advance
+    Route::resource('advance', advance::class);
 });
 
 Route::middleware(['checkauth'])->prefix('admin')->group(function () {
