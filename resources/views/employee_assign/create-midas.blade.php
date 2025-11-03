@@ -15,8 +15,7 @@
                                 <div class="row p-2 mt-4">
                                     <div class="col-lg-4 mt-2">
                                         <label for=""><b>Customer Name</b></label>
-                                        <select class="form-select customer_id select2" id="customer_id" name="customer_id"
-                                            onchange="getBranch(this)">
+                                        <select class="form-select customer_id select2" id="customer_id" name="customer_id">
                                             <option value="">Select Customer</option>
                                             @forelse ($customer as $c)
                                                 <option value="{{ $c->id }}" @if(request()->get('customer_id') == $c->id) selected @endif>{{ $c->name }}</option>
@@ -215,6 +214,13 @@
             $('.new_rows').remove();
             $('#empassign').find(':input').not(':button, :submit, :reset, :hidden, .not-hide').val('');
         }
+        $(document).ready(function() {
+            // Your code here
+            let customerSelect = $('#customer_id');
+            if (customerSelect.val()) {
+                getBranch(customerSelect[0]); // Trigger your branch function
+            }
+        });
 
 
     </script>

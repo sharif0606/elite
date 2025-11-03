@@ -70,6 +70,7 @@ class EmployeeAssignController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         try {
             $data = new EmployeeAssign;
             $data->customer_id = $request->customer_id;
