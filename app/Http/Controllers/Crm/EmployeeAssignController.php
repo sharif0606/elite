@@ -49,12 +49,17 @@ class EmployeeAssignController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $jobpost = JobPost::all();
         $customer = Customer::all();
         $hours = Hour::get();
-        return view('employee_assign.create', compact('customer', 'jobpost', 'hours'));
+
+        if ($request->customer_id == 74) {
+            return view('employee_assign.create-midas', compact('customer', 'jobpost', 'hours'));
+        } else {
+            return view('employee_assign.create', compact('customer', 'jobpost', 'hours'));
+        }
     }
 
     /**
@@ -76,15 +81,20 @@ class EmployeeAssignController extends Controller
                         if ($value) {
                             $details = new EmployeeAssignDetails;
                             $details->employee_assign_id = $data->id;
-                            $details->atm_id = $request->atm_id[$key];
+                            $details->atm_id = isset($request->atm_id[$key]) ? $request->atm_id[$key] : null;
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
+                            $details->take_home_salary = $request->take_home_salary[$key];
+                            $details->material_support_cost = $request->material_support_cost[$key];
+                            $details->reliver_cost = $request->reliver_cost[$key];
+                            $details->overhead_service_charge = $request->overhead_service_charge[$key];
+                            $details->type = $request->type[$key];
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
                             $details->bonus_amount = $request->bonus_amount[$key];
                             $details->start_date = $request->start_date[$key];
                             $details->end_date = $request->end_date[$key];
-                            $details->hours = $request->hours[$key];
+                            $details->hours = isset($request->hours[$key]) ? $request->hours[$key] : null;
                             $details->status = 1;
                             $details->save();
                         }
@@ -93,12 +103,15 @@ class EmployeeAssignController extends Controller
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Assign', $request->getContent(), 'EmployeeAssign,EmployeeAssignDetails');
-                return redirect()->route('employee_assign.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                if ($request->customer_id == 74)
+                    return redirect()->route('employee_assign.index', ['role' => currentUser(), 'customer_id' => 74])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+                else
+                    return redirect()->route('employee_assign.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
-            //dd($e);
+            dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
@@ -129,7 +142,10 @@ class EmployeeAssignController extends Controller
         $customer = Customer::where('id', $empasin->customer_id)->first();
         $atm = Atm::where('branch_id', $empasin->branch_id)->get();
         $hours = Hour::get();
-        return view('employee_assign.edit', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
+        if ($empasin->customer_id == 74)
+            return view('employee_assign.edit-midas', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
+        else
+            return view('employee_assign.edit', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
     }
 
     /**
@@ -141,6 +157,7 @@ class EmployeeAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //dd($request->all());
         try {
             $data = EmployeeAssign::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;
@@ -154,15 +171,20 @@ class EmployeeAssignController extends Controller
                         if ($value) {
                             $details = new EmployeeAssignDetails;
                             $details->employee_assign_id = $data->id;
-                            $details->atm_id = $request->atm_id[$key];
+                            $details->atm_id = isset($request->atm_id[$key]) ? $request->atm_id[$key] : null;
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
+                            $details->take_home_salary = $request->take_home_salary[$key];
+                            $details->material_support_cost = $request->material_support_cost[$key];
+                            $details->reliver_cost = $request->reliver_cost[$key];
+                            $details->overhead_service_charge = $request->overhead_service_charge[$key];
+                            $details->type = $request->type[$key];
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
                             $details->bonus_amount = $request->bonus_amount[$key];
                             $details->start_date = $request->start_date[$key];
                             $details->end_date = $request->end_date[$key];
-                            $details->hours = $request->hours[$key];
+                            $details->hours = isset($request->hours[$key]) ? $request->hours[$key] : null;
                             $details->status = 1;
                             $details->save();
                         }
@@ -171,7 +193,10 @@ class EmployeeAssignController extends Controller
             }
             if ($data->save()) {
                 \LogActivity::addToLog('Employee Assign Update', $request->getContent(), 'EmployeeAssign,EmployeeAssignDetails');
-                return redirect()->route('employee_assign.index', ['role' => currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                if ($request->customer_id == 74)
+                    return redirect()->route('employee_assign.index', ['role' => currentUser(), 'customer_id' => 74])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
+                else
+                    return redirect()->route('employee_assign.index', ['role' => currentUser()])->with(Toastr::success('Data Update!', 'Success', ["positionClass" => "toast-top-right"]));
             } else {
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
@@ -193,7 +218,10 @@ class EmployeeAssignController extends Controller
         $c = EmployeeAssign::findOrFail(encryptor('decrypt', $id));
         $dl = EmployeeAssignDetails::where('employee_assign_id', $c->id)->delete();
         $c->delete();
-        return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
+        if ($c->customer_id == 74)
+            return redirect()->route('employee_assign.index', ['role' => currentUser(), 'customer_id' => 74])->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
+        else
+            return redirect()->back()->with(Toastr::error('Data Deleted!', 'Success', ["positionClass" => "toast-top-right"]));
     }
 
     public function loadBranchAjax(Request $request)
@@ -225,7 +253,7 @@ class EmployeeAssignController extends Controller
             // Assuming 'details' is a collection, so loop through it
             foreach ($ed->details as $detail) {
                 // Add each job post option
-                $data .= '<option data-jobpostid="' . $detail->job_post_id . '" value="' . $detail->job_post_id . '">' . $detail->jobpost?->name .'-'.$detail->rate. '</option>';
+                $data .= '<option data-jobpostid="' . $detail->job_post_id . '" value="' . $detail->job_post_id . '">' . $detail->jobpost?->name . '-' . $detail->rate . '</option>';
             }
         }
         // Return the generated HTML as a JSON response

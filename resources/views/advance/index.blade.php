@@ -53,71 +53,39 @@
                     <tr class="text-center">
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col" style="width: 80px;">{{__('Month')}}</th>
-                        <th scope="col" style="width: 180px;">{{__('Customer Name')}}</th>
-                        <th scope="col">{{__('Billing amount')}}</th>
-                        <th scope="col">{{__('Bonus')}}</th>
-                        <th scope="col">{{__('Received amount')}}</th>
-                        <th scope="col">{{__('Vat %')}}</th>
-                        <th scope="col">{{__('Ait %')}}</th>
-                        <th scope="col">{{__('Less Paid/Due')}}</th>
-                        <th scope="col" style="width: 90px;">{{__('Pay Mode')}}</th>
-                        <th scope="col" style="width: 100px;">{{__('Bank Name')}}</th>
-                        <th scope="col">{{__('PO No')}}</th>
-                        <th scope="col" style="width: 80px;">{{__('PO Date')}}</th>
-                        <th scope="col" style="width: 100px;">{{__('Deposit Bank')}}</th>
-                        <th scope="col" style="width: 80px;">{{__('Deposit Date')}}</th>
-                        <th scope="col">{{__('Remarks')}}</th>
+                        <th scope="col">{{__('Customer Name')}}</th>
+                        <th scope="col">{{__('Amount')}}</th>
+                        <th scope="col" style="width: 100px;">{{__('Advance Date')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @php $pm=[1=>"Cash","Pay Order","Fund Transfer","Online Pay"]; @endphp
                     @forelse($payments as $e)
-                    @if($e->received_amount > 0 || $e->less_paid_honor > 0)
+                   
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}{{--$e->id--}}</td>
-                        <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
-                        <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
-                        <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
+                        <td>{{ \Carbon\Carbon::parse($e->taken_date)->format('M-y') }}</td>
                         <td>
-                            @if($e->invoice->detail->bonus_for == 1)
-                            Edi UL FITR
-                            @elseif($e->invoice->detail->bonus_for == 2)
-                            Edi UL Azha
-                            @else
-                            -
-                            @endif
+                            {{ $e->customer?->name }}(Branch-{{$e->branch?->brance_name}})(Atm-{{$e->atm?->atm}})
                         </td>
-                        <td>{{ $e->received_amount }}</td>
+                        <td>{{ $e->amount}}</td>
+                        <td>{{ $e->taken_date }}</td>
                         <td>
-                            @if ($e->vat > 0)
-                                {{(float) $e->vat }}%
-                            @endif
-                        </td>
-                        <td>
-                            @if ($e->ait > 0)
-                                {{(float) $e->ait }}%
-                            @endif
-                        </td>
-                        <td>
-                            @if ($e->less_paid > 0)
-                                {{$e->less_paid }}
-                            @endif
-                        </td>
-                        <td>{{ $pm[$e->payment_type] }}</td>
-                        <td>{{ $e->bank_name }}</td>
-                        <td>{{ $e->po_no }}</td>
-                        <td>{{ $e->po_date }}</td>
-                        <td>@if($e->deposit_bank==1) DBBL @else PBL @endif</td>
-                        <td>{{ $e->deposit_date }}</td>
-                        <td>{{ $e->remarks }}</td>
-                        <td>
-                            <a href="{{route('invoice-payment.edit',[encryptor('encrypt',$e->id)])}}">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                           
+                               <a href="{{ route('advance.edit', $e->id) }}" class="text-primary">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                <form action="{{ route('advance.destroy', $e->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-link text-danger p-0 m-0">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                         </td>
                     </tr>
-                    @endif
+                  
                     @empty
                     <tr>
                         <th colspan="15" class="text-center">No Data Found</th>

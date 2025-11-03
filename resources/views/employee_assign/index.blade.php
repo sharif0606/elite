@@ -36,9 +36,15 @@
                     <!-- Empty div to push the link to the right side -->
                 </div>
                 <div class="col-lg-2 col-sm-6 d-flex justify-content-end align-items-center">
+                    @if(request()->get('customer_id') == 74)
+                    <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser(),'customer_id' =>74])}}">
+                        <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
+                    </a>
+                    @else
                     <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser()])}}">
                         <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
                     </a>
+                    @endif
                 </div>
             </div>
         </form>
@@ -84,6 +90,15 @@
                                             @if($de->atms?->atm )
                                             (ATM: {{ $de->atms?->atm }})
                                             @endif
+                                            @if($e->customer_id == 74)
+                                                @if($de->type == 1)
+                                                <span class="d-block">Home Salary:{{$de->take_home_salary}}</span>
+                                                <span class="d-block">Material Support Cost:{{$de->material_support_cost}}</span>
+                                                <span class="d-block">Reliver Cost:{{$de->reliver_cost}}</span>
+                                                <span class="d-block">Overhead Service:{{$de->overhead_service_charge}}</span>
+                                                @else
+                                                @endif
+                                            @endif
                                             </td>
                                         <td>{{ $de->qty }}</td>
                                         <td>{{ $de->hours_emp?->hour }}</td>
@@ -98,9 +113,15 @@
                             <a href="{{route('employee_assign.show',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-eye"></i>
                             </a>
+                            @if($e->customer_id == 74)
+                            <a href="{{route('employee_assign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser(),'customer_id' => 74])}}">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            @else
                             <a href="{{route('employee_assign.edit',[encryptor('encrypt',$e->id),'role' =>currentUser()])}}">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
+                            @endif
                             <a class="text-danger" href="javascript:void(0)" onclick="confirmDelete({{ $e->id }})">
                                 <i class="bi bi-trash"></i>
                             </a>

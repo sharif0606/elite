@@ -129,6 +129,9 @@
                 <a href="{{route('islamiBankEmpAssign.index', ['role' =>currentUser()])}}">IBBL Employee's Assign</a>
             </li>
             <li class="submenu-item">
+                <a href="{{route('employee_assign.index', ['role' =>currentUser(),'customer_id' =>74])}}">Midas Employee's Assign</a>
+            </li>
+            <li class="submenu-item">
                 <a href="{{route('invoiceGenerate.index', ['role' =>currentUser()])}}">Invoice Generate</a>
             </li>
             <li class="submenu-item">
