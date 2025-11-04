@@ -357,6 +357,7 @@
                                 <td>${value.name} <br/> ${ATMdata}
                                     <input class="" type="hidden" name="job_post_id[]" value="${value.job_post_id}">
                                     <input class="" type="hidden" name="detail_atm_id[]" value="${value.atm_id}">
+                                    <input class="" type="hidden" name="emp_assign_detl_id[]" value="${value.eid}">
                                 </td>
                                 <td>
                                     <input class="form-control input_css rate_c text-center" onkeyup="reCalcultateInvoice(this)" type="text" name="rate[]" value="${value.rate}">

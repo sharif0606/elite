@@ -31,6 +31,7 @@ use App\Models\Crm\PortlinkInvoiceLess;
 use App\Models\Crm\SouthBanglaInvoice;
 use App\Models\Crm\SouthBanglaInvoiceDetails;
 use App\Models\Crm\WasaInvoiceDetails;
+use App\Models\Employee\EmployeeDetails;
 use Intervention\Image\Facades\Image;
 use App\Models\Settings\DepositBank;
 use Exception;
@@ -40,43 +41,44 @@ class InvoiceGenerateController extends Controller
 
     public function index(Request $request)
     {
-        $invoice=InvoiceGenerate::with('payment','customer','branch','port_link')->orderBy('id','DESC');
-        $customer=Customer::all();
-        if ($request->fdate && $request->tdate){
+        $invoice = InvoiceGenerate::with('payment', 'customer', 'branch', 'port_link')->orderBy('id', 'DESC');
+        $customer = Customer::all();
+        if ($request->fdate && $request->tdate) {
             $startDate = $request->fdate;
             $endDate = $request->tdate;
 
             $invoice->where(function ($query) use ($startDate, $endDate) {
                 $query->where(function ($query) use ($startDate, $endDate) {
-                    $query->whereDate('invoice_generates.start_date', '>=',$startDate )
+                    $query->whereDate('invoice_generates.start_date', '>=', $startDate)
                         ->whereDate('invoice_generates.end_date', '<=', $endDate);
                 });
             });
         }
-        if ($request->customer_id){
+        if ($request->customer_id) {
             $customerId = $request->customer_id;
             $invoice->where('invoice_generates.customer_id', $customerId);
         }
-        if ($request->branch_id){
+        if ($request->branch_id) {
             $invoice->where('invoice_generates.branch_id', $request->branch_id);
         }
-        if ($request->bill_date){
+        if ($request->bill_date) {
             $billDate = $request->bill_date;
             $invoice->where('invoice_generates.bill_date', $billDate);
         }
         $invoice = $invoice->paginate(15);
         $deposit_bank = DepositBank::get();
-        return view('invoice_generate.index',compact('invoice','customer','deposit_bank'));
+        return view('invoice_generate.index', compact('invoice', 'customer', 'deposit_bank'));
     }
 
     public function create()
     {
-        $customer=Customer::all();
-        return view('invoice_generate.create',compact('customer'));
+        $customer = Customer::all();
+        return view('invoice_generate.create', compact('customer'));
     }
 
-    public function getHeaderFooterNote(Request $request){
-        $data = Customer::select('id','header_note','footer_note')->where('id',$request->customer_id)->first();
+    public function getHeaderFooterNote(Request $request)
+    {
+        $data = Customer::select('id', 'header_note', 'footer_note')->where('id', $request->customer_id)->first();
         return response()->json($data, 200);
     }
 
@@ -84,10 +86,10 @@ class InvoiceGenerateController extends Controller
     {
         //dd($request->all());
         DB::beginTransaction();
-        try{
-            $data=new InvoiceGenerate;
+        try {
+            $data = new InvoiceGenerate;
             $data->customer_id = $request->customer_id;
-            if($request->branch_id > 0){
+            if ($request->branch_id > 0) {
                 $data->branch_id = $request->branch_id;
             }
             $data->atm_id = $request->atm_id;
@@ -107,51 +109,59 @@ class InvoiceGenerateController extends Controller
             $data->invoice_type = 1;
             // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
-            if($data->save()){
-                if($request->job_post_id){
-                    foreach($request->job_post_id as $key => $value){
-                        if($value){
+            if ($data->save()) {
+                if ($request->job_post_id) {
+                    foreach ($request->job_post_id as $key => $value) {
+                        if ($value) {
                             $details = new InvoiceGenerateDetails;
-                            $details->invoice_id=$data->id;
-                            $details->job_post_id=$request->job_post_id[$key];
-                            $details->rate=$request->rate[$key];
-                            $details->employee_qty=$request->employee_qty[$key];
-                            $details->bonus_rate=$request->bonus_rate[$key];
-                            $details->bonus_amount=$request->bonus_amount[$key];
-                            $details->bonus_type=$request->bonus_type[$key];
-                            $details->bonus_for=$request->bonus_for[$key];
+                            $details->invoice_id = $data->id;
+                            $details->job_post_id = $request->job_post_id[$key];
+                            if ($request->emp_assign_detl_id[$key]) {
+                                $emp_assign_data = EmployeeDetails::where('id', $request->emp_assign_detl_id[$key])->first();
+                                $details->take_home_salary =$emp_assign_data->take_home_salary;
+                                $details->material_support_cost = $emp_assign_data->material_support_cost;
+                                $details->reliver_cost = $emp_assign_data->reliver_cost;
+                                $details->overhead_service_charge = $emp_assign_data->overhead_service_charge;
+                                $details->type = $emp_assign_data->type;
+                            }
+                            $details->rate = $request->rate[$key];
+                            $details->employee_qty = $request->employee_qty[$key];
+                            $details->bonus_rate = $request->bonus_rate[$key];
+                            $details->bonus_amount = $request->bonus_amount[$key];
+                            $details->bonus_type = $request->bonus_type[$key];
+                            $details->bonus_for = $request->bonus_for[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
-                            $details->warking_day=$request->warking_day[$key];
-                            $details->divide_by=$request->divide_by[$key];
-                            $details->actual_warking_day=$request->actual_warking_day[$key];
-                            $details->duty_day=$request->duty_day[$key];
-                            $details->total_houres=$request->total_houres[$key];
-                            $details->type_houre=$request->type_houre[$key];
-                            $details->rate_per_houres=$request->rate_per_houres[$key];
-                            $details->st_date=$request->st_date[$key];
-                            $details->ed_date=$request->ed_date[$key];
-                            $details->total_amounts=$request->total_amounts[$key];
-                            $details->status=0;
+                            $details->warking_day = $request->warking_day[$key];
+                            $details->divide_by = $request->divide_by[$key];
+                            $details->actual_warking_day = $request->actual_warking_day[$key];
+                            $details->duty_day = $request->duty_day[$key];
+                            $details->total_houres = $request->total_houres[$key];
+                            $details->type_houre = $request->type_houre[$key];
+                            $details->rate_per_houres = $request->rate_per_houres[$key];
+                            $details->st_date = $request->st_date[$key];
+                            $details->ed_date = $request->ed_date[$key];
+                            $details->total_amounts = $request->total_amounts[$key];
+                            $details->status = 0;
                             $details->save();
                         }
                     }
                 }
             }
-            if($request->add_amount){
-                foreach($request->add_amount as $i=>$add_amount){
-                    if($add_amount){
-                        $olddue=new InvoiceGenerateLess;
-                        $olddue->invoice_id=$data->id;
-                        $olddue->description=$request->add_description[$i];
-                        $olddue->amount=$add_amount;
-                        $olddue->status=0;
+            if ($request->add_amount) {
+                foreach ($request->add_amount as $i => $add_amount) {
+                    if ($add_amount) {
+                        $olddue = new InvoiceGenerateLess;
+                        $olddue->invoice_id = $data->id;
+                        $olddue->description = $request->add_description[$i];
+                        $olddue->amount = $add_amount;
+                        $olddue->status = 0;
                         $olddue->save();
                     }
                 }
             }
             DB::commit();
-            \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
-            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            \LogActivity::addToLog('Invoice Generate', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+            return redirect()->route('invoiceGenerate.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
             // dd($e);
             DB::rollback();
@@ -159,82 +169,82 @@ class InvoiceGenerateController extends Controller
         }
     }
 
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('customer_id',$invoice_id->customer_id)->first();
-        return view('invoice_generate.show',compact('invoice_id','branch'));
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('customer_id', $invoice_id->customer_id)->first();
+        return view('invoice_generate.show', compact('invoice_id', 'branch'));
     }
-    public function getSingleInvoice1(Request $request,$id)
+    public function getSingleInvoice1(Request $request, $id)
     {
         // echo $request->header;
         // die();
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        return view('invoice_generate.single_show1',compact('invoice_id','branch','headershow'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        return view('invoice_generate.single_show1', compact('invoice_id', 'branch', 'headershow'));
     }
     public function getSingleInvoice2(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        return view('invoice_generate.single_show2',compact('invoice_id','branch','headershow'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        return view('invoice_generate.single_show2', compact('invoice_id', 'branch', 'headershow'));
     }
     public function getSingleInvoice3(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        return view('invoice_generate.single_show3',compact('invoice_id','branch','headershow'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        return view('invoice_generate.single_show3', compact('invoice_id', 'branch', 'headershow'));
     }
     public function getSingleInvoice4(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-    //     $summaryQuery = "SELECT
-    //     SUM(`rate`) as total,
-    //     (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
-    //     ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat FROM `invoice_generate_details` WHERE `invoice_id` = $invoice_id->id;";
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        //     $summaryQuery = "SELECT
+        //     SUM(`rate`) as total,
+        //     (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) as Vat,
+        //     ROUND(SUM(`rate` * (SELECT vat FROM invoice_generates WHERE invoice_generates.id = invoice_generate_details.invoice_id) / 100), 2) as withVat FROM `invoice_generate_details` WHERE `invoice_id` = $invoice_id->id;";
 
-    // $summery = DB::select($summaryQuery)[0];
-    //     $dueTotal = ($summery->withVat+$summery->total);
-    //     $textValue='Zero';
-    //     if ($dueTotal > 0) {
-    //         $textValue = getBangladeshCurrency($dueTotal);
-    //     }
+        // $summery = DB::select($summaryQuery)[0];
+        //     $dueTotal = ($summery->withVat+$summery->total);
+        //     $textValue='Zero';
+        //     if ($dueTotal > 0) {
+        //         $textValue = getBangladeshCurrency($dueTotal);
+        //     }
         // return view('invoice_generate.single_show4',compact('invoice_id','branch','textValue'));
-        return view('invoice_generate.single_show4',compact('invoice_id','branch','headershow'));
+        return view('invoice_generate.single_show4', compact('invoice_id', 'branch', 'headershow'));
     }
-    public function getSingleInvoice5(Request $request,$id)
+    public function getSingleInvoice5(Request $request, $id)
     {
 
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        $portlink = PortlinkInvoice::where('invoice_id',$invoice_id->id)->first();
-        $portDetail = PortlinkInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
-        $less = PortlinkInvoiceLess::where('invoice_id',$invoice_id->id)->get();
-        $desup = PortlinkDeductionSupervisor::where('invoice_id',$invoice_id->id)->get();
-        $deguard = PortlinkDeductionGuard::where('invoice_id',$invoice_id->id)->get();
-        return view('invoice_generate.single_show5',compact('invoice_id','branch','headershow','portlink','portDetail','less','desup','deguard'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        $portlink = PortlinkInvoice::where('invoice_id', $invoice_id->id)->first();
+        $portDetail = PortlinkInvoiceDetails::where('invoice_id', $invoice_id->id)->get();
+        $less = PortlinkInvoiceLess::where('invoice_id', $invoice_id->id)->get();
+        $desup = PortlinkDeductionSupervisor::where('invoice_id', $invoice_id->id)->get();
+        $deguard = PortlinkDeductionGuard::where('invoice_id', $invoice_id->id)->get();
+        return view('invoice_generate.single_show5', compact('invoice_id', 'branch', 'headershow', 'portlink', 'portDetail', 'less', 'desup', 'deguard'));
     }
-    public function getSingleInvoice6(Request $request,$id)
+    public function getSingleInvoice6(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        $southBangla = SouthBanglaInvoice::where('invoice_id',$invoice_id->id)->first();
-        $southDetail = SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id->id)->get();
-        return view('invoice_generate.single_show6',compact('invoice_id','branch','headershow','southBangla','southDetail'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        $southBangla = SouthBanglaInvoice::where('invoice_id', $invoice_id->id)->first();
+        $southDetail = SouthBanglaInvoiceDetails::where('invoice_id', $invoice_id->id)->get();
+        return view('invoice_generate.single_show6', compact('invoice_id', 'branch', 'headershow', 'southBangla', 'southDetail'));
     }
     public function getSingleInvoice7(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        $wasa=WasaInvoice::where('invoice_id',$invoice_id->id)->first();
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        $wasa = WasaInvoice::where('invoice_id', $invoice_id->id)->first();
         $invoiceNo = '';
         // dd($headershow);
         if (!$wasa) {
@@ -250,36 +260,36 @@ class InvoiceGenerateController extends Controller
 
     public function getSingleInvoice8(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        $onetrip=OnetripInvoice::where('invoice_id',$invoice_id->id)->first();
-        return view('invoice_generate.single_show8',compact('invoice_id','branch','onetrip','headershow'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        $onetrip = OnetripInvoice::where('invoice_id', $invoice_id->id)->first();
+        return view('invoice_generate.single_show8', compact('invoice_id', 'branch', 'onetrip', 'headershow'));
     }
-    public function getSingleInvoice9(Request $request,$id)
+    public function getSingleInvoice9(Request $request, $id)
     {
-        $headershow=$request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $branch=CustomerBrance::where('id',$invoice_id->branch_id)->first();
-        return view('invoice_generate.single_show9',compact('invoice_id','branch','headershow'));
+        $headershow = $request->header;
+        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        return view('invoice_generate.single_show9', compact('invoice_id', 'branch', 'headershow'));
     }
 
     public function edit($id)
     {
-        $customer=Customer::all();
-        $inv = InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
-        $invDetail = InvoiceGenerateDetails::where('invoice_id',$inv->id)->get();
-        $invLess = InvoiceGenerateLess::where('invoice_id',$inv->id)->get();
-        return view('invoice_generate.edit',compact('customer','inv','invDetail','invLess'));
+        $customer = Customer::all();
+        $inv = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $invDetail = InvoiceGenerateDetails::where('invoice_id', $inv->id)->get();
+        $invLess = InvoiceGenerateLess::where('invoice_id', $inv->id)->get();
+        return view('invoice_generate.edit', compact('customer', 'inv', 'invDetail', 'invLess'));
     }
 
     public function update(Request $request, $id)
     {
         DB::beginTransaction();
-        try{
-            $data= InvoiceGenerate::findOrFail(encryptor('decrypt',$id));
+        try {
+            $data = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;
-            if($request->branch_id > 0){
+            if ($request->branch_id > 0) {
                 $data->branch_id = $request->branch_id;
             }
             $data->atm_id = $request->atm_id;
@@ -299,53 +309,53 @@ class InvoiceGenerateController extends Controller
             $data->invoice_type = 1;
             // invoice_type 1= general, 2=wasa, 3=onetrip
             $data->status = 0;
-            if($data->save()){
-                if($request->job_post_id){
-                    InvoiceGenerateDetails::where('invoice_id',$data->id)->delete();
-                    InvoiceGenerateLess::where('invoice_id',$data->id)->delete();
-                    foreach($request->job_post_id as $key => $value){
-                        if($value){
+            if ($data->save()) {
+                if ($request->job_post_id) {
+                    InvoiceGenerateDetails::where('invoice_id', $data->id)->delete();
+                    InvoiceGenerateLess::where('invoice_id', $data->id)->delete();
+                    foreach ($request->job_post_id as $key => $value) {
+                        if ($value) {
                             $details = new InvoiceGenerateDetails;
-                            $details->invoice_id=$data->id;
-                            $details->job_post_id=$request->job_post_id[$key];
-                            $details->rate=$request->rate[$key];
-                            $details->employee_qty=$request->employee_qty[$key];
-                            $details->bonus_rate=$request->bonus_rate[$key];
-                            $details->bonus_amount=$request->bonus_amount[$key];
-                            $details->bonus_type=$request->bonus_type[$key];
-                            $details->bonus_for=$request->bonus_for[$key];
+                            $details->invoice_id = $data->id;
+                            $details->job_post_id = $request->job_post_id[$key];
+                            $details->rate = $request->rate[$key];
+                            $details->employee_qty = $request->employee_qty[$key];
+                            $details->bonus_rate = $request->bonus_rate[$key];
+                            $details->bonus_amount = $request->bonus_amount[$key];
+                            $details->bonus_type = $request->bonus_type[$key];
+                            $details->bonus_for = $request->bonus_for[$key];
                             $details->atm_id = $request->detail_atm_id[$key];
-                            $details->warking_day=$request->warking_day[$key];
-                            $details->divide_by=$request->divide_by[$key];
-                            $details->actual_warking_day=$request->actual_warking_day[$key];
-                            $details->duty_day=$request->duty_day[$key];
-                            $details->total_houres=$request->total_houres[$key];
-                            $details->type_houre=$request->type_houre[$key];
-                            $details->rate_per_houres=$request->rate_per_houres[$key];
-                            $details->st_date=$request->st_date[$key];
-                            $details->ed_date=$request->ed_date[$key];
-                            $details->total_amounts=$request->total_amounts[$key];
-                            $details->status=0;
+                            $details->warking_day = $request->warking_day[$key];
+                            $details->divide_by = $request->divide_by[$key];
+                            $details->actual_warking_day = $request->actual_warking_day[$key];
+                            $details->duty_day = $request->duty_day[$key];
+                            $details->total_houres = $request->total_houres[$key];
+                            $details->type_houre = $request->type_houre[$key];
+                            $details->rate_per_houres = $request->rate_per_houres[$key];
+                            $details->st_date = $request->st_date[$key];
+                            $details->ed_date = $request->ed_date[$key];
+                            $details->total_amounts = $request->total_amounts[$key];
+                            $details->status = 0;
                             $details->save();
                         }
                     }
                 }
             }
-            if($request->add_amount){
-                foreach($request->add_amount as $i=>$add_amount){
-                    if($add_amount){
-                        $olddue=new InvoiceGenerateLess;
-                        $olddue->invoice_id=$data->id;
-                        $olddue->description=$request->add_description[$i];
-                        $olddue->amount=$add_amount;
-                        $olddue->status=0;
+            if ($request->add_amount) {
+                foreach ($request->add_amount as $i => $add_amount) {
+                    if ($add_amount) {
+                        $olddue = new InvoiceGenerateLess;
+                        $olddue->invoice_id = $data->id;
+                        $olddue->description = $request->add_description[$i];
+                        $olddue->amount = $add_amount;
+                        $olddue->status = 0;
                         $olddue->save();
                     }
                 }
             }
             DB::commit();
-            \LogActivity::addToLog('Invoice Generate',$request->getContent(),'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
-            return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
+            \LogActivity::addToLog('Invoice Generate', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
+            return redirect()->route('invoiceGenerate.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
             // dd($e);
             DB::rollback();
@@ -354,38 +364,37 @@ class InvoiceGenerateController extends Controller
     }
 
     public function destroy(Request $request, $id)
-    {
-        {
+    { {
             DB::beginTransaction();
-            try{
-                $invoice_id=encryptor('decrypt',$id);
-                $checkPayment = InvoicePayment::where('invoice_id',$invoice_id)->first();
-                if(!$checkPayment){
-                    InvoiceGenerate::where('id',$invoice_id)->delete();
-                    InvoiceGenerateDetails::where('invoice_id',$invoice_id)->delete();
-                    WasaInvoice::where('invoice_id',$invoice_id)->delete();
-                    WasaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
+            try {
+                $invoice_id = encryptor('decrypt', $id);
+                $checkPayment = InvoicePayment::where('invoice_id', $invoice_id)->first();
+                if (!$checkPayment) {
+                    InvoiceGenerate::where('id', $invoice_id)->delete();
+                    InvoiceGenerateDetails::where('invoice_id', $invoice_id)->delete();
+                    WasaInvoice::where('invoice_id', $invoice_id)->delete();
+                    WasaInvoiceDetails::where('invoice_id', $invoice_id)->delete();
                     IslamiBankInvoice::where('invoice_id', $invoice_id)->delete();
                     IslamiBankInvoiceDetails::where('invoice_id', $invoice_id)->delete();
-                    InvoiceGenerateLess::where('invoice_id',$invoice_id)->delete();
-                    OnetripInvoice::where('invoice_id',$invoice_id)->delete();
-                    OnetripInvoiceDetails::where('invoice_id',$invoice_id)->delete();
-                    PortlinkInvoice::where('invoice_id',$invoice_id)->delete();
-                    PortlinkInvoiceDetails::where('invoice_id',$invoice_id)->delete();
-                    PortlinkInvoiceLess::where('invoice_id',$invoice_id)->delete();
-                    PortlinkDeductionGuard::where('invoice_id',$invoice_id)->delete();
-                    PortlinkDeductionSupervisor::where('invoice_id',$invoice_id)->delete();
-                    SouthBanglaInvoice::where('invoice_id',$invoice_id)->delete();
-                    SouthBanglaInvoiceDetails::where('invoice_id',$invoice_id)->delete();
+                    InvoiceGenerateLess::where('invoice_id', $invoice_id)->delete();
+                    OnetripInvoice::where('invoice_id', $invoice_id)->delete();
+                    OnetripInvoiceDetails::where('invoice_id', $invoice_id)->delete();
+                    PortlinkInvoice::where('invoice_id', $invoice_id)->delete();
+                    PortlinkInvoiceDetails::where('invoice_id', $invoice_id)->delete();
+                    PortlinkInvoiceLess::where('invoice_id', $invoice_id)->delete();
+                    PortlinkDeductionGuard::where('invoice_id', $invoice_id)->delete();
+                    PortlinkDeductionSupervisor::where('invoice_id', $invoice_id)->delete();
+                    SouthBanglaInvoice::where('invoice_id', $invoice_id)->delete();
+                    SouthBanglaInvoiceDetails::where('invoice_id', $invoice_id)->delete();
 
                     DB::commit();
                     \App\Helpers\LogActivity::addToLog('Invoice Delete', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
-                    return redirect()->route('invoiceGenerate.index', ['role' =>currentUser()])->with(Toastr::success('Data Delete!', 'Success', ["positionClass" => "toast-top-right"]));
-                }else
+                    return redirect()->route('invoiceGenerate.index', ['role' => currentUser()])->with(Toastr::success('Data Delete!', 'Success', ["positionClass" => "toast-top-right"]));
+                } else
                     return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 DB::rollback();
-                  dd($e);
+                dd($e);
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         }
@@ -403,23 +412,19 @@ class InvoiceGenerateController extends Controller
     public function getInvoiceData(Request $request)
     {
         $query = EmployeeAssignDetails::join('employee_assigns', 'employee_assigns.id', '=', 'employee_assign_details.employee_assign_id')
-                                        ->join('job_posts','employee_assign_details.job_post_id','=','job_posts.id')
-                                        ->leftjoin('atms','employee_assign_details.atm_id','=','atms.id')
-                                        ->select('employee_assigns.*', 'employee_assign_details.*','job_posts.*','atms.*');
+            ->join('job_posts', 'employee_assign_details.job_post_id', '=', 'job_posts.id')
+            ->leftjoin('atms', 'employee_assign_details.atm_id', '=', 'atms.id')
+            ->select('employee_assigns.*', 'employee_assign_details.*', 'job_posts.*', 'atms.*', 'employee_assign_details.id as eid',);
 
-        if ($request->atm_id=='a') {
-            $query = $query->where('employee_assign_details.atm_id',"!=","0")->where('employee_assigns.branch_id', $request->branch_id);
-        }
-        else if ($request->atm_id=='n') {
-            $query = $query->where('employee_assign_details.atm_id',"=","0")->where('employee_assigns.branch_id', $request->branch_id);
-        }
-        else if ($request->atm_id >0) {
-            $query = $query->where('employee_assign_details.atm_id',$request->atm_id)->where('employee_assigns.branch_id', $request->branch_id);
-        }
-        else if ($request->branch_id) {
+        if ($request->atm_id == 'a') {
+            $query = $query->where('employee_assign_details.atm_id', "!=", "0")->where('employee_assigns.branch_id', $request->branch_id);
+        } else if ($request->atm_id == 'n') {
+            $query = $query->where('employee_assign_details.atm_id', "=", "0")->where('employee_assigns.branch_id', $request->branch_id);
+        } else if ($request->atm_id > 0) {
+            $query = $query->where('employee_assign_details.atm_id', $request->atm_id)->where('employee_assigns.branch_id', $request->branch_id);
+        } else if ($request->branch_id) {
             $query = $query->where('employee_assigns.branch_id', $request->branch_id);
-        }
-        else{
+        } else {
             $query = $query->where('employee_assigns.customer_id', $request->customer_id);
         }
 
@@ -427,27 +432,27 @@ class InvoiceGenerateController extends Controller
             $startDate = $request->start_date;
             $endDate = $request->end_date;
 
-            $query = $query->where(function($query) use ($startDate, $endDate) {
-                $query->where(function($query) use ($startDate, $endDate) {
+            $query = $query->where(function ($query) use ($startDate, $endDate) {
+                $query->where(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('employee_assign_details.start_date', '>=', $startDate)
-                    ->whereDate('employee_assign_details.end_date', '<=', $endDate);
+                        ->whereDate('employee_assign_details.end_date', '<=', $endDate);
                 });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
+                $query->orWhere(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('employee_assign_details.start_date', '>=', $startDate)
-                    ->whereNull('employee_assign_details.end_date');
+                        ->whereNull('employee_assign_details.end_date');
                 });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
+                $query->orWhere(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('employee_assign_details.start_date', '<=', $startDate)
-                    ->whereNull('employee_assign_details.end_date');
+                        ->whereNull('employee_assign_details.end_date');
                 });
-                $query->orWhere(function($query) use ($startDate, $endDate) {
+                $query->orWhere(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('employee_assign_details.start_date', '<=', $startDate)
-                    ->whereDate('employee_assign_details.end_date', '>=', $startDate);
+                        ->whereDate('employee_assign_details.end_date', '>=', $startDate);
                 });
 
-                $query->orWhere(function($query) use ($startDate, $endDate) {
+                $query->orWhere(function ($query) use ($startDate, $endDate) {
                     $query->whereDate('employee_assign_details.start_date', '<=', $endDate)
-                    ->whereDate('employee_assign_details.end_date', '>=', $endDate);
+                        ->whereDate('employee_assign_details.end_date', '>=', $endDate);
                 });
             });
         }
@@ -457,13 +462,13 @@ class InvoiceGenerateController extends Controller
     }
     public function lessPaidInvoiceGenerate($customer, $startDate, $id, $branchId = null)
     {
-        $inv= InvoiceGenerate::where('id',$id)->first();
-        $branch=CustomerBrance::where('id',$branchId)->first();
+        $inv = InvoiceGenerate::where('id', $id)->first();
+        $branch = CustomerBrance::where('id', $branchId)->first();
         if ($branch != '') {
-            $invoices = InvoiceGenerate::where('customer_id', $customer)->where('branch_id',$branchId)
+            $invoices = InvoiceGenerate::where('customer_id', $customer)->where('branch_id', $branchId)
                 ->where('start_date', '<=', $startDate)
                 ->get();
-        }else{
+        } else {
             $invoices = InvoiceGenerate::where('customer_id', $customer)
                 ->where('start_date', '<=', $startDate)
                 ->get();
@@ -471,16 +476,16 @@ class InvoiceGenerateController extends Controller
         $result = [];
         foreach ($invoices as $invoice) {
             $receivedAmount = InvoicePayment::where('invoice_id', $invoice->id)
-            ->select(
-                DB::raw("SUM(received_amount) as received_amount"),
-                DB::raw("SUM(ait_amount) as ait_amount"),
-                DB::raw("SUM(fine_deduction) as fine_deduction"),
-                DB::raw("SUM(paid_by_client) as paid_by_client"),
-                DB::raw("SUM(less_paid_honor) as less_paid_honor"),
-                DB::raw("SUM(vat_amount) as vat_amount")
-            )
-            ->groupBy('invoice_id')
-            ->first();
+                ->select(
+                    DB::raw("SUM(received_amount) as received_amount"),
+                    DB::raw("SUM(ait_amount) as ait_amount"),
+                    DB::raw("SUM(fine_deduction) as fine_deduction"),
+                    DB::raw("SUM(paid_by_client) as paid_by_client"),
+                    DB::raw("SUM(less_paid_honor) as less_paid_honor"),
+                    DB::raw("SUM(vat_amount) as vat_amount")
+                )
+                ->groupBy('invoice_id')
+                ->first();
 
             // Calculate the total received amount across all relevant fields
             $receivedAmountValue = (
@@ -503,7 +508,7 @@ class InvoiceGenerateController extends Controller
                 $result[] = $invoice;
             }
         }
-        return view('invoice_generate.less_paid_invoice',compact('result','inv','branch'));
+        return view('invoice_generate.less_paid_invoice', compact('result', 'inv', 'branch'));
     }
 
 
