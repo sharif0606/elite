@@ -117,7 +117,7 @@ class InvoiceGenerateController extends Controller
                             $details->invoice_id = $data->id;
                             $details->job_post_id = $request->job_post_id[$key];
                             if ($request->emp_assign_detl_id[$key]) {
-                                $emp_assign_data = EmployeeDetails::where('id', $request->emp_assign_detl_id[$key])->first();
+                                $emp_assign_data = EmployeeAssignDetails::where('id', $request->emp_assign_detl_id[$key])->first();
                                 $details->take_home_salary =$emp_assign_data->take_home_salary;
                                 $details->material_support_cost = $emp_assign_data->material_support_cost;
                                 $details->reliver_cost = $emp_assign_data->reliver_cost;
@@ -163,7 +163,7 @@ class InvoiceGenerateController extends Controller
             \LogActivity::addToLog('Invoice Generate', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
             return redirect()->route('invoiceGenerate.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
-            // dd($e);
+             dd($e);
             DB::rollback();
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
