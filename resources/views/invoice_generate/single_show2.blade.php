@@ -178,6 +178,12 @@
                 <tr>
                     <th>S.L</th>
                     <th>Service</th>
+                    @if($invoice_id->customer_id == 74)
+                    <th>Take Home Salary</th>
+                    <th>Material Support Cost</th>
+                    <th>Reliver Cost</th>
+                    <th>OverHead & Service Charge</th>
+                    @endif
                     <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
                     <th>Period</th>
                     <th>Person</th>
@@ -193,19 +199,30 @@
                 @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                        @if ($de->rate > 0 || $de->employee_qty > 0)
+                        @if ($de->rate > 0 || $de->employee_qty > 0 || $de->type==2)
                             <tr style="text-align: center;">
                                 <td >{{ $sl++  }}</td>
                                 <td>{{ $de->jobpost?->name }}
                                     <br/>
                                     {{ $de->atms?->atm }}
                                 </td>
-                                <td>{{ $de->rate }} <br/>
-                                    @if ($de->divide_by == 1)
-                                        (Per shift)
+                                @if($invoice_id->customer_id == 74)
+                                <td>{{$de->take_home_salary}}</td>
+                                <td>{{$de->material_support_cost}}</td>
+                                <td>{{$de->reliver_cost}}</td>
+                                <td>{{$de->overhead_service_charge}}</td>
+                                @endif
+                                <td>
+                                    @if($invoice_id->customer_id == 74 && $de->type==2)
+                                    {{$de->rate_per_houres}} Per Hour
                                     @else
-                                        @if($de->type_houre )
-                                            ({{ (int)$de->hours?->hour }} hourly shift per month)
+                                        {{ $de->rate }} <br/>
+                                        @if ($de->divide_by == 1)
+                                            (Per shift)
+                                        @else
+                                            @if($de->type_houre )
+                                                ({{ (int)$de->hours?->hour }} hourly shift per month)
+                                            @endif
                                         @endif
                                     @endif
                                 </td>
@@ -217,22 +234,26 @@
                                 @endif
                                 </td>
                                 <td>
-                                    {{ $de->employee_qty }}<br>
-                                    @if ($de->duty_day > 0 && $de->total_houres > 0)
-                                        @if ($de->duty_day > 1)
-                                            ({{ (int) $de->duty_day }} duties)
-                                        @else
-                                            ({{ (int) $de->duty_day }} duty)
-                                        @endif
-                                    @elseif($de->duty_day > 0 && $de->total_houres == '')
-                                        @if ($de->duty_day > 1)
-                                            ({{ (int) $de->duty_day }} duties)
-                                        @else
-                                            ({{ (int) $de->duty_day }} duty)
-                                        @endif
-                                    @elseif($de->duty_day == '' && $de->total_houres > 0)
-                                        ({{ (int) $de->total_houres }} duty hours)
+                                    @if($invoice_id->customer_id == 74 && $de->type==2)
+                                        {{$de->total_houres}} hrs
                                     @else
+                                        {{ $de->employee_qty }}<br>
+                                        @if ($de->duty_day > 0 && $de->total_houres > 0)
+                                            @if ($de->duty_day > 1)
+                                                ({{ (int) $de->duty_day }} duties)
+                                            @else
+                                                ({{ (int) $de->duty_day }} duty)
+                                            @endif
+                                        @elseif($de->duty_day > 0 && $de->total_houres == '')
+                                            @if ($de->duty_day > 1)
+                                                ({{ (int) $de->duty_day }} duties)
+                                            @else
+                                                ({{ (int) $de->duty_day }} duty)
+                                            @endif
+                                        @elseif($de->duty_day == '' && $de->total_houres > 0)
+                                            ({{ (int) $de->total_houres }} duty hours)
+                                        @else
+                                        @endif
                                     @endif
                                 </td>
                                 
@@ -253,7 +274,11 @@
                 @if($invoice_id->sub_total_amount)
                     <tr style="text-align: center;">
                         <td></td>
+                        @if($invoice_id->customer_id == 74)
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:8}}">Sub Total</th>
+                        @else
                         <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Sub Total</th>
+                        @endif
                         <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
                     </tr>
                 @endif
@@ -262,6 +287,7 @@
                     @foreach ($invoice_id->less as $le)
                         <tr style="text-align: center;">
                             <td></td>
+
                             <td colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">{{ $le->description }}</td>
                             <td style="text-align: end;"><b>{{ money_format($le->amount) }}</b></td>
                         </tr>
