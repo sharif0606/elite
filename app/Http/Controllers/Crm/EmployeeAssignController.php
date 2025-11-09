@@ -85,11 +85,13 @@ class EmployeeAssignController extends Controller
                             $details->atm_id = isset($request->atm_id[$key]) ? $request->atm_id[$key] : null;
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
-                            $details->take_home_salary = $request->take_home_salary[$key];
-                            $details->material_support_cost = $request->material_support_cost[$key];
-                            $details->reliver_cost = $request->reliver_cost[$key];
-                            $details->overhead_service_charge = $request->overhead_service_charge[$key];
-                            $details->type = $request->type[$key];
+                            if ($request->customer_id == 74) {
+                                $details->take_home_salary = $request->take_home_salary[$key];
+                                $details->material_support_cost = $request->material_support_cost[$key];
+                                $details->reliver_cost = $request->reliver_cost[$key];
+                                $details->overhead_service_charge = $request->overhead_service_charge[$key];
+                                $details->type = $request->type[$key];
+                            }
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
                             $details->bonus_amount = $request->bonus_amount[$key];
@@ -112,7 +114,7 @@ class EmployeeAssignController extends Controller
                 return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
             }
         } catch (Exception $e) {
-            dd($e);
+            //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
@@ -175,11 +177,13 @@ class EmployeeAssignController extends Controller
                             $details->atm_id = isset($request->atm_id[$key]) ? $request->atm_id[$key] : null;
                             $details->job_post_id = $request->job_post_id[$key];
                             $details->qty = $request->qty[$key];
-                            $details->take_home_salary = $request->take_home_salary[$key];
-                            $details->material_support_cost = $request->material_support_cost[$key];
-                            $details->reliver_cost = $request->reliver_cost[$key];
-                            $details->overhead_service_charge = $request->overhead_service_charge[$key];
-                            $details->type = $request->type[$key];
+                            if ($request->customer_id == 74) {
+                                $details->take_home_salary = $request->take_home_salary[$key];
+                                $details->material_support_cost = $request->material_support_cost[$key];
+                                $details->reliver_cost = $request->reliver_cost[$key];
+                                $details->overhead_service_charge = $request->overhead_service_charge[$key];
+                                $details->type = $request->type[$key];
+                            }
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
                             $details->bonus_amount = $request->bonus_amount[$key];
