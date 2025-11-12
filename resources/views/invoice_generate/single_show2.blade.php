@@ -227,7 +227,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                                                        {{$de->id}}
                                 @if($de->bonus_amount > 0)
                                 -
                                 @else
