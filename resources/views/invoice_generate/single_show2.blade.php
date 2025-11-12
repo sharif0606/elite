@@ -213,8 +213,9 @@
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
                                 <td>
-                                    @if($invoice_id->customer_id == 74 && $de->type==2 && $de->rate_per_houres > 0)
-                                    {{$de->rate_per_houres}} Per Hour
+                                    {{$de}}
+                                    @if($invoice_id->customer_id == 74 && $de->type==2 )
+                                    {{$de->rate_per_houres}} Per Hour{{$de->id}}
                                     @else
                                         {{ $de->rate }} <br/>
                                         @if ($de->divide_by == 1)
