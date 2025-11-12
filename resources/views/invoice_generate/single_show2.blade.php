@@ -213,6 +213,7 @@
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
                                 <td>
+                                    {{$de}}
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                     {{$de->rate_per_houres}} Per Hour
                                     @else
@@ -230,7 +231,7 @@
                                 @if($de->bonus_amount > 0)
                                 -
                                 @else
-                                {{ \Carbon\Carbon::parse($de->st_date)->format('d') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}
+                                {{ \Carbon\Carbon::parse($de->st_date)->format('d/m/y') }}-{{ \Carbon\Carbon::parse($de->ed_date)->format('d/m/Y') }}
                                 @endif
                                 </td>
                                 <td>
