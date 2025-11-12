@@ -199,7 +199,6 @@
                 @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                    {{$invoice_id->details}}
                         @if ($de->rate > 0 || $de->employee_qty > 0 || $de->type==2)
                             <tr style="text-align: center;">
                                 <td >{{ $sl++  }}</td>
@@ -212,6 +211,11 @@
                                 <td>{{$de->material_support_cost}}</td>
                                 <td>{{$de->reliver_cost}}</td>
                                 <td>{{$de->overhead_service_charge}}</td>
+                                @else
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
@@ -226,6 +230,7 @@
                                             @endif
                                         @endif
                                     @endif
+                                    {{ $de->employee_qty}}
                                 </td>
                                 <td>
                                 @if($de->bonus_amount > 0)
