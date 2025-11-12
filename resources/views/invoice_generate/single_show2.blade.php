@@ -214,6 +214,7 @@
                                 @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2 && $de->rate_per_houres> 0)
+                                    {{$de->id}}
                                     {{$de->rate_per_houres}} Per Hour
                                     @else
                                         {{ $de->rate }} <br/>
