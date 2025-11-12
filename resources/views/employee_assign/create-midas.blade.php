@@ -49,7 +49,7 @@
                                                     <th scope="col">{{__('Bonus Amount')}}</th>
                                                     <th scope="col">{{ __('Start Date') }}</th>
                                                     <th scope="col">{{ __('End Date') }}</th>
-                                                    {{-- <th scope="col">{{ __('Hours') }}</th> --}}
+                                                    <th scope="col">{{ __('Hours') }}</th>
                                                     <th class="white-space-nowrap">{{ __('ACTION') }}</th>
                                                 </tr>
                                             </thead>
@@ -100,7 +100,7 @@
                                                     </td>
                                                     <td><input class="form-control" type="date" name="end_date[]"
                                                             value="" placeholder="End Date"></td>
-                                                    {{--<td>
+                                                    <td>
                                                         <select name="hours[]"
                                                             class="form-control @error('hours') is-invalid @enderror"
                                                             id="hours">
@@ -112,7 +112,7 @@
                                                                 <option value="">No hours available</option>
                                                             @endforelse
                                                         </select>
-                                                    </td>--}}
+                                                    </td>
                                                     <td>
                                                         {{--  <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>  --}}
                                                         <span onClick='addRow(),EmployeeAsignGetAtm();'
@@ -179,7 +179,7 @@
                             </td>
                             <td><input class="form-control" type="date" name="start_date[]" value="" placeholder="Start Date"></td>
                             <td><input class="form-control" type="date" name="end_date[]" value="" placeholder="End Date"></td>
-                            {{--<td>
+                            <td>
                                 <select name="hours[]"
                                                                                 class="form-control @error('hours') is-invalid @enderror"
                                                                                 id="hours">
@@ -191,7 +191,7 @@
                                                                                     <option value="">No hours available</option>
                                                                                 @endforelse
                                 </select>
-                            </td>--}}
+                            </td>
                             <td>
                                 <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                 {{--  <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>  --}}

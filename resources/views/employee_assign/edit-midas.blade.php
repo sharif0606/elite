@@ -48,6 +48,7 @@
                                                 <th>{{ __('Bonus Amount') }}</th>
                                                 <th>{{ __('Start Date') }}</th>
                                                 <th>{{ __('End Date') }}</th>
+                                                <th scope="col">{{ __('Hours') }}</th>
                                                 <th class="white-space-nowrap">{{ __('Action') }}</th>
                                             </tr>
                                         </thead>
@@ -87,6 +88,20 @@
                                                 <td><input class="form-control" type="text" name="bonus_amount[]" value="{{ $detail->bonus_amount }}"></td>
                                                 <td><input class="form-control" type="date" name="start_date[]" value="{{ $detail->start_date }}"></td>
                                                 <td><input class="form-control" type="date" name="end_date[]" value="{{ $detail->end_date }}"></td>
+                                                <td>
+                                                    <select name="hours[]"
+                                                        class="form-control @error('hours') is-invalid @enderror"
+                                                        id="hours">
+                                                        @forelse ($hours as $hour)
+                                                            <option value="{{ $hour->id }}"
+                                                                {{ $hour->id == $detail->hours ? 'selected' : '' }}>
+                                                                {{ $hour->hour }} Hour's
+                                                            </option>
+                                                        @empty
+                                                            <option value="">No hours available</option>
+                                                        @endforelse
+                                                    </select>
+                                                </td>
                                                 <td>
                                                     <span onClick='removeRow(this);' class="delete-row text-danger"><i class="bi bi-trash-fill"></i></span>
                                                     <span onClick='addRow();' class="add-row text-primary"><i class="bi bi-plus-square-fill"></i></span>
