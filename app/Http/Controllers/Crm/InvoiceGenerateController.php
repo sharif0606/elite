@@ -137,7 +137,7 @@ class InvoiceGenerateController extends Controller
                             $details->duty_day = $request->duty_day[$key];
                             $details->total_houres = $request->total_houres[$key];
                             $details->type_houre = $request->type_houre[$key];
-                            $details->rate_per_houres = $request->rate_per_houres[$key];
+                            $details->rate_per_houres = $request->rate_per_houres[$key]??0;
                             $details->st_date = $request->st_date[$key];
                             $details->ed_date = $request->ed_date[$key];
                             $details->total_amounts = $request->total_amounts[$key];
@@ -331,7 +331,7 @@ class InvoiceGenerateController extends Controller
                             $details->duty_day = $request->duty_day[$key];
                             $details->total_houres = $request->total_houres[$key];
                             $details->type_houre = $request->type_houre[$key];
-                            $details->rate_per_houres = $request->rate_per_houres[$key];
+                            $details->rate_per_houres = $request->rate_per_houres[$key]??0;
                             $details->st_date = $request->st_date[$key];
                             $details->ed_date = $request->ed_date[$key];
                             $details->total_amounts = $request->total_amounts[$key];
