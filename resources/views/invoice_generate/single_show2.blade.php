@@ -182,7 +182,7 @@
                     <th>Take Home Salary</th>
                     <th>Material Support Cost</th>
                     <th>Reliver Cost</th>
-                    <th>OverHead & Service Charge</th>
+                    <th>Over Head & Service Charge</th>
                     @endif
                     <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
                     <th>Period</th>

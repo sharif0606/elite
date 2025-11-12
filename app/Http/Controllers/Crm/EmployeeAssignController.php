@@ -160,7 +160,7 @@ class EmployeeAssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd($request->all());
+        dd($request->all());
         try {
             $data = EmployeeAssign::findOrFail(encryptor('decrypt', $id));
             $data->customer_id = $request->customer_id;
