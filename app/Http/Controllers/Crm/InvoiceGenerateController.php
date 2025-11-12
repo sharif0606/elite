@@ -276,6 +276,7 @@ class InvoiceGenerateController extends Controller
 
     public function edit($id)
     {
+        dd(encryptor('decrypt', $id));
         $customer = Customer::all();
         $inv = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
         $invDetail = InvoiceGenerateDetails::where('invoice_id', $inv->id)->get();
