@@ -46,8 +46,8 @@ class AdvanceController extends Controller
         try {
             $data = new Advance;
             $data->customer_id = $request->customer_id;
-            $data->branch_id   = $request->branch_id;
-            $data->atm_id      = $request->atm_id;
+            $data->branch_id   = $request->branch_id ? $request->branch_id : 0;
+            $data->atm_id      = $request->atm_id ? $request->atm_id : 0;
             $data->amount      = $request->amount;
             $data->taken_date  = $request->taken_date;
             $data->created_by  = 1;
@@ -55,7 +55,7 @@ class AdvanceController extends Controller
             \LogActivity::addToLog('Advance', $request->getContent(), 'Advance Create');
             return redirect()->route('advance.index', ['role' => currentUser(), 'customer_id' => $data->customer_id, 'branch_id' => $data->branch_id])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
-            dd($e);
+            //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
     }
@@ -78,8 +78,8 @@ class AdvanceController extends Controller
         try {
             $data = Advance::findOrFail($id);
             $data->customer_id = $request->customer_id;
-            $data->branch_id   = $request->branch_id;
-            $data->atm_id      = $request->atm_id;
+            $data->branch_id   = $request->branch_id ? $request->branch_id : 0;
+            $data->atm_id      = $request->atm_id ? $request->atm_id : 0;
             $data->amount      = $request->amount;
             $data->taken_date  = $request->taken_date;
             $data->updated_by  = auth()->id() ?? 1;
