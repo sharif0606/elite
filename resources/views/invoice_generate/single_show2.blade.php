@@ -211,11 +211,6 @@
                                 <td>{{$de->material_support_cost}}</td>
                                 <td>{{$de->reliver_cost}}</td>
                                 <td>{{$de->overhead_service_charge}}</td>
-                                @else
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
