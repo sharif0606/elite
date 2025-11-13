@@ -199,7 +199,7 @@
                 @endphp
                 @if ($invoice_id->details)
                     @foreach ($invoice_id->details as $de)
-                        @if ($de->rate > 0 || $de->employee_qty > 0 || $de->type==2)
+                        @if ($de->rate > 0 || $de->employee_qty > 0)
                             <tr style="text-align: center;">
                                 <td >{{ $sl++  }}</td>
                                 <td>{{ $de->jobpost?->name }}
@@ -213,7 +213,7 @@
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
                                 <td>
-                                    @if($invoice_id->customer_id == 74 && $de->type==2 && $de->rate_per_houres> 0)
+                                    @if($invoice_id->customer_id == 74 && $de->type==2 )
                                     {{$de->rate_per_houres}} Per Hour
                                     @else
                                         {{ $de->rate }} <br/>

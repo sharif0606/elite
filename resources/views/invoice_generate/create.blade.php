@@ -215,9 +215,13 @@
             success: function(data) {
                 console.log(data);
                 
-                let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
-                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+                //let defaultHeader = 'Reference to the above subject, We herewith submitted the security services bill along with Chalan copy.';
+                //let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" by the 1st week of each month.';
+
+                let defaultHeader = 'Reference to the above subject, We herewith submit the security services bill.';
+                let defaultFooter = 'The payment may please be made in Cheques/Drafts/Cash in favor of "Elite Security Services Limited" or A/C No. 165 120 000 2281 Dutch Bangla Bank Ltd. Halisahar Branch, Ctg. by the 1st week of each month.';
                 
+
                 let header = data.header_note !== null ? data.header_note : defaultHeader;
                 let footer = data.footer_note !== null ? data.footer_note : defaultFooter;
                 
