@@ -239,21 +239,7 @@
                                         @endif
                                     @endif
                                 </td>
-                                <td>
-                                @if($de->bonus_amount > 0)
-                                -
-                                @else
-                                    @php
-                                        $start = \Carbon\Carbon::parse($de->st_date);
-                                        $end   = \Carbon\Carbon::parse($de->ed_date);
-                                    @endphp
-                                    @if($start->isSameDay($end))
-                                        {{ $start->format('d/m/Y') }}
-                                    @else
-                                        {{ $start->format('d/m/Y') }} - {{ $end->format('d/m/Y') }}
-                                    @endif
-                                @endif
-                                </td>
+
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                         {{$de->total_houres}} hrs
