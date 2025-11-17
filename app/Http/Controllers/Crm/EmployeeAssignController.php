@@ -154,6 +154,9 @@ class EmployeeAssignController extends Controller
         $hours = Hour::get();
         if ($empasin->customer_id == 74)
             return view('employee_assign.edit-midas', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
+        elseif ($empasin->customer_id == 13) 
+            //Mtbl
+            return view('employee_assign.edit-mtbl', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
         else
             return view('employee_assign.edit', compact('jobpost', 'customer', 'empasin', 'branch', 'atm', 'hours'));
     }
