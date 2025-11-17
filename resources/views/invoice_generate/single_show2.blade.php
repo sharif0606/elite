@@ -220,7 +220,7 @@
                                 <td>{{$de->reliver_cost}}</td>
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
-                                @if($invoice_id->customer_id != 13)
+                                @if($invoice_id->customer_id == 13)
                                 <td>{{$de->take_home_salary}}</td>
                                 <td>{{$de->agency_com}}</td>
                                 @endif
