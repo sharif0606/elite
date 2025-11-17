@@ -220,12 +220,41 @@
                                 <td>{{$de->reliver_cost}}</td>
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
-                                @if($invoice_id->customer_id == 13)
+                                @if($invoice_id->customer_id != 13)
                                 <td>{{$de->take_home_salary}}</td>
                                 <td>{{$de->agency_com}}</td>
                                 @endif
-                                
-                                
+                                @if($invoice_id->customer_id !=13)
+                                <td>
+                                    @if($invoice_id->customer_id == 74 && $de->type==2 )
+                                    {{$de->rate_per_houres}} Per Hour
+                                    @else
+                                        {{ $de->rate }} <br/>
+                                        @if ($de->divide_by == 1)
+                                            (Per shift)
+                                        @else
+                                            @if($de->type_houre )
+                                                ({{ (int)$de->hours?->hour }} hourly shift per month)
+                                            @endif
+                                        @endif
+                                    @endif
+                                </td>
+                                <td>
+                                @if($de->bonus_amount > 0)
+                                -
+                                @else
+                                    @php
+                                        $start = \Carbon\Carbon::parse($de->st_date);
+                                        $end   = \Carbon\Carbon::parse($de->ed_date);
+                                    @endphp
+                                    @if($start->isSameDay($end))
+                                        {{ $start->format('d/m/Y') }}
+                                    @else
+                                        {{ $start->format('d/m/Y') }} - {{ $end->format('d/m/Y') }}
+                                    @endif
+                                @endif
+                                </td>
+                                @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                         {{$de->total_houres}} hrs
