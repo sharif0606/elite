@@ -40,6 +40,10 @@
                     <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser(),'customer_id' =>74])}}">
                         <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
                     </a>
+                    @elseif(request()->get('customer_id') == 13)
+                    <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser(),'customer_id' =>13])}}">
+                        <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>
+                    </a>
                     @else
                     <a class="text-danger" href="{{route('employee_assign.create', ['role' =>currentUser()])}}">
                         <i class="bi bi-plus-square-fill" style="font-size: 1.7rem;"></i>

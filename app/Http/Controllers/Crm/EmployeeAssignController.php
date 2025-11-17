@@ -54,9 +54,12 @@ class EmployeeAssignController extends Controller
         $jobpost = JobPost::all();
         $customer = Customer::all();
         $hours = Hour::get();
-
         if ($request->customer_id == 74) {
+            //Midas
             return view('employee_assign.create-midas', compact('customer', 'jobpost', 'hours'));
+        } elseif ($request->customer_id == 13) {
+            //Mtbl
+            return view('employee_assign.create-mtbl', compact('customer', 'jobpost', 'hours'));
         } else {
             return view('employee_assign.create', compact('customer', 'jobpost', 'hours'));
         }
@@ -91,6 +94,10 @@ class EmployeeAssignController extends Controller
                                 $details->reliver_cost = $request->reliver_cost[$key];
                                 $details->overhead_service_charge = $request->overhead_service_charge[$key];
                                 $details->type = $request->type[$key];
+                            }
+                            if ($request->customer_id == 13) {
+                                $details->take_home_salary = $request->take_home_salary[$key];
+                                $details->agency_com = $request->agency_com[$key];
                             }
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
@@ -183,6 +190,10 @@ class EmployeeAssignController extends Controller
                                 $details->reliver_cost = $request->reliver_cost[$key];
                                 $details->overhead_service_charge = $request->overhead_service_charge[$key];
                                 $details->type = $request->type[$key];
+                            }
+                            if ($request->customer_id == 13) {
+                                $details->take_home_salary = $request->take_home_salary[$key];
+                                $details->agency_com = $request->agency_com[$key];
                             }
                             $details->rate = $request->rate[$key];
                             $details->bonus_type = $request->bonus_type[$key];
