@@ -119,6 +119,7 @@ class InvoiceGenerateController extends Controller
                             if ($request->emp_assign_detl_id[$key]) {
                                 $emp_assign_data = EmployeeAssignDetails::where('id', $request->emp_assign_detl_id[$key])->first();
                                 $details->take_home_salary =$emp_assign_data->take_home_salary;
+                                $details->agency_com =$emp_assign_data->agency_com;
                                 $details->material_support_cost = $emp_assign_data->material_support_cost;
                                 $details->reliver_cost = $emp_assign_data->reliver_cost;
                                 $details->overhead_service_charge = $emp_assign_data->overhead_service_charge;
