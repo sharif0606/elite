@@ -225,21 +225,7 @@
                                 <td>{{$de->agency_com}}</td>
                                 @endif
                                 
-                                <td>
-                                    @if($invoice_id->customer_id == 74 && $de->type==2 )
-                                    {{$de->rate_per_houres}} Per Hour
-                                    @else
-                                        {{ $de->rate }} <br/>
-                                        @if ($de->divide_by == 1)
-                                            (Per shift)
-                                        @else
-                                            @if($de->type_houre )
-                                                ({{ (int)$de->hours?->hour }} hourly shift per month)
-                                            @endif
-                                        @endif
-                                    @endif
-                                </td>
-
+                                
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                         {{$de->total_houres}} hrs
