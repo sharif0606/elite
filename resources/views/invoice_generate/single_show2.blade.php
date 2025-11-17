@@ -184,9 +184,17 @@
                     <th>Reliver Cost</th>
                     <th>Over Head & Service Charge</th>
                     @endif
+
+                    @if($invoice_id->customer_id == 13)
+                    <th>Take Home Salary</th>
+                    <th>Material Support Cost</th>
+                    <th>Person</th>
+                    @else
                     <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
                     <th>Period</th>
                     <th>Person</th>
+                    @endif
+                    
                     @if( $invoice_id->detail?->bonus_amount > 0)
                     <th>Bonus Rate</th>
                     @endif
@@ -212,6 +220,11 @@
                                 <td>{{$de->reliver_cost}}</td>
                                 <td>{{$de->overhead_service_charge}}</td>
                                 @endif
+                                @if($invoice_id->customer_id == 13)
+                                <td>{{$de->take_home_salary}}</td>
+                                <td>{{$de->agency_com}}</td>
+                                @endif
+                                @if($invoice_id->customer_id !== 13 )
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2 )
                                     {{$de->rate_per_houres}} Per Hour
@@ -226,6 +239,7 @@
                                         @endif
                                     @endif
                                 </td>
+                                
                                 <td>
                                 @if($de->bonus_amount > 0)
                                 -
@@ -241,6 +255,7 @@
                                     @endif
                                 @endif
                                 </td>
+                                @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                         {{$de->total_houres}} hrs
