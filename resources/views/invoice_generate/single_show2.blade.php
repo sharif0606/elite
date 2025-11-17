@@ -187,7 +187,7 @@
 
                     @if($invoice_id->customer_id == 13)
                     <th>Take Home Salary</th>
-                    <th>Material Support Cost</th>
+                    <th>Agency Commission</th>
                     <th>Person</th>
                     @else
                     <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
