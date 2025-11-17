@@ -224,7 +224,7 @@
                                 <td>{{$de->take_home_salary}}</td>
                                 <td>{{$de->agency_com}}</td>
                                 @endif
-                                @if($invoice_id->customer_id !== 13 )
+                                
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2 )
                                     {{$de->rate_per_houres}} Per Hour
@@ -239,8 +239,6 @@
                                         @endif
                                     @endif
                                 </td>
-                                
-                                
                                 <td>
                                 @if($de->bonus_amount > 0)
                                 -
@@ -256,7 +254,6 @@
                                     @endif
                                 @endif
                                 </td>
-                                @endif
                                 <td>
                                     @if($invoice_id->customer_id == 74 && $de->type==2)
                                         {{$de->total_houres}} hrs
