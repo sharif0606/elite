@@ -205,7 +205,11 @@
                             $itemsToProcess->push((object)[
                                 'description' => $detail->jobpost?->name ?? 'Service',
                                 'amount' => $detail->total_amounts ?? 0,
-                                'id' => $detail->id ?? null
+                                'id' => $detail->id ?? null,
+                                'rate' => $detail->rate ?? 0,
+                                'employee_qty' => $detail->employee_qty ?? 0,
+                                'duty_day' => $detail->duty_day ?? 0,
+                                'original_detail' => $detail, // Store original detail for calculations
                             ]);
                         }
                     }
@@ -297,57 +301,336 @@
                 
                 {{-- Row 4: Total Service charge --}}
                 @if(isset($orderedItems['service_charge']))
+                    @php
+                        $item = $orderedItems['service_charge'];
+                        $desc = $item->description ?? '';
+                        
+                        // Get rate and duty_day from item or original_detail
+                        $rate = $item->rate ?? 0;
+                        $dutyDay = $item->duty_day ?? ($item->employee_qty ?? 0);
+                        
+                        // If rate/duty_day not available, try to get from original_detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($item->original_detail)) {
+                            $rate = $item->original_detail->rate ?? $rate;
+                            $dutyDay = $item->original_detail->duty_day ?? ($item->original_detail->employee_qty ?? $dutyDay);
+                        }
+                        
+                        // If still not available and we have details, try to find matching detail
+                        // For service charge, we might need to sum up or find the right detail record
+                        if (($rate == 0 || $dutyDay == 0) && isset($invoice_id->details)) {
+                            $totalRate = 0;
+                            $totalDutyDay = 0;
+                            $foundDetails = 0;
+                            foreach ($invoice_id->details as $detail) {
+                                $detailDesc = strtolower(trim($detail->jobpost?->name ?? ''));
+                                if (strpos($detailDesc, 'service charge') !== false || strpos($detailDesc, 'service') !== false) {
+                                    $detailRate = $detail->rate ?? 0;
+                                    $detailDutyDay = $detail->duty_day ?? ($detail->employee_qty ?? 0);
+                                    if ($detailRate > 0 || $detailDutyDay > 0) {
+                                        // If we find a detail with both rate and duty_day, use it
+                                        if ($detailRate > 0 && $detailDutyDay > 0) {
+                                            $rate = $detailRate;
+                                            $dutyDay = $detailDutyDay;
+                                            break;
+                                        }
+                                        // Otherwise accumulate
+                                        $totalRate += $detailRate;
+                                        $totalDutyDay += $detailDutyDay;
+                                        $foundDetails++;
+                                    }
+                                }
+                            }
+                            // If we accumulated values, use averages or totals
+                            if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
+                                $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
+                                $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        $calcText = '';
+                        // Only add calculation if description doesn't already have it and we have rate/duty_day
+                        if (strpos($desc, '(') === false && $rate > 0 && $dutyDay > 0) {
+                            // Format: rate x duty_day (e.g., 2650.00 x 21.5)
+                            $calcText = ' (' . number_format($rate, 2) . ' x ' . number_format($dutyDay, 1) . ')';
+                        }
+                    @endphp
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
-                        <td style="text-align: left; padding: 8px;">{{ $orderedItems['service_charge']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ money_format($orderedItems['service_charge']->amount) }}</td>
+                        <td style="text-align: left; padding: 8px;">{{ $desc }}{{ $calcText }}</td>
+                        <td style="text-align: right; padding: 8px;">{{ money_format($item->amount) }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $totalChargePF += $orderedItems['service_charge']->amount; @endphp
+                    @php $totalChargePF += $item->amount; @endphp
                 @endif
                 
                 {{-- Row 5: Insurance Amount --}}
                 @if(isset($orderedItems['insurance']))
+                    @php
+                        $item = $orderedItems['insurance'];
+                        $desc = $item->description ?? '';
+                        
+                        // Get rate and duty_day from item or original_detail
+                        $rate = $item->rate ?? 0;
+                        $dutyDay = $item->duty_day ?? ($item->employee_qty ?? 0);
+                        
+                        // If rate/duty_day not available, try to get from original_detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($item->original_detail)) {
+                            $rate = $item->original_detail->rate ?? $rate;
+                            $dutyDay = $item->original_detail->duty_day ?? ($item->original_detail->employee_qty ?? $dutyDay);
+                        }
+                        
+                        // If still not available and we have details, try to find matching detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($invoice_id->details)) {
+                            $totalRate = 0;
+                            $totalDutyDay = 0;
+                            $foundDetails = 0;
+                            foreach ($invoice_id->details as $detail) {
+                                $detailDesc = strtolower(trim($detail->jobpost?->name ?? ''));
+                                if (strpos($detailDesc, 'insurance') !== false) {
+                                    $detailRate = $detail->rate ?? 0;
+                                    $detailDutyDay = $detail->duty_day ?? ($detail->employee_qty ?? 0);
+                                    if ($detailRate > 0 || $detailDutyDay > 0) {
+                                        // If we find a detail with both rate and duty_day, use it
+                                        if ($detailRate > 0 && $detailDutyDay > 0) {
+                                            $rate = $detailRate;
+                                            $dutyDay = $detailDutyDay;
+                                            break;
+                                        }
+                                        // Otherwise accumulate
+                                        $totalRate += $detailRate;
+                                        $totalDutyDay += $detailDutyDay;
+                                        $foundDetails++;
+                                    }
+                                }
+                            }
+                            // If we accumulated values, use averages or totals
+                            if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
+                                $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
+                                $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        $calcText = '';
+                        // Only add calculation if description doesn't already have it and we have rate/duty_day
+                        if (strpos($desc, '(') === false && $rate > 0 && $dutyDay > 0) {
+                            // Format: rate x duty_day (e.g., 60.00 x 21.5)
+                            $calcText = ' (' . number_format($rate, 2) . ' x ' . number_format($dutyDay, 1) . ')';
+                        }
+                    @endphp
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
-                        <td style="text-align: left; padding: 8px;">{{ $orderedItems['insurance']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ money_format($orderedItems['insurance']->amount) }}</td>
+                        <td style="text-align: left; padding: 8px;">{{ $desc }}{{ $calcText }}</td>
+                        <td style="text-align: right; padding: 8px;">{{ money_format($item->amount) }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $totalChargePF += $orderedItems['insurance']->amount; @endphp
+                    @php $totalChargePF += $item->amount; @endphp
                 @endif
                 
                 {{-- Row 6: Uniform Charge --}}
                 @if(isset($orderedItems['uniform']))
+                    @php
+                        $item = $orderedItems['uniform'];
+                        $desc = $item->description ?? '';
+                        
+                        // Get rate and duty_day from item or original_detail
+                        $rate = $item->rate ?? 0;
+                        $dutyDay = $item->duty_day ?? ($item->employee_qty ?? 0);
+                        
+                        // If rate/duty_day not available, try to get from original_detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($item->original_detail)) {
+                            $rate = $item->original_detail->rate ?? $rate;
+                            $dutyDay = $item->original_detail->duty_day ?? ($item->original_detail->employee_qty ?? $dutyDay);
+                        }
+                        
+                        // If still not available and we have details, try to find matching detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($invoice_id->details)) {
+                            $totalRate = 0;
+                            $totalDutyDay = 0;
+                            $foundDetails = 0;
+                            foreach ($invoice_id->details as $detail) {
+                                $detailDesc = strtolower(trim($detail->jobpost?->name ?? ''));
+                                if (strpos($detailDesc, 'uniform') !== false) {
+                                    $detailRate = $detail->rate ?? 0;
+                                    $detailDutyDay = $detail->duty_day ?? ($detail->employee_qty ?? 0);
+                                    if ($detailRate > 0 || $detailDutyDay > 0) {
+                                        // If we find a detail with both rate and duty_day, use it
+                                        if ($detailRate > 0 && $detailDutyDay > 0) {
+                                            $rate = $detailRate;
+                                            $dutyDay = $detailDutyDay;
+                                            break;
+                                        }
+                                        // Otherwise accumulate
+                                        $totalRate += $detailRate;
+                                        $totalDutyDay += $detailDutyDay;
+                                        $foundDetails++;
+                                    }
+                                }
+                            }
+                            // If we accumulated values, use averages or totals
+                            if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
+                                $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
+                                $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        $calcText = '';
+                        // Only add calculation if description doesn't already have it and we have rate/duty_day
+                        if (strpos($desc, '(') === false && $rate > 0 && $dutyDay > 0) {
+                            // Format: rate x duty_day (e.g., 600.00 x 21.5)
+                            $calcText = ' (' . number_format($rate, 2) . ' x ' . number_format($dutyDay, 1) . ')';
+                        }
+                    @endphp
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
-                        <td style="text-align: left; padding: 8px;">{{ $orderedItems['uniform']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ money_format($orderedItems['uniform']->amount) }}</td>
+                        <td style="text-align: left; padding: 8px;">{{ $desc }}{{ $calcText }}</td>
+                        <td style="text-align: right; padding: 8px;">{{ money_format($item->amount) }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $totalChargePF += $orderedItems['uniform']->amount; @endphp
+                    @php $totalChargePF += $item->amount; @endphp
                 @endif
                 
                 {{-- Row 7: Provident Fund for Supervisor --}}
                 @if(isset($orderedItems['pf_supervisor']))
+                    @php
+                        $item = $orderedItems['pf_supervisor'];
+                        $desc = $item->description ?? '';
+                        
+                        // Get rate and duty_day from item or original_detail
+                        $rate = $item->rate ?? 0;
+                        $dutyDay = $item->duty_day ?? ($item->employee_qty ?? 0);
+                        
+                        // If rate/duty_day not available, try to get from original_detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($item->original_detail)) {
+                            $rate = $item->original_detail->rate ?? $rate;
+                            $dutyDay = $item->original_detail->duty_day ?? ($item->original_detail->employee_qty ?? $dutyDay);
+                        }
+                        
+                        // If still not available and we have details, try to find matching detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($invoice_id->details)) {
+                            $totalRate = 0;
+                            $totalDutyDay = 0;
+                            $foundDetails = 0;
+                            foreach ($invoice_id->details as $detail) {
+                                $detailDesc = strtolower(trim($detail->jobpost?->name ?? ''));
+                                if (strpos($detailDesc, 'provident fund') !== false && (strpos($detailDesc, 'supervisor') !== false || strpos($detailDesc, 'sup') !== false)) {
+                                    $detailRate = $detail->rate ?? 0;
+                                    $detailDutyDay = $detail->duty_day ?? ($detail->employee_qty ?? 0);
+                                    if ($detailRate > 0 || $detailDutyDay > 0) {
+                                        // If we find a detail with both rate and duty_day, use it
+                                        if ($detailRate > 0 && $detailDutyDay > 0) {
+                                            $rate = $detailRate;
+                                            $dutyDay = $detailDutyDay;
+                                            break;
+                                        }
+                                        // Otherwise accumulate
+                                        $totalRate += $detailRate;
+                                        $totalDutyDay += $detailDutyDay;
+                                        $foundDetails++;
+                                    }
+                                }
+                            }
+                            // If we accumulated values, use averages or totals
+                            if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
+                                $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
+                                $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        $calcText = '';
+                        // For PF, check if description already has calculation in parentheses
+                        // PF descriptions might have complex calculations like "(8550 /100*8.33) = 712 (712 x 02)"
+                        // So we check if it ends with a calculation pattern
+                        if (strpos($desc, '(') !== false && strpos($desc, ' x ') !== false) {
+                            // Already has calculation, don't add
+                            $calcText = '';
+                        } elseif ($rate > 0 && $dutyDay > 0) {
+                            // Format: rate x duty_day (e.g., 712 x 2)
+                            $calcText = ' (' . number_format($rate, 0) . ' x ' . number_format($dutyDay, 0) . ')';
+                        } elseif ($item->amount > 0 && $dutyDay > 0) {
+                            // If rate not available, calculate unit amount
+                            $unitAmount = $item->amount / ($dutyDay > 0 ? $dutyDay : 1);
+                            $calcText = ' (' . number_format($unitAmount, 0) . ' x ' . number_format($dutyDay, 0) . ')';
+                        }
+                    @endphp
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
-                        <td style="text-align: left; padding: 8px;">{{ $orderedItems['pf_supervisor']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ money_format($orderedItems['pf_supervisor']->amount) }}</td>
+                        <td style="text-align: left; padding: 8px;">{{ $desc }}{{ $calcText }}</td>
+                        <td style="text-align: right; padding: 8px;">{{ money_format($item->amount) }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $totalChargePF += $orderedItems['pf_supervisor']->amount; @endphp
+                    @php $totalChargePF += $item->amount; @endphp
                 @endif
                 
                 {{-- Row 8: Provident Fund for Guard --}}
                 @if(isset($orderedItems['pf_guard']))
+                    @php
+                        $item = $orderedItems['pf_guard'];
+                        $desc = $item->description ?? '';
+                        
+                        // Get rate and duty_day from item or original_detail
+                        $rate = $item->rate ?? 0;
+                        $dutyDay = $item->duty_day ?? ($item->employee_qty ?? 0);
+                        
+                        // If rate/duty_day not available, try to get from original_detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($item->original_detail)) {
+                            $rate = $item->original_detail->rate ?? $rate;
+                            $dutyDay = $item->original_detail->duty_day ?? ($item->original_detail->employee_qty ?? $dutyDay);
+                        }
+                        
+                        // If still not available and we have details, try to find matching detail
+                        if (($rate == 0 || $dutyDay == 0) && isset($invoice_id->details)) {
+                            $totalRate = 0;
+                            $totalDutyDay = 0;
+                            $foundDetails = 0;
+                            foreach ($invoice_id->details as $detail) {
+                                $detailDesc = strtolower(trim($detail->jobpost?->name ?? ''));
+                                if (strpos($detailDesc, 'provident fund') !== false && strpos($detailDesc, 'guard') !== false) {
+                                    $detailRate = $detail->rate ?? 0;
+                                    $detailDutyDay = $detail->duty_day ?? ($detail->employee_qty ?? 0);
+                                    if ($detailRate > 0 || $detailDutyDay > 0) {
+                                        // If we find a detail with both rate and duty_day, use it
+                                        if ($detailRate > 0 && $detailDutyDay > 0) {
+                                            $rate = $detailRate;
+                                            $dutyDay = $detailDutyDay;
+                                            break;
+                                        }
+                                        // Otherwise accumulate
+                                        $totalRate += $detailRate;
+                                        $totalDutyDay += $detailDutyDay;
+                                        $foundDetails++;
+                                    }
+                                }
+                            }
+                            // If we accumulated values, use averages or totals
+                            if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
+                                $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
+                                $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        $calcText = '';
+                        // For PF, check if description already has calculation in parentheses
+                        // PF descriptions might have complex calculations like "(6950 /100*8.33) = 579 (579 x 10)"
+                        // So we check if it ends with a calculation pattern
+                        if (strpos($desc, '(') !== false && strpos($desc, ' x ') !== false) {
+                            // Already has calculation, don't add
+                            $calcText = '';
+                        } elseif ($rate > 0 && $dutyDay > 0) {
+                            // Format: rate x duty_day (e.g., 579 x 10)
+                            $calcText = ' (' . number_format($rate, 0) . ' x ' . number_format($dutyDay, 0) . ')';
+                        } elseif ($item->amount > 0 && $dutyDay > 0) {
+                            // If rate not available, calculate unit amount
+                            $unitAmount = $item->amount / ($dutyDay > 0 ? $dutyDay : 1);
+                            $calcText = ' (' . number_format($unitAmount, 0) . ' x ' . number_format($dutyDay, 0) . ')';
+                        }
+                    @endphp
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
-                        <td style="text-align: left; padding: 8px;">{{ $orderedItems['pf_guard']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ money_format($orderedItems['pf_guard']->amount) }}</td>
+                        <td style="text-align: left; padding: 8px;">{{ $desc }}{{ $calcText }}</td>
+                        <td style="text-align: right; padding: 8px;">{{ money_format($item->amount) }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $totalChargePF += $orderedItems['pf_guard']->amount; @endphp
+                    @php $totalChargePF += $item->amount; @endphp
                 @endif
                 
                 {{-- Display any other items that don't match the pattern (but are not deductions) --}}
