@@ -192,7 +192,7 @@ class InvoiceGenerateController extends Controller
         $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
         
         // Show single_show2_sewtech view only for customer_id 250
-        if ($invoice_id->customer_id === 250) {
+        if ($invoice_id->customer_id == 250) {
             return view('invoice_generate.single_show2_sewtech', compact('invoice_id', 'branch', 'headershow'));
         }
         
