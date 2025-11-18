@@ -184,7 +184,7 @@
                     <th>Take Home Salary</th>
                     <th>Material Support Cost</th>
                     <th>Reliever Cost</th>
-                    <th>OverHead & Service Charge</th>
+                    <th>Overhead & Service Charge</th>
                     @endif
 
                     @if($invoice_id->customer_id == 13)
