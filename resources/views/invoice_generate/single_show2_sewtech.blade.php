@@ -192,25 +192,38 @@
                     $netBillAmount = 0;
                     $deductionAmount = 0;
                     
-                    // Get all less items first
+                    // Get all less items and details items
                     $lessItems = $invoice_id->less ?? collect();
+                    $detailsItems = $invoice_id->details ?? collect();
                     
-                    // If less items is empty, use details as fallback
+                    // Combine both less and details items
+                    // Priority: details items first (they have rate/duty_day), then less items
                     $itemsToProcess = collect();
-                    if ($lessItems->count() > 0) {
-                        $itemsToProcess = $lessItems;
-                    } elseif (isset($invoice_id->details) && $invoice_id->details->count() > 0) {
-                        // Convert details to a format similar to less items
-                        foreach ($invoice_id->details as $detail) {
-                            $itemsToProcess->push((object)[
-                                'description' => $detail->jobpost?->name ?? 'Service',
-                                'amount' => $detail->total_amounts ?? 0,
-                                'id' => $detail->id ?? null,
-                                'rate' => $detail->rate ?? 0,
-                                'employee_qty' => $detail->employee_qty ?? 0,
-                                'duty_day' => $detail->duty_day ?? 0,
-                                'original_detail' => $detail, // Store original detail for calculations
-                            ]);
+                    $processedDescriptions = [];
+                    
+                    // First, add all details items (convert to similar format)
+                    foreach ($detailsItems as $detail) {
+                        $detailDesc = strtolower(trim($detail->jobpost?->name ?? 'Service'));
+                        $itemObj = (object)[
+                            'description' => $detail->jobpost?->name ?? 'Service',
+                            'amount' => $detail->total_amounts ?? 0,
+                            'id' => $detail->id ?? null,
+                            'rate' => $detail->rate ?? 0,
+                            'employee_qty' => $detail->employee_qty ?? 0,
+                            'duty_day' => $detail->duty_day ?? 0,
+                            'original_detail' => $detail, // Store original detail for calculations
+                        ];
+                        $itemsToProcess->push($itemObj);
+                        $processedDescriptions[] = $detailDesc;
+                    }
+                    
+                    // Then, add less items that don't duplicate details items
+                    foreach ($lessItems as $lessItem) {
+                        $lessDesc = strtolower(trim($lessItem->description ?? ''));
+                        // Only add if not already processed from details
+                        if (!in_array($lessDesc, $processedDescriptions)) {
+                            $itemsToProcess->push($lessItem);
+                            $processedDescriptions[] = $lessDesc;
                         }
                     }
                     
@@ -221,7 +234,7 @@
                     foreach ($itemsToProcess as $item) {
                         $desc = strtolower(trim($item->description ?? ''));
                         
-                        if (strpos($desc, 'paid in wages') !== false || (strpos($desc, 'wages') !== false && strpos($desc, 'backup') === false)) {
+                        if (strpos($desc, 'paid in wages') !== false || (strpos($desc, 'wages') !== false && strpos($desc, 'backup') === false && strpos($desc, 'service') === false)) {
                             if (!isset($orderedItems['wages'])) {
                                 $orderedItems['wages'] = $item;
                             } else {
@@ -231,7 +244,7 @@
                             $orderedItems['backup'] = $item;
                         } elseif (strpos($desc, 'employee advance') !== false || strpos($desc, 'loan') !== false || strpos($desc, 'tanning') !== false || strpos($desc, 'advance') !== false) {
                             $orderedItems['advance'] = $item;
-                        } elseif (strpos($desc, 'service charge') !== false || strpos($desc, 'service') !== false) {
+                        } elseif (strpos($desc, 'service charge') !== false || (strpos($desc, 'service') !== false && strpos($desc, 'charge') !== false)) {
                             $orderedItems['service_charge'] = $item;
                         } elseif (strpos($desc, 'insurance') !== false) {
                             $orderedItems['insurance'] = $item;
@@ -242,7 +255,12 @@
                         } elseif (strpos($desc, 'provident fund') !== false && (strpos($desc, 'guard') !== false)) {
                             $orderedItems['pf_guard'] = $item;
                         } elseif (strpos($desc, 'deduction commission') !== false || strpos($desc, 'vacant post') !== false || strpos($desc, 'deduction') !== false) {
-                            $orderedItems['deduction'] = $item;
+                            // For deductions, allow multiple entries
+                            if (!isset($orderedItems['deduction'])) {
+                                $orderedItems['deduction'] = $item;
+                            } else {
+                                $otherItems[] = $item;
+                            }
                         } else {
                             $otherItems[] = $item;
                         }
@@ -347,6 +365,15 @@
                             }
                         }
                         
+                        // Fallback: Calculate duty_day from amount / rate if duty_day is 0 or 1.0 (default value)
+                        if ($rate > 0 && ($dutyDay == 0 || $dutyDay == 1.0) && $item->amount > 0) {
+                            $calculatedDutyDay = $item->amount / $rate;
+                            // Only use calculated value if it makes sense (greater than 0.1)
+                            if ($calculatedDutyDay > 0.1) {
+                                $dutyDay = $calculatedDutyDay;
+                            }
+                        }
+                        
                         $calcText = '';
                         // Only add calculation if description doesn't already have it and we have rate/duty_day
                         if (strpos($desc, '(') === false && $rate > 0 && $dutyDay > 0) {
@@ -410,6 +437,15 @@
                             }
                         }
                         
+                        // Fallback: Calculate duty_day from amount / rate if duty_day is 0 or 1.0 (default value)
+                        if ($rate > 0 && ($dutyDay == 0 || $dutyDay == 1.0) && $item->amount > 0) {
+                            $calculatedDutyDay = $item->amount / $rate;
+                            // Only use calculated value if it makes sense (greater than 0.1)
+                            if ($calculatedDutyDay > 0.1) {
+                                $dutyDay = $calculatedDutyDay;
+                            }
+                        }
+                        
                         $calcText = '';
                         // Only add calculation if description doesn't already have it and we have rate/duty_day
                         if (strpos($desc, '(') === false && $rate > 0 && $dutyDay > 0) {
@@ -470,6 +506,15 @@
                             if ($rate == 0 && $dutyDay == 0 && $foundDetails > 0) {
                                 $rate = $totalRate > 0 ? ($totalRate / $foundDetails) : 0;
                                 $dutyDay = $totalDutyDay > 0 ? $totalDutyDay : 0;
+                            }
+                        }
+                        
+                        // Fallback: Calculate duty_day from amount / rate if duty_day is 0 or 1.0 (default value)
+                        if ($rate > 0 && ($dutyDay == 0 || $dutyDay == 1.0) && $item->amount > 0) {
+                            $calculatedDutyDay = $item->amount / $rate;
+                            // Only use calculated value if it makes sense (greater than 0.1)
+                            if ($calculatedDutyDay > 0.1) {
+                                $dutyDay = $calculatedDutyDay;
                             }
                         }
                         
@@ -682,6 +727,12 @@
                 @endif
                 
                 {{-- Row 9: Deduction commission for vacant post --}}
+                @php
+                    // Initialize deductionAmount if not already set
+                    if (!isset($deductionAmount)) {
+                        $deductionAmount = 0;
+                    }
+                @endphp
                 @if(isset($orderedItems['deduction']))
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
@@ -689,7 +740,7 @@
                         <td style="text-align: right; padding: 8px;">{{ $orderedItems['deduction']->amount > 0 ? money_format($orderedItems['deduction']->amount) : '' }}</td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $deductionAmount = $orderedItems['deduction']->amount; @endphp
+                    @php $deductionAmount += $orderedItems['deduction']->amount; @endphp
                 @endif
                 
                 {{-- Check otherItems for deductions --}}
@@ -808,17 +859,21 @@
                     if (!isset($totalBillBeforeDeduction)) {
                         $totalBillBeforeDeduction = $totalSalaryBill + $totalChargePF;
                     }
+                    if (!isset($deductionAmount)) {
+                        $deductionAmount = 0;
+                    }
                     $netBillAmount = $totalBillBeforeDeduction - $deductionAmount;
                 @endphp
                 
                 {{-- Final Total: Net Bill Amount --}}
-                @if($netBillAmount > 0)
+                @if($netBillAmount > 0 || $deductionAmount > 0 || $totalBillBeforeDeduction > 0)
                     <tr style="background-color: #e0e0e0;">
                         <td style="text-align: center; padding: 8px;"></td>
                         <td style="text-align: left; padding: 8px;"><b>Net Bill Amount</b></td>
-                        <td style="text-align: right; padding: 8px;"><b>{{ money_format($netBillAmount) }}</b></td>
+                        <td style="text-align: right; padding: 8px;"><b>{{ money_format($netBillAmount > 0 ? $netBillAmount : ($invoice_id->grand_total ?? 0)) }}</b></td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
+                    @php if($netBillAmount <= 0 && isset($invoice_id->grand_total)) { $netBillAmount = $invoice_id->grand_total; } @endphp
                 @elseif($invoice_id->grand_total > 0)
                     {{-- Fallback to grand_total if netBillAmount is 0 --}}
                     <tr style="background-color: #e0e0e0;">
