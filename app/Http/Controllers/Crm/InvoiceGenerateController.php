@@ -118,8 +118,8 @@ class InvoiceGenerateController extends Controller
                             $details->job_post_id = $request->job_post_id[$key];
                             if ($request->emp_assign_detl_id[$key]) {
                                 $emp_assign_data = EmployeeAssignDetails::where('id', $request->emp_assign_detl_id[$key])->first();
-                                $details->take_home_salary =$emp_assign_data->take_home_salary;
-                                $details->agency_com =$emp_assign_data->agency_com;
+                                $details->take_home_salary = $emp_assign_data->take_home_salary;
+                                $details->agency_com = $emp_assign_data->agency_com;
                                 $details->material_support_cost = $emp_assign_data->material_support_cost;
                                 $details->reliver_cost = $emp_assign_data->reliver_cost;
                                 $details->overhead_service_charge = $emp_assign_data->overhead_service_charge;
@@ -138,7 +138,7 @@ class InvoiceGenerateController extends Controller
                             $details->duty_day = $request->duty_day[$key];
                             $details->total_houres = $request->total_houres[$key];
                             $details->type_houre = $request->type_houre[$key];
-                            $details->rate_per_houres = $request->rate_per_houres[$key]??0;
+                            $details->rate_per_houres = $request->rate_per_houres[$key] ?? 0;
                             $details->st_date = $request->st_date[$key];
                             $details->ed_date = $request->ed_date[$key];
                             $details->total_amounts = $request->total_amounts[$key];
@@ -164,7 +164,7 @@ class InvoiceGenerateController extends Controller
             \LogActivity::addToLog('Invoice Generate', $request->getContent(), 'InvoiceGenerate,InvoiceGenerateDetails,InvoiceGenerateLess');
             return redirect()->route('invoiceGenerate.index', ['role' => currentUser()])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
-             dd($e);
+            dd($e);
             DB::rollback();
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
         }
@@ -188,8 +188,14 @@ class InvoiceGenerateController extends Controller
     public function getSingleInvoice2(Request $request, $id)
     {
         $headershow = $request->header;
-        $invoice_id = InvoiceGenerate::findOrFail(encryptor('decrypt', $id));
+        $invoice_id = InvoiceGenerate::with(['less', 'details'])->findOrFail(encryptor('decrypt', $id));
         $branch = CustomerBrance::where('id', $invoice_id->branch_id)->first();
+        
+        // Show single_show2_sewtech view only for customer_id 250
+        if ($invoice_id->customer_id === 250) {
+            return view('invoice_generate.single_show2_sewtech', compact('invoice_id', 'branch', 'headershow'));
+        }
+        
         return view('invoice_generate.single_show2', compact('invoice_id', 'branch', 'headershow'));
     }
     public function getSingleInvoice3(Request $request, $id)
@@ -332,7 +338,7 @@ class InvoiceGenerateController extends Controller
                             $details->duty_day = $request->duty_day[$key];
                             $details->total_houres = $request->total_houres[$key];
                             $details->type_houre = $request->type_houre[$key];
-                            $details->rate_per_houres = $request->rate_per_houres[$key]??0;
+                            $details->rate_per_houres = $request->rate_per_houres[$key] ?? 0;
                             $details->st_date = $request->st_date[$key];
                             $details->ed_date = $request->ed_date[$key];
                             $details->total_amounts = $request->total_amounts[$key];

@@ -90,6 +90,7 @@
                 <td style="padding-bottom: 8px;" width="15%">Invoice No:</td>
                 <td style="padding-bottom: 8px;">{{ $invoice_id->customer?->invoice_number }}/{{ \Carbon\Carbon::parse($invoice_id->end_date)->format('y') }}/{{ $invoice_id->id }}</td>
             </tr>
+            
             <tr>
                 <td width="15%">To: @if($branch?->billing_person != '') <br>&nbsp;&nbsp; @else @endif</td>
                 <td>
@@ -117,6 +118,7 @@
                 <td colspan="2">{{ $branch?->brance_name }}</td>
             </tr>
             @endif
+            {{$invoice_id->customer?->customer_type}}
             <tr>
                 <td width="15%"></td>
                 <td colspan="2">
@@ -181,8 +183,8 @@
                     @if($invoice_id->customer_id == 74)
                     <th>Take Home Salary</th>
                     <th>Material Support Cost</th>
-                    <th>Reliver Cost</th>
-                    <th>Over Head & Service Charge</th>
+                    <th>Reliever Cost</th>
+                    <th>OverHead & Service Charge</th>
                     @endif
 
                     @if($invoice_id->customer_id == 13)
@@ -190,7 +192,7 @@
                     <th>Agency Commission</th>
                     <th>Person</th>
                     @else
-                    <th>Rate {{$invoice_id->customer?->inv_vat_note}}</th>
+                    <th>{{ $invoice_id->customer_id == 74 ? 'Total Rate' : 'Rate' }} {{ $invoice_id->customer?->inv_vat_note }}</th>
                     <th>Period</th>
                     <th>Person</th>
                     @endif
