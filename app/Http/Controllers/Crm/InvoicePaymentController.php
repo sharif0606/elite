@@ -7,6 +7,8 @@ use App\Models\Crm\InvoiceGenerate;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Crm\InvoicePayment;
+use App\Models\Advance;
+use App\Models\AdvanceUsage;
 
 use Toastr;
 use Exception;
@@ -82,15 +84,42 @@ class InvoicePaymentController extends Controller
         }
     }
 
+    /**
+     * Get available advance balance for a customer
+     */
+    public function getAvailableAdvance(Request $request)
+    {
+        try {
+            $customerId = $request->customer_id;
+            $branchId = $request->branch_id ?? null;
+
+            $advanceData = Advance::getAvailableAdvance($customerId, $branchId);
+
+            return response()->json([
+                'success' => true,
+                'data' => $advanceData
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try{
             $invGen = InvoiceGenerate::select('id','customer_id','branch_id')->where('id',$request->invId)->first();
+            
+            // Create invoice payment record
             $data=new InvoicePayment;
             $data->customer_id = $invGen->customer_id;
             $data->branch_id = $invGen->branch_id;
             $data->invoice_id = $request->invId;
             $data->received_amount = $request->received_amount;
+            $data->advance_adjusted = $request->advance_adjusted ?? 0;
             $data->vat = $request->vat;
             $data->vat_amount = $request->vat_amount;
             $data->ait = $request->ait;
@@ -110,11 +139,70 @@ class InvoicePaymentController extends Controller
             $data->deposit_date = $request->deposit_date;
             $data->remarks = $request->remarks;
             $data->save();
+
+            // Handle advance adjustment if present
+            if ($request->advance_adjusted && $request->advance_adjusted > 0) {
+                $this->processAdvanceAdjustment(
+                    $invGen->customer_id,
+                    $invGen->branch_id,
+                    $data->id,
+                    $request->advance_adjusted
+                );
+            }
+
+            DB::commit();
             \LogActivity::addToLog('InvoicePayment',$request->getContent(),'InvoicePayment');
             return redirect()->route('invoiceGenerate.index', ['role' =>currentUser(),'customer_id' => $data->customer_id,'branch_id' => $data->branch_id])->with(Toastr::success('Data Saved!', 'Success', ["positionClass" => "toast-top-right"]));
         } catch (Exception $e) {
+            DB::rollBack();
             //dd($e);
             return redirect()->back()->withInput()->with(Toastr::error('Please try again!', 'Fail', ["positionClass" => "toast-top-right"]));
+        }
+    }
+
+    /**
+     * Process advance adjustment for invoice payment
+     */
+    private function processAdvanceAdjustment($customerId, $branchId, $invoicePaymentId, $adjustAmount)
+    {
+        $remainingAmount = $adjustAmount;
+
+        // Get available advances for this customer/branch (oldest first)
+        $advances = Advance::where('customer_id', $customerId)
+            ->where(function($query) use ($branchId) {
+                $query->where('branch_id', $branchId)
+                      ->orWhere('branch_id', 0);
+            })
+            ->whereRaw('(amount - used_amount) > 0')
+            ->orderBy('taken_date', 'asc')
+            ->get();
+
+        foreach ($advances as $advance) {
+            if ($remainingAmount <= 0) break;
+
+            $availableInAdvance = $advance->amount - $advance->used_amount;
+            $amountToUse = min($remainingAmount, $availableInAdvance);
+
+            // Update advance used_amount
+            $advance->used_amount += $amountToUse;
+            $advance->remaining_amount = $advance->amount - $advance->used_amount;
+            $advance->save();
+
+            // Create advance usage record
+            AdvanceUsage::create([
+                'advance_id' => $advance->id,
+                'invoice_payment_id' => $invoicePaymentId,
+                'customer_id' => $customerId,
+                'branch_id' => $branchId,
+                'used_amount' => $amountToUse,
+                'created_by' => auth()->id() ?? 1
+            ]);
+
+            $remainingAmount -= $amountToUse;
+        }
+
+        if ($remainingAmount > 0) {
+            throw new Exception('Insufficient advance balance available');
         }
     }
     public function show(Request $request,$id)

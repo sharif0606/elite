@@ -367,6 +367,14 @@
                             <input type="text" id="less_paid_honor" onkeyup="billTotal();" name="less_paid_honor" class="form-control">
                         </div>
                         <div class="col-sm-4">
+                            <label for="">Advance Adjusted</label>
+                            <span class="advance-balance text-success fs-6 px-2">
+                                <small>Available: <strong id="available_advance_display">0.00</strong></small>
+                            </span>
+                            <input type="text" id="advance_adjusted" onkeyup="validateAndCalculateAdvance();" name="advance_adjusted" class="form-control" placeholder="0.00">
+                            <span class="error-message-advance" style="color: red; display: none;"></span>
+                        </div>
+                        <div class="col-sm-4">
                             <label for="">Less Paid</label>
                             <input type="text" id="less_paid" name="less_paid" class="form-control error-less-paid" readonly>
                             <span class="error-message-less-paid" style="color: red; display: none;"></span>
@@ -590,8 +598,9 @@
         let fineDeduct = $('#fine_deduction').val() ? parseFloat($('#fine_deduction').val()) : 0;
         let lessPaidHonor = $('#less_paid_honor').val() ? parseFloat($('#less_paid_honor').val()) : 0;
         let paidByClient = $('#paid_by_client').val() ? parseFloat($('#paid_by_client').val()) : 0;
+        let advanceAdjusted = $('#advance_adjusted').val() ? parseFloat($('#advance_adjusted').val()) : 0;
 
-        let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient));
+        let lessPaid = parseFloat(dueAmount) - (parseFloat(received) + parseFloat(vatDeduct) + parseFloat(aitDeduct) + parseFloat(fineDeduct) + parseFloat(lessPaidHonor) + parseFloat(paidByClient) + parseFloat(advanceAdjusted));
         // Debugging: Log values before calculation
         console.log("Due Amount:", dueAmount);
         console.log("Received:", received);
@@ -600,8 +609,73 @@
         console.log("Fine Deduct:", fineDeduct);
         console.log("Less Paid Honor:", lessPaidHonor);
         console.log("Paid By Client:", paidByClient);
+        console.log("Advance Adjusted:", advanceAdjusted);
         $('#less_paid').val(lessPaid.toFixed(2));
         less_paid_amount();
+    }
+
+    // Global variable to store available advance
+    var availableAdvanceAmount = 0;
+
+    /**
+     * Fetch available advance balance for customer
+     */
+    function fetchAvailableAdvance(customerId, branchId) {
+        $.ajax({
+            url: "{{ route('get_available_advance') }}",
+            type: "GET",
+            dataType: "json",
+            data: {
+                customer_id: customerId,
+                branch_id: branchId
+            },
+            success: function(response) {
+                if (response.success) {
+                    availableAdvanceAmount = response.data.total_available;
+                    $('#available_advance_display').text(parseFloat(availableAdvanceAmount).toFixed(2));
+                    
+                    // Reset advance adjusted field
+                    $('#advance_adjusted').val('');
+                    $('.error-message-advance').hide();
+                } else {
+                    console.error('Error fetching advance:', response.error);
+                    availableAdvanceAmount = 0;
+                    $('#available_advance_display').text('0.00');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error fetching advance:', error);
+                availableAdvanceAmount = 0;
+                $('#available_advance_display').text('0.00');
+            }
+        });
+    }
+
+    /**
+     * Validate and calculate with advance adjustment
+     */
+    function validateAndCalculateAdvance() {
+        var advanceInput = $('#advance_adjusted').val();
+        var advanceAmount = parseFloat(advanceInput) || 0;
+        var errorMessage = $('.error-message-advance');
+
+        // Validate advance amount
+        if (advanceAmount < 0) {
+            errorMessage.text('Advance amount cannot be negative').show();
+            $('#advance_adjusted').val('');
+            billTotal();
+            return;
+        }
+
+        if (advanceAmount > availableAdvanceAmount) {
+            errorMessage.text('Advance amount cannot exceed available balance (' + availableAdvanceAmount.toFixed(2) + ')').show();
+            $('#advance_adjusted').val(availableAdvanceAmount.toFixed(2));
+            billTotal();
+            return;
+        }
+
+        errorMessage.hide();
+        billTotal();
     }
 
     function paymethod(){
@@ -757,6 +831,9 @@
             } else {
                 lastPoList.append('<li>No recent Po Number available.</li>');
             }
+
+            // Fetch available advance balance
+            fetchAvailableAdvance(cusID, branchID);
         });
     });
 
