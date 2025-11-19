@@ -143,6 +143,11 @@
             <li class="submenu-item">
                 <a href="{{route('advance.index', ['role' =>currentUser()])}}">Advance</a>
             </li>
+            <li class="submenu-item">
+                <a href="{{route('advance-usage.index', ['role' =>currentUser()])}}">
+                    <i class="bi bi-clock-history"></i> Advance Usage History
+                </a>
+            </li>
             </ul>
             </li>
             <li class="sidebar-item  has-sub">

@@ -334,6 +334,10 @@ Route::middleware(['checkauth'])->prefix('admin')->group(function () {
     Route::get('/checking-po-number', [invPayment::class, 'checkPoNumber'])->name('checking_duplicate_po');
     Route::get('/get-available-advance', [invPayment::class, 'getAvailableAdvance'])->name('get_available_advance');
     Route::get('/get-advance-usage-details', [invPayment::class, 'getAdvanceUsageDetails'])->name('get_advance_usage_details');
+    
+    /* Advance Usage History */
+    Route::get('/advance-usage-history', [App\Http\Controllers\AdvanceUsageController::class, 'index'])->name('advance-usage.index');
+    Route::get('/advance-usage-detail/{id}', [App\Http\Controllers\AdvanceUsageController::class, 'showAdvanceDetail'])->name('advance-usage.detail');
     /* employee security */
     Route::get('/prior-introduction-security-guards/{id}', [employee::class, 'securityGuards'])->name('securityGuards');
     Route::post('/prior-introduction-security-guards/{id}', [employee::class, 'securityGuardsStore'])->name('security.store');

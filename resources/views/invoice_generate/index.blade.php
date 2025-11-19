@@ -300,7 +300,7 @@
 
 <div class="modal fade" id="invList" tabindex="-1" role="dialog" aria-labelledby="balanceTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-        <form method="post" id="invUpdate"  action="{{route('invoice-payment.store')}}" onsubmit="return handlePaymentSubmit(this);">
+        <form method="post" id="invUpdate"  action="{{route('invoice-payment.store')}}">
             @csrf
             <div class="modal-content">
                 <div class="modal-header py-1">
@@ -454,9 +454,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="buttonDisable" class="btn btn-sm btn-primary" disabled>Save</button>
-                    <small class="text-muted" id="submitMessage" style="display: none;">
-                        <i class="bi bi-hourglass-split"></i> Processing...
-                    </small>
+
                 </div>
             </div>
         </form>
@@ -690,39 +688,6 @@
         errorMessage.hide();
         billTotal();
     }
-
-    /**
-     * Prevent double submission of payment form
-     */
-    var isSubmitting = false;
-    function handlePaymentSubmit(form) {
-        if (isSubmitting) {
-            console.log('Form already submitting, preventing duplicate');
-            return false;
-        }
-
-        // Check if receive date is filled (required field)
-        var receiveDate = $('#invUpdate input[name="rcv_date"]').val();
-        if (!receiveDate || receiveDate === '') {
-            alert('Please fill in the Receive Date');
-            return false;
-        }
-
-        // Disable submit button and show processing message
-        isSubmitting = true;
-        $('#buttonDisable').prop('disabled', true).text('Processing...');
-        $('#submitMessage').show();
-
-        // Allow form to submit
-        return true;
-    }
-
-    // Reset the form when modal is hidden
-    $('#invList').on('hidden.bs.modal', function () {
-        isSubmitting = false;
-        $('#buttonDisable').text('Save');
-        $('#submitMessage').hide();
-    });
 
     function paymethod(){
         let pmethod = document.querySelector('select[name="payment_type"]').value;
