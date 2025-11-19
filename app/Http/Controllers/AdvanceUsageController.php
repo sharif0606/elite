@@ -50,9 +50,11 @@ class AdvanceUsageController extends Controller
     /**
      * Show detailed report for a specific advance
      */
-    public function showAdvanceDetail($advanceId)
+    public function showAdvanceDetail($id)
     {
-        $advance = Advance::with(['usages.invoicePayment.invoice', 'customer', 'branch'])
+        $advanceId = encryptor('decrypt', $id);
+        
+        $advance = Advance::with(['usages.invoicePayment.invoice', 'customer', 'branch', 'atm'])
             ->findOrFail($advanceId);
         
         return view('advance_usage.detail', compact('advance'));
