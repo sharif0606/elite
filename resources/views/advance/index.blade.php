@@ -54,7 +54,9 @@
                         <th scope="col">{{__('#SL')}}</th>
                         <th scope="col" style="width: 80px;">{{__('Month')}}</th>
                         <th scope="col">{{__('Customer Name')}}</th>
-                        <th scope="col">{{__('Amount')}}</th>
+                        <th scope="col">{{__('Original Amount')}}</th>
+                        <th scope="col" class="text-danger">{{__('Used')}}</th>
+                        <th scope="col" class="text-success">{{__('Available')}}</th>
                         <th scope="col" style="width: 100px;">{{__('Advance Date')}}</th>
                         <th class="white-space-nowrap">{{__('ACTION')}}</th>
                     </tr>
@@ -68,21 +70,36 @@
                         <td>
                             {{ $e->customer?->name }}(Branch-{{$e->branch?->brance_name}})(Atm-{{$e->atm?->atm}})
                         </td>
-                        <td>{{ $e->amount}}</td>
+                        <td>{{ number_format($e->amount, 2) }}</td>
+                        <td class="text-danger">
+                            @if($e->used_amount > 0)
+                                <strong>{{ number_format($e->used_amount, 2) }}</strong>
+                            @else
+                                0.00
+                            @endif
+                        </td>
+                        <td class="text-success">
+                            <strong>{{ number_format($e->remaining_amount ?? $e->amount, 2) }}</strong>
+                        </td>
                         <td>{{ $e->taken_date }}</td>
                         <td>
-                           
-                               <a href="{{ route('advance.edit', $e->id) }}" class="text-primary">
-                                    <i class="bi bi-pencil-square"></i>
+                            @if($e->used_amount > 0)
+                                <a href="{{ route('advance-usage.detail', [encryptor('encrypt', $e->id), 'role' => currentUser()]) }}" 
+                                   class="btn btn-sm btn-info" title="View Usage History">
+                                    <i class="bi bi-clock-history"></i>
                                 </a>
-
-                                <form action="{{ route('advance.destroy', $e->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-link text-danger p-0 m-0">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
+                            @endif
+                            <a href="{{ route('advance.edit', $e->id) }}" class="btn btn-sm btn-primary" title="Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <form action="{{ route('advance.destroy', $e->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Are you sure?')" 
+                                        class="btn btn-sm btn-danger" title="Delete">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                   
