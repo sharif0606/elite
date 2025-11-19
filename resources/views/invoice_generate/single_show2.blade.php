@@ -118,7 +118,6 @@
                 <td colspan="2">{{ $branch?->brance_name }}</td>
             </tr>
             @endif
-            {{$invoice_id->customer?->customer_type}}
             <tr>
                 <td width="15%"></td>
                 <td colspan="2">

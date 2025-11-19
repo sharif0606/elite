@@ -118,7 +118,6 @@
                 <td colspan="2">{{ $branch?->brance_name }}</td>
             </tr>
             @endif
-            {{$invoice_id->customer?->customer_type}}
             <tr>
                 <td width="15%"></td>
                 <td colspan="2">
@@ -196,6 +195,32 @@
                     $lessItems = $invoice_id->less ?? collect();
                     $detailsItems = $invoice_id->details ?? collect();
                     
+                    // DEBUG: Show what we have
+                    $debugInfo = [
+                        'less_count' => $lessItems->count(),
+                        'details_count' => $detailsItems->count(),
+                        'less_items' => [],
+                        'details_items' => []
+                    ];
+                    
+                    foreach ($lessItems as $li) {
+                        $debugInfo['less_items'][] = [
+                            'desc' => $li->description ?? '',
+                            'amount' => $li->amount ?? 0
+                        ];
+                    }
+                    
+                    foreach ($detailsItems as $di) {
+                        $debugInfo['details_items'][] = [
+                            'desc' => $di->jobpost?->name ?? '',
+                            'amount' => $di->total_amounts ?? 0,
+                            'rate' => $di->rate ?? 0,
+                            'duty_day' => $di->duty_day ?? 0
+                        ];
+                    }
+                @endphp
+                
+                @php
                     // Combine both less and details items
                     // Priority: details items first (they have rate/duty_day), then less items
                     $itemsToProcess = collect();
@@ -737,10 +762,17 @@
                     <tr>
                         <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
                         <td style="text-align: left; padding: 8px;">{{ $orderedItems['deduction']->description }}</td>
-                        <td style="text-align: right; padding: 8px;">{{ $orderedItems['deduction']->amount > 0 ? money_format($orderedItems['deduction']->amount) : '' }}</td>
+                        <td style="text-align: right; padding: 8px;">
+                            @if($orderedItems['deduction']->amount != 0)
+                                {{ money_format($orderedItems['deduction']->amount) }}
+                            @endif
+                        </td>
                         <td style="text-align: center; padding: 8px;"></td>
                     </tr>
-                    @php $deductionAmount += $orderedItems['deduction']->amount; @endphp
+                    @php 
+                        // If amount is already negative, use absolute value for calculation
+                        $deductionAmount += abs($orderedItems['deduction']->amount); 
+                    @endphp
                 @endif
                 
                 {{-- Check otherItems for deductions --}}
@@ -753,10 +785,17 @@
                         <tr>
                             <td style="text-align: center; padding: 8px;">{{ $sl++ }}</td>
                             <td style="text-align: left; padding: 8px;">{{ $item->description }}</td>
-                            <td style="text-align: right; padding: 8px;">{{ $item->amount > 0 ? money_format($item->amount) : '' }}</td>
+                            <td style="text-align: right; padding: 8px;">
+                                @if($item->amount != 0)
+                                    {{ money_format($item->amount) }}
+                                @endif
+                            </td>
                             <td style="text-align: center; padding: 8px;"></td>
                         </tr>
-                        @php $deductionAmount += $item->amount; @endphp
+                        @php 
+                            // If amount is already negative, use absolute value for calculation
+                            $deductionAmount += abs($item->amount); 
+                        @endphp
                     @endif
                 @endforeach
                 
@@ -847,10 +886,17 @@
                         <tr>
                             <td style="text-align: center; padding: 8px;">{{ $fallbackSl++ }}</td>
                             <td style="text-align: left; padding: 8px;">{{ $item->description }}</td>
-                            <td style="text-align: right; padding: 8px;">{{ $item->amount > 0 ? money_format($item->amount) : '' }}</td>
+                            <td style="text-align: right; padding: 8px;">
+                                @if($item->amount != 0)
+                                    {{ money_format($item->amount) }}
+                                @endif
+                            </td>
                             <td style="text-align: center; padding: 8px;"></td>
                         </tr>
-                        @php $deductionAmount += $item->amount; @endphp
+                        @php 
+                            // If amount is already negative, use absolute value for calculation
+                            $deductionAmount += abs($item->amount); 
+                        @endphp
                     @endforeach
                 @endif
                 
