@@ -332,11 +332,12 @@
                             </table>
                         </div>
                         <div class="col-sm-4">
-                            <label for="">Received Amount</label>
+                            <label for="">Received Amount <small class="text-muted">(Cash/Bank)</small></label>
                             <span class="last-receive text-info fs-4 px-2"><i class="bi bi-info-circle-fill"></i>
                                 <ul class="last-amount" id="receivedAmountsList"></ul>
                             </span>
-                            <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control">
+                            <input type="text" id="received_amount" onkeyup="billTotal();" name="received_amount" class="form-control" placeholder="0.00">
+                            <small class="text-muted">Enter 0 if paying fully from advance</small>
                         </div>
                         <div class="col-sm-2">
                             <label for="">VAT</label>
@@ -367,12 +368,13 @@
                             <input type="text" id="less_paid_honor" onkeyup="billTotal();" name="less_paid_honor" class="form-control">
                         </div>
                         <div class="col-sm-4">
-                            <label for="">Advance Adjusted</label>
+                            <label for="">Advance Adjusted <small class="text-success">(From Customer Balance)</small></label>
                             <span class="advance-balance text-success fs-6 px-2">
                                 <small>Available: <strong id="available_advance_display">0.00</strong></small>
                             </span>
                             <input type="text" id="advance_adjusted" onkeyup="validateAndCalculateAdvance();" name="advance_adjusted" class="form-control" placeholder="0.00">
                             <span class="error-message-advance" style="color: red; display: none;"></span>
+                            <small class="text-muted">Amount to deduct from advance balance</small>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Less Paid</label>

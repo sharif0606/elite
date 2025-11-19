@@ -107,6 +107,30 @@ class InvoicePaymentController extends Controller
         }
     }
 
+    /**
+     * Get advance usage details for an invoice payment
+     */
+    public function getAdvanceUsageDetails(Request $request)
+    {
+        try {
+            $paymentId = $request->payment_id;
+
+            $advanceUsages = AdvanceUsage::with(['advance.branch', 'advance.atm'])
+                ->where('invoice_payment_id', $paymentId)
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $advanceUsages
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         DB::beginTransaction();

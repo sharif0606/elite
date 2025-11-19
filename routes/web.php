@@ -333,6 +333,7 @@ Route::middleware(['checkauth'])->prefix('admin')->group(function () {
 
     Route::get('/checking-po-number', [invPayment::class, 'checkPoNumber'])->name('checking_duplicate_po');
     Route::get('/get-available-advance', [invPayment::class, 'getAvailableAdvance'])->name('get_available_advance');
+    Route::get('/get-advance-usage-details', [invPayment::class, 'getAdvanceUsageDetails'])->name('get_advance_usage_details');
     /* employee security */
     Route::get('/prior-introduction-security-guards/{id}', [employee::class, 'securityGuards'])->name('securityGuards');
     Route::post('/prior-introduction-security-guards/{id}', [employee::class, 'securityGuardsStore'])->name('security.store');

@@ -82,6 +82,7 @@
                         <th scope="col">{{__('Billing amount')}}</th>
                         <th scope="col">{{__('Bonus')}}</th>
                         <th scope="col">{{__('Received amount')}}</th>
+                        <th scope="col" class="text-success">{{__('Advance Used')}}</th>
                         <th scope="col">{{__('Vat %')}}</th>
                         <th scope="col">{{__('Ait %')}}</th>
                         <th scope="col">{{__('Less Paid/Due')}}</th>
@@ -98,12 +99,12 @@
                 <tbody>
                     @php $pm=[1=>"Cash","Pay Order","Fund Transfer","Online Pay"]; @endphp
                     @forelse($payments as $e)
-                    @if($e->received_amount > 0 || $e->less_paid_honor > 0)
+                    @if($e->received_amount > 0 || $e->advance_adjusted > 0 || $e->less_paid_honor > 0)
                     <tr class="text-center">
                         <td scope="row">{{ ++$loop->index }}{{--$e->id--}}</td>
                         <td>{{ \Carbon\Carbon::parse($e->invoice?->end_date)->format('M-y') }}</td>
                         <td>{{ $e->customer?->name }}({{$e->invoice?->branch?->brance_name}}) <input type="hidden" value="{{ $e->invoice_id }}"></td>
-                        <td>{{ $e->received_amount + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
+                        <td>{{ $e->received_amount + $e->advance_adjusted + $e->vat_amount + $e->ait_amount + $e->fine_deduction + $e->paid_by_client + $e->less_paid_honor}}</td>
                         <td>
                             @if($e->invoice->detail->bonus_for == 1)
                             Edi UL FITR
@@ -113,7 +114,19 @@
                             -
                             @endif
                         </td>
-                        <td>{{ $e->received_amount }}</td>
+                        <td>{{ $e->received_amount }} <small class="text-muted">(Cash/Bank)</small></td>
+                        <td class="text-success">
+                            @if($e->advance_adjusted > 0)
+                                <strong>{{ number_format($e->advance_adjusted, 2) }}</strong>
+                                @if($e->advanceUsages->count() > 0)
+                                    <br><small class="text-muted" title="Click to view details" style="cursor: pointer;" onclick="showAdvanceDetails({{ $e->id }})">
+                                        <i class="bi bi-info-circle"></i> {{ $e->advanceUsages->count() }} advance(s) used
+                                    </small>
+                                @endif
+                            @else
+                                0.00
+                            @endif
+                        </td>
                         <td>
                             @if ($e->vat > 0)
                                 {{(float) $e->vat }}%
@@ -157,7 +170,27 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+
+<!-- Advance Details Modal -->
+<div class="modal fade" id="advanceDetailsModal" tabindex="-1" aria-labelledby="advanceDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="advanceDetailsModalLabel">
+                    <i class="bi bi-cash-stack text-success"></i> Advance Usage Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="advanceDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 @push('scripts')
@@ -210,6 +243,51 @@ function getBranchSearch(customerId, branchId = null) {
             let vat=(100*(vamt/rec));
             $('#'+place).val(vat.toFixed(2))
         }
+    }
+
+    // Show advance usage details in modal
+    function showAdvanceDetails(paymentId) {
+        $('#advanceDetailsModal').modal('show');
+        $('#advanceDetailsContent').html('<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+        
+        $.ajax({
+            url: "{{ route('get_advance_usage_details') }}",
+            type: "GET",
+            data: { payment_id: paymentId },
+            success: function(response) {
+                if (response.success && response.data.length > 0) {
+                    let html = '<div class="table-responsive"><table class="table table-bordered table-hover">';
+                    html += '<thead class="table-light"><tr>';
+                    html += '<th>#</th><th>Advance ID</th><th>Advance Date</th><th>Original Amount</th><th>Used Amount</th><th>Remaining</th><th>Branch/ATM</th>';
+                    html += '</tr></thead><tbody>';
+                    
+                    let totalUsed = 0;
+                    response.data.forEach((item, index) => {
+                        totalUsed += parseFloat(item.used_amount);
+                        html += '<tr>';
+                        html += '<td>' + (index + 1) + '</td>';
+                        html += '<td><span class="badge bg-primary">#' + item.advance.id + '</span></td>';
+                        html += '<td>' + item.advance.taken_date + '</td>';
+                        html += '<td>' + parseFloat(item.advance.amount).toFixed(2) + '</td>';
+                        html += '<td class="text-success"><strong>' + parseFloat(item.used_amount).toFixed(2) + '</strong></td>';
+                        html += '<td>' + parseFloat(item.advance.remaining_amount).toFixed(2) + '</td>';
+                        html += '<td>' + (item.advance.branch ? item.advance.branch.brance_name : 'General') + '</td>';
+                        html += '</tr>';
+                    });
+                    
+                    html += '<tr class="table-success"><td colspan="4" class="text-end"><strong>Total Advance Used:</strong></td>';
+                    html += '<td colspan="3"><strong>' + totalUsed.toFixed(2) + '</strong></td></tr>';
+                    html += '</tbody></table></div>';
+                    
+                    $('#advanceDetailsContent').html(html);
+                } else {
+                    $('#advanceDetailsContent').html('<div class="alert alert-warning">No advance usage details found.</div>');
+                }
+            },
+            error: function() {
+                $('#advanceDetailsContent').html('<div class="alert alert-danger">Error loading advance details. Please try again.</div>');
+            }
+        });
     }
     $(document).ready(function () {
         $('#invList').on('show.bs.modal', function (event) {
