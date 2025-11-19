@@ -132,9 +132,10 @@
                             $paymentHasOrNot = $e->payment->sum('received_amount');
                         @endphp
                         @php
-                            $due = round($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
-                            $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
+                            $due = round($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('advance_adjusted') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
+                            $dueshow = money_format($e->grand_total - ($e->payment->sum('received_amount') + $e->payment->sum('advance_adjusted') + $e->payment->sum('vat_amount') + $e->payment->sum('ait_amount') + $e->payment->sum('fine_deduction') + $e->payment->sum('paid_by_client') + $e->payment->sum('less_paid_honor')));
                             $receivedAmount = money_format($e->payment->sum('received_amount'));
+                            $advanceAdjusted = money_format($e->payment->sum('advance_adjusted'));
                             $less_paid_honor = money_format($e->payment->sum('less_paid_honor'));
                         @endphp
                     {{--$e->port_link?->details--}}
@@ -163,11 +164,19 @@
                             <td>{{ $e->bill_date }}</td>
                             <td>{{ money_format($e->grand_total) }}</td>
                             <td>
-                                @if ($receivedAmount > 0 )
-                                    {{ $receivedAmount }}
+                                @if ($receivedAmount > 0 || $advanceAdjusted > 0)
+                                    @if($receivedAmount > 0)
+                                        <span title="Cash/Bank">{{ $receivedAmount }}</span>
+                                    @endif
+                                    @if($advanceAdjusted > 0)
+                                        @if($receivedAmount > 0)<br>@endif
+                                        <span class="text-success" title="From Advance">+{{ $advanceAdjusted }}</span>
+                                    @endif
                                 @endif
                             </td>
-                            <td>{{ $due }}</td>
+                            <td class="{{ $due == 0 ? 'text-success fw-bold' : 'text-danger' }}">
+                                {{ $due == 0 ? 'PAID' : $due }}
+                            </td>
                             <td>
                                 <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                     <i class="bi bi-eye"></i>
