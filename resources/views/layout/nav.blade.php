@@ -145,7 +145,7 @@
             </li>
             <li class="submenu-item">
                 <a href="{{route('advance-usage.index', ['role' =>currentUser()])}}">
-                    <i class="bi bi-clock-history"></i> Advance Usage History
+                    Advance Usage History
                 </a>
             </li>
             </ul>
