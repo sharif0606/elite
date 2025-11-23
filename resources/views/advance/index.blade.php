@@ -85,18 +85,18 @@
                         <td>
                             @if($e->used_amount > 0)
                                 <a href="{{ route('advance-usage.detail', [encryptor('encrypt', $e->id), 'role' => currentUser()]) }}" 
-                                   class="btn btn-sm btn-info" title="View Usage History">
+                                    title="View Usage History">
                                     <i class="bi bi-clock-history"></i>
                                 </a>
                             @endif
-                            <a href="{{ route('advance.edit', $e->id) }}" class="btn btn-sm btn-primary" title="Edit">
+                            <a href="{{ route('advance.edit', $e->id) }}" title="Edit">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <form action="{{ route('advance.destroy', $e->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" onclick="return confirm('Are you sure?')" 
-                                        class="btn btn-sm btn-danger" title="Delete">
+                                    title="Delete" style="outline:none;border:none;background: #fff;">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -109,6 +109,14 @@
                     </tr>
                     @endforelse
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3" class="text-end">Total</th>
+                        <th class="text-center">{{number_format($payments->sum('amount'),2)}}</th>
+                        <th class="text-center">{{number_format($payments->sum('used_amount'),2)}}</th>
+                        <th class="text-center">{{ number_format($payments->sum('amount') - $payments->sum('used_amount'), 2) }}</th>
+                    </tr>
+                </tfoot>
             </table>
             <div class="pt-2">
                  {{$payments->withQueryString()->links()}} 

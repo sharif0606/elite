@@ -122,7 +122,7 @@
                         </td>
                         <td>
                             <a href="{{ route('invoiceGenerate.show', [encryptor('encrypt', $usage->invoicePayment?->invoice_id ?? 0)]) }}" 
-                               class="btn btn-sm btn-info" title="View Invoice">
+                               title="View Invoice">
                                 <i class="bi bi-eye"></i>
                             </a>
                         </td>

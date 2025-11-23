@@ -21,7 +21,7 @@
                                 {{-- Customer --}}
                                 <div class="col-lg-4 mt-2">
                                     <label><b>Customer Name</b></label>
-                                    <select required class="form-select customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
+                                    <select required class="form-select select2 customer_id" id="customer_id" name="customer_id" onchange="getBranch(this)">
                                         <option value="">Select Customer</option>
                                         @foreach ($customer as $c)
                                             <option value="{{ $c->id }}" {{ $advance->customer_id == $c->id ? 'selected' : '' }}>
