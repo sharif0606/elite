@@ -1408,9 +1408,10 @@
                     </tr>
                     <tr class="tbl_border">
                         <th class="tbl_border" style="text-align: center; padding: 6px;">24</th>
-                        <th class="tbl_border" style="padding: 6px;">Any Other Information</th>
+                        <th class="tbl_border" style="padding: 6px;">Date of Joining Elite Force</th>
                         <th class="tbl_border" style="text-align: center; padding: 6px;">:</th>
-                        <th class="tbl_border" style="padding: 6px;">@if($employees->en_any_other_info=='1') {{ 'Yes' }} @elseif($employees->en_any_other_info=='2') {{ 'No' }}@else @endif</th>
+                        <th class="tbl_border" style="padding: 6px;">{{$employees->joining_date}}</th>
+                        {{-- <th class="tbl_border" style="padding: 6px;">@if($employees->en_any_other_info=='1') {{ 'Yes' }} @elseif($employees->en_any_other_info=='2') {{ 'No' }}@else @endif</th> --}}
                     </tr>
                 </tbody>
             </table>

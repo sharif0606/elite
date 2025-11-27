@@ -38,6 +38,13 @@ class InvoicePaymentController extends Controller
         if($request->pay_date){
             $payments=$payments->where('pay_date',$request->pay_date);
         }
+        if($request->pay_date){
+            $payments=$payments->where('pay_date',$request->pay_date);
+        }
+        if($request->received_amount){
+            $payments=$payments->where('received_amount',$request->received_amount);
+        }
+        
         // if($request->rcv_date){
         //     $payments=$payments->where('rcv_date',$request->rcv_date);
         // }
@@ -217,7 +224,7 @@ class InvoicePaymentController extends Controller
                 'advance_id' => $advance->id,
                 'invoice_payment_id' => $invoicePaymentId,
                 'customer_id' => $customerId,
-                'branch_id' => $branchId,
+                'branch_id' => $branchId?$branchId:0,
                 'used_amount' => $amountToUse,
                 'created_by' => auth()->id() ?? 1
             ]);

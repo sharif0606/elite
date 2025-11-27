@@ -64,6 +64,10 @@
                     <label for="fdate">{{__('To Bill Date')}}</label>
                     <input type="date" id="tdate" class="form-control" value="{{ request('tdate')}}" name="tdate">
                 </div>
+                <div class="col-lg-2 col-md-6 col-sm-12 py-1">
+                    <label for="">Receive Amount</label>
+                    <input type="text" name="received_amount" class="form-control" value="{{ request()->received_amount }}">
+                </div>
                 <div class="col-sm-3 py-3">
                     <button type="submit" class="btn btn-sm btn-info mt-2">Search</button>
                     <a href="{{route('invoice-payment.index')}}" class="btn btn-sm btn-danger mt-2">Clear</a>
