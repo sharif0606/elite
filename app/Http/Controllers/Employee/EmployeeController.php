@@ -391,7 +391,7 @@ class EmployeeController extends Controller
                 'Any Other Information',
                 $employees->en_any_other_info == '1' ? 'Yes' : ($employees->en_any_other_info == '2' ? 'No' : '')
             ],
-            [
+            /*[
                 'Emergency Address',
                 ($employees->en_emergency_holding_no ? 'C/O: ' . $employees->en_parm_holding_name . ', ' . $employees->en_pre_holding_no : '') .
                     ($employees->en_emergency_village_name ? 'Vill: ' . $employees->en_parm_village_name . ', ' : '') .
@@ -399,6 +399,10 @@ class EmployeeController extends Controller
                     ($employees->bn_emergency_union?->name ? 'P.S: ' . $employees->bn_emergency_union?->name . ', ' : '') .
                     ($employees->bn_emergency_upazilla?->name ? 'UP: ' . $employees->bn_emergency_upazilla?->name . ', ' : '') .
                     ($employees->bn_emergency_district?->name ? 'Dist: ' . $employees->bn_emergency_district?->name : '')
+            ]*/
+            [
+                'Date of Joining Elite Force',
+                $employees->joining_date
             ]
         ];
 
