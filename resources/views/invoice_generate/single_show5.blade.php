@@ -161,7 +161,18 @@
                         <td>{{ money_format($d->rate) }}</td>
                         <td>{{ money_format($d->commission) }}</td>
                         <td>{{ money_format($d->rate+$d->commission) }}</td>
-                        <td>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d/m/Y')}} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d/m/Y')}}</td>
+                        {{-- <td>{{ \Carbon\Carbon::parse($invoice_id->start_date)->format('d/m/Y')}} to {{ \Carbon\Carbon::parse($invoice_id->end_date)->format('d/m/Y')}}</td>--}}
+                        <td>    
+                            @php
+                                $start = \Carbon\Carbon::parse($d->st_date);
+                                $end   = \Carbon\Carbon::parse($d->ed_date);
+                            @endphp
+                            @if($start->isSameDay($end))
+                                {{ $start->format('d/m/Y') }}
+                            @else
+                                {{ $start->format('d/m/Y') }} - {{ $end->format('d/m/Y') }}
+                            @endif
+                        </td>
                         <td>
                             {{ $d->employee_qty }}
                             @if ($d->duty_day > 1)
