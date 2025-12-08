@@ -556,6 +556,12 @@
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
                     subtotalAmount();
                     addCount();
+            }else if(person > 0 && totalHour > 0) {
+                //For GPH Ispat Mayun Guided
+                let subTotalAmount=parseFloat(totalHour*ratePerHour).toFixed(2);
+                $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
+                subtotalAmount();
+                addCount();
             }else{
                 let subTotalAmount=parseFloat(rate*person).toFixed(2);
                     $(e).closest('tr').find('.total_amounts').val(subTotalAmount);
