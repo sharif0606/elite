@@ -54,7 +54,7 @@ class AdvanceUsageController extends Controller
     {
         $advanceId = encryptor('decrypt', $id);
         
-        $advance = Advance::with(['usages.invoicePayment.invoice', 'customer', 'branch', 'atm'])
+        $advance = Advance::with(['usages.invoicePayment.invoice', 'customer', 'branch', 'atm', 'depositBank'])
             ->findOrFail($advanceId);
         
         return view('advance_usage.detail', compact('advance'));

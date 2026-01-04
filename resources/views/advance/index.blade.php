@@ -146,6 +146,27 @@
         }
     });
 
+function getBranch(e) {
+    var customerId = $(e).val();
+    $('#branch_id').empty().append('<option value="">Loading...</option>');
+
+    $.ajax({
+        url: "{{ route('get_ajax_branch') }}",
+        type: "GET",
+        data: { customerId: customerId },
+        success: function (data) {
+            $('#branch_id').empty().append('<option value="">Select Branch</option>');
+            $.each(data, function (key, value) {
+                $('#branch_id').append(`<option value="${value.id}">${value.brance_name}</option>`);
+            });
+        },
+        error: function () {
+            $('#branch_id').empty().append('<option value="">Select Branch</option>');
+            console.error("Error fetching data from the server.");
+        },
+    });
+}
+
 function getBranchSearch(customerId, branchId = null) {
     $('#branch_id').empty();
     $.ajax({

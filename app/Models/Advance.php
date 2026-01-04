@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Crm\CustomerBrance;
 use App\Models\Crm\Atm;
 use App\Models\AdvanceUsage;
+use App\Models\Settings\DepositBank;
 
 class Advance extends Model
 {
@@ -21,6 +22,9 @@ class Advance extends Model
         'used_amount',
         'remaining_amount',
         'taken_date',
+        'payment_type',
+        'deposit_bank',
+        'bank_name',
         'created_by',
         'updated_by'
     ];
@@ -38,6 +42,11 @@ class Advance extends Model
     public function atm()
     {
         return $this->belongsTo(Atm::class, 'atm_id', 'id');
+    }
+
+    public function depositBank()
+    {
+        return $this->belongsTo(DepositBank::class, 'deposit_bank', 'id');
     }
 
     /**

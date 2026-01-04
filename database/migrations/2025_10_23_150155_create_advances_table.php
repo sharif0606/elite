@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('branch_id')->index();
             $table->unsignedBigInteger('atm_id')->index();
             $table->decimal('amount', 15, 2)->default(0);
+            $table->decimal('used_amount', 15, 2)->default(0)->comment('Amount already used from this advance');
+            $table->decimal('remaining_amount', 15, 2)->default(0)->comment('Available balance remaining');
             $table->date('taken_date');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();

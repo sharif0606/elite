@@ -66,6 +66,30 @@
                                     <label><b>Amount</b></label>
                                     <input required class="form-control" type="text" name="amount" value="{{ $advance->amount }}">
                                 </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label><b>Payment Mode</b></label>
+                                    <select name="payment_type" class="form-control">
+                                        <option value="1" {{ $advance->payment_type == 1 ? 'selected' : '' }}>Cash</option>
+                                        <option value="2" {{ $advance->payment_type == 2 ? 'selected' : '' }}>Pay Order</option>
+                                        <option value="3" {{ $advance->payment_type == 3 ? 'selected' : '' }}>Fund Transfer</option>
+                                        <option value="4" {{ $advance->payment_type == 4 ? 'selected' : '' }}>Online Pay</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label><b>Deposit Bank</b></label>
+                                    <select class="form-control" name="deposit_bank">
+                                        <option value="">Select</option>
+                                        @foreach($deposit_bank as $db)
+                                            <option value="{{ $db->id }}" {{ $advance->deposit_bank == $db->id ? 'selected' : '' }}>
+                                                {{ $db->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 mt-2">
+                                    <label><b>Bank Name</b></label>
+                                    <input type="text" name="bank_name" class="form-control" value="{{ $advance->bank_name }}" placeholder="Bank Name">
+                                </div>
                             </div>
 
                             <div class="d-flex justify-content-end my-2">

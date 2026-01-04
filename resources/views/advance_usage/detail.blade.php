@@ -12,7 +12,7 @@
             </h5>
         </div>
         <div class="card-body">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-3">
                     <strong>Customer:</strong><br>
                     {{ $advance->customer?->name }}
@@ -36,6 +36,50 @@
                 <div class="col-md-1">
                     <strong>Remaining:</strong><br>
                     <span class="badge bg-success">{{ number_format($advance->remaining_amount, 2) }}</span>
+                </div>
+            </div>
+            <!-- Payment Information Section -->
+            <div class="row border-top pt-3">
+                <div class="col-md-12">
+                    <h6 class="text-primary mb-3"><i class="bi bi-credit-card"></i> Payment Information</h6>
+                </div>
+                <div class="col-md-3">
+                    <strong>Payment Mode:</strong><br>
+                    @if($advance->payment_type)
+                        @php
+                            $paymentModes = [
+                                1 => 'Cash',
+                                2 => 'Pay Order',
+                                3 => 'Fund Transfer',
+                                4 => 'Online Pay'
+                            ];
+                        @endphp
+                        <span class="badge bg-secondary">{{ $paymentModes[$advance->payment_type] ?? 'N/A' }}</span>
+                    @else
+                        <span class="text-muted">Not specified</span>
+                    @endif
+                </div>
+                <div class="col-md-3">
+                    <strong>Deposit Bank:</strong><br>
+                    @if($advance->depositBank)
+                        <span class="badge bg-info">{{ $advance->depositBank->name }}</span>
+                    @elseif($advance->deposit_bank)
+                        <span class="text-muted">ID: {{ $advance->deposit_bank }}</span>
+                    @else
+                        <span class="text-muted">Not specified</span>
+                    @endif
+                </div>
+                <div class="col-md-3">
+                    <strong>Bank Name:</strong><br>
+                    @if($advance->bank_name)
+                        <span class="badge bg-warning text-dark">{{ $advance->bank_name }}</span>
+                    @else
+                        <span class="text-muted">Not specified</span>
+                    @endif
+                </div>
+                <div class="col-md-3">
+                    <strong>ATM:</strong><br>
+                    {{ $advance->atm?->atm ?? 'N/A' }}
                 </div>
             </div>
         </div>
