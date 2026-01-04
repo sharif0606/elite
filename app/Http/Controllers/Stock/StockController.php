@@ -31,15 +31,36 @@ class StockController extends Controller
     public function stockindividual(Request $request, $id)
     {
         //$company = company()['company_id'];
-        $stock = Stock::where('product_id', (encryptor('decrypt', $id)));
+        $productId = encryptor('decrypt', $id);
+        
+        // Get stock for display (filtered by date if provided)
+        $stock = Stock::where('product_id', $productId);
         if ($request->fdate) {
             $tdate = $request->tdate ? $request->tdate : $request->fdate;
             $stock = $stock->whereBetween('entry_date', [$request->fdate, $tdate]);
         }
-        $stock = $stock->get();
-        $product = Product::where('id', (encryptor('decrypt', $id)))->first();
+        $stock = $stock->orderBy('entry_date')->orderBy('created_at')->get();
+        
+        // Calculate total available stock up to end date (or all time if no filter)
+        // This is for showing the cumulative total in the "Total STOCK" column
+        $allStockForTotal = Stock::where('product_id', $productId);
+        if ($request->fdate && $request->tdate) {
+            // If date filter is applied, calculate total up to the end date
+            $allStockForTotal = $allStockForTotal->where('entry_date', '<=', $request->tdate);
+        }
+        $allStockForTotal = $allStockForTotal->orderBy('entry_date')->orderBy('created_at')->get();
+        
+        // Calculate cumulative totals for each transaction
+        $cumulativeTotals = [];
+        $runningTotal = 0;
+        foreach ($allStockForTotal as $s) {
+            $runningTotal += $s->product_qty;
+            $cumulativeTotals[$s->id] = $runningTotal;
+        }
+        
+        $product = Product::where('id', $productId)->first();
 
-        return view('Stock.stock.stockReportIndividual', compact('stock', 'product'));
+        return view('Stock.stock.stockReportIndividual', compact('stock', 'product', 'cumulativeTotals', 'allStockForTotal'));
     }
 
     public function EmployeeList(Request $request)

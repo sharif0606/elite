@@ -24,11 +24,11 @@
                     <div class="row">
                         <div class="col-4 py-1">
                             <label for="fdate">{{__('From Date')}}</label>
-                            <input type="date" id="fdate" class="form-control" value="{{ old('fdate')}}" name="fdate">
+                            <input type="date" id="fdate" class="form-control" value="{{ request()->get('fdate') }}" name="fdate">
                         </div>
                         <div class="col-4 py-1">
-                            <label for="fdate">{{__('To Date')}}</label>
-                            <input type="date" id="tdate" class="form-control" value="{{ old('tdate')}}" name="tdate">
+                            <label for="tdate">{{__('To Date')}}</label>
+                            <input type="date" id="tdate" class="form-control" value="{{ request()->get('tdate') }}" name="tdate">
                         </div>
                         <div class="col-4 mt-4 d-flex">
                             <div class="col-6 ">
@@ -86,7 +86,6 @@
                                         </tr>
                                         @php
                                             $actualQtyTotalkg = 0;
-                                            $totalQty = 0;
                                         @endphp
                                         @forelse($stock as $s)
                                         <tr class="tbl_expense">
@@ -132,8 +131,7 @@
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;"></td>
                                             @endif
                                             <td class="tbl_expense" style="text-align: center; padding: 5px;">
-                                                @php echo $totalQty += $s->product_qty; @endphp
-
+                                                {{ isset($cumulativeTotals[$s->id]) ? number_format($cumulativeTotals[$s->id], 0) : number_format($s->product_qty, 0) }}
                                             </td>
                                         </tr>
                                         @empty

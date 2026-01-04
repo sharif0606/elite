@@ -66,6 +66,31 @@ class ProductRequisitionController extends Controller
     }
 
     /**
+     * Get available stock for a product and type combination
+     * This matches the stock list calculation which shows available stock (Stock In - Stock Out)
+     *
+     * @param  int  $productId
+     * @param  int|null  $sizeId (not used in calculation, kept for future use)
+     * @param  int  $type (1 for New, 2 for Used)
+     * @return float
+     */
+    private function getAvailableStock($productId, $sizeId = null, $type = 1)
+    {
+        // Calculate available stock matching the stock list view logic
+        // Stock In: sum of positive product_qty values (stock added)
+        // Stock Out: absolute value of sum of negative product_qty values (stock issued)
+        // Available Stock: Stock In - Stock Out
+        $stocks = Stock::where('product_id', $productId)
+            ->where('type', $type)
+            ->get();
+        
+        $stockIn = $stocks->where('product_qty', '>', 0)->sum('product_qty');
+        $stockOut = abs($stocks->where('product_qty', '<', 0)->sum('product_qty'));
+        
+        return max(0, $stockIn - $stockOut);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -77,6 +102,37 @@ class ProductRequisitionController extends Controller
          // Begin the transaction
         DB::beginTransaction();
         try{
+            // Validate stock availability before processing
+            if($request->product_id){
+                foreach($request->product_id as $key => $value){
+                    if($value){
+                        $productId = $request->product_id[$key];
+                        $sizeId = $request->size_id[$key] ?? null;
+                        $requestedQty = (float) $request->product_qty[$key];
+                        $type = $request->type[$key] ?? 1; // 1 for New, 2 for Used
+                        
+                        if ($requestedQty > 0) {
+                            $availableStock = $this->getAvailableStock($productId, $sizeId, $type);
+                            
+                            if ($availableStock < $requestedQty) {
+                                $product = Product::find($productId);
+                                $productName = $product ? $product->product_name : 'Unknown';
+                                $typeName = $type == 1 ? 'New' : 'Used';
+                                
+                                DB::rollBack();
+                                return redirect()->back()
+                                    ->withInput()
+                                    ->with(Toastr::error(
+                                        "Insufficient stock! Available {$typeName} stock for '{$productName}' is {$availableStock}, but you are trying to issue {$requestedQty}.",
+                                        'Stock Validation Failed',
+                                        ["positionClass" => "toast-top-right"]
+                                    ));
+                            }
+                        }
+                    }
+                }
+            }
+
             $data=new ProductRequisition;
             if($request->employee_id != null){
                 $data->employee_id=$request->employee_id;
