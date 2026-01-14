@@ -139,6 +139,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function () {
     Route::resource('productdamage', productdamage::class);
     Route::get('/stock-employee-list', [stock::class, 'EmployeeList'])->name('stock.employeeList');
     Route::get('/stock-employee-individual/{id}', [stock::class, 'employeeIndividual'])->name('stock.employeeIndividual');
+    Route::get('/stock-product-wise-employee', [stock::class, 'productWiseEmployeeReport'])->name('stock.productWiseEmployee');
 
     Route::post('/stockin-product/delete', [product_stockin::class, 'productDelete'])->name('product_stockin.stock_in_product.delete');
     Route::post('/stockin-issue-product/delete', [requisition::class, 'issueProductDelete'])->name('product_issue.delete');

@@ -237,6 +237,9 @@
                     <li class="submenu-item">
                         <a href="{{route('stock.employeeList')}}">Employee | Customer Wise</a>
                     </li>
+                    {{-- <li class="submenu-item d-none">
+                        <a href="{{route('stock.productWiseEmployee')}}">Product Wise Employee Report</a>
+                    </li> --}}
                     <li class="submenu-item">
                         <a href="{{route('relEmployee.index', ['role' =>currentUser()])}}">Release List</a>
                     </li>

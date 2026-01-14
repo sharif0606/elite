@@ -78,7 +78,7 @@
                             <tbody>
                                 @forelse($stock as $d)
                                 <tr class="text-center">
-                                    <th scope="row">{{ ++$loop->index }}</th>
+                                    <th scope="row">{{ $stock->firstItem() + $loop->index }}</th>
                                     <td>
                                         @if($d->employee?->bn_applicants_name)
                                         {{$d->employee?->bn_applicants_name}}({{$d->employee?->admission_id_no}})

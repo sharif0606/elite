@@ -65,30 +65,48 @@ class StockController extends Controller
 
     public function EmployeeList(Request $request)
     {
-        $stock = Stock::select('id', 'employee_id', 'product_qty', 'entry_date', 'company_id', 'company_branch_id');
+        /**
+         * GOAL:
+         * - When showing employees (default / employee filter): each employee should appear ONLY ONCE.
+         * - When showing companies (customer/branch filter): each company/branch should appear ONLY ONCE.
+         *
+         * Implementation:
+         * - Use simple Eloquent queries with GROUP BY instead of complex raw SQL.
+         */
 
-        // Check and apply filters based on request parameters
-        if (!empty($request->employee_id)) {
-            // If employee_id is provided, apply it and ignore other filters
-            $stock = $stock->where('employee_id', $request->employee_id)->groupBy('employee_id');
-        } elseif (!empty($request->company_id)) {
-            // If company_id is provided, apply it and ignore employee_id
-            $stock = $stock->where('company_id', $request->company_id)->groupBy('company_id');
-        } elseif (!empty($request->company_branch_id)) {
-            // If company_branch_id is provided, apply it and ignore employee_id
-            $stock = $stock->where('company_branch_id', $request->company_branch_id)->groupBy('company_branch_id');
+        $perPage = 50;
+
+        // Base query with relationships
+        $stock = Stock::with(['employee', 'company', 'company_branch']);
+
+        // EMPLOYEE MODE (default and when employee filter is used)
+        if (!empty($request->employee_id) || (empty($request->company_id) && empty($request->company_branch_id))) {
+            if (!empty($request->employee_id)) {
+                $stock = $stock->where('employee_id', $request->employee_id);
+            }
+
+            $stock = $stock->whereNotNull('employee_id')
+                ->select(DB::raw('MIN(id) as id'), 'employee_id')
+                ->groupBy('employee_id')
+                ->orderBy('id');
+
+        // COMPANY MODE (when customer or branch filter is used)
         } else {
-            $stock = $stock->whereNotNull('employee_id');
+            if (!empty($request->company_id)) {
+                $stock = $stock->where('company_id', $request->company_id);
+            }
+            if (!empty($request->company_branch_id)) {
+                $stock = $stock->where('company_branch_id', $request->company_branch_id);
+            }
+
+            $stock = $stock->whereNull('employee_id')
+                ->select(DB::raw('MIN(id) as id'), 'company_id', 'company_branch_id')
+                ->groupBy('company_id', 'company_branch_id')
+                ->orderBy('id');
         }
-        DB::enableQueryLog(); // Enable query logging
-        // Finalize the stock query
-        $stock = $stock->paginate(50);
-        // Get the executed queries from the log
-        //$queries = DB::getQueryLog();
-        // Optionally, log the queries to a file or display them
-        //\Log::info('Executed Queries: ', $queries);
-        // You can also dd() to display the queries for immediate debugging
-        //dd($queries);
+
+        // Paginate the grouped result
+        $stock = $stock->paginate($perPage);
 
         // Fetch other necessary data
         $employee = Employee::select('id', 'admission_id_no', 'bn_applicants_name')->get();
@@ -215,5 +233,95 @@ class StockController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Report: Product-wise Employee Report
+     * Shows employees who have taken exactly 1 quantity of each selected product (up to 6 products)
+     */
+    public function productWiseEmployeeReport(Request $request)
+    {
+        // Get selected product IDs (up to 6)
+        $selectedProducts = [];
+        for ($i = 1; $i <= 6; $i++) {
+            $productKey = 'product_id_' . $i;
+            if ($request->has($productKey) && $request->$productKey) {
+                $selectedProducts[] = $request->$productKey;
+            }
+        }
+
+        // If no products selected, show empty result
+        if (empty($selectedProducts)) {
+            $employeeRows = [];
+        } else {
+            // Find employees who have exactly 1 qty for ANY selected product
+            // Step 1: Get all employees who have exactly 1 qty for each selected product
+            $employeeProductData = [];
+            $allEmployeeIds = [];
+            
+            foreach ($selectedProducts as $productId) {
+                $productQuery = DB::table('stocks')
+                    ->select(
+                        'stocks.employee_id',
+                        DB::raw('ABS(SUM(stocks.product_qty)) as total_qty')
+                    )
+                    ->whereNotNull('stocks.employee_id')
+                    ->where('stocks.product_id', $productId)
+                    ->where('stocks.status', 1) // Only issued products (status = 1 means out/issued)
+                    ->groupBy('stocks.employee_id')
+                    ->havingRaw('ABS(SUM(stocks.product_qty)) = 1'); // Exactly 1 piece
+
+                $productResults = $productQuery->get();
+                
+                foreach ($productResults as $result) {
+                    $allEmployeeIds[] = $result->employee_id;
+                    if (!isset($employeeProductData[$result->employee_id])) {
+                        $employeeProductData[$result->employee_id] = [];
+                    }
+                    $employeeProductData[$result->employee_id][$productId] = $result;
+                }
+            }
+
+            // Step 2: Get all unique employee IDs who have at least one product with exactly 1 qty
+            $uniqueEmployeeIds = array_unique($allEmployeeIds);
+
+            // Step 3: Format results for columnar display
+            // Show all employees who have exactly 1 qty of ANY selected product
+            // For products they don't have, show empty/null
+            $employeeRows = [];
+            foreach ($uniqueEmployeeIds as $employeeId) {
+                $employeeRows[$employeeId] = [];
+                foreach ($selectedProducts as $productId) {
+                    if (isset($employeeProductData[$employeeId][$productId])) {
+                        $employeeRows[$employeeId][$productId] = [
+                            'qty' => $employeeProductData[$employeeId][$productId]->total_qty,
+                        ];
+                    } else {
+                        // Show empty/null for products this employee doesn't have
+                        $employeeRows[$employeeId][$productId] = [
+                            'qty' => null,
+                        ];
+                    }
+                }
+            }
+        }
+
+        // Load employee data
+        $employeeIds = !empty($employeeRows) ? array_keys($employeeRows) : [];
+        $employees = [];
+        if (!empty($employeeIds)) {
+            $employees = Employee::whereIn('id', $employeeIds)->get()->keyBy('id');
+        }
+
+        // Load product data for selected products
+        $products = [];
+        if (!empty($selectedProducts)) {
+            $products = Product::whereIn('id', $selectedProducts)->get()->keyBy('id');
+        }
+
+        // Get all products for filters
+        $allProducts = Product::all();
+
+        return view('Stock.report.productWiseEmployee', compact('employeeRows', 'employees', 'products', 'allProducts', 'selectedProducts'));
     }
 }
