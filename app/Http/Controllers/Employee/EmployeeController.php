@@ -400,10 +400,10 @@ class EmployeeController extends Controller
                     ($employees->bn_emergency_upazilla?->name ? 'UP: ' . $employees->bn_emergency_upazilla?->name . ', ' : '') .
                     ($employees->bn_emergency_district?->name ? 'Dist: ' . $employees->bn_emergency_district?->name : '')
             ]*/
-            [
+            /*[
                 'Date of Joining Elite Force',
                 $employees->joining_date
-            ]
+            ]*/
         ];
 
 
