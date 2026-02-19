@@ -188,7 +188,9 @@
 
                     @if($invoice_id->customer_id == 13)
                     <th>Take Home Salary</th>
+                    @if( $invoice_id->detail?->bonus_amount == 0)
                     <th>Agency Commission</th>
+                    @endif
                     <th>Person</th>
                     @else
                     <th>{{ $invoice_id->customer_id == 74 ? 'Total Rate' : 'Rate' }} {{ $invoice_id->customer?->inv_vat_note }}</th>
@@ -223,7 +225,9 @@
                                 @endif
                                 @if($invoice_id->customer_id == 13)
                                 <td>{{$de->take_home_salary}}</td>
+                                @if( $invoice_id->detail?->bonus_amount == 0)
                                 <td>{{$de->agency_com}}</td>
+                                @endif
                                 @endif
                                 @if($invoice_id->customer_id !=13)
                                 <td>
