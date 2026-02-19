@@ -303,6 +303,8 @@
                         <td></td>
                         @if($invoice_id->customer_id == 74)
                         <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:8}}">Sub Total</th>
+                        @elseif($invoice_id->customer_id == 13)
+                        <th colspan="4">Sub Total</th>
                         @else
                         <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Sub Total</th>
                         @endif
@@ -321,24 +323,47 @@
                         @php $totalAddLess += $le->amount; @endphp
                     @endforeach
                 @endif
-                @if ($totalAddLess != 0)
-                    <tr style="text-align: center;">
-                    <td></td>
-                    <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
-                    <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
-                </tr> 
+                @if($totalAddLess != 0)
+                    @if($invoice_id->customer_id == 13)
+                        <th colspan="4">Sub Total</th>
+                        <tr style="text-align: center;">
+                            <td></td>
+                            <th colspan="4">Total</th>
+                            <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
+                        </tr> 
+                    @else
+                        <th colspan="4">Sub Total</th>
+                        <tr style="text-align: center;">
+                            <td></td>
+                            <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
+                            <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
+                        </tr> 
+                    @endif
                 @endif
                 @if($invoice_id->vat>0)
+                    @if($invoice_id->customer_id == 13)
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <td colspan="4">Vat@ {{ $invoice_id->vat }} %</td>
+                        <td style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Grand Total</th>
+                        <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
+                    </tr>
+                    @else
                     <tr style="text-align: center;">
                         <td></td>
                         <td colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Vat@ {{ $invoice_id->vat }} %</td>
                         <td style="text-align: end;">{{ money_format($invoice_id->vat_taka) }}</td>
                     </tr>
-                <tr style="text-align: center;">
-                    <td></td>
-                    <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Grand Total</th>
-                    <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
-                </tr>
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Grand Total</th>
+                        <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
+                    </tr>
+                    @endif
                 @endif
             </tfoot>
         </table>
