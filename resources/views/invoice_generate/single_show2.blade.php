@@ -349,7 +349,7 @@
                     </tr>
                     <tr style="text-align: center;">
                         <td></td>
-                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Grand Total</th>
+                        <th colspan="4">Grand Total</th>
                         <td style="text-align: end;"><b>{{ money_format($invoice_id->grand_total) }}</b></td>
                     </tr>
                     @else
