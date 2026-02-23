@@ -302,11 +302,11 @@
                     <tr style="text-align: center;">
                         <td></td>
                         @if($invoice_id->customer_id == 74)
-                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:8}}" 1>Sub Total</th>
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:8}}">Sub Total</th>
                         @elseif($invoice_id->customer_id == 13)
-                        <th colspan="4" 2>Sub Total</th>
+                        <th colspan="4">Sub Total</th>
                         @else
-                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}" 3>Sub Total</th>
+                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Sub Total</th>
                         @endif
                         <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
                     </tr>
@@ -332,12 +332,12 @@
                             <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
                         </tr> 
                     @else
-                        <th colspan="4">Sub Total</th>
+                        {{-- <th colspan="4">Sub Total</th>
                         <tr style="text-align: center;">
                             <td></td>
                             <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
                             <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
-                        </tr> 
+                        </tr>  --}}
                     @endif
                 @endif
                 @if($invoice_id->vat>0)
