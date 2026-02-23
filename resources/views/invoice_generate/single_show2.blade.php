@@ -325,15 +325,13 @@
                 @endif
                 @if($totalAddLess != 0)
                     @if($invoice_id->customer_id == 13)
-                        <th colspan="4">Sub Total</th>
                         <tr style="text-align: center;">
                             <td></td>
                             <th colspan="4">Total</th>
                             <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
                         </tr> 
                     @else
-                        <th colspan="4">Total</th>
-                        <tr style="text-align: center;" 2>
+                        <tr style="text-align: center;">
                             <td></td>
                             <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
                             <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
