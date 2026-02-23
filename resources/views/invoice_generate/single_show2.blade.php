@@ -303,8 +303,6 @@
                         <td></td>
                         @if($invoice_id->customer_id == 74)
                         <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:8}}">Sub Total</th>
-                        @else
-                        <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Sub Total</th>
                         @endif
                         <td style="text-align: end;"><b>{{ money_format($invoice_id->sub_total_amount) }}</b></td>
                     </tr>
