@@ -333,7 +333,7 @@
                         </tr> 
                     @else
                         <th colspan="4">Total</th>
-                        <tr style="text-align: center;">
+                        <tr style="text-align: center;" 2>
                             <td></td>
                             <th colspan="{{$invoice_id->detail?->bonus_amount > 0 ?5:4}}">Total</th>
                             <td style="text-align: end;"><b>{{ money_format($invoice_id->total_tk)}}</b></td>
