@@ -52,8 +52,8 @@
                                     <th class="white-space-nowrap" rowspan="2">{{__('Action') }}</th>
                                 </tr>
                                 <tr class="text-center">
-                                    <th scope="col" colspan="2">{{__('New')}}</th>
-                                    <th scope="col" colspan="2">{{__('Used')}}</th>
+                                    <th scope="col" colspan="3">{{__('New')}}</th>
+                                    <th scope="col" colspan="3">{{__('Used')}}</th>
                                     <th scope="col" colspan="2">{{__('Total')}}</th>
                                 </tr>
                                 <tr class="text-center">
@@ -61,8 +61,10 @@
                                     <th></th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Out')}}</th>
+                                    <th scope="col">Balance</th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Out')}}</th>
+                                    <th scope="col">Balance</th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Available')}}</th>
                                     <th></th>
@@ -127,8 +129,10 @@
                                     @endphp
                                     <td>{{ number_format($newStockIn, 0) }}</td>
                                     <td>{{ number_format($newStockOut, 0) }}</td>
+                                    <td>{{ number_format($newStockIn - $newStockOut, 0) }}</td>
                                     <td>{{ number_format($usedStockIn, 0) }}</td>
                                     <td>{{ number_format($usedStockOut, 0) }}</td>
+                                    <td>{{ number_format($usedStockIn - $usedStockOut, 0) }}</td>
                                     <td>{{ number_format($totalStockIn, 0) }}</td>
                                     <td class="{{ $totalAvailable <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">
                                         {{ number_format($totalAvailable, 0) }}
