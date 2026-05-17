@@ -100,9 +100,10 @@
         </form>
         <!-- table bordered -->
         <div class="table-responsive">
-            <table class="table table-bordered mb-0">
+            <table class="table table-bordered mb-0" id="invoiceTable">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#wasaInvoice"> <i class="bi bi-plus-square"></i> Add Different</button>
+                <button type="button" onclick="exportInvoiceList()" class="btn btn-sm btn-success float-end my-2 mx-2 no-export-hide"><i class="bi bi-file-earmark-excel"></i> Export Excel</button>
                 {{--  <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('wasaEmployeeAsign.createInvoice')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>  --}}
                 <thead>
                     <tr class="text-center">
@@ -112,15 +113,22 @@
                         <th scope="col">{{__('Start Date')}}</th>
                         <th scope="col">{{__('End Date')}}</th>
                         <th scope="col">{{__('Bill Date')}}</th>
+                        <th scope="col">{{__('Sub Total')}}</th>
+                        <th scope="col">{{__('VAT')}}</th>
                         <th scope="col">{{__('Grand Total')}}</th>
                         <th scope="col">{{__('Received')}}</th>
                         <th scope="col">{{__('Due')}}</th>
-                        <th class="white-space-nowrap">{{__('ACTION')}}</th>
+                        <th class="white-space-nowrap no-export-hide">{{__('ACTION')}}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php
                         $totalItems = $invoice->total();
+                        $pageSubTotal    = 0;
+                        $pageVatTotal    = 0;
+                        $pageGrandTotal  = 0;
+                        $pageReceivedTotal = 0;
+                        $pageDueTotal    = 0;
                     @endphp
                     @forelse($invoice as $key=>$e)
                         @php
@@ -137,6 +145,12 @@
                             $receivedAmount = money_format($e->payment->sum('received_amount'));
                             $advanceAdjusted = money_format($e->payment->sum('advance_adjusted'));
                             $less_paid_honor = money_format($e->payment->sum('less_paid_honor'));
+                            $rowSubTotal = ($e->vat_switch != 1) ? (float)$e->total_tk : (float)$e->sub_total_amount;
+                            $pageSubTotal    += $rowSubTotal;
+                            $pageVatTotal    += (float)$e->vat_taka;
+                            $pageGrandTotal  += (float)$e->grand_total;
+                            $pageReceivedTotal += ($e->payment->sum('received_amount') + $e->payment->sum('advance_adjusted'));
+                            $pageDueTotal    += $due;
                         @endphp
                     {{--$e->port_link?->details--}}
                     {{-- @if ($due != 0) --}}
@@ -162,6 +176,8 @@
                             <td>{{ $e->start_date }}</td>
                             <td>{{ $e->end_date }}</td>
                             <td>{{ $e->bill_date }}</td>
+                            <td>{{ money_format($rowSubTotal) }}</td>
+                            <td>{{ money_format($e->vat_taka) }}</td>
                             <td>{{ money_format($e->grand_total) }}</td>
                             <td>
                                 @if ($receivedAmount > 0 || $advanceAdjusted > 0)
@@ -177,7 +193,7 @@
                             <td class="{{ $due == 0 ? 'text-success fw-bold' : 'text-danger' }}">
                                 {{ $due == 0 ? 'PAID' : $due }}
                             </td>
-                            <td>
+                            <td class="no-export-hide">
                                 <a href="{{route('invoiceGenerate.show',[encryptor('encrypt',$e->id)])}}">
                                     <i class="bi bi-eye"></i>
                                 </a>
@@ -286,10 +302,21 @@
                     {{-- @endif --}}
                     @empty
                     <tr>
-                        <th colspan="9" class="text-center">No Data Found</th>
+                        <th colspan="12" class="text-center">No Data Found</th>
                     </tr>
                     @endforelse
                 </tbody>
+                <tfoot>
+                    <tr class="fw-bold table-secondary text-center">
+                        <td colspan="6" class="text-end pe-3">Page Total</td>
+                        <td>{{ money_format($pageSubTotal) }}</td>
+                        <td>{{ money_format($pageVatTotal) }}</td>
+                        <td>{{ money_format($pageGrandTotal) }}</td>
+                        <td>{{ money_format($pageReceivedTotal) }}</td>
+                        <td>{{ money_format($pageDueTotal) }}</td>
+                        <td class="no-export-hide"></td>
+                    </tr>
+                </tfoot>
             </table>
             <div class="pt-2">
                  {!! $invoice->withQueryString()->links()!!}
@@ -509,6 +536,23 @@
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
+<script>
+    function exportInvoiceList() {
+        let table = document.getElementById('invoiceTable');
+        let clone = table.cloneNode(true);
+
+        // Remove columns / cells marked as no-export-hide
+        clone.querySelectorAll('.no-export-hide').forEach(function (el) {
+            el.remove();
+        });
+
+        TableToExcel.convert(clone, {
+            name: 'Invoice-List-{{ now()->format("Y-m-d") }}.xlsx',
+            sheet: { name: 'Invoices' }
+        });
+    }
+</script>
 <script>
     $(document).ready(function () {
         function getQueryParam(param) {
