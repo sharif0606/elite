@@ -103,7 +103,7 @@
             <table class="table table-bordered mb-0" id="invoiceTable">
                 <a class="btn btn-sm btn-primary float-end my-2" href="{{route('invoiceGenerate.create')}}"><i class="bi bi-plus-square"></i> Add New</a>
                 <button type="button" class="btn btn-sm btn-primary float-end my-2 mx-2" data-bs-toggle="modal" data-bs-target="#wasaInvoice"> <i class="bi bi-plus-square"></i> Add Different</button>
-                <button type="button" onclick="exportInvoiceList()" class="btn btn-sm btn-success float-end my-2 mx-2 no-export-hide"><i class="bi bi-file-earmark-excel"></i> Export Excel</button>
+                <button type="button" onclick="exportInvoiceList()" class="btn btn-sm btn-success float-end my-2 mx-2 no-export-hide"><i class="bi bi-file-earmark-excel"></i> Export All</button>
                 {{--  <a class="btn btn-sm btn-primary float-end my-2 mx-2" href="{{route('wasaEmployeeAsign.createInvoice')}}"><i class="bi bi-plus-square"></i> Add Wasa</a>  --}}
                 <thead>
                     <tr class="text-center">
@@ -538,19 +538,23 @@
 @push('scripts')
 <script src="{{ asset('/assets/js/tableToExcel.js') }}"></script>
 <script>
+    var exportBaseUrl = "{{ route('invoiceGenerate.export') }}";
+
     function exportInvoiceList() {
-        let table = document.getElementById('invoiceTable');
-        let clone = table.cloneNode(true);
+        var params = new URLSearchParams();
+        var fdate   = document.getElementById('fdate')?.value;
+        var tdate   = document.getElementById('tdate')?.value;
+        var billDate = document.querySelector('input[name="bill_date"]')?.value;
+        var customerId = document.querySelector('select[name="customer_id"]')?.value;
+        var branchId   = document.querySelector('select[name="branch_id"]')?.value;
 
-        // Remove columns / cells marked as no-export-hide
-        clone.querySelectorAll('.no-export-hide').forEach(function (el) {
-            el.remove();
-        });
+        if (fdate)      params.append('fdate', fdate);
+        if (tdate)      params.append('tdate', tdate);
+        if (billDate)   params.append('bill_date', billDate);
+        if (customerId) params.append('customer_id', customerId);
+        if (branchId)   params.append('branch_id', branchId);
 
-        TableToExcel.convert(clone, {
-            name: 'Invoice-List-{{ now()->format("Y-m-d") }}.xlsx',
-            sheet: { name: 'Invoices' }
-        });
+        window.location.href = exportBaseUrl + (params.toString() ? '?' + params.toString() : '');
     }
 </script>
 <script>

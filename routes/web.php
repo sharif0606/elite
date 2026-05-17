@@ -156,6 +156,7 @@ Route::middleware(['checkrole'])->prefix('admin')->group(function () {
     Route::post('customerduty/copy/{id}', [customerduty::class, 'copy'])->name('customerduty.copy');
     Route::resource('customerduty', customerduty::class);
     Route::resource('invoiceGenerate', invoiceGenerate::class);
+    Route::get('invoiceGenerate-export', [invoiceGenerate::class, 'exportExcel'])->name('invoiceGenerate.export');
     Route::resource('portlinkInvoice', portlinkInvoice::class);
     Route::resource('customer', customer::class);
     Route::resource('customerbrance', customerbrance::class);

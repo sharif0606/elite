@@ -70,6 +70,90 @@ class InvoiceGenerateController extends Controller
         return view('invoice_generate.index', compact('invoice', 'customer', 'deposit_bank'));
     }
 
+    public function exportExcel(Request $request)
+    {
+        $query = InvoiceGenerate::with('payment', 'customer', 'branch')->orderBy('id', 'DESC');
+
+        if ($request->fdate && $request->tdate) {
+            $startDate = $request->fdate;
+            $endDate   = $request->tdate;
+            $query->where(function ($q) use ($startDate, $endDate) {
+                $q->whereDate('invoice_generates.start_date', '>=', $startDate)
+                  ->whereDate('invoice_generates.end_date',   '<=', $endDate);
+            });
+        }
+        if ($request->customer_id) {
+            $query->where('invoice_generates.customer_id', $request->customer_id);
+        }
+        if ($request->branch_id) {
+            $query->where('invoice_generates.branch_id', $request->branch_id);
+        }
+        if ($request->bill_date) {
+            $query->where('invoice_generates.bill_date', $request->bill_date);
+        }
+
+        $invoices = $query->get();
+
+        $filename = 'Invoice-List-' . now()->format('Y-m-d') . '.csv';
+
+        $headers = [
+            'Content-Type'        => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+
+        $callback = function () use ($invoices) {
+            $file = fopen('php://output', 'w');
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF)); // UTF-8 BOM for Excel
+
+            fputcsv($file, ['#SL', 'Month', 'Customer', 'Start Date', 'End Date', 'Bill Date',
+                            'Sub Total', 'VAT', 'Grand Total', 'Received', 'Due']);
+
+            $sl = count($invoices);
+            foreach ($invoices as $e) {
+                $subTotal = ($e->vat_switch != 1) ? (float) $e->total_tk : (float) $e->sub_total_amount;
+                $received = $e->payment->sum('received_amount') + $e->payment->sum('advance_adjusted');
+                $due      = round(
+                    $e->grand_total - (
+                        $e->payment->sum('received_amount') +
+                        $e->payment->sum('advance_adjusted') +
+                        $e->payment->sum('vat_amount') +
+                        $e->payment->sum('ait_amount') +
+                        $e->payment->sum('fine_deduction') +
+                        $e->payment->sum('paid_by_client') +
+                        $e->payment->sum('less_paid_honor')
+                    )
+                );
+
+                if ($e->details()->whereIn('bonus_for', [1, 2])->exists()) {
+                    $month = $e->details->first()->bonus_for == 1
+                        ? 'EID UL FITR-' . \Carbon\Carbon::parse($e->end_date)->format('y')
+                        : 'EID UL AZHA-' . \Carbon\Carbon::parse($e->end_date)->format('y');
+                } else {
+                    $month = \Carbon\Carbon::parse($e->end_date)->format('M-y');
+                }
+
+                $customerName = $e->customer?->name . ($e->branch_id ? ' (' . $e->branch?->brance_name . ')' : '');
+
+                fputcsv($file, [
+                    $sl--,
+                    $month,
+                    $customerName,
+                    $e->start_date,
+                    $e->end_date,
+                    $e->bill_date,
+                    number_format($subTotal, 2, '.', ''),
+                    number_format((float) $e->vat_taka, 2, '.', ''),
+                    number_format((float) $e->grand_total, 2, '.', ''),
+                    number_format($received, 2, '.', ''),
+                    $due == 0 ? 'PAID' : $due,
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
     public function create()
     {
         $customer = Customer::all();
