@@ -308,12 +308,21 @@
                 </tbody>
                 <tfoot>
                     <tr class="fw-bold table-secondary text-center">
-                        <td colspan="6" class="text-end pe-3">Page Total</td>
+                        <td colspan="6" class="text-end pe-3">Total</td>
                         <td>{{ money_format($pageSubTotal) }}</td>
                         <td>{{ money_format($pageVatTotal) }}</td>
                         <td>{{ money_format($pageGrandTotal) }}</td>
                         <td>{{ money_format($pageReceivedTotal) }}</td>
                         <td>{{ money_format($pageDueTotal) }}</td>
+                        <td class="no-export-hide"></td>
+                    </tr>
+                    <tr class="fw-bold table-light text-center">
+                        <td colspan="6" class="text-end pe-3">Grand Total</td>
+                        <td>{{ money_format($grandTotals['sub_total'] ?? 0) }}</td>
+                        <td>{{ money_format($grandTotals['vat_total'] ?? 0) }}</td>
+                        <td>{{ money_format($grandTotals['grand_total'] ?? 0) }}</td>
+                        <td>{{ money_format($grandTotals['received_total'] ?? 0) }}</td>
+                        <td>{{ money_format($grandTotals['due_total'] ?? 0) }}</td>
                         <td class="no-export-hide"></td>
                     </tr>
                 </tfoot>

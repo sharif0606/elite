@@ -41,33 +41,80 @@ class InvoiceGenerateController extends Controller
 
     public function index(Request $request)
     {
-        $invoice = InvoiceGenerate::with('payment', 'customer', 'branch', 'port_link')->orderBy('id', 'DESC');
+        $query = $this->buildInvoiceIndexQuery($request);
+        $grandTotals = $this->calculateInvoiceListGrandTotals($query);
+        $invoice = (clone $query)->with('payment', 'customer', 'branch', 'port_link')->paginate(15);
         $customer = Customer::all();
+        $deposit_bank = DepositBank::get();
+
+        return view('invoice_generate.index', compact('invoice', 'customer', 'deposit_bank', 'grandTotals'));
+    }
+
+    private function buildInvoiceIndexQuery(Request $request)
+    {
+        $query = InvoiceGenerate::query()->orderBy('invoice_generates.id', 'DESC');
+
         if ($request->fdate && $request->tdate) {
             $startDate = $request->fdate;
             $endDate = $request->tdate;
 
-            $invoice->where(function ($query) use ($startDate, $endDate) {
-                $query->where(function ($query) use ($startDate, $endDate) {
-                    $query->whereDate('invoice_generates.start_date', '>=', $startDate)
-                        ->whereDate('invoice_generates.end_date', '<=', $endDate);
-                });
+            $query->where(function ($q) use ($startDate, $endDate) {
+                $q->whereDate('invoice_generates.start_date', '>=', $startDate)
+                    ->whereDate('invoice_generates.end_date', '<=', $endDate);
             });
         }
         if ($request->customer_id) {
-            $customerId = $request->customer_id;
-            $invoice->where('invoice_generates.customer_id', $customerId);
+            $query->where('invoice_generates.customer_id', $request->customer_id);
         }
         if ($request->branch_id) {
-            $invoice->where('invoice_generates.branch_id', $request->branch_id);
+            $query->where('invoice_generates.branch_id', $request->branch_id);
         }
         if ($request->bill_date) {
-            $billDate = $request->bill_date;
-            $invoice->where('invoice_generates.bill_date', $billDate);
+            $query->where('invoice_generates.bill_date', $request->bill_date);
         }
-        $invoice = $invoice->paginate(15);
-        $deposit_bank = DepositBank::get();
-        return view('invoice_generate.index', compact('invoice', 'customer', 'deposit_bank'));
+
+        return $query;
+    }
+
+    private function calculateInvoiceListGrandTotals($query): array
+    {
+        $paymentSums = DB::table('invoice_payments')
+            ->selectRaw('
+                invoice_id,
+                SUM(IFNULL(received_amount, 0)) as received_amount,
+                SUM(IFNULL(advance_adjusted, 0)) as advance_adjusted,
+                SUM(
+                    IFNULL(received_amount, 0) + IFNULL(advance_adjusted, 0) + IFNULL(vat_amount, 0) +
+                    IFNULL(ait_amount, 0) + IFNULL(fine_deduction, 0) + IFNULL(paid_by_client, 0) +
+                    IFNULL(less_paid_honor, 0)
+                ) as total_paid
+            ')
+            ->whereIn('invoice_id', (clone $query)->select('invoice_generates.id'))
+            ->groupBy('invoice_id');
+
+        $amounts = (clone $query)
+            ->selectRaw('
+                SUM(CASE WHEN invoice_generates.vat_switch != 1 THEN invoice_generates.total_tk ELSE invoice_generates.sub_total_amount END) as sub_total,
+                SUM(invoice_generates.vat_taka) as vat_total,
+                SUM(invoice_generates.grand_total) as grand_total
+            ')
+            ->first();
+
+        $paymentTotals = (clone $query)
+            ->leftJoinSub($paymentSums, 'ip', 'invoice_generates.id', '=', 'ip.invoice_id')
+            ->selectRaw('
+                SUM(IFNULL(ip.received_amount, 0) + IFNULL(ip.advance_adjusted, 0)) as received_total,
+                SUM(ROUND(invoice_generates.grand_total - IFNULL(ip.total_paid, 0), 0)) as due_total
+            ')
+            ->first();
+
+        return [
+            'sub_total' => (float) ($amounts->sub_total ?? 0),
+            'vat_total' => (float) ($amounts->vat_total ?? 0),
+            'grand_total' => (float) ($amounts->grand_total ?? 0),
+            'received_total' => (float) ($paymentTotals->received_total ?? 0),
+            'due_total' => (float) ($paymentTotals->due_total ?? 0),
+        ];
     }
 
     public function exportExcel(Request $request)
