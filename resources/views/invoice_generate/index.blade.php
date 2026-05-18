@@ -145,7 +145,7 @@
                             $receivedAmount = money_format($e->payment->sum('received_amount'));
                             $advanceAdjusted = money_format($e->payment->sum('advance_adjusted'));
                             $less_paid_honor = money_format($e->payment->sum('less_paid_honor'));
-                            $rowSubTotal = ($e->vat_switch != 1) ? (float)$e->total_tk : (float)$e->sub_total_amount;
+                            $rowSubTotal = ($e->vat_switch == 1) ? (float)$e->sub_total_amount : (float)$e->total_tk;
                             $pageSubTotal    += $rowSubTotal;
                             $pageVatTotal    += (float)$e->vat_taka;
                             $pageGrandTotal  += (float)$e->grand_total;

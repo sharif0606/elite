@@ -94,7 +94,7 @@ class InvoiceGenerateController extends Controller
 
         $amounts = (clone $query)
             ->selectRaw('
-                SUM(CASE WHEN invoice_generates.vat_switch != 1 THEN invoice_generates.total_tk ELSE invoice_generates.sub_total_amount END) as sub_total,
+                SUM(CASE WHEN invoice_generates.vat_switch = 1 THEN invoice_generates.sub_total_amount ELSE invoice_generates.total_tk END) as sub_total,
                 SUM(invoice_generates.vat_taka) as vat_total,
                 SUM(invoice_generates.grand_total) as grand_total
             ')
@@ -119,27 +119,9 @@ class InvoiceGenerateController extends Controller
 
     public function exportExcel(Request $request)
     {
-        $query = InvoiceGenerate::with('payment', 'customer', 'branch')->orderBy('id', 'DESC');
-
-        if ($request->fdate && $request->tdate) {
-            $startDate = $request->fdate;
-            $endDate   = $request->tdate;
-            $query->where(function ($q) use ($startDate, $endDate) {
-                $q->whereDate('invoice_generates.start_date', '>=', $startDate)
-                  ->whereDate('invoice_generates.end_date',   '<=', $endDate);
-            });
-        }
-        if ($request->customer_id) {
-            $query->where('invoice_generates.customer_id', $request->customer_id);
-        }
-        if ($request->branch_id) {
-            $query->where('invoice_generates.branch_id', $request->branch_id);
-        }
-        if ($request->bill_date) {
-            $query->where('invoice_generates.bill_date', $request->bill_date);
-        }
-
-        $invoices = $query->get();
+        $query = $this->buildInvoiceIndexQuery($request);
+        $grandTotals = $this->calculateInvoiceListGrandTotals($query);
+        $invoices = (clone $query)->with('payment', 'customer', 'branch')->get();
 
         $filename = 'Invoice-List-' . now()->format('Y-m-d') . '.csv';
 
@@ -148,7 +130,7 @@ class InvoiceGenerateController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        $callback = function () use ($invoices) {
+        $callback = function () use ($invoices, $grandTotals) {
             $file = fopen('php://output', 'w');
             fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF)); // UTF-8 BOM for Excel
 
@@ -157,7 +139,7 @@ class InvoiceGenerateController extends Controller
 
             $sl = count($invoices);
             foreach ($invoices as $e) {
-                $subTotal = ($e->vat_switch != 1) ? (float) $e->total_tk : (float) $e->sub_total_amount;
+                $subTotal = $e->vat_switch == 1 ? (float) $e->sub_total_amount : (float) $e->total_tk;
                 $received = $e->payment->sum('received_amount') + $e->payment->sum('advance_adjusted');
                 $due      = round(
                     $e->grand_total - (
@@ -195,6 +177,21 @@ class InvoiceGenerateController extends Controller
                     $due == 0 ? 'PAID' : $due,
                 ]);
             }
+
+            fputcsv($file, [
+                '',
+                '',
+                '',
+                '',
+                '',
+                'Grand Total',
+                number_format($grandTotals['sub_total'], 2, '.', ''),
+                number_format($grandTotals['vat_total'], 2, '.', ''),
+                number_format($grandTotals['grand_total'], 2, '.', ''),
+                number_format($grandTotals['received_total'], 2, '.', ''),
+                number_format($grandTotals['due_total'], 2, '.', ''),
+            ]);
+
             fclose($file);
         };
 
