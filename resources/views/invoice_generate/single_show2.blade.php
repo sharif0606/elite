@@ -267,18 +267,18 @@
                                         {{ $de->employee_qty }}<br>
                                         @if ($de->duty_day > 0 && $de->total_houres > 0)
                                             @if ($de->duty_day > 1)
-                                                ({{ (int) $de->duty_day }} duties)
+                                                ({{ (float) $de->duty_day }} duties)
                                             @else
-                                                ({{ (int) $de->duty_day }} duty)
+                                                ({{ (float) $de->duty_day }} duty)
                                             @endif
                                         @elseif($de->duty_day > 0 && $de->total_houres == '')
                                             @if ($de->duty_day > 1)
-                                                ({{ (int) $de->duty_day }} duties)
+                                                ({{ (float) $de->duty_day }} duties)
                                             @else
-                                                ({{ (int) $de->duty_day }} duty)
+                                                ({{ (float) $de->duty_day }} duty)
                                             @endif
                                         @elseif($de->duty_day == '' && $de->total_houres > 0)
-                                            ({{ (int) $de->total_houres }} duty hours)
+                                            ({{ (float) $de->total_houres }} duty hours)
                                         @else
                                         @endif
                                     @endif
