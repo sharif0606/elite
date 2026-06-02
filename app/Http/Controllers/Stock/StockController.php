@@ -24,7 +24,7 @@ class StockController extends Controller
         if ($request->product) {
             $product = $product->where('id', $request->product);
         }
-        $product = $product->get();
+        $product = $product->orderBy('product_name')->get();
         return view('Stock.stock.list', compact('product'));
     }
 
