@@ -132,6 +132,8 @@ class StockController extends Controller
             // Query for employee
             $productList = Stock::where('employee_id', $decryptedId)
                 ->orderBy('product_id')
+                ->orderBy('entry_date')
+                ->orderBy('created_at')
                 ->get();
 
             $stock = json_decode(json_encode(DB::select("
@@ -145,6 +147,8 @@ class StockController extends Controller
             // Query for customer
             $productList = Stock::where('stocks.company_id', $decryptedId)
                 ->orderBy('stocks.product_id')
+                ->orderBy('stocks.entry_date')
+                ->orderBy('stocks.created_at')
                 ->get();
 
             $stock = json_decode(json_encode(DB::select("
