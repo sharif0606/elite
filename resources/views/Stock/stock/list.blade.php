@@ -42,8 +42,59 @@
             </div>
             <div class="col-12">
                 <div class="card" id="result_show">
+                    <style>
+                        .stock-report-header {
+                            text-align: center;
+                            border: 1px solid #333;
+                            border-top: 3px solid #0d6efd;
+                            padding: 15px 10px;
+                            margin-bottom: 15px;
+                        }
+                        .stock-report-header h4 {
+                            margin-bottom: 5px;
+                            font-weight: bold;
+                        }
+                        .stock-report-header p {
+                            margin-bottom: 3px;
+                        }
+                        .stock-report-header .report-date {
+                            margin-top: 10px;
+                            font-weight: 600;
+                        }
+                        .stock-report-table {
+                            border: 1px solid #333;
+                            border-collapse: collapse;
+                            width: 100%;
+                        }
+                        .stock-report-table th,
+                        .stock-report-table td {
+                            border: 1px solid #333;
+                            padding: 5px;
+                            text-align: center;
+                        }
+                        .stock-report-table thead th {
+                            background-color: #f8f9fa;
+                        }
+                    </style>
+                    <div class="stock-report-header">
+                        <h4>এলিট সিকিউরিটি সার্ভিসেস লিমিটেড</h4>
+                        <p>বাড়ি নং-২, লেইন নং-২, রোড নং-২, ব্লক-কে,</p>
+                        <p>হালিশহর হাউজিং এষ্টেট, চট্টগ্রাম-৪২২৪</p>
+                        <p class="report-date">
+                            @if(request()->get('fdate'))
+                                Date: {{ \Carbon\Carbon::parse(request()->get('fdate'))->format('d/m/Y') }}
+                                @if(request()->get('tdate'))
+                                    - {{ \Carbon\Carbon::parse(request()->get('tdate'))->format('d/m/Y') }}
+                                @else
+                                    - {{ \Carbon\Carbon::now()->format('d/m/Y') }}
+                                @endif
+                            @else
+                                Date: {{ \Carbon\Carbon::now()->format('d/m/Y') }}
+                            @endif
+                        </p>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered mb-0">
+                        <table class="stock-report-table mb-0">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col" rowspan="2">{{__('#SL')}}</th>
