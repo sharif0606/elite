@@ -79,6 +79,13 @@ class StockController extends Controller
         // Base query with relationships
         $stock = Stock::with(['employee', 'company', 'company_branch']);
 
+        if ($request->fdate) {
+            $to = $request->tdate ?? date('Y-m-d');
+            $stock = $stock->whereBetween('entry_date', [$request->fdate, $to]);
+        } elseif ($request->tdate) {
+            $stock = $stock->where('entry_date', '<=', $request->tdate);
+        }
+
         // EMPLOYEE MODE (default and when employee filter is used)
         if (!empty($request->employee_id) || (empty($request->company_id) && empty($request->company_branch_id))) {
             if (!empty($request->employee_id)) {
@@ -106,7 +113,7 @@ class StockController extends Controller
         }
 
         // Paginate the grouped result
-        $stock = $stock->paginate($perPage);
+        $stock = $stock->paginate($perPage)->appends($request->all());
 
         // Fetch other necessary data
         $employee = Employee::select('id', 'admission_id_no', 'bn_applicants_name')->get();
@@ -130,8 +137,16 @@ class StockController extends Controller
         }
         if ($isEmployee && $request->type == 1) {
             // Query for employee
-            $productList = Stock::where('employee_id', $decryptedId)
-                ->orderBy('product_id')
+            $productList = Stock::where('employee_id', $decryptedId);
+
+            if ($request->fdate) {
+                $to = $request->tdate ?? date('Y-m-d');
+                $productList = $productList->whereBetween('entry_date', [$request->fdate, $to]);
+            } elseif ($request->tdate) {
+                $productList = $productList->where('entry_date', '<=', $request->tdate);
+            }
+
+            $productList = $productList->orderBy('product_id')
                 ->orderBy('entry_date')
                 ->orderBy('created_at')
                 ->get();
@@ -145,8 +160,16 @@ class StockController extends Controller
             $deposits = [];
         } else {
             // Query for customer
-            $productList = Stock::where('stocks.company_id', $decryptedId)
-                ->orderBy('stocks.product_id')
+            $productList = Stock::where('stocks.company_id', $decryptedId);
+
+            if ($request->fdate) {
+                $to = $request->tdate ?? date('Y-m-d');
+                $productList = $productList->whereBetween('stocks.entry_date', [$request->fdate, $to]);
+            } elseif ($request->tdate) {
+                $productList = $productList->where('stocks.entry_date', '<=', $request->tdate);
+            }
+
+            $productList = $productList->orderBy('stocks.product_id')
                 ->orderBy('stocks.entry_date')
                 ->orderBy('stocks.created_at')
                 ->get();

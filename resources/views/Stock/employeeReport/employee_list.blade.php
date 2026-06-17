@@ -6,58 +6,54 @@
 <section class="section">
     <form class="form" method="get" action="">
         <div class="row">
-            <div class="col-10">
-                <form action="" method="get">
+            <div class="col-12">
                     <div class="row">
-                        <div class="input-group input-group-sm d-flex justify-content-between" >
-                            <div class="d-flex">
-                                <select class="form-select employee_id select2" id="employee_id" name="employee_id">
+                        <div class="input-group input-group-sm d-flex justify-content-between flex-wrap gap-2">
+                            <div class="d-flex flex-wrap gap-2 align-items-end">
+                                <select class="form-select employee_id select2" id="employee_id" name="employee_id" style="min-width: 200px;">
                                     <option value="">Select Employee</option>
                                     @forelse ($employee as $em)
                                     <option value="{{ $em->id }}" {{ (request('employee_id') == $em->id ? 'selected' : '') }}>{{ $em->bn_applicants_name .' ('.' Id-'.$em->admission_id_no.')' }}</option>
                                     @empty
                                     @endforelse
                                 </select>
-                                <div class="col-lg-4 col-md-6 col-sm-12 mx-2">
-                                    <div class="form-group">
-                                        <select class="form-select company_id select2" id="company_id" name="company_id">
-                                            <option value="">Select Customer</option>
-                                            @forelse ($customer as $c)
-                                            <option value="{{ $c->id }}" @if(request()->get('company_id') == $c->id) selected @endif>{{ $c->name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                        @if($errors->has('company_id'))
-                                        <span class="text-danger"> {{ $errors->first('company_id') }}</span>
-                                        @endif
-                                    </div>
+                                <select class="form-select company_id select2" id="company_id" name="company_id" style="min-width: 180px;">
+                                    <option value="">Select Customer</option>
+                                    @forelse ($customer as $c)
+                                    <option value="{{ $c->id }}" @if(request()->get('company_id') == $c->id) selected @endif>{{ $c->name }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @if($errors->has('company_id'))
+                                <span class="text-danger"> {{ $errors->first('company_id') }}</span>
+                                @endif
+                                <select class="form-select company_branch_id select2" id="company_branch_id" name="company_branch_id" style="min-width: 160px;">
+                                    <option value="">Select Branch</option>
+                                    @forelse ($branch as $b)
+                                    <option value="{{ $b->id }}" @if(request()->get('company_branch_id') == $b->id) selected @endif>{{ $b->brance_name }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                @if($errors->has('company_branch_id'))
+                                <span class="text-danger"> {{ $errors->first('company_branch_id') }}</span>
+                                @endif
+                                <div>
+                                    <label for="fdate" class="small mb-0">{{__('From Date')}}</label>
+                                    <input type="date" id="fdate" class="form-control form-control-sm" value="{{ request('fdate') }}" name="fdate">
                                 </div>
-                                <div class="col-lg-4 col-md-6 col-sm-12">
-                                    <div class="form-group">
-                                        <select class="form-select company_branch_id select2" id="company_branch_id" name="company_branch_id">
-                                            <option value="">Select Branch</option>
-                                            @forelse ($branch as $b)
-                                            <option value="{{ $b->id }}">{{ $b->brance_name }}</option>
-                                            @empty
-                                            @endforelse
-                                        </select>
-                                        @if($errors->has('company_branch_id'))
-                                        <span class="text-danger"> {{ $errors->first('company_branch_id') }}</span>
-                                        @endif
-                                    </div>
+                                <div>
+                                    <label for="tdate" class="small mb-0">{{__('To Date')}}</label>
+                                    <input type="date" id="tdate" class="form-control form-control-sm" value="{{ request('tdate') }}" name="tdate">
                                 </div>
-                                <div class="input-group-append" style="margin-left: 6px;">
+                                <div class="d-flex align-items-end pb-1">
                                     <button type="submit" class="btn btn-info">
                                         <i class="bi bi-search"></i>
                                     </button>
-                                </div>
-                                <div class="input-group-append" style="margin-left: -2px;">
-                                    <a class="btn btn-warning ms-2" href="{{route('stock.employeeList')}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
+                                    <a class="btn btn-warning ms-2" href="{{route('stock.employeeList', ['role' => currentUser()])}}" title="Clear"><i class="bi bi-arrow-clockwise"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
         <div class="row" id="table-bordered">
@@ -96,12 +92,18 @@
                                     {{--  <td>{{$d->name}}</td>
                                     <td>{{$d->qty}}</td>  --}}
                                     <td class="white-space-nowrap">
+                                        @php
+                                            $dateParams = array_filter([
+                                                'fdate' => request('fdate'),
+                                                'tdate' => request('tdate'),
+                                            ]);
+                                        @endphp
                                         @if($d->employee?->bn_applicants_name)
-                                        <a href="{{route('stock.employeeIndividual',['id'=>encryptor('encrypt',$d->employee_id),'type' =>1])}}">
+                                        <a href="{{ route('stock.employeeIndividual', array_merge(['id' => encryptor('encrypt', $d->employee_id), 'type' => 1], $dateParams)) }}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         @else
-                                        <a href="{{route('stock.employeeIndividual',['id'=>encryptor('encrypt',$d->company_id),'type' =>2])}}">
+                                        <a href="{{ route('stock.employeeIndividual', array_merge(['id' => encryptor('encrypt', $d->company_id), 'type' => 2], $dateParams)) }}">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         @endif
