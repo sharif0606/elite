@@ -46,7 +46,6 @@
                         .stock-report-header {
                             display: none;
                             text-align: center;
-                            border-top: 2px solid #1e4d8c;
                             padding: 12px 10px 10px;
                             margin-bottom: 15px;
                         }
@@ -106,7 +105,7 @@
                                     <th scope="col" rowspan="2">{{__('#SL')}}</th>
                                     <th scope="col" rowspan="2">{{__('Product')}}</th>
                                     <th scope="col" colspan="6">{{__('Stock Details')}}</th>
-                                    <th class="white-space-nowrap" rowspan="2">{{__('Action') }}</th>
+                                    <th class="white-space-nowrap no-print-col" rowspan="2">{{__('Action') }}</th>
                                 </tr>
                                 <tr class="text-center">
                                     <th scope="col" colspan="3">{{__('New')}}</th>
@@ -124,7 +123,7 @@
                                     <th scope="col">Balance</th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Available')}}</th>
-                                    <th></th>
+                                    <th class="no-print-col"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -194,7 +193,7 @@
                                     <td class="{{ $totalAvailable <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">
                                         {{ number_format($totalAvailable, 0) }}
                                     </td>
-                                    <td class="white-space-nowrap">
+                                    <td class="white-space-nowrap no-print-col">
                                         @php
                                             $urlParams = [];
                                             if (request()->get('fdate')) {
@@ -235,7 +234,11 @@
 <script>
     function printStockReport() {
         var prtDiv = document.getElementById('result_show');
-        var prtContent = prtDiv.innerHTML;
+        var clone = prtDiv.cloneNode(true);
+        clone.querySelectorAll('.no-print-col').forEach(function(el) {
+            el.remove();
+        });
+        var prtContent = clone.innerHTML;
 
         var printFrame = document.createElement('iframe');
         printFrame.style.position = 'absolute';
@@ -255,7 +258,6 @@
                     .stock-report-header {
                         display: block !important;
                         text-align: center;
-                        border-top: 2px solid #1e4d8c;
                         padding: 12px 10px 10px;
                         margin-bottom: 15px;
                     }
