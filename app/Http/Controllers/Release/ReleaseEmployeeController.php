@@ -22,10 +22,25 @@ class ReleaseEmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = ReleaseEmployee::all();
-        return view('release.index',compact('data'));
+        $query = ReleaseEmployee::with('employee')->orderBy('resign_date', 'desc');
+
+        if ($request->admission_id_no) {
+            $query->whereHas('employee', function ($q) use ($request) {
+                $q->where('admission_id_no', 'like', '%' . $request->admission_id_no . '%');
+            });
+        }
+
+        if ($request->fdate) {
+            $to = $request->tdate ?? date('Y-m-d');
+            $query->whereBetween('resign_date', [$request->fdate, $to]);
+        } elseif ($request->tdate) {
+            $query->where('resign_date', '<=', $request->tdate);
+        }
+
+        $data = $query->get();
+        return view('release.index', compact('data'));
     }
 
     /**
