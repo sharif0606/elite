@@ -38,28 +38,34 @@
         </div>
         <div class="row" id="table-bordered">
             <div class="text-end">
-                <button type="button" class="btn btn-info" onclick="printDiv('result_show')">Print</button>
+                <button type="button" class="btn btn-info" onclick="printStockReport()">Print</button>
             </div>
             <div class="col-12">
                 <div class="card" id="result_show">
                     <style>
                         .stock-report-header {
+                            display: none;
                             text-align: center;
-                            border: 1px solid #333;
-                            border-top: 3px solid #0d6efd;
-                            padding: 15px 10px;
+                            border-top: 2px solid #1e4d8c;
+                            padding: 12px 10px 10px;
                             margin-bottom: 15px;
                         }
                         .stock-report-header h4 {
-                            margin-bottom: 5px;
+                            margin-bottom: 4px;
                             font-weight: bold;
+                            color: #1e4d8c;
+                            font-size: 1.15rem;
                         }
                         .stock-report-header p {
-                            margin-bottom: 3px;
+                            margin-bottom: 2px;
+                            color: #555;
+                            font-size: 0.9rem;
                         }
                         .stock-report-header .report-date {
-                            margin-top: 10px;
+                            margin-top: 8px;
                             font-weight: 600;
+                            color: #333;
+                            font-size: 0.9rem;
                         }
                         .stock-report-table {
                             border: 1px solid #333;
@@ -224,3 +230,81 @@
     </form>
 </section>
 @endsection
+
+@push('scripts')
+<script>
+    function printStockReport() {
+        var prtDiv = document.getElementById('result_show');
+        var prtContent = prtDiv.innerHTML;
+
+        var printFrame = document.createElement('iframe');
+        printFrame.style.position = 'absolute';
+        printFrame.style.width = '0px';
+        printFrame.style.height = '0px';
+        printFrame.style.border = 'none';
+        document.body.appendChild(printFrame);
+
+        var doc = printFrame.contentWindow.document;
+        doc.open();
+        doc.write(`
+            <html>
+            <head>
+                <title>Product Stock List</title>
+                <link rel="stylesheet" href="{{ asset('assets/css/main/app.css') }}" type="text/css" />
+                <style>
+                    .stock-report-header {
+                        display: block !important;
+                        text-align: center;
+                        border-top: 2px solid #1e4d8c;
+                        padding: 12px 10px 10px;
+                        margin-bottom: 15px;
+                    }
+                    .stock-report-header h4 {
+                        margin-bottom: 4px;
+                        font-weight: bold;
+                        color: #1e4d8c;
+                        font-size: 1.15rem;
+                    }
+                    .stock-report-header p {
+                        margin-bottom: 2px;
+                        color: #555;
+                        font-size: 0.9rem;
+                    }
+                    .stock-report-header .report-date {
+                        margin-top: 8px;
+                        font-weight: 600;
+                        color: #333;
+                        font-size: 0.9rem;
+                    }
+                    .stock-report-table {
+                        border: 1px solid #333;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    .stock-report-table th,
+                    .stock-report-table td {
+                        border: 1px solid #333;
+                        padding: 5px;
+                        text-align: center;
+                    }
+                    .stock-report-table thead th {
+                        background-color: #f8f9fa;
+                    }
+                    body { padding: 20px; }
+                </style>
+            </head>
+            <body>
+                <div>${prtContent}</div>
+            </body>
+            </html>
+        `);
+        doc.close();
+
+        setTimeout(function() {
+            printFrame.contentWindow.focus();
+            printFrame.contentWindow.print();
+            document.body.removeChild(printFrame);
+        }, 500);
+    }
+</script>
+@endpush
