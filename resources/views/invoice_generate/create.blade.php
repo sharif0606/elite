@@ -189,7 +189,8 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <div class="d-flex justify-content-end my-2">
+                            <div class="d-flex justify-content-end my-2 gap-2">
+                                <button type="button" class="btn btn-secondary" onclick="roundOff()">Round Off</button>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
@@ -568,6 +569,12 @@
                     subtotalAmount();
                     addCount();
             }    
+        }
+        function roundOff() {
+            var vatTaka = Math.round(parseFloat($('.vat_taka').val()) || 0);
+            var totalTk = parseFloat($('.total_tk').val()) || 0;
+            $('.vat_taka').val(vatTaka);
+            $('.grand_total').val(Math.round(totalTk + vatTaka));
         }
 </script>
 
