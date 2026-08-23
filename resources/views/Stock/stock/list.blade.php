@@ -102,28 +102,27 @@
                         <table class="stock-report-table mb-0">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col" rowspan="2">{{__('#SL')}}</th>
-                                    <th scope="col" rowspan="2">{{__('Product')}}</th>
+                                    <th scope="col" rowspan="3">{{__('#SL')}}</th>
+                                    <th scope="col" rowspan="3">{{__('Product')}}</th>
+                                    <th scope="col" rowspan="3">{{__('B/F')}}</th>
                                     <th scope="col" colspan="6">{{__('Stock Details')}}</th>
-                                    <th class="white-space-nowrap no-print-col" rowspan="2">{{__('Action') }}</th>
+                                    <th scope="col" rowspan="2">{{__('Total')}}</th>
+                                    {{-- <th class="white-space-nowrap no-print-col" rowspan="3">{{__('Action') }}</th> --}}
                                 </tr>
                                 <tr class="text-center">
                                     <th scope="col" colspan="3">{{__('New')}}</th>
                                     <th scope="col" colspan="3">{{__('Used')}}</th>
-                                    <th scope="col" colspan="2">{{__('Total')}}</th>
                                 </tr>
                                 <tr class="text-center">
-                                    <th></th>
-                                    <th></th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Out')}}</th>
                                     <th scope="col">Balance</th>
                                     <th scope="col">{{__('In')}}</th>
                                     <th scope="col">{{__('Out')}}</th>
                                     <th scope="col">Balance</th>
-                                    <th scope="col">{{__('In')}}</th>
+                                    {{-- <th scope="col">{{__('In')}}</th> --}}
                                     <th scope="col">{{__('Available')}}</th>
-                                    <th class="no-print-col"></th>
+                                    {{-- <th class="no-print-col"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -134,11 +133,13 @@
                                     @php
                                     $allStocks = $d->stock; // All stock for available calculation
                                     $stocks = $d->stock; // For In/Out display
+                                    $bfStocks = collect(); // Brought forward: stock before From Date
 
                                     // Apply date filter if present
                                     if (request()->get('fdate')) {
                                         $from = request()->get('fdate');
                                         $to = request()->get('tdate') ?? date('Y-m-d');
+                                        $bfUpto = \Carbon\Carbon::parse($from)->subDay()->format('Y-m-d');
                                         
                                         // Filter stocks for In/Out display (movements within date range)
                                         $stocks = $stocks->filter(function($stock) use ($from, $to) {
@@ -150,6 +151,11 @@
                                         $allStocks = $allStocks->filter(function($stock) use ($to) {
                                             $entryDate = $stock->entry_date;
                                             return $entryDate <= $to;
+                                        });
+
+                                        // B/F: accumulated stock up to the day before From Date
+                                        $bfStocks = $d->stock->filter(function($stock) use ($bfUpto) {
+                                            return $stock->entry_date <= $bfUpto;
                                         });
                                     }
 
@@ -178,21 +184,37 @@
                                     $allUsedStockOut = abs($allUsedStocks->where('product_qty', '<', 0)->sum('product_qty'));
                                     $usedAvailable = max(0, $allUsedStockIn - $allUsedStockOut);
                                     
+                                    // B/F available stock (same formula, only transactions up to day before From Date)
+                                    $bfNewStocks = $bfStocks->where('type', 1);
+                                    $bfNewIn = $bfNewStocks->where('product_qty', '>', 0)->sum('product_qty');
+                                    $bfNewOut = abs($bfNewStocks->where('product_qty', '<', 0)->sum('product_qty'));
+                                    $bfNewAvailable = max(0, $bfNewIn - $bfNewOut);
+
+                                    $bfUsedStocks = $bfStocks->where('type', 2);
+                                    $bfUsedIn = $bfUsedStocks->where('product_qty', '>', 0)->sum('product_qty');
+                                    $bfUsedOut = abs($bfUsedStocks->where('product_qty', '<', 0)->sum('product_qty'));
+                                    $bfUsedAvailable = max(0, $bfUsedIn - $bfUsedOut);
+                                    $bfTotal = $bfNewAvailable + $bfUsedAvailable;
+                                    
                                     // Total Stock
                                     $totalStockIn = $newStockIn + $usedStockIn;
                                     $totalStockOut = $newStockOut + $usedStockOut;
                                     $totalAvailable = $newAvailable + $usedAvailable;
                                     @endphp
+                                    <td class="{{ $bfTotal <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">
+                                        {{ number_format($bfTotal, 0) }}
+                                    </td>
                                     <td>{{ number_format($newStockIn, 0) }}</td>
                                     <td>{{ number_format($newStockOut, 0) }}</td>
                                     <td>{{ number_format($newStockIn - $newStockOut, 0) }}</td>
                                     <td>{{ number_format($usedStockIn, 0) }}</td>
                                     <td>{{ number_format($usedStockOut, 0) }}</td>
                                     <td>{{ number_format($usedStockIn - $usedStockOut, 0) }}</td>
-                                    <td>{{ number_format($totalStockIn, 0) }}</td>
+                                    {{-- <td>{{ number_format($totalStockIn, 0) }}</td> --}}
                                     <td class="{{ $totalAvailable <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">
                                         {{ number_format($totalAvailable, 0) }}
                                     </td>
+                                    {{--
                                     <td class="white-space-nowrap no-print-col">
                                         @php
                                             $urlParams = [];
@@ -211,6 +233,7 @@
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
+                                    --}}
                                 </tr>
                                 @empty
                                 <tr>
