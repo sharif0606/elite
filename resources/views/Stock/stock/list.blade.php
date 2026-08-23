@@ -121,7 +121,7 @@
                                     <th scope="col">{{__('Out')}}</th>
                                     <th scope="col">Balance</th>
                                     {{-- <th scope="col">{{__('In')}}</th> --}}
-                                    <th scope="col">{{__('Available')}}</th>
+                                    <th scope="col">{{__('Closing Balance')}}</th>
                                     {{-- <th class="no-print-col"></th> --}}
                                 </tr>
                             </thead>
