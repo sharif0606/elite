@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h6 class="text-center my-3">জীবন বৃন্তান্ত/ব্যাক্তিগত বিবরণ/তথ্যাদি</h6>
+                    <h6 class="text-center my-3">জীবনবৃত্তান্ত / ব্যক্তিগত বিবরণ / তথ্যাদি</h6>
                     <h6 class="border-bottom my-2">বাংলা</h6>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
@@ -383,7 +383,7 @@
                     </div>
                     <div class="col-md-4 col-12">
                         <div class="form-group">
-                            <label for="bn_edu_qualification">শিক্ষাগতা যোগ্যতা</label>
+                            <label for="bn_edu_qualification">শিক্ষাগত যোগ্যতা</label>
                             <input type="text" id="bn_edu_qualification" value="{{old('bn_edu_qualification')}}" class="form-control @error('bn_edu_qualification') is-invalid @enderror" placeholder="" name="bn_edu_qualification">
                             @if($errors->has('bn_edu_qualification'))
                                 <span class="text-danger"> {{ $errors->first('bn_edu_qualification') }}</span>

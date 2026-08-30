@@ -56,7 +56,7 @@
                             <p class="text-center m-0 p-0">ভর্তি ফরম:সকল অস্থায়ী পদের জন্য</p>
                             <p class="text-center m-0 p-0">বাড়ি নং-২,লেইন নং-২,রোড নং-২,ব্লক-''কে''</p>
                             <p class="text-center m-0 p-0">হালিশহর হাউজিং এষ্টেট,চট্টগ্রাম-৪২২৪</p>
-                            <h6 class="text-center m-0 p-0"><u>জীবন বৃত্তান্ত/ব্যক্তিগত বিবরন/তথ্যাদি</u></h6>
+                            <h6 class="text-center m-0 p-0"><u>জীবনবৃত্তান্ত / ব্যক্তিগত বিবরণ / তথ্যাদি</u></h6>
                         </div>
                     </div>
                     <div class="col-3" style="padding-left: 10px;">
@@ -124,13 +124,13 @@
                                 <td class="py-1" colspan="9" style="text-align: center;"><b>(উল্লেখ্য, আমার বর্তমান ঠিকানা পরিবর্তন হলে আমি তাহা সাথে সাথে অফিস কে জানাবো)</b></td>
                             </tr>
                             <tr>
-                                <td class="py-1" style="text-align: left; width: 25%;">৫ । সনাক্তহকরণ চিহ্ন :</td>
+                                <td class="py-1" style="text-align: left; width: 25%;">৫ । সনাক্তকরণ চিহ্ন :</td>
                                 <td class="py-1 tbborder" colspan="5" style="width: 35%;">{{ $employees->bn_identification_mark }}</td>
                                 <td class="py-1" style="text-align: center; width: 10%;">রক্তের গ্রুপ</td>
                                 <td class="py-1 tbborder" colspan="2" style="width: 35%;">{{ $employees->bloodgroup?->name_bn }}</td>
                             </tr>
                             <tr>
-                                <td class="py-1" style="text-align: left; width: 25%;">৬ । শিক্ষাগতা যোগ্যতা :</td>
+                                <td class="py-1" style="text-align: left; width: 25%;">৬ । শিক্ষাগত যোগ্যতা :</td>
                                 <td class="py-1" colspan="8">
                                     <span class="tbborder d-inline-block" style="padding-right:38px; padding-top:15px">{{ $employees->bn_edu_qualification }}</span>
                                     <label for="">জন্ম তারিখ :</label>
@@ -210,7 +210,7 @@
                             </tr>
                             <tr>
                                 <th class="py-1" colspan="9" style="text-align: left;">
-                                    ১৪ । এই মর্মে আমি অঙ্গীকার করছি যে, আমার দেওয়া উপরুক্ত বিবরণ/ তথ্যাদি সম্পূর্ণ সঠিক। আমি নির্ধারিত বেতনে আবেদিত পদে অস্থায়ীভাবে এলিট সিকিউরিটি সার্ভিসেস লিমিটেড, চট্টগ্রাম এলাকায় করতে আগ্রহী। আমি সজ্ঞানে পড়ে ও বুজে নিন্মে স্বাক্ষর করলাম।
+                                    ১৪ । এই মর্মে আমি অঙ্গীকার করছি যে, আমার দেওয়া উপরোক্ত বিবরণ/ তথ্যাদি সম্পূর্ণ সঠিক। আমি নির্ধারিত বেতনে আবেদিত পদে অস্থায়ীভাবে এলিট সিকিউরিটি সার্ভিসেস লিমিটেড, চট্টগ্রাম এলাকায় চাকরী করতে আগ্রহী। আমি সজ্ঞানে পড়ে ও বুঝে নিন্মে স্বাক্ষর করলাম।
                                 </th>
                             </tr>
                             <tr>
@@ -313,7 +313,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th class="py-1">৬. শিক্ষাগতা যোগ্যতা</th>
+                                <th class="py-1">৬. শিক্ষাগত যোগ্যতা</th>
                                 <td class="py-1">:</td>
                                 <td class="py-1" colspan="2"> {{ $employees->bn_edu_qualification }}</td>
                             </tr>
@@ -546,7 +546,7 @@
                                 <td colspan="4"><input type="text" class="tinput" value="{{ convertToBanglaNumber($employees->bn_dob) }}"></td>
                             </tr>
                             <tr>
-                                <th>৯ । শিক্ষাগতা যোগ্যতা</th>
+                                <th>৯ । শিক্ষাগত যোগ্যতা</th>
                                 <th>:</th>
                                 <td colspan="4"><input type="text" class="tinput" value="{{ $employees->bn_edu_qualification }}"></td>
                             </tr>
