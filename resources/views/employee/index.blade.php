@@ -49,6 +49,7 @@
                             <p><strong>আবেদনকারীর নাম:</strong> {{$e->bn_applicants_name}}</p>
                             <p><strong>পিতার নাম:</strong> {{$e->bn_fathers_name}}</p>
                             <p><strong>মাতার নাম:</strong> {{$e->bn_mothers_name}}</p>
+                            <p><strong>মোবাইল নম্বর:</strong> {{$e->bn_parm_phone_my}}</p>
                         </td>
                         <td>
                             <p>ID:<strong>{{$e->admission_id_no}}</strong></p>
