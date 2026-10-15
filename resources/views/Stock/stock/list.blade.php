@@ -107,7 +107,7 @@
                                     <th scope="col" rowspan="3">{{__('B/F')}}</th>
                                     <th scope="col" colspan="6">{{__('Stock Details')}}</th>
                                     <th scope="col" rowspan="2">{{__('Total')}}</th>
-                                    {{-- <th class="white-space-nowrap no-print-col" rowspan="3">{{__('Action') }}</th> --}}
+                                    <th class="white-space-nowrap no-print-col" rowspan="3">{{__('Action') }}</th>
                                 </tr>
                                 <tr class="text-center">
                                     <th scope="col" colspan="3">{{__('New')}}</th>
@@ -122,7 +122,6 @@
                                     <th scope="col">Balance</th>
                                     {{-- <th scope="col">{{__('In')}}</th> --}}
                                     <th scope="col">{{__('Closing Balance')}}</th>
-                                    {{-- <th class="no-print-col"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -214,7 +213,6 @@
                                     <td class="{{ $totalAvailable <= 0 ? 'text-danger fw-bold' : 'text-success fw-bold' }}">
                                         {{ number_format($totalAvailable, 0) }}
                                     </td>
-                                    {{--
                                     <td class="white-space-nowrap no-print-col">
                                         @php
                                             $urlParams = [];
@@ -233,11 +231,10 @@
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </td>
-                                    --}}
                                 </tr>
                                 @empty
                                 <tr>
-                                    <th colspan="10" class="text-center">No Product Found</th>
+                                    <th colspan="11" class="text-center">No Product Found</th>
                                 </tr>
                                 @endforelse
                             </tbody>
